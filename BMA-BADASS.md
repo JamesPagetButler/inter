@@ -1,0 +1,349 @@
+# BMA:BADASS — Becoming and Enabling Behavior Actualization of Sprinting at Speed
+
+**The federation's live project-management dashboard. Read this at the start of every workspace session.**
+
+> Owner: qbp-architecture (Claude Opus 4.7) — managed continuously across sessions
+> Beekeeper: James Paget Butler (terminal-side approvals)
+> Created: 2026-05-14
+> **GitHub Project (live): https://github.com/users/JamesPagetButler/projects/2** (public)
+> Companion: `~/Documents/inter/project-management-best-practices.md`
+> Inherits from: `~/Documents/QBP/docs/workflows/` (sprint_mode_workflow, pivot_protocol, parallel_subagent_workflow) + `~/Documents/QBP/SPRINT_STATUS.md` (operational logbook pattern)
+
+## GitHub Project layout
+
+Project #2 (BMA:BADASS — Federation Sprint Dashboard). Configured 2026-05-14:
+
+| Field | Type | Options |
+|---|---|---|
+| **Status** | built-in single-select | Todo / In Progress / Done |
+| **Sprint** | single-select | Sprint 1 — Toddle Entry / Sprint 2 — TBD / Backlog |
+| **Phase** | single-select | Crawl / Toddle / Walk / Run |
+| **Cart** | single-select | Theory / Engineering / Art / Information |
+| **Implementor** | single-select | bma-implementor / wyrd-implementor / cth-implementor / contextus-impl / qbp-cu-implementor / qbp-implementor / qbp-oppenheimer / bma-Marcy / beekeeper |
+| **Tier** | single-select | T1 / T2 / T3 (per code-review BP doc) |
+
+**Items (56 total as of 2026-05-14 18:50 UTC — maintained by Herschel):**
+**Naming convention (beekeeper directive 2026-05-14):** cross-federation refs use `repo-<name>-<type>-#<num>` format. Phantom "A18/A19/A20" handles retired; use actual issue numbers.
+
+**Done (31):**
+- QBP #413 anchoring rule — merged 13:49 UTC
+- QBP #416 PR7 conflict-routing rubric — merged 13:49 UTC
+- QBP #415 LieAlgebraIso anchor — merged
+- QBP #414 Sprint12 inherited Lean fold — merged; 69 theorems on v4.30
+- QBP #417→**#419** PR2 Axioms Upgrade — merged
+- QBP #418 PR7 cycle 1 CTH reconciliation — merged 15:31 UTC
+- QBP #420 CI lint fix (manim) — merged 15:05 UTC
+- QBP #421 housekeeping B-13/B-12 — merged 15:33 UTC
+- QBP #422 CTH inventory baseline (141+150 anchors tracked) — merged 15:48 UTC
+- **QBP #423** PR7 cycle 2 per-anchor proposals + rubric v0.2 — **merged 17:13 UTC** (HVR pass ✅)
+- Wyrd #35 ScoutQuery design — merged 15:03 UTC (5/5 §I4 reads)
+- Wyrd #39 Toddle stub — merged
+- Wyrd #40 scope-loader design — merged 15:33 UTC (3/3 §I4 reads)
+- Wyrd #41 query/ impl — merged
+- Wyrd #42 W-Toddle-1 tier-immune impl — merged 15:03 UTC
+- Wyrd #44 ScoutQuery + predictions/ impl — merged 15:41 UTC
+- **Wyrd #45** (PR#2: HamiltonProduct→Gearbox substrate chain) — **merged 17:35 UTC** ✅
+- **Wyrd #46** TierImmunity.lean soundness anchor (W-Toddle-1) — **merged 17:35 UTC** ✅
+- **Wyrd #47** W-Toddle-2 BMA node-type schema (doc/design) — **merged 17:35 UTC** ✅
+- **Contextus #14** scope-config schema + reference loader — **merged 17:10 UTC** ✅ (all 3 Contextus Sprint 1 items done)
+- `repo-bma-systema-pr-#158` cart-tools harness Loop 1 — merged 17:06 UTC ✅
+- `repo-confluent-trust-pr-#62` live-inventory-api v0.2 §I4 design surface — merged (beekeeper override; partial §I4; gaps resolved in #64)
+- `repo-confluent-trust-pr-#64` live-inventory-api v0.2 hook semantics + per-field filter — merged ✅
+- `repo-wyrd-pr-#48` W-Toddle-2 impl BMA NodeType-to-policy — merged 18:12 UTC ✅
+- `repo-confluent-trust-pr-#63` ScorePrediction primitive A18 §2.4 — merged 18:15 UTC ✅
+- `repo-qbp-pr-#424` PR6 Wisdom v1.4 (W-003 spectral triple revision) — merged 17:59 UTC ✅
+- doc(design): ScoutQuery + predictions/ schema v0.1 §I4 surface — merged
+- doc(design): scope-node configuration loader v0.1 §I4 surface — merged
+- `repo-qbp-pr-#428` PR3 Genesis + Cosmology + Gravitational Anomaly — **merged 18:42 UTC** ✅ (D5-D9 beekeeper HVR pass)
+- `repo-qbp-pr-#425` Sprint 3 Retrospective — merged 18:41 UTC ✅
+- `repo-qbp-compute-unit-pr-#32` GCG verification ladder CI — merged `77523ad` ✅
+- (7/8 #81 QBP roadmap: PR2 ✅ PR3 ✅ PR6 ✅ PR7 ✅ PR8 ✅; PR4 gated on D10-D15; PR5 can start post-PR3)
+
+**In Progress (Sprint 1):**
+- `repo-bma-systema-pr-#160` (scope load reins wrapper stub) — bma-implementor; gating dep Wyrd#40 merged ✓ (T2)
+- `repo-bma-systema-pr-#161` (graph query reins stub) — bma-implementor; gating dep Wyrd#41 merged ✓ (T2)
+- ~~`repo-qbp-pr-#428` PR3~~ — **merged 18:42 UTC** (D5-D9 HVR pass ✅)
+- ~~`repo-qbp-pr-#425` Sprint 3 Retrospective~~ — **merged 18:41 UTC** ✅
+- `repo-bma-systema-issue-#155` (cart-tools harness) + `repo-bma-systema-issue-#157` (bilateral arch + L5/L6) — #157 held pending `repo-bma-systema-issue-#159` pod-aware ruling
+- `repo-bma-systema-issue-#159` (Pentagon Pod Architecture) — §I4: qbp-architecture APPROVED; Marcy APPROVED; **wyrd-implementor + cth-implementor + beekeeper reads pending** (gates #157)
+- `repo-confluent-trust-issue-#58` (qbp_v3_2 inventory migration)
+- **QBP-CU rc1 tag chain** — `repo-qbp-compute-unit-pr-#31` merged 17:39 by beekeeper override; BMA §I4 ratifying reads landed (no flags); **#20 tag walk + #15 PAT decision still pending beekeeper**
+
+**Todo (active items needing sequencing):**
+- `repo-bma-systema-issue-#163` — Pentagon Pod Theory Addendum (input: #159 + #162; qbp-architecture to author; §I4 reader-list in issue body) (T3)
+- `repo-bma-systema-issue-#164` — Federation Lean Promotion Protocol Theory Addendum (Compute Manifest companion in repo-wyrd; sequenced after #163) (T3)
+
+**Todo:**
+- bma-systema #153 (BMA spec §2 vocab refresh) — low-urgency
+- bma-systema #154 (Toddle phase spec)
+- confluent-trust #59 (CTH README drop SurrealDB)
+- wyrd #36 (Wyrd README drop SurrealDB)
+- 8 remaining drafts (OD-12 / OD-13 / OD-2 / Step 9 / Wyrd OD-11(c) absorption doc / BMA L5/L6 ref / QBP-CU M1 design / Marcy gov-layer triple)
+
+---
+
+## What this is
+
+BMA:BADASS is the **federation-level project-management dashboard** for cross-tenant work spanning BMA + QBP + QBP-Compute-Unit + Wyrd + CTH + Contextus + future tenants. Distinct from per-project SPRINT_STATUS.md files (e.g., QBP's), which track within-project sprint state.
+
+**Update at every federation-meaningful event** — sprint kickoff, sprint close, implementor CONFIRM/COUNTER/BLOCKED, beekeeper decision landing, blocker surfacing, phase transition.
+
+**Source-of-truth for the beekeeper's terminal-side view.** When James asks "what's the state?" — this file answers in under 60 seconds.
+
+---
+
+## Sprint driver — Herschel pattern (Sonnet sustained ops)
+
+**Sustained sprint-execution monitoring** is delegated to a Sonnet **Herschel** instance, not run on Opus. qbp-architecture (Opus) drives meetings + roadmap + sprint kickoff + sprint close; Herschel handles execution-phase ops + cross-repo review unblocking + project board maintenance.
+
+| Doc | Role |
+|---|---|
+| `~/Documents/inter/herschel-role-definition.md` | Role spec + responsibilities + escalation criteria |
+| `~/Documents/inter/herschel-launch-prompt.md` | Paste-able launcher for new Sonnet session |
+| `~/Documents/inter/sprint-handoff-protocol.md` | Kickoff handoff / close handoff templates + cross-repo review pattern + substantial-progress criteria |
+| `memory/feedback_herschel_pattern.md` | Federation rule memory |
+
+**Cross-repo review SLA** (Herschel enforces):
+- Tier 1 (docs/workflow) → stall threshold >4h since open with no review
+- Tier 2 (proofs/impl) → stall threshold >12h
+- Tier 3 (paper/spec) → stall threshold >24h
+
+When stall threshold crossed, Herschel pings reviewer on bridge with cost-to-deliver estimate per six-category checklist. 3 pings over 48h → escalation to beekeeper.
+
+---
+
+## ⚠ Model discipline — READ AT SESSION START
+
+**Beekeeper directive 2026-05-14:** team is over-using Opus, burning Sprint 1 credit budget. **Default to Sonnet. Opus is the exception, not the default.**
+
+| Cart × loop/op | Default model |
+|---|---|
+| Theory Cart (authorship + adjudication) | **Opus + Gemini 3-Pro HIGH** |
+| Engineering Cart Loop 1 (Ideation/Reference) | **Sonnet** MED |
+| Engineering Cart Loop 2 (Architectural/Guidance) | **Sonnet** MED |
+| Engineering Cart Loop 3 (Real-World/Requirement) | Sonnet MED; **Opus only at gate-review step** |
+| Art Cart Napkin/Studio | **Sonnet** LOW-MED |
+| Art Cart Gallery | Sonnet → Opus only for audience-ready polish |
+| Information Cart Classify/Render | **Haiku** LOW |
+| Information Cart EligibleVenues/ProposePromotion | **Sonnet** MED |
+| Federation facilitation routine | **Sonnet** |
+| Federation architectural synthesis | Opus |
+
+**Self-audit before any tool call:** (1) what cart? (2) what loop/op? (3) cart-loop row says which model? (4) if Opus — is it *truly* architectural synthesis or theory adjudication, or does it just *feel important*? If the latter → Sonnet.
+
+Full directive + per-task examples: live-test seq=103. Policy of record: [`feedback_delegation_policy.md`](~/.claude/projects/-home-prime-Documents/memory/feedback_delegation_policy.md).
+
+---
+
+## Current State
+
+### Federation phase
+**CRAWL** — load-bearing infrastructure under construction. Crawl→Toddle gate active.
+
+### Active sprint
+**Sprint 1 — Toddle Entry** — kicked off 2026-05-14 05:10 UTC on `sprint-1-toddle-entry` seq=1.
+
+**Sprint goal:** all Toddle entry criteria + first-wave Toddle PRs scoped + Block C decisions handed off to per-PR threads.
+
+**Sprint completion criterion (beekeeper-set 2026-05-14):**
+- (a) All implementors complete sprint issues, OR
+- (b) Meaningful blocker surfaces requiring synchronous discussion
+
+When either triggers for all → next federation meeting fires.
+
+### Sprint 1 attendees + scope (min 3 issues each)
+
+| Attendee | Role | Issues | Confirmation |
+|---|---|---|---|
+| @bma-implementor | BMA-side implementation | Cart-tools harness (Theory Cart Python+Lean) / continuous-loop scaffold (full bilateral on Crawl hw + drive) / L5/L6 inference-time arch + action-selection test harness | ⏸ pending |
+| @wyrd-implementor | Wyrd-side implementation | OD-11(c) absorption design doc / NT_SEED inventory ingestion from bma-impl / Wyrd PR #2 (post rc1 tag) | ⏸ pending |
+| @cth-implementor | CTH-side implementation | Wyrd PR #35 §I4 read (PRED-* + CTHAnchor) / CTH #58 schema-drift resolution / CTH #59 README refresh | ⏸ pending |
+| @contextus-impl | Contextus-side implementation | Wyrd PR #35 §I4 read (NT_SCOPE_PHYSICAL + referent_kind) / Contextus #9 scope-loader config schema / PR #5 Theory v1.5 merge | ✅ CONFIRMED (sprint-1-toddle-entry seq=5 14:52 UTC) — items 1 + 3 already done |
+| @qbp-cu-implementor | QBP-CU substrate | rc1 tag chain close (PRs #27 + #28 + #29) / M1 design surface doc / A19 co-authorship Width-tier feasibility table | ⏸ pending |
+| @qbp-implementor | QBP Integration | PR7 CTH v5.13↔v5_3 reconciliation / post-PR-#414 housekeeping (208 + Hessian + FanoGenesis dup) / PR6 Wisdom v1.4 | ⏸ pending |
+| @qbp-oppenheimer | QBP Strategic Lead, Theory Cart | PR2 #417 Tier 3 cycle / PR3 Round 2 (post D5-D9) / PR4 Round 2 (post D10-D15) | ⏸ pending |
+| @bma (Marcy) | BMA gov-layer | OD-11(c) constitutional check (A11 decay-immunity) / L5/L6 action-selection test architecture / Sharp Butler context test scope | ⏸ pending |
+
+### Pending beekeeper actions (at terminal)
+
+| ID | Decision / action | Why it's beekeeper-only |
+|---|---|---|
+| ~~rc1 tag~~ | ~~`emulator/v0.1.0-rc1`~~ | **✅ TAGGED** (`80564d57`) |
+| ~~Wyrd merge queue~~ | ~~Wyrd #35 + #40 + #42~~ | **✅ MERGED 15:03–15:33 UTC** |
+| ~~Wyrd #45 merge~~ | ~~PR #2 HamiltonProduct→Gearbox~~ | **✅ MERGED 17:35 UTC** |
+| ~~QBP #423 HVR + rubric v0.2~~ | ~~PR7 cycle 2~~ | **✅ MERGED 17:13 UTC** |
+| **BMA #159 constitutional read** | §I4 pending beekeeper | #157 pod-aware scoping can lock |
+| ~~**QBP-CU #20 tag walk**~~ | ~~Verify `emulator/v0.1.0-rc1`~~ | **✅ Tag confirmed `0bef732`; Wyrd PR #2 cycle complete** |
+| **QBP-CU #15 PAT decision** | Option A (public) vs option B (PATs) | Policy decision |
+| **D10-D15 rulings** | PR4 (Spectral+CCvS+W-003) Round 2 + `repo-qbp-pr-#403` v0.2 R7-R11 stances | Theory-axis adjudication — gating qbp-oppenheimer PR4 |
+| ~~**Sprint 4 direction #408**~~ | ~~Dirac spectrum vs Bell's Theorem pick~~ | **✅ RATIFIED** (`repo-qbp-pr-#429`): Dirac spectrum → Bell's Theorem are sequential phases of one programme; PR4 §X framing proceeds |
+| OD-12 | Crawl hardware drive upgrade (NVMe-via-addon vs durable SATA) | Procurement |
+| OD-13 | Walk GPU placement (ROCm-on-Crawl-as-server vs T1-on-RISC-V-NPU) | Architecture preference + procurement coupling |
+| OD-2 | Walk RISC-V SBC spec (model + node count + topology) | Procurement |
+| Step 9 | BMA succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact |
+| ~~Merge bundle~~ | ~~#413+#416 (Tier 1) → #415 → #414 → #417~~ | **✅ DONE 2026-05-14 13:49-14:00 UTC** |
+| D5-D9 | PR3 (Genesis+Cosmo+GravAnom) rulings | Theory-axis adjudication |
+| D10-D15 | PR4 (Spectral+CCvS+W-003) rulings | Theory-axis adjudication |
+| ~~`RetentionTier` distinct type~~ | ~~Wyrd PR #39 cross-PR coherence~~ | **✅ RESOLVED 2026-05-14 14:33 UTC** via Wyrd PR #42 |
+
+---
+
+## Sprint Lifecycle State
+
+```
+[Sprint kickoff] → [Scope CONFIRM] → [Planning approval] → [Execution] → [Sprint close] → [Next meeting]
+       ↑              ↑↑↑↑                ↑                    ↑              ↑
+       DONE         ⏸ THIS PHASE       (Phase 2 trigger)   (per-PR)      (a) or (b) trigger
+```
+
+**Currently in Phase 1**: scope-confirmation collection. Phase 2 (per-implementor planning-trigger prompts) fires once all 8 attendees CONFIRM (or COUNTERs resolved).
+
+**Herschel online 2026-05-14 15:02 UTC** — sprint-driver watch taken; polling 120s active. Registered on bridge as `herschel`; subscribed to live-test, sprint-1-toddle-entry, pr407-conflict-resolution, addendum-18-walk, qbp-cu-walk.
+
+---
+
+## Decisions log (federation-level, this sprint)
+
+Decisions made or ratified during Sprint 1 setup that affect federation architecture (NOT per-PR decisions, which live in PR threads):
+
+| Date | Decision | Authority | Cross-refs |
+|---|---|---|---|
+| 2026-05-13 | Toddle phase ratified between Crawl and Walk | beekeeper | workspace-phase-architecture.md §Phase 2 |
+| 2026-05-13 | Walk hardware = networked RISC-V SBCs (NOT bigger workstation) | beekeeper | workspace-roadmap.md OD-2 |
+| 2026-05-13 | OD-11 = option (c): Wyrd absorbs hg/'s BMA-specific structures | beekeeper + bma-impl + wyrd-impl jointly | workspace-roadmap.md OD-11 |
+| 2026-05-13 | Sharp Butler context test added to Walk exit criteria | beekeeper | workspace-phase-architecture.md §3.6 |
+| 2026-05-13 | Cart-driven tool acquisition — BMA actively participates in work | beekeeper | feedback_cart_tool_acquisition.md |
+| 2026-05-13 | Four-cart taxonomy: Theory + Engineering + Art + Information | beekeeper | workspace-phase-architecture.md §0.1 |
+| 2026-05-13 | Art Cart loops: Napkin → Studio → Gallery (parallels Engineering's three-loop hardening) | beekeeper | workspace-phase-architecture.md §0.2 |
+| 2026-05-13 | Cart-model mapping: Theory Cart on Opus + Gemini 3-Pro HIGH effort | beekeeper | feedback_delegation_policy.md |
+| 2026-05-13 | Code-review BP: gograph for Go review; testo selectively for E2E | beekeeper | code-review-best-practices.md |
+| 2026-05-14 | Sprint 1 — Toddle Entry kicked off; first formal sprint under 4-phase model | beekeeper | this doc |
+| 2026-05-14 | 208 theorems audit: root cause = counting-methodology error (state report counted theorem+lemma+def as "theorems"); B-11 Nat-truncation = compound symptom, not root cause | qbp-architecture audit + qbp-oppenheimer ratification | pr407 seq=29-33 |
+| 2026-05-14 | Two-tier Lean ownership model ratified: tenant research Lean (sorry OK, Theory Cart authorship) vs Wyrd substrate Lean (no sorry, promoted via Compute Manifest gate); type-instantiation (Q1 mode a) vs extraction-execute (mode b) per theorem type | qbp-architecture five rulings (live-test seq=113); Marcy gov-layer endorsed (seq=114); bma-implementor absorbed (seq=115) | A20 Theory Addendum queued (qbp-architecture to author) |
+| 2026-05-14 | Compute Manifest abstraction: substrate promotion gate tied to "current federation Compute Manifest" not literal qbp-cu — preserves silicon-ladder exit ramp; Compute Manifest transitions themselves require §I4 review surface (Marcy, seq=114) | qbp-architecture + Marcy | A20 Theory Addendum |
+
+---
+
+## Risk register (Sprint 1 — open risks only)
+
+| ID | Risk | Mitigation | Owner |
+|---|---|---|---|
+| R-1 | wyrd-implementor externally gated on rc1 tag; Wyrd PR #2 cannot land until then | rc1 tag chain (qbp-cu-impl issue #1) is parallel sprint work; both should close in sprint window | qbp-cu-implementor + wyrd-implementor |
+| R-2 | bma-implementor scope ambitious (3 substantive sub-issues of #154 simultaneously) | Sequence: cart-tools harness first (load-bearing); continuous-loop scaffold second; L5/L6 third | bma-implementor |
+| R-3 | OD-11(c) constitutional check (Marcy gov-layer) gates wyrd-implementor's absorption design | Marcy's ack is recommended-not-required; bma-impl can scope inventory in parallel | Marcy + qbp-architecture facilitator |
+| R-4 | Gemini Pro 429 free-tier issue (resolved 2026-05-13 per memory but worth monitoring); qbp-oppenheimer's Theory Cart work depends on it | qbp-oppenheimer running paid tier; flag if 429 returns | qbp-oppenheimer + beekeeper |
+| R-5 | Hessian content-drop flagged for PR5 (sedenion-level eigenvalue-structure claims may surface need for structural proofs not in canonical Sedenion.lean) | Re-derive on v4.30 when needed, not migrate from historical/ | qbp-oppenheimer + qbp-implementor |
+
+Resolved risks archived to §History.
+
+---
+
+## Cross-project dependencies (active blockers)
+
+Per `workspace-roadmap.md` §4, gate-on-gate dependencies (not PR queue):
+
+| Blocked gate | Blocked by gate | Status |
+|---|---|---|
+| BMA Step 9 (instantiation) | Succession contacts confirmation | Pending Brett Lyman + Skyler Rainier human contact |
+| BMA Crawl→Toddle | OD-11(c) decided + OD-12 drive upgrade + NATS broker spec | OD-11(c) ✓ decided; OD-12 ⏸ beekeeper; NATS ⏸ scope unclear |
+| Wyrd v0.2 federation-wide | OD-11(c) implementation lands + CTH v0.2 schema | OD-11(c) ✓ decided; impl pending; CTH #58 pending |
+| QBP Walk (GW-EM pipeline) | Wyrd predictions/ schema (PR #35) + CTH v0.2 migration + federation Walk-tier primitives | All upstream |
+
+---
+
+## Update protocol
+
+This doc is the federation truth source. Update at:
+
+1. **Sprint events** — kickoff, scope confirmation, planning approval, sprint close
+2. **Beekeeper decisions** — land new D-decisions in §Decisions log
+3. **Risk changes** — new risks open; existing risks resolved (move to §History)
+4. **Phase transitions** — federation moves Crawl → Toddle → Walk → Run; gate criteria pass
+5. **Cross-project dependency changes** — gates pass; new dependencies surface
+
+**Do NOT update for:**
+- Per-PR state (those live in PR threads + per-project SPRINT_STATUS.md files)
+- Implementor work-cycle reports (they own their own logs)
+- Routine bridge-channel chatter
+
+Updates go through qbp-architecture as a federation-level event log. Beekeeper reads to orient.
+
+---
+
+## Session-start protocol (analogous to QBP's Herschel Check)
+
+At the start of every workspace federation-level session, read in this order:
+
+1. **This doc** — current state, active sprint, pending beekeeper actions, open risks
+2. **`~/Documents/CLAUDE.md`** — workspace config + project directory map
+3. **`~/Documents/inter/workspace-roadmap.md`** — phase progression + cross-project dependencies
+4. **Memory file** — federation policy memory (`feedback_workspace_stack.md`, `feedback_delegation_policy.md`, `feedback_code_review_policy.md`, `feedback_cart_tool_acquisition.md`)
+
+Then engage with the user's request.
+
+---
+
+## History (this session's federation-level events — chronological)
+
+- **2026-05-13** federation architectural cluster (Toddle phase + Walk RISC-V reframe + OD-11(c) + four-cart + cart-tools + cart-model + code-review BP)
+- **2026-05-13** addendum-18-walk Round-2 closeout (Wyrd PR #35 reads 3/5; sync-meeting offer Marcy holding)
+- **2026-05-14** 208 theorems audit (counting-methodology root cause) + Hessian content-drop partial-absorption ruling
+- **2026-05-14** Marcy gov-layer P12 close + M1 design-surface reframe endorsement
+- **2026-05-14** qbp-cu-implementor PR #29 substrate-guarantees doc filed
+- **2026-05-14** qbp-oppenheimer merge-priority brief to beekeeper (pr407 seq=34)
+- **2026-05-14 05:05** Toddle-design meeting formally closed (toddle-design seq=21)
+- **2026-05-14 05:10** Sprint 1 — Toddle Entry kicked off
+- **2026-05-14** BMA:BADASS dashboard + project-management BP doc created
+- **2026-05-14 13:49-14:00** QBP PRs #413/#416/#415/#414/#417(→#419) all merged; 5/8 #81 roadmap complete
+- **2026-05-14 14:44** Wyrd PR #35 §I4 5/5 reads complete; sync-meeting offer closed (addendum-18-walk seq=61)
+- **2026-05-14 14:52** contextus-impl CONFIRMED Sprint 1 scope (sprint-1-toddle-entry seq=5); Contextus PR #5 Theory v1.5 merged + Wyrd PR #35 §I4 read done
+- **2026-05-14 ~14:30** bma-systema#158 (cart-tools harness Loop 1 impl PR) + confluent-trust#62 (live inventory update API design) opened; QBP#418 PR7 cycle 1 opened; QBP#420 CI lint fix merged; QBP#421 housekeeping opened
+- **2026-05-14 15:02** Herschel (Sonnet sprint-driver) online; watch taken on Sprint 1
+- **2026-05-14 15:03–15:41** Beekeeper merge wave: Wyrd #35/#42 (15:03) + QBP#418 (15:31) + Wyrd#40/QBP#421 (15:33) + Wyrd#44 ScoutQuery impl (15:41) — Done count 7→13
+- **2026-05-14 15:27** bma-implementor filed BMA #159 Pentagon Pod Architecture; qbp-architecture APPROVED (§I4 architect review); Marcy gov-layer absorbed 3 theory-axis rulings
+- **2026-05-14 15:36** contextus-impl posted Phase-2 plan for Contextus #9 — awaiting beekeeper approval
+- **2026-05-14 15:08** qbp-implementor flagged CTH inventory ledger gap; beekeeper authorized a+b+c
+- **2026-05-14 15:48** QBP #422 merged — CTH inventory baseline now tracked (141+150 anchors)
+- **2026-05-14 ~15:55** QBP #423 (PR7 cycle 2) opened; Red Team+Gemini APPROVE; in HVR
+- **2026-05-14 ~16:00** rc1 tag `emulator/v0.1.0-rc1` tagged; Wyrd #45 (PR#2) opened
+- **2026-05-14 ~16:00** bma-systema #161 (graph query reins stub) + #160 (scope load reins stub) opened
+- **2026-05-14 16:46** Herschel pulse: 14 Done, beekeeper queue surfaced, #159 §I4 pings sent
+- **2026-05-14 17:10–17:13** Contextus #14 merged (scope-config; all 3 Contextus Sprint 1 items done) + QBP #423 merged (PR7 cycle 2; HVR pass ✅)
+- **2026-05-14 17:35** Wyrd #45 (HamiltonProduct→Gearbox PR#2) + #46 (TierImmunity.lean) + #47 (W-Toddle-2 node-type schema) all merged — substrate chain complete
+- **2026-05-14 17:39** qbp-cu PR#31 (M0.5 stubs) merged by beekeeper override; issue #9 auto-closed; BMA §I4 reads landed post-merge as ratifying (no flags)
+- **2026-05-14 17:35–18:00** qbp-architecture five Lean rulings absorbed (live-test seq=113–116): two-tier model + Compute Manifest abstraction ratified; Marcy gov-layer endorsed; bma-implementor claimed 3 next-step actions; A20 Theory Addendum queued for qbp-architecture
+- **2026-05-14 18:10** Herschel board sync: 49 items / 25 Done / 8 In Progress / 16 Todo; Wyrd#48 + confluent-trust#63 added to board
+- **2026-05-14 18:12–18:15** `repo-wyrd-pr-#48` (W-Toddle-2 impl) + `repo-confluent-trust-pr-#63` (ScorePrediction) both merged by beekeeper
+- **2026-05-14 18:01** `repo-confluent-trust-pr-#64` (live-inventory-api v0.2 hook semantics) opened and merged same cycle by contextus-impl + beekeeper; resolves T8/T9 design clarifications from PR#62 §I4 gaps
+- **2026-05-14 18:04** qbp-architecture self-correction: A18/A19/A20 handles are phantom — no actual issues on repo-bma-systema; beekeeper directive to stop using A-handles and apply `repo-<name>-<type>-#<num>` prefix convention
+- **2026-05-14 18:09** `repo-bma-systema-issue-#163` (Pentagon Pod Theory Addendum) + `repo-bma-systema-issue-#164` (Federation Lean Promotion Protocol Theory Addendum) filed by qbp-architecture; replace all prior A19/A20 phantom references
+- **2026-05-14 18:20** `repo-qbp-pr-#428` (PR3 Genesis+Cosmo+GravAnom) opened by qbp-oppenheimer; gated on D5-D9 beekeeper rulings
+- **2026-05-14 18:30** Herschel board sync: 55 items / 28 Done / 9 In Progress / 18 Todo
+- **2026-05-14 18:41–18:42** `repo-qbp-pr-#425` Sprint 3 Retrospective + `repo-qbp-pr-#428` PR3 Genesis+Cosmo+GravAnom both merged — D5-D9 beekeeper HVR pass confirmed; 7/8 of #81 QBP roadmap done
+- **2026-05-14 18:32** `repo-qbp-compute-unit-pr-#32` GCG verification CI ladder merged; `emulator/v0.1.0-rc1` tag confirmed live at `0bef732`; Wyrd PR #2 cycle closed
+- **2026-05-14 18:34** qbp-oppenheimer surfaced Sprint 4 direction fork (Dirac spectrum vs Bell's Theorem, pr407 seq=47); routing to beekeeper #408 disposition
+- **2026-05-14 18:50** Herschel board sync: 56 items / 31 Done / 7 In Progress / 18 Todo
+- **2026-05-14 ~21:20** Sprint 4 direction ratified (`repo-qbp-pr-#429`): Dirac spectrum + quaternionic tensor-product as sequential phases; resolves #408 fork; PR4 §X framing unblocked pending D10-D15
+
+---
+
+## Cross-reference index
+
+| Doc | Role |
+|---|---|
+| `~/Documents/inter/project-management-best-practices.md` | Federation PM conventions; how to run sprints + meetings |
+| `~/Documents/inter/workspace-roadmap.md` | Phase progression + cross-project dependency graph |
+| `~/Documents/inter/workspace-phase-architecture.md` | Per-phase diagrams (Crawl / Toddle / Walk / Run) |
+| `~/Documents/inter/code-review-best-practices.md` | Code review discipline (six-category checklist + gograph + testo) |
+| `~/Documents/inter/roadmap-best-practices.md` | Roadmap document conventions |
+| `~/Documents/inter/architecture-diagrams-best-practices.md` | Visualization tier model |
+| `~/Documents/inter/github-best-practices.md` | Federation GitHub conventions |
+| `~/Documents/QBP/SPRINT_STATUS.md` | QBP-specific operational logbook (within-project sprint state) |
+| `~/Documents/QBP/docs/workflows/` | QBP workflow corpus (sprint_mode, pivot_protocol, parallel_subagent, etc.) — federation inherits |
+| `~/Documents/CLAUDE.md` | Workspace config + project directory map |
+
+---
+
+*BMA:BADASS Dashboard v0.5 | 2026-05-14 18:50 UTC*
+*Becoming and Enabling Behavior Actualization of Sprinting at Speed*
+*Authored by Claude Opus 4.7 (qbp-architecture); sprint-execution maintained by Herschel (Sonnet); read by James Paget Butler (beekeeper) at terminal*
