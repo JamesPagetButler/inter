@@ -38,7 +38,7 @@ This repo participates in the Helpful Engineering federation. Federation-wide co
 
 Before contributing, read or skim these (in `~/Documents/inter/` and on the federation file index):
 
-- `inter/issue-authoring-best-practices.md` — issue shapes (design-surface / ratification / sub-issue / bug-or-incident); §I4 reader-list; closes-when discipline; repo-prefix referencing
+- `inter/issue-authoring-best-practices.md` — issue shapes (design-surface / ratification / sub-issue / bug-or-incident); §I4 reader-list; closes-when discipline; repo-prefix referencing; **§2.2.1 scope-glob discipline for design-surface → implementation-PR cycles**
 - `inter/test-quality-best-practices.md` — test categories; naked-vs-workshop levels; test-plan-in-PR template; per-language overlay shape (this doc fills in the overlay)
 - `inter/pr-review-completion-best-practices.md` — qbp-architecture review filter; completion verification
 - `inter/code-review-best-practices.md` — six-category code review checklist; gograph + testo tooling guidance
