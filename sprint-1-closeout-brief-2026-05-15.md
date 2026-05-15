@@ -78,6 +78,35 @@ Five theory addenda + four spec addenda + five best-practice docs + one new repo
 
 **Phantom-artifact incident — `repo-bma-systema-issue-#168`.** Concurrent agent's `git reset` at 2026-05-14 21:47:31 wiped qbp-architecture's untracked theory + spec files. Recovery via session-transcript replay; root cause confirmed via reflog forensics; structural fix (worktree isolation rule) landed federation-wide. Runbook filed.
 
+### 1.6 Verification debt — Sprint 1 unverified architectural claims (Sprint 2 entry condition)
+
+*Added 2026-05-15 post-close-out per beekeeper finding: "lots of review by per agents but not much code running confirming claims."*
+
+Sprint 1 federation-architecture work landed substantial theory + spec + best-practice surface (5 theory addenda, 4 spec addenda, 5 best-practice docs, 6 federation-wide standing rules). **Eleven specific architectural claims committed in Sprint 1 have NO running-code verification yet.** This verification debt is now explicitly tracked.
+
+**Inventory:** `repo-inter-issue-#4` — Federation claim-verification audit (filed 2026-05-15 as `housekeeping`).
+
+The 11 unverified claims, by tier:
+
+| Tier | Count | Examples |
+|---|---|---|
+| **Pentagon Pod cognitive architecture** | 3 (C1–C3) | A20 separate-binary-per-cell + state-flush; A20 §0.2 Conscious-singular vs Subconscious-concurrent; BMA harness OnSeam non-blocking invariant |
+| **Federation Knowledge-Sovereignty + Lean promotion** | 4 (C4–C7) | First Spec 9.2 §2 substrate-tier promotion end-to-end; Spec 9.2 §13 contracts-tier promotion; Compute Manifest round-trip; Translation Functor cycle-counter cross-phase |
+| **Cross-tenant + research-aid + actuation** | 4 (C8–C11) | NT_AUTONOMIC_SIGNAL cross-tenant chain; A22 §4.2 Translation Functor magnitude-preservation; A23 scaffold against real corpus; A24 actuation airgap + NT_OBSERVATION loop |
+
+**Sprint 2 priority recommendation per inter#4:**
+
+- **P0** (must verify in Sprint 2): C3, C4, C5, C6 — running-code targets where substrate work is already in §I4 review (`repo-wyrd-pr-#58`, `repo-qbp-compute-unit-pr-#40`, `repo-bma-systema-pr-#172`, plus first substrate-tier promotion exercise)
+- **P1** (should verify in Sprint 2): C1, C2 — Pentagon Pod runs in real cells
+- **P2** (Sprint 3 candidates): C7, C8, C9, C10 — depend on P0/P1 landing first
+- **P3** (Walk-α-conditional): C11 — hardware-actuation; only relevant when first physical boundary exists
+
+**Structural response (federation-wide discipline change):** `repo-inter-pr-#5` adds **§2.2.2 verification-test discipline** to `inter/issue-authoring-best-practices.md` — every design-surface ratification issue's closes-when criterion 4 MUST now name (a) the specific verification test, (b) the PR/sprint where it lands, (c) the failure mode it detects. Closes the soft-gate failure mode ("first post-update implementation PR demonstrates the discipline") that allowed Sprint 1's claim accumulation without matching verification surface.
+
+**Why this matters for Sprint 2 readiness:** the housekeeping-before-sprint standing rule says "a new sprint cannot open while housekeeping work is outstanding." Verification debt of C1–C11 is now classified as housekeeping; Sprint 2 scoping should explicitly pick which P-tier claims to commit. Verification debt is the federation equivalent of mocking the database in tests — the design works on paper but never against the substrate it claims to control.
+
+**Sprint 1 close-out is NOT blocked on verification-debt clearance** — Sprint 1 shipped the design surface; verification belongs to Sprint 2+ implementation work. But Sprint 2 kickoff should commit explicit P-tier claims from inter#4 as Sprint 2 scope items.
+
 ---
 
 ## 2. Housekeeping backlog state
