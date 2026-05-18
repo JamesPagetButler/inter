@@ -94,6 +94,65 @@ A ratification issue exists **after the artifact exists** — to bring the reade
 **Sequencing:** <blocked-after | sequenced-with | blocks>
 ```
 
+### 2.2.1 Scope-glob discipline for design-surface PRs that commit to follow-on implementation PRs
+
+When a ratification issue's artifact is a **design surface** (a doc-only PR per the §I4 design-doc-as-S-01-review-surface pattern from ADR-003) that commits to follow-on implementation PRs, the design surface MUST publish **HARD scope-globs per implementation PR** in its body. Reviewers enforce scope-globs at implementation-PR review time: a diff outside the published scope-glob is `request changes` with a redirect to "file a new PR for that surface."
+
+This discipline keeps implementation-cycle reviews bounded — scope-creep gets flagged at PR-open time rather than discovered late.
+
+**Federation precedents:**
+- `repo-qbp-compute-unit-pr-#33` §8 (M1 Gearbox design surface) commits to three implementation PRs (m1.1 / m1.2 / m1.3) with HARD scope-globs per file
+- `repo-qbp-compute-unit-pr-#35` §5 (M1 verification strategy) commits to three implementation PRs (cosim-Tier-A / archtest / Tier-B-nightly) with the same shape
+
+**Required format — `## Implementation sequence` section in the design surface body:**
+
+```markdown
+## Implementation sequence
+
+The implementation PRs gated on this design surface, in dependency order:
+
+| PR | Scope (HARD glob) | Effort | Depends on |
+|---|---|---|---|
+| `feat(<area>.<N>)` <one-sentence title> | `path/to/file1.<ext>` + `path/to/file2.<ext>` + `path/to/<area>_test.<ext>` | ~<N> days | <prior-PR or "none"> |
+| `feat(<area>.<N+1>)` <title> | <files> | ~<N> days | <prior-PR> |
+| ... | ... | ... | ... |
+```
+
+**Rules for the scope-glob:**
+
+1. **HARD scope-glob means file-list, not pattern.** "Anywhere under `internal/foo/**`" is too loose; "`internal/foo/bar.go` + `internal/foo/bar_test.go`" is enforceable.
+2. **Tests in scope.** Every implementation PR's scope includes its test files; a PR that adds production code without tests is request-changes by default per `test-quality-best-practices.md` §4 phase floor.
+3. **Test files for new packages may be added on first scope-glob.** Subsequent PRs do not need to re-list existing test files unless they modify them.
+4. **Generated files declared explicitly.** If the implementation generates code (codegen, protobuf, etc.), the generated files are part of the scope-glob; reviewers verify the generator + the generated artifact land together.
+5. **Documentation in scope when implementation changes user-visible behavior.** A PR that ships a new API surface includes the README + relevant `doc/` sections in scope.
+6. **Cross-package work splits across PRs.** If an implementation PR's natural scope spans two packages with separable surfaces, split into two PRs rather than widening scope.
+
+**Reviewer enforcement:**
+
+When an implementation PR is opened that cites its parent design-surface PR, the reviewer's first action (before reading the diff) is **scope-glob comparison**:
+
+1. Fetch the parent design-surface's `## Implementation sequence` table
+2. Find this PR's row
+3. Run `git diff --name-only <base>...HEAD` and compare against the scope-glob
+4. Files in the diff that are NOT in the scope-glob → `request changes` with redirect: *"Out-of-scope file `<path>` — file a separate PR or amend the design surface."*
+5. Files in the scope-glob that are NOT in the diff → only fail if the PR's title/body claims them; absence-of-expected is a `comment`, not a `request changes`
+
+If the parent design-surface lacked an `## Implementation sequence` section, the implementation PR's first review action is to redirect to the design-surface PR: *"Parent design surface missing `## Implementation sequence` table; please amend before implementation cycle proceeds."*
+
+**Authoring exception:**
+
+If the implementation work genuinely cannot be partitioned into scope-globs (e.g., a refactor that crosses many files atomically), the design surface MUST declare *why* in a `### Scope-glob exception` subsection of `## Implementation sequence`, naming the reason and the alternative bounding mechanism (e.g., line-count cap; or "single atomic refactor PR; reviewer reads the whole diff"). The exception is a deliberate decision, not a default.
+
+**When this discipline does NOT apply:**
+
+- Issues whose artifact is not a design surface (e.g., direct ratification of a doc; bug fixes; mechanical chores)
+- Implementation PRs that are not gated on a design surface (open-design / iterative-development PRs)
+- Single-PR scopes where the design + implementation land together (no follow-on cycle)
+
+In these cases, normal PR-review discipline per `code-review-best-practices.md` §3-§4 governs.
+
+---
+
 ### 2.3 Sub-issue shape
 
 A sub-issue scopes a *named subset* of a parent issue. The parent stays open; the sub-issue closes independently.
@@ -254,6 +313,62 @@ When this issue closes a gap surfaced elsewhere, the issue body links the surfac
 ### 6.3 No phantom handles
 
 A reference must be to a real, filed artifact. Do not use placeholder handles like "the A18 handle" unless an A18 file actually exists at a known path. The 2026-05-14 phantom-handles incident is the canonical bad example — see `feedback_repo_prefixed_refs` memory for the cautionary tale. **Grep the repo before treating a handle as load-bearing.**
+
+---
+
+## 6a. The `housekeeping` label — non-blocking, important, not trivial
+
+**Effective 2026-05-15 per beekeeper standing ruling.** Federation repos carry a `housekeeping` label (color `#fbca04`, gold-yellow) on `bma-systema`, `wyrd`, `qbp-compute-unit`, `QBP`, `Contextus`, `confluent-trust`, `inter`. The label exists to keep work flowing without sliding either way: it catches things that would be lost as "minor" if untagged, and it prevents agents from using "housekeeping" as a synonym for "I don't want to do this now."
+
+### 6a.1 Three-criteria threshold
+
+An issue qualifies for the `housekeeping` label **only if all three hold**:
+
+1. **Important.** The work matters; deferring it costs the federation something measurable (audit trail gap, reference drift, doc rot, broken cross-link, stale convention). If the work is genuinely optional or cosmetic, do not file an issue at all.
+2. **Non-blocking.** The work does not block any in-flight sprint scope. If it blocks, it's sprint-scope, not housekeeping — the label is wrong shape.
+3. **Not trivial.** The work takes more than ~15 minutes of focused effort. Trivial fixes (typo, dead link, single-line tweak) belong in a passing PR or a one-line commit, not in a tracked issue with a label.
+
+If any criterion fails, do not label as `housekeeping`. Either escalate to sprint-scope (criterion 2 fail = it's blocking), do the work in-line (criterion 3 fail = it's trivial), or close as "won't fix" (criterion 1 fail = it doesn't matter enough).
+
+### 6a.2 Who labels
+
+- **qbp-architecture** sets the policy + audits the housekeeping queue periodically (especially before sprint kickoff)
+- **Tenant implementors** may apply the `housekeeping` label themselves **after** qbp-architecture has notified them they're authorized to do so (initial authorization happens via bridge announcement; renewed implicitly each sprint)
+- **Beekeeper** can override any housekeeping classification at any time
+
+The "implementor self-label" path is meant to keep momentum during normal work — when an implementor surfaces a non-blocking-important-non-trivial item, they tag it `housekeeping` themselves and continue with sprint work. The audit catches misclassifications.
+
+### 6a.3 Anti-pattern: housekeeping as laziness shield
+
+The most common failure mode is **using `housekeeping` to defer work that should be done now**. Test:
+
+- "I'll get to this later" + label → if the work is actually blocking something, this is sprint-scope mislabeled. Re-classify.
+- "This isn't urgent enough to interrupt my sprint work" + label → check criterion 3. If trivial → do it now (15 min). If non-trivial → criterion 1 check: is it actually important? Or just nice-to-have?
+- Bulk-labeling a batch of issues `housekeeping` to clear the sprint board → red flag. Each housekeeping classification should pass the three-criteria test individually.
+
+When qbp-architecture's audit finds mis-labeled housekeeping (anything that fails the three-criteria test), the issue is re-classified with a brief comment naming the failure mode. Pattern-of-mislabeling by a single implementor is surfaced to beekeeper.
+
+### 6a.4 Pre-sprint housekeeping gate
+
+Per the standing rule `feedback_housekeeping_before_sprint`: **a new sprint cannot open while housekeeping work is outstanding.** qbp-architecture conducts a housekeeping audit as the final close-out step (after all sprint-scope PRs are merged, before the kickoff doc for the next sprint is drafted). The audit produces:
+
+- **Briefing:** what the sprint accomplished (closed issues, merged PRs, cross-doc artifacts shipped)
+- **Housekeeping backlog:** what `housekeeping`-labeled work remains, classified by effort + repo, with a recommended schedule for clearing it before the next sprint kicks off
+
+The next-sprint kickoff is gated on the housekeeping backlog being **either cleared or explicitly deferred by beekeeper** with named reasoning.
+
+### 6a.5 Operational checklist for the label
+
+When considering whether to apply `housekeeping`:
+
+```
+1. Will deferring this cost the federation something measurable?         [important]
+2. Is sprint-scope work unblocked by deferring this?                     [non-blocking]
+3. Does this take ≥ 15 minutes of focused work?                          [not trivial]
+4. (Audit guard) Would qbp-architecture's audit confirm 1+2+3?           [honest classification]
+```
+
+All four → apply. Any failure → re-classify or do-it-now or won't-fix.
 
 ---
 
