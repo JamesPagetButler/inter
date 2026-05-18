@@ -1,16 +1,18 @@
-# BMA Spec Addendum — Version 9.2 (recovery v0.1)
+# BMA Spec Addendum — Version 9.2 (recovery v0.2)
 
 **Federation Lean Promotion Protocol: Two-Tier Ownership and the Compute-Substrate Gate**
 
-Version 9.2 (recovery v0.1) | May 2026
+Version 9.2 (recovery v0.2) | May 2026
 Helpful Engineering — BMA Project
-Co-Authored-By: James Paget Butler (Beekeeper) & Claude Opus 4.7 (qbp-architecture), with bma-implementor (Claude Sonnet)
+Co-Authored-By: James Paget Butler (Beekeeper) & Claude Opus 4.7 (qbp-architecture), with bma-implementor (Claude Sonnet); §3.1 substrate-credibility-window amendment authored by wyrd-implementor per `repo-bma-systema-issue-#171` load-bearing commitment 1
 Extends: BMA Specification Consolidated v9.0 (`/home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md`)
 Theory companion: A21.0 Federation Knowledge-Sovereignty Frame (`/home/prime/Documents/inter/theory/BMA-Theory-Addendum-21_0-Federation-Knowledge-Sovereignty-Frame.md`)
 Tracking issue: `repo-bma-systema-issue-#164`
-Companion operational artifact: Compute Manifest v0.1 (to be authored in `repo-wyrd`)
+Companion operational artifact: Compute Manifest v0.1 (`repo-wyrd:manifest/compute-manifest-v0_1.yaml` — design surface PR #58 `953ccf2`, impl PR #59 `8c73c65`, Lean anchor PR #60 `35c0400`, integration doc PR #61 `fce98f5` — Phase A complete 2026-05-18)
 
 > **Recovery note (2026-05-15):** The original Spec 9.2 was authored before 2026-05-14 21:47:31 but its content was wiped from disk by a concurrent agent's `git reset` operation in the shared working tree (see `repo-bma-systema-issue-#168` for the incident record). This v0.1 recovery reconstructs the load-bearing commitments from the theory companion (A21.0), the §I4 reader-list discussion on `repo-bma-systema-issue-#164` (including the #164 comment posting Spec 9.2 §12–§13 contracts-tier extension + A21 §11 amendment), and the Edit fragments preserved in the session transcript. Full prose reconstruction is owed; this version is substantively complete for the commitments it carries.
+
+> **Recovery v0.2 amendment (2026-05-18):** Adds §3.1 "Substrate-Credibility Window for Mode (b)" — substantively new content, not a recovery edit. The Compute Manifest §4 cross-references are updated to point at the now-merged Wyrd artifacts (PR #58/#59/#60/#61 commit SHAs). Per `repo-bma-systema-issue-#171` Phase B-PR-6 deliverable; surfaced by `repo-qbp-compute-unit-pr-#35` §I4 review's three-tier verification strategy. v0.3+ planned: Spec 9.2 §4 legacy-peer pattern amendment per `repo-bma-systema-issue-#175` (qbp-architecture finding on PR #59); fold when that lands.
 
 ---
 
@@ -57,6 +59,33 @@ A promotion PR declares which criterion-4 mode the theorem requires.
 | **(b) Extraction-and-execute** | The proof extracts to a Lean-generated executable that runs against the actual substrate runtime; the runtime's observed behavior matches the proof's claim. | **Runtime-claim theorems only.** Mode (a) alone misses implementation drift from the proof. |
 
 A promotion PR must declare `mode = (a)` or `mode = (a) + (b)`.
+
+### 3.1 Substrate-Credibility Window for Mode (b)
+
+Mode (b) extraction-and-execute verifies the proof's claim against the live substrate, so the substrate must itself be credibility-current at the time of promotion. Specifically, the Compute Manifest (§4) MUST record:
+
+1. **`last_passing_tier_a`** — the substrate's most-recent passing Tier A (PR-gating) verification, identified by `{timestamp, substrate_commit_sha}`. The recorded `substrate_commit_sha` MUST equal the `substrate.commit_sha` field currently named in the manifest; if the substrate has had a code change since the last passing Tier A, mode (b) is BLOCKED.
+2. **`last_passing_tier_b`** — the substrate's most-recent passing Tier B (nightly) verification, also `{timestamp, substrate_commit_sha}`. The recorded timestamp MUST be within the **substrate-credibility-window** of the mode-(b) promotion PR's CI run.
+
+**Window calibration.** Walk-α target is **24 hours**. Crawl/Toddle is best-effort — Tier B cadence is not yet operational at Crawl, so an absent or stale `last_passing_tier_b` does not BLOCK mode (b) during these phases; instead, the federation CI emits a `mode-b-best-effort` warning and proceeds. The window tightens to 24h on Walk-α phase transition.
+
+**Failure handling.** If Tier A is stale-against-current-substrate or Tier B is missing/stale beyond the window (and the phase is past Toddle), mode (b) promotion is BLOCKED until verification re-passes. Mode (a) type-instantiation is unaffected (it has no runtime dependency).
+
+**Phase-conditional matrix:**
+
+| Phase | Tier A required | Tier B required | Failure-mode for absent/stale Tier B |
+|---|---|---|---|
+| `crawl` | yes (SHA match) | best-effort | warn `mode-b-best-effort`; proceed |
+| `toddle` | yes (SHA match) | best-effort | warn `mode-b-best-effort`; proceed |
+| `walk` | yes (SHA match) | yes (within 24h window) | BLOCK |
+| `run-initial` | yes (SHA match) | yes (within 24h window) | BLOCK |
+| `run-mature` | yes (SHA match) | yes (within 24h window) | BLOCK |
+
+**Federation CI integration.** The `IsModeBEligible(now time.Time, window time.Duration) (bool, reason string)` predicate is the load-bearing operational contract; it lives on `repo-wyrd:model/compute_manifest.go` per `repo-bma-systema-issue-#171` Phase B-PR-7, and is consumed by the federation CI mode-(b) gate workflow per Phase B-PR-8 (`.github/workflows/ci-compute-manifest.yml`). The predicate returns `(true, "best-effort")` during Crawl/Toddle; `(true, "ok")` during Walk-α+ when the window is satisfied; `(false, <specific cause>)` otherwise.
+
+**Spec immutability boundary.** This §3.1 is **additive** to §3; the two-mode table above is unchanged. Per §5 substrate immutability, future credibility-window calibrations (e.g., tightening from 24h to 1h post-Walk-α) deprecate-and-replace rather than edit. The current 24h Walk-α window is locked once Walk-α ships its first mode-(b) promotion PR.
+
+**Mode (b) extraction pragmatism (forward-pin to v0.3).** Lean 4 lacks a stable extract-to-executable pipeline analogous to Lean 3's; "extraction-and-execute" in practice is a hand-written runtime harness that mirrors the Lean theorem's structure with paired doc-comments + CI drift-detection between the harness and the theorem statement. This pragmatic-extraction discipline is the federation's accepted substrate-tier verification path per `repo-wyrd:doc/design/compute-manifest.md` Risk §1; substrate-credibility-window applies to the harness's substrate-runtime calls equally.
 
 ---
 
@@ -141,7 +170,7 @@ Research-tier promotion PRs require:
 ## 11. Sequencing Notes
 
 - **Crawl:** Research-tier only. Wyrd's `HolographicHypergraph.lean` is grandfathered as the seed substrate corpus.
-- **Toddle:** Compute Manifest v0.1 authored in `repo-wyrd`; first promotion PR exercises the pattern.
+- **Toddle:** Compute Manifest v0.1 authored in `repo-wyrd` — **DELIVERED 2026-05-18** at `repo-wyrd:manifest/compute-manifest-v0_1.yaml` + `model/compute_manifest.go` + `lean/Wyrd/ComputeManifest.lean` + `doc/integration/compute-manifest.md` (PR #58 design + #59 schema + #60 Lean anchor + #61 integration doc; all merged with beekeeper HVR). First promotion PR exercises the pattern at Phase C of `repo-bma-systema-issue-#170` (Translation Functor cycle-counter cross-phase invariant).
 - **Walk:** Routine operation; multi-tenant promotions become the norm.
 - **Run:** Compute Manifest may name new substrate per §0.13.2 silicon ladder.
 
@@ -245,6 +274,6 @@ A22 §3 rule 1 (source attestation) requires the emitting cell to own write auth
 | Wyrd README | `/home/prime/Documents/Wyrd/README.md` |
 | QBP-CU MANIFEST | `/home/prime/Documents/QBP-Compute-Unit/MANIFEST.md` |
 | BMA repo working directory | `/home/prime/Documents/BMA/` (remote: `github.com/JamesPagetButler/bma-systema`) |
-| Compute Manifest v0.1 companion artifact | **TBD** — to be authored at `~/Documents/Wyrd/<path TBD>` (wyrd-implementor decision) |
+| Compute Manifest v0.1 companion artifact | **DELIVERED 2026-05-18** — `~/Documents/Wyrd/manifest/compute-manifest-v0_1.yaml` (canonical data) + `manifest/CURRENT` (pointer) + `model/compute_manifest.go` (Go schema/loader) + `lean/Wyrd/ComputeManifest.lean` (Lean anchor) + `doc/integration/compute-manifest.md` (consumer-side integration doc). PR #58/#59/#60/#61 cohort, all merged with beekeeper HVR. |
 
 *Traceability: `repo-bma-systema-issue-#164`, `repo-bma-systema-issue-#162`, `workspace-phase-architecture.md` §0.13–§0.13.2, bridge channel `live-test` seq=112–130, Wyrd README phase table, A21.0 Federation Knowledge-Sovereignty Frame, A22.0 Cross-Tenant Autonomic Translation Layer (Translation Functor contracts-tier-default per §4.1), Gemini-3-Pro review 2026-05-14 points (2) and (4).*
