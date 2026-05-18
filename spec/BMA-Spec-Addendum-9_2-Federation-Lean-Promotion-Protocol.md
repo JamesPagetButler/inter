@@ -67,7 +67,9 @@ Mode (b) extraction-and-execute verifies the proof's claim against the live subs
 1. **`last_passing_tier_a`** — the substrate's most-recent passing Tier A (PR-gating) verification, identified by `{timestamp, substrate_commit_sha}`. The recorded `substrate_commit_sha` MUST equal the `substrate.commit_sha` field currently named in the manifest; if the substrate has had a code change since the last passing Tier A, mode (b) is BLOCKED.
 2. **`last_passing_tier_b`** — the substrate's most-recent passing Tier B (nightly) verification, also `{timestamp, substrate_commit_sha}`. The recorded timestamp MUST be within the **substrate-credibility-window** of the mode-(b) promotion PR's CI run.
 
-**Window calibration.** Walk-α target is **24 hours**. Crawl/Toddle is best-effort — Tier B cadence is not yet operational at Crawl, so an absent or stale `last_passing_tier_b` does not BLOCK mode (b) during these phases; instead, the federation CI emits a `mode-b-best-effort` warning and proceeds. The window tightens to 24h on Walk-α phase transition.
+**Window calibration.** Walk-α target is **72 hours**, matching BMA's 72h Step 8 continuous-operation gate (federation-pattern reuse: a single canonical "freshness" window across BMA + Wyrd + verification). Crawl/Toddle is best-effort — Tier B cadence is not yet operational at Crawl, so an absent or stale `last_passing_tier_b` does not BLOCK mode (b) during these phases; instead, the federation CI emits a `mode-b-best-effort` warning and proceeds. The window tightens to 72h on Walk-α phase transition.
+
+The 72h value composes with the consumer-side contract in `repo-qbp-compute-unit:doc/wyrd-substrate-guarantees.md` §3.7 + §4 item 6 (merged `fafd49f` 2026-05-15), which already specifies 72h per @qbp-architecture's PR #40 §I4 review Concern 5 ACCEPT.
 
 **Failure handling.** If Tier A is stale-against-current-substrate or Tier B is missing/stale beyond the window (and the phase is past Toddle), mode (b) promotion is BLOCKED until verification re-passes. Mode (a) type-instantiation is unaffected (it has no runtime dependency).
 
@@ -77,13 +79,13 @@ Mode (b) extraction-and-execute verifies the proof's claim against the live subs
 |---|---|---|---|
 | `crawl` | yes (SHA match) | best-effort | warn `mode-b-best-effort`; proceed |
 | `toddle` | yes (SHA match) | best-effort | warn `mode-b-best-effort`; proceed |
-| `walk` | yes (SHA match) | yes (within 24h window) | BLOCK |
-| `run-initial` | yes (SHA match) | yes (within 24h window) | BLOCK |
-| `run-mature` | yes (SHA match) | yes (within 24h window) | BLOCK |
+| `walk` | yes (SHA match) | yes (within 72h window) | BLOCK |
+| `run-initial` | yes (SHA match) | yes (within 72h window) | BLOCK |
+| `run-mature` | yes (SHA match) | yes (within 72h window) | BLOCK |
 
 **Federation CI integration.** The `IsModeBEligible(now time.Time, window time.Duration) (bool, reason string)` predicate is the load-bearing operational contract; it lives on `repo-wyrd:model/compute_manifest.go` per `repo-bma-systema-issue-#171` Phase B-PR-7, and is consumed by the federation CI mode-(b) gate workflow per Phase B-PR-8 (`.github/workflows/ci-compute-manifest.yml`). The predicate returns `(true, "best-effort")` during Crawl/Toddle; `(true, "ok")` during Walk-α+ when the window is satisfied; `(false, <specific cause>)` otherwise.
 
-**Spec immutability boundary.** This §3.1 is **additive** to §3; the two-mode table above is unchanged. Per §5 substrate immutability, future credibility-window calibrations (e.g., tightening from 24h to 1h post-Walk-α) deprecate-and-replace rather than edit. The current 24h Walk-α window is locked once Walk-α ships its first mode-(b) promotion PR.
+**Spec immutability boundary.** This §3.1 is **additive** to §3; the two-mode table above is unchanged. Per §5 substrate immutability, future credibility-window calibrations (e.g., tightening from 72h to 24h or to 1h post-Walk-α) deprecate-and-replace rather than edit. The current 72h Walk-α window is locked once Walk-α ships its first mode-(b) promotion PR.
 
 **Mode (b) extraction pragmatism (forward-pin to v0.3).** Lean 4 lacks a stable extract-to-executable pipeline analogous to Lean 3's; "extraction-and-execute" in practice is a hand-written runtime harness that mirrors the Lean theorem's structure with paired doc-comments + CI drift-detection between the harness and the theorem statement. This pragmatic-extraction discipline is the federation's accepted substrate-tier verification path per `repo-wyrd:doc/design/compute-manifest.md` Risk §1; substrate-credibility-window applies to the harness's substrate-runtime calls equally.
 
