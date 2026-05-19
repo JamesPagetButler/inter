@@ -144,6 +144,43 @@ Closes-when criterion 4 with this discipline operationalizes the federation's an
 
 The verification-test inventory at `repo-inter-issue-#4` (Sprint 1 verification-debt audit) is the canonical example of what this discipline prevents going forward: federation-wide claim accumulation without matching verification surface.
 
+#### 2.2.2.f Working precedent: BMA's `internal/bma/params/` AHE ledger
+
+The three-field criterion-4 shape (§2.2.2.a-c) is not new federation
+discipline being introduced. It documents and federates a pattern
+already operational in BMA at `internal/bma/params/`, where the
+tunable parameter registry (`repo-bma-systema-issue-#90`) encodes
+the same primitives:
+
+- `params.PredictedOutcome` (`types.go:131`) — "what will improve,
+  e.g. 'lower judge veto rate on ethics proposals'"
+- `params.PredictedDelta` (`types.go:132`) — "quantitative claim,
+  e.g. '-15%', '+200 nodes/h', 'no regression on success metric'"
+- `params.ActualOutcome` + `params.ActualDelta`
+  (`types.go:137-138`) — populated post-hoc by `RecordOutcome`
+  (`#93` Phase A)
+- `params.ClassifyAccuracy(spec, actualDelta)`
+  (`predict.go:78,99`) — returns a `PredictionAccuracy` enum that
+  feeds into the `TrustClass` (`types.go:30`) per-source ledger
+
+The BMA implementation goes further than §2.2.2.a-c requires: it
+also tracks accumulated prediction-accuracy per author / category
+as a trust signal over time (`TrustClass` derivation), reflecting
+the AHE-style approach from Lin et al. (arXiv:2604.25850).
+
+§2.2.2 federation-wide adoption normalizes the criterion-4 fields
+across all design-surface ratification PRs at the issue-authoring
+layer. BMA's `internal/bma/params/` is the runtime instantiation:
+the prediction ledger consumes §2.2.2-shaped fields from the issue
+template, the AHE-pattern infrastructure records actuals post-hoc,
+and the accumulated accuracy ledger feeds trust-class scoring.
+
+Citing this explicitly turns §2.2.2 from "new convention" into
+"documented working precedent" + makes the issue-to-code coupling
+visible. Author of a §2.2.2-compliant PR can look at
+`internal/bma/params/types.go` to see what shape their populated
+fields actually feed downstream.
+
 ---
 
 ### 2.2.1 Scope-glob discipline for design-surface PRs that commit to follow-on implementation PRs
