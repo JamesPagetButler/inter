@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write   # required for gitleaks-action to post PR comments on detection
 
 jobs:
   scan:
