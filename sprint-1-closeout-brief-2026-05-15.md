@@ -138,7 +138,7 @@ QBP's 21 pre-existing items are QBP-implementor-and-qbp-oppenheimer authored und
 |---|---|---|
 | BMA Theory Consolidated v3.0 compile (10-addendum rule triggered: 13 addenda) | Task #25 deferred per beekeeper Decision A(iii) | Will gate a future sprint; not gating Sprint 2 |
 | Wyrd / Contextus / confluent-trust housekeeping label sweep | (no issue filed; recommend) | Three repos at 0 housekeeping; either no housekeeping exists or label not yet adopted |
-| OAuth token rotation (`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` in git remotes) | (no issue filed; standing flag) | Memory note carries this; beekeeper to act |
+| OAuth token rotation (token-embedded HTTPS remotes; specific value redacted) | (no issue filed; standing flag) | Memory note carries this; beekeeper to act |
 | Dir-restructure to per-tenant root directories | Sprint 2 pre-condition per beekeeper plan | Listed in §4 below |
 
 ---
@@ -156,7 +156,7 @@ QBP's 21 pre-existing items are QBP-implementor-and-qbp-oppenheimer authored und
 
 - **Sprint-cadence drift.** QBP is on Sprint 4 (per QBP PR #437 launch). Federation broader work is closing Sprint 1 (Toddle Entry). QBP's sprint clock runs faster than federation's. Decision needed in Sprint 2 scoping: do federation sprints absorb QBP sprints (one-to-one map?), or run on independent cadences with cross-references? Recommend: **independent cadences with explicit cross-references** since QBP's physics-paper-train is naturally smaller-scoped per-sprint.
 - **Three repos at zero housekeeping label** (Wyrd, Contextus, confluent-trust) likely indicates incomplete adoption rather than zero housekeeping. Sweep needed in Sprint 2.
-- **OAuth token unrotated.** `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` is in git remotes across multiple repos. Memory has flagged this since 2026-05-14; no action taken. Beekeeper-only decision.
+- **OAuth token unrotated.** A token-embedded HTTPS remote is in `.git/config` across multiple federation worktrees (specific value redacted from this doc per 2026-05-18 security cleanup). Memory has flagged this since 2026-05-14. Beekeeper-only decision; addressed in `chore/security-redact-leaked-token` (this PR).
 - **No dashboard refresh.** `inter/BMA-BADASS.md` is herschel-maintained; dashboard's "In Progress" list shows items that have since merged. Herschel needs a refresh sweep at next session start.
 
 ### 3.3 Memory drift check
