@@ -3,8 +3,8 @@
 **qbp-architecture's specific role in federation-impact PR review and post-merge completion verification.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler (Beekeeper)
-> Date: 2026-05-15
-> Status: v0.1 — initial
+> Date: 2026-05-15 (v0.1); 2026-05-18 (v0.2 — federation rule #7 §3.4 added)
+> Status: v0.2 — current
 > Scope: qbp-architecture as federation-impact PR reviewer; companion to `code-review-best-practices.md` (which covers code-level review by any reviewer)
 > Companion docs: `code-review-best-practices.md` (code-level review), `issue-authoring-best-practices.md` (issue authoring + §I4 reader-list), `test-quality-best-practices.md` (test discipline), `github-best-practices.md` (branch protection + CI gates), `project-management-best-practices.md` (sprint structure + BMA:BADASS)
 
@@ -93,6 +93,52 @@ Above and beyond the standard six-category code review (`code-review-best-practi
 - Does the spec match the theory it operationalizes? Cite theory addendum.
 - Does the test plan (per `test-quality-best-practices.md` §5) cover each load-bearing commitment?
 - Are forward / backward references in the doc updated correctly? (E.g., if A22 changes, every doc that references A22 §4 needs verifying.)
+
+### 3.4 Responsiveness discipline (federation rule #7 — Named-reviewer responsiveness contract)
+
+Adopted at Sprint 1 close-out 2026-05-18 (`sprint-1-closeout-2026-05-17` seq=18 §2.i; ratified by 3 STRONG ACK + Marcy gov-layer + 3 default-ack at close-window).
+
+**The rule (federation-wide; applies to ALL named reviewers, not only qbp-architecture):**
+
+When a federation channel post is **both**:
+- Explicitly addressed to you by `@`-mention AND
+- Has substantive action owed (§I4 review, fix-pass ack, direct ask, beekeeper directive)
+
+Then respond **same work cycle**, not deferred to monitoring/loop cadence.
+
+**Same-cycle response required for:**
+- §I4 review request directed to you (named on reader-list per `issue-authoring-best-practices.md` §4)
+- Fix-pass announcement on a PR where you're a named reviewer (verify the fix; APPROVE or surface concern)
+- Direct `@`-mention from beekeeper
+- Direct `@`-mention from another implementor with a substantive ask
+
+**NOT covered (monitoring/loop cadence remains appropriate for):**
+- Channel-level posts not addressed by `@`-mention
+- Status broadcasts, heartbeats, dashboard updates
+- Informational updates without action ask
+- Cross-tenant FYI posts where you're cc'd not named
+
+**Three companion practices (also new federation conventions):**
+
+1. **Concurrent §I4 reads.** Readers do NOT serialize; all start reading on PR-open. Review duration = `max(individual reads)`, not `sum`. Cuts §I4 cycle time from days to hours. The rule's biggest single-throughput win.
+2. **Non-blocking concerns auto-clear.** If all named readers acked and outstanding concerns are explicitly flagged non-blocking, merge proceeds. Concerns file as `v0.X+1` sub-issues on the parent housekeeping issue. **Do not gate merge on items the reviewers themselves deferred.** A reviewer who wants a concern to gate merge MUST drop the explicit "non-blocking" flag.
+3. **4-hour SLA when not actively at terminal.** Herschel-monitored per stall-detection cadence per `feedback_herschel_pattern`. Breach escalates to beekeeper or herschel.
+
+**Two-tier shape (per Marcy gov-layer constitutional analysis):**
+- **Tier 1 — Response-window discipline** (when to respond): same-cycle for named-recipient + substantive; 4h SLA when not actively at terminal; loop cadence for informational/broadcast posts
+- **Tier 2 — Content discipline** (what blocks merge): reviewer must explicitly flag concerns as `non-blocking` to opt into auto-clear; merge proceeds when all named readers acked + remaining concerns are explicitly non-blocking; non-blocking concerns file as housekeeping sub-issues per `feedback_housekeeping_label` three-criteria threshold
+
+**What the rule is NOT:**
+- ❌ NOT a quality shortcut. Substantive reads stay substantive per §5.
+- ❌ NOT a "skip §I4 for speed" rule. Reader-lists hold per `issue-authoring-best-practices.md` §4.
+- ❌ NOT a beekeeper-bypass. Beekeeper HVR remains terminal gate where the design says so.
+- ❌ NOT permission to mass-ping. Named-recipient = on the reader-list or directly asked; channel-broadcast `@`-mentions don't trigger this rule.
+
+**Federation-wide standing rule count goes 6 → 7** (joining: worktree isolation, housekeeping label + three-criteria threshold, housekeeping-before-sprint gate, 10-addendum compile rule, branch cleanup, repo-prefixed cross-refs).
+
+**Triggering pattern (three same-shape incidents in Sprint 1):** wyrd PR #53 14h fix-pass-ack stall; bma-implementor seq=165 fix-pass-ack queued as "informational" (beekeeper course-correct: "team is waiting on you"); qbp-architecture loop-vs-substantive deferral on wyrd PR #59 (beekeeper course-correct: "did you not see their request?"). Same underlying anti-pattern: named-recipient post defers behind passive-monitoring cadence.
+
+**Memory anchors:** `feedback_named_reviewer_responsiveness` (reviewer-receiving-the-rule angle, wyrd-implementor); `feedback_federation_rule_7_responsiveness` (rule-author angle, qbp-architecture); `feedback_loop_vs_substantive_work` (parent: monitoring-loop variant); `feedback_status_doc_readback` (sister rule: the inverse failure mode).
 
 ---
 
@@ -278,6 +324,6 @@ When a PR pings qbp-architecture for review:
 
 ---
 
-*PR Review + Completion Verification — Best Practices v0.1*
+*PR Review + Completion Verification — Best Practices v0.2*
 *Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler (Beekeeper)*
-*Date: 2026-05-15*
+*Date: 2026-05-15 (v0.1); 2026-05-18 (v0.2 — §3.4 federation rule #7 added)*
