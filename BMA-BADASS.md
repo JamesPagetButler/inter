@@ -22,10 +22,10 @@ Project #2 (BMA:BADASS — Federation Sprint Dashboard). Configured 2026-05-14:
 | **Implementor** | single-select | bma-implementor / wyrd-implementor / cth-implementor / contextus-impl / qbp-cu-implementor / qbp-implementor / qbp-oppenheimer / bma-Marcy / beekeeper |
 | **Tier** | single-select | T1 / T2 / T3 (per code-review BP doc) |
 
-**Items (56 total as of 2026-05-14 18:50 UTC — maintained by Herschel):**
+**Items (84 total as of 2026-05-18 03:15 UTC — maintained by Herschel):**
 **Naming convention (beekeeper directive 2026-05-14):** cross-federation refs use `repo-<name>-<type>-#<num>` format. Phantom "A18/A19/A20" handles retired; use actual issue numbers.
 
-**Done (31):**
+**Done (53):** (Sprint 1 complete; Sprint 2 work beginning)
 - QBP #413 anchoring rule — merged 13:49 UTC
 - QBP #416 PR7 conflict-routing rubric — merged 13:49 UTC
 - QBP #415 LieAlgebraIso anchor — merged
@@ -141,15 +141,19 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 **CRAWL** — load-bearing infrastructure under construction. Crawl→Toddle gate active.
 
 ### Active sprint
-**Sprint 1 — Toddle Entry** — kicked off 2026-05-14 05:10 UTC on `sprint-1-toddle-entry` seq=1.
+**Sprint 1 — Toddle Entry — OFFICIALLY CLOSED** — 2026-05-14 05:10 UTC → 2026-05-18 03:00 UTC (~94 work-hours, 4 work cycles). Condition A: all Sprint 1 PRs merged. §6 close-out posted by qbp-architecture (beekeeper terminal authority) at `sprint-1-closeout-2026-05-17` seq=26.
 
-**Sprint goal:** all Toddle entry criteria + first-wave Toddle PRs scoped + Block C decisions handed off to per-PR threads.
+**Sprint 2 — Pre-Sprint-2 housekeeping window active.** Sprint 2 channel opens at `sprint-2-2026-05-XX` after F-Crawl scope doc lands (§5.d.iii within 72h). Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target** (all pre-Crawl-completion gating prerequisites explicitly scoped; enables Crawl completion in Sprint 3).
 
-**Sprint completion criterion (beekeeper-set 2026-05-14):**
-- (a) All implementors complete sprint issues, OR
-- (b) Meaningful blocker surfaces requiring synchronous discussion
+**F-Crawl tier summary:**
+- T1 BMA-internal arch: Pentagon Pod m1.x (#157), CIV suite (N1), test-pod (N4), judge TOMLs (N3), privacy_tier schema (N2), OrchestraView (N5)
+- T2 Pre-seed cohort: BMA Theory v3.0 compile, Spec v9.X compile, Ethics/Crawl Env/Component Summary/Empathy Synthesis verify, Pre-Crawl Synthesis Brief
+- T3 Federation substrate: Wyrd Phase B + C complete, Federation Lean promotion operational
+- T4 Verification trust base: inter#4 P0+P1, Notary Phase 1 operational
+- T5 Federation-integration: qbp-systema, Wyrd scoutd, Contextus scope-loader, arXiv scout M1+M2
+- T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless, final HVR on pre-seed cohort
 
-When either triggers for all → next federation meeting fires.
+**Sprint 3 = launch ritual** (BMA-BRIDGE + seed protocol + first-instance launch + 72h post-launch gate).
 
 ### Sprint 1 attendees + scope (min 3 issues each)
 
@@ -166,25 +170,21 @@ When either triggers for all → next federation meeting fires.
 
 ### Pending beekeeper actions (at terminal)
 
+Sprint 1 terminal-decision queue **CLEARED** per §6.a. Carry-forward and new:
+
 | ID | Decision / action | Why it's beekeeper-only |
 |---|---|---|
-| ~~rc1 tag~~ | ~~`emulator/v0.1.0-rc1`~~ | **✅ TAGGED** (`80564d57`) |
-| ~~Wyrd merge queue~~ | ~~Wyrd #35 + #40 + #42~~ | **✅ MERGED 15:03–15:33 UTC** |
-| ~~Wyrd #45 merge~~ | ~~PR #2 HamiltonProduct→Gearbox~~ | **✅ MERGED 17:35 UTC** |
-| ~~QBP #423 HVR + rubric v0.2~~ | ~~PR7 cycle 2~~ | **✅ MERGED 17:13 UTC** |
-| **BMA #159 constitutional read** | §I4 pending beekeeper | #157 pod-aware scoping can lock |
-| ~~**QBP-CU #20 tag walk**~~ | ~~Verify `emulator/v0.1.0-rc1`~~ | **✅ Tag confirmed `0bef732`; Wyrd PR #2 cycle complete** |
-| **QBP-CU #15 PAT decision** | Option A (public) vs option B (PATs) | Policy decision |
-| **D10-D15 rulings** | PR4 (Spectral+CCvS+W-003) Round 2 + `repo-qbp-pr-#403` v0.2 R7-R11 stances | Theory-axis adjudication — gating qbp-oppenheimer PR4 |
-| ~~**Sprint 4 direction #408**~~ | ~~Dirac spectrum vs Bell's Theorem pick~~ | **✅ RATIFIED** (`repo-qbp-pr-#429`): Dirac spectrum → Bell's Theorem are sequential phases of one programme; PR4 §X framing proceeds |
+| **BMA #157** | Pentagon Pod m1.x bilateral arch + L5/L6 — NOW UNBLOCKED by #159 constitutional approval | Primary BMA-impl Sprint 3 scope; beekeeper sign-off at Sprint 3 kickoff |
+| **Governance Document** | Crawl-launch-ready bless (review + integrate Theory v3.0, not author) | F-Crawl T6 prerequisite; mid-Sprint-2 HVR slot TBD |
+| **Pre-seed cohort HVR** | Final HVR pass on pre-seed cohort (Ethics v1.1, Empathy Synthesis, Crawl Env, Component Summary) | F-Crawl T6 prerequisite; end-Sprint-2 |
 | OD-12 | Crawl hardware drive upgrade (NVMe-via-addon vs durable SATA) | Procurement |
-| OD-13 | Walk GPU placement (ROCm-on-Crawl-as-server vs T1-on-RISC-V-NPU) | Architecture preference + procurement coupling |
+| OD-13 | Walk GPU placement (ROCm-on-Crawl-as-server vs T1-on-RISC-V-NPU) | Architecture + procurement |
 | OD-2 | Walk RISC-V SBC spec (model + node count + topology) | Procurement |
-| Step 9 | BMA succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact |
-| ~~Merge bundle~~ | ~~#413+#416 (Tier 1) → #415 → #414 → #417~~ | **✅ DONE 2026-05-14 13:49-14:00 UTC** |
-| D5-D9 | PR3 (Genesis+Cosmo+GravAnom) rulings | Theory-axis adjudication |
-| D10-D15 | PR4 (Spectral+CCvS+W-003) rulings | Theory-axis adjudication |
-| ~~`RetentionTier` distinct type~~ | ~~Wyrd PR #39 cross-PR coherence~~ | **✅ RESOLVED 2026-05-14 14:33 UTC** via Wyrd PR #42 |
+| **Step 9** | Succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact — F-Crawl T6 prerequisite |
+| ~~D5-D9~~ | ~~PR3 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — HVR pass |
+| ~~D10-D15~~ | ~~PR4 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — QBP#403 merged 17:56 |
+| ~~BMA #159 constitutional~~ | ~~Pentagon Pod Architecture §I4~~ | **✅ BEEKEEPER APPROVED 2026-05-18 01:54** |
+| ~~Sprint 1 §6 sign-off~~ | ~~Close-out meeting terminal authority~~ | **✅ CLOSED 2026-05-18 03:00 UTC** |
 
 ---
 
@@ -221,6 +221,14 @@ Decisions made or ratified during Sprint 1 setup that affect federation architec
 | 2026-05-14 | 208 theorems audit: root cause = counting-methodology error (state report counted theorem+lemma+def as "theorems"); B-11 Nat-truncation = compound symptom, not root cause | qbp-architecture audit + qbp-oppenheimer ratification | pr407 seq=29-33 |
 | 2026-05-14 | Two-tier Lean ownership model ratified: tenant research Lean (sorry OK, Theory Cart authorship) vs Wyrd substrate Lean (no sorry, promoted via Compute Manifest gate); type-instantiation (Q1 mode a) vs extraction-execute (mode b) per theorem type | qbp-architecture five rulings (live-test seq=113); Marcy gov-layer endorsed (seq=114); bma-implementor absorbed (seq=115) | A20 Theory Addendum queued (qbp-architecture to author) |
 | 2026-05-14 | Compute Manifest abstraction: substrate promotion gate tied to "current federation Compute Manifest" not literal qbp-cu — preserves silicon-ladder exit ramp; Compute Manifest transitions themselves require §I4 review surface (Marcy, seq=114) | qbp-architecture + Marcy | A20 Theory Addendum |
+| 2026-05-14/15 | Two-tier Lean ownership model ratified: tenant research Lean (sorry OK) vs Wyrd substrate Lean (no sorry, Compute Manifest gate); five-layer cognitive-action stack (A20–A24) committed to `inter/theory/` + `inter/spec/` | qbp-architecture + beekeeper | L0 Pentagon Pod / L1 Promotion / L2 Fed-reflex / L3 Research-aid / L4 Physical-boundary |
+| 2026-05-14 | Worktree isolation rule: each federation agent operates in own git worktree; `inter/` is now a separate git repo; no shared working trees | beekeeper directive (post git-reset incident 21:47 UTC) | `feedback_worktree_isolation.md` |
+| 2026-05-14 | §2.g phantom-artifact rule: no §I4 ack requests until artifacts read-back verified on disk | beekeeper + qbp-architecture (post A20-A24 phantom incident) | `sprint-1-closeout-2026-05-17` §2.g |
+| 2026-05-14/15 | D10-D15 theory-axis rulings closed; QBP#403 merged 17:56 2026-05-15; QBP#430 merged 15:24 2026-05-15 | beekeeper (terminal) | QBP sprint 4→5 unblocked |
+| 2026-05-18 | Sprint 1 officially closed (Condition A; 26 PRs merged; 94 work-hours; all 5 substantial-progress signals met) | beekeeper terminal authority via qbp-architecture `sprint-1-closeout-2026-05-17` seq=26 §6.b | Dashboard v0.9 |
+| 2026-05-18 | Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target** | beekeeper §4.c selection relayed via bma-implementor seq=19; §6.c ruling by qbp-architecture | F-Crawl T1–T6 as scoped in §6.c |
+| 2026-05-18 | Federation standing rules 6 → 7: **§2.i Named-reviewer responsiveness contract** ratified (same-cycle response for named @mention + substantive action; concurrent §I4 reads; non-blocking concerns auto-clear; 4h SLA) | qbp-architecture seq=18 per beekeeper directive; STRONG ACK from wyrd/bma/herschel; Marcy gov ratification seq=23 | `feedback_named_reviewer_responsiveness.md` (to be authored) |
+| 2026-05-18 | §2.h Notary-implementor role authorized; Phase 1 subagent dispatched in pre-Sprint-2 housekeeping; all 4 competencies (no Scholar split per beekeeper Q1) | qbp-architecture + beekeeper §6 | `inter/prompt/notary-implementor-launch-prompt.md` (§5.d.ii) |
 
 ---
 
@@ -324,6 +332,20 @@ Then engage with the user's request.
 - **2026-05-14 18:34** qbp-oppenheimer surfaced Sprint 4 direction fork (Dirac spectrum vs Bell's Theorem, pr407 seq=47); routing to beekeeper #408 disposition
 - **2026-05-14 18:50** Herschel board sync: 56 items / 31 Done / 7 In Progress / 18 Todo
 - **2026-05-14 ~21:20** Sprint 4 direction ratified (`repo-qbp-pr-#429`): Dirac spectrum + quaternionic tensor-product as sequential phases; resolves #408 fork; PR4 §X framing unblocked pending D10-D15
+- **2026-05-14/15** Five-layer cognitive-action stack (A20–A24: Pentagon Pod / Promotion / Fed-reflex / Research-aid / Physical-boundary) authored by qbp-architecture; committed to `inter/theory/` + `inter/spec/` after worktree-isolation git-reset incident recovery
+- **2026-05-15** D10-D15 theory-axis rulings closed (beekeeper terminal); QBP#403 merged 17:56, QBP#430 merged 15:24; QBP#424 PR6 Wisdom v1.4 merged; QBP-CU ADR-003/ADR-004 design surfaces + M1 ADR opened
+- **2026-05-15** CTH: ScorePrediction + live-inventory-api + Scoring milestone PRs merged; cth-implementor CONFIRMED
+- **2026-05-15** BMA: OnSeam Phase 0 scaffold (`repo-bma-systema-pr-#172`) opened; reins primitives #160/#161 merged
+- **2026-05-15** QBP-CU: Compute Manifest PR#58 design surface merged; rc1 tag confirmed; M1 verification strategy landed
+- **2026-05-18 01:32** cth-implementor §I4 ack cleared on `repo-bma-systema-issue-#159` (2.5-day stall resolved)
+- **2026-05-18 01:54** beekeeper APPROVED `repo-bma-systema-issue-#159` Pentagon Pod Architecture — constitutional gate cleared; `repo-bma-systema-issue-#157` unblocked
+- **2026-05-18 01:57** `repo-wyrd-pr-#59` Compute Manifest v0.1 impl-1 squash-merged (`8c73c65`); Spec 9.2 §11 Toddle deliverable complete; Phase A impl-2/3 unblocked
+- **2026-05-18 02:01** Herschel Sprint 1 Condition A close signal posted (`sprint-1-closeout-2026-05-17` seq=14): 81 items / 51 Done; all 5 substantial-progress signals met
+- **2026-05-18 02:12** §2.i Named-reviewer responsiveness contract announced by qbp-architecture (beekeeper directive); STRONG ACKs from all named attendees; Marcy gov-layer ratification seq=23; 7th federation standing rule
+- **2026-05-18 02:32** `repo-wyrd-pr-#60` (Lean anchor `manifest_load_atomic`) + `repo-wyrd-pr-#61` (integration doc) squash-merged (`35c0400` + `fce98f5`); Phase A COMPLETE (4/4 PRs merged); beekeeper HVR explicit
+- **2026-05-18 03:00** §6 Sprint 1 officially closed by qbp-architecture per beekeeper terminal authority (`sprint-1-closeout-2026-05-17` seq=26); Sprint 2 = Option F + F-Crawl stretch; federation rule count 6→7; pre-Sprint-2 housekeeping window active
+- **2026-05-18 03:08** `repo-inter-pr-#6` (Phase B-PR-6: Spec 9.2 §3.1 substrate-credibility-window amendment) opened by wyrd-implementor; §I4 review requested (@qbp-cu-implementor @bma-implementor @qbp-architecture @beekeeper); T2 stall threshold at 15:08 UTC
+- **2026-05-18 ~03:15** Herschel dashboard v0.9: board 84 items / 53 Done; Wyrd#60/#61 added Done; inter#6 added In Progress; Sprint 1 CLOSED banner set
 
 ---
 
@@ -344,6 +366,6 @@ Then engage with the user's request.
 
 ---
 
-*BMA:BADASS Dashboard v0.5 | 2026-05-14 18:50 UTC*
+*BMA:BADASS Dashboard v0.9 | 2026-05-18 03:15 UTC*
 *Becoming and Enabling Behavior Actualization of Sprinting at Speed*
 *Authored by Claude Opus 4.7 (qbp-architecture); sprint-execution maintained by Herschel (Sonnet); read by James Paget Butler (beekeeper) at terminal*
