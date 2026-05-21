@@ -74,7 +74,7 @@ All F-Crawl items are Sprint-2 scope. Sprint 3 launch ritual is gated on T1-T6 c
 | CIV suite (N1) | — | ⏸ Sprint 2 scope | Crawl integration validation |
 | Test-pod (N4) | — | ⏸ Sprint 2 scope | BMA Tunable Parameter Registry #90 prerequisite |
 | Judge TOMLs (N3) | — | ⏸ Sprint 2 scope | Judge collective configuration |
-| Privacy_tier schema (N2) | — | ⏸ Sprint 2 scope | 4-tier privacy model from 2026-04-29 CLI-Handoff |
+| Privacy_tier schema (N2) | bma-systema #183 | ✅ COMPLETE | spec: inter PR #27; impl: bma-systema PR #190; both merged 2026-05-21 |
 | OrchestraView (N5) | — | ⏸ Sprint 2 scope | Observability layer |
 
 ### T2 — Pre-seed cohort (qbp-architecture + beekeeper HVR)
@@ -108,7 +108,8 @@ All F-Crawl items are Sprint-2 scope. Sprint 3 launch ritual is gated on T1-T6 c
 |---|---|---|
 | inter #4 P0 claims | ⏸ Sprint 2 first half | Verification audit dispatch |
 | inter #4 P1 claims | ⏸ Sprint 2 second half | Follow-on from P0 |
-| Notary Phase 1 operational | ⏸ Sprint 2 (W2) | First dispatch unblocked; see §2 W2 |
+| Notary Phase 1 operational | ⏳ Cycle 1 complete (2026-05-20) | 3 seam records; T2+T3 unblocked pending repo-wyrd-issue-#68 |
+| repo-wyrd-issue-#68: HamiltonProduct Wyrd-local Lean theorem | ⏸ Sprint 2 (wyrd-implementor) | Notary Cycle 1 P0 prerequisite; NT_SEAM_RECORD_001+002 resolution |
 
 ### T5 — Federation-integration (distributed ownership)
 
