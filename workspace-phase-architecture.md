@@ -3,8 +3,8 @@
 **Per-phase architecture diagrams for the federation: Crawl → Toddle → Walk → Run.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13
-> Status: v0.3 — adds Toddle intermediate phase between Crawl and Walk per beekeeper-accepted 2026-05-13 architecture review; renumbers downstream phases
+> Date: 2026-05-13; updated 2026-05-20
+> Status: v0.4 — Sprint 2 opened (Option F + F-Crawl); Wyrd Phase B complete + Phase C final PR; CTH v0.3 schema in Sprint 2 scope; Verdandi package + NT_POD_* NodeTypes added to Crawl exit picture
 > Convention sources:
 > - `~/Documents/inter/architecture-diagrams-best-practices.md` (visualization tier model, C4, Mermaid)
 > - `~/Documents/inter/roadmap-best-practices.md` §5 (roadmap house style)
@@ -736,8 +736,8 @@ The federation exits Crawl when **all of the following pass** for the load-beari
 |---|---|---|---|
 | BMA | Step 8 (72-hour continuous operation) + Step 9 (Governance Document + succession contacts + seeds loaded) | beekeeper | Step 8 ✅ Run 3 cleared; Step 9 ⏸ pending |
 | BMA↔Wyrd | **OD-11 decided 2026-05-13: option (c) — Wyrd absorbs hg/'s BMA-specific structures (NT_SEED tier-immune, salience=1.0).** wyrd-implementor extends Wyrd; BMA `hg/` becomes thin shim. | wyrd-implementor + bma-implementor | ⏸ decided; implementation pending |
-| Wyrd | v0.2 spec stable; native DB upgrade (MuninnDB engram layer + NATS) designed and PR'd | wyrd-implementor | ⏸ in v0.1; v0.2 design open |
-| CTH | v0.2 inventory schema design stable (full migration tool can lag to Walk) | cth-implementor | ⏸ v0.1-alpha; #58 schema-drift investigation open |
+| Wyrd | v0.2 spec stable; native DB upgrade (MuninnDB engram layer + NATS) designed and PR'd | wyrd-implementor | Phase B complete ✅; Phase C substrate-tier promotion final PR (C-PR-14 next); Verdandi orchestration package + NT_POD_* NodeTypes designed |
+| CTH | v0.2 inventory schema design stable (full migration tool can lag to Walk) | cth-implementor | v0.2 schema active; v0.3 proof-formalisation provenance schema in Sprint 2 scope (#71 APPROVE-WITH-SEQUENCING 2026-05-20) |
 | NATS | Broker spec'd + deployed for federation events | beekeeper + bma-implementor | ⏸ not yet scoped |
 | BMA continuous-loop scaffold | Subconscious goroutine pair in code (Conscious bilateral A/B may defer) | bma-implementor | ⏸ not yet scoped |
 
