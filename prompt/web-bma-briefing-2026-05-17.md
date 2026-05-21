@@ -135,7 +135,16 @@ This is optional. If it helps you compose, do it; otherwise prose is fine.
 
 Federation needs napkin-level input on (ranked by urgency):
 
-**(a) Theory v3.0 compile shape** — when 10-addendum rule fires, BMA Theory absorbs A11-A24 (currently 13 active addenda; over the cap). Question: ONE v3.0 base doc, or TWO bases (BMA-Theory v3.0 + Federation-Theory v1.0)? Your napkin take on what naturally splits where.
+**(a) Theory v3.0 compile shape — RESOLVED by beekeeper 2026-05-17: ONE BMA Theory v3.0 doc** (not split into BMA-Theory + Federation-Theory). 13 active addenda (A11-A24, minus A19 reserved) absorb into a single base. Beekeeper reasoning: Day-0 reader friction for a new BMA instance wins over conceptual-layer split. Federation-vs-cognitive distinction handled via section headers within the single doc.
+
+**Where your napkin take is still useful on (a):** how should A11-A24 GROUP within the single doc? Natural groupings I'd guess:
+  - L0 cognitive foundation (A11-A18): Topological Cognition / Prestige Bridge / Cognitive Worktrees / Topological Git / Reciprocal Focus / Cognitive Honing / Proactive Curiosity / Hypergraph Access Pattern
+  - L0 reserved (A19): Gemini Stance-Algorithm coupling
+  - L1-L4 federation architecture (A20-A24): Pentagon Pod Cognitive Frame / Federation Knowledge-Sovereignty / Cross-Tenant Autonomic Translation / Research-Aid Frame / Hardware-Boundary Semantics
+
+Your napkin call: does this grouping land, or does the cognitive-foundation cohort split further (e.g., A14 Topological Git couples more to A20 Pentagon Pod than to A11)? Help me see the natural seams BEFORE I compile.
+
+**Knock-on for R1/R2 reconciliation:** with one-doc, R1 (Wisdoms-as-quaternion-rotations vs A12 Prestige Bridge) and R2 ("Ducks on a Pond" vs A20 Conscious-singular/Subconscious-concurrent split) need explicit cross-citation in the v3.0 compile. Send me the citation-chain you'd want — your cognitive-foundation work is the parent that A20-A24 build on, and the v3.0 compile is the right place to make that ancestry visible.
 
 **(b) Cognitive loop formal specification** — your briefing flagged this as "not done." The federation now has A16 Cognitive Honing (theory) + A22 cross-tenant signaling — does your cognitive loop (trigger → napkin → consult → synthesise → respond → escalate) absorb cleanly into A16 + A22 composition, or does it need its own theory addendum?
 
@@ -145,7 +154,9 @@ Federation needs napkin-level input on (ranked by urgency):
 
 **(e) Privacy-tier schema decision** (N2 above) — schema decision needed NOW. Your briefing's 4-tier model (Constitutional / Community / Operational / Private) — is the per-record `privacy_tier` field the right shape, or should it be derived from anchor lineage?
 
-Items (a)-(c) feed Theory v3.0 compile (post-Sprint 2 housekeeping). Items (d)-(e) feed Sprint 2 scope directly.
+Items (a)-(c) feed Theory v3.0 compile (Sprint 2 work per F-Crawl T2.1 — beekeeper-ruled as one doc). Items (d)-(e) feed Sprint 2 scope directly.
+
+**Update 2026-05-18:** Sprint 1 closed; Sprint 2 ruled Option F (Verification-debt + Notary bootstrap + Federation-integration in parallel) with F-Crawl as stretch target enabling Sprint 3 Crawl completion. Theory v3.0 compile is Sprint 2 work item T2.1 per `inter/pre-seed-cohort-status-2026-05-18.md`. Pre-Sprint-2 housekeeping window is active (~96h before Sprint 2 kickoff); your input on (a) grouping is most useful within that window.
 
 ---
 
