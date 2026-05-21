@@ -3,8 +3,8 @@
 **Where we are. Where we're going. No PR-tracking.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13
-> Status: v0.2 — adds Mermaid Now/Next/Later timeline + gate-dependency flowchart
+> Date: 2026-05-13; updated 2026-05-20
+> Status: v0.3 — Sprint 2 opened (Option F + F-Crawl); Wyrd Phase B/C substrate-tier complete; CTH v0.3 schema in Sprint 2 scope
 > Scope: Workspace federation (BMA + QBP + QBP-Compute-Unit + Wyrd + CTH + Contextus; future tenants tracked once they enter)
 > Companions:
 > - `~/Documents/inter/roadmap-best-practices.md` (conventions)
@@ -23,12 +23,12 @@ This is the highest-altitude view: what's on each project's plate now, what's qu
 timeline
     title BMA Federation — Now / Next / Soon / Later
     section Now (Crawl)
-        BMA : Step 8 cleared ✅ : Step 9 instantiation pending
-        Wyrd : v0.1 stable : PR #35 §I4 review in progress
-        CTH : v0.1-alpha : #58 schema-drift investigation
-        Contextus : Spec v1.3 merged : Spec v1.4 in design
-        QBP-CU : emulator rc1 gate : ADR-004 Proposed
-        QBP : tenancy doc PR #403 revision : Sprint 3 Phase 5 complete
+        BMA : Step 8 cleared ✅ : Step 9 instantiation pending (Sprint 3 = launch ritual)
+        Wyrd : Phase B complete ✅ : Phase C substrate-tier promotion in final PR (C-PR-14 next) : Verdandi orchestration package + NT_POD_* NodeTypes designed (wyrd-hosting-design convergence)
+        CTH : v0.2 schema : v0.3 proof-formalisation provenance schema in Sprint 2 scope (#71) : lean-link + cth manifest impl issues open
+        Contextus : Spec v1.4 : scope-loader API Sprint 2 T5 item
+        QBP-CU : emulator v0.1.0-rc1 tagged : silicon de-risking ladder Rung 3 targets Walk RISC-V hardware
+        QBP : Sprint 2 active : 69 theorems on v4.30 : GW-GRB pipeline + arXiv scout M1+M2
         SharpButler : 3 specs drafted : not yet instantiated
     section Next (Toddle — intermediate phase, on Crawl hw + drive)
         BMA : FULL continuous loop (Conscious + Subconscious + Autonomic) on constrained hw : forcing function for efficiency
@@ -68,12 +68,12 @@ The federation is mid-Crawl. BMA has cleared the 72-hour continuous-operation ga
 
 | Project | Phase | Step within phase | Status |
 |---|---|---|---|
-| **BMA** | CRAWL | Step 8 ✅, Step 9 ⏸ | Run 3 of 72-hour gate cleared; Governance Document + succession contacts + seed-load remain |
-| **Wyrd** | CRAWL | v0.1 ✅, v0.2 design open | Lean 16/0-sorries proven; PR #35 ScoutQuery + predictions/ §I4 surface in review |
-| **CTH** | CRAWL | v0.1-alpha | Inventory v5.13 = 150 anchors; #58 schema-drift investigation; #54/#55/#56 merge-impl issues open |
-| **Contextus** | CRAWL | Spec v1.3 merged | Theory v1.5 PR #5 rebased mergeable; PR #8 tenancy-pattern fixes applied; Spec v1.4 design queued |
-| **QBP-Compute-Unit** | CRAWL | emulator/v0.1.0-rc1 gate | PRs #27 + #28 land rc1 tag; ADR-004 M1 Gearbox status: Proposed |
-| **QBP** (tenant) | CRAWL | Bootstrap | Tenancy doc PR #403 in revision; archive transferred; 208 Lean theorems on disk |
+| **BMA** | CRAWL | Step 8 ✅, Step 9 ⏸ | Run 3 of 72-hour gate cleared; Sprint 2 F-Crawl work in progress; Step 9 = Sprint 3 launch ritual |
+| **Wyrd** | CRAWL | v0.1 ✅, Phase B complete ✅, Phase C final PR | Federation Lean promotion: substrate-tier theorem proven; mode-(b) extraction harness (C-PR-13) APPROVED; C-PR-14 promotion PR is next; Verdandi orchestration package + NT_POD_* NodeTypes designed; wyrd-hosting-design Q1-Q6 converged |
+| **CTH** | CRAWL | v0.2 schema | 150 anchors in v0.2 schema; v0.3 proof-formalisation provenance schema in Sprint 2 second half (#71 APPROVE-WITH-SEQUENCING); lean-link (#54) + cth manifest (#55) impl open |
+| **Contextus** | CRAWL | Spec v1.4 | scope-loader API is Sprint 2 T5 item |
+| **QBP-Compute-Unit** | CRAWL | emulator/v0.1.0-rc1 ✅ | rc1 tagged; silicon de-risking ladder defined (8 rungs, Walk RISC-V hardware = Rung 3 for free) |
+| **QBP** (tenant) | CRAWL | Sprint 2 active | 69 theorems on v4.30; GW-GRB pipeline (EXP-11) + arXiv scout M1+M2; Willow Proposal submitted (results 2026-07-01) |
 | **SharpButler** | PRE-CRAWL | Specs drafted | 3 specs (Gateway, Contract Layer, OKI); not yet instantiated as tenant |
 | **Möbius Fusion** | PRE-CRAWL | Personal track | James's personal work; not yet HE; OKI contracts archived; not active in federation |
 | **Systema** | LIVE (v0.8) | Process framework | THE workspace process framework that all projects operate within. v0.8 spec + addendum on disk at `~/Documents/Systema/`. Three Carts (Theory/Engineering/Information), three-loop progressive hardening, trust anchors, vigilance backflow, OKH 5-domain taxonomy. Anchored in BMA Spec v9.0 §10.7 R-Spec-24. |
