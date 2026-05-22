@@ -110,6 +110,34 @@ A single `sorry` is RED (L1). No exceptions.
 
 ---
 
+## Code analysis tools for review
+
+Use these to go beyond reading the diff — trace actual call paths, check blast radius, verify no unintended dependencies were introduced.
+
+**Go:**
+```bash
+# Who calls the changed function? (vta = most precise)
+callgraph -algo vta ./...
+
+# What packages depend on the changed package? (blast radius)
+godepgraph -m github.com/JamesPagetButler/<repo>
+
+# Static analysis on changed packages
+golangci-lint run ./path/to/changed/...
+```
+
+**Python:**
+```bash
+# Class/package structure after the change
+pyreverse -o png -p review src/
+```
+
+**Cross-file navigation:** load `ToolSearch("select:LSP")` for go-to-def and find-references.
+
+Full reference: `inter/best-practices/code-analysis-tools.md`
+
+---
+
 ## What "GREEN" means
 
 GREEN is not "I didn't find anything obviously wrong." GREEN is "I read the code, verified every AC, and the work demonstrably meets the phase-appropriate quality bar on this dimension."
