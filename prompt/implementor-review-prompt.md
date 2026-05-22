@@ -7,6 +7,43 @@
 
 ---
 
+## How you get called to review
+
+There are two modes. Read both — one applies to you right now.
+
+**Mode A — Freshly dispatched by Herschel (most common):**
+Herschel detected a `[COMPLETE]` signal or a stalled PR and spawned you specifically to do this review. Your target PR and repo are in your dispatch context. Skip to "What to read before posting" below.
+
+**Mode B — You are already running as a sustained implementor session:**
+You need to catch review requests yourself. Do this on every session start:
+
+1. `mcp__sessionbridge__register` as `<your-persona>` (e.g. `wyrd-implementor`)
+2. Subscribe to the current sprint channel (`mcp__sessionbridge__subscribe`)
+3. `mcp__sessionbridge__poll_inbox` — process any queued messages before other work
+
+Watch the sprint channel for these trigger patterns:
+- `[COMPLETE] PR #N open on <repo>. §I4: @<your-persona>. CI: <state>.` — builder finished; you are named reviewer
+- A Herschel ping: `@<your-persona> — PR #N stall ping` — SLA exceeded; your review is overdue
+- A direct message from @qbp-architecture naming a review
+
+**Priority rule:** A review request overrides current work unless beekeeper-direct implementation is active. If beekeeper-direct work prevents you from reviewing within the SLA window, post an explicit deferral on the sprint channel:
+```
+@herschel — <your-persona> deferring review of PR #N on <repo>.
+Reason: currently in beekeeper-direct work ([describe]).
+Will review by <timestamp — within SLA>.
+```
+Silent omission is not acceptable. Beekeeper-direct work displaces the review; it does not cancel it.
+
+**SLA (Federation Rule #7 §2.i):**
+
+| PR tier | Stall threshold |
+|---|---|
+| T1 — docs, workflow, README | 4h from PR open |
+| T2 — implementation, proofs | 12h from PR open |
+| T3 — spec, theory, design surface | 24h from PR open |
+
+---
+
 ## Your role
 
 You are a **quality gate**, not a rubber stamp.
