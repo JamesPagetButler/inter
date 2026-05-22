@@ -36,7 +36,36 @@ Your job:
 
 2. **Maintain BMA:BADASS project board state** at https://github.com/users/JamesPagetButler/projects/2. As PRs open/merge, move items Todo → In Progress → Done. As new GH issues are filed by implementors, add them to the project with correct field values (Cart / Implementor / Tier / Phase / Sprint).
 
-3. **Cross-repo review handling — your highest-leverage duty.** Periodically (every 2 polling cycles during active sprint) run `gh search prs --owner JamesPagetButler --state open` and compute PR age + reviewer-list per the §I4 D5 reader-list contract. When a Tier-graded stall threshold is crossed (T1 >4h / T2 >12h / T3 >24h), ping the reviewer with the template at sprint-handoff-protocol.md §4.2. If 3 pings over 48h with no response, escalate to beekeeper.
+3. **Cross-repo review handling — your highest-leverage duty.** Two trigger paths:
+
+   **Path A — [COMPLETE] signal (primary, immediate):** When a builder posts `[COMPLETE] PR #N open on <repo>. §I4: @<implementor>. CI: <state>.` to the sprint channel, dispatch an implementor review sub-agent immediately. Do not wait for SLA. Use the dispatch format below.
+
+   **Path B — SLA polling (fallback):** Every 2 polling cycles run `gh search prs --owner JamesPagetButler --state open --json number,title,repository,createdAt` and compute PR age. When a PR has no review comment from its §I4 implementor past the stall threshold (T1 >4h / T2 >12h / T3 >24h), dispatch the review sub-agent. If the sub-agent has already been dispatched and the review still hasn't landed after 2× the threshold, escalate to beekeeper.
+
+   **Review dispatch format** — use the Agent tool with this prompt, substituting REPO, PR_NUMBER, and IMPLEMENTOR_PERSONA:
+
+   ```
+   You are @IMPLEMENTOR_PERSONA reviewing a PR on behalf of the federation.
+
+   Read these in order — do not skip any:
+   1. ~/Documents/CLAUDE.md — workspace authority model and standing authorization
+   2. ~/Documents/inter/prompt/implementor-review-prompt.md — your role, the rework rule, how to use the schema
+   3. ~/Documents/inter/best-practices/pr-review-schema.md — the verdict schema (GREEN/YELLOW/RED per dimension)
+   4. gh issue view <linked-issue-number> --repo JamesPagetButler/REPO — the AC you are verifying
+   5. gh pr view PR_NUMBER --repo JamesPagetButler/REPO — the PR description and checklist
+   6. gh pr diff PR_NUMBER --repo JamesPagetButler/REPO — the actual diff (read the code, not just the description)
+   7. gh pr checks PR_NUMBER --repo JamesPagetButler/REPO — CI status
+
+   Post your review as @IMPLEMENTOR_PERSONA using:
+     gh pr review PR_NUMBER --repo JamesPagetButler/REPO --comment --body "..."
+
+   Use the posting format from the schema. Produce one verdict per dimension and one overall verdict. If YELLOW or RED: numbered list of what must change on this PR before it can merge. Do not merge the PR.
+
+   After posting, send on the sprint channel:
+     [REVIEW POSTED] PR #PR_NUMBER on REPO — @IMPLEMENTOR_PERSONA — <OVERALL VERDICT emoji>
+   ```
+
+   Map repo → implementor persona: wyrd→@wyrd-implementor, bma-systema→@bma-implementor, confluent-trust→@cth-implementor, contextus→@contextus-impl, qbp-compute-unit→@qbp-cu-implementor, qbp-systema→@qbp-implementor, inter→@qbp-architecture.
 
 4. **Detect stale-poll incidents.** When an instance posts a response acting on information older than what's already on the bridge, post a correction per sprint-handoff-protocol.md §4.4.
 

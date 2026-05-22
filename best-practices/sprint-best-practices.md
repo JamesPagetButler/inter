@@ -267,8 +267,39 @@ This is intentional. Direct builder-to-builder communication produces untracked 
 - **[INTENT]**: notes the builder is active, adds to project board if not already tracked
 - **[QUESTION]**: surfaces to qbp-architecture if no response within 30 min; otherwise notes the best-call
 - **[DEPENDENCY]**: tracks on project board; pings the downstream builder/implementor to confirm sequencing
-- **[COMPLETE]**: pings the §I4 implementor per the SLA table (`inter/sprint-handoff-protocol.md` §4.2)
+- **[COMPLETE]**: dispatches an implementor review sub-agent immediately — does not wait for SLA (see review dispatch format in `inter/herschel-launch-prompt.md` §3)
+- **[REVIEW POSTED]**: marks the review dispatched on the project board; watches for author response if YELLOW/RED
 - **[BLOCKED]**: escalates immediately to qbp-architecture; notes GitHub issue comment as primary record
+
+### The full review cycle
+
+```
+Builder: [COMPLETE] PR #N open on <repo>. §I4: @<implementor>. CI: green.
+    ↓
+Herschel: detects [COMPLETE] → dispatches implementor review sub-agent (Agent tool)
+    ↓
+Implementor sub-agent: reads issue AC + PR diff + CI → applies schema → posts review
+    ↓
+Implementor sub-agent: [REVIEW POSTED] PR #N — @<repo>-implementor — 🟢/🟡/🔴
+    ↓
+🟢 GREEN  → Herschel moves item to "Awaiting merge" on project board
+🟡 YELLOW → Builder (or beekeeper re-dispatch of builder) fixes on the PR → posts [COMPLETE] again
+🔴 RED    → Same as YELLOW; qbp-architecture notified if architectural issue
+```
+
+**SLA fallback:** If no `[COMPLETE]` signal arrives and Herschel's `gh search prs` polling detects a PR past the T1/T2/T3 threshold (4h/12h/24h) with no review, Herschel dispatches the review sub-agent anyway.
+
+**Repo → implementor mapping** (Herschel uses this when dispatching):
+
+| Repo | Implementor persona |
+|---|---|
+| wyrd | @wyrd-implementor |
+| bma-systema | @bma-implementor |
+| confluent-trust | @cth-implementor |
+| contextus | @contextus-impl |
+| qbp-compute-unit | @qbp-cu-implementor |
+| qbp-systema | @qbp-implementor |
+| inter | @qbp-architecture |
 
 ### If sessionbridge is unavailable
 
