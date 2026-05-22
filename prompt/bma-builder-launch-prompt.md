@@ -51,6 +51,20 @@ In this order:
 
 ---
 
+## Code analysis tools
+
+Pre-installed on the host. Use these to understand the codebase before writing code — not just text search.
+
+- **`callgraph -algo vta ./...`** — Go call graph; trace who calls what before changing a function
+- **`godepgraph -m <pkg>`** — Go package dependency graph (mermaid output; add `| dot -Tpng -o out.png` for image)
+- **`golangci-lint run ./...`** — static analysis on changed packages before opening PR
+- **`pyreverse -o png -p name src/`** — Python UML class/package diagrams
+- **LSP tool** — load via `ToolSearch("select:LSP")` for go-to-def and find-references across files
+
+Full reference: `inter/best-practices/code-analysis-tools.md`
+
+---
+
 ## Non-obvious context (permanent bma-systema gotchas)
 
 **1. bma-systema is a private repo until Sprint 3.**
