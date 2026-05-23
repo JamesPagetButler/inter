@@ -87,6 +87,23 @@ Theorem names in CTH records use fully-qualified Lean module paths (e.g., `Wyrd.
 
 ---
 
+## Multi-layer design question trigger
+
+**Before writing code**, ask yourself: does my implementation wire together 2 or more architectural layers?
+
+Examples of multi-layer wiring:
+- Schema change → federation tenant reader → migration path
+- CTH record write → verification chain → downstream consumer
+- API boundary → storage → external service
+
+If yes: post a `[QUESTION]` to the sprint channel *before writing the code*. State the layers and your proposed wiring. Do not implement until acknowledged (or 30 min have passed with no response — then proceed on best-call and document under `## Calls made without architect input`).
+
+**Why:** The #205/#208 incident is the case study. PR #205 closed the API-surface gap correctly but left the inference-consumption layer unwired. Tests passed. Review passed. It merged. A new issue had to be filed post-merge. The functional gap wasn't caught because the question wasn't asked at design time.
+
+Single-layer changes: no trigger. Proceed.
+
+---
+
 ## Stuck-state protocol
 
 **Tier 1 — Best-call-and-document (continue):**
@@ -129,6 +146,8 @@ PR §I4 reader-list:
 - `@beekeeper` — beekeeper-only actions only
 
 Tick AC checkboxes in real-time as each gate passes.
+
+Before posting `[COMPLETE]`, self-check against `inter/best-practices/definition-of-done.md`. All universal gates + applicable language-specific gates must pass.
 
 ---
 
