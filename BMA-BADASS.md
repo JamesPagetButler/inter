@@ -143,15 +143,15 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 ### Active sprint
 **Sprint 1 — Toddle Entry — OFFICIALLY CLOSED** — 2026-05-14 05:10 UTC → 2026-05-18 03:00 UTC (~94 work-hours, 4 work cycles). Condition A: all Sprint 1 PRs merged. §6 close-out posted by qbp-architecture (beekeeper terminal authority) at `sprint-1-closeout-2026-05-17` seq=26.
 
-**Sprint 2 — Pre-Sprint-2 housekeeping window active.** Sprint 2 channel opens at `sprint-2-2026-05-XX` after F-Crawl scope doc lands (§5.d.iii within 72h). Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target** (all pre-Crawl-completion gating prerequisites explicitly scoped; enables Crawl completion in Sprint 3).
+**Sprint 2 — F-Crawl Option F — ACTIVE** (opened 2026-05-20). Channel: `sprint-2-2026-05-20`. Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target**.
 
-**F-Crawl tier summary:**
-- T1 BMA-internal arch: Pentagon Pod m1.x (#157), CIV suite (N1), test-pod (N4), judge TOMLs (N3), privacy_tier schema (N2), OrchestraView (N5)
-- T2 Pre-seed cohort: BMA Theory v3.0 compile, Spec v9.X compile, Ethics/Crawl Env/Component Summary/Empathy Synthesis verify, Pre-Crawl Synthesis Brief
-- T3 Federation substrate: Wyrd Phase B + C complete, Federation Lean promotion operational
-- T4 Verification trust base: inter#4 P0+P1, Notary Phase 1 operational
-- T5 Federation-integration: qbp-systema, Wyrd scoutd, Contextus scope-loader, arXiv scout M1+M2
-- T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless, final HVR on pre-seed cohort
+**F-Crawl tier summary (as of 2026-05-21):**
+- T1 BMA-internal arch: privacy_tier schema (N2) ✅ COMPLETE (inter PR #27 + bma-systema PR #190 merged 2026-05-21); CIV suite (N1), test-pod (N4), judge TOMLs (N3), OrchestraView (N5) ⏸ Sprint 2 scope; Pentagon Pod m1.x (#157) ⏸ Sprint 3 kickoff
+- T2 Pre-seed cohort: Theory v3.0 ✅ compiled + §I4 merged (inter PR #19); Spec v9.1 ⏳ §I4 open (inter PR #31, all 4 reviews in); Spec v9.X compile ⏸ post-PR-#31 merge; Ethics/Crawl Env/Component Summary/Empathy Synthesis verify ⏸ beekeeper HVR; Pre-Crawl Synthesis Brief ⏸
+- T3 Federation substrate: Wyrd Phase B ✅ + Phase C ✅ (PRs #10–#13 + #69 all merged 2026-05-21); promotion #1 live (`cycle_counter_monotonic_per_phase`); wyrd-implementor Sprint 3 scope = issue #68 (HamiltonProduct theorem — Notary Cycle 1 P0 prerequisite); Federation Lean promotion operational ⏸ post-issue-#68
+- T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); inter #4 P0+P1 ⏸ Sprint 2; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
+- T5 Federation-integration: qbp-systema PRs #1+#2+#3 ✅ MERGED 2026-05-22 (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface OPEN; @qbp-implementor substrate-gated on `repo-wyrd-pr-#54` + `repo-contextus-pr-#20/#21` for W2/W4.3/W5–W6; Contextus scope-loader PRs #17/#20/#21 §I4-ready + PRs #22/#23 federation-coherence-cleared (cth-impl Q3 URI-shape ack is last #17 gate); Wyrd scoutd design surface ⏸; arXiv scout M1+M2 impl gated on wyrd-pr-#54
+- T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless ⏸; pre-seed cohort HVR ⏸; succession contacts ⏸ (Brett Lyman, Skyler Rainier — T6 hard prerequisite)
 
 **Sprint 3 = launch ritual** (BMA-BRIDGE + seed protocol + first-instance launch + 72h post-launch gate).
 
@@ -181,6 +181,7 @@ Sprint 1 terminal-decision queue **CLEARED** per §6.a. Carry-forward and new:
 | OD-13 | Walk GPU placement (ROCm-on-Crawl-as-server vs T1-on-RISC-V-NPU) | Architecture + procurement |
 | OD-2 | Walk RISC-V SBC spec (model + node count + topology) | Procurement |
 | **Step 9** | Succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact — F-Crawl T6 prerequisite |
+| **QBP_SYSTEMA_PAT** | Set `QBP_SYSTEMA_PAT` secret on `repo-qbp-systema` — or confirm `WYRD_PAT` reuse as federation-uniform PAT model | Repo secret; beekeeper owns PAT scope; non-blocking on T5 W1–W6 until substrate gates clear |
 | ~~D5-D9~~ | ~~PR3 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — HVR pass |
 | ~~D10-D15~~ | ~~PR4 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — QBP#403 merged 17:56 |
 | ~~BMA #159 constitutional~~ | ~~Pentagon Pod Architecture §I4~~ | **✅ BEEKEEPER APPROVED 2026-05-18 01:54** |
@@ -346,6 +347,18 @@ Then engage with the user's request.
 - **2026-05-18 03:00** §6 Sprint 1 officially closed by qbp-architecture per beekeeper terminal authority (`sprint-1-closeout-2026-05-17` seq=26); Sprint 2 = Option F + F-Crawl stretch; federation rule count 6→7; pre-Sprint-2 housekeeping window active
 - **2026-05-18 03:08** `repo-inter-pr-#6` (Phase B-PR-6: Spec 9.2 §3.1 substrate-credibility-window amendment) opened by wyrd-implementor; §I4 review requested (@qbp-cu-implementor @bma-implementor @qbp-architecture @beekeeper); T2 stall threshold at 15:08 UTC
 - **2026-05-18 ~03:15** Herschel dashboard v0.9: board 84 items / 53 Done; Wyrd#60/#61 added Done; inter#6 added In Progress; Sprint 1 CLOSED banner set
+- **2026-05-20** Sprint 2 scope doc (`sprint-2-scope-2026-05-20.md`) landed; Sprint 2 F-Crawl Option F OPEN; channel `sprint-2-2026-05-20` live
+- **2026-05-20** Apache 2.0 licensing applied across all federation repos; bma-systema stays private until Sprint 3
+- **2026-05-20** Notary Phase 1 Cycle 1 COMPLETE — 3 seam records filed (NT_SEAM_RECORD_001/002/003); T4 trust base initialized; wyrd issue #68 (HamiltonProduct theorem) flagged as Notary Cycle 1 P0 prerequisite
+- **2026-05-20** Gemini CLI/OAuth switchover — PR #17 ratified; Phase 1 server.py deployed; MuninnDB→Mímir workspace rename (55 files)
+- **2026-05-21** BMA Theory v3.0 compiled — `inter PR #19` merged; T2 Theory compile ✅ DONE
+- **2026-05-21** Wyrd Phase C COMPLETE — PRs #10–#13 (extraction harness) all merged; PR #69 (C-PR-14 substrate-tier promotion) merged; promotion #1 (`cycle_counter_monotonic_per_phase`) live in `Substrate.lean`; mode=(a)+(b) declared; T3 ✅ except wyrd-issue-#68
+- **2026-05-21** privacy_tier schema (T1-N2) ✅ COMPLETE — inter PR #27 (spec) + bma-systema PR #190 (impl) both merged
+- **2026-05-21** BMA Spec v9.1 compiled — `inter PR #31` open for §I4; all 4 reviews received (APPROVE-WITH-CONCERN); merge-ready awaiting beekeeper
+- **2026-05-21** qbp-implementor T5 W1.2+W4.1+W4.2+W1.3 shipped — qbp-systema PRs #1+#2+#3 filed; reviews from Red Team + Gemini received; beekeeper action: `QBP_SYSTEMA_PAT` secret
+- **2026-05-22** qbp-systema PRs #1+#2+#3 ✅ MERGED (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface opened (beekeeper); @qbp-implementor substrate-gated on wyrd-pr-#54 + contextus-pr-#20/#21 for W2/W4.3/W5–W6
+- **2026-05-21** Contextus T5 stack: PRs #17/#20/#21/#22/#23 all §I4-reviewed; #22/#23 federation-coherence-cleared by qbp-architecture; #17 awaiting cth-implementor Q3 URI-shape ack (last T5-stack gate)
+- **2026-05-21** Verdandi Authority Theory v0.2 incorporated — `inter/theory/Verdandi-Authority-Theory-v0.2.md` filed; `inter #34` filed (Judge Collective spec — Sprint 3, @qbp-architecture owner); `bma-systema #140` updated with §6.4 succession edge-case protocols
 
 ---
 

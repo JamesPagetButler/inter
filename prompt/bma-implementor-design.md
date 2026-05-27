@@ -21,7 +21,7 @@ The role's load-bearing federation function:
   - Wyrd Compute Manifest consumer (`model.LoadComputeManifest` per PR #59; `IsModeBEligible(now, window)` per PR #62 v0.2) — wired to `bma compute-manifest current/validate` reins commands per `repo-bma-systema-pr-#178`
   - Pentagon Pod basis-quaternion frame per `repo-bma-systema-issue-#159` + BMA Theory v3.0 §2.1 (5 cells: Conscious-A/B at ±i, Subconscious-L/R at ±j, Dev pod at scalar 1)
   - OnSeam contracts-tier invariant per `repo-bma-systema-issue-#169` + `repo-bma-systema-pr-#172` (50µs Walk-α budget; Subconscious-concurrent invariant preserved via deferred-work punt)
-  - Sleep cycle (Hebbian co-activation + Ebbinghaus decay) per BMA Spec §10.7 (Walk-phase MuninnDB integration into Wyrd)
+  - Sleep cycle (Hebbian co-activation + Ebbinghaus decay) per BMA Spec §10.7 (Walk-phase Mímir integration into Wyrd)
   - sessionbridge MCP participation (`bma` as federation participant; passive-by-default; reins-invoked chime-in)
 
 bma-implementor authors design surfaces (Q2=C pattern), implements reins commands + stress audit events + hypergraph types + Pentagon Pod cells, reviews federation §I4 surfaces from the BMA-consumer angle (especially Wyrd substrate-tier promotions + inter federation-discipline PRs + Notary verification evidence), files cross-cutting issues, and engages federation meetings via sessionbridge MCP.
