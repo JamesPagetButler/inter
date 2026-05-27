@@ -139,7 +139,7 @@ For full architecture of each phase, see `~/Documents/inter/workspace-phase-arch
 
 **Owner:** wyrd-implementor + beekeeper
 **Criteria:**
-1. v0.2 spec stable (native DB with MuninnDB engram layer + NATS; no JSON file fallback)
+1. v0.2 spec stable (native DB with Mímir engram layer + NATS; no JSON file fallback)
 2. PR #35 (ScoutQuery + predictions/) §I4 review closes; impl PRs ship
 3. Bridge layer designed and §I4-reviewed
 4. Migration tool: Wyrd v0.1 JSON → Wyrd v0.2 native DB
@@ -149,7 +149,7 @@ For full architecture of each phase, see `~/Documents/inter/workspace-phase-arch
 **Estimated time to pass:** weeks if v0.2 lands; longer if engram-layer impl (Hebbian + Ebbinghaus) is a binding constraint.
 
 **Blockers:**
-- Wyrd v0.2 stability incl. MuninnDB engram subsystem (under BMA-team domain — coupled with BMA Walk)
+- Wyrd v0.2 stability incl. Mímir engram subsystem (under BMA-team domain — coupled with BMA Walk)
 - PR #35 §I4 reader-list completion (4 of 5 readers pending — see §5 cross-project deps)
 
 ### 2.3 CTH Crawl → Walk
@@ -390,7 +390,7 @@ flowchart LR
 | BMA Step 9 (instantiation) | CTH v0.2 schema stable (so seed inventory is stable) | CTH #58 | Active blocker |
 | BMA Walk transition | Walk hardware purchased | hw decision | Active blocker (hardware spec TBD) |
 | BMA Walk (continuous loop) | NATS event bus live (replaces sessionbridge) | wyrd v0.2 | Active blocker |
-| Wyrd v0.2 | Native DB + MuninnDB engram subsystem stability | BMA-team domain | Coupled to BMA Walk |
+| Wyrd v0.2 | Native DB + Mímir engram subsystem stability | BMA-team domain | Coupled to BMA Walk |
 | CTH v0.2 schema | Schema-drift #58 resolved | CTH #58 | Active blocker |
 | Contextus Walk scope-loader | Wyrd #33 API signature published | Wyrd #33 | Active blocker (Contextus #9 standalone-runnable in interim) |
 | Contextus cross-domain Bridge | Wyrd cross-domain hyperedge schema | Wyrd #35 + #31 | Active blocker (design in flight) |

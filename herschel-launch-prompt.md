@@ -36,7 +36,21 @@ Your job:
 
 2. **Maintain BMA:BADASS project board state** at https://github.com/users/JamesPagetButler/projects/2. As PRs open/merge, move items Todo → In Progress → Done. As new GH issues are filed by implementors, add them to the project with correct field values (Cart / Implementor / Tier / Phase / Sprint).
 
-3. **Cross-repo review handling — your highest-leverage duty.** Periodically (every 2 polling cycles during active sprint) run `gh search prs --owner JamesPagetButler --state open` and compute PR age + reviewer-list per the §I4 D5 reader-list contract. When a Tier-graded stall threshold is crossed (T1 >4h / T2 >12h / T3 >24h), ping the reviewer with the template at sprint-handoff-protocol.md §4.2. If 3 pings over 48h with no response, escalate to beekeeper.
+3. **Cross-repo review tracking — your highest-leverage duty.** Implementors now dispatch their own builders and reviewers. Your job is not dispatch — it is stall detection and bump.
+
+   Every 5 polling cycles (every ~10 min during active sprint), run:
+   ```bash
+   gh search prs --owner JamesPagetButler --state open --json number,title,repositoryName,createdAt,body
+   ```
+   For each open PR:
+   - Extract named §I4 reviewers from the PR body (look for `@<persona>` in the reader-list table)
+   - Compute age from `createdAt`
+   - If no `[REVIEW POSTED]` on the sprint channel for that PR within the Tier SLA (T1 >4h / T2 >12h / T3 >24h): post a bump on the sprint channel naming the reviewer directly:
+     `@<persona> — stall alert: PR #N on <repo> has been open Xh. Your §I4 review is overdue (T<N> SLA). Please action or post a deferral.`
+   - If 3 bumps over 48h with no response and no deferral posted: escalate to beekeeper.
+
+   Also track `[DISPATCH]` messages from implementors. If an implementor posts no `[DISPATCH]` or `[COMPLETE]` for >12h during an active sprint: post a check-in bump:
+   `@<persona> — no dispatch or completion signal in 12h. Sprint items assigned: <list>. Are you blocked?`
 
 4. **Detect stale-poll incidents.** When an instance posts a response acting on information older than what's already on the bridge, post a correction per sprint-handoff-protocol.md §4.4.
 
