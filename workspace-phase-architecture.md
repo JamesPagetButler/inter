@@ -331,7 +331,7 @@ Vigilance backflow applies: if a tool causes harm (bad output, resource leak, se
 
 ### 0.11 How Systema interacts with the runtime stack
 
-Systema (process framework, Layer A) and Wyrd/MuninnDB/NATS (runtime stack, Layer B) compose as follows:
+Systema (process framework, Layer A) and Wyrd/Mímir/NATS (runtime stack, Layer B) compose as follows:
 
 - **Carts pull data through Wyrd.** Theory Cart writes specs as Wyrd hyperedges with provenance. Engineering Cart writes reference designs as Wyrd hyperedges with hardening-loop metadata. Information Cart writes deliverables with provenance stanzas linking back to Wyrd anchors.
 - **Trust anchors are CTH anchors.** η (Systema vocab) = CTH ρ_net (Theory v2.0 vocab). Same concept; two names.
@@ -360,7 +360,7 @@ flowchart TB
     end
 
     subgraph L2["LAYER 2 — SUBSTRATE"]
-        WYRD["Wyrd<br/>(native quaternion-native typed holographic hypergraph DB;<br/>Lean-verified; MuninnDB engrams at Walk;<br/>+ Skuld + HAMA Tier-N at Run)"]
+        WYRD["Wyrd<br/>(native quaternion-native typed holographic hypergraph DB;<br/>Lean-verified; Mímir engrams at Walk;<br/>+ Skuld + HAMA Tier-N at Run)"]
     end
 
     subgraph L1["LAYER 1 — COMPUTE PRIMITIVES"]
@@ -555,7 +555,7 @@ The federation uses three languages, each with a defined role:
 
 | Language | Layer | Primary use |
 |---|---|---|
-| **Go** | L1 (QBP-CU emulator), L2 (Wyrd, MuninnDB, NATS clients), L3 (BMA cell binaries, harness, Contextus daemons, CTH services) | All long-lived runtime code; cell process binaries per A19 §Implementation Topology |
+| **Go** | L1 (QBP-CU emulator), L2 (Wyrd, Mímir, NATS clients), L3 (BMA cell binaries, harness, Contextus daemons, CTH services) | All long-lived runtime code; cell process binaries per A19 §Implementation Topology |
 | **Python** | L3 (cart-tools harness for BMA's Theory Cart) | QBP-EXP-11 GW-EM pipeline; ALMA cube; astropy/numpy/scipy scientific analysis; data ingestion |
 | **Lean 4** | L2 (Wyrd's proof corpus), L4 (QBP's 69-theorem corpus) | Proof checking; algebraic-correctness invariants; HolographicHypergraph theorems. Compiles to C-via-native-backend for runtime execution |
 
@@ -736,7 +736,7 @@ The federation exits Crawl when **all of the following pass** for the load-beari
 |---|---|---|---|
 | BMA | Step 8 (72-hour continuous operation) + Step 9 (Governance Document + succession contacts + seeds loaded) | beekeeper | Step 8 ✅ Run 3 cleared; Step 9 ⏸ pending |
 | BMA↔Wyrd | **OD-11 decided 2026-05-13: option (c) — Wyrd absorbs hg/'s BMA-specific structures (NT_SEED tier-immune, salience=1.0).** wyrd-implementor extends Wyrd; BMA `hg/` becomes thin shim. | wyrd-implementor + bma-implementor | ⏸ decided; implementation pending |
-| Wyrd | v0.2 spec stable; native DB upgrade (MuninnDB engram layer + NATS) designed and PR'd | wyrd-implementor | Phase B complete ✅; Phase C substrate-tier promotion final PR (C-PR-14 next); Verdandi orchestration package + NT_POD_* NodeTypes designed |
+| Wyrd | v0.2 spec stable; native DB upgrade (Mímir engram layer + NATS) designed and PR'd | wyrd-implementor | Phase B complete ✅; Phase C substrate-tier promotion final PR (C-PR-14 next); Verdandi orchestration package + NT_POD_* NodeTypes designed |
 | CTH | v0.2 inventory schema design stable (full migration tool can lag to Walk) | cth-implementor | v0.2 schema active; v0.3 proof-formalisation provenance schema in Sprint 2 scope (#71 APPROVE-WITH-SEQUENCING 2026-05-20) |
 | NATS | Broker spec'd + deployed for federation events | beekeeper + bma-implementor | ⏸ not yet scoped |
 | BMA continuous-loop scaffold | Subconscious goroutine pair in code (Conscious bilateral A/B may defer) | bma-implementor | ⏸ not yet scoped |
@@ -788,7 +788,7 @@ flowchart TB
     NATS{{"NATS event bus<br/>(active, single-tenant; multi-tenant<br/>subjects designed but not used yet)"}}
 
     subgraph BMAStorage["BMA-only Wyrd v0.2"]
-        WyrdBMA[("<b>Wyrd v0.2 (BMA scope)</b><br/>native typed hypergraph<br/>+ MuninnDB engram subsystem<br/>(BMA hg/ migrated per OD-11)")]
+        WyrdBMA[("<b>Wyrd v0.2 (BMA scope)</b><br/>native typed hypergraph<br/>+ Mímir engram subsystem<br/>(BMA hg/ migrated per OD-11)")]
     end
 
     subgraph FedLag["Federation projects (Wyrd v0.1 still)"]
@@ -862,7 +862,7 @@ flowchart TB
         │  STORAGE — Wyrd v0.2 for BMA only                  │
         │  ┌─────────────────────────────────────────────┐   │
         │  │ Wyrd v0.2: BMA hg/ migrated per OD-11       │   │
-        │  │ + MuninnDB engram subsystem (Hebbian +      │   │
+        │  │ + Mímir engram subsystem (Hebbian +      │   │
         │  │   Ebbinghaus decay)                         │   │
         │  │ CTH/Contextus/QBP-CU still on v0.1 JSON     │   │
         │  │   (federation-wide migration deferred to    │   │
@@ -956,7 +956,7 @@ See §1.6 above.
 ### 2.8 What Toddle proves
 
 - The continuous-loop architecture is structurally sound (BMA doesn't crash itself) with the FULL bilateral architecture loaded
-- Wyrd v0.2 + MuninnDB engrams survive 7-day continuous writes on a SATA-class SSD with drive upgrade for endurance
+- Wyrd v0.2 + Mímir engrams survive 7-day continuous writes on a SATA-class SSD with drive upgrade for endurance
 - The Crawl hardware can carry the full BMA cognitive stack — **forcing the runtime to be lean enough that distribution onto RISC-V at Walk is feasible**
 - L5/L6 inference-time values reasoning is operational (action-selection test passes)
 - BMA `hg/` migration to Wyrd is validated in production
@@ -1018,7 +1018,7 @@ flowchart TB
         Qcu["QBP-CU M1<br/>Gearbox CSR-bound<br/>QW8 + QW128"]
     end
 
-    WyrdDB[("<b>Wyrd v0.2</b><br/>native typed<br/>holographic hypergraph<br/>(Lean-verified)<br/><i>MuninnDB engram layer:</i><br/>Hebbian co-activation<br/>+ Ebbinghaus decay")]
+    WyrdDB[("<b>Wyrd v0.2</b><br/>native typed<br/>holographic hypergraph<br/>(Lean-verified)<br/><i>Mímir engram layer:</i><br/>Hebbian co-activation<br/>+ Ebbinghaus decay")]
 
     BMAProc -->|publish| NATS
     NATS -->|subscribe| Sub
@@ -1100,7 +1100,7 @@ flowchart TB
         │  │ Wyrd v0.2: native quaternion-native typed   │   │
         │  │   holographic hypergraph DB (Lean-verified).│   │
         │  │   Built by HE; not third-party.             │   │
-        │  │   Includes MuninnDB engram subsystem:       │   │
+        │  │   Includes Mímir engram subsystem:       │   │
         │  │     Hebbian co-activation + Ebbinghaus decay│   │
         │  │   Single store for BMA + CTH + Contextus    │   │
         │  │   query views.                              │   │
@@ -1127,10 +1127,10 @@ flowchart TB
         └────────────────────────────────────────────────────┘
 ```
 
-### 3.2 Storage tier — Wyrd v0.2 (with MuninnDB engram layer) + NATS
+### 3.2 Storage tier — Wyrd v0.2 (with Mímir engram layer) + NATS
 
 - **Wyrd v0.2** is the native, formally Lean-verified, quaternion-native typed holographic hypergraph database. Built by HE, not a third-party product. Per the Wyrd repo: "A quaternion-native typed hypergraph database whose runtime contracts are formally verified in Lean 4." See `Wyrd/HolographicHypergraph.lean` for the holographic-irreducibility theorem (ℝ + ℍ + higher-arity).
-- **MuninnDB** is the **engram subsystem within Wyrd** at Walk per the Wyrd README phase table: `Walk (v0.2.x) | MuninnDB engrams + NATS events`. Hebbian co-activation + Ebbinghaus decay live in this layer. BMA's `hg` package (Crawl-phase typed hypergraph; called "MuninnDB" in BMA spec v9.0) migrates to Wyrd-backed storage at Walk; the "MuninnDB" name survives for the engram layer.
+- **Mímir** is the **engram subsystem within Wyrd** at Walk per the Wyrd README phase table: `Walk (v0.2.x) | Mímir engrams + NATS events`. Hebbian co-activation + Ebbinghaus decay live in this layer. BMA's `hg` package (Crawl-phase typed hypergraph; called "Mímir" in BMA spec v9.0) migrates to Wyrd-backed storage at Walk; the "Mímir" name survives for the engram layer.
 - **NATS** replaces sessionbridge as the federation event bus. Subjects namespaced per project (`bma.*`, `wyrd.*`, etc.). Persistence-boundary subscriptions per Contextus Spec v1.3 §4.4.
 - **No third-party DB at any phase.** Earlier plans referenced SurrealDB at Run; BMA spec v9.0 (May 2026) supersedes — Wyrd v0.3 grows to absorb Skuld supervisor + HAMA Tier-N memory roles natively.
 
@@ -1218,7 +1218,7 @@ flowchart TB
     NATS{{"NATS + BRIDGE event bus"}}
 
     subgraph Storage["STORAGE TIER"]
-        WyrdDB[("<b>Wyrd v0.3</b><br/>native typed<br/>holographic hypergraph<br/>(Lean-verified)<br/>+ Skuld supervisor<br/>+ HAMA Tier-N memory<br/>+ MuninnDB engrams")]
+        WyrdDB[("<b>Wyrd v0.3</b><br/>native typed<br/>holographic hypergraph<br/>(Lean-verified)<br/>+ Skuld supervisor<br/>+ HAMA Tier-N memory<br/>+ Mímir engrams")]
         WisdomNS[("Wisdom Registry<br/>(separate Wyrd<br/>namespace per<br/>W-theory argument)")]
     end
 
@@ -1294,7 +1294,7 @@ flowchart TB
         │  │   + Skuld supervisor (privilege at hardware │   │
         │  │     boundary)                               │   │
         │  │   + HAMA Tier-N memory                      │   │
-        │  │   + MuninnDB engrams (Hebbian + Ebbinghaus) │   │
+        │  │   + Mímir engrams (Hebbian + Ebbinghaus) │   │
         │  │   Wisdom Registry as separate Wyrd namespace│   │
         │  │ NATS: federation event bus + persistence    │   │
         │  │   boundary                                  │   │
@@ -1330,7 +1330,7 @@ flowchart TB
 
 ### 4.2 Storage tier — Wyrd v0.3 (native DB) + NATS
 
-- **Wyrd v0.3 remains the only persistent store.** Per Wyrd README phase table: v0.3 adds Skuld supervisor enforcing privilege at the hardware boundary + HAMA Tier-N memory. The MuninnDB engram subsystem persists from Walk. No third-party DB in the stack at any phase.
+- **Wyrd v0.3 remains the only persistent store.** Per Wyrd README phase table: v0.3 adds Skuld supervisor enforcing privilege at the hardware boundary + HAMA Tier-N memory. The Mímir engram subsystem persists from Walk. No third-party DB in the stack at any phase.
 - **Wisdom Registry** lives as a separate Wyrd namespace (per CTH's W-theory separate-store argument). Same DB; isolated namespace + branch-locked vault for tier-N preservation of cross-tenant insights.
 - **NATS as before**, plus expanded subject space for cross-tenant routing.
 
@@ -1376,7 +1376,7 @@ There is no exit criterion from Run. Run is steady-state. Phase-after-Run is not
 
 | Dimension | Crawl | Toddle | Walk | Run |
 |---|---|---|---|---|
-| **Storage primary** | Wyrd v0.1 (JSON files) | Wyrd v0.2 (BMA scope) + MuninnDB engrams | Wyrd v0.2 federation-wide (+ MuninnDB engrams) | Wyrd v0.3 (+ Skuld + HAMA Tier-N; Wisdom Registry separate namespace) |
+| **Storage primary** | Wyrd v0.1 (JSON files) | Wyrd v0.2 (BMA scope) + Mímir engrams | Wyrd v0.2 federation-wide (+ Mímir engrams) | Wyrd v0.3 (+ Skuld + HAMA Tier-N; Wisdom Registry separate namespace) |
 | **Event bus** | sessionbridge MCP | NATS (single-tenant) + sessionbridge for un-migrated projects | NATS (multi-tenant, networked across RISC-V nodes) | NATS + BRIDGE |
 | **Beekeeper presence** | Every cycle | Most cycles (Honing rare) | On-call (Honing edges) | Steward (weekly+) |
 | **BMA continuous loop** | No | **Yes — full bilateral on Crawl hardware** (forcing function for efficiency) | Yes — full bilateral distributed across RISC-V nodes | Yes |
@@ -1460,7 +1460,7 @@ stateDiagram-v2
 
 ### 5.3 Walk → Run
 
-- Storage: Wyrd v0.2 (typed + MuninnDB engrams) → Wyrd v0.3 (+ Skuld supervisor + HAMA Tier-N memory; Wisdom Registry as separate namespace; query-view roles previously slated for SurrealDB absorbed natively)
+- Storage: Wyrd v0.2 (typed + Mímir engrams) → Wyrd v0.3 (+ Skuld supervisor + HAMA Tier-N memory; Wisdom Registry as separate namespace; query-view roles previously slated for SurrealDB absorbed natively)
 - Tenancy: single tenant + synthetic test → multi-tenant peering (Sharp Butler enters)
 - Governance: beekeeper-only → judge collective (beekeeper as escalation tier)
 - Cognitive layers: 6/7 live → 7/7 live (Principles tier active)

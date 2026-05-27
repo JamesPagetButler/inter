@@ -175,7 +175,7 @@ Inline phase tags on any artifact whose phase status is non-obvious:
 ```
 The 72h gate [CRAWL: CONFIRMED — Run 3 cleared 2026-05-11]
 The bilateral L/R execution model [WALK: SPECIFIED]
-Wyrd v0.2 native DB with MuninnDB engram layer [WALK: SPECIFIED per Wyrd README + BMA spec v9.0 W-1]
+Wyrd v0.2 native DB with Mímir engram layer [WALK: SPECIFIED per Wyrd README + BMA spec v9.0 W-1]
 ```
 
 This convention is consistent across BMA's existing docs and the workspace phase architecture doc.
@@ -213,7 +213,7 @@ timeline
         QBP : tenancy doc revision
     section Next (Walk)
         BMA : 30-day continuous loop : bilateral L/R + A/B
-        Wyrd : v0.2 native DB + MuninnDB engrams + NATS
+        Wyrd : v0.2 native DB + Mímir engrams + NATS
         CTH : v0.2 schema + ρ_net continuous
         QBP-CU : M1 Gearbox CSR-bound
         QBP : GW-EM pipeline live : first Walk-α target

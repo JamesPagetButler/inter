@@ -406,7 +406,7 @@ flowchart LR
     end
     subgraph Walk["Walk gates (next)"]
         BmaWalk["BMA Walk<br/>continuous loop"]
-        WyrdV2Live["Wyrd v0.2 live<br/>native DB +<br/>MuninnDB engrams +<br/>NATS"]
+        WyrdV2Live["Wyrd v0.2 live<br/>native DB +<br/>Mímir engrams +<br/>NATS"]
         CthV2Live["CTH v0.2 live<br/>ρ_net continuous"]
         QbpCuM1["QBP-CU M1<br/>Gearbox"]
         QbpWalk["QBP Walk<br/>GW-EM pipeline"]
