@@ -1,8 +1,29 @@
 # Federation Watcher — configuration
-# Used by watcher.py + consumed by the main agent at Monitor launch.
+# Used by watcher.py + consumed by agent terminals via Monitor.
 
-# Personas whose @mentions always wake the main agent immediately,
-# regardless of filter_mode or busy flag.
+# ── Fan-out mode ──────────────────────────────────────────────────────────
+# The watcher runs as a single daemon. Each agent terminal monitors its own
+# wake file rather than the watcher's stdout directly.
+#
+# Watcher daemon (run once, any terminal):
+#   nohup python3 ~/Documents/inter/federation-watcher/watcher.py \
+#         > ~/.federation-watcher/watcher.log 2>&1 &
+#
+# Each agent terminal (replace PERSONA with e.g. qbp-architecture):
+#   Monitor(command="tail -f -n 0 ~/.federation-watcher/wake/PERSONA",
+#           persistent=True)
+#
+# New agents register by just starting their Monitor — no central config
+# change needed. The watcher writes to any persona's wake file the moment
+# they appear in a message's mentions list.
+
+# Directory where per-persona wake files live.
+# Each file: {wake_dir}/{persona}  (plain text, one event per line)
+wake_dir: ~/.federation-watcher/wake
+
+# Personas whose @mentions also fire on the watcher's own stdout.
+# Useful when the terminal running the watcher is also an agent terminal.
+# Set to [] if running the watcher as a headless daemon.
 watch_mentions:
   - qbp-architecture
   - beekeeper
@@ -12,11 +33,11 @@ watch_mentions:
 # that have no spaces and don't start with '#'.
 channels: auto
 
-# Classification filter:
-#   off    — only @mentions wake; everything else is silently ignored
-#   regex  — pattern-based classification (free, no API calls)
-#   haiku  — Claude Haiku API classification (costs per non-mention message)
-#             Falls back to regex if API call fails.
+# Classification filter applied to non-mention messages:
+#   off    — only @mentions produce wake events; everything else ignored
+#   regex  — pattern-based classification (free, ~0ms per message)
+#   haiku  — Claude Haiku API classification (~200ms, costs per call)
+#             Falls back to regex on any API failure.
 filter_mode: regex
 
 # Poll interval in seconds.
@@ -27,9 +48,10 @@ haiku_model: claude-haiku-4-5-20251001
 
 # Busy flag path.
 # When this file exists:
-#   - @mentions still wake immediately (always)
-#   - IMMEDIATE-classified non-mention items are written to deferred queue
-#     instead of printing to stdout (so Monitor doesn't fire)
+#   - @mention wake files are still written (always — §2.i compliance)
+#   - IMMEDIATE-classified non-mention items go to deferred queue instead
+# Per-persona busy flags are also checked: {busy_flag}.{persona}
+#   e.g. ~/.federation-watcher/busy.qbp-architecture
 # Set:   touch ~/.federation-watcher/busy
 # Clear: rm   ~/.federation-watcher/busy
 busy_flag: ~/.federation-watcher/busy
