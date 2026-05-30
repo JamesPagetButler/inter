@@ -149,7 +149,7 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 - T1 BMA-internal arch: privacy_tier schema (N2) ✅ COMPLETE (inter PR #27 + bma-systema PR #190 merged 2026-05-21); CIV suite (N1), test-pod (N4), judge TOMLs (N3), OrchestraView (N5) ⏸ Sprint 2 scope; Pentagon Pod m1.x (#157) ⏸ Sprint 3 kickoff
 - T2 Pre-seed cohort: Theory v3.0 ✅ compiled + §I4 merged (inter PR #19); Spec v9.1 ⏳ §I4 open (inter PR #31, all 4 reviews in); Spec v9.X compile ⏸ post-PR-#31 merge; Ethics/Crawl Env/Component Summary/Empathy Synthesis verify ⏸ beekeeper HVR; Pre-Crawl Synthesis Brief ⏸
 - T3 Federation substrate: Wyrd Phase B ✅ + Phase C ✅ (PRs #10–#13 + #69 all merged 2026-05-21); promotion #1 live (`cycle_counter_monotonic_per_phase`); wyrd-implementor Sprint 3 scope = issue #68 (HamiltonProduct theorem — Notary Cycle 1 P0 prerequisite); Federation Lean promotion operational ⏸ post-issue-#68
-- T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); inter #4 P0+P1 ⏸ Sprint 2; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
+- T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); **Notary Cycle 2 IN PROGRESS** — TLC running at 279M+ states depth 6, no invariant violations; T4 formal declaration + `inter/notary-evidence/cycle-2-verdandi-authority-tla-2026-05-29.yaml` update pending TLC completion; inter #4 P0+P1 ⏸; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
 - T5 Federation-integration: qbp-systema PRs #1+#2+#3 ✅ MERGED 2026-05-22 (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface OPEN; @qbp-implementor substrate-gated on `repo-wyrd-pr-#54` + `repo-contextus-pr-#20/#21` for W2/W4.3/W5–W6; Contextus scope-loader PRs #17/#20/#21 §I4-ready + PRs #22/#23 federation-coherence-cleared (cth-impl Q3 URI-shape ack is last #17 gate); Wyrd scoutd design surface ⏸; arXiv scout M1+M2 impl gated on wyrd-pr-#54
 - T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless ⏸; pre-seed cohort HVR ⏸; succession contacts ⏸ (Brett Lyman, Skyler Rainier — T6 hard prerequisite)
 
@@ -182,6 +182,8 @@ Sprint 1 terminal-decision queue **CLEARED** per §6.a. Carry-forward and new:
 | OD-2 | Walk RISC-V SBC spec (model + node count + topology) | Procurement |
 | **Step 9** | Succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact — F-Crawl T6 prerequisite |
 | **QBP_SYSTEMA_PAT** | Set `QBP_SYSTEMA_PAT` secret on `repo-qbp-systema` — or confirm `WYRD_PAT` reuse as federation-uniform PAT model | Repo secret; beekeeper owns PAT scope; non-blocking on T5 W1–W6 until substrate gates clear |
+| **`repo-bma-systema-pr-#186`** | Apache 2.0 license chore — DRAFT→ready (herschel seq=339). No §I4 required. | beekeeper merge |
+| **`repo-edda-issue-#1` HVR** | Bootstrap path Option A: @qbp-architecture APPROVE + @qbp-cu-implementor APPROVE; @wyrd-implementor read pending (seq=337, 4h SLA). Once wyrd-implementor clears, beekeeper HVR ratifies Option A and Stage 0 begins. | beekeeper HVR; gates Edda Stage 0 impl |
 | ~~D5-D9~~ | ~~PR3 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — HVR pass |
 | ~~D10-D15~~ | ~~PR4 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — QBP#403 merged 17:56 |
 | ~~BMA #159 constitutional~~ | ~~Pentagon Pod Architecture §I4~~ | **✅ BEEKEEPER APPROVED 2026-05-18 01:54** |
@@ -359,6 +361,13 @@ Then engage with the user's request.
 - **2026-05-22** qbp-systema PRs #1+#2+#3 ✅ MERGED (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface opened (beekeeper); @qbp-implementor substrate-gated on wyrd-pr-#54 + contextus-pr-#20/#21 for W2/W4.3/W5–W6
 - **2026-05-21** Contextus T5 stack: PRs #17/#20/#21/#22/#23 all §I4-reviewed; #22/#23 federation-coherence-cleared by qbp-architecture; #17 awaiting cth-implementor Q3 URI-shape ack (last T5-stack gate)
 - **2026-05-21** Verdandi Authority Theory v0.2 incorporated — `inter/theory/Verdandi-Authority-Theory-v0.2.md` filed; `inter #34` filed (Judge Collective spec — Sprint 3, @qbp-architecture owner); `bma-systema #140` updated with §6.4 succession edge-case protocols
+- **2026-05-29** Notary Cycle 2 started — Verdandi Authority TLA+ spec (`inter/tla/verdandi_authority_three_gap.tla`) authored; TLC BFS run launched (PID 439908); spec covers 8 invariants (three-gap independence, approval/denial conditions, cannot-self-grant, consent-downward-only, revocation-propagation); Gap2Check fixed from actor-level existential to presented-token (capability laundering closure)
+- **2026-05-29** Sprint Interlude Conversation 1 COMPLETE (live-test seq=304–313) — @qbp-architecture × @edda-implementor; TLA+ verification review: Gap2Check presented-token fix, `edda_cap_store_faithful` simulation-not-bijection claim, revocation scope split (hard revocation v0.2; soft/retained-with-flag deferred to v0.3 pending `Cap.Temporal`)
+- **2026-05-29/30** Sprint Interlude Conversation 2 COMPLETE (live-test seq=320–335) — @qbp-architecture × @edda-implementor; Contextus scout emulation design: grantable/constructed capability first-class distinction; witnessed/declared provenance cross-cutting classification; epistemic authority two-phase propose/admit (`cap(signal_emit)` grantable / `cap(cth_admit)` constructed N-of-M); prediction vs postdiction (Wyrd-assigned proposal-timestamps); trust architecture — fixed quorum, trust feeds routing priority + judge deliberation confidence only (not threshold); materialized trust-view (O(1) accumulator) required for WCET certification; unifying principle: substrate-witnesses every admission-weight, scout contributes derivations not authority; concurrent admission grounded in C-21b worktree-merge (same construct as football plan-deviation)
+- **2026-05-30** `inter/theory/Verdandi-Authority-Theory-v0.2-addendum-A.md` filed — 9 sections (A.1–A.9) amending Verdandi Authority Theory v0.2; authored by @qbp-architecture from Sprint Interlude conversations (seq=304–335)
+- **2026-05-30** `repo-wyrd-issue-#73` filed — tamper-evident hyperedge write-timestamps anchored to shared ledger; Verdandi §A.8 prerequisite (prediction/postdiction weighting); Walk/v0.3 gating; co-authoring dependency on `edda_cap_store_faithful` post wyrd#68
+- **2026-05-30** @herschel sprint driver online — review SLA pings sent: wyrd-implementor for `repo-confluent-trust-pr-#91` + `repo-edda-issue-#1` (seq=337); contextus-impl + bma-implementor + qbp-implementor §I4 escalation on `repo-confluent-trust-pr-#91` (seq=338); beekeeper sprint status update (seq=339)
+- **2026-05-30** Federation §I4 reviews posted — `repo-confluent-trust-pr-#91` @qbp-implementor APPROVE (grammar correct; §9 Q1–Q4 addressed; minor v0.2 subpath-scoping note); `repo-edda-issue-#1` @qbp-architecture APPROVE Option A with `edda_cap_store_faithful` Stage 1 tracking flag; QBP foundations convention PRs F1/F3/F4/F5 (#468/#467/#469/#470) all @qbp-architecture ratified; QBP foundations Phase 1 skeleton PR #471 @qbp-architecture APPROVE pending @cth-implementor co-sign (8 new DEFN-* anchors)
 
 ---
 
@@ -379,6 +388,6 @@ Then engage with the user's request.
 
 ---
 
-*BMA:BADASS Dashboard v0.9 | 2026-05-18 03:15 UTC*
+*BMA:BADASS Dashboard v0.10 | 2026-05-30 (Sprint Interlude / Notary Cycle 2)*
 *Becoming and Enabling Behavior Actualization of Sprinting at Speed*
 *Authored by Claude Opus 4.7 (qbp-architecture); sprint-execution maintained by Herschel (Sonnet); read by James Paget Butler (beekeeper) at terminal*

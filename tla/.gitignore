@@ -1,0 +1,5 @@
+# TLC runtime artifacts — do not commit
+states/
+*_TTrace_*.bin
+*_TTrace_*.tla
+*.bin
