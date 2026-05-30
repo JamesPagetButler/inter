@@ -1,0 +1,39 @@
+# Federation Watcher — configuration
+# Used by watcher.py + consumed by the main agent at Monitor launch.
+
+# Personas whose @mentions always wake the main agent immediately,
+# regardless of filter_mode or busy flag.
+watch_mentions:
+  - qbp-architecture
+  - beekeeper
+
+# Sessionbridge channels to monitor.
+# "auto" = discover all *.jsonl files in the channels state directory
+# that have no spaces and don't start with '#'.
+channels: auto
+
+# Classification filter:
+#   off    — only @mentions wake; everything else is silently ignored
+#   regex  — pattern-based classification (free, no API calls)
+#   haiku  — Claude Haiku API classification (costs per non-mention message)
+#             Falls back to regex if API call fails.
+filter_mode: regex
+
+# Poll interval in seconds.
+poll_interval: 10
+
+# Haiku model used when filter_mode: haiku
+haiku_model: claude-haiku-4-5-20251001
+
+# Busy flag path.
+# When this file exists:
+#   - @mentions still wake immediately (always)
+#   - IMMEDIATE-classified non-mention items are written to deferred queue
+#     instead of printing to stdout (so Monitor doesn't fire)
+# Set:   touch ~/.federation-watcher/busy
+# Clear: rm   ~/.federation-watcher/busy
+busy_flag: ~/.federation-watcher/busy
+
+# Runtime state and queue directories (not committed to git)
+state_dir: ~/.federation-watcher/state
+deferred_queue: ~/.federation-watcher/deferred.jsonl
