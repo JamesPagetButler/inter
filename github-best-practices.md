@@ -399,6 +399,15 @@ Cross-instance design discussion happens on the sessionbridge MCP channels (Craw
 
 After Walk-phase, sessionbridge is superseded by BMA's NATS-fronted federation.
 
+### 7.4 Issue-PR discipline
+
+Canonical rules live in `inter/issue-authoring-best-practices.md` §11. Summary:
+
+- **Rule 1 — Issue closes by PR.** Every issue resolves via a PR carrying `Closes #N`. No manual closes without written rationale posted to the issue.
+- **Rule 2 — No PR without an issue.** Every PR links to a parent issue (the *why*). Parentless PRs require an inline rationale block (reserved for typo-fixes; rare).
+
+These rules were codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`). Named reviewers may DEFER any PR that violates Rule 2.
+
 ---
 
 ## 8. Maintenance
@@ -409,7 +418,7 @@ This doc updates when:
 - CI patterns shift across federation repos
 - ADR-003 §I4 evolves
 
-Last updated: 2026-05-07 (initial creation post-addendum-18-walk meeting).
+Last updated: 2026-06-01 (§7.4 issue-PR discipline added, inter#43).
 
 ---
 
