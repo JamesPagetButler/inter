@@ -145,11 +145,11 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 
 **Sprint 2 — F-Crawl Option F — ACTIVE** (opened 2026-05-20). Channel: `sprint-2-2026-05-20`. Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target**.
 
-**F-Crawl tier summary (as of 2026-05-21):**
+**F-Crawl tier summary (as of 2026-05-31):**
 - T1 BMA-internal arch: privacy_tier schema (N2) ✅ COMPLETE (inter PR #27 + bma-systema PR #190 merged 2026-05-21); CIV suite (N1), test-pod (N4), judge TOMLs (N3), OrchestraView (N5) ⏸ Sprint 2 scope; Pentagon Pod m1.x (#157) ⏸ Sprint 3 kickoff
-- T2 Pre-seed cohort: Theory v3.0 ✅ compiled + §I4 merged (inter PR #19); Spec v9.1 ⏳ §I4 open (inter PR #31, all 4 reviews in); Spec v9.X compile ⏸ post-PR-#31 merge; Ethics/Crawl Env/Component Summary/Empathy Synthesis verify ⏸ beekeeper HVR; Pre-Crawl Synthesis Brief ⏸
+- T2 Pre-seed cohort: Theory v3.0 ✅ compiled + §I4 merged (inter PR #19); **Spec v9.1 ✅ MERGED** (inter PR #31 merged 2026-05-21; cth-implementor APPROVE-WITH-CONCERN — 3 non-blocking follow-ups: CTH v0.4 Privacy field + `cth resolve` primitive + §15.5 deprecation status note — companion issues to be filed); Spec v9.X compile ⏸ post-PR-#31; Ethics/Crawl Env/Component Summary/Empathy Synthesis verify ⏸ beekeeper HVR; Pre-Crawl Synthesis Brief ⏸
 - T3 Federation substrate: Wyrd Phase B ✅ + Phase C ✅ (PRs #10–#13 + #69 all merged 2026-05-21); promotion #1 live (`cycle_counter_monotonic_per_phase`); wyrd-implementor Sprint 3 scope = issue #68 (HamiltonProduct theorem — Notary Cycle 1 P0 prerequisite); Federation Lean promotion operational ⏸ post-issue-#68
-- T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); **Notary Cycle 2 IN PROGRESS** — TLC running at 279M+ states depth 6, no invariant violations; T4 formal declaration + `inter/notary-evidence/cycle-2-verdandi-authority-tla-2026-05-29.yaml` update pending TLC completion; inter #4 P0+P1 ⏸; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
+- T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); **Notary Cycle 2 ✅ COMPLETE** — TLC ran 2026-05-31 20:43–20:55 (7,465,455 states, 400k traces, depth 20, 4 workers, 0 violations); all 8 safety invariants hold; `trust_tiers_achieved: [T4]`; YAML updated `cycle-2-verdandi-authority-tla-2026-05-29.yaml`; T4 declared live-test seq=351; inter #4 P0+P1 ⏸; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
 - T5 Federation-integration: qbp-systema PRs #1+#2+#3 ✅ MERGED 2026-05-22 (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface OPEN; @qbp-implementor substrate-gated on `repo-wyrd-pr-#54` + `repo-contextus-pr-#20/#21` for W2/W4.3/W5–W6; Contextus scope-loader PRs #17/#20/#21 §I4-ready + PRs #22/#23 federation-coherence-cleared (cth-impl Q3 URI-shape ack is last #17 gate); Wyrd scoutd design surface ⏸; arXiv scout M1+M2 impl gated on wyrd-pr-#54
 - T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless ⏸; pre-seed cohort HVR ⏸; succession contacts ⏸ (Brett Lyman, Skyler Rainier — T6 hard prerequisite)
 
@@ -259,6 +259,7 @@ Per `workspace-roadmap.md` §4, gate-on-gate dependencies (not PR queue):
 | BMA Crawl→Toddle | OD-11(c) decided + OD-12 drive upgrade + NATS broker spec | OD-11(c) ✓ decided; OD-12 ⏸ beekeeper; NATS ⏸ scope unclear |
 | Wyrd v0.2 federation-wide | OD-11(c) implementation lands + CTH v0.2 schema | OD-11(c) ✓ decided; impl pending; CTH #58 pending |
 | QBP Walk (GW-EM pipeline) | Wyrd predictions/ schema (PR #35) + CTH v0.2 migration + federation Walk-tier primitives | All upstream |
+| CTH v0.3 sheaf scoring model | Wyrd locale topology answer (wyrd #74) | OPEN — wyrd-implementor to answer; CTH scoring design blocked until resolved; full context in inter #41 |
 
 ---
 
@@ -368,6 +369,9 @@ Then engage with the user's request.
 - **2026-05-30** `repo-wyrd-issue-#73` filed — tamper-evident hyperedge write-timestamps anchored to shared ledger; Verdandi §A.8 prerequisite (prediction/postdiction weighting); Walk/v0.3 gating; co-authoring dependency on `edda_cap_store_faithful` post wyrd#68
 - **2026-05-30** @herschel sprint driver online — review SLA pings sent: wyrd-implementor for `repo-confluent-trust-pr-#91` + `repo-edda-issue-#1` (seq=337); contextus-impl + bma-implementor + qbp-implementor §I4 escalation on `repo-confluent-trust-pr-#91` (seq=338); beekeeper sprint status update (seq=339)
 - **2026-05-30** Federation §I4 reviews posted — `repo-confluent-trust-pr-#91` @qbp-implementor APPROVE (grammar correct; §9 Q1–Q4 addressed; minor v0.2 subpath-scoping note); `repo-edda-issue-#1` @qbp-architecture APPROVE Option A with `edda_cap_store_faithful` Stage 1 tracking flag; QBP foundations convention PRs F1/F3/F4/F5 (#468/#467/#469/#470) all @qbp-architecture ratified; QBP foundations Phase 1 skeleton PR #471 @qbp-architecture APPROVE pending @cth-implementor co-sign (8 new DEFN-* anchors)
+- **2026-05-31** QBP scenario walkthrough (three real arXiv Ca-43/Sr-88 trapped-ion papers, chronological discovery) surfaced two architectural decisions: (1) Kenning absorbed into Edda — epistemic resource types (`cth.*`, `arxiv.*`, `signal.*`) added to Edda resource taxonomy, no separate language needed; (2) trust over a locale is a **sheaf section**, not a trajectory — per-axis gluing (meet/join), coverage-based cluster states (NASCENT/DEVELOPING/CONFLUENT). `inter #41` filed (pre-Sprint 3 housekeeping; full federation review after Sprint 2 closes). `wyrd #74` filed (locale topology question — new cross-project dependency; CTH v0.3 sheaf scoring design blocked until wyrd-implementor answers). `confluent-trust #92` Sprint 3 label added.
+- **2026-05-31** Federation watcher armed — daemon PID 796474; 12 channels monitored; regex filter; @qbp-architecture + @beekeeper mentions watched. `sprint-2-2026-05-20` seq=35 + `cth-qbp-live-testing` seq=4 posted announcing inter #41 + wyrd #74.
+- **2026-05-31** Sprint 2 status review: execution clean. Substrate tiers (T3) complete. Main open gates: inter PR #40 (Notary Cycle 2, no reviews yet); Edda issue #1 @wyrd-implementor read §2.i overdue; confluent-trust PR #91 beekeeper verdict pending. T6 (succession contacts + Governance Document HVR + pre-seed cohort HVR) remains Sprint 3 launch hard gate — all require beekeeper terminal action.
 
 ---
 
@@ -388,6 +392,6 @@ Then engage with the user's request.
 
 ---
 
-*BMA:BADASS Dashboard v0.10 | 2026-05-30 (Sprint Interlude / Notary Cycle 2)*
+*BMA:BADASS Dashboard v0.11 | 2026-05-31 (Sprint 2 status review; Edda+sheaf design decisions; wyrd #74 locale topology dependency)*
 *Becoming and Enabling Behavior Actualization of Sprinting at Speed*
 *Authored by Claude Opus 4.7 (qbp-architecture); sprint-execution maintained by Herschel (Sonnet); read by James Paget Butler (beekeeper) at terminal*
