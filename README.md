@@ -180,7 +180,7 @@ All federation repos follow the conventions in [`github-best-practices.md`](gith
 - Sub-issues, design surfaces, and follow-up tasks are filed as GitHub issues, not tracked in Slack or chat.
 - The `housekeeping` label marks important-but-non-blocking items (≥15min effort threshold). Sprint rule: no new sprint until housekeeping is done.
 
-For the PR review completion protocol, see [`pr-review-completion-best-practices.md`](pr-review-completion-best-practices.md). For issue authoring conventions, see [`issue-authoring-best-practices.md`](issue-authoring-best-practices.md).
+For the PR review completion protocol, see [`pr-review-completion-best-practices.md`](pr-review-completion-best-practices.md). For issue authoring conventions, see [`issue-authoring-best-practices.md`](issue-authoring-best-practices.md). For Lean 4 / Mathlib proof work (zero-`sorry` foundations, `native_decide` ban, `#print axioms` completeness gate), see [`lean-proof-best-practices.md`](lean-proof-best-practices.md).
 
 ---
 
