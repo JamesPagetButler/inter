@@ -12,6 +12,7 @@ Running log of process breakdowns across federation repos. Reviewed at each spri
 | Date | Sprint | Repo | Issue / PR | What broke | Classification | Resolution |
 |---|---|---|---|---|---|---|
 | 2026-06-01 | Sprint 2 | confluent-trust | #84 | 4-PR sequence (#74/#75/#76/#89) completed and merged but tracking issue #84 was never closed. Root cause: no single PR carried `Closes #84` in its body; GitHub auto-close didn't fire; no manual close followed. Work shipped; tracker showed live work that was done. | ? — retro | Sprint 2 retrospective |
+| 2026-06-01 | Sprint 2 | bma-systema | #219 | Direct push of `governance/BMA-Governance-Document.md` + addendum to `bma-systema` main without a PR. Root cause: beekeeper verbal instruction ("commit and push") interpreted as push authorization; agent did not recognize that constitutional documents require a PR gate regardless of instruction form. Remediated same session: force-push reversal to `28e3ea8`, governance commit preserved on `governance/219-blessing-review`, PR opened. | ? — retro | Sprint 3 retrospective |
 
 ---
 
