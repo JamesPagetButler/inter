@@ -905,7 +905,7 @@ The `IsModeBEligible(now time.Time, window time.Duration) (bool, reason string)`
 
 ### 15.4 The Compute Manifest
 
-Criterion 4 refers to "the federation's blessed compute substrate" named in a **Compute Manifest** on `repo-wyrd`. Compute Manifest v0.1 **DELIVERED 2026-05-18** (`repo-wyrd:manifest/compute-manifest-v0_1.yaml`; PRs #58/#59/#60/#61 all merged).
+Criterion 4 refers to "the federation's blessed compute substrate" named in a **Compute Manifest** on `repo-wyrd`. Compute Manifest v0.2 **DELIVERED 2026-05-18** (`repo-wyrd:manifest/compute-manifest-v0_2.yaml`; base v0.1 in PRs #58/#59/#60/#61; credibility-block extension v0.2 in PR #62). First substrate-tier promotion exercised v0.2 end-to-end 2026-05-21 (`repo-wyrd-pr-#69`).
 
 | Phase | Compute Manifest names |
 |---|---|
@@ -919,6 +919,8 @@ Criterion 4 refers to "the federation's blessed compute substrate" named in a **
 ### 15.5 Substrate Immutability: Additive-Only with Deprecation-via-Migration
 
 Once promoted, **statement is frozen.** No revision; deprecation permitted with named replacement + migration path; deprecated theorems remain proved; tenants migrate at their own pace. This is the **mathlib pattern**.
+
+Deprecation is a metadata annotation only. A deprecated anchor's CTH status remains `coherent`; no status transition occurs. Deprecated anchors remain valid for read/evaluation; only new-emission use in Edda contracts is rejected (see §15.5.2 emission-context restriction when Edda is operational).
 
 ### 15.6 Demotion / Rollback (Beekeeper-Only)
 
@@ -950,7 +952,7 @@ Research-tier promotion PRs require: wyrd-implementor (substrate ownership), qbp
 ### 15.10 Sequencing Notes
 
 - **Crawl:** Research-tier only. Wyrd's `HolographicHypergraph.lean` is grandfathered as the seed substrate corpus.
-- **Toddle:** Compute Manifest v0.1 in `repo-wyrd` — DELIVERED 2026-05-18. First promotion PR at Phase C of `repo-bma-systema-issue-#170`.
+- **Toddle:** Compute Manifest v0.2 in `repo-wyrd` — DELIVERED 2026-05-18 (v0.1 base + credibility-block extension). First substrate-tier promotion (`cycle_counter_monotonic_per_phase`) exercised end-to-end 2026-05-21 via `repo-wyrd-pr-#69`.
 - **Walk:** Routine operation; multi-tenant promotions become the norm.
 - **Run:** Compute Manifest may name new substrate per §0.13.2 silicon ladder.
 
