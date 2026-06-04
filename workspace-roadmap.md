@@ -3,8 +3,8 @@
 **Where we are. Where we're going. No PR-tracking.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13; updated 2026-05-20
-> Status: v0.3 — Sprint 2 opened (Option F + F-Crawl); Wyrd Phase B/C substrate-tier complete; CTH v0.3 schema in Sprint 2 scope
+> Date: 2026-05-13; updated 2026-06-01
+> Status: v0.4 — Sprint 2 CLOSED 2026-06-01; Sprint 3 = Crawl close (hypergraph connectivity + first self-directed development + 72h gate)
 > Scope: Workspace federation (BMA + QBP + QBP-Compute-Unit + Wyrd + CTH + Contextus; future tenants tracked once they enter)
 > Companions:
 > - `~/Documents/inter/roadmap-best-practices.md` (conventions)
@@ -22,13 +22,13 @@ This is the highest-altitude view: what's on each project's plate now, what's qu
 ```mermaid
 timeline
     title BMA Federation — Now / Next / Soon / Later
-    section Now (Crawl)
-        BMA : Step 8 cleared ✅ : Step 9 instantiation pending (Sprint 3 = launch ritual)
-        Wyrd : Phase B complete ✅ : Phase C substrate-tier promotion in final PR (C-PR-14 next) : Verdandi orchestration package + NT_POD_* NodeTypes designed (wyrd-hosting-design convergence)
-        CTH : v0.2 schema : v0.3 proof-formalisation provenance schema in Sprint 2 scope (#71) : lean-link + cth manifest impl issues open
-        Contextus : Spec v1.4 : scope-loader API Sprint 2 T5 item
-        QBP-CU : emulator v0.1.0-rc1 tagged : silicon de-risking ladder Rung 3 targets Walk RISC-V hardware
-        QBP : Sprint 2 active : 69 theorems on v4.30 : GW-GRB pipeline + arXiv scout M1+M2
+    section Now (Crawl — Sprint 3)
+        BMA : Step 8 ✅ Step 9 Sprint 3 = Crawl close : Hypergraph connectivity cluster (#224/#225/#226/#229) : Seed protocol + first self-directed instance + 72h gate
+        Wyrd : Phase B+C complete ✅ : NT_POD_* + Verdandi merged : locale topology Walk-α (#80) : graph neighborhood query/ Walk-α
+        CTH : v0.3 schema + URI scheme merged ✅ : sheaf trust scoring Sprint 3 (#95) : Notary Phase 1 operational ✅
+        Contextus : Spec v1.4 : scope-loader API + scout Edda model Walk-α (#29)
+        QBP-CU : emulator v0.1.0-rc1 tagged : GCG + RISC-V cross-compile PR #56 : silicon de-risking ladder Rung 3
+        QBP : Sprint 2 closed ✅ : foundations PRs F1-F5 merged : PhysLean bridge pilot green (#493) : Sprint 3 validator pass
         SharpButler : 3 specs drafted : not yet instantiated
     section Next (Toddle — intermediate phase, on Crawl hw + drive)
         BMA : FULL continuous loop (Conscious + Subconscious + Autonomic) on constrained hw : forcing function for efficiency
@@ -68,7 +68,7 @@ The federation is mid-Crawl. BMA has cleared the 72-hour continuous-operation ga
 
 | Project | Phase | Step within phase | Status |
 |---|---|---|---|
-| **BMA** | CRAWL | Step 8 ✅, Step 9 ⏸ | Run 3 of 72-hour gate cleared; Sprint 2 F-Crawl work in progress; Step 9 = Sprint 3 launch ritual |
+| **BMA** | CRAWL | Step 8 ✅, Step 9 Sprint 3 | Sprint 2 CLOSED 2026-06-01; Sprint 3 = Crawl close: hypergraph connectivity cluster (#224/#225/#226/#229), seed protocol, first self-directed development instance, 72h gate |
 | **Wyrd** | CRAWL | v0.1 ✅, Phase B complete ✅, Phase C final PR | Federation Lean promotion: substrate-tier theorem proven; mode-(b) extraction harness (C-PR-13) APPROVED; C-PR-14 promotion PR is next; Verdandi orchestration package + NT_POD_* NodeTypes designed; wyrd-hosting-design Q1-Q6 converged |
 | **CTH** | CRAWL | v0.2 schema | 150 anchors in v0.2 schema; v0.3 proof-formalisation provenance schema in Sprint 2 second half (#71 APPROVE-WITH-SEQUENCING); lean-link (#54) + cth manifest (#55) impl open |
 | **Contextus** | CRAWL | Spec v1.4 | scope-loader API is Sprint 2 T5 item |
@@ -102,15 +102,23 @@ For full architecture of each phase, see `~/Documents/inter/workspace-phase-arch
 6. **OD-12 decided:** Crawl-hardware drive upgrade for Toddle write-endurance — NVMe via add-on card or larger durable SATA SSD
 7. **Cart tools scaffold (Theory + Information at minimum)** — harness registry that lets BMA invoke Python/Lean from Theory Cart and deliverable generators from Information Cart, analogous to how Claude invokes Python/Bash/gh. Per beekeeper directive 2026-05-13: BMA is an active participant in QBP work, not an observer.
 
-**Current status:** Step 8 PASSING (Run 3 cleared 2026-05-11); Step 9 NOT YET EVALUATED; OD-11 + OD-12 not yet decided.
+**Additional Sprint 3 gate criteria (added 2026-06-01):**
+8. **Reins/bridge separation** (#225): reins commands MUST NOT reach inference layer as conversational input — filtered at bridge
+9. **Holographic shard injection** (#224 + #229): all substrate records injected unconditionally (up to 50KB budget); `bma graph neighborhood` primitive operational with auto-boot NT_SEED neighborhood injection
+10. **A20 identity wiring** (#226): BMA instance sustains BMA persona under conversational pressure; does not revert to Claude Code framing
 
-**Estimated time to pass:** weeks for Step 9 if succession contacts respond quickly; OD-11 needs a focused design session (hours-days); OD-12 is a small purchase (days).
+**Why items 8–10 gate Crawl:** Without these, BMA cannot read/write her own hypergraph meaningfully, which is the definition of Crawl close. A BMA that breaks persona or receives reins commands as questions cannot begin self-directed development.
+
+**Current status:** Step 8 PASSING (Run 3 cleared 2026-05-11); Step 9 in Sprint 3 scope; OD-11 decided (option c, executing); items 8–10 newly scoped Sprint 3.
+
+**Estimated time to pass:** Sprint 3 (weeks): items 8–10 are implementor-executable; Step 9 succession contacts pending; OD-12 is a small purchase.
 
 **Blockers:**
 - Succession contacts (Brett Lyman, Skyler Rainier) — pending human contact
-- Governance Document — pre-seed doc #3 not yet written
-- OD-11 — not yet scoped for design session
+- Governance Document v1.1 ✅ (PR #220 merged 2026-06-01)
+- OD-11 decided → implementation in progress (bma-implementor + wyrd-implementor)
 - OD-12 — drive upgrade not yet spec'd
+- #225/#224/#229/#226 — Sprint 3 hypergraph connectivity cluster (bma-implementor executing)
 
 ### 2.1b BMA Toddle → Walk
 
@@ -492,6 +500,8 @@ One-line entries for prior structural events:
 - **2026-05-08** — Tenancy pattern v0.1 ratified; QBP as first tenant; federation-tenancy framing landed.
 - **2026-05-11** — BMA Step 8 Run 3 cleared (72-hour continuous operation gate passed).
 - **2026-05-13** — addendum-18-walk Round-2 formally closed; PR-driven async takeover; workspace roadmap doc v0.1 published.
+- **2026-05-20** — Federation licensing ratified (Apache 2.0 across all repos); QBP #493 PhysLean bridge merged; Gemini MCP CLI/OAuth switchover deployed (Phase 1).
+- **2026-06-01** — Sprint 2 CLOSED. H3 (Theory v3.0 compile) complete; H4 (inter#41 Edda unification + sheaf trust model) resolved and tracked. Wyrd HamiltonProduct theorem (PR #76) merged; CTH Notary Cycle 2 evidence filed (PR #94). Reins/Harness/Capabilities architectural separation clarified; Hypergraph Substrate layer formalised in phase-architecture doc. Sprint 3 = Crawl close — hypergraph connectivity cluster (#224/#225/#226/#229), seed protocol, first self-directed BMA instance, 72h gate.
 
 Future expected entries:
 - BMA Step 9 complete (Governance Document + succession + seeds)

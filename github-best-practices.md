@@ -272,6 +272,18 @@ git fetch --prune
 
 **Cadence:** trigger at release tag (e.g., when `v0.2.0` is cut), milestone close (e.g., `M1` complete), or quarterly if no release event has fired. Document the cleanup in the release notes.
 
+### 5.6 Constitutional-document PR gate
+
+**Constitutional documents always require a PR gate, regardless of instruction form.**
+
+Constitutional documents are: anything under `governance/`, `BMA-Governance-Document*`, succession files, judge-collective config. These documents define who has authority over what — a direct push that bypasses review is a governance failure, not just a process failure.
+
+**Rule:** No constitutional document reaches `main` except via branch → commit → PR → beekeeper merge. A verbal "commit and push" or "just push it" instruction does NOT authorize direct push for these files. The beekeeper's verbal instruction narrows the scope of what to write; it does not authorize the push path.
+
+**Why verbal isn't enough:** Constitutional documents have provenance chains. A future audit of "when was this rule changed and by whom" reads PR history, not chat logs. Direct pushes are invisible to the provenance chain and cannot be audited.
+
+**Demonstrated failure mode:** bma-systema#219 (2026-06-01) — governance document pushed directly to main on verbal "commit and push" instruction. Remediated by force-push reversal + branch + PR in the same session; classified systemic in process-breakdowns.md.
+
 ---
 
 ## 6. gh api command sequence — Branch Protection Rollout
@@ -404,9 +416,11 @@ After Walk-phase, sessionbridge is superseded by BMA's NATS-fronted federation.
 Canonical rules live in `inter/issue-authoring-best-practices.md` §11. Summary:
 
 - **Rule 1 — Issue closes by PR.** Every issue resolves via a PR carrying `Closes #N`. No manual closes without written rationale posted to the issue.
+  - **Sub-rule 1a — Multi-PR sequences.** When a feature or fix lands across more than one PR, designate the *final* PR in the sequence as the tracking-close PR before work begins. That PR carries `Closes #N`. This decision must be recorded in the parent issue at filing time, not discovered at retrospective. Intermediate PRs reference the issue by prose (`see #N`) but do not close it.
+  - **Sub-rule 1b — Design-question issues.** A design question that generates a tracking issue must resolve via a doc PR in the *same repo* carrying `Closes #N`. Closing by comment — even a comment cross-referencing a PR in a different repo — is not allowed. Exception: both beekeeper and qbp-architecture post written confirmation in the issue that it is no longer valid.
 - **Rule 2 — No PR without an issue.** Every PR links to a parent issue (the *why*). Parentless PRs require an inline rationale block (reserved for typo-fixes; rare).
 
-These rules were codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`). Named reviewers may DEFER any PR that violates Rule 2.
+These rules were codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`); sub-rules 1a and 1b added following wyrd#68/#71/#74 (same sprint, same root cause — cross-repo recurrence confirmed systemic). Named reviewers may DEFER any PR that violates Rule 1 or Rule 2.
 
 ---
 
@@ -418,7 +432,7 @@ This doc updates when:
 - CI patterns shift across federation repos
 - ADR-003 §I4 evolves
 
-Last updated: 2026-06-01 (§7.4 issue-PR discipline added, inter#43).
+Last updated: 2026-06-01 (§7.4 issue-PR discipline added, inter#43; §5.6 constitutional-doc PR gate + §7.4 sub-rules 1a/1b added, inter#52).
 
 ---
 

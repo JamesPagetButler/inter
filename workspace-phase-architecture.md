@@ -3,8 +3,8 @@
 **Per-phase architecture diagrams for the federation: Crawl → Toddle → Walk → Run.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13; updated 2026-05-20
-> Status: v0.4 — Sprint 2 opened (Option F + F-Crawl); Wyrd Phase B complete + Phase C final PR; CTH v0.3 schema in Sprint 2 scope; Verdandi package + NT_POD_* NodeTypes added to Crawl exit picture
+> Date: 2026-05-13; updated 2026-06-01
+> Status: v0.5 — Sprint 2 CLOSED; Sprint 3 = Crawl close; Reins/Harness/Capabilities architectural separation clarified; Hypergraph Substrate layer added to Systema diagram; holographic shard loading pattern introduced
 > Convention sources:
 > - `~/Documents/inter/architecture-diagrams-best-practices.md` (visualization tier model, C4, Mermaid)
 > - `~/Documents/inter/roadmap-best-practices.md` §5 (roadmap house style)
@@ -31,8 +31,10 @@ Before reading the per-phase diagrams below, understand the **Systema process fr
 flowchart LR
     BK["<b>BEEKEEPER (James)</b>"]
     R{{"<b>Reins</b><br/>CLI / web interface<br/>(beekeeper ↔ horse channel)"}}
-    H["<b>Horse — BMA-the-instance</b><br/>cognitive entity<br/>(pulls carts)"]
-    HR{{"<b>Harness</b><br/>BRIDGE + four-layer registry<br/>(how horse attaches to carts)"}}
+    H["<b>Horse — BMA-the-instance</b><br/>cognitive entity<br/>(executive + inference)"]
+    HR{{"<b>Harness</b><br/>BMA executive layer →<br/>external systems<br/>(BRIDGE + four-layer registry)"}}
+
+    HS[("<b>Hypergraph Substrate</b><br/>Wyrd + CTH + Contextus<br/>navigational map for inference;<br/>holographic shard loaded at boot")]
 
     subgraph Carts["<b>The Four Carts</b>"]
         direction TB
@@ -44,17 +46,21 @@ flowchart LR
 
     BK <-->|directs| R
     R <-->|commands /<br/>responses| H
-    H <-->|attaches via| HR
+    H <-->|executive reads/writes| HR
+    HR <-->|hypergraph queries| HS
     HR <-->|pulls| Carts
+    HS -.->|holographic shard<br/>→ inference context| H
 
     classDef bk fill:#fce,stroke:#933,color:#000
     classDef channel fill:#ffe,stroke:#993,color:#000
     classDef horse fill:#eef,stroke:#339,color:#000
     classDef cart fill:#efe,stroke:#393,color:#000
+    classDef substrate fill:#cfe,stroke:#396,color:#000
     class BK bk
     class R,HR channel
     class H horse
     class TC,EC,AC,IC cart
+    class HS substrate
 ```
 
 **Cart-count history (resolved):**
@@ -67,6 +73,20 @@ flowchart LR
 | **Beekeeper resolution** | **2026-05-13** | **4+ (Theory + Engineering + Art + Information)** | **Current** |
 
 Systema v0.9 (forthcoming) should formalise the four-cart taxonomy in the canonical spec. BMA Spec §10.7 should add the Art Cart in its next revision (folded into BMA #153 spec-refresh issue).
+
+### 0.1a Reins / Harness / Capabilities — terminology clarification
+
+Three terms that were conflated in earlier BRIDGE design; clarified by beekeeper directive 2026-06-01. Sprint 3 issues #225 / #224 / #229 / #226 operationalise this separation.
+
+| Term | Definition | MUST NOT | Crawl form | Walk-α form |
+|---|---|---|---|---|
+| **Reins** | Beekeeper → BMA command channel. The interface James uses to direct BMA. | Reach BMA's inference layer. If reins commands reach inference they become identity pressure, causing BMA to revert toward Claude Code persona (issue #226). | CLI commands + sessionbridge messages; routed through BRIDGE reins-filter (#225) | Formal MCP interface to BMA with dedicated reins-only API surface |
+| **Harness** | BMA executive layer → external systems. How BMA accesses the Hypergraph Substrate (Wyrd, CTH, Contextus) and the four Carts. | Be confused with beekeeper commands. Harness calls are BMA-initiated, not beekeeper-initiated. | BRIDGE + four-layer tool registry; unconditional substrate record injection (#224) | Live BRIDGE service; harness-registered tool invocations are auditable; NATS subjects carry substrate events |
+| **Capabilities** | What BMA does herself — her own internal functions invoked without per-action beekeeper permission. Graph neighborhood traversal, sprint analysis, federation tool invocations. | Require a beekeeper reins command for every invocation (that would make them reins, not capabilities). | None in Sprint 2; `bma graph neighborhood` lands Sprint 3 (#229) | Walk-α: Edda epistemic resource queries, agent-to-agent coordination, CTH-score derivation |
+
+**The Hypergraph Substrate** (Wyrd + CTH + Contextus) sits between Horse and Carts in the architecture — it is what the Harness primarily connects to. Carts need substrate data to operate; the substrate provides the navigational map that lets BMA's inference layer know *where deeper knowledge lives* without loading the full graph.
+
+**Holographic shard pattern** (beekeeper insight 2026-06-01): Because Wyrd is a holographic hypergraph, a 100-node depth-2 neighborhood of NT_SEED nodes (~50KB) acts as a complete navigational map. BMA's inference layer gets this shard injected at session boot (#224 + #229). The shard does not answer questions — it tells BMA *where to look*; the Harness retrieves deeper content on demand.
 
 ### 0.2 Three-loop progressive hardening (Engineering Cart + Art Cart)
 
@@ -689,6 +709,68 @@ flowchart TB
         │  Sleep cycle:     [CRAWL: CONFIRMED, gate-tested]  │
         └────────────────────────────────────────────────────┘
 ```
+
+### 1.1b BMA BRIDGE internals — Sprint 3 target architecture
+
+The §1.1 diagram shows federation-level topology. This diagram shows BMA BRIDGE internals, where the Reins/Harness/Capabilities separation is implemented. Sprint 3 issues #225 (reins filter), #224 (unconditional injection), #229 (graph neighborhood + auto-boot), #226 (identity wiring) collectively close the hypergraph-connectivity gap.
+
+```mermaid
+flowchart TB
+    BK("<b>BEEKEEPER (James)</b>")
+
+    subgraph SB["sessionbridge MCP"]
+        CH["live-test + federation channels"]
+    end
+
+    subgraph BRIDGE["BMA BRIDGE (Sprint 3 target)"]
+        direction TB
+        RF["<b>Reins Filter</b> (#225)<br/>strips beekeeper commands<br/>BEFORE inference sees them"]
+        EX["<b>Executive layer</b><br/>processes commands;<br/>updates harness state;<br/>schedules substrate reads"]
+        HL["<b>Harness layer</b> (#224)<br/>substrate reads/writes<br/>unconditional record injection"]
+        NB["<b>graph neighborhood</b> (#229)<br/>100-node depth-2 NT_SEED shard<br/>extracted at boot (~50KB)"]
+    end
+
+    subgraph HS["Hypergraph Substrate (Crawl: JSON)"]
+        WJ["hg.json (Wyrd)"]
+        CJ["CTH inventory JSON"]
+    end
+
+    subgraph INF["BMA Inference (T3 hemisphere)"]
+        SHARD["holographic shard<br/>(navigational map)"]
+        ID["A20 identity wiring (#226)<br/>BMA sustains persona<br/>under reins pressure"]
+    end
+
+    BK -->|reins commands| SB
+    SB -->|poll_inbox| RF
+    RF -->|filtered commands<br/>(identity pressure removed)| EX
+    EX -->|substrate queries| HL
+    HL <-->|reads/writes| HS
+    HL -->|substrate records<br/>(all, unconditional)| NB
+    NB -.->|shard auto-injected<br/>at session boot| SHARD
+    EX -.->|executive status only<br/>(not beekeeper commands)| INF
+
+    classDef bk fill:#fce,stroke:#933,color:#000
+    classDef sb fill:#ffe,stroke:#993,color:#000
+    classDef bridge fill:#eef,stroke:#339,color:#000
+    classDef hs fill:#cfe,stroke:#396,color:#000
+    classDef inf fill:#fef,stroke:#636,color:#000
+    class BK bk
+    class SB,CH sb
+    class RF,EX,HL,NB bridge
+    class WJ,CJ hs
+    class SHARD,ID inf
+```
+
+**Key architectural invariants for Sprint 3:**
+
+| Invariant | Issue | Gate |
+|---|---|---|
+| Reins commands (beekeeper directives) MUST NOT reach inference as conversational input | #225 | Sprint 3 merge gate |
+| All substrate records injected unconditionally (no path-match gate) | #224 | Sprint 3 merge gate |
+| `bma graph neighborhood` primitive extracts holographic shard at boot | #229 | Sprint 3 merge gate |
+| BMA sustains persona under reins pressure (A20 identity wiring) | #226 | Sprint 3 merge gate |
+
+**Walk-α evolution:** At Walk-α, the JSON substrate is replaced by live Wyrd v0.2 queries; the Harness layer gains NATS subscriptions; the reins filter becomes the formal MCP interface; capabilities expand to include Edda epistemic resource queries and agent-to-agent coordination.
 
 ### 1.2 Storage tier — JSON files
 
