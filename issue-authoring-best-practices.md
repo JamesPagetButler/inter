@@ -527,10 +527,22 @@ If all five answer cleanly, file. If any answer with hand-waving, refine before 
 
 ## 11. Issue-PR discipline
 
-Two rules that apply across all federation repos. Codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`, entry 2026-06-01): a 4-PR sequence completed and merged but the tracking issue was never closed because no single PR carried `Closes #84`.
+Two rules that apply across all federation repos. Codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`, entry 2026-06-01); sub-rules added following wyrd#68/#71/#74 (same sprint, cross-repo recurrence confirmed systemic, inter#52).
 
 **Rule 1 — Issue closes by PR.**
 Every issue is resolved by a PR whose body contains `Closes #N`. When the final PR merges, GitHub fires the auto-close. Exceptions (approach change, fundamental misclassification of the issue) require written rationale posted to the issue before manually closing.
+
+**Rule 1a — Multi-PR sequences.**
+When a feature or fix lands across more than one PR, decide *before work begins* which PR will be the tracking-close PR (almost always the final PR in the sequence). Record this decision in the parent issue at filing time. That PR carries `Closes #N`. Intermediate PRs reference the issue by prose (`see #N`) but do not close it. Discovering the gap at retrospective is the failure mode this rule prevents.
+
+> *Why before work begins:* In a multi-PR sequence, each implementor naturally assumes someone else will close the issue. Making it explicit at filing time removes that assumption. — wyrd#68 post-mortem.
+
+**Rule 1b — Design-question issues.**
+A design question that generates a tracking issue must resolve via a doc PR in the *same repo* carrying `Closes #N`. Closing by comment — even a comment cross-referencing a PR or decision document in a different repo — is not valid closure. The provenance chain for a design decision must be auditable within the repo that holds the issue.
+
+Exception: both beekeeper and qbp-architecture post written confirmation in the issue that it is no longer valid (e.g., the question became moot). In that case, a manual close with that thread as rationale is acceptable.
+
+> *Why same-repo:* Cross-repo references break. A doc PR in `inter` closing a design question in `wyrd` means the closure evidence lives in a different repo's history. Future auditors of `wyrd` will not find it. — wyrd#74 post-mortem.
 
 **Rule 2 — No PR without an issue.**
 The issue is the *why*; the PR is the *how*. Every PR must link to the issue that motivated it. A PR that lacks a parent issue must either: (a) create the issue first, or (b) carry an inline rationale block in the PR body explaining why no issue exists (reserved for typo-fixes and single-line doc corrections — rare).
@@ -539,6 +551,6 @@ The issue is the *why*; the PR is the *how*. Every PR must link to the issue tha
 
 ---
 
-*Issue Authoring — Best Practices v0.2*
+*Issue Authoring — Best Practices v0.3*
 *Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler (Beekeeper)*
-*Date: 2026-05-15; updated 2026-06-01 (§11 issue-PR discipline, inter#43)*
+*Date: 2026-05-15; updated 2026-06-01 (§11 issue-PR discipline, inter#43); updated 2026-06-01 (Rule 1a + 1b sub-rules, inter#52)*
