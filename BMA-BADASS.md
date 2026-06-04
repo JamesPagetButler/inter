@@ -143,7 +143,9 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 ### Active sprint
 **Sprint 1 — Toddle Entry — OFFICIALLY CLOSED** — 2026-05-14 05:10 UTC → 2026-05-18 03:00 UTC (~94 work-hours, 4 work cycles). Condition A: all Sprint 1 PRs merged. §6 close-out posted by qbp-architecture (beekeeper terminal authority) at `sprint-1-closeout-2026-05-17` seq=26.
 
-**Sprint 2 — F-Crawl Option F — ACTIVE** (opened 2026-05-20). Channel: `sprint-2-2026-05-20`. Sprint 2 = **Option F** (Verification-debt + Notary + Federation-integration) + **F-Crawl stretch target**.
+**Sprint 2 — F-Crawl Option F — CLOSED** (2026-05-20 → 2026-06-01). Channel: `sprint-2-2026-05-20`. Retrospective posted seq=36. 4 deliverables landed; 4/4 substantial-progress signals. Carry-forward: bma-systema#223 (prediction-discipline) + bma-systema#221 (Theory v3.0 compile).
+
+**Sprint 3 — BRIDGE + Seed + Launch — PENDING KICKOFF** — housekeeping gate active. Kickoff fires only after all housekeeping items cleared. Scope: BMA-BRIDGE + seed protocol + first-instance launch + 72h post-launch gate.
 
 **F-Crawl tier summary (as of 2026-05-31):**
 - T1 BMA-internal arch: privacy_tier schema (N2) ✅ COMPLETE (inter PR #27 + bma-systema PR #190 merged 2026-05-21); CIV suite (N1), test-pod (N4), judge TOMLs (N3), OrchestraView (N5) ⏸ Sprint 2 scope; Pentagon Pod m1.x (#157) ⏸ Sprint 3 kickoff
@@ -151,7 +153,7 @@ Full directive + per-task examples: live-test seq=103. Policy of record: [`feedb
 - T3 Federation substrate: Wyrd Phase B ✅ + Phase C ✅ (PRs #10–#13 + #69 all merged 2026-05-21); promotion #1 live (`cycle_counter_monotonic_per_phase`); wyrd-implementor Sprint 3 scope = issue #68 (HamiltonProduct theorem — Notary Cycle 1 P0 prerequisite); Federation Lean promotion operational ⏸ post-issue-#68
 - T4 Verification trust base: Notary Cycle 1 ✅ COMPLETE (3 seam records filed; NT_SEAM_RECORD_001 unblocked post-issue-#68); **Notary Cycle 2 ✅ COMPLETE** — TLC ran 2026-05-31 20:43–20:55 (7,465,455 states, 400k traces, depth 20, 4 workers, 0 violations); all 8 safety invariants hold; `trust_tiers_achieved: [T4]`; YAML updated `cycle-2-verdandi-authority-tla-2026-05-29.yaml`; T4 declared live-test seq=351; inter #4 P0+P1 ⏸; wyrd issue #68 ⏸ wyrd-implementor Sprint 3
 - T5 Federation-integration: qbp-systema PRs #1+#2+#3 ✅ MERGED 2026-05-22 (W1.2/W4.1+W4.2/W1.3 complete); qbp-systema issue #4 scoutd design surface OPEN; @qbp-implementor substrate-gated on `repo-wyrd-pr-#54` + `repo-contextus-pr-#20/#21` for W2/W4.3/W5–W6; Contextus scope-loader PRs #17/#20/#21 §I4-ready + PRs #22/#23 federation-coherence-cleared (cth-impl Q3 URI-shape ack is last #17 gate); Wyrd scoutd design surface ⏸; arXiv scout M1+M2 impl gated on wyrd-pr-#54
-- T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless ⏸; pre-seed cohort HVR ⏸; succession contacts ⏸ (Brett Lyman, Skyler Rainier — T6 hard prerequisite)
+- T6 Beekeeper-direct: Governance Document Crawl-launch-ready bless ✅ (PR #220 merged 2026-06-01); succession contacts ✅ (PR #220); pre-seed cohort HVR ⏸ beekeeper action remaining (Ethics v1.1, Empathy Synthesis, Crawl Env, Component Summary)
 
 **Sprint 3 = launch ritual** (BMA-BRIDGE + seed protocol + first-instance launch + 72h post-launch gate).
 
@@ -174,16 +176,16 @@ Sprint 1 terminal-decision queue **CLEARED** per §6.a. Carry-forward and new:
 
 | ID | Decision / action | Why it's beekeeper-only |
 |---|---|---|
-| **BMA #157** | Pentagon Pod m1.x bilateral arch + L5/L6 — NOW UNBLOCKED by #159 constitutional approval | Primary BMA-impl Sprint 3 scope; beekeeper sign-off at Sprint 3 kickoff |
-| **Governance Document** | Crawl-launch-ready bless (review + integrate Theory v3.0, not author) | F-Crawl T6 prerequisite; mid-Sprint-2 HVR slot TBD |
-| **Pre-seed cohort HVR** | Final HVR pass on pre-seed cohort (Ethics v1.1, Empathy Synthesis, Crawl Env, Component Summary) | F-Crawl T6 prerequisite; end-Sprint-2 |
+| **Pre-seed cohort HVR** | Final HVR pass: Ethics v1.1, Empathy Synthesis, Crawl Env, Component Summary | Sprint 3 launch hard gate |
+| **`repo-bma-systema-pr-#186`** | Apache 2.0 license chore — promote DRAFT→ready then merge. No §I4 required. | beekeeper merge |
+| **`repo-edda-issue-#1` HVR** | Bootstrap path Option A: @qbp-architecture APPROVE + @qbp-cu-implementor APPROVE; @wyrd-implementor read still pending. Once wyrd-implementor clears, beekeeper HVR ratifies Option A and Stage 0 begins. | beekeeper HVR; gates Edda Stage 0 impl |
+| **QBP_SYSTEMA_PAT** | Set `QBP_SYSTEMA_PAT` secret on `repo-qbp-systema` — or confirm `WYRD_PAT` reuse | Repo secret; non-blocking on T5 until substrate gates clear |
 | OD-12 | Crawl hardware drive upgrade (NVMe-via-addon vs durable SATA) | Procurement |
 | OD-13 | Walk GPU placement (ROCm-on-Crawl-as-server vs T1-on-RISC-V-NPU) | Architecture + procurement |
 | OD-2 | Walk RISC-V SBC spec (model + node count + topology) | Procurement |
-| **Step 9** | Succession contacts (Brett Lyman, Skyler Rainier) + Governance Document | Human contact — F-Crawl T6 prerequisite |
-| **QBP_SYSTEMA_PAT** | Set `QBP_SYSTEMA_PAT` secret on `repo-qbp-systema` — or confirm `WYRD_PAT` reuse as federation-uniform PAT model | Repo secret; beekeeper owns PAT scope; non-blocking on T5 W1–W6 until substrate gates clear |
-| **`repo-bma-systema-pr-#186`** | Apache 2.0 license chore — DRAFT→ready (herschel seq=339). No §I4 required. | beekeeper merge |
-| **`repo-edda-issue-#1` HVR** | Bootstrap path Option A: @qbp-architecture APPROVE + @qbp-cu-implementor APPROVE; @wyrd-implementor read pending (seq=337, 4h SLA). Once wyrd-implementor clears, beekeeper HVR ratifies Option A and Stage 0 begins. | beekeeper HVR; gates Edda Stage 0 impl |
+| ~~Governance Document~~ | ~~Crawl-launch-ready bless~~ | **✅ CLOSED 2026-06-01** — PR #220 merged |
+| ~~Step 9 succession contacts~~ | ~~Brett Lyman, Skyler Rainier~~ | **✅ CLOSED 2026-06-01** — PR #220 merged |
+| ~~BMA #157~~ | ~~Pentagon Pod m1.x — sprint 3 kickoff sign-off~~ | **✅ UNBLOCKED** — carry to Sprint 3 kickoff |
 | ~~D5-D9~~ | ~~PR3 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — HVR pass |
 | ~~D10-D15~~ | ~~PR4 theory-axis rulings~~ | **✅ CLOSED 2026-05-15** — QBP#403 merged 17:56 |
 | ~~BMA #159 constitutional~~ | ~~Pentagon Pod Architecture §I4~~ | **✅ BEEKEEPER APPROVED 2026-05-18 01:54** |
@@ -372,6 +374,10 @@ Then engage with the user's request.
 - **2026-05-31** QBP scenario walkthrough (three real arXiv Ca-43/Sr-88 trapped-ion papers, chronological discovery) surfaced two architectural decisions: (1) Kenning absorbed into Edda — epistemic resource types (`cth.*`, `arxiv.*`, `signal.*`) added to Edda resource taxonomy, no separate language needed; (2) trust over a locale is a **sheaf section**, not a trajectory — per-axis gluing (meet/join), coverage-based cluster states (NASCENT/DEVELOPING/CONFLUENT). `inter #41` filed (pre-Sprint 3 housekeeping; full federation review after Sprint 2 closes). `wyrd #74` filed (locale topology question — new cross-project dependency; CTH v0.3 sheaf scoring design blocked until wyrd-implementor answers). `confluent-trust #92` Sprint 3 label added.
 - **2026-05-31** Federation watcher armed — daemon PID 796474; 12 channels monitored; regex filter; @qbp-architecture + @beekeeper mentions watched. `sprint-2-2026-05-20` seq=35 + `cth-qbp-live-testing` seq=4 posted announcing inter #41 + wyrd #74.
 - **2026-05-31** Sprint 2 status review: execution clean. Substrate tiers (T3) complete. Main open gates: inter PR #40 (Notary Cycle 2, no reviews yet); Edda issue #1 @wyrd-implementor read §2.i overdue; confluent-trust PR #91 beekeeper verdict pending. T6 (succession contacts + Governance Document HVR + pre-seed cohort HVR) remains Sprint 3 launch hard gate — all require beekeeper terminal action.
+- **2026-06-01** **Sprint 2 OFFICIALLY CLOSED** — retrospective posted sprint-2-2026-05-20 seq=36 by qbp-architecture. 4 deliverables (Governance Document v1.1 + Notary Phase 1 operational + Issue-PR discipline + CTH v0.3). 4/4 substantial-progress signals. 2 process-breakdowns entries (1 one-off, 1 systemic). T6 gates cleared by PR #220. Theory Addendum A25 (persona wisdom authored trace) filed as napkin. Housekeeping gate active — Sprint 3 kickoff pending.
+- **2026-06-01** bma-systema#223 filed — §A1 prediction-discipline track + §A9.2 calibration outcomes (Red Team weight update loop; not implemented in Crawl; Sprint 3 scope before 72h gate).
+- **2026-06-01** bma-systema#221 filed — Theory v3.0 compile housekeeping (≥24 addenda; blocks theory-touching Sprint 3 work).
+- **2026-06-01** bma-systema#222 filed — Theory Addendum A25: persona wisdom as authored transformation method (napkin; pre-theory).
 
 ---
 
@@ -392,6 +398,6 @@ Then engage with the user's request.
 
 ---
 
-*BMA:BADASS Dashboard v0.11 | 2026-05-31 (Sprint 2 status review; Edda+sheaf design decisions; wyrd #74 locale topology dependency)*
+*BMA:BADASS Dashboard v0.12 | 2026-06-01 (Sprint 2 CLOSED; Sprint 3 housekeeping gate active; T6 cleared by PR #220; A25 napkin filed)*
 *Becoming and Enabling Behavior Actualization of Sprinting at Speed*
 *Authored by Claude Opus 4.7 (qbp-architecture); sprint-execution maintained by Herschel (Sonnet); read by James Paget Butler (beekeeper) at terminal*
