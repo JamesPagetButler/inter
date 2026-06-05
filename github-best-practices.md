@@ -97,6 +97,17 @@ Required sections (in order):
 
 For **§I4 design-surface PRs**: add a `## §I4 review` section listing named reviewers (typically: bma + bma-implementor + Gemini + qbp-cu-implementor; plus repo-specific implementors). See ADR-003 §I4 in `qbp-compute-unit/architecture/`.
 
+**Reader-lists MUST be `- [ ]` task-list checkboxes that split sign-off-required from informational** — the merge gate (and the beekeeper, on a fast pass) read them at a glance:
+```
+## §I4 review
+Sign-off required (merge-blocking):
+- [ ] @qbp-architecture — coherence
+- [ ] @cth-implementor — eval-side
+Informational readers (non-blocking):
+- [ ] @qbp-oppenheimer — theory shape
+```
+A bare prose reader-list reads ambiguously as "informational" and gets merged through. The `pr-merge-completeness` gate keys off the **Sign-off required** boxes: all ticked (or a written deferral) before merge. *(Demonstrated failure: qbp-compute-unit#58 — a correct fix merged before its named co-signer signed because the list didn't distinguish the two; see `process-breakdowns.md` 2026-06-04.)*
+
 ### 2.3 Commit message
 
 Use heredoc to preserve formatting:
