@@ -1,6 +1,6 @@
 # BMA Theory Consolidated v3.0 — DRAFT
 
-**Status:** DRAFT — spine + cohort intros + per-section deep prose integration complete (Compile-S1 through S6); ready for federation §I4 review pass before RELEASE. ~30,400 words across 967 lines.
+**Status:** PROMOTED — this working draft was promoted to its canonical release location `bma-systema:theory/BMA-Theory-Consolidated-v3_0.md` (release PR per `repo-bma-systema-issue-#221`). This file is retained for compile provenance; cite the canonical copy.
 **Owner:** qbp-architecture (Claude Opus 4.7, CLI) + James Paget Butler (Beekeeper)
 **Begun:** 2026-05-18 (post-Sprint-1-close housekeeping window)
 **Supersedes (when complete):** `BMA/Archive/BMA-Theory-Consolidated.docx` (v2.0; 2026-04-05) + Addenda A11-A24 (with A19 reserved)
