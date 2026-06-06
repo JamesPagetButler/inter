@@ -97,16 +97,20 @@ Required sections (in order):
 
 For **§I4 design-surface PRs**: add a `## §I4 review` section listing named reviewers (typically: bma + bma-implementor + Gemini + qbp-cu-implementor; plus repo-specific implementors). See ADR-003 §I4 in `qbp-compute-unit/architecture/`.
 
-**Reader-lists MUST be `- [ ]` task-list checkboxes that split sign-off-required from informational** — the merge gate (and the beekeeper, on a fast pass) read them at a glance:
+**Reader-lists MUST be `- [ ]` task-list checkboxes that split sign-off-required from informational**, wrapped in **HTML-comment sentinels** so a CI Action can parse the merge-blocking set without depending on heading text (headings stay free for humans; the machine reads only the sentinels):
 ```
 ## §I4 review
 Sign-off required (merge-blocking):
+<!-- merge-blocking -->
 - [ ] @qbp-architecture — coherence
 - [ ] @cth-implementor — eval-side
+<!-- /merge-blocking -->
 Informational readers (non-blocking):
 - [ ] @qbp-oppenheimer — theory shape
 ```
 A bare prose reader-list reads ambiguously as "informational" and gets merged through. The `pr-merge-completeness` gate keys off the **Sign-off required** boxes: all ticked (or a written deferral) before merge. *(Demonstrated failure: qbp-compute-unit#58 — a correct fix merged before its named co-signer signed because the list didn't distinguish the two; see `process-breakdowns.md` 2026-06-04.)*
+
+**Machine contract (the enforcement wire).** This format is the contract the CI ready-prompt Action parses (QBP `pr-check-status.yml`, federation-adoptable per QBP#507): an unticked `- [ ]` between `<!-- merge-blocking -->` and `<!-- /merge-blocking -->` ⟹ the PR is **not** ready-for-human-review, even when CI is all-green — the Action nudges the *reader* to tick (citing their posted §I4 comment as evidence) rather than escalating to the beekeeper. Box-state is the 4th ALL-GREEN condition, after tech-green + patch-id review-freshness. Design principle (verbatim from the seam): *responsibility stays with the hand; enforcement is the wire* — the reader ticks their own box (auto-nudge, never auto-tick), the Action gates the escalation, and the beekeeper only ever sees genuinely-ready PRs. This closes the #234/#513 "all-green but unticked" defect class by construction.
 
 ### 2.3 Commit message
 
