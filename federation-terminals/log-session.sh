@@ -26,9 +26,27 @@ pdir="$PROJECTS/$slug"
 [ -d "$pdir" ] || { echo "ERROR: no project history dir for $WORKDIR ($pdir)" >&2; exit 1; }
 
 # own session = newest UUID-named transcript (exclude subagent agent-*.jsonl)
-sid="$(ls -t "$pdir"/????????-????-????-????-????????????.jsonl 2>/dev/null \
-        | head -1 | xargs -r -n1 basename | sed 's/\.jsonl$//')"
-[ -n "$sid" ] || { echo "ERROR: could not determine session id in $pdir" >&2; exit 1; }
+newest="$(ls -t "$pdir"/????????-????-????-????-????????????.jsonl 2>/dev/null | head -1)"
+[ -n "$newest" ] || { echo "ERROR: could not determine session id in $pdir" >&2; exit 1; }
+sid="$(basename "$newest" .jsonl)"
+
+# Staleness guard (bma-implementor, seq=471). The LIVE session's transcript is
+# written continuously — running this command itself writes to it — so an active
+# session's pick is SECONDS old. A pick that is minutes/hours old means the wrong
+# session was matched: usually the shell's cwd is not this session's workdir, or
+# another session is newer in a shared project dir (~/Documents). Refuse rather
+# than silently log a stale row (the exact footgun that mis-logged 75e1c976).
+now="$(date +%s)"; mt="$(stat -c %Y "$newest" 2>/dev/null || echo "$now")"
+age=$(( now - mt ))
+if [ "$age" -gt 60 ] && [ "${FORCE:-0}" != "1" ]; then
+  echo "⚠ REFUSING: matched transcript is ${age}s old — not a live session." >&2
+  echo "  Your shell cwd ($WORKDIR) is probably not this session's workdir, or a" >&2
+  echo "  newer session exists in a shared project dir. Pass the workdir explicitly:" >&2
+  echo "      log-session.sh $PERSONA /home/prime/Documents" >&2
+  echo "  and re-check the echoed id against a path your own harness shows you." >&2
+  echo "  (Override with FORCE=1 only if you are certain.)" >&2
+  exit 2
+fi
 
 mkdir -p "$(dirname "$ROSTER")"
 ts="$(date -Iseconds 2>/dev/null || date)"
