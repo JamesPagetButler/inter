@@ -1,3 +1,5 @@
+> **SUPERSEDED (compile):** Folded into **BMA Theory Consolidated v3.0** §2 (L1-L4 Federation Architecture) — canonical at `bma-systema:theory/BMA-Theory-Consolidated-v3_0.md`. Per the v3.0 preamble, the full original prose below remains canonical for litigation-of-detail; new work cites v3.0 sections. (`repo-bma-systema-issue-#221`)
+
 # BMA Theory Addendum — Version 23.0
 
 **Research-Aid Frame: Subconscious Literature-to-Scaffold Operations for Cross-Tenant Inference**
