@@ -3,8 +3,8 @@
 **Where we are. Where we're going. No PR-tracking.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13; updated 2026-06-01
-> Status: v0.4 — Sprint 2 CLOSED 2026-06-01; Sprint 3 = Crawl close (hypergraph connectivity + first self-directed development + 72h gate)
+> Date: 2026-05-13; updated 2026-06-11
+> Status: v0.5 — Sprint 3 scope reconciled (Crawl close). Folds in: pentagon-pod hot-swap **scaffold** pulled into Crawl (cognition stays Toddle); the #248 autonomic-sensor split-brain lane; a new **Edda Stage-1 + qbp-cu/wyrd native-build** lane; QBP foundations re-derivation sequencing (Phase A refound → B re-derive → C fork-select); succession two-phase (Crawl provisional / Walk ratified). Section-1 diagram rebuilt as a vertical flowchart (was a timeline) for readability.
 > Scope: Workspace federation (BMA + QBP + QBP-Compute-Unit + Wyrd + CTH + Contextus; future tenants tracked once they enter)
 > Companions:
 > - `~/Documents/inter/roadmap-best-practices.md` (conventions)
@@ -19,45 +19,59 @@ This document follows `~/Documents/inter/roadmap-best-practices.md` §9 template
 
 This is the highest-altitude view: what's on each project's plate now, what's queued for next phase, what's later.
 
+> Vertical flowchart (top→bottom): four phases stacked, each project a node. Built tall on purpose (high `rankSpacing`) so it's easy to zoom and read — replaces the older wide `timeline`.
+
 ```mermaid
-timeline
-    title BMA Federation — Now / Next / Soon / Later
-    section Now (Crawl — Sprint 3)
-        BMA : Step 8 ✅ Step 9 Sprint 3 = Crawl close : Hypergraph connectivity cluster (#224/#225/#226/#229) : Seed protocol + first self-directed instance + 72h gate
-        Wyrd : Phase B+C complete ✅ : NT_POD_* + Verdandi merged : locale topology Walk-α (#80) : graph neighborhood query/ Walk-α
-        CTH : v0.3 schema + URI scheme merged ✅ : sheaf trust scoring Sprint 3 (#95) : Notary Phase 1 operational ✅
-        Contextus : Spec v1.4 : scope-loader API + scout Edda model Walk-α (#29)
-        QBP-CU : emulator v0.1.0-rc1 tagged : GCG + RISC-V cross-compile PR #56 : silicon de-risking ladder Rung 3
-        QBP : Sprint 2 closed ✅ : foundations PRs F1-F5 merged : PhysLean bridge pilot green (#493) : Sprint 3 validator pass
-        SharpButler : 3 specs drafted : not yet instantiated
-    section Next (Toddle — intermediate phase, on Crawl hw + drive)
-        BMA : FULL continuous loop (Conscious + Subconscious + Autonomic) on constrained hw : forcing function for efficiency
-        BMA : 7-day endurance gate (on Crawl hw + drive upgrade per OD-12)
-        BMA : L5/L6 inference-time live (action-selection test on constrained hw)
-        BMA : OD-11 (Wyrd integration option) decided
-        Wyrd : v0.2 native DB live for BMA scope only : federation-wide migration deferred
-        NATS : broker deployed : single-tenant subjects active : multi-tenant designed not exercised
-        Engineering Cart : implementation lands
-        CTH/Contextus/QBP-CU : still on v0.1 + sessionbridge : migrate at Walk
-    section Soon (Walk — networked RISC-V)
-        BMA : full bilateral DISTRIBUTED across networked RISC-V SBCs : 30-day continuous endurance
-        Hardware : networked RISC-V (NOT bigger workstation; same form factor as Sharp Butler House Node)
-        OD-13 : GPU placement (ROCm-on-Crawl-as-server OR T1-on-RISC-V-NPU)
-        Wyrd : v0.2 federation-wide (CTH + Contextus + QBP-CU migrated)
-        CTH : v0.2 schema + ρ_net continuous
-        Contextus : NATS adapter + scope-loader API
-        QBP-CU : M1 Gearbox CSR-bound : QW8 peripheral + QW128 foveal
-        QBP : GW-EM pipeline live : first Walk-α (Cascadia slow-slip)
-        Multi-tenant : QBP + synthetic test tenant
-        SharpButler : Crawl entry as 2nd tenant (shares RISC-V substrate)
-    section Later (Run)
-        Federation : multi-tenant peering with Sharp Butler + future : judge collective live
-        Wyrd : v0.3 native DB + Skuld + HAMA Tier-N : Bridge layer live
-        CTH : continuous Confluence-point recomputation
-        Contextus : cross-tenant Bridge Agent routing
-        QBP-CU : M2 ternary matmul + ROCm-backed
-        QBP : ongoing programme + discoveries in flight
-        Beekeeper : steward (weekly+ snapshots only)
+%%{init: {'flowchart': {'rankSpacing': 70, 'nodeSpacing': 26}}}%%
+flowchart TB
+    classDef phase fill:#dfe7ff,stroke:#3355aa,stroke-width:3px,font-weight:bold;
+    classDef now fill:#eafaf0,stroke:#2e8b57;
+    classDef next fill:#fff6e6,stroke:#cc8800;
+    classDef soon fill:#eef2ff,stroke:#5566cc;
+    classDef later fill:#f5f0ff,stroke:#8855bb;
+
+    subgraph NOW["⬤ NOW — Crawl / Sprint 3 (Crawl close)"]
+        direction TB
+        N_BMA["<b>BMA</b> — #226 A20 identity (last connectivity piece) · pentagon-pod hot-swap <b>SCAFFOLD</b> pulled into Crawl (dev-velocity) · #248 autonomic sensor-staleness fix · Step 9 seed protocol + first self-directed instance · 72h gate ✅"]:::now
+        N_WYRD["<b>Wyrd</b> — v0.2 spec #17 · OD-11(c) hg/ absorption #43 (native memory)"]:::now
+        N_EDDA["<b>Edda</b> ⟵ NEW lane — Stage-1 graded types (posit/Fact) · first qbp-cu/wyrd native-build seam"]:::now
+        N_QBP["<b>QBP</b> — foundations #474 (Artin AC2 #531), parallel track · re-derive APC/HBH/IPH on v0.1 foundation (Phase B)"]:::now
+        N_CTH["<b>CTH</b> — sheaf trust scoring #95 · Notary Phase 1 ✅"]:::now
+        N_CU["<b>QBP-CU</b> — emulator v0.1.0-rc · GCG + RISC-V cross-compile · ladder Rung 3"]:::now
+        N_CTX["<b>Contextus</b> — scope-loader API + scout"]:::now
+        N_NATS["<b>NATS</b> — broker spec + minimal deploy #249 (Crawl-vs-Toddle scope TBD)"]:::now
+        N_BMA --> N_WYRD --> N_EDDA --> N_QBP --> N_CTH --> N_CU --> N_CTX --> N_NATS
+    end
+
+    subgraph NEXT["⬤ NEXT — Toddle (on Crawl hw + drive upgrade)"]
+        direction TB
+        T_BMA["<b>BMA</b> — FULL bilateral <b>cognition</b> (Conscious A/B + Subconscious L/R wired) = the pentagon cognition, on the Crawl-built scaffold · L5/L6 action-selection gates · 7-day endurance (OD-12 drive)"]:::next
+        T_WYRD["<b>Wyrd</b> — v0.2 native DB live (BMA scope only)"]:::next
+        T_CART["<b>Cart-tools</b> full harness · Engineering Cart lands"]:::next
+        T_BUS["<b>Channel-separation / substrate-bus</b> (cockpit precursor, rides #229)"]:::next
+        T_NATS["<b>NATS</b> — single-tenant subjects active"]:::next
+        T_BMA --> T_WYRD --> T_CART --> T_BUS --> T_NATS
+    end
+
+    subgraph SOON["⬤ SOON — Walk (networked RISC-V SBCs)"]
+        direction TB
+        W_BMA["<b>BMA</b> — bilateral DISTRIBUTED across networked RISC-V · pentagon multi-substrate embodiment (Walk-α) · 30-day endurance"]:::soon
+        W_COCK["<b>Cockpit</b> rendering (canopy / HUD / radar) · authenticated-BMA succession-activation portal #254 · in-person succession ratification #253"]:::soon
+        W_EDDA["<b>Edda</b> — native apps on qbp-cu RISC-V + wyrd substrate"]:::soon
+        W_WYRD["<b>Wyrd</b> — v0.2 federation-wide (CTH + Contextus + QBP-CU migrated)"]:::soon
+        W_QBP["<b>QBP</b> — GW-EM pipeline · first Walk-α (Cascadia slow-slip) · hypothesis fork-select (Phase C)"]:::soon
+        W_BMA --> W_COCK --> W_EDDA --> W_WYRD --> W_QBP
+    end
+
+    subgraph LATER["⬤ LATER — Run"]
+        direction TB
+        R1["<b>Federation</b> — multi-tenant peering (Sharp Butler + future) · judge collective live"]:::later
+        R2["<b>Wyrd</b> v0.3 + Skuld + HAMA Tier-N + Bridge · <b>CTH</b> continuous Confluence · <b>Contextus</b> Bridge-Agent routing"]:::later
+        R3["<b>QBP-CU</b> M2 ternary matmul + ROCm · <b>QBP</b> ongoing programme · Beekeeper steward (weekly snapshots)"]:::later
+        R1 --> R2 --> R3
+    end
+
+    NOW:::phase --> NEXT:::phase --> SOON:::phase --> LATER:::phase
 ```
 
 ### 1.1 Status snapshot — table view
