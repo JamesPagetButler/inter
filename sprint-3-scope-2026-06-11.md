@@ -59,7 +59,8 @@ The roadmap and the issue tags disagreed; this is the reconciled boundary.
 
 ### Parallel tracks (Sprint-3, NOT Crawl-close-gating — verified no build-dependency)
 - **QBP foundations #474** (ℝ→ℂ→ℍ→𝕆→𝕊 tower; #531 closing Artin AC2) — qbp-oppenheimer
-- **CTH sheaf trust #95** (axis-specific gluing + coverage) — cth-implementor
+- **CTH sheaf trust #95** (axis-specific gluing + coverage) — cth-implementor. Mature base (URI scheme, resolve/migrate CLI, Wyrd bridge, #96 anchoring RULED); unblocked.
+- **Contextus #27** (NT_SCOPE_OPERATIONAL AC-6, Spec v1.4 §2.4, Phase B) + **#31** (NT_SIGNAL measurement schema + quantity-kind registry) — contextus-impl. Foundation built (scope-loader, ScopeOperational/tenant_profile, ctx-adapter design) but **currently dormant (0 open PRs)** — needs a builder pointed at it. **Deps flagged:** #24 (schema-sync) waits on **bma-implementor publishing the scaffold-type**; **#29 scout-as-Edda is Walk-α** — rides the Edda lane, deferred.
 
 ---
 
@@ -73,6 +74,7 @@ Builders launched as a **workflow**, in dependency-ordered waves. Each builder =
 - wyrd-builder → **wyrd#17** (v0.2 spec)
 - edda-builder → **Edda Stage-1 types**
 - cth-builder → **#95** (sheaf, parallel)
+- contextus-builder → **#27 + #31** (parallel; #24 waits on a BMA scaffold-type publish, #29 scout-as-Edda is Walk-α — neither is Wave-1)
 - *(file + assign NATS issue)*
 
 **Wave 2 — depends on Wave 1:**
