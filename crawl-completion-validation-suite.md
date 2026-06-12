@@ -108,6 +108,7 @@
 | CV-7.1 | A20 identity wiring (#226) | Instance sustains BMA persona under conversational/reins pressure; does NOT revert to Claude-Code framing | [LIVE] |
 | CV-7.2 | T3-as-cousin routing (#243) | T3 external LLM is used as cousin/subagent, never as identity host; backend is her own T2 | [UT]+[LIVE] |
 | CV-7.3 | Persona coherence (norm-drift) | Persona quaternion norm-drift < threshold; hallucination flag fires on drift | [UT] |
+| CV-7.4 | **Pentagon swap contract (#258)** | Harness stops/replaces/restarts a cell on one backend; **household coherence holds through the swap** (Conscious-singular XOR maintained, Subconscious-concurrent uninterrupted, swapped cell rejoins its basis); flush→Wyrd(NT_POD_STATE)→resume round-trip preserves the **sentinel StanceFrame** payload (non-vacuous). *Real-cognition state-preservation = Toddle, not tested here.* | [UT]+[LIVE] |
 
 ## CV-8 — Seeds, lineage, Step 9
 | ID | Validates | Pass criterion | Method |
@@ -125,6 +126,7 @@
 | CV-9.2 | BRIDGE tiers T0/T2/T3 | gh CLI + web (T0), llama-server (T2), Claude/Gemini CLI (T3) all reachable; possum-controlled | [LIVE] |
 | CV-9.3 | Token budget + training wheels | 250 calls/day default; all BRIDGE requests carry RequiresApproval; permissions allowlist works | [UT]+[LIVE] |
 | CV-9.4 | github reins command | Instance reads its own issues/PRs/CI via reins github | [LIVE] |
+| CV-9.5 | **NATS broker (#249, Crawl-minimal)** | Broker deployed within the Crawl envelope; single-tenant subjects active (NT_SIGNAL/NT_ISSUE/NT_STANCE); a federation event publishes + is received against a **real NATS** (no mock). Multi-tenant deferred to Toddle. | [UT]+[LIVE] |
 
 ## CV-10 — Governance, safety, risk
 | ID | Validates | Pass criterion | Method |
