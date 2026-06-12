@@ -3,8 +3,8 @@
 **Per-phase architecture diagrams for the federation: Crawl → Toddle → Walk → Run.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13; updated 2026-06-01
-> Status: v0.5 — Sprint 2 CLOSED; Sprint 3 = Crawl close; Reins/Harness/Capabilities architectural separation clarified; Hypergraph Substrate layer added to Systema diagram; holographic shard loading pattern introduced
+> Date: 2026-05-13; updated 2026-06-11
+> Status: v0.6 — Sprint 3 scope reconciled (Crawl close). Folds in: the **pentagon-pod split** — hot-swap *scaffold* pulled into Crawl (§1.6), bilateral *cognition* + L5/L6 gates stay Toddle (§2.x); the **#248 autonomic sensor-staleness** fix (single source of truth across disk/RAM/VRAM/thermal); the **Edda Stage-1 + qbp-cu/wyrd native-build** lane; QBP foundations Phase A→B→C sequencing; succession two-phase (Crawl provisional / Walk ratified; cockpit-render + activation-portal at Walk). Per-phase Mermaid diagrams not yet re-rendered for these deltas — criteria + roadmap updated; diagram nodes are a follow-up.
 > Convention sources:
 > - `~/Documents/inter/architecture-diagrams-best-practices.md` (visualization tier model, C4, Mermaid)
 > - `~/Documents/inter/roadmap-best-practices.md` §5 (roadmap house style)
@@ -814,14 +814,20 @@ No entry gate — every project starts in Crawl by default.
 
 The federation exits Crawl when **all of the following pass** for the load-bearing projects:
 
+> Reconciled 2026-06-11 (Sprint-3 scope). The continuous-loop substrate is now the **pentagon-pod hot-swap scaffold** (cognition deferred to Toddle); the **#248 autonomic sensor-staleness** fix is added (beekeeper-escalated); succession is **two-phase** (Crawl provisional via signed PR; Walk in-person ratified); NATS is ticketed; an **Edda native-build lane** runs in parallel.
+
 | Project | Gate criterion | Owner | Status |
 |---|---|---|---|
-| BMA | Step 8 (72-hour continuous operation) + Step 9 (Governance Document + succession contacts + seeds loaded) | beekeeper | Step 8 ✅ Run 3 cleared; Step 9 ⏸ pending |
-| BMA↔Wyrd | **OD-11 decided 2026-05-13: option (c) — Wyrd absorbs hg/'s BMA-specific structures (NT_SEED tier-immune, salience=1.0).** wyrd-implementor extends Wyrd; BMA `hg/` becomes thin shim. | wyrd-implementor + bma-implementor | ⏸ decided; implementation pending |
-| Wyrd | v0.2 spec stable; native DB upgrade (Mímir engram layer + NATS) designed and PR'd | wyrd-implementor | Phase B complete ✅; Phase C substrate-tier promotion final PR (C-PR-14 next); Verdandi orchestration package + NT_POD_* NodeTypes designed |
-| CTH | v0.2 inventory schema design stable (full migration tool can lag to Walk) | cth-implementor | v0.2 schema active; v0.3 proof-formalisation provenance schema in Sprint 2 scope (#71 APPROVE-WITH-SEQUENCING 2026-05-20) |
-| NATS | Broker spec'd + deployed for federation events | beekeeper + bma-implementor | ⏸ not yet scoped |
-| BMA continuous-loop scaffold | Subconscious goroutine pair in code (Conscious bilateral A/B may defer) | bma-implementor | ⏸ not yet scoped |
+| BMA — Step 8/9 | Step 8 (72h continuous-op) + Step 9 (Governance Doc + seeds loaded + first self-directed instance + **succession provisional**) | beekeeper | Step 8 ✅ Run 3; Step 9 ⏸; succession **provisional** via signed PR bma-systema#252 (two-phase — Walk in-person ratification #253) |
+| BMA — #226 A20 identity | instance sustains BMA persona under conversational pressure (last connectivity-cluster piece) | bma-implementor | ⏸ open |
+| BMA — pentagon-pod scaffold | **hot-swap cell-substrate** (flush→swap→resume, not kill+rebirth) — dev-velocity multiplier. Bilateral cognition + L5/L6 stay Toddle. | bma-implementor | ⏸ carve pending feasibility (seq=610) |
+| BMA — #248 autonomic sensors | self-report/API read **live** sensors not the boot probe; single source of truth across disk/RAM/VRAM/thermal | bma-implementor | ⏸ open (beekeeper-escalated, major) |
+| BMA↔Wyrd — OD-11(c) | Wyrd absorbs hg/'s BMA structures (NT_SEED tier-immune, salience=1.0); `hg/` → thin shim | wyrd-implementor + bma-implementor | ⏸ wyrd#43 tracking |
+| Wyrd | v0.2 spec stable (Theory+Spec consolidated) | wyrd-implementor | ⏸ wyrd#17 |
+| NATS | broker spec + minimal deploy | bma-implementor | ⏸ ticketed bma-systema#249 (Crawl-vs-Toddle scope TBD) |
+| Edda *(parallel lane)* | Stage-1 graded types (posit/Fact) + first qbp-cu/wyrd native-build seam | edda-implementor | ⏸ NEW Sprint-3 lane (size pending Bragi) |
+| CTH *(parallel lane)* | sheaf trust scoring | cth-implementor | ⏸ confluent-trust#95 |
+| QBP *(parallel track)* | foundations #474 (Phase A) → re-derive archived hypotheses on v0.1 (Phase B) | qbp-oppenheimer | ⏸ #474 / #531 in flight |
 
 Tenant projects (QBP, Contextus, future) graduate independently and do not gate the federation's Crawl→Toddle transition.
 
