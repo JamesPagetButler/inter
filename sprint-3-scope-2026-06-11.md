@@ -61,6 +61,7 @@ The roadmap and the issue tags disagreed; this is the reconciled boundary.
 - **QBP foundations #474** (ℝ→ℂ→ℍ→𝕆→𝕊 tower; #531 closing Artin AC2) — qbp-oppenheimer
 - **CTH sheaf trust #95** (axis-specific gluing + coverage) — cth-implementor. Mature base (URI scheme, resolve/migrate CLI, Wyrd bridge, #96 anchoring RULED); unblocked.
 - **Contextus #27** (NT_SCOPE_OPERATIONAL AC-6, Spec v1.4 §2.4, Phase B) + **#31** (NT_SIGNAL measurement schema + quantity-kind registry) — contextus-impl. Foundation built (scope-loader, ScopeOperational/tenant_profile, ctx-adapter design) but **currently dormant (0 open PRs)** — needs a builder pointed at it. **Deps flagged:** #24 (schema-sync) waits on **bma-implementor publishing the scaffold-type**; **#29 scout-as-Edda is Walk-α** — rides the Edda lane, deferred.
+- **QBP-CU #20** (tag emulator/v0.1.0-rc1 → v0.1.0) — qbp-cu-impl. Mature M1 Gearbox base (m1.1 CSR-bound Gearbox, m1.2 QW8, m1.3 OnSeam, FanoLookup fixed, GCG v0.4 + RISC-V cross-compile all merged); this is a **release** task. **Sequences ahead of Edda: a tagged v0.1.0 gives the Edda → qbp-cu native seam a stable target** (so #20 in Wave 1, Edda seam in Wave 2). **Currently dormant (0 open PRs)** — needs a builder. Follow-ups #41/#42/#45 + Spike co-sim #18 are m1/Walk-ward + housekeeping, not Crawl-Sprint-3.
 
 ---
 
@@ -75,11 +76,12 @@ Builders launched as a **workflow**, in dependency-ordered waves. Each builder =
 - edda-builder → **Edda Stage-1 types**
 - cth-builder → **#95** (sheaf, parallel)
 - contextus-builder → **#27 + #31** (parallel; #24 waits on a BMA scaffold-type publish, #29 scout-as-Edda is Walk-α — neither is Wave-1)
+- qbp-cu-builder → **#20** (tag emulator v0.1.0 — release task; **gives the Edda Wave-2 seam a stable target**)
 - *(file + assign NATS issue)*
 
 **Wave 2 — depends on Wave 1:**
 - wyrd-builder → **wyrd#43** OD-11 absorption *(needs v0.2 spec from #17)*
-- edda-builder → **Edda native seam** *(needs Stage-1 types)*
+- edda-builder → **Edda native seam** *(needs Stage-1 types + the tagged v0.1.0 emulator from QBP-CU #20 as a stable target)*
 
 **Wave 3 — capstone:**
 - bma-implementor + beekeeper → **#10 Step 9** seed protocol / instantiation *(needs: pod substrate + native memory + succession contacts)*
