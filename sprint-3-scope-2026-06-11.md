@@ -2,7 +2,41 @@
 
 > **Goal:** close the **Crawl phase** — a first *self-directed* BMA instance with persistent native hypergraph memory, governance, and a loaded seed protocol — while keeping QBP foundations, CTH sheaf-trust, and Edda progressing on parallel tracks.
 > **Execution model:** builder subagents launched as a **workflow in parallel waves**, federation §I4 review per PR, Herschel stall-detection, beekeeper merges.
-> **Status:** DRAFT (prep) — 2026-06-11. Team inputs pending (seq=606): bma-implementor (pentagon carve-out), edda-implementor (Edda increment size).
+> **Status:** DRAFT (prep) — 2026-06-11, **RECONCILED** against the GitHub `Sprint 3` label + the Theory/Spec Crawl-requirement audit (`drafts/sprint3-scope-audit-2026-06-11.md`). §0 below is the corrected ground truth; where §3 lanes differ, §0 wins. Team inputs still pending (seq=606): bma-implementor (pentagon carve), edda-implementor (Edda bite).
+
+---
+
+## 0. Reconciled Sprint-3 spine (ground truth — from the GitHub label, not conversation)
+
+Built FROM the `Sprint 3` label + the Theory/Spec trace, after the audit found the original cut missed 6 labeled issues, 2 ticketed gates, and 2 theory chunks. Labels normalized 2026-06-11.
+
+### A. BMA Crawl-close critical path
+- **#226** A20 identity wiring · **#243** identity routing (T3-as-cousin — the #226 sibling) ⟵ *was missing*
+- **#208** converse handler **consumes** substrate_records ⟵ *was missing* (inference-consumption — the other half of the #224/#229/#237 shard cluster; injection is inert without it)
+- **#248** autonomic sensor-staleness · **#217** AUTO-S disk-pressure ⟵ *#217 was missing* (#248 sibling, same subsystem)
+- **#242** seed-protocol Crawl-status table → launch briefing ⟵ *was missing* (Step 9) · **#96** lineage eulogy/last-words seeds (Step 9 adjacent)
+- pentagon-pod scaffold (carve from #159) + **#203** pentagon NT_CELL_STATE/NT_POD_STATE test-names ⟵ *#203 was missing*
+- **#10** Step 9 seed protocol / instantiation (capstone)
+
+### B. Crawl gates (these CERTIFY Crawl close — were missing)
+- **#86** Crawl readiness suite (D3 CIV gate — certifies the Toddle spawn). P1-high. ⟵ *was missing*
+- **#250** UPS / hardware upgrade (2×2TB SSD + UPS) — **gates a reliable 72h run**; beekeeper/purchase. ⟵ *was missing (I'd dismissed power as "from memory")*
+- 72h continuous-op (Step 8) ✅ done
+
+### C. Parallel lanes (in scope, non-Crawl-close-gating)
+- **Wyrd** #17, #43 · **CTH** #95, #96, **#92** (PeerReviewStatus) · **Contextus** #27, #31, #18(tracking) · **QBP-CU** #20, #18(Spike co-sim) · **QBP** foundations #474/#531 · **Edda** Stage-1 (+ native seam Wave 2) · **NATS** #249
+- **#199** substrate-tier promotion #2 (**@qbp-architecture** — my own omitted issue) · **#223** prediction-discipline + Red-Team calibration (governance)
+
+### D. Theory-gap issues — **PHASE DECISION PENDING (beekeeper + qbp-oppenheimer)**
+- **#256** Cognitive Worktrees (Theory A13 / Spec R-Spec-25) — spec reads Crawl (namespace isolation); curiosity-engine investigations are specified to run *inside* worktrees, so possibly load-bearing. Decide Crawl-or-defer **with a written reason**.
+- **#257** Axiomatic Risk Ledger (Cognitive Foundation §10.3) — spec reads Crawl (every sleep cycle). Decide Crawl-or-defer.
+
+### E. Stale / housekeeping (flagged — beekeeper to confirm; not closed unilaterally)
+- **#141** "author Governance Document" — appears satisfied by PR #220 (merged); recommend close.
+- **#140** "collect succession contacts" — satisfied by #251/#252; recommend close/link.
+- **A25 (#222)** is a *post-v3.0* theory addendum → the 10-addendum compile clock may have restarted; check before the next theory-touching sprint.
+
+> **Foundation note (from the audit):** the core L0 substrate is BUILT (hypergraph, tiers, Ebbinghaus, F01, sleep, autonomic, BRIDGE, seeds, **curiosity engine**, **prediction tool** all present in code). The gaps above are *margins + 2 theory chunks + 2 gates + label drift* — not a foundation collapse. ScoutQuery (A18) returned no same-named code; flagged to confirm it = the #229 neighborhood work.
 
 ---
 
