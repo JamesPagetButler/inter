@@ -27,9 +27,12 @@ Built FROM the `Sprint 3` label + the Theory/Spec trace, after the audit found t
 - **Wyrd** #17, #43 · **CTH** #95, #96, **#92** (PeerReviewStatus) · **Contextus** #27, #31, #18(tracking) · **QBP-CU** #20, #18(Spike co-sim) · **QBP** foundations #474/#531 · **Edda** Stage-1 (+ native seam Wave 2) · **NATS** #249
 - **#199** substrate-tier promotion #2 (**@qbp-architecture** — my own omitted issue) · **#223** prediction-discipline + Red-Team calibration (governance)
 
-### D. Theory-gap issues — **PHASE DECISION PENDING (beekeeper + qbp-oppenheimer)**
-- **#256** Cognitive Worktrees (Theory A13 / Spec R-Spec-25) — spec reads Crawl (namespace isolation); curiosity-engine investigations are specified to run *inside* worktrees, so possibly load-bearing. Decide Crawl-or-defer **with a written reason**.
-- **#257** Axiomatic Risk Ledger (Cognitive Foundation §10.3) — spec reads Crawl (every sleep cycle). Decide Crawl-or-defer.
+### D. Theory-gap issues — **DECIDED: CRAWL** (beekeeper 2026-06-11)
+- **#256** Cognitive Worktrees (Theory A13 / Spec R-Spec-25) — **Crawl** (load-bearing for the curiosity engine, which runs investigations inside worktrees). Validated by CV-6.
+- **#257** Axiomatic Risk Ledger (Cognitive Foundation §10.3) — **Crawl** (updated every sleep cycle). Validated by CV-10.6.
+
+### F. Crawl-exit gate — the Validation Suite (the Sprint-3 close condition)
+**Sprint 3 does not close until the Crawl-Completion Validation Suite (`crawl-completion-validation-suite.md`, ~55 tests, CV-1…CV-13) is all-GREEN + notary D6.** The loop: run → any RED files a `crawl-validation` issue linked to the CV-id → fix (test ships with the fix) → re-run → repeat until green. Implementing issue: **bma-systema#86**. The hardest gates: CV-12.1 (72h), CV-12.2 (UPS/#250), CV-13.x (self-directed-development proof, needs Step-9 instantiation).
 
 ### E. Stale / housekeeping (flagged — beekeeper to confirm; not closed unilaterally)
 - **#141** "author Governance Document" — appears satisfied by PR #220 (merged); recommend close.
