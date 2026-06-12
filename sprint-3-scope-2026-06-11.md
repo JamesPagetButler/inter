@@ -2,7 +2,7 @@
 
 > **Goal:** close the **Crawl phase** — a first *self-directed* BMA instance with persistent native hypergraph memory, governance, and a loaded seed protocol — while keeping QBP foundations, CTH sheaf-trust, and Edda progressing on parallel tracks.
 > **Execution model:** builder subagents launched as a **workflow in parallel waves**, federation §I4 review per PR, Herschel stall-detection, beekeeper merges.
-> **Status:** DRAFT (prep) — 2026-06-11, **RECONCILED** against the GitHub `Sprint 3` label + the Theory/Spec Crawl-requirement audit (`drafts/sprint3-scope-audit-2026-06-11.md`). §0 below is the corrected ground truth; where §3 lanes differ, §0 wins. Team inputs still pending (seq=606): bma-implementor (pentagon carve), edda-implementor (Edda bite).
+> **Status:** **RECONCILED + PRE-FLIGHT RESOLVED + DISPATCH FINALIZED** — 2026-06-11. Reconciled against the GitHub `Sprint 3` label + the Theory/Spec audit (`drafts/sprint3-scope-audit-2026-06-11.md`); all pre-flight team replies folded in (pentagon #258, Edda#5, NATS #249, qbp-cu #59/#18). **§0 = corrected ground truth · §4 = finalized dispatch · §5 = pre-flight resolutions.** Awaiting beekeeper review of this finalized cut, then launch. (§2/§7 are the reconciliation history trail.)
 
 ---
 
@@ -86,8 +86,8 @@ The roadmap and the issue tags disagreed; this is the reconciled boundary.
 - **wyrd#17** Wyrd v0.2 spec — consolidate Theory + Spec v1.0
 - **wyrd#43** OD-11(c) — Wyrd absorbs BMA `hg/` structures (NT_SEED tier-immune, salience=1.0); `hg/` becomes a thin shim
 
-### Lane C — NATS (messaging; owner TBD)
-- **FILE ISSUE** — NATS broker spec + deploy (roadmap criterion 4; currently unticketed)
+### Lane C — NATS (messaging; bma-builder)
+- **#249** — broker spec + **minimal Crawl deploy** + single-tenant subjects + real-NATS integration test (no mock). Multi-tenant = Toddle. Wave 3. *(Resolved 2026-06-11: in Crawl scope.)*
 
 ### Lane D — Edda (native app substrate; owner edda-implementor — size pending, seq=606)
 - **Edda Stage-1** — tier×width graded type system (ℂ/ℍ/𝕆/𝕊 × QW-width) + the `posit`-linear / `Fact`-copyable split (per fork-charrette Addendum B)
@@ -102,38 +102,44 @@ The roadmap and the issue tags disagreed; this is the reconciled boundary.
 
 ---
 
-## 4. Parallel-wave dispatch plan (workflow execution)
+## 4. Parallel-wave dispatch plan (FINALIZED 2026-06-11 — pre-flight resolved)
 
-Builders launched as a **workflow**, in dependency-ordered waves. Each builder = a fresh repo+issue-scoped instance per `inter/prompt/<repo>-builder-launch-prompt.md`. Each PR carries a §I4 reader-list (builder author · implementor primary · @qbp-architecture cross-layer coherence · @beekeeper constitutional). Herschel routes cross-builder dependencies; **beekeeper merges**.
+Builders launched as a **workflow**, dependency-ordered, **capacity-staged at ~6 concurrent/wave** (91%-disk / 16GB box; the `pre-run-resource-estimate` gate applies to the orchestration). Each builder = a fresh repo+issue-scoped instance per `inter/prompt/<repo>-builder-launch-prompt.md`. §I4 chain per PR: builder author · implementor primary · @qbp-architecture cross-layer · @beekeeper constitutional. Herschel routes cross-builder deps; **beekeeper merges**. Full per-row table: `sprint3-dispatch-table-2026-06-11.md`.
 
-**Wave 1 — no cross-deps (launch concurrently):**
-- bma-builder → **#226** (A20 identity)
-- bma-builder → **pentagon-pod scaffold** (new issue)
-- wyrd-builder → **wyrd#17** (v0.2 spec)
-- edda-builder → **Edda Stage-1 types**
-- cth-builder → **#95** (sheaf, parallel)
-- contextus-builder → **#27 + #31** (parallel; #24 waits on a BMA scaffold-type publish, #29 scout-as-Edda is Walk-α — neither is Wave-1)
-- qbp-cu-builder → **#20** (tag emulator v0.1.0 — release task; **gives the Edda Wave-2 seam a stable target**)
-- *(file + assign NATS issue)*
+**Wave 1 — critical-path enablers + lane-openers (6):**
+- bma-builder → **#226** A20 identity · bma-builder → **#248** sensor-staleness (+#217)
+- wyrd-builder → **wyrd#17** v0.2 spec · cth-builder → **#95** sheaf
+- qbp-cu-builder → **#20** emulator v0.1.0 (unblocks Edda W2)
+- edda-builder → **Edda#5 W1** (ℂ→ℍ types + capability/mode)
 
-**Wave 2 — depends on Wave 1:**
-- wyrd-builder → **wyrd#43** OD-11 absorption *(needs v0.2 spec from #17)*
-- edda-builder → **Edda native seam** *(needs Stage-1 types + the tagged v0.1.0 emulator from QBP-CU #20 as a stable target)*
+**Wave 2 — depends on W1 (6):**
+- bma-builder → **#208** converse *consumes* shard · bma-builder → **#258** Pentagon contract-carve (+sentinel StanceFrame) · bma-builder → **#243** identity routing
+- wyrd-builder → **wyrd#43** OD-11 *(needs #17)* · contextus-builder → **#27 + #31**
+- edda-builder → **Edda#5 W2** qbp-cu native demo *(needs W1 + #20; ℍ→Gearbox research-tier pending wyrd#68)*
 
-**Wave 3 — capstone:**
-- bma-implementor + beekeeper → **#10 Step 9** seed protocol / instantiation *(needs: pod substrate + native memory + succession contacts)*
+**Wave 3 — theory-foundational + remaining (≤6):**
+- bma-builder → **#256** Worktrees · **#257** Risk Ledger · **#242** seed-status · **#249** NATS (Crawl-minimal)
+- qbp-cu-builder → **#59** prove-before-bake *(needs QBP#540 export)* · **#18** Spike co-sim
 
-Wave N+1 launches only after Wave N's PRs are §I4-cleared (the workflow's review gate). The single off-ramp risk is **Step 9's succession contacts** — a human gate no builder can close.
+**Wave 4 — validation + capstone (sequential, gated):**
+- bma-builder + notary → **#86** CV-suite implementation
+- bma-implementor + **beekeeper** → **#10 Step 9 instantiation** *(needs substrate W1–3 + succession + seeds)*
+- qbp-architecture + notary → **CV loop** (run → RED files `crawl-validation` → fix → re-run → all-GREEN + D6 → **Crawl/Sprint-3 closes**)
+
+Wave N+1 launches only after Wave N's PRs are §I4-cleared. **Not builder-dispatched:** #250 (UPS/hardware), the succession ceremony (#251/#252 + your signed merge), #10 instantiation (your generational act).
+
+**Parallel tracks (own cadence):** QBP #474/#531 + #540 + the re-derivation verdict (seq=613); CTH #96; Lean consolidation inter#70.
+**Deferred (named):** full pentagon cognition + L5/L6 (#157→Toddle); Edda 𝕆/𝕊 + wyrd seam (Stage-1b); qbp-cu OMul/SMul (post-Phase-B); cart-tools full harness (Toddle).
 
 ---
 
-## 5. Open inputs before launch (the pre-flight checklist)
-1. **bma-implementor confirm** the pentagon carve-out (pod scaffold → Crawl; cognition + L5/L6 → Toddle) — seq=606.
-2. **edda-implementor scope** the Stage-1 bite (types alone vs types + one native seam) — seq=606.
-3. **File the NATS issue** (criterion 4 has no ticket).
-4. **Cart-tools scope** decision (minimal-Crawl vs Toddle).
-5. **Succession contacts** — beekeeper action; gates Step 9 capstone.
-6. **Beekeeper sign-off** on this scope + the dispatch table, then workflow-execute.
+## 5. Pre-flight checklist — RESOLVED (2026-06-11)
+1. **Pentagon carve** — ✅ DECIDED: contract-carve into Crawl (**#258**); per bma-implementor build-truth (seq=614) — Crawl gets the swap contract + flush/resume plumbing (sentinel StanceFrame); velocity payoff lands at Toddle. #157 stays whole at Toddle.
+2. **Edda bite** — ✅ Stage-1a (**Edda#5**): ℂ→ℍ types + capability/mode core + qbp-cu native demo (seq=615). 𝕆/𝕊 + wyrd seam = Stage-1b.
+3. **NATS** — ✅ **#249 in Crawl scope** (minimal deploy + single-tenant subjects); Wave 3.
+4. **Cart-tools** — ✅ deferred to Toddle (keep Crawl lean under capacity).
+5. **Succession contacts** — 🚧 beekeeper (in flight via #251/#252); gates the #10 capstone.
+6. **Beekeeper sign-off** — ✅ scope signed + PR #73 merged 2026-06-12. *This PR adds the finalized dispatch + the pre-flight resolutions; review then launch.*
 
 ---
 
