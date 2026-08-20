@@ -71,8 +71,8 @@ wait_ready() {
   return 1
 }
 
-render() {  # $1=handle $2=workdir $3=role
-  sed -e "s#{{HANDLE}}#$1#g" -e "s#{{WORKDIR}}#$2#g" -e "s#{{ROLE}}#$3#g" "$TMPL" | tr -d '\n'
+render() {  # $1=handle $2=workdir $3=role $4=template(optional, defaults to $TMPL)
+  sed -e "s#{{HANDLE}}#$1#g" -e "s#{{WORKDIR}}#$2#g" -e "s#{{ROLE}}#$3#g" "${4:-$TMPL}" | tr -d '\n'
 }
 
 onboarded=0; skipped=0
@@ -86,7 +86,9 @@ while IFS= read -r line; do
   if [ -n "${ONLY// /}" ]; then case " $ONLY " in *" $persona "*) : ;; *) continue ;; esac; fi
   case "$SKIP" in *" $persona "*) echo "· skip $persona (ONBOARD_SKIP)"; skipped=$((skipped+1)); continue ;; esac
   role="$(role_of "$persona")"
-  prompt="$(render "$persona" "$workdir" "$role")"
+  # deming gets its own boot directive (register/subscribe/monitor + babysit-the-team job)
+  tmpl="$TMPL"; [ "$persona" = "deming" ] && [ -f "$HERE/deming-boot.tmpl" ] && tmpl="$HERE/deming-boot.tmpl"
+  prompt="$(render "$persona" "$workdir" "$role" "$tmpl")"
 
   if [ "$DRY" -eq 1 ]; then
     echo "── $persona  ($workdir)  role=$role ──"
