@@ -19,7 +19,9 @@
 #   FED_TMUX_SESSION=fed         # tmux session (default: fed)
 #   FED_TERMINALS_CONF=/path     # personas.conf override
 #   ONBOARD_SKIP="a b"           # handles to skip (e.g. resumed/grounded sessions)
-#   READY_TIMEOUT=30             # seconds to wait for a pane's chat prompt
+#   READY_TIMEOUT=75             # seconds to wait for a pane's chat prompt
+#                                # (needs headroom: 11 concurrent claude boots on
+#                                #  a slow host can take >30s to reach the prompt)
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -27,7 +29,7 @@ CONF="${FED_TERMINALS_CONF:-$HERE/personas.conf}"
 TMPL="$HERE/onboard-prompt.tmpl"
 SESSION="${FED_TMUX_SESSION:-fed}"
 SKIP=" ${ONBOARD_SKIP:-} "
-READY_TIMEOUT="${READY_TIMEOUT:-30}"
+READY_TIMEOUT="${READY_TIMEOUT:-75}"
 DRY=0; ONLY=""
 for a in "$@"; do if [ "$a" = "--dry-run" ]; then DRY=1; else ONLY="$ONLY $a"; fi; done
 
