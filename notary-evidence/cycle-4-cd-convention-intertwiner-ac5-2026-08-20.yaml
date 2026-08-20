@@ -1,0 +1,116 @@
+# NT_NOTARY_VERIFICATION_EVIDENCE
+# Notary-implementor Cycle 4 — Phase 1 dispatch (CANONICAL RECORD — promoted from the notary
+#   repo via PR (working copy: notary@e994891). Isolation-safe: added via PR, not the live
+#   worktree.
+# Date: 2026-08-20
+# Produced by: notary-implementor (Claude Opus 4.8)
+# Dispatched by: qbp-oppenheimer (cross-session request), beekeeper-directed check-in
+# Target: QBP PR #575 AC5 — the blocking convention-intertwiner criterion for #578
+
+verification_evidence:
+  target_claim_node: "NT_CD_CONVENTION_INTERTWINER_SCHAFER_BAEZ_AC5"
+  invoking_persona: "qbp-oppenheimer"
+  competency_invoked: "lean_coq_port"        # cross-formalism correspondence proof (Lean/Schafer <-> Agda/Baez)
+  verification_date: "2026-08-20"
+
+  target_claim: >
+    The Lean #474 foundation (Schafer Cayley-Dickson convention) and the Agda substrate
+    (Baez CD convention) formalize the SAME CD multiplication up to the canonical
+    isomorphism phi(a,b) = (a, b*), where * is an additive involutive anti-automorphism.
+    Concretely: phi( (a,b) ⋆_Schafer (c,d) ) ≡ phi(a,b) ⋆_Baez phi(c,d) for all a,b,c,d.
+    If it holds, AC5 has NO discrepancy (PASS); a genuine mismatch would be BLOCKING for #578.
+
+  source_artifacts:
+    lean_schafer: "JamesPagetButler/QBP proofs/QBP/Foundations/CDAlg.lean @ master — (a,b)(c,d) = (ac − d̄b, da + bc̄)"
+    agda_baez: "JamesPagetButler/QBP proofs/agda-cubical/CDJoinBR.agda cd-mul @ PR#575 head 1eb3544"
+    phi: "phi(a,b) = (a, b*)"
+
+  method: >
+    INDEPENDENT COLD DERIVATION (per dispatcher's explicit ask: re-derive, do NOT re-read the
+    two posted Red-Team/Gemini derivations — third pass is only third-independent if cold).
+    Step 0 (§2.g read-back-verify): fetched BOTH multiplication formulas from the actual source
+    files at the stated refs — did not trust the dispatcher's transcription. Confirmed:
+      - Lean CDAlg.lean doubling recursion literally reads (ac − d̄b, da + bc̄).
+      - Agda cd-mul four corners literally read: inl·inl=a⊗c, inl·inr=starS a⊗d,
+        inr·inl=c⊗b, inr·inr=negS(d⊗starS b)  ⇒  (ac − d b*, a* d + c b).
+    Step 1: symbolic derivation of both sides, order-preserved (base algebra non-commutative),
+    using only that * is additive, involutive ((x*)*=x), and an anti-automorphism ((xy)*=y*x*).
+
+  derivation:
+    schafer_mul: "(a,b) ⋆_S (c,d) = (a·c − d*·b, d·a + b·c*)"
+    baez_mul:    "(A,B) ⋆_B (C,D) = (A·C − D·B*, A*·D + C·B)"
+    lhs: >
+      phi( (a,b) ⋆_S (c,d) ) = phi(a·c − d*·b, d·a + b·c*)
+        = ( a·c − d*·b , (d·a + b·c*)* )
+        = ( a·c − d*·b , a*·d* + c·b* )        # (da)*=a*d*, (bc*)*=(c*)*b*=c b*
+    rhs: >
+      phi(a,b) ⋆_B phi(c,d) = (a, b*) ⋆_B (c, d*)
+        = ( a·c − d*·(b*)* , a*·d* + c·b* )
+        = ( a·c − d*·b , a*·d* + c·b* )        # (b*)*=b
+    conclusion: "LHS ≡ RHS componentwise, for all a,b,c,d. Identity HOLDS."
+
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    AC5 PASS — NO discrepancy. phi(a,b)=(a,b*) is an algebra isomorphism from (pairs, ⋆_Schafer)
+    to (pairs, ⋆_Baez): it is its own inverse (phi∘phi = id, since ** = id — mechanized as
+    `phi_involutive`), additive, and — proven here — multiplicative (`intertwiner`). Independent cold
+    derivation CONCURS with the two prior hand derivations (Red Team + Gemini). Because only binary
+    products appear, NO associativity of the base algebra is used → the intertwiner holds at EVERY
+    Cayley-Dickson level, octonion (𝕆) and sedenion (𝕊) included. Not blocking for #578 on the
+    multiplication-convention axis. UPGRADED 2026-08-20: now KERNEL-CHECKED in Lean 4 (see mechanization).
+
+  # =========================================================
+  # MECHANIZATION (2026-08-20) — upgrades the hand PASS to kernel-checked
+  # =========================================================
+  mechanization:
+    prover: "Lean 4, toolchain v4.30.0 (federation standard; Wyrd pins v4.30.0-rc1). NO Mathlib."
+    proof_file: "notary/proofs/CDConventionIntertwiner.lean"
+    structure: >
+      StarNAlg — a type with add/neg/mul and a unary `star` assumed only to be an additive
+      involutive anti-automorphism (star_add, star_mul, star_star). Three axioms = the entire
+      trust base. No Ring, no associativity, no commutativity assumed.
+    theorems_proved:
+      - "intertwiner : phi S (mulS S x y) = mulB S (phi S x) (phi S y)  — the AC5 identity, ∀ pairs."
+      - "phi_involutive : phi S (phi S p) = p  — phi is its own inverse (⇒ bijective ⇒ iso)."
+    compile_result: "lean exit 0 (clean type-check, offline)."
+    axiom_audit: "#print axioms → both theorems depend on axioms: [propext] ONLY."
+    axiom_note: >
+      Zero sorry, zero native_decide, zero Classical.choice. `propext` alone is a strict SUBSET of
+      the federation-accepted Lean trust base {propext, Classical.choice, Quot.sound} (CDAlg.lean
+      header standard). Kernel-checked at the strongest honestly-available rigor for this claim.
+
+  trust_tiers_achieved: []
+  trust_tier_note: >
+    The T0–T7 ladder is an implementation-verification scale; this is a cross-formalism
+    CORRESPONDENCE proof, so no ladder tier is claimed (claiming one would be false precision).
+    Rigor level: MECHANIZED / KERNEL-CHECKED (Lean 4, propext-only) — upgraded 2026-08-20 from the
+    original independent hand symbolic derivation. Both agree.
+
+  trust_dependencies:
+    - "Correctness of the two source-formula transcriptions — MITIGATED by §2.g read-back-verify from the actual .lean/.agda at the stated refs"
+    - "Abstract-* axioms: * additive, involutive, anti-automorphism (assumed to hold of both starS/Lean-star)"
+    - "Hand algebra (this derivation is human-auditable, not machine-checked)"
+    - "Lean side additionally: mulCoeff kernel-pinned to sedenion sgnTable via mulCoeff_four_eq_sgnTable (decide) — strengthens the Lean anchor independently"
+
+  residual_obligations:
+    - "BASE-CASE + INVOLUTION AGREEMENT (the real cross-formalism-drift risk, STILL OPEN — tracked as QBP #579 AC1): this proof shows the CD doubling-STEP intertwines GIVEN a shared involution * and shared lower product ⊗. It does NOT verify that Lean's `star` and Agda's `starS`, nor the base algebra (ℝ) and its conjugation, actually COINCIDE between the two formalisms. That agreement is a separate, unverified obligation — see seam below."
+    - "DISCHARGED 2026-08-20: mechanize the intertwiner over an abstract star-algebra → kernel-checked. Done in Lean 4 (notary/proofs/CDConventionIntertwiner.lean, axioms=[propext]). See mechanization block above."
+
+  cross_formalism_correspondences:
+    - "NT_CROSS_FORMALISM_CORRESPONDENCE: phi(a,b)=(a,b*) maps Lean/Schafer CD-mul to Agda/Baez CD-mul. The convention difference is exactly the placement of conjugation (Schafer: d̄b, bc̄ inner; Baez: db*, a*d) and phi absorbs the second-coordinate b↦b* twist. This correspondence is itself a first-class notary-verifiable claim (tracked here rather than as a code comment)."
+
+  seam_records_fired:
+    - "NT_SEAM_RECORD (INFORMATIVE, low severity): the intertwiner is proven at the ABSTRACT-* level only. The base-case/involution-coincidence obligation (residual #1) is where a silent Lean↔Agda definition drift could still hide even though every single-formalism check passes. Flagged for the reviewer/Judge Collective, per failure-mode #4 (cross-formalism drift = the single biggest practical risk)."
+
+  prediction_accuracy_ledger:
+    predicted_outcome: >
+      Expected the intertwiner to HOLD (VERIFIED / AC5 PASS) — Red Team and Gemini already
+      concurred, and the phi=(a,b*) twist is the standard Schafer↔Baez reconciliation.
+      Expected the derivation to hinge on the anti-automorphism law in the second component.
+    predicted_delta: "Both components expected to match exactly; no associativity needed."
+    actual_outcome: >
+      VERIFIED, exactly as predicted — both components identical; the second-component match is
+      driven by (da)*=a*d* and (bc*)*=c b*, the first by (b*)*=b. No associativity invoked, so it
+      holds at 𝕆/𝕊. Unpredicted (informative): surfaced the base-case/involution-agreement seam as
+      the residual cross-formalism obligation not covered by the step-intertwiner proof.
+    actual_delta: "0 component mismatches. 1 seam fired (base-case agreement), not predicted."
