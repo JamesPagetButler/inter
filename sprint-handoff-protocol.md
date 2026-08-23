@@ -129,6 +129,19 @@ What I've already done to unstick:
 
 qbp-architecture (or beekeeper) responds with resolution; Herschel resumes after the resolution lands.
 
+### Sprint-Close runbook (the deterministic close sequence)
+
+Triggered by beekeeper close-intent (per `~/Documents/CLAUDE.md` §Sprint-Lifecycle Triggers → confirm-handshake). Once confirmed, these steps execute **in order**, each with an owner. This is a fixed runbook so "close the sprint" runs deterministically, not improvised:
+
+1. **Completeness gate** (qbp-architecture + Herschel). Verify every sprint-scope issue closed and every PR merged with written §I4 sign-offs + ticked test-plan boxes (`pr-merge-completeness` hard gate). Any gap → carry-item or the close pauses; never wave it through.
+2. **Housekeeping gate** (qbp-architecture). Confirm `housekeeping-before-sprint` for the *next* sprint is satisfiable — incl. the 10-addendum compile rule for any theory/spec the next sprint touches.
+3. **Builder-learnings harvest** (each implementor owns their builder; qbp-architecture ratifies federation-wide). For each builder deployed this sprint, read its `inter/wisdoms/<builder>.md` deltas and promote the *general* ones into that builder's launch prompt (bump "Last updated"); route cross-builder lessons to `wisdoms/_federation.md` for qbp-architecture coherence-ratification. "No new learnings" is a valid, common outcome — overhead scales with real learning, not run count. *(The org-scale sleep cycle: per-run episodic learnings → consolidated into semantic prompt/wisdoms. See `architecture-records/2026-08-23-builder-refinement-loop-RECORD.md`.)*
+4. **Retrospective** (qbp-architecture). Post the close-out to the sprint channel: goal delivered/partial, deliverables landed, substantial-progress signals (§5), process-breakdowns, carry-items (reuse the §3 Condition-A template).
+5. **Dashboard + carry-forward** (qbp-architecture; Herschel assists). Update `BMA-BADASS.md` (Sprint Lifecycle State, Decisions log, History); roll unfinished scope + new follow-ups into the next sprint's backlog.
+6. **Announce close** (qbp-architecture). One channel post declaring Sprint N CLOSED + the next-sprint housekeeping-gate status, so every seat re-grounds to the new state.
+
+The federation "picks this up" because each step names an owner and step 6 is the communication event the seats re-ground from — rules + communication, crash-durable via the always-loaded trigger rule + this on-disk runbook.
+
 ### Condition C: Sprint partial (close vs continue?)
 
 Some Sprint-N items Done; others not blocked but still in progress + close criterion isn't fully met. Herschel posts a status check:
