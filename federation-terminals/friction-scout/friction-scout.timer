@@ -1,0 +1,19 @@
+[Unit]
+Description=Cadence for the federation friction-scout (inter#83)
+
+[Timer]
+# First sweep 3 min after boot/enable (let the federation finish cold-boot
+# panes first), then every 10 min thereafter. 10 min is a deliberate
+# Tier-1 call (documented on inter#83): frequent enough to catch a stuck
+# prompt or a BLOCKED report before it wastes an hour of a seat's idle time,
+# infrequent enough that a Haiku triage call six times an hour is a trivial
+# token cost against the whole point of this daemon (keeping Deming, an
+# Opus seat, dormant). Override via `systemctl --user edit friction-scout.timer`
+# if a different cadence is wanted — no code change needed.
+OnBootSec=3min
+OnUnitActiveSec=10min
+Persistent=true
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target
