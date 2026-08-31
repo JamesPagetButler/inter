@@ -60,7 +60,7 @@ roster_sid() {
 
 # Known federation persona handles — the content-sniff dominance check ranks
 # against these. Keep in sync with the persona rows below.
-FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor'
+FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming'
 
 # AUTO resolution order: roster (authoritative, workdir-matched) -> content sniff.
 # Content sniff = newest *.jsonl in the project dir where THIS persona is the
@@ -177,12 +177,15 @@ cmd_launch() {
   [ "${#P_PERSONA[@]}" -gt 0 ] || die "no personas in $CONF"
 
   local i first=1
+  local -a FRESH=()
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
     if [ -n "$sid" ] && [ ! -f "$PROJECTS/$(slug_of "$wd")/$sid.jsonl" ]; then
       echo "⚠  $persona: session $sid not found — pane falls back to fresh 'claude'"
       sid=""
     fi
+    # fresh panes (no resumable session) get auto-onboarded below
+    [ -z "$sid" ] && FRESH+=("$persona")
     local run; run="$(resume_cmd "$sid")"
 
     if [ "$LAYOUT" = "windows" ]; then
@@ -209,7 +212,19 @@ cmd_launch() {
     tmux set -t "$SESSION" pane-border-format " #T " 2>/dev/null
   fi
   echo "✓ built tmux session '$SESSION' (${LAYOUT})."
-  echo "  Each persona re-arms its own §2.i Monitor on session start (federation-watcher boot protocol)."
+
+  # auto-onboard fresh panes (federation-optimization #6): ground → register →
+  # subscribe → arm §2.i Monitor → re-anchor, so each comes up fully operational
+  # and responsive on chat instead of as a blank claude. Resumed panes keep their
+  # own context and are skipped (only FRESH handles are passed). Gate: ONBOARD=1
+  # (default). Relies on pre-trusted dirs + sessionbridge/Monitor allowlist (#1/#2)
+  # so the boot-protocol tool calls run without approval stalls.
+  if [ "${ONBOARD:-1}" = "1" ] && [ "${#FRESH[@]}" -gt 0 ] && [ -x "$HERE/onboard-federation.sh" ]; then
+    echo "  Auto-onboarding ${#FRESH[@]} fresh pane(s): ${FRESH[*]}"
+    "$HERE/onboard-federation.sh" "${FRESH[@]}" || echo "  ⚠ onboard pass reported issues (see above)"
+  else
+    echo "  Each persona re-arms its own §2.i Monitor on session start (federation-watcher boot protocol)."
+  fi
 
   if [ -t 1 ]; then
     [ -n "${TMUX:-}" ] && exec tmux switch-client -t "$SESSION" || exec tmux attach -t "$SESSION"
