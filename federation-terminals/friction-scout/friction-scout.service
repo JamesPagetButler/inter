@@ -1,0 +1,15 @@
+[Unit]
+Description=Federation friction-scout — one Haiku triage sweep (inter#83)
+After=default.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Documents/inter/federation-terminals/friction-scout
+ExecStart=%h/Documents/inter/federation-terminals/friction-scout/run-scout.sh
+# each run is a short-lived subprocess (gather signals + one `claude -p`
+# triage call + a conditional post) — Type=oneshot is correct here, not a
+# persistent loop; the friction-scout.timer unit provides the cadence.
+StandardOutput=append:%h/.federation-watcher/friction-scout/systemd.log
+StandardError=append:%h/.federation-watcher/friction-scout/systemd.log
+# bound a single sweep so a hung `claude -p` call can't wedge the next tick
+TimeoutStartSec=180

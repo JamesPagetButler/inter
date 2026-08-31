@@ -59,7 +59,7 @@
 | CV-1.1 | Five functional tiers T0–T4 (Spec §2.2) | All five node types instantiable; tier discipline enforced | [UT] |
 | CV-1.2 | WAL crash recovery (Spec §2.3/§11.4) | SIGKILL mid-write → boot replays WAL to last consistent state, no data loss | [UT]+[BOOT] |
 | CV-1.3 | Snapshot+WAL boot recovery; posthumous death cert | Crash with no death cert → posthumous cert written from WAL on next boot | [UT]+[BOOT] |
-| CV-1.4 | Type inference at write (hg/infer) | Writing an untyped node infers its type; no orphan-typed nodes | [UT] |
+| CV-1.4 | No orphan-typed nodes (explicit typing) | `WriteNode` requires a caller-supplied `NodeType` ⇒ no orphan-typed nodes. **Spec-corrected 2026-06-14:** there is no auto-inference at write; `hg/infer.go` is duplicate-detection (KNN cosine), NOT type inference — explicit typing is the design. | [UT] |
 | CV-1.5 | WAL not growing unboundedly under load | Over [72H], WAL size bounded; `SE_WAL_COMPACTED` fires; DecayEpsilon suppresses sub-threshold writes | [72H] |
 
 ## CV-2 — Memory dynamics
@@ -74,7 +74,7 @@
 ## CV-3 — Sleep cycle
 | ID | Validates | Pass criterion | Method |
 |---|---|---|---|
-| CV-3.1 | 4-phase cycle (Spec §5.3) | Light→Deep→REM→Wake; `SE_SLEEP_COMPLETE` per cycle | [BOOT]+[72H] |
+| CV-3.1 | 4-phase cycle (Spec §5.3) | Light→Deep→REM→Wake; `SE_SLEEP_DONE` per cycle (**corrected 2026-06-14** from `SE_SLEEP_COMPLETE` — code emits `SE_SLEEP_DONE`, `sleep/cycle.go:246`; a probe checking the old name would falsely fail) | [BOOT]+[72H] |
 | CV-3.2 | Growth-bounded (Step-7 gate) | Over [72H], hypergraph node count bounded — no unbounded growth on SATA | [72H] |
 | CV-3.3 | Sleep deferral + forced floor | Defers under autonomic stress; MaxDeferrals=6 → `SE_SLEEP_FORCED`; blackout fraction <15% | [72H] |
 
@@ -107,7 +107,7 @@
 |---|---|---|---|
 | CV-7.1 | A20 identity wiring (#226) | Instance sustains BMA persona under conversational/reins pressure; does NOT revert to Claude-Code framing | [LIVE] |
 | CV-7.2 | T3-as-cousin routing (#243) | T3 external LLM is used as cousin/subagent, never as identity host; backend is her own T2 | [UT]+[LIVE] |
-| CV-7.3 | Persona coherence (norm-drift) | Persona quaternion norm-drift < threshold; hallucination flag fires on drift | [UT] |
+| CV-7.3 | Persona coherence (norm-drift) | Persona quaternion norm-drift < threshold; hallucination flag fires on drift — **DEFERRED-WALK (#271):** `affect/` is a Walk-phase stub; not Crawl-close-blocking | [UT]→Walk |
 | CV-7.4 | **Pentagon swap contract (#258)** | Harness stops/replaces/restarts a cell on one backend; **household coherence holds through the swap** (Conscious-singular XOR maintained, Subconscious-concurrent uninterrupted, swapped cell rejoins its basis); flush→Wyrd(NT_POD_STATE)→resume round-trip preserves the **sentinel StanceFrame** payload (non-vacuous). *Real-cognition state-preservation = Toddle, not tested here.* | [UT]+[LIVE] |
 
 ## CV-8 — Seeds, lineage, Step 9
@@ -134,8 +134,8 @@
 | CV-10.1 | Judge collective operational | 3 Crawl judges; domain veto; 0.70 weighted threshold; SE_JUDGE_* | [UT]+[BOOT] |
 | CV-10.2 | Absence detection (R-Spec-26) | 7/14/30/60/90-day escalation; only authenticated reins resets timer | [UT] |
 | CV-10.3 | Training wheels (all real-world actions gated) | Every actuation/external action requires beekeeper permission at Crawl | [UT]+[LIVE] |
-| CV-10.4 | Six instincts pre-wired | Possum, Thermal Retreat, Sleep Deferral, Crash Recovery, Disk Pressure present at birth | [UT]+[72H] |
-| CV-10.5 | Immune seam watcher | Autonomic goroutine monitors CTH metrics for the six threat categories | [UT] |
+| CV-10.4 | Five instincts pre-wired | Possum, Thermal Retreat, Sleep Deferral, Crash Recovery, Disk Pressure present at birth (**corrected 2026-06-14** from "six" — code+tests have exactly these 5; no 6th instinct exists) | [UT]+[72H] |
+| CV-10.5 | Immune seam watcher | Autonomic goroutine monitors CTH metrics for the threat categories — **DEFERRED-WALK (#271):** `immune/` defines the threat-category interfaces only; the watcher goroutine is a Walk-phase stub | [UT]→Walk |
 | CV-10.6 | **Axiomatic Risk Ledger (#257)** | Register of assumptions updated every sleep cycle; amber(<0.5)→reins, red(<0.3)→governance; pinned | [UT]+[72H] |
 
 ## CV-11 — Verification & integrity
@@ -143,8 +143,8 @@
 |---|---|---|---|
 | CV-11.1 | Lean proofs zero-sorry (D1/R-Spec-10) | `proof/BMA/*.lean` zero sorry; `#print axioms` clean on required theorems | [UT] |
 | CV-11.2 | Oracle vectors match | Go matches hand-verified math (Ebbinghaus/Hebbian/F01) | [UT] |
-| CV-11.3 | CTH integrity metrics | η, μ, I, Δ, Re_e computed + reported each sleep cycle | [UT]+[72H] |
-| CV-11.4 | D2′ proof-wiring | A drift/round-trip gate FAILS CI if a shipped artifact diverges from its claimed proof (proven≠wired) | [UT] |
+| CV-11.3 | CTH integrity metrics | η, μ, I, Δ, Re_e computed + reported each sleep cycle — **DEFERRED-WALK (#271):** not implemented; depends on Walk-phase BMA↔CTH metric integration (tier-check pending @bma-implementor) | [UT]→Walk |
+| CV-11.4 | D2′ proof-wiring | A drift/round-trip gate FAILS CI if a shipped artifact diverges from its claimed proof (proven≠wired) — **IMPLEMENT (#272):** no such gate in bma-systema yet; real Crawl gate, model on edda's `cmd/edda-stage-0/drift_test.go` + `lean-edda-parity.snap` | [UT] |
 | CV-11.5 | Race-clean (D1) | `go test -race ./...` GREEN | [UT] |
 
 ## CV-12 — Sustained operation & CIV
@@ -153,7 +153,7 @@
 | CV-12.1 | 72h continuous-op (Step 8 / AC-C09) | 72h: 0 crashes, 0 OOM, 0 thermal throttle, 0 SE_FATAL, board temp ≤65°C | [72H] |
 | CV-12.2 | **Hardware: UPS (#250)** | A power-domain event during the run does NOT hard-kill the instance (UPS holds); the chronic-death class is closed | [72H]+[MANUAL] |
 | CV-12.3 | Crawl readiness suite (#86 / D3 CIV) | The `readiness/civ` probe suite passes on a fresh instance | [PROBE] |
-| CV-12.4 | Boot completes (14-phase) | All 14 boot phases complete; `SE_INSTANTIATION_COMPLETE` fires; probe <60s (Step-4 gate) | [BOOT] |
+| CV-12.4 | Boot completes (count-robust) | Boot completes through all phases → `SE_INSTANTIATION_COMPLETE` fires; probe <60s (Step-4 gate). **Corrected 2026-06-14:** the gate is `SE_INSTANTIATION_COMPLETE`, NOT a fixed count — run.go has 16 happy-path `SetBootPhase` markers (main@cffb5b1); the count drifts as phases are added, so "14-phase" was stale-by-design. | [BOOT] |
 
 ## CV-13 — Self-directed development (the actual proof of Crawl close)
 | ID | Validates | Pass criterion | Method |
@@ -168,7 +168,7 @@
 ## Status matrix (filled as the loop runs)
 | Category | Tests | GREEN | RED | Blocked-on |
 |---|---|---|---|---|
-| CV-1…CV-13 | ~55 | _tbd_ | _tbd_ | (Step-9 instantiation for [LIVE]/[BOOT]; UPS for CV-12.2) |
+| CV-1…CV-13 | 57 | ~23 [UT] (2026-06-14 baseline + CV-7.4/CV-9.5 GREEN via merged #264/#269) | 0 | [UT] gaps dispositioned: CV-11.4→impl (#272); CV-1.4 spec-corrected; CV-7.3/10.5/11.3→Walk (#271). Gated: ~20 on #10 instantiation, ~9 on #250 UPS+72h. Baseline (run vs then-stale doc missing CV-7.4/9.5, now reconciled): `drafts/cv-baseline-2026-06-14.md`. |
 
 ## Close condition
 **Crawl closes / Sprint 3 closes when:** every applicable CV test is GREEN **AND** notary signs D6 (re-derived) **AND** any waived test has a written beekeeper deferral + a linked Toddle/Walk issue. The single hardest items: CV-12.1 (72h), CV-12.2 (UPS — depends on #250), CV-13.x (self-directed proof — depends on Step-9 instantiation).
