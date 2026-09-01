@@ -1,0 +1,80 @@
+# NT_NOTARY_VERIFICATION_EVIDENCE
+# Notary-implementor Cycle 3 — Phase 1 dispatch (CANONICAL RECORD — promoted from the notary
+#   repo via PR (working copy: notary@e994891). Isolation-safe: added via PR, not a shared worktree).
+# Date: 2026-08-20
+# Produced by: notary-implementor (Claude Opus 4.8)
+# Dispatched by: qbp-oppenheimer (cross-session request), beekeeper-directed check-in
+# Target: QBP PR #549 — byte-identical vendoring of the CTH schema mirror
+
+verification_evidence:
+  target_claim_node: "NT_CTH_SCHEMA_VENDORING_BYTE_IDENTITY_549"
+  invoking_persona: "qbp-oppenheimer"
+  competency_invoked: "lean_go_differential"   # differential-oracle pass (exact byte-equality differential)
+  verification_date: "2026-08-20"
+
+  target_claim: >
+    docs/cth/inventory.schema.v0.3.json at QBP PR #549 head 323cbfa is BYTE-IDENTICAL to the
+    upstream canonical schema at confluent-trust@18c91db (the #98 merge) schema/inventory.schema.json
+    — i.e. a faithful vendored mirror, not an edited copy.
+
+  source_artifacts:
+    qbp_side: "JamesPagetButler/QBP docs/cth/inventory.schema.v0.3.json @ 323cbfa4d7127980ac905ef5366acc65d870ff6e (PR #549 head, verified via gh pr view)"
+    upstream: "JamesPagetButler/confluent-trust schema/inventory.schema.json @ 18c91db67ad12efe8907ba0f5e745408c9db6260"
+
+  method: >
+    Independent differential. Fetched BOTH files from the GitHub contents API at their exact refs
+    (authoritative source — not the local checkout, not the PR's self-reported hash), decoded, then
+    (1) re-derived sha256 of each, (2) compared byte sizes, (3) ran `cmp` for byte-level equality,
+    and (4) independently confirmed the upstream ref is genuinely the canonical source (not just some
+    ref that happens to match).
+
+  results:
+    qbp_sha256:      "56ebd18095b3feb86a001dee1f376e7e4cb7df05f061b7cc691a861114529c6b"
+    upstream_sha256: "56ebd18095b3feb86a001dee1f376e7e4cb7df05f061b7cc691a861114529c6b"
+    byte_size_qbp: 20950
+    byte_size_upstream: 20950
+    cmp_result: "no differences (byte-identical)"
+    upstream_ref_provenance: >
+      confluent-trust@18c91db IS the merge commit of PR #98 (gh: mergeCommit.oid == 18c91db67ad…,
+      mergedAt 2026-06-12), whose message explicitly stamps the schema semver 0.3.1 -> 0.3.2 (C1
+      schema-sync gate). It is ALSO the most-recent commit touching schema/inventory.schema.json on
+      confluent-trust `main` — so the mirror tracks the CURRENT canonical upstream, no newer drift.
+
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    Faithful mirror CONFIRMED across all three sub-claims of "verified":
+      • EXISTS — both files present at the stated refs.
+      • CORRECT — byte-identical (sha256 match + cmp clean), AND the upstream ref is the genuine
+        canonical #98 merge / v0.3.2 schema (not a byte-match against the wrong source).
+      • FRESH — 18c91db is still the newest commit touching that schema on main; no post-#98 drift.
+    The dispatcher's self-reported QBP-side sha256 was independently reproduced (not trusted).
+
+  trust_tiers_achieved: []
+  trust_tier_note: >
+    Not an implementation-tier (T0–T7) verification; this is an exact byte-equality differential.
+    The claim (byte-identical mirror) is established at cryptographic-hash strength — the strongest
+    available form for a file-identity claim, not a sampled/property differential.
+
+  trust_dependencies:
+    - "GitHub contents API integrity (returned bytes == repo blob at ref)"
+    - "sha256 collision-resistance"
+    - "git object model (ref -> content resolution); refs confirmed via gh pr view / gh api commits"
+
+  residual_obligations: []   # exact-equality claim fully discharged
+
+  cross_formalism_correspondences: []
+
+  seam_records_fired:
+    - "NT_SEAM_RECORD (INFORMATIVE, cosmetic — NOT a blocker): PR #549 branch is named `refresh/cth-schema-0.3.1` while the content synced is v0.3.2 (title + file are 0.3.2). Version-label lag in the branch name only; the vendored bytes are the correct 0.3.2 canonical. Naming-hygiene note for the reviewer; no effect on the byte-identity verdict."
+
+  prediction_accuracy_ledger:
+    predicted_outcome: >
+      Expected VERIFIED byte-identity — the dispatcher had already reported a matching sha256 and
+      the PR is a stated mirror-refresh. Main risk anticipated: that the upstream ref cited might
+      not be the true canonical (byte-match against a stale/wrong source).
+    predicted_delta: "sha256 equal; sizes equal; cmp clean."
+    actual_outcome: >
+      VERIFIED, exactly as predicted — sha256 and size match, cmp clean. The anticipated risk was
+      checked and cleared: 18c91db independently confirmed as the #98 merge and the current schema
+      tip on main. Unpredicted (informative): branch-name version-label lag (0.3.1 vs 0.3.2) seam.
+    actual_delta: "0 byte differences. 1 cosmetic seam (branch-name label lag), not predicted."
