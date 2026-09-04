@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# run-bounded — launch a compute/proof job under a HARD memory + time cap.
+#
+# Layer 1 of the resource-containment program (inter#99 / EPIC inter#100).
+# A runaway job OOM-kills ITSELF inside its own cgroup scope; the box and every
+# other federation seat are untouched. This is *containment that needs no
+# prediction* — the answer to the fact that proof-checking cost is undecidable
+# a priori (RCA live-test seq=905): you cannot always estimate the cost, but you
+# can always cap the blast radius.
+#
+# Mechanism (validated on this box 2026-09-01, exit 137 = cgroup OOM-kill):
+#   rootless `systemd-run --user --scope -p MemoryMax=<M> -p MemorySwapMax=0`
+#   — the `memory` controller IS delegated to user-1000.slice here (CPU is not).
+#   Time bound via `timeout` (reliable regardless of scope RuntimeMaxSec support).
+#
+# Usage:
+#   run-bounded <mem> <maxSec> <command> [args...]
+#     mem     : hard memory cap as a systemd size, e.g. 12G, 512M, 2G
+#     maxSec  : wall-clock cap in whole seconds (job killed if it exceeds this)
+#     command : the command + args to run under the cap
+#
+# Exit code = the command's own, except:
+#   137 = OOM-killed (exceeded <mem>) or otherwise SIGKILLed
+#   124 = timed out  (exceeded <maxSec>)
+#
+# Every launch is appended to the proto intent-ledger (RUN_BOUNDED_LEDGER;
+# default ~/.federation-watcher/run-bounded.ledger) — the seed of the layer-4
+# allocation ledger (inter#80).
+set -uo pipefail
+
+LEDGER="${RUN_BOUNDED_LEDGER:-$HOME/.federation-watcher/run-bounded.ledger}"
+
+[ $# -ge 3 ] || { echo "usage: run-bounded <mem e.g. 12G> <maxSec> <command> [args...]" >&2; exit 2; }
+MEM="$1"; SEC="$2"; shift 2
+
+# validate: mem is a systemd size (digits + optional K/M/G/T), sec is integer
+case "$MEM" in ''|*[!0-9KMGTkmgt]*) echo "run-bounded: <mem> must be a size like 12G or 512M" >&2; exit 2;; esac
+case "$SEC" in ''|*[!0-9]*)          echo "run-bounded: <maxSec> must be whole seconds" >&2; exit 2;; esac
+
+command -v systemd-run >/dev/null || { echo "run-bounded: systemd-run not available" >&2; exit 3; }
+command -v timeout     >/dev/null || { echo "run-bounded: timeout not available" >&2; exit 3; }
+
+UNIT="rb-$(date +%s)-$$"
+mkdir -p "$(dirname "$LEDGER")"
+printf '%s\tSTART\tunit=%s\tmem=%s\tmaxsec=%s\tcmd=%s\n' \
+  "$(date -u +%FT%TZ)" "$UNIT" "$MEM" "$SEC" "$*" >> "$LEDGER"
+
+# --quiet suppresses the "Running scope as unit" banner.
+# MemorySwapMax=0 closes the swap escape hatch (else a runaway just thrashes swap).
+# timeout --kill-after=10: SIGTERM at the deadline, SIGKILL 10s later if ignored.
+systemd-run --user --scope --quiet --unit="$UNIT" \
+  -p MemoryMax="$MEM" -p MemorySwapMax=0 \
+  -- timeout --kill-after=10 "$SEC" "$@"
+rc=$?
+
+case $rc in
+  137) note="OOM-KILLED (hit ${MEM} cap) or SIGKILL"; msg="job hit its ${MEM} memory cap and was killed (box protected)";;
+  124) note="TIMED OUT (hit ${SEC}s)";              msg="job hit its ${SEC}s time cap and was killed";;
+  0)   note="ok"; msg="";;
+  *)   note="exit $rc"; msg="";;
+esac
+printf '%s\tDONE\tunit=%s\trc=%s\t%s\n' "$(date -u +%FT%TZ)" "$UNIT" "$rc" "$note" >> "$LEDGER"
+[ -n "$msg" ] && echo "run-bounded: $msg" >&2
+exit $rc
