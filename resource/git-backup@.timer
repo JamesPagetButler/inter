@@ -1,0 +1,13 @@
+[Unit]
+Description=Run git-backup for seat %i on a cadence (durability mirror, opt-in)
+
+[Timer]
+# first run shortly after boot, then every 15 min; catches up a missed run
+# if the box was off (Persistent=true), which is exactly the crash-recovery
+# case this tool exists for.
+OnBootSec=5min
+OnUnitActiveSec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

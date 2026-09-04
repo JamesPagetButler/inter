@@ -1,0 +1,14 @@
+[Unit]
+Description=git-backup — durability mirror of un-pushed HEAD for seat %i (refs/backup/%i/<branch>, never refs/heads/*)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/git-backup/%i.env
+ExecStart=/usr/bin/env bash -c 'cd "$GIT_BACKUP_REPO" && exec "$GIT_BACKUP_BIN" %i -r "${GIT_BACKUP_REMOTE:-origin}"'
+# lightweight + safe caps — this is a periodic `git push` of one small ref,
+# not a build job
+Nice=10
+MemoryMax=200M
+CPUQuota=20%
