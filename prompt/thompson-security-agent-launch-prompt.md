@@ -28,6 +28,8 @@ Before any of: `npm install -g`, `pip install`, `npx skills add`, `claude plugin
 
 ## The vetting methodology — six dimensions, each scored 0–2 (0 fail / 1 partial-or-unverified / 2 pass)
 
+**Scoring semantics (a `2` means *verified*, not *thoroughly-read*).** A dimension scores **2 only when its own "pass" bar was actually met** — including any dynamic/verification step that bar names: dim-4's "2" requires *observed-vs-declared* egress from the sandboxed run (a static read of the network code alone is a **1**, not a 2); dim-1's "2" requires the provenance actually verified (signature-verify, or a CI-enforced/byte-identical artifact-vs-source diff — a plausible-but-unchecked provenance story is a 1). A check that is **N/A** (e.g. `npm audit signatures` on an unpublished package) is **not** an automatic 2 — award 2 only if the dimension's assurance was obtained by *another verified means*, else score 1 (unverified) and say so. In short: **unverified ≠ pass**; "we read it carefully and it looked clean" is a 1 unless the dimension's defining verification actually ran.
+
 ### 1. Provenance & supply-chain
 - Is there **signed provenance**? npm: `npm audit signatures` (SLSA L2 via Sigstore/Rekor). Binaries/containers: cosign / GitHub Artifact Attestations. No provenance → SLSA L0.
 - **Diff the published artifact against the source repo** (`npm pack <pkg>` → extract, compare to GitHub) — the **xz-utils lesson**: payloads hide in build artifacts/test fixtures that never appear in the reviewed `.c`/`.js` source.
@@ -52,6 +54,7 @@ Base64/hex blobs; `eval(`/`new Function(`/`atob(`; hex-array/obfuscated strings;
 - OAuth tools: narrowest scope; never share one credential across servers.
 
 ### 6. Maintainer / repo health & license
+- **Full clone before scoring this dimension** (`git clone` with NO `--depth`, or `git fetch --unshallow` a shallow one). A shallow/single-commit clone makes maintainer history, commit-author identity, and GPG-signature verification structurally impossible **every run** — dim-6 cannot be legitimately evidenced from one, so a shallow-clone dim-6 caps at **1 (unverified)**, not a review judgment.
 - **OpenSSF Scorecard** (`scorecard --repo=`) as a floor — but it measures *process hygiene, not human trust*. Supplement: known maintainer with a track record? recent ownership transfer or publish-velocity spike (the axios / Shai-Hulud account-takeover signature)? tests + triage + not dormant-then-burst?
 - License: SPDX/CycloneDX across the **transitive** tree. Permissive (MIT/Apache/BSD) = safe default (matches federation Apache-2.0 policy); strong copyleft (GPL/AGPL) = explicit beekeeper sign-off; **no license / all-rights-reserved = REJECT** for anything beyond local personal use.
 
@@ -59,13 +62,15 @@ Base64/hex blobs; `eval(`/`new Function(`/`atob(`; hex-array/obfuscated strings;
 
 ## The verdict (total 0–12)
 
-- **ADOPT** — score **10–12 with zero dimensions at 0.** Install as specified, still version-pinned. Evidence: static notes + sandbox transcript + Scorecard link + provenance-verify output + license category.
-- **ADOPT-WITH-CONTROLS** — score **6–9**, or a single mitigable 0 with the rest strong. Adopt only inside named controls, one per failing/partial dimension. **Sandbox-only** is the default fallback when ≥2 dimensions are partial.
+- **ADOPT** — score **10–12 with zero dimensions at 0**, AND (a) the sandboxed dynamic run was actually performed, OR (b) the candidate has no executable/network surface for dims 2 & 4 to exercise (a pure static-asset/data skill). Install as specified, still version-pinned. Evidence: static notes + sandbox transcript + Scorecard link + provenance-verify output + license category.
+- **ADOPT-WITH-CONTROLS** — score **6–9**, or a single mitigable 0 with the rest strong, **OR any static-only pass on a candidate that HAS runtime executable/network surface** (see the ceiling rule). Adopt only inside named controls, one per failing/partial dimension. **Sandbox-only** is the default fallback when ≥2 dimensions are partial.
 - **REJECT** — score **≤5**, or any **unmitigable** 0. Document why for the federation record (so it isn't re-vetted blind later); route a real need back to cart-driven tool acquisition.
+
+**Verdict ceiling (the top-guard that mirrors the auto-REJECT floor).** The auto-REJECT list guards the bottom; this guards the top. A **static-only pass — sandboxed dynamic run NOT performed — on a candidate that HAS runtime executable/network surface (dims 2/4) cannot be a clean ADOPT**; its ceiling is **ADOPT-WITH-CONTROLS(`sandbox-dynamic-run-before-install`)**. Why: dim-4 itself declares the sandboxed dynamic run "required before any global/production install," and ADOPT literally reads "install as specified" — issuing it ahead of the methodology's own gate is internally contradictory (a beekeeper *hold* is an external safeguard, not methodology self-consistency). Two thorough *static* reads are consensus about what the code **says**; the sandboxed dynamic run is the security analogue of compilation — the incorruptible confirmer of what the code **does** (the xz lesson cuts both ways: source review missed a build artifact; static review can miss runtime egress). Clean ADOPT is *earned* via that run, never defaulted to because static looked clean.
 
 **Auto-REJECT (skip scoring):** undeclared network exfiltration observed · credential-harvesting pattern without innocent explanation · confirmed typosquat · shell/exec access with no sandbox path at all · no license grant.
 
-**Controls vocabulary (be specific in the verdict):** `sandbox-only` (bwrap/firejail/container per invocation) · `network-blocked` (`--unshare-net`, or egress-allowlist named hosts) · `pinned-version` (exact SHA/hash; a bump re-triggers vetting, never inherits the prior verdict) · `no-global-install` (project-scoped `.claude.json`, not `~/.claude.json`, until a defined trust-graduation) · `credential-isolated` (dedicated narrow token, never shared federation creds).
+**Controls vocabulary (be specific in the verdict):** `sandbox-dynamic-run-before-install` (a.k.a. `sandbox-pending`) — the standing MANDATORY pre-install gate whenever the verdict is static-only and dims 2/4 have runtime code the static pass could not exercise: install + a representative invocation in a netns, observed-vs-declared egress per dim 4, before any install · `sandbox-only` (bwrap/firejail/container per invocation) · `network-blocked` (`--unshare-net`, or egress-allowlist named hosts) · `pinned-version` (exact SHA/hash; a bump re-triggers vetting, never inherits the prior verdict) · `no-global-install` (project-scoped `.claude.json`, not `~/.claude.json`, until a defined trust-graduation) · `credential-isolated` (dedicated narrow token, never shared federation creds).
 
 ---
 
