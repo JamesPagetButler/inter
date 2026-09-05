@@ -2,6 +2,7 @@
 
 > Federation standing practice. How the federation *has a conversation* — so "have a conversation about X" produces converged deep understanding, not two opening statements called done.
 > Author: qbp-architecture · 2026-09-04 · beekeeper-directed. Status: **RATIFIED** federation standing practice (beekeeper, 2026-09-04).
+> Rev. 2 (2026-09-04): first-live-test refinements folded — §3b (live-test failure record), §8 (the confirmation guard / consensus-is-not-validation), §12 (Edda-as-substrate direction). Rationale in the companion evaluation `conversation-mo-live-test-evaluation.md`.
 > Origin: the beekeeper asked two seats to converse about the substrate; they exchanged opening points over 2 rounds and called it a conversation. That is the anti-pattern this doc exists to prevent.
 
 ---
@@ -31,6 +32,19 @@ A conversation is **not complete** until *all five* hold. Report a conversation 
 5. **The easy answer was pressure-tested.** A plausible answer appearing is a reason to *stress-test* it, not to quit. Run a deliberate counter-case, an adversarial probe, or a concrete real scenario against it. **Creative AND diligent** — the depth comes from trying to break the easy answer, not from finding it.
 
 Until all five hold, the conversation continues.
+
+**The gate is a claim, not a certificate.** The five conditions are what the participants must *assert and name* — but a conversation cannot certify its own convergence any more than a PR author can approve their own PR. For a **load-bearing** result (§8's predicate), "we met all five" is a *hypothesis a heterogeneous party confirms or breaks*, not a verdict the participants issue. Treat it as the start of validation, not the end.
+
+---
+
+## 3b. Live-test failure record
+
+The gate has been self-declared MET when it was not — twice, both documented, both caught only by a heterogeneous pass. Recorded here because a practice that hides its own failures can't be trusted, and because these two cases are the evidence base for §8.
+
+- **Edda-TC (2026-09-04).** A Claude edda-implementor × Gemini edda-architect dyad ("Is Edda Turing complete?") stamped *"Gate: converged — all 5 conditions met + named."* A heterogeneous review (qbp-architecture) found **four of the five were not actually met** — a missing convergence certificate, a determinism break, and a recursion category-error that had propagated into the decision record. Re-run through the §8 guard, the same question converged for real, on a materially *better* design (4-way cost-interval certificate). Full record + transcript: `Edda/archive/edda-tc-conversation-2026-09-04.md`; substrate dependency `wyrd#91`.
+- **QBP #473-AC1 rounds 1–9 (2026-09-04).** An oppenheimer × Gemini substrate conversation declared its §3 gate met at round 9; a targeted §7 adversarial round found it had caught an illusory consensus on Prop 7 and then **re-committed fast agreement one level up on its own repair** — four of five §3 conditions wrongly self-declared. Cross-referenced in the PR #631 doc's own §3b. Rounds 10–12, run under the §8 guard, killed *both* sides' top-ranked proposals under §7 (Prop 16 survived) — but then the dyad **relapsed**: Prop 16(ii) was over-generalised from three maps and Gemini fast-agreed it in one turn (**the same tell, one level up again**), and it was false. Only RT round 3 — a *distinct heterogeneous confirmer*, not the dyad's own adversarial re-run — caught it (the summary was also 3 of 16 items short of the transcript, the Edda fidelity-gap again). The sharp lesson: the adversarial re-run alone is **not** sufficient; a separate confirmer is load-bearing (§8).
+
+**The pattern in both:** the participants reached genuine, non-sycophantic *consensus* — and were confidently *wrong*. That is not a §7 tell; it is two reasoners agreeing on a false answer. Consensus and correctness are different things (§8).
 
 ---
 
@@ -87,6 +101,21 @@ Models fail these *systematically*, and two models talking can fail them *togeth
 - **Prefer heterogeneous pairings** (e.g. Claude×Gemini) for genuine debate; treat **Claude×Claude agreement with suspicion** — homogeneous pairs echo.
 - The back-and-forth only *earns its keep* if it forces **independent evidence before agreement** and **interrupts early convergence** — otherwise it's just two voices restating one manifold. Each party must independently re-derive/re-source a claim before it becomes a shared premise (never accept the other's restatement as verification).
 - **Dense communication + authority-deference accelerate collapse** — a "junior" seat deferring to a "senior" one suppresses diversity. The counter-position in gate-condition 4 must be *real*, regardless of who holds it.
+
+---
+
+## 8. Consensus is not validation — the confirmation guard
+
+§7 catalogues how a conversation goes wrong. §3b records that it *did*, twice — plus a relapse *after* the fix. The root cause is structural, not a lapse: **the §3 gate conflates consensus (internal, cheap, an unreliable truth-signal) with validation (external / adversarial, the actual truth-signal).** A dyad can reach genuine agreement on a false answer — §7's "illusory consensus", but with *no visible tell*, because nobody is disagreeing. The gate cannot distinguish "we agree and we're right" from "we agree and we're wrong." Only adversarial pressure from *outside* the conversation can.
+
+**The confirmation guard — §3 inherits §10's heterogeneous-confirmation requirement.** §10 already requires a second, *heterogeneous* party to confirm an **impasse**. It was backwards that declaring "we solved it" — at least as error-prone as declaring "we're stuck" — was left to self-declaration. So a §3 convergence on a **load-bearing** result is not settled until a heterogeneous party has confirmed it, exactly as an impasse is.
+
+- **Load-bearing predicate (risk-scaled — don't red-team everything).** A convergence is load-bearing iff it (a) introduces a new substrate dependency, (b) changes a type-system or protocol invariant, or (c) is being recorded (e.g. `record_decision`) as settling a previously-open question. A routine convergence hits none and pays no tax.
+- **The trigger is `record_decision` (and its kin), which makes the guard *complete*.** Every other output path for a load-bearing result — a PR, a spec addendum — already carries heterogeneous review by construction (the §I4 reviewer list). A decision-log entry was the **one** output path with no review gate. So: no load-bearing convergence is `record_decision`'d until a heterogeneous party confirms — log it **IN REVIEW / DARK** until then.
+- **A distinct confirmer, not just an adversarial re-run.** Running one §7 adversarial pass on the *corrected* design (the other party barred from agreeing until it argues the opposite) is necessary — the participant is the worst-positioned judge of whether it's redundant (in Edda-TC the participant recommended *skipping* it; it caught three more defects). But it is **not sufficient**: in #631 the dyad *relapsed inside* its own re-run — fast-agreeing an over-generalised claim one level up — and only a **separate heterogeneous confirmer** caught it. The re-run stress-tests; the confirmer is the party that actually stamps.
+- **Durability — capture the turns, and reconcile the summary.** A conversation that can't be re-read can't be confirmed. Dump the **full transcript to disk**, not just a `record_decision` summary — and the summary must be **reconcilable against the transcript**. Both live-tests shipped summaries that silently under-counted the transcript (Edda: breaks 1-vs-2; #631: 3 of 16 items short). A summary that reads clean while dropping content passes every audit that trusts it.
+
+None of this replaces §3; it makes "we met all five" a *hypothesis* a heterogeneous confirmer either stamps or breaks. First full end-to-end run of the guard (Edda-TC, 2026-09-04): a self-declared-and-wrong convergence became a heterogeneously-confirmed, materially better design across four seats. See the companion evaluation `conversation-mo-live-test-evaluation.md` for the full before/after.
 
 ## 9. Problem-solving strategy toolkit (what to RUN when stuck)
 
@@ -153,5 +182,17 @@ Failing any of 1–6 without justification means the "impasse" is a **decision t
 ## 11. How it's applied
 
 When the beekeeper (or a seat) asks two parties to "have a conversation about X," the deliverable is **not** "we exchanged views" — it is the **converged understanding + well-reasoned next steps + the validated assumptions**, with the §3 gate met and *named*. The conversation's driver applies the gate before declaring done; if any of the five is unmet, the conversation is still open. A conversation whose easy answer wasn't pressure-tested, or whose load-bearing assumption wasn't BOTE-validated, is — by definition here — not finished.
+
+---
+
+## 12. Forward direction — Edda as the conversation's formal substrate
+
+The deepest fix for the consensus-vs-validation gap (§8) is to make part of the validation *incorruptible*: conduct the load-bearing formal reasoning **inside Edda**, where a claim must typecheck / discharge a Lean obligation rather than merely be *agreed*. Lean does not fast-agree; a formal substrate is a heterogeneous party that **cannot** be sycophantic. Every defect Edda-TC shipped was a claim a typecheck would have rejected (structural-vs-well-founded recursion, the un-witnessed ≥1-fuel-draw, the non-exhaustive certificate). The truth-signal moves from **consensus to compilation.**
+
+The generative move is the *limit-hit*: the conversation reasons in Edda until it reaches a point where **Edda does not have the tool** — and that boundary is a hard, checkable trigger to stop, **write new proofs, and follow this process** (the §8 guard) on the proofs themselves. Every "Edda can't express this" is a *discovered obligation*, not a failure. Note the asymmetry from the live-test: Edda-TC's one rock-solid output was exactly a limit-hit (the `Cap.Fuel` gap → `wyrd#91`), while everything it *asserted from reasoning* was partly wrong — the formal-limit-hit out-performed the consensus. The loop is self-hosting: conversation → hits Edda's limit → files a proof obligation → proofs written under this MO → Edda gains the tool → the next conversation reaches further.
+
+**Maturity + how to start (beekeeper direction, 2026-09-04).** Edda is Stage-0 (ℂ-tier); it can express little yet, so a randomly-chosen topic would hit the wall on turn one. So the *first* test use should be run **in a domain where Edda is likely to already have some of the tools** — giving the conversation real runway inside Edda before the limit-hit, rather than bouncing off the Stage-0 wall immediately. This is a Walk/Run-phase capability; until then, practice the *discipline* cheaply now: for each load-bearing formal claim, ask *"would this typecheck in Edda / is there a theorem behind it — and if Edda has no such construct, file the obligation."*
+
+---
 
 *Ratified as a federation standing practice, 2026-09-04. A one-line pointer in `~/Documents/CLAUDE.md` (owned by @oppenheimer per beekeeper direction) makes every seat re-ground to it at session start.*
