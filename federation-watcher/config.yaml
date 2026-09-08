@@ -59,3 +59,21 @@ busy_flag: ~/.federation-watcher/busy
 # Runtime state and queue directories (not committed to git)
 state_dir: ~/.federation-watcher/state
 deferred_queue: ~/.federation-watcher/deferred.jsonl
+
+# ── Monitor-liveness heartbeat (crash-recovery R3, inter#91) ────────────────
+# The watcher only *delivers* wake events above — it never verified a seat's
+# §2.i Monitor was actually armed to receive them. F3 (2026-08-24 crash
+# recovery): two seats' Monitors died silently (process-exit / mid-gap stop,
+# no completion record); the seat looked "up" but couldn't hear @mentions.
+#
+# Each armed Monitor is, concretely, a `tail -f -n 0 wake/{persona}` child
+# process on this host (see the fan-out doc above) — so liveness is a plain
+# external pgrep, no ack protocol and no write into a healthy seat's own
+# wake file (zero added wake-noise). A dead/absent Monitor is written once,
+# on the alive->dead transition only, to `notify_persona`'s wake file.
+heartbeat:
+  enabled: true
+  interval: 60                    # seconds between liveness sweeps
+  personas_conf: ~/Documents/inter/federation-terminals/personas.conf
+  status_file: ~/.federation-watcher/monitor-liveness.json
+  notify_persona: deming          # who gets the MONITOR_DEAD/RECOVERED wake line

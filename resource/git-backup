@@ -1,0 +1,192 @@
+#!/usr/bin/env bash
+#
+# git-backup — mirror un-pushed local commits to a durable backup ref
+# namespace on a remote, WITHOUT creating a branch, PR candidate, or CI
+# trigger.
+#
+# Design (inter#101 / R5, crash-recovery-review-2026-08-29.md):
+#   Beekeeper-gating a `git push` of a new branch / refs/heads/* ref is a
+#   MERGE-AUTHORIZATION control. It is not a durability control. Un-pushed
+#   gated work sits crash-exposed on a single aging local disk between
+#   commit and beekeeper merge-approval. This tool decouples the two
+#   concerns: it mirrors the current branch's HEAD to
+#   refs/backup/<seat>/<branch> on the remote — a ref namespace that never
+#   appears in `git branch -r`, never becomes a PR candidate, and never
+#   triggers CI. A push under refs/backup/* is pre-authorized as a
+#   durability mechanism; it is explicitly NOT the gated new-branch/heads
+#   push.
+#
+#   Safety: the destination is hardcoded to the refs/backup/ prefix and is
+#   asserted (twice) immediately before every push. This script contains no
+#   code path that can target refs/heads/* or pass --force to anything but
+#   the refs/backup/* destination.
+#
+# Usage:
+#   git-backup [<seat>] [-b <branch>] [-r <remote>] [--dry-run]
+#   git-backup --list [<seat>] [-r <remote>]
+#   git-backup --help
+#
+# Seat resolution order: explicit arg > $FEDERATION_SEAT env >
+#   `git config federation.seat` > error (must be supplied once, then it's
+#   remembered via git config).
+#
+# Recovery (from any clone with the same remote configured):
+#   git fetch <remote> 'refs/backup/<seat>/*:refs/backup/<seat>/*'
+#   git checkout -b <branch>-recovered refs/backup/<seat>/<branch>
+#
+set -euo pipefail
+
+PROG="git-backup"
+BACKUP_PREFIX="refs/backup"
+
+usage() {
+  cat <<'EOF'
+git-backup — mirror un-pushed HEAD to refs/backup/<seat>/<branch> (never refs/heads/*)
+
+Usage:
+  git-backup [<seat>] [-b <branch>] [-r <remote>] [--dry-run]
+  git-backup --list [<seat>] [-r <remote>]
+  git-backup --help
+
+Options:
+  <seat>          Federation seat name (e.g. bma, wyrd, cth). Defaults to
+                  $FEDERATION_SEAT, then `git config federation.seat`.
+  -b, --branch    Branch to back up (default: current branch, i.e. HEAD)
+  -r, --remote    Remote to push the backup ref to (default: origin)
+  --dry-run       Print the push command without running it
+  --list          List existing backup refs for a seat (or all, if omitted)
+  -h, --help      This message
+
+Examples:
+  git-backup bma                 # push current branch -> refs/backup/bma/<branch>
+  git-backup bma -b feat/91-x    # push a specific local branch
+  git-backup --list bma          # show bma's backup refs on the remote
+
+First run in a repo: either pass the seat every time, or remember it once:
+  git config federation.seat bma
+
+Recovery:
+  git fetch origin 'refs/backup/<seat>/*:refs/backup/<seat>/*'
+  git checkout -b <branch>-recovered refs/backup/<seat>/<branch>
+EOF
+}
+
+die() { echo "$PROG: error: $*" >&2; exit 1; }
+
+require_git_repo() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+    || die "not inside a git repository"
+}
+
+resolve_seat() {
+  local explicit="$1"
+  if [ -n "$explicit" ]; then
+    printf '%s' "$explicit"
+    return
+  fi
+  if [ -n "${FEDERATION_SEAT:-}" ]; then
+    printf '%s' "$FEDERATION_SEAT"
+    return
+  fi
+  local cfg
+  cfg="$(git config --get federation.seat 2>/dev/null || true)"
+  if [ -n "$cfg" ]; then
+    printf '%s' "$cfg"
+    return
+  fi
+  die "no seat given. Pass one (git-backup <seat>), set \$FEDERATION_SEAT, or run: git config federation.seat <seat>"
+}
+
+# Backup refs are still git ref path components: reject path traversal,
+# whitespace, and ref-metacharacters so a bad seat/branch name can never
+# escape the refs/backup/<seat>/<branch> shape.
+sanitize_component() {
+  local s="$1"
+  case "$s" in
+    *..*|*' '*|*"$(printf '\t')"*|*'~'*|*'^'*|*':'*|*'?'*|*'*'*|*'['*|*'\'*|/*|*/)
+      die "unsafe ref component: '$s'" ;;
+  esac
+  [ -n "$s" ] || die "empty ref component"
+  printf '%s' "$s"
+}
+
+cmd_list() {
+  local seat="$1" remote="$2"
+  local pattern="${BACKUP_PREFIX}/"
+  [ -n "$seat" ] && pattern="${BACKUP_PREFIX}/${seat}/"
+  echo "$PROG: backup refs on '$remote' matching ${pattern}*:"
+  git ls-remote "$remote" "${pattern}*" | sed 's/^/  /'
+}
+
+main() {
+  local seat="" branch="" remote="origin" dry_run=0 list_mode=0
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --list) list_mode=1; shift ;;
+      -b|--branch) branch="${2:?--branch requires a value}"; shift 2 ;;
+      -r|--remote) remote="${2:?--remote requires a value}"; shift 2 ;;
+      --dry-run) dry_run=1; shift ;;
+      -h|--help) usage; exit 0 ;;
+      --) shift; break ;;
+      -*) die "unknown option: $1 (see --help)" ;;
+      *)
+        if [ -z "$seat" ]; then seat="$1"; else die "unexpected argument: $1"; fi
+        shift ;;
+    esac
+  done
+
+  require_git_repo
+
+  if [ "$list_mode" -eq 1 ]; then
+    if [ -n "$seat" ]; then seat="$(sanitize_component "$seat")"; fi
+    cmd_list "$seat" "$remote"
+    exit 0
+  fi
+
+  seat="$(resolve_seat "$seat")"
+  seat="$(sanitize_component "$seat")"
+
+  if [ -z "$branch" ]; then
+    branch="$(git rev-parse --abbrev-ref HEAD)"
+    [ "$branch" = "HEAD" ] && die "detached HEAD — pass -b <branch> explicitly"
+  fi
+  branch="$(sanitize_component "$branch")"
+
+  local dest="${BACKUP_PREFIX}/${seat}/${branch}"
+
+  # Defense in depth: never let the destination resolve outside
+  # refs/backup/, and never let it land under refs/heads/. Both checks are
+  # redundant with the hardcoded BACKUP_PREFIX above by construction, but
+  # this is the safety-critical line in the file, so it is asserted
+  # explicitly rather than trusted implicitly.
+  case "$dest" in
+    "${BACKUP_PREFIX}/"*) : ;;
+    *) die "internal error: destination '$dest' escaped ${BACKUP_PREFIX}/ — refusing to push" ;;
+  esac
+  case "$dest" in
+    refs/heads/*) die "internal error: destination resolved under refs/heads/ — refusing to push" ;;
+  esac
+
+  local refspec="HEAD:${dest}"
+
+  echo "$PROG: backing up local HEAD ($(git rev-parse --short HEAD) on '$branch') -> ${remote} ${dest}"
+
+  if [ "$dry_run" -eq 1 ]; then
+    echo "$PROG: [dry-run] git push --force -- \"$remote\" \"$refspec\""
+    exit 0
+  fi
+
+  # --force is scoped to the backup ref only — the refspec destination is
+  # hardcoded and asserted above to be under refs/backup/, never
+  # refs/heads/. Force is intentional here: WIP branches get rebased and
+  # amended while gated, and the backup ref must always mirror current
+  # HEAD, not stay fast-forward-only.
+  git push --force -- "$remote" "$refspec"
+
+  echo "$PROG: done. Recover with:"
+  echo "  git fetch $remote '${BACKUP_PREFIX}/${seat}/*:${BACKUP_PREFIX}/${seat}/*'"
+  echo "  git checkout -b ${branch}-recovered ${dest}"
+}
+
+main "$@"

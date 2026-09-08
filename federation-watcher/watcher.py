@@ -34,13 +34,20 @@ Non-mention IMMEDIATE events are deferred when the relevant busy flag exists.
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import yaml
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Optional
 
 CONFIG_PATH = Path(__file__).parent / "config.yaml"
 SESSIONBRIDGE_CHANNELS = Path.home() / ".claude/mcp-servers/sessionbridge/state/channels"
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
 
 # ── Config ────────────────────────────────────────────────────────────────
@@ -51,6 +58,11 @@ def load_config() -> dict:
     for key in ("wake_dir", "busy_flag", "state_dir", "deferred_queue"):
         if key in cfg:
             cfg[key] = Path(os.path.expanduser(str(cfg[key])))
+    hb = cfg.get("heartbeat")
+    if hb:
+        for key in ("personas_conf", "status_file"):
+            if key in hb:
+                hb[key] = Path(os.path.expanduser(str(hb[key])))
     return cfg
 
 
@@ -129,6 +141,111 @@ def write_wake(wake_dir: Path, persona: str, line: str) -> None:
 def is_persona_busy(busy_flag: Path, persona: str) -> bool:
     """True if global busy flag OR persona-specific busy flag is set."""
     return busy_flag.exists() or (busy_flag.parent / f"busy.{persona}").exists()
+
+
+# ── Monitor-liveness heartbeat (crash-recovery R3, inter#91) ────────────────
+# "Armed ≠ alive" — the wake-file fan-out above only *delivers* events; it
+# never confirmed a seat's §2.i Monitor was still there to receive them.
+# This section adds a periodic, low-overhead liveness sweep on top of it.
+
+def load_seat_personas(personas_conf: Path) -> list[str]:
+    """Parse persona names out of personas.conf — the same roster
+    launch-federation.sh uses to open panes, so "active seat" here means
+    exactly what it means there. Comment/blank lines skipped; the ADVISERS
+    block is entirely commented (`# gemini | ...`) so it's excluded for
+    free — advisers hold no seat and no Monitor to check."""
+    if not personas_conf.exists():
+        return []
+    out: list[str] = []
+    with open(personas_conf, errors="replace") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "|" not in line:
+                continue
+            persona = line.split("|", 1)[0].strip()
+            if persona:
+                out.append(persona)
+    return out
+
+
+def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
+    """External liveness check for a persona's §2.i wake-file Monitor.
+
+    Each agent terminal arms its Monitor as a literal
+    `tail -f -n 0 {wake_dir}/{persona}` child process on this host (see the
+    module docstring's fan-out architecture) — so `pgrep -f` against that
+    command line is a direct, zero-cost, zero-noise liveness probe: it never
+    touches the persona's own wake file, so a healthy seat gets no extra
+    wake event out of this check.
+
+    Returns True (alive) / False (dead) / None (the check itself failed —
+    e.g. pgrep unavailable) so a tooling hiccup surfaces as "unknown"
+    rather than a false DEAD flag.
+    """
+    wake_path = wake_dir / persona
+    try:
+        result = subprocess.run(
+            ["pgrep", "-f", f"tail -f -n 0 {wake_path}"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return bool(result.stdout.strip())
+    except Exception:
+        return None
+
+
+def load_heartbeat_state(status_file: Path) -> dict:
+    if not status_file.exists():
+        return {}
+    try:
+        return json.loads(status_file.read_text())
+    except json.JSONDecodeError:
+        return {}
+
+
+def save_heartbeat_state(status_file: Path, state: dict) -> None:
+    """Atomic write via tmp + rename — deming polls this file, so a reader
+    should never see a half-written one."""
+    status_file.parent.mkdir(parents=True, exist_ok=True)
+    tmp = status_file.with_suffix(status_file.suffix + ".tmp")
+    tmp.write_text(json.dumps(state, indent=2))
+    tmp.replace(status_file)
+
+
+def run_heartbeat_sweep(wake_dir: Path, personas_conf: Path,
+                         notify_persona: str, prev_state: dict) -> dict:
+    """One liveness sweep over every seat in personas.conf.
+
+    Always updates every persona's entry in the returned state (cheap: one
+    pgrep per seat). Only WRITES a wake-file notification on a genuine
+    alive<->dead transition — a seat that's been dead for hours doesn't
+    re-page deming every interval, and an `alive is None` (check failure)
+    never counts as a transition in either direction.
+    """
+    now = _now_iso()
+    personas = load_seat_personas(personas_conf)
+    new_state: dict = {}
+    for persona in personas:
+        alive = check_monitor_alive(wake_dir, persona)
+        prev = prev_state.get(persona, {})
+        prev_alive = prev.get("alive")
+        since = now if alive != prev_alive else prev.get("since", now)
+        new_state[persona] = {"alive": alive, "last_checked": now, "since": since}
+
+        if alive is False and prev_alive is not False:
+            line = (
+                f"MONITOR_DEAD persona={persona} last_checked={now} "
+                f"msg=\"no live wake-file Monitor process found for {persona}\""
+            )
+            if persona != notify_persona:
+                write_wake(wake_dir, notify_persona, line)
+            emit(line)
+        elif alive is True and prev_alive is False:
+            line = f"MONITOR_RECOVERED persona={persona} last_checked={now}"
+            if persona != notify_persona:
+                write_wake(wake_dir, notify_persona, line)
+            emit(line)
+
+    return new_state
 
 
 # ── Classification ────────────────────────────────────────────────────────
@@ -255,6 +372,16 @@ def main() -> None:
     state_dir: Path = cfg["state_dir"]
     deferred_queue: Path = cfg["deferred_queue"]
 
+    heartbeat_cfg: dict = cfg.get("heartbeat") or {}
+    heartbeat_enabled: bool = bool(heartbeat_cfg.get("enabled", False))
+    heartbeat_interval: int = int(heartbeat_cfg.get("interval", 60))
+    heartbeat_personas_conf: Optional[Path] = heartbeat_cfg.get("personas_conf")
+    heartbeat_status_file: Optional[Path] = heartbeat_cfg.get("status_file")
+    heartbeat_notify: str = heartbeat_cfg.get("notify_persona", "deming")
+    if heartbeat_enabled and not (heartbeat_personas_conf and heartbeat_status_file):
+        emit('WATCHER_ERROR msg="heartbeat.enabled but personas_conf/status_file missing"')
+        heartbeat_enabled = False
+
     state_dir.mkdir(parents=True, exist_ok=True)
     wake_dir.mkdir(parents=True, exist_ok=True)
 
@@ -275,8 +402,13 @@ def main() -> None:
     emit(
         f"WATCHER_START channels={channels} mentions={watch_mentions} "
         f"filter={filter_mode} poll={poll_interval}s "
-        f"wake_dir={wake_dir}"
+        f"wake_dir={wake_dir} heartbeat={'on:' + str(heartbeat_interval) + 's' if heartbeat_enabled else 'off'}"
     )
+
+    heartbeat_state: dict = {}
+    last_heartbeat: float = 0.0
+    if heartbeat_enabled:
+        heartbeat_state = load_heartbeat_state(heartbeat_status_file)
 
     while True:
         for channel in channels:
@@ -369,6 +501,13 @@ def main() -> None:
 
             if max_seq > last_seq:
                 set_last_seq(state_dir, channel, max_seq)
+
+        if heartbeat_enabled and (time.time() - last_heartbeat) >= heartbeat_interval:
+            heartbeat_state = run_heartbeat_sweep(
+                wake_dir, heartbeat_personas_conf, heartbeat_notify, heartbeat_state
+            )
+            save_heartbeat_state(heartbeat_status_file, heartbeat_state)
+            last_heartbeat = time.time()
 
         time.sleep(poll_interval)
 
