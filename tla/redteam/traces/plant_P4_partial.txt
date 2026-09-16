@@ -1,0 +1,6 @@
+Progress(11) at 2026-09-16 12:40:51: 11,006,921 states generated (10,652,562 s/min), 2,164,788 distinct states found (2,
+Progress(12) at 2026-09-16 12:41:51: 21,281,791 states generated (10,274,870 s/min), 3,776,552 distinct states found (1,
+=== P4_n3_narrow_2T2 (3 T1 + 2 T2, narrowing floor-gated)
+Progress(10) at 2026-09-16 12:44:51: 357,456 states generated (357,456 s/min), 88,114 distinct states found (88,114 ds/m
+Progress(12) at 2026-09-16 12:45:51: 9,033,092 states generated (8,675,636 s/min), 1,421,408 distinct states found (1,33
+Progress(13) at 2026-09-16 12:46:51: 17,596,084 states generated (8,562,992 s/min), 2,410,902 distinct states found (989
