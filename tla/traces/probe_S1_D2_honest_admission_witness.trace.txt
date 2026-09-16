@@ -1,0 +1,12 @@
+State 1: <Initial predicate>
+/\ legitDone = FALSE
+/\ events = 0
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]
+State 2: <HonestStart line 174, col 3 to line 181, col 92 of module verdandi_principal_revocation>
+/\ legitDone = FALSE
+/\ events = 1
+/\ adm = [active |-> TRUE, signers |-> {t1a, t1b}, step |-> 1, attacker |-> FALSE]
+State 3: <Complete line 196, col 3 to line 205, col 73 of module verdandi_principal_revocation>
+/\ legitDone = TRUE
+/\ events = 2
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]
