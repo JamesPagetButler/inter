@@ -147,15 +147,14 @@ Hyphens, not underscores or camelCase. Lowercase. Issue-prefix preferred when ap
 
 ### 2.6 Referencing issues & PRs — always repo-qualified
 
-The federation spans ~15 repos, so a **bare `#292` is ambiguous** — the reader can't tell which repo it lives in, and the number collides across repos (every repo has its own `#292`). **Always name the repo when you cite an issue or PR.**
+The federation spans ~15 repos, so a **bare `#292` is ambiguous** — the reader can't tell which repo it lives in, and the number collides across repos (every repo has its own `#292`). **The one rule: always name the repo when you cite an issue or PR — never a bare `#N`.** The *form* depends on where you're writing, because GitHub auto-links and chat/terminals don't:
 
-- **Canonical form:** `owner/repo#N` — e.g. `JamesPagetButler/bma-systema#292`. GitHub auto-links this **across repos**, so it works in any PR body, issue, or commit message.
-- **Short form** (acceptable when the owner is unambiguously the federation org): `repo#N` — e.g. `bma-systema#292`, `inter#112`.
-- **In prose / chat / sessionbridge:** say the repo in words — "PR #292 **on bma-systema**", "**inter** #112". Never a bare "#292" in a sentence that doesn't already name the repo.
-- **This applies everywhere:** PR bodies, issue text, commit messages, design docs, dashboards, and every sessionbridge/chat post — anywhere a number could be read without its repo.
-- **Cross-repo `Closes`:** GitHub only auto-closes **same-repo** references. To close an issue in another repo from a PR, use `Closes owner/repo#N` for the link, but note it **won't auto-close** — close it manually on merge. (Example: `bma-systema#292` implements `inter#112`; the issue is closed by hand.)
+- **In GitHub artifacts** (PR bodies, issue text, commit messages, `gh` comments) → **`owner/repo#N`**, e.g. `JamesPagetButler/bma-systema#292`. GitHub **auto-links this across repos**, so it's clickable everywhere. Short form `repo#N` (e.g. `inter#112`) is fine when the owner is unambiguously the org.
+- **In chat / sessionbridge / terminal / dashboards** (no auto-linking) → the federation handle **`repo-<name>-<type>-#<num>`**, e.g. `repo-bma-systema-pr-#292`, `repo-qbp-pr-#424` (beekeeper directive 2026-05-14 — the beekeeper reads from terminal context where repo scope isn't visible). Naming the repo in words is equally fine: "PR #292 **on bma-systema**".
+- **Never** a bare `#N` in any context that doesn't already name the repo — including a thread already scoped to one repo (the reader may not see that scope).
+- **Cross-repo `Closes`:** GitHub only auto-closes **same-repo** references. To close an issue in another repo, use `Closes owner/repo#N` for the link, but it **won't auto-close** — close it by hand on merge. (Example: `JamesPagetButler/bma-systema#292` implements `JamesPagetButler/inter#112`; the issue is closed manually.)
 
-Rationale: repo-qualification is the difference between a reference someone can follow in one click and one they have to interrogate. Codified 2026-09-17 after a bare `#292` needed a "which repo?" round-trip.
+Rationale: repo-qualification is the difference between a reference someone follows in one click and one they have to interrogate. Codified 2026-09-17 (unifying the 2026-05-14 chat-handle directive with the GitHub auto-linking form) after a bare `#292` needed a "which repo?" round-trip.
 
 ---
 
