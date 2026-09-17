@@ -1,4 +1,5 @@
 ---- MODULE verdandi_authority_attestation_containment ----
+\* STATUS: SUPERSEDED — ~(consumed /\ ~final) shown necessary-not-sufficient by red-team C1. Replaced by verdandi_authority_attestation_containment_witnessed.tla. Kept as audit trail — do not run as current.
 \* NT_NOTARY — Verðandi Authority attestation (CONTAINMENT / confirmation-depth).
 \* Author: notary-implementor (Notary Phase 1, competency #3). Dispatch: qbp-architecture seq=1370.
 \* CANONICAL temporal base going forward — supersedes verdandi_authority_attestation_temporal.tla's

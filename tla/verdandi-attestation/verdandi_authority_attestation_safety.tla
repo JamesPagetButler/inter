@@ -1,4 +1,5 @@
 ---- MODULE verdandi_authority_attestation_safety ----
+\* STATUS: pre-P1 base (assembling-set floor). SUPERSEDED for the holder-set floor by verdandi_authority_attestation_safety_holder.tla (architect seq=1374, option b). Kept as cycle-5 audit trail — do not run as current.
 \* NT_NOTARY — Verðandi Authority attestation-tier / T1-floor threat model (SAFETY side)
 \* Author: notary-implementor (Notary Phase 1, competency #3). Dispatch: qbp-architecture seq=1358.
 \* Red-teamed by: qbp-oppenheimer (author writes / breaker breaks — §8 shape).

@@ -1,4 +1,5 @@
 ---- MODULE verdandi_authority_attestation_containment_witnessed ----
+\* STATUS: CANONICAL-CURRENT — containment ~(consumed /\ tainted) (C1/C2 corrected).
 \* NT_NOTARY — Verðandi Authority attestation CONTAINMENT, CORRECTED (C1/C2 fix).
 \* Author: notary-implementor (Notary Phase 1, competency #3). Dispatch: qbp-architecture seq=1376.
 \* Supersedes verdandi_authority_attestation_containment.tla, whose ~(consumed /\ ~final) invariant

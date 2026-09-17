@@ -1,4 +1,5 @@
 ---- MODULE verdandi_authority_attestation_temporal ----
+\* STATUS: pre-reframe (admission-race). SUPERSEDED for containment by verdandi_authority_attestation_containment_witnessed.tla. Kept as audit trail (independent K>D reproduction) — do not run as current.
 \* NT_NOTARY — Verðandi Authority attestation (TEMPORAL side): INV_RevokeBeatsExploit.
 \* Author: notary-implementor (Notary Phase 1, competency #3). Dispatch: qbp-architecture seq=1358.
 \* Purpose: INDEPENDENT reproduction (heterogeneous cross-check) of qbp-oppenheimer's seq=1361 finding

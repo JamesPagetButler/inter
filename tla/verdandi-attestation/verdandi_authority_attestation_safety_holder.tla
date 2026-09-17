@@ -1,4 +1,5 @@
 ---- MODULE verdandi_authority_attestation_safety_holder ----
+\* STATUS: CANONICAL-CURRENT — safety / holder-set floor (option b, floor-gated narrowing).
 \* NT_NOTARY — Verðandi Authority attestation SAFETY, HOLDER-SET form (A.4 narrowing verb).
 \* Author: notary-implementor (Notary Phase 1, competency #3). Dispatch: qbp-architecture seq=1374.
 \* Extends the safety analysis to cover qbp-oppenheimer's P1 red-team finding (seq=1373).
