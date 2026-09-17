@@ -145,6 +145,18 @@ Hyphens, not underscores or camelCase. Lowercase. Issue-prefix preferred when ap
 - **Acceptable to bundle** when files are tightly coupled (a single feature spread across model + handler + test) or when bundling reduces churn (omnibus M0 corpus PR per addendum-18-walk Q3=A).
 - **Avoid** mixing unrelated changes (e.g. don't combine a docs change with a behavior fix).
 
+### 2.6 Referencing issues & PRs — always repo-qualified
+
+The federation spans ~15 repos, so a **bare `#292` is ambiguous** — the reader can't tell which repo it lives in, and the number collides across repos (every repo has its own `#292`). **Always name the repo when you cite an issue or PR.**
+
+- **Canonical form:** `owner/repo#N` — e.g. `JamesPagetButler/bma-systema#292`. GitHub auto-links this **across repos**, so it works in any PR body, issue, or commit message.
+- **Short form** (acceptable when the owner is unambiguously the federation org): `repo#N` — e.g. `bma-systema#292`, `inter#112`.
+- **In prose / chat / sessionbridge:** say the repo in words — "PR #292 **on bma-systema**", "**inter** #112". Never a bare "#292" in a sentence that doesn't already name the repo.
+- **This applies everywhere:** PR bodies, issue text, commit messages, design docs, dashboards, and every sessionbridge/chat post — anywhere a number could be read without its repo.
+- **Cross-repo `Closes`:** GitHub only auto-closes **same-repo** references. To close an issue in another repo from a PR, use `Closes owner/repo#N` for the link, but note it **won't auto-close** — close it manually on merge. (Example: `bma-systema#292` implements `inter#112`; the issue is closed by hand.)
+
+Rationale: repo-qualification is the difference between a reference someone can follow in one click and one they have to interrogate. Codified 2026-09-17 after a bare `#292` needed a "which repo?" round-trip.
+
 ---
 
 ## 3. Issue Templates and Labels
