@@ -1,0 +1,12 @@
+Error: Invariant INV_NoSubFloorHolder is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+constructed = {}
+
+State 2: <ConstructHighStakes({t1a, t1b, t2a}) line 36, col 3 to line 38, col 65 of module verdandi_authority_attestation_safety_holder>
+constructed = {[prov |-> {t1a, t1b, t2a}, holder |-> {t1a, t1b, t2a}]}
+
+State 3: <Next line 53, col 6 to line 53, col 67 of module verdandi_authority_attestation_safety_holder>
+constructed = {[prov |-> {t1a, t1b, t2a}, holder |-> {t1a, t2a}]}
+
+18 states generated, 15 distinct states found, 9 states left on queue.

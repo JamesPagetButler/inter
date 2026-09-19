@@ -1,0 +1,18 @@
+Error: Invariant INV_NoSubFloorConstruction is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ grantableFrom = {}
+/\ compromised = {}
+/\ constructed = {}
+
+State 2: <StealStore line 52, col 3 to line 54, col 47 of module verdandi_authority_attestation_safety>
+/\ grantableFrom = {}
+/\ compromised = {t2a, t2b}
+/\ constructed = {}
+
+State 3: <Next line 93, col 6 to line 93, col 59 of module verdandi_authority_attestation_safety>
+/\ grantableFrom = {}
+/\ compromised = {t2a, t2b}
+/\ constructed = {{t2a}}
+
+13 states generated, 12 distinct states found, 7 states left on queue.
