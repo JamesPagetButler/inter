@@ -1,0 +1,174 @@
+# NT_NOTARY_VERIFICATION_EVIDENCE
+# Notary-implementor Cycle 5 — Phase 1 dispatch. CANONICAL RECORD (promoted from notary repo via PR; working copy notary@fc526e4)
+# Date: 2026-09-16
+# Produced by: notary-implementor (Claude Opus 4.8)
+# Dispatched by: qbp-architecture (seq=1353 convening, seq=1358 split ruling)
+# Co-checker (red-team / temporal comparison): qbp-oppenheimer (seq=1361)
+# floor-model = FROM-PROSE (Addendum B not on disk) — architect seq=1358 B.6 verbatim; re-stamp on ratification.
+
+verification_evidence:
+  target_claim_node: "NT_VERDANDI_ATTESTATION_FLOOR_REVOKE_THREATMODEL"
+  invoking_persona: "qbp-architecture"
+  competency_invoked: "tla_plus_modelcheck"
+  verification_date: "2026-09-16"
+
+  spec_files:
+    - "notary/tla/verdandi_authority_attestation_safety.tla   (+ sat_base/sat_mut_nofloor/sat_mut_upward.cfg, base_probe.tla)"
+    - "notary/tla/verdandi_authority_attestation_temporal.tla (+ tmp_holds/tmp_break_noprio/tmp_break_window.cfg)"
+  traces: "notary/tla/traces/{trace_mut_nofloor,trace_mut_upward,trace_temporal_noprio}.txt"
+  resource_estimate: "notary/tla/PRE-RUN-RESOURCE-ESTIMATE.md (pre-run-resource-estimate gate satisfied: -Xmx2g kill bound, ≤289 states/config, ≪50% headroom)"
+  tooling: "TLC (tla2tools.jar), Java 11, -workers 2, -Xmx2g, -deadlock. All runs finished in ≤1s."
+
+  # =========================================================
+  # OUTCOME — two invariants
+  # =========================================================
+  invariant_1:
+    name: "INV_NoSubFloorConstruction (safety, A.4 constructed-cap + B.6 floor)"
+    verification_outcome: VERIFIED    # CONFIRMED-in-model, EXHAUSTIVE at n=4
+    result: >
+      HOLDS under EnforceFloor=TRUE, AllowUpwardVerb=FALSE — TLC explored the COMPLETE reachable
+      state space (289 distinct states, 0 left on queue → exhaustive at 2 T1 + 2 T2 principals),
+      no violation. No reachable state has a constructed high-stakes cap whose assembling set fails
+      the B.6 floor.
+    non_vacuity: >
+      CONFIRMED non-vacuous (base_probe.tla): honest floor-satisfying construction IS reachable —
+      StealT1(t1a)→StealT1(t1b)→Construct{t1a,t1b} (2 distinct T1). So the HOLDS is meaningful, not
+      "holds because nothing is ever constructed."
+    load_bearing_mutations:
+      - "EnforceFloor=FALSE → INV VIOLATED. Trace: StealStore→compromised={t2a,t2b}→Construct{t2a} (all-T2, no T1). ⇒ the B.6 floor is load-bearing."
+      - "AllowUpwardVerb=TRUE → INV VIOLATED. Trace: StealStore→AcquireGrantable(t2a)→LaunderUpward{t2a}. ⇒ the A.4 verb-closure (no grant/project verb up to constructed) is load-bearing. THIS IS the grantable→constructed laundering path absent from qbp-oppenheimer's comparison harness (seq=1361) — the red-team surface the architect assigned to notary's base."
+
+  invariant_2:
+    name: "INV_RevokeBeatsExploit (temporal)"
+    verification_outcome: COUNTEREXAMPLE_FOUND    # BROKEN-as-premised
+    result: >
+      BROKEN as premised ("revocation is one O(1) river event" does NOT by itself deliver it).
+      INDEPENDENTLY REPRODUCES qbp-oppenheimer seq=1361 with a separately-authored model:
+        • RevokePriority=FALSE → VIOLATED. Trace: Steal→AdmitStep(admit=1,revokeDue=TRUE)→AdmitStep(2)
+          →AdmitStep(3=K, admitted=TRUE) with revoked=FALSE throughout — exploit races 3 witnessed
+          admission steps past a DUE-but-unapplied revoke.
+        • RevokePriority=TRUE, window K>D (D=1,K=3) → HOLDS.
+        • RevokePriority=TRUE, window fails (D=3,K=3, K≯D) → VIOLATED.
+      ⇒ INV_RevokeBeatsExploit holds IFF (a) revocation is serialized AHEAD of further admission
+      (RevokePriority) AND (b) the admission window exceeds detection latency (AdmitSteps > DetectLatency).
+      This is heterogeneous confirmation: two independently-authored TLA+ models, same conclusion.
+
+  trust_tiers_achieved: [T4]
+  trust_tier_justification: >
+    T4 (TLA+ model-checked). BOUND = the T4 artifact: the safety HOLDS is EXHAUSTIVE at 2 T1 + 2 T2
+    principals (TLC reported 0 states left on queue — the whole reachable space, not a truncated depth).
+    The temporal COUNTEREXAMPLES are conclusive independent of bound (a reachable violation is a
+    violation). What is NOT covered: generality in the number of principals (checked n=4 exhaustively;
+    the floor/verb-closure logic is uniform in n but an all-n proof is not done — see residual).
+
+  trust_dependencies:
+    - "TLA+/TLC toolchain (tla2tools, Java 11)"
+    - "floor-model FROM-PROSE — B.6 modeled from architect seq=1358, NOT a canonical on-disk Addendum B"
+    - "Finite abstraction: n=4 principals, bounded admission/detection counters"
+    - "A.7 witnessed-admission premise (temporal): each admit step is observable → advances detection"
+
+  residual_obligations:
+    - "Generality in n: safety checked exhaustively at n=4 only; a symmetry/induction argument for arbitrary principal counts is not mechanized."
+    - "SUBSTRATE-CLONING (base-case): T1 substrate_hash modeled as distinct per principal. If two T1 PoRs could share a substrate_hash (cloned substrate), the floor's 'pairwise-distinct' clause is the guard — a separate red-team surface not exercised here."
+    - "Addendum B ratification will re-canonicalise the from-prose floor model (re-stamp)."
+    - "qbp-oppenheimer to EXTENDS this canonical base and re-run the Finding-3 comparison + adversarial plants on top (per seq=1358 / 1361)."
+
+  cross_formalism_correspondences: []
+
+  seam_records_fired:
+    - "NT_SEAM_RECORD S1 (corroborates qbp-oppenheimer seq=1361): 'priority cap' is NOT a canonical class in Verðandi v0.2 / Addendum A (only routing priority), yet architect seq=1358 lists 'grantable + priority caps' with grant/project/compose. Notary's model uses only 'grantable' for the laundering path; the result is unaffected, but the prose/canonical mismatch is a real seam for Addendum-B authoring."
+    - "NT_SEAM_RECORD S2 (corroborates qbp-oppenheimer seq=1361, HIGH relevance): the temporal invariant's PREMISE — auto-revoke as one river event — DIVERGES from v0.2's written compromised-key protocol, which is HOLD-pending-investigation (successor / Judge Collective), not auto-revoke. A 'hold' is also one event carrying the SAME scheduling requirement (RevokePriority). ⇒ INV_RevokeBeatsExploit tests a PROPOSED mechanism, not the current spec; whichever mechanism ships must serialize the hold/revoke ahead of admission."
+    - "NT_SEAM_RECORD S3: floor-model from-prose (Addendum B not on disk) — stamped throughout; not a defect, a provenance flag."
+
+  prediction_accuracy_ledger:
+    predicted_outcome: >
+      Safety: expected INV_NoSubFloorConstruction to HOLD under the floor + verb-closure, with both
+      mutations breaking it (floor + closure load-bearing). Temporal: expected fragility — qbp-oppenheimer
+      had already flagged BROKEN-as-premised at seq=1361; expected my independent model to reproduce the
+      RevokePriority + window conditions.
+    predicted_delta: "safety exhaustive at small n; temporal holds only under 2 named conditions."
+    actual_outcome: >
+      Exactly as predicted. Safety HOLDS exhaustively (289 states, 0 on queue) and is non-vacuous;
+      both mutations break it. Temporal reproduces oppenheimer precisely: FALSE-priority breaks,
+      TRUE-priority+window holds, window-fail breaks. Unpredicted (informative): surfaced the
+      substrate-cloning base-case as a distinct residual, and independently corroborated both of
+      oppenheimer's doc-conflict seams.
+    actual_delta: "0 surprises on the headline verdicts; 3 seams fired (2 corroborating, 1 provenance)."
+
+# =========================================================
+# ADDENDUM (same day, seq=1370) — CONFIRMATION-DEPTH containment reframe, adopted into Addendum B
+# =========================================================
+containment_addendum:
+  dispatch: "qbp-architecture seq=1370 (adopting notary's consume-before-final reframe into Addendum B)"
+  canonical_module: "notary/tla/verdandi_authority_attestation_containment.tla (supersedes the temporal module's admission-race framing; that module kept as historical record)"
+  reframe: >
+    The harm is NOT admission (admission is safe) — it is IRREVERSIBLE CONSUMPTION of a NOT-YET-FINAL
+    admission. Primary invariant moves from ~admitted (superseded, too strong) to
+    INV_ContainmentBeatsExploit == ~(consumed /\ ~final). `Delayable` folds architect results #2
+    (finality window) and #3 (un-delayable actions) into ONE model.
+  invariant_3:
+    name: "INV_ContainmentBeatsExploit == ~(consumed /\\ ~final)"
+    result: >
+      Delayable=TRUE  (D=1,K=2,W=2,RevokePriority=TRUE) -> HOLDS (24 distinct states, 0 on queue):
+        a delayable irreversible action waits for finality, so confirmation-depth containment governs it.
+      Delayable=FALSE -> COUNTEREXAMPLE: AdmitStep->AdmitStep(admitted)->Consume with final=FALSE ->
+        consumed /\ ~final. An un-delayable/time-critical action CANNOT wait for finality, so post-merge
+        invalidation provably cannot govern it -> it needs the synchronous actuator-multisig carve-out
+        (architect result #3, now a reachable model break rather than prose).
+    non_vacuity: >
+      CONFIRMED (containment_probe.tla): NoFinal violated (final IS reachable -> admissions finalize) and
+      NoConsume violated (consumption DOES happen, after final under Delayable) -> the HOLDS is meaningful.
+    trace: "notary/tla/traces/trace_containment_undelayable.txt"
+  significance: >
+    Adopted into Addendum B by the architect as "a real improvement, not a rename." The formal work
+    bottomed out exactly at the policy boundary: confirmation-depth containment is SOUND for delayable
+    actions and PROVABLY INSUFFICIENT for un-delayable ones — the delayable/un-delayable categorization
+    is therefore a beekeeper policy call, not a safety derivation.
+
+# =========================================================
+# RED-TEAM RESPONSE (qbp-oppenheimer seq=1373/1375; architect rulings seq=1374/1376)
+# Author/breaker loop: breaker broke, author accepts + folds the corrections into the canonical models.
+# =========================================================
+red_team_response:
+  P1_holder_floor:
+    finding: "qbp-oppenheimer P1 (seq=1373): A.4's narrow-to-smaller-collective verb was ABSENT from the base; the floor was implicitly over the ASSEMBLING set only. Un-gated narrowing drops a floor-satisfying construction to a sub-floor HOLDER set."
+    architect_ruling: "seq=1374 option (b): the floor is a property of EVERY HOLDER SET; A.4 narrowing must preserve it (B.6 clause). Directed notary to model narrowing floor-preserving."
+    notary_action: "ACCEPTED — a valid gap the base didn't surface. Modeled in verdandi_authority_attestation_safety_holder.tla: constructed caps carry {prov, holder}; Narrow requires |H|>=2 (A.4 never-individual) + (GateNarrow => FloorSatisfied(H))."
+    result: >
+      GateNarrow=TRUE (ruled design) -> INV_NoSubFloorHolder HOLDS, exhaustive (512 distinct states, 0 on
+      queue). GateNarrow=FALSE -> VIOLATION, reproducing oppenheimer's exact counterexample
+      (Construct{t1a,t1b,t2a} -> Narrow{t1a,t2a}, one T1). Independent reproduction; my exhaustive count
+      (512) differs from oppenheimer's 641 — a modeling detail (narrow modeled as transfer/replace here),
+      NOT a verdict disagreement (both HOLD gated / BREAK ungated).
+    NT_SEAM_RECORD S6 (A.4 narrowing semantics, for Addendum B — reconciled with oppenheimer seq=1379):
+      the 512-vs-641 gap is TWO defensible readings of A.4 narrowing — TRANSFER (holder moves; notary,
+      512 states) vs COPY/PROJECT (narrowed cap coexists with its parent; oppenheimer, 641 states).
+      COPY is the LARGER attack surface (the parent's holders keep exercising the original cap alongside
+      the narrowed one). Both HOLD under the gated ruling, so it is not a verdict issue — but Addendum B
+      must STATE which semantics A.4 intends, because the surface differs. If transfer is intended, say so
+      explicitly (oppenheimer's recommendation).
+  P3_hardware_bound:
+    finding: "qbp-oppenheimer P3 (seq=1373): INV_NoSubFloorConstruction guarantees no SUB-FLOOR set constructs — NOT that an attacker owning >=2 distinct T1 keys can't (they satisfy the floor)."
+    architect_ruling: "seq=1374: theft-resistance = INV_NoSubFloorConstruction ∧ HardwareBound (T1 keys non-extractable). Stated as Addendum B premise."
+    notary_action: "ACCEPTED and folded into this evidence's trust base. The security claim is CONDITIONAL on HardwareBound; oppenheimer model-checked INV_NoAttackerConstruction under HardwareBound (holds, 5 states; breaks the moment StealT1 is enabled). Sharpest tie to the Sprint-3 self-hosted-instance dependency."
+  C1_necessary_not_sufficient:
+    finding: "qbp-oppenheimer C1 (seq=1375, SHARPEST): the containment invariant ~(consumed /\\ ~final) is NECESSARY-BUT-NOT-SUFFICIENT — silent confirmation ticks let a stolen admission ride out the window, FINALIZE, and be consumed while the invariant HOLDS. My ConfirmTick advanced the window but NOT detection."
+    architect_ruling: "seq=1376 accepted; corrected invariant -> ~(consumed /\\ tainted) (tainted = an admission step witnessed while stolen; `stolen` alone wrongly flags honest admissions completed before a later theft). Directed the canonical fix."
+    notary_action: "ACCEPTED fully. Corrected module verdandi_authority_attestation_containment_witnessed.tla (supersedes the ~(consumed/\\~final) form). Implemented the fix INDEPENDENTLY (not oppenheimer's diff verbatim) -> heterogeneous cross-check."
+    C2_three_conditions_result: >
+      INV_ContainmentBeatsExploit == ~(consumed /\ tainted) HOLDS iff all three (each shown load-bearing
+      via a switch): (1) WitnessedConfirm (confirmation ticks advance detection) — FALSE reproduces the C1
+      silent-tick break; (2) RevokePriority (a due containment halts FINALIZATION as well as admission) —
+      FALSE breaks; (3) W >= D (window >= detection latency, independent of K) — W=2<D=3 breaks.
+      With all three (D=3,K=1,W=3,priority,witnessed): HOLDS — reproduces oppenheimer's 62-state point
+      exactly (62 states generated, 45 distinct, 0 on queue). Trace of the C1 break:
+      traces/trace_containment_C1_silent.txt.
+    correction_of_my_earlier_framing: >
+      My cycle-5 temporal result used AdmitSteps > DetectLatency (K>D) — that governs whether ADMISSION is
+      blocked, which C2 shows is NEITHER necessary nor sufficient for CONTAINMENT (finality needs W>=D,
+      witnessed). The architect owned the same conflation (seq=1376). The K>D result stands for the
+      admission-race sub-property; it is NOT the containment condition.
+  net: >
+    Two of four findings (P1, C1) were real model gaps; both accepted, corrected in the canonical modules,
+    and independently re-verified. This is the author/breaker split working as designed — the honest
+    negatives strengthened the models rather than being defended. All fold into Addendum B.

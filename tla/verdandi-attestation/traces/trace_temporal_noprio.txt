@@ -1,0 +1,43 @@
+Error: Invariant INV_RevokeBeatsExploit is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ revoked = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ revokeDue = FALSE
+/\ admit = 0
+/\ admitted = FALSE
+
+State 2: <Steal line 42, col 3 to line 44, col 64 of module verdandi_authority_attestation_temporal>
+/\ revoked = FALSE
+/\ detect = 0
+/\ stolen = TRUE
+/\ revokeDue = FALSE
+/\ admit = 0
+/\ admitted = FALSE
+
+State 3: <AdmitStep line 63, col 3 to line 71, col 36 of module verdandi_authority_attestation_temporal>
+/\ revoked = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ revokeDue = TRUE
+/\ admit = 1
+/\ admitted = FALSE
+
+State 4: <AdmitStep line 63, col 3 to line 71, col 36 of module verdandi_authority_attestation_temporal>
+/\ revoked = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ revokeDue = TRUE
+/\ admit = 2
+/\ admitted = FALSE
+
+State 5: <AdmitStep line 63, col 3 to line 71, col 36 of module verdandi_authority_attestation_temporal>
+/\ revoked = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ revokeDue = TRUE
+/\ admit = 3
+/\ admitted = TRUE
+
+10 states generated, 9 distinct states found, 0 states left on queue.

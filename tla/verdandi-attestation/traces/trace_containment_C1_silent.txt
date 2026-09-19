@@ -1,0 +1,87 @@
+Error: Invariant INV_ContainmentBeatsExploit is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ tainted = FALSE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 0
+/\ confirm = 0
+/\ admitted = FALSE
+
+State 2: <Steal line 42, col 3 to line 43, col 99 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = FALSE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 0
+/\ confirm = 0
+/\ admitted = FALSE
+
+State 3: <AdmitStep line 57, col 3 to line 64, col 62 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 0
+/\ admitted = TRUE
+
+State 4: <ConfirmTick line 70, col 3 to line 76, col 72 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 1
+/\ admitted = TRUE
+
+State 5: <ConfirmTick line 70, col 3 to line 76, col 72 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 2
+/\ admitted = TRUE
+
+State 6: <ConfirmTick line 70, col 3 to line 76, col 72 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = TRUE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 3
+/\ admitted = TRUE
+
+State 7: <Consume line 79, col 3 to line 82, col 97 of module verdandi_authority_attestation_containment_witnessed>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = TRUE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = TRUE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 3
+/\ admitted = TRUE
+
+62 states generated, 47 distinct states found, 7 states left on queue.
