@@ -75,9 +75,9 @@ BMA has **no ambient access** by design (instances see nothing unless granted vi
 
 | Grant | Can BMA see/do it? | Interface | Risk / control |
 |---|---|---|---|
-| **Internet** | *New capability* — BMA's first egress | Egress **only to the §5.4 allowlist**; APIs/feeds, not open web | Bounded allowlist; **provenance on every fetch** (ingested papers → **A23 NT_LITERATURE_NODE**); external surface gets an **A24 boundary node**. No arbitrary browsing. |
-| **CTH (read theory + write NT_SIGNAL)** | **Open decision** — depends on CTH↔BMA-T1 relationship (§8) | Native (if CTH lives in BMA-T1) or Wyrd-query/BRIDGE (if separate) | Signals are **additive + provenance-tracked**, never destructive — a bad signal can't corrupt the theory; the *response* to a signal is human/judge-gated, not the signal itself. Least-privilege write scope. |
-| **Contextus (scout agents)** | **Open decision** — orchestrate vs embody (§8) | BMA tasks Contextus's Edge/Corpus/Bridge scouts and consumes their output | Contextus does the scanning under the same allowlist. |
+| **Internet** | **RULED (§8.2): egress cap lives on Contextus, not BMA** — BMA may need no direct egress at all | (via Contextus) egress **only to the §5.4 allowlist**; APIs/feeds, not open web | Bounded allowlist; **provenance on every fetch** (→ **A23 NT_LITERATURE_NODE**); external surface = **A24 boundary node**. No arbitrary browsing. |
+| **CTH (read theory + write NT_SIGNAL)** | **RULED (§8.1): CTH separate & sovereign** — BMA-T1 indexes/caches *over* it | **Wyrd-query / BRIDGE**; signal-writes are cross-system **propose-caps** (`cap(signal_emit)`), never a memory op | Signals **additive + provenance-tracked**, never destructive; a signal **cannot self-admit** — `cap(cth_admit)` belongs to the federation/judge-collective. Least-privilege write scope. |
+| **Contextus (scout agents)** | **RULED (§8.2): orchestrate** — BMA tasks scouts, holds no scan surface itself | BMA tasks Contextus's Edge/Corpus/Bridge scouts + consumes output; **Contextus holds the egress cap** | Contextus scans under the allowlist. |
 
 **Can BMA speak to the federation?** — **Yes, already.** BMA participates on sessionbridge as `bma` (via `internal/bma/sessionbridge/` + `bma bridge …` reins commands; passive-by-default, `chime-in` for rate-limited autonomous posting). So the **notification path (§6→§7) uses BMA's existing bridge capability** — no new channel needed. Confirm the `bma` seat's registration + wake-Monitor are live before relying on it.
 
