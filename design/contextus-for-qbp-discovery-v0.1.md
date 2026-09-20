@@ -1,8 +1,17 @@
-# Contextus-for-QBP — Continuous Research-Discovery Loop (design v0.1, DRAFT)
+# Contextus-for-QBP — Continuous Research-Discovery Loop (design v0.2, DRAFT → architect)
 
-**Status:** first draft for qbp-architecture coherence review · beekeeper-directed 2026-09-19
-**Author:** deming · **Reviewer requested:** qbp-architecture (coherence)
-**Focus areas the beekeeper flagged for scrutiny:** §5 Resource management · §6 Access control · §7 Notification/escalation path
+**Status (v0.2):** deming's v0.1 sketch + qbp-architecture's coherence rulings folded in → **handed to qbp-architecture to make the authoritative design pass.** This doc is *devops-side scaffolding* — deming confirmed the infrastructure/resource/access shape is buildable; **the architecture design proper is qbp-architecture's position to own.**
+**Author (scaffold):** deming · **Design owner (from here):** qbp-architecture · beekeeper-directed 2026-09-19/20
+**Beekeeper focus areas:** §5 Resource management · §6 Access control · §7 Notification path · §10 Token budget (≤12.5% cap)
+
+## v0.2 — architect rulings folded in (qbp-architecture, inter#120#issuecomment-5746249664)
+Verdict: coherent, no blockers. The four §8 calls are RULED (see §8), and these become load-bearing:
+- **CTH stays SEPARATE & sovereign; BMA-T1 is an associative index/cache/signal-store *over* it** — canonical anchors must not decay, a shared asset must not be single-tenant-owned. "Write a signal" = a **cross-system propose-cap**, not a memory op.
+- **Contextus ORCHESTRATE → the internet-egress cap belongs to Contextus, not BMA** (smaller, least-privilege BMA surface; BMA may need no direct egress).
+- **Propose ≠ admit (A.7):** a discovery signal can NEVER self-admit — the loop *proposes* (`cap(signal_emit)`), the federation/judge-collective *admits* (`cap(cth_admit)`). Anti-laundering applied to automation.
+- **Falsification verdict = a constructed cap minted by a *genuinely-heterogeneous* quorum** (correlated/shared-training models don't count as independent confirmers); notifications carry a **candidate verdict, never an asserted fact.**
+- **§5 additions:** a *written* pre-run-resource-estimate is still owed before the pilot runs; on Crawl, bound deep-traversal to **concurrency=1 / idle-windows** (cpu-delegation absent); size against *current concurrent* federation headroom, not "the box."
+- **Continuous design is gated on BMA self-hosting (Step 9);** the Crawl pilot (ATLAS/CMS Z-boson deep-traversal) is the first test.
 
 ---
 
@@ -90,7 +99,7 @@ How a noteworthy insight reaches **the beekeeper (aware/decide)** and **qbp-oppe
 
 ---
 
-## 8. Open decisions (for the architect)
+## 8. Architect calls — RULED 2026-09-20 (rulings in the v0.2 note above; originals kept below as the questions answered)
 
 1. **CTH ↔ BMA-T1 relationship** — is CTH *inside* BMA's semantic memory (native read/write) or a *separate* store BMA queries (Wyrd-query / BRIDGE)? Decides whether "write a signal" is a memory op or a cross-system call, and shapes the §6 access interface.
 2. **Contextus's role** — does BMA *orchestrate* Contextus's scouts (discovery-as-a-service), or *embody* the discovery via its own internet tool + cascade? (Lean: orchestrate.)
@@ -110,3 +119,26 @@ How a noteworthy insight reaches **the beekeeper (aware/decide)** and **qbp-oppe
 **arXiv categories:** quant-ph · hep-ex/th/ph/lat · math-ph · math.RA/GR/QA · physics.chem-ph · physics.atom-ph · cond-mat.* · nucl-* · gr-qc.
 **Access principle:** composite metadata layer → filter → full-text only on winners (mirrors the cascade). No HTML-scraping of paywalled publishers; reach them via Crossref metadata + Unpaywall.
 **EXCLUDE:** viXra (unmoderated), Sci-Hub (illegal), ResearchGate/Academia (ToS/bot-blocked), general web/Wikipedia (secondary). Don't hard-code a predatory blocklist (goes stale) — gate unfamiliar OA venues via DOAJ-membership + Crossref-registration heuristic.
+
+---
+
+## 10. Token budget (beekeeper directive 2026-09-20)
+
+**HARD CAP: the continuous discovery process consumes ≤ 12.5% of total token availability.** This is a *rate* cap (per billing period), not a one-time slice — and it's enforced **structurally**, not by trust: the cascade's per-tier daily caps + backpressure (**queue, never exceed**) mean the process *cannot* blow the cap even if the estimate below is wrong. If a tier's cap is hit, items queue for the next window. The cascade IS the enforcement.
+
+**Rough steady-state estimate** (order-of-magnitude; ±2–3×; depends heavily on hit-rates + hypergraph size + sweep frequency):
+
+| Tier | Volume/day (assumed) | ~tokens/item | ~tokens/day |
+|---|---|---|---|
+| Stage 0 scan + BMA-T1 association gate | ~300–500 papers | ~0 (embeddings/associative, non-LLM) | ~0 |
+| Haiku precursory (assoc/keyword hits) | ~40–60 | ~700 | ~40K |
+| Sonnet deep traversal (Haiku-positives) | ~8–12 | ~10K | ~100K |
+| Opus (Sonnet escalations) | ~1–2 | ~20K | ~40K |
+| Quorum apex (falsification) | ~1/week | high (3 models) | rare spike |
+| Slow sweep (weekly, amortized) | — | model-dependent (local≈0 / Gemini budgeted) | ~50–70K |
+| **Steady-state total** | | | **≈ 250K tokens/day** |
+
+**The startup surge (you're right — this is the big one).** The initial **backfill** — traversing the existing relevant-literature backlog *and* populating the hypergraph from near-empty — is front-loaded and could be **10–50× the steady-state daily rate** (millions of tokens if it backfills years of QBP-relevant papers) because early on *nothing* is in the associative gate yet, so more passes through the expensive tiers.
+**Mitigation:** **throttle the backfill to a rate-limited trickle within the 12.5% cap** — spread it over weeks rather than one surge. It's not time-critical; the cap holds, the backfill just takes longer. (Do NOT run the backfill unthrottled — that's the one thing that would breach 12.5%.)
+
+**Net:** ≈250K tokens/day steady-state is the ballpark to compare against 12.5% of the allowance; the surge is bounded by throttling + the hard cap. Estimate to be firmed once we know the allowance base + backfill depth (both beekeeper knobs).
