@@ -161,6 +161,21 @@ No blockers. Sprint can:
 
 ---
 
+### Sprint-Prep runbook (the deterministic load-forward sequence)
+
+The mirror of §Sprint-Close: close *harvests + tidies*, housekeeping *clears the house*, **Sprint-Prep loads forward** into the next sprint. Runs **after the `housekeeping-before-sprint` gate is satisfied** (post-close, post-housekeeping) and **before the next kickoff handoff (§2).** Steps execute in order, each with an owner — a fixed runbook so the boundary is deterministic, not improvised:
+
+1. **Gate check** (qbp-architecture). Confirm `housekeeping-before-sprint` is actually *done*, not just satisfiable — housekeeping-labeled items resolved + the 10-addendum compile cleared for anything the next sprint touches. Prep does not start until the house is clean.
+2. **Backlog fill** (qbp-architecture authors; Herschel lays it into each seat's starting queue). Issue the Sprint-N+1 backlog **from the *updated* architecture + roadmap** (`workspace-roadmap.md`), so each seat wakes into a defined backlog, not a blank prompt. This is where staged sub-issues that have come in-scope get filed (e.g. per-seat sub-issues from a design spike once its gate nears).
+3. **Resume checkpoint** (each seat). Every seat writes its current state + its starting-queue tasks to its `RESUME.md` (per `best-practices/RESUME-template.md`) so the reload in step 5 is lossless.
+4. **Persona / wisdom update** (each seat; qbp-architecture coherence-ratifies). Each seat updates its OWN persona/launch doc with the wisdom + processes it actually accumulated — the seat-level analogue of §Sprint-Close's builder-learnings harvest. This is the standing quality-compounding step: done *every* prep, so persona quality rises sprint over sprint (the learnings flow back into who each seat is, not just into builders). "No new wisdom" is a valid outcome.
+5. **Reload** (deming/devops executes; each seat resumes). Restart every seat fresh — which **loads any pending code deploy automatically.** This is the **deploy-propagation point**: a merged fix (e.g. a sessionbridge server change) goes live for all seats *here*, with no surgical mid-sprint reconnect. Each seat comes back on new code + its updated persona + its RESUME.md queue, and resumes from RESUME.md.
+6. **Verify + hand to kickoff** (deming health-sweep; qbp-architecture). Post-reload babysit-the-team sweep (every seat grounded + registered + `@`-Monitor armed + responsive), confirm each picked up its backlog, then the kickoff handoff (§2) fires → Sprint N+1 begins.
+
+The federation picks this up because each step names an owner and steps 2 + 6 are the queue/communication events seats wake into. **Deploys always ride the next Sprint-Prep reload** — the standing answer to "how does a merged fix reach all 12 seats" (no surgical reconnect, ever). Crash-durable via the always-loaded lifecycle rule + this on-disk runbook.
+
+---
+
 ## 4. Cross-repo review handling — the bottleneck pattern
 
 This is the most operationally costly federation pattern. Herschel owns it.
