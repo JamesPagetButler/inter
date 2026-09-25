@@ -1,0 +1,14 @@
+module efimov.spike
+
+contract efimov_triad {
+    tier: C
+    requires: cap(detector_read, scope = screen.locale)
+    body: {
+        val node0 : Amplitude[C] @ QW64 = (1.5, 0.5)
+        val node1 : Amplitude[C] @ QW64 = (0.9, -0.1)
+        val node2 : Amplitude[C] @ QW64 = (0.4, 0.4)
+        
+        val triad1 : Amplitude[C] @ QW64 = node0 * node1
+        val triad2 : Amplitude[C] @ QW64 = triad1 * node2
+    }
+}
