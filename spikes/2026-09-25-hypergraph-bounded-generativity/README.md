@@ -6,7 +6,7 @@
 
 If a cth-implementor "leader" becomes the effective reasoning engine over the hypergraph, the hypergraph begins to take the role the model plays in today's AI — a **static substrate that grows and refines with interaction**, like a brain. The beekeeper's reframe: useful human "hallucination" is not the LLM failure mode but **bounded generativity**, and biological generativity is safe because **generation is architecturally separated from fact-commitment** — an LLM hallucinates because it collapses that separation.
 
-**Four-spike sequence:** **0 — lower the registry** · **1 — active/world simulation (this record)** · 2 — dream/offline reprocessing · 3 — theory of mind. Each builds on the prior. The unifying frame: **lowering the four-layer registry (Tools→Skills→Wisdoms→Personas) into the CTH hypergraph** — not inventing an ontology (a companion first-draft ontology, AXIOM-1-grounded, lives in `../../ontology/`).
+**Spike chain (0–8):** foundation **0 — lower the registry** · **1 — active/world simulation (this record)** · 2 — dream · 3 — theory of mind; bridge to functioning infra + math import **4 — emulated substrate** · **5 — formal-verification tier** · **6 — math-domain ingestion (bounded)** · **7 — eBOM/criticality** · **8 — end-to-end + real query.** Full chain + the "spikes surface capability-gaps → sprint inputs" principle: `spike-chain-to-epistemic-hypergraph.md`. Unifying frame: **lowering the four-layer registry (Tools→Skills→Wisdoms→Personas) into the CTH hypergraph** — not inventing an ontology (companion first-draft ontology, AXIOM-1-grounded, in `../../ontology/`).
 
 ## Method (all done for spike 1)
 
@@ -25,6 +25,9 @@ If a cth-implementor "leader" becomes the effective reasoning engine over the hy
 - `spike-2-concept-dream.md` — **first-draft concept** for spike 2 (offline consolidation; skill→wisdom promotion / maturation ladder; CLS/SHY/Hoel).
 - `spike-3-concept-theory-of-mind.md` — **first-draft concept** for spike 3 (ToM: threat-simulation / camouflage / empathy = modelling other **Personas**); resolves the ethics-simulation nuance via a purpose/intent provenance dimension.
 - `../../ontology/` — companion **first-draft ontology** of the whole system's vocabulary: dual human+machine-readable, AXIOM-1-grounded (in progress).
+- `spike-chain-to-epistemic-hypergraph.md` — the **full 0–8 chain** bridging to functioning infra + math-domain import; the capability-gaps→sprint principle.
+- `ebom-cth-connection.md` — the **eBOM** (fan-out / blast-radius / eVaR) as a CTH `root_audit` extension; keystones vs empirical choke points (Spike 7).
+- `oppenheimer-math-curriculum.md` — the **bounded** Lean/Mathlib curriculum to verify the federation's *own* claims (formal-tier oracle; input to Spike 5). Explicitly not "formalize all of math."
 
 ## Ratification / next
 This is a **design record for review**, not a ratified spec and not a run. Ratification of `RECORD.md`'s Open-bucket claims waits on the validation spike (which itself waits on Deming box-safety). Spikes 0 (lower the registry — foundational/prior), 2 (dream), and 3 (ToM) are conceptualized; the companion ontology is in progress.
