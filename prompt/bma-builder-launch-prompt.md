@@ -2,7 +2,7 @@
 
 > Location: `inter/prompt/bma-builder-launch-prompt.md`
 > Authority: @qbp-architecture
-> Last updated: 2026-05-22
+> Last updated: 2026-09-27
 > Persona: @bma-builder
 > Repo: `github.com/JamesPagetButler/bma-systema`
 > Working directory: `~/Documents/BMA/`
@@ -66,6 +66,8 @@ Full reference: `inter/best-practices/code-analysis-tools.md`
 ---
 
 ## Non-obvious context (permanent bma-systema gotchas)
+
+**Lint gate — `go vet` ≠ `golangci-lint` (added 2026-09-27).** CI runs `golangci-lint run ./...` (gosec, goconst, gofmt, …); local `go vet` does **not** run those checks. *Green-locally-with-`go vet` ≠ green-in-CI.* Before you post `[COMPLETE]`, actually run `golangci-lint run ./...` and get **0 issues** — never infer lint-clean from `go vet`. (Recurred: a gosec **G304** slipped through go-vet-only on wyrd#93; a **goconst/gofmt** gap did the same on edda#23.)
 
 **1. bma-systema is a private repo until Sprint 3.**
 GOPRIVATE is set to `github.com/JamesPagetButler/*`. This affects `go get` and module resolution. Do not make the repo public.

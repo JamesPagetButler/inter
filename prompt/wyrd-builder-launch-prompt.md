@@ -2,7 +2,7 @@
 
 > Location: `inter/prompt/wyrd-builder-launch-prompt.md`
 > Authority: @qbp-architecture
-> Last updated: 2026-05-22
+> Last updated: 2026-09-27
 > Persona: @wyrd-builder
 > Repo: `github.com/JamesPagetButler/wyrd`
 > Working directory: `~/Documents/Wyrd/`
@@ -68,6 +68,8 @@ Full reference: `inter/best-practices/code-analysis-tools.md`
 ---
 
 ## Non-obvious context (permanent wyrd gotchas)
+
+**Lint gate — `go vet` ≠ `golangci-lint` (added 2026-09-27).** CI runs `golangci-lint run ./...` (gosec, goconst, gofmt, …); local `go vet` does **not** run those checks. *Green-locally-with-`go vet` ≠ green-in-CI.* Before you post `[COMPLETE]`, actually run `golangci-lint run ./...` and get **0 issues** — never infer lint-clean from `go vet`. (Recurred: gosec **G304** — file-inclusion-via-variable, e.g. `os.ReadFile(path)` in a test — slipped through go-vet-only on wyrd#93; a **goconst/gofmt** gap did the same on edda#23.)
 
 **1. Do not modify `Foundations.lean`.**
 It is a read-only substrate foundation. New theorems go in new files. Precedent: `CycleCounterCrossPhase.lean` — one theorem, one file.
