@@ -1,0 +1,1234 @@
+%YAML 1.1
+---
+# ============================================================================
+# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.1.0)
+# ============================================================================
+# Human AND machine entry point. Read top to bottom as prose, or parse as YAML.
+# See ../README.md for the guided tour and ../ONTOLOGY-BEST-PRACTICES.md for
+# why this format was chosen and how it upgrades to SKOS/JSON-LD later.
+#
+# STATUS OF THIS FILE: DRAFT. First cut of the CORE current vocabulary, not the
+# whole federation. Every term below was harvested and verified against a
+# committed source file (quoted or tightly paraphrased) — nothing here was
+# invented. Where a term could not be located, it is marked status: unlocated
+# rather than guessed. Where the corpus itself flags a term as unverified,
+# unratified, or contested, that status is carried forward, not smoothed over.
+# ============================================================================
+
+_meta:
+  title: "Federation Ontology (DRAFT)"
+  status: DRAFT
+  version: "0.1.0"
+  date: "2026-09-27"
+  root_axiom: cth:AXIOM-1
+  scope: >
+    Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
+    and the hypergraph-generativity spike, plus the cross-cutting "capability"
+    clash. Not exhaustive — see README.md "Extension path" for how to add terms.
+
+  field_glossary:
+    id: "Stable namespaced identifier, e.g. cth:AXIOM-1. Namespace = source project."
+    prefLabel: "Human-readable label. Maps to skos:prefLabel."
+    definition: "Human-readable definition, quoted or tightly paraphrased from a committed source. Maps to skos:definition."
+    status: >
+      This ontology's own formality/provenance tag (dogfoods the federation's own
+      provenance discipline — see CTH ProofState/closure). One of:
+        axiom          - a root axiom itself (only cth:AXIOM-1 in this draft)
+        derived        - established in a ratified spec, proven code/Lean, or a
+                         committed schema; may or may not trace formally to AXIOM-1
+                         (see axiom_grounding for that distinction)
+        conjectural    - the SOURCE ITSELF flags this as unverified/theoretical
+        design-proposal - draft/unratified design work, not yet beekeeper-ratified
+        unlocated      - searched for in the corpus, not found; flagged, not guessed
+    axiom_grounding: >
+      Either a derivation chain of term ids ending in cth:AXIOM-1 (for the small
+      number of terms that genuinely trace to it mathematically), or an explicit
+      note that no such chain exists and the term belongs to an independent design
+      lineage (BMA Theory, Systema spec, Edda language design, or plain engineering
+      convention). Most terms are honestly the latter — see README.md for why this
+      ontology does not force false derivation chains.
+    broader: "List of term ids this term is a kind of. Maps to skos:broader."
+    narrower: "List of term ids that are kinds of this term. Maps to skos:narrower."
+    related: "List of term ids this term relates to without being a kind of. Maps to skos:related."
+    source: "List of {file: <absolute path>, quote: <verbatim or tight paraphrase>}."
+    notes: "Discrepancies, gaps, corrections, or BEEKEEPER-DECISION flags."
+
+  namespaces:
+    cth: "Confluent Trust Hierarchy — QBP-implementor/CTH corpus (the axiom/proof ledger)"
+    wyrd: "Wyrd — quaternion-native typed holographic hypergraph DB"
+    bma: "BMA — Biological Mind Architecture"
+    edda: "Edda — theory-to-executable compiler/language"
+    systema: "Systema — workspace process framework"
+    spike: "hypergraph-generativity spike (2026-09-25) — DRAFT, NOT ratified"
+    fed: "cross-cutting federation-level terms (registry layers, capability clash)"
+
+  format_mapping_to_skos_jsonld:
+    id: "@id"
+    prefLabel: "skos:prefLabel"
+    definition: "skos:definition"
+    broader: "skos:broader"
+    narrower: "skos:narrower"
+    related: "skos:related"
+    note: "See ONTOLOGY-BEST-PRACTICES.md §5 for the full upgrade-path table."
+
+terms:
+
+  # ==========================================================================
+  # CTH — the axiom/proof ledger. cth:AXIOM-1 is this ontology's root.
+  # ==========================================================================
+
+  - id: cth:AXIOM-1
+    prefLabel: "AXIOM-1 — Information is preserved"
+    definition: >
+      "No physical process destroys information. Selects division algebras
+      (no zero divisors: ab=0 implies a=0 or b=0)."
+    status: axiom
+    axiom_grounding: >
+      IS the root axiom — this ontology's grounding point for everything tagged
+      axiom_grounding below. Note carefully: AXIOM-1's own decision_state is
+      "open", not "settled" (see notes) — it is asserted and load-bearing, but
+      not yet closed by the CTH ledger's own rules. Anything whose grounding
+      chain passes through AXIOM-1 inherits that open-ness honestly.
+    broader: []
+    narrower: [cth:ROOT-Prefix-Taxonomy]
+    related: [cth:decision_state, cth:kill_condition, cth:closure, cth:four-bucket-audit, wyrd:Tier, edda:BornRule]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
+        quote: >
+          {"id": "AXIOM-1", "name": "Information is preserved", "statement":
+          "No physical process destroys information. Selects division algebras
+          (no zero divisors: ab=0 implies a=0 or b=0).", "derivable": false,
+          "decision_state": "open"}
+      - file: /home/prime/Documents/QBP-implementor/scripts/root_audit.py
+        quote: "DEFAULT_LEDGER points at this same file — confirms it is the live canonical ledger, not a superseded snapshot."
+    notes: >
+      CANONICAL location confirmed directly (not just via subagent report) on
+      2026-09-27 by reading the JSON record. Two live kill_condition entries on
+      AXIOM-1 itself: (1) QUESTION 1 — whether "physical process" ranges over the
+      whole substrate or only crystal-internal processes (closure: derivation,
+      discharge: FLAG-rule-flow-open, trigger issue #647) — TODAY: "no proven
+      flow exists... recorded as OPEN, not as a pass"; (2) QUESTION 2 — scope of
+      the "selects division algebras" clause: encoding-only vs. unrestricted
+      (closure: ruling-rescope) — PROOF-42zd's 42 sedenion zero-divisors would
+      contradict an unrestricted reading. Superseded/forensic ledger copies exist
+      (confluent-trust-inventory-v5_3.json, v5.13.json, baselines/v5_24.json) —
+      these are NOT current; only the v0.3-suffixed file above is, per
+      CTH/MANIFEST.md's Source-of-Truth table. root-audit-register.json's
+      changelog notes AXIOM-1 was moved to "bucket-3 OPEN" 2026-09-18 (PR #659).
+
+  - id: cth:ROOT-Prefix-Taxonomy
+    prefLabel: "ROOT prefix taxonomy (AXIOM- / POST- / META- / INTERP-)"
+    definition: >
+      The four prefixes classifying a root-ledger record's kind:
+      ROOT_PREFIXES = ("AXIOM-", "POST-", "META-", "INTERP-"). A record in
+      meta_axiom, meta_principles, axioms, or interpretations whose id starts
+      with one of these. INTERP- records additionally carry
+      provenance_kind: philosophy — interpretive/semantic claims, not proof-apt.
+    status: derived
+    axiom_grounding: "Independent of any single axiom — this is the CTH ledger's own classification scheme for how roots (axioms, postulates, meta-principles, interpretations) are typed. Schema v0.3.4."
+    broader: []
+    narrower: [cth:AXIOM-1]
+    related: [cth:four-bucket-audit]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/scripts/root_audit.py
+        quote: "ROOT_PREFIXES = (\"AXIOM-\", \"POST-\", \"META-\", \"INTERP-\")"
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.Interpretation carries provenance_kind: philosophy + decision_state + kill_condition"
+    notes: "Only AXIOM-1 (cth:AXIOM-1) is harvested by id in this first draft; POST-/META-/INTERP- example records are an extension-path item (README.md)."
+
+  - id: cth:decision_state
+    prefLabel: "decision_state (open | settled)"
+    definition: >
+      "'open' = an open question with a stated falsifier (bucket 3); 'settled' =
+      proved/forced (bucket 1/2)... Invariant: decision_state:open REQUIRES a
+      non-empty kill_condition — nothing parks open without a kill."
+    status: derived
+    axiom_grounding: "Schema-level CTH machinery, not itself derived from an axiom — it is the mechanism BY WHICH axioms like AXIOM-1 carry their own open/settled status."
+    broader: []
+    narrower: []
+    related: [cth:kill_condition, cth:AXIOM-1, cth:four-bucket-audit]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.DecisionState — see definition above, canonical v0.3.4"
+    notes: "Canonical."
+
+  - id: cth:kill_condition
+    prefLabel: "kill_condition"
+    definition: >
+      Array of KillConditionEntry {kill, closure, discharge?, question?,
+      trigger_issue?} — one Impasse Record on a root: the ledger-observable
+      event that fires the kill, plus how the open question would close. `kill`
+      is the falsifier (non-placeholder, minLength 8); `discharge` is required
+      iff closure is in {derivation, measurement}.
+    status: derived
+    axiom_grounding: "none — CTH schema mechanism; see cth:decision_state."
+    broader: []
+    narrower: []
+    related: [cth:decision_state, cth:closure, cth:AXIOM-1]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.KillConditionEntry"
+    notes: "Canonical. AXIOM-1's own kill_condition array (2 entries) is the worked example carried in cth:AXIOM-1 above."
+
+  - id: cth:ProofState
+    prefLabel: "ProofState (verified | partial | written)"
+    definition: >
+      "Rollup state of a proof-bearing anchor per design §4.1." `written` = the
+      file resolves but carries no verification block — explicitly NOT a proof:
+      "proof_state:written + no verification + native_decide is not a proof."
+    status: derived
+    axiom_grounding: "none — CTH schema mechanism for grading formal claims."
+    broader: []
+    narrower: []
+    related: [cth:closure, spike:FormalityGradient]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.ProofState"
+      - file: /home/prime/Documents/QBP-implementor/docs/rca/cth-proof-evidence-process-2026-09-02.md
+        quote: "proof_state:written + no verification + native_decide is not a proof"
+    notes: "Canonical."
+
+  - id: cth:closure
+    prefLabel: "closure (derivation | measurement | ruling-rescope)"
+    definition: >
+      "'derivation'/'measurement' name a resolving anchor in discharge;
+      'ruling-rescope' closes only when the kill fires (a constitutional
+      change), so discharge is legitimately absent."
+    status: derived
+    axiom_grounding: "none — CTH schema mechanism."
+    broader: []
+    narrower: []
+    related: [cth:kill_condition, cth:AXIOM-1, spike:ProductProjectionProvenance]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.KillConditionEntry.closure"
+    notes: "Canonical. AXIOM-1's two kill_condition entries use closure: derivation and closure: ruling-rescope respectively — both live examples."
+
+  - id: cth:four-bucket-audit
+    prefLabel: "Four-bucket audit (PROVED / FORCED / OPEN / RETIRED)"
+    definition: >
+      root_audit.py's D1 "ROOT GATE": bucket 1 PROVED (forced_by -> PROOF-*
+      anchor, verified); bucket 2 FORCED (forced_by -> MEAS-* anchor
+      coherent/converged, or decision_state:settled + a ruling citing a
+      GitHub issue/PR); bucket 3 OPEN (non-empty kill_condition +
+      decision_state:open — "an open root is an Impasse Record, not a
+      request"); bucket 4 RETIRED (in retired_axioms/retired_principles).
+      Unsorted -> HARD FAIL unless registered.
+    status: derived
+    axiom_grounding: "none — this is the audit mechanism applied TO axioms/postulates including AXIOM-1, not derived from one. Mechanises the beekeeper's 2026-09-11 zero-axiom standard."
+    broader: []
+    narrower: []
+    related: [cth:decision_state, cth:AXIOM-1, cth:ProofState]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/scripts/root_audit.py
+        quote: "docstring defining the four buckets, see definition above"
+    notes: "AXIOM-1 currently sorts into bucket 3 OPEN per root-audit-register.json's 2026-09-18 changelog entry."
+
+  - id: cth:belief-tiers
+    prefLabel: "Belief tiers"
+    definition: "NOT FOUND as a literal defined term/enum anywhere in the searched CTH corpus."
+    status: unlocated
+    axiom_grounding: "n/a — unlocated"
+    broader: []
+    narrower: []
+    related: [cth:AnchorStatus, cth:ProvenanceKind]
+    source: []
+    notes: >
+      BEEKEEPER-DECISION NEEDED. Closest analogs found: (a) the Status enum on
+      anchors (coherent, untested, incoherent, contested, refuted, killed,
+      marginal, converged, falsified — see cth:AnchorStatus); (b) ProvenanceKind
+      (see cth:ProvenanceKind); (c) a prose reference to Dempster-Shafer belief
+      functions and Jøsang subjective-logic belief/disbelief/uncertainty triples
+      in CTH/Archive/Confluent-Trust-Hypergraph-Theory-v0_2.md ("trust anchors
+      represent provability from axioms, not truth about reality"). None of
+      these is a defined "belief tier" scheme. Either point us at the source, or
+      confirm this term belongs on the extension-path as design-proposal work
+      rather than harvested vocabulary.
+
+  - id: cth:Anchor
+    prefLabel: "Anchor (CONJ- / DERIV- / PROOF- kinds)"
+    definition: >
+      A proof-bearing or evidence-bearing ledger record. Kinds distinguished by
+      id prefix (CONJ- conjecture, DERIV- derivation, PROOF- formally proven).
+      Anchors carry ProofState and, per the CTH/Wyrd integration doc, map onto
+      Wyrd Nodes.
+    status: derived
+    axiom_grounding: "none directly — the general ledger unit that AXIOM-1's own kill_condition entries reference (e.g. PROOF-42zd, DERIV-arrow)."
+    broader: []
+    narrower: []
+    related: [cth:ProofState, cth:AnchorStatus, cth:ProvenanceKind, wyrd:CTHIntegration]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
+        quote: "PROOF-42zd, DERIV-arrow, DERIV-crystallisation-asymptotic cited inside AXIOM-1's own kill_condition text"
+    notes: "Definition assembled from usage across the ledger schema and AXIOM-1's own record; not a single quoted docstring."
+
+  - id: cth:AnchorStatus
+    prefLabel: "Anchor Status enum"
+    definition: "coherent, untested, incoherent, contested, refuted, killed, marginal, converged, falsified."
+    status: derived
+    axiom_grounding: none
+    broader: [cth:Anchor]
+    narrower: []
+    related: [cth:belief-tiers]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.Status"
+    notes: "Canonical."
+
+  - id: cth:ProvenanceKind
+    prefLabel: "Provenance Kind enum"
+    definition: "proof, theory, theory-external, experiment, hypothesis, internal-compute, philosophy, derivation."
+    status: derived
+    axiom_grounding: none
+    broader: [cth:Anchor]
+    narrower: []
+    related: [cth:ROOT-Prefix-Taxonomy, cth:belief-tiers]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
+        quote: "$defs.ProvenanceKind"
+    notes: "INTERP- records use provenance_kind: philosophy specifically."
+
+  # ==========================================================================
+  # WYRD — quaternion-native typed holographic hypergraph DB
+  # ==========================================================================
+
+  - id: wyrd:Tier
+    prefLabel: "Tier (algebraic privilege tower ℂ ⊂ ℍ ⊂ 𝕆 ⊂ 𝕊)"
+    definition: >
+      "A position in the Cayley-Dickson algebraic privilege tower... Each tier
+      corresponds to a doubling of the previous algebra and a strict loss of an
+      algebraic property (commutativity at ℂ→ℍ, associativity at ℍ→𝕆,
+      alternativity at 𝕆→𝕊)." TierComplex=2 components (user-facing),
+      TierQuaternion=4 (supervisor/Hamilton), TierOctonion=8 (kernel),
+      TierSedenion=16 (firmware, outermost).
+    status: derived
+    axiom_grounding: >
+      GENUINE CHAIN to cth:AXIOM-1: AXIOM-1's statement explicitly "selects
+      division algebras (no zero divisors)". ℂ, ℍ, 𝕆 are division algebras
+      (no zero divisors); 𝕊 (sedenions) is NOT — it has zero divisors (per
+      AXIOM-1's own kill_condition, PROOF-42zd asserts 42 of them). So the tier
+      boundary at 𝕆→𝕊 is precisely where AXIOM-1's selection clause would bite
+      if its scope is unrestricted — which is AXIOM-1's own still-OPEN
+      QUESTION 2. This ontology inherits that open-ness: the tier tower's
+      privileged-vs-not boundary is grounded in AXIOM-1, but AXIOM-1 itself has
+      not settled how far that grounding reaches.
+    broader: []
+    narrower: []
+    related: [cth:AXIOM-1, wyrd:HolographicProperty, edda:BornRule]
+    source:
+      - file: /home/prime/Documents/Wyrd/model/tier.go
+        quote: "lines 8-37, Tier type + doubling/property-loss docstring"
+      - file: /home/prime/Documents/Wyrd/lean/Wyrd/Foundations.lean
+        quote: "proves no ring homomorphism from inner->outer tier is surjective (T2.1.a/b/c)"
+    notes: >
+      Enforced at runtime by the "Skuld supervisor" via compute.CanSynthesize.
+      Distinct from BMA's memory Tier (0-4, see bma:MemoryTier) and CTH's own
+      Anchor.Tier (axiom/proof/measurement/prediction) — a three-way "Tier"
+      naming collision across the federation, flagged explicitly in
+      /home/prime/Documents/Wyrd/doc/integration/cth.md. Recommend the ontology
+      (and future docs) always qualify which Tier is meant.
+
+  - id: wyrd:Node
+    prefLabel: "Node / NodeType"
+    definition: >
+      Node{ID, Type, Tier, Created, Payload, TierImmune, Salience}. NodeType is
+      "a free-form classification chosen by the consumer" (CTH/BMA/Contextus
+      each define their own); Wyrd reserves only the wyrd. prefix. TierImmune
+      exempts a node from all automatic eviction. Salience (0.0-1.0) modulates
+      eviction priority.
+    status: derived
+    axiom_grounding: "none — engineering data structure, not derived from an axiom."
+    broader: []
+    narrower: [bma:NodeType]
+    related: [wyrd:Hyperedge, wyrd:Salience]
+    source:
+      - file: /home/prime/Documents/Wyrd/model/node.go
+        quote: "lines 8-66"
+    notes: "Salience is incremented by Hebbian reinforcement, decremented by Ebbinghaus decay."
+
+  - id: wyrd:Hyperedge
+    prefLabel: "Hyperedge (Heads / Tails / Transit)"
+    definition: >
+      Hyperedge{ID, Nodes []NodeID, Weight, IsSymmetric, Heads []int, Tails
+      []int}. Heads/Tails are index sets into Nodes encoding orientation
+      ("Heads = upstream, Tails = downstream" is the CTH-opcode convention;
+      semantics are tenant-defined); their intersection must be empty. Nodes in
+      neither set are "transit" — present in the edge but not directional
+      endpoints (the "N-to-M-with-transit" pattern, PR #31 §3). Symmetric edges
+      must have empty Heads/Tails.
+    status: derived
+    axiom_grounding: "none directly — but see wyrd:HolographicProperty, the Lean-proven property of exactly this structure at arity >= 3."
+    broader: []
+    narrower: []
+    related: [wyrd:Node, wyrd:HolographicProperty, spike:Leader]
+    source:
+      - file: /home/prime/Documents/Wyrd/model/hyperedge.go
+        quote: "lines 26-53, struct + TransitNodes()"
+    notes: "spike:Leader's skill anatomy explicitly maps a skill onto this shape: Tails = inputs, Transit = transform, Heads = outputs (RECORD.md)."
+
+  - id: wyrd:HolographicProperty
+    prefLabel: "Holographic property"
+    definition: >
+      "A hyperedge of arity k >= 3 carries information that CANNOT be recovered
+      from any decomposition into smaller-arity edges. Consumers MUST NOT
+      silently split a k-edge into k(k-1)/2 pair edges." Lean-proven (PROT-HH-001
+      Theorem 2): "a 3-beam coherent recording is NOT equivalent to three
+      independent pairwise recordings... The irreducibility resides in PHASE
+      COHERENCE: a 3-beam recording binds three relative phases under the
+      constraint of triangle consistency." The map from triple-coherent
+      recordings to independent pairs is NOT surjective.
+    status: derived
+    axiom_grounding: "none direct to AXIOM-1 (this is a separate proven theorem about hyperedge structure, not about information-preservation under physical process) — flag as its own, independently Lean-verified claim."
+    broader: []
+    narrower: []
+    related: [wyrd:Hyperedge, cth:ProofState]
+    source:
+      - file: /home/prime/Documents/Wyrd/lean/Wyrd/HolographicHypergraph.lean
+        quote: "lines 1-60, Theorem 2 statement + docstring"
+      - file: /home/prime/Documents/Wyrd/README.md
+        quote: "lines 33-35, listed among the four load-bearing Lean-verified invariants"
+    notes: "Generalized to all n>=3 in HolographicHypergraphHigherArity.lean. This is the formal grounding for why Wyrd is called a 'holographic' hypergraph DB."
+
+  - id: wyrd:Salience
+    prefLabel: "Salience"
+    definition: "A 0.0-1.0 field on Node modulating eviction priority; incremented by Hebbian co-activation, decremented by Ebbinghaus decay."
+    status: derived
+    axiom_grounding: none
+    broader: [wyrd:Node]
+    narrower: []
+    related: []
+    source:
+      - file: /home/prime/Documents/Wyrd/model/node.go
+        quote: "Salience field, see node.go"
+    notes: ""
+
+  - id: wyrd:CTHIntegration
+    prefLabel: "Wyrd/CTH integration mapping"
+    definition: "CTH's Anchor/Chain/Confluence map onto Wyrd Node/Hyperedge; CTH's Anchor.Tier is explicitly 'not the same as' Wyrd's algebraic Tier."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [wyrd:Tier, cth:Anchor]
+    source:
+      - file: /home/prime/Documents/Wyrd/doc/integration/cth.md
+        quote: "Anchor/Chain/Confluence -> Node/Hyperedge mapping; Tier naming-collision disclaimer"
+    notes: "No occurrence of 'AXIOM-1' anywhere in the Wyrd corpus itself (confirmed via grep across all .go/.md/.lean files by the harvesting pass) — Wyrd cites inter/theory/ (Verðandi Authority Theory v0.2, BMA Theory v3.0) as its own governing anchors, not CTH roots directly."
+
+  # ==========================================================================
+  # BMA — Biological Mind Architecture
+  # ==========================================================================
+
+  - id: fed:FourLayerRegistry
+    prefLabel: "Four-layer registry (Tools -> Skills -> Wisdoms -> Personas)"
+    definition: >
+      "1. Tools: Raw capabilities (e.g., git, llama-server, rocm-smi). 2.
+      Skills: Learned patterns for using tools (with gotchas/fallbacks). 3.
+      Wisdoms: Judgment about when to use a skill (with contra-indicators). 4.
+      Personas: Complete agents combining 1-3 with a specific affect genome."
+      A second, independently-worded source agrees: "Tools are concrete
+      capabilities. Skills are composed tool patterns. Wisdoms are cognitive
+      lenses. Personas are stabilised wisdom products."
+    status: derived
+    axiom_grounding: "none — this is BMA Theory's own architectural design (cites Theory 9.0 §4.7), an independent design lineage from CTH/AXIOM-1, not derived from it."
+    broader: []
+    narrower: [fed:Tool, fed:Skill, fed:Wisdom, fed:Persona]
+    related: [fed:Capability, spike:Leader]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "lines 334-338, '### 6.1 The Four Registry Layers'"
+      - file: /home/prime/Documents/BMA/infrastructure/BMA-Cognitive-Foundation.md
+        quote: "line 765, §10.4, cites Theory 9.0 §4.7 as origin"
+    notes: >
+      BOTH cited sources equate "Tool" with "capability" at layer 1 — this is
+      the "capability ≡ tool" side of the cross-project clash. See fed:Capability
+      for the full clash and the proposed reconciliation. "Theory 9.0 §4.7" (the
+      registry's stated origin) was not independently re-verified in this pass.
+
+  - id: fed:Tool
+    prefLabel: "Tool"
+    definition: "Raw/concrete capability — layer 1 of the four-layer registry. Example instances given: git, llama-server, rocm-smi."
+    status: derived
+    axiom_grounding: none
+    broader: [fed:FourLayerRegistry]
+    narrower: []
+    related: [fed:Capability, edda:Cap]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "see fed:FourLayerRegistry"
+    notes: "This is the 'capability ≡ tool' pole of the clash — see fed:Capability."
+
+  - id: fed:Skill
+    prefLabel: "Skill"
+    definition: "Layer 2 of the four-layer registry: a learned/composed pattern for using one or more tools, with gotchas/fallbacks. In the spike's ICOM+Vessel anatomy, formalized as a typed transform Input -> Transformation -> Output, realised as a directed hyperedge (Tails=inputs, Transit=transform, Heads=outputs)."
+    status: derived
+    axiom_grounding: none
+    broader: [fed:FourLayerRegistry]
+    narrower: []
+    related: [fed:Tool, fed:Capability, spike:ICOMVessel, wyrd:Hyperedge]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "see fed:FourLayerRegistry"
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'a skill is a typed transform — Input(type, quantity, quality) -> Transformation -> Output — realised as a directed hyperedge'"
+    notes: "The RECORD.md formalization is design-proposal (DRAFT); the registry-layer definition itself is ratified BMA spec."
+
+  - id: fed:Wisdom
+    prefLabel: "Wisdom"
+    definition: "Layer 3 of the four-layer registry: judgment about WHEN to use a skill, with contra-indicators / failure-modes. See bma:WisdomStructure for the full schema."
+    status: derived
+    axiom_grounding: none
+    broader: [fed:FourLayerRegistry]
+    narrower: [bma:WisdomStructure]
+    related: [fed:Persona, bma:PersonaQuaternionOperator]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "see fed:FourLayerRegistry"
+    notes: "RECORD.md notes wisdom is 'not an anchor in the CTH' and is 'half-lowered' into the hypergraph — it has algebra (quaternion) and acts via its persona, but is not yet its own node type."
+
+  - id: fed:Persona
+    prefLabel: "Persona"
+    definition: "Layer 4 of the four-layer registry: a complete agent combining Tools+Skills+Wisdoms with a specific affect genome. Formalized (conjecturally — see bma:PersonaQuaternionOperator) as a quaternion operator q·v·q⁻¹ applied to input content."
+    status: derived
+    axiom_grounding: none
+    broader: [fed:FourLayerRegistry]
+    narrower: [bma:PersonaQuaternionOperator]
+    related: [fed:Wisdom]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "see fed:FourLayerRegistry"
+    notes: "The registry-layer definition is ratified spec; the quaternion formalization specifically is conjectural, see bma:PersonaQuaternionOperator."
+
+  - id: bma:NodeType
+    prefLabel: "NT_* node types"
+    definition: >
+      Explicit NodeType enum (never iota — 'disk-serialized types'): NT_ATOM(0)
+      raw observation/Tier 0, NT_ENTITY(1) named entity, NT_CONCEPT(2) abstract
+      concept, NT_PATTERN(3) compressed pattern/Tier 1, NT_SEED(4) permanent
+      seed doc/Tier 4 no-decay, NT_IDENTITY(5) self-knowledge,
+      NT_LIFE_CERTIFICATE(6)/NT_DEATH_CERTIFICATE(7)/NT_MEMORIAL(8) — Layer 3,
+      no decay, RS_Confirmed, NT_SIGNAL(9) subconscious->conscious queued
+      signal, NT_POD_STATE(10) flushed Pentagon cell state.
+    status: derived
+    axiom_grounding: "none — engineering implementation of BMA's own node typing scheme, an instance of wyrd:Node's tenant-defined NodeType."
+    broader: [wyrd:Node]
+    narrower: []
+    related: [bma:MemoryTier, bma:EdgeType, bma:ResolutionState]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
+        quote: "lines 30-71, NodeType enum"
+    notes: >
+      No NT_SKILL / NT_CAPABILITY / NT_STEP exists among these ~11 types (RECORD.md
+      confirms: "there is no NT_SKILL / NT_CAPABILITY / NT_STEP among BMA's ~50
+      node types") — this is the concrete code-level gap the hypergraph-spike
+      work is proposing to fill. Also: BMA-Spec's tier table (bma:MemoryTier)
+      references NTSkill for Tier 2, but no such constant exists in types.go —
+      flagged as a spec/code mismatch below.
+
+  - id: bma:EdgeType
+    prefLabel: "ET_* edge types"
+    definition: "ET_EPISODIC .. ET_INHERITED — the edge-type enum paired with NodeType."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [bma:NodeType]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
+        quote: "same file as NodeType"
+    notes: ""
+
+  - id: bma:ResolutionState
+    prefLabel: "ResolutionState (RS_*)"
+    definition: "RS_OPEN / RS_CONFIRMED / RS_SUPERSEDED / RS_RETRACTED / RS_DECAYED."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [bma:NodeType, cth:decision_state]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
+        quote: "same file as NodeType"
+    notes: "Structurally parallel to cth:decision_state's open/settled, but a distinct BMA-local enum — not the same field."
+
+  - id: bma:MemoryTier
+    prefLabel: "Memory tiers T0-T4"
+    definition: >
+      T0=NTAtom/Raw Episodic Observations/Ebbinghaus Decay+F01; T1=NTPattern/
+      Semantic Generalizations/F01 Promotion; T2=NTSkill/Procedural Muscle
+      Memory/Registry Training; T3=NTIdentity/Constitutional-Self/
+      Pinned-No-Decay; T4=NTSeed/Foundational Theory-Spec/Pinned-No-Decay.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [bma:NodeType, bma:F01Functor, wyrd:Tier]
+    source:
+      - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
+        quote: "lines 220-224, tier table"
+    notes: >
+      SPEC/CODE GAP: T2's NTSkill has no corresponding constant in
+      internal/bma/hg/types.go (see bma:NodeType) — the tier is specified but
+      not yet implemented. Distinct concept from wyrd:Tier (algebraic tower) —
+      see the naming-collision note there.
+
+  - id: bma:F01Functor
+    prefLabel: "F01 functor (EPISODIC -> SEMANTIC compression)"
+    definition: >
+      "Package compress provides compression functors for BMA's tiered memory.
+      F01 compresses episodic observations (Tier 0) into semantic patterns
+      (Tier 1)." Steps: validate cluster similarity -> create L1 pattern via
+      SemanticMemory -> migrate external edges source->pattern -> accelerate
+      decay on source nodes (SourceDecay, factor 0.5).
+    status: derived
+    axiom_grounding: "none — engineering implementation of a category-theoretic-flavored compression step in BMA Theory; not derived from AXIOM-1."
+    broader: []
+    narrower: []
+    related: [bma:MemoryTier, bma:SleepCycle]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/compress/f01.go
+        quote: "lines 1-3 (package doc), CompressF01 lines 48-55"
+    notes: "IMPLEMENTED, has tests (f01_test.go). Per RECORD.md, this is 'BMA's only built functor' and the spike's proposed Provenance-Masked Activation fix would require rewriting it (flagged there as MAJOR cost)."
+
+  - id: bma:SleepCycle
+    prefLabel: "Sleep cycle"
+    definition: >
+      Four phases: PhaseAwake, PhaseLight (NREM 1-2: pause writes, flush
+      co-activation), PhaseDeep (SWS: compression, decay), PhaseREM (pattern
+      replay). "Consolidates memory through biologically-grounded phases:
+      Light Sleep (pause writes, flush), Deep Sleep (compress, decay), REM
+      (pattern replay), Wake (resume, report)."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [bma:F01Functor, bma:MemoryTier]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/sleep/cycle.go
+        quote: "lines 1-31"
+    notes: "IMPLEMENTED, has tests (cycle_test.go)."
+
+  - id: bma:PersonaQuaternionOperator
+    prefLabel: "Persona as quaternion operator (q·v·q⁻¹)"
+    definition: >
+      "A quaternion rotation q·v·q⁻¹ preserves magnitude (truth is conserved)
+      while changing orientation (understanding shifts). A wisdom operates
+      identically: the facts don't change, but what's salient does." "A persona
+      is fundamentally a PROCESSOR — it takes input content, applies its wisdom
+      rotations as quaternionic cognitive transformations, and produces a work
+      product according to an output schema." Composition is explicitly
+      non-commutative, treated as diagnostic (different orders reveal different
+      things).
+    status: conjectural
+    axiom_grounding: "none — and explicitly self-flagged as unverified by its own source (see notes), so no derivation chain is claimed."
+    broader: [fed:Persona]
+    narrower: []
+    related: [fed:Wisdom, bma:WisdomStructure]
+    source:
+      - file: /home/prime/Documents/BMA/infrastructure/BMA-Cognitive-Foundation.md
+        quote: "§10.4-10.5, lines 777-784 and 836-859"
+    notes: >
+      THE SOURCE ITSELF flags this: BMA-Cognitive-Foundation.md's own
+      Axiomatic Risk Ledger (§10.3, line 745) rates "Quaternion genomes provide
+      useful persona diversity" as "Low (THEORETICAL) — No personas have been
+      bred yet." This ontology carries that self-assessed conjectural status
+      forward rather than presenting it as established.
+
+  - id: bma:WisdomStructure
+    prefLabel: "Wisdom entry schema"
+    definition: >
+      Canonical (7-field) schema per BMA-Cognitive-Foundation.md §10.4:
+      Statement (the wisdom in one sentence), Axes (i,j,k) (three cognitive
+      dimensions rotated), Strength (provenance/evidence body), Domain
+      (problem class it applies to), Transform (operational instruction "When
+      you see P, reframe as Q"), Composition history (what other wisdoms
+      combined with, in what order), Failure modes (when the wisdom misleads).
+    status: derived
+    axiom_grounding: none
+    broader: [fed:Wisdom]
+    narrower: []
+    related: [bma:PersonaQuaternionOperator]
+    source:
+      - file: /home/prime/Documents/BMA/infrastructure/BMA-Cognitive-Foundation.md
+        quote: "table at lines 790-798"
+    notes: >
+      DISCREPANCY, low-stakes: this task's own directive and RECORD.md both use
+      a shorter 5-field shorthand (Statement/Axes/Domain/Composition/
+      Failure-modes), dropping Strength and Transform. Both are real — the
+      7-field version in BMA-Cognitive-Foundation.md is the fuller canonical
+      schema; the 5-field version is an in-use shorthand. Flag for beekeeper:
+      confirm which is authoritative going forward, or note both are valid at
+      different levels of detail. Live instances exist at
+      /home/prime/Documents/inter/worktrees/hypergraph-generativity/wisdoms/
+      (not schema-checked in this pass).
+
+  - id: bma:TypeNode
+  ###
+  # "Type-Node" and "Ratio-Edge" are NOT Wyrd terms (confirmed absent from the
+  # Wyrd corpus by direct search) — they are BMA/Systema concepts referenced
+  # from the hypergraph-generativity spike's RECORD.md, which describes them
+  # as "already lowered" into the graph. Filed under bma: because RECORD.md
+  # attributes them to "BMA + Systema", but flagged design-proposal because
+  # they do not appear as an actual distinct node/edge type in BMA's code.
+  ###
+    prefLabel: "Type-Node (\"Universal Truth of a state-change\")"
+    definition: >
+      "The Type-Node (\"Universal Truth of a state change\", an algebraic
+      ratio)" — per RECORD.md, one of three things already lowered into the
+      graph, alongside reversible Ratio-Edges and personas-as-quaternion-
+      operators, described as "the graph-level embodiment of the registry's
+      top layer."
+    status: design-proposal
+    axiom_grounding: "none stated"
+    broader: []
+    narrower: []
+    related: [bma:RatioEdge, bma:NodeType, spike:Leader]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "line 16, 'Transformation-as-invariant — the Type-Node (\"Universal Truth of a state change\", an algebraic ratio) + reversible Ratio-Edges'"
+    notes: >
+      DISCREPANCY flagged for beekeeper: RECORD.md claims this is "ALREADY
+      lowered" (i.e., already exists), but bma:NodeType's actual enum
+      (types.go) has no corresponding constant — it is not among BMA's ~11
+      NT_* types. Either this concept lives elsewhere in the BMA corpus
+      un-harvested by this pass, or RECORD.md's "already lowered" claim is
+      aspirational/theoretical rather than code-verified. Recommend
+      resolving before treating this as settled vocabulary.
+
+  - id: bma:RatioEdge
+    prefLabel: "Ratio-Edge (reversible)"
+    definition: "A reversible edge type paired with Type-Node, per RECORD.md's 'reversible Ratio-Edges' — not independently defined beyond that phrase in the searched corpus."
+    status: design-proposal
+    axiom_grounding: "none stated"
+    broader: []
+    narrower: []
+    related: [bma:TypeNode, wyrd:Hyperedge]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "line 16, see bma:TypeNode"
+    notes: "Same discrepancy flag as bma:TypeNode — not found as an implemented Wyrd or BMA edge type by direct search of wyrd:Hyperedge's EdgeType/NodeType enums."
+
+  # ==========================================================================
+  # EDDA — theory-to-executable compiler/language
+  # ==========================================================================
+
+  - id: edda:Cap
+    prefLabel: "Cap (linear capability)"
+    definition: "capability, linear by default. Maps to Wyrd.Capability.Capability A structure (T2.3). \"Capabilities are linear by default — use-once. The compiler tracks capability consumption flow.\""
+    status: derived
+    axiom_grounding: "none direct — Edda-language-design term grounded in its own type theory, not in AXIOM-1."
+    broader: [fed:Tool]
+    narrower: [edda:GrantableCap, edda:ConstructedCap]
+    related: [fed:Capability, spike:HeldVsConsumed]
+    source:
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.2.md
+        quote: "line 596 (glossary), line 146 (linear-by-default)"
+    notes: "This is the tool/primitive-resource pole of the capability clash — see fed:Capability. Edda's usage matches BMA/Systema's 'capability ≡ tool', NOT the spike's 'capability = what a skill grants'."
+
+  - id: edda:GrantableCap
+    prefLabel: "Grantable cap"
+    definition: >
+      "Grantable caps — minted by an authority, stored, delegated, projected.
+      Full v0.2 delegation algebra. (cap(warning_emit), cap(signal_emit).)"
+      Also distinguishes capability projection (delegation, cap.project_to /
+      cap.derive — a wider-tier cap projects to a narrower-tier cap) from
+      boundary crossing (a tier-algebra transition) — "capability projection
+      changes the delegate; a boundary crossing changes the algebra."
+    status: design-proposal
+    axiom_grounding: none
+    broader: [edda:Cap]
+    narrower: []
+    related: [edda:ConstructedCap]
+    source:
+      - file: /home/prime/Documents/Edda/doc/v0.3-decisions.md
+        quote: "lines 38-41"
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.2.md
+        quote: "§4.10, lines 355-362 (projection vs boundary crossing)"
+    notes: "Part of the stage1a capability-surface spec (PR #14, status APPROVE-WITH-CONCERN as of rev 2026-08-31, awaiting qbp-architecture + beekeeper HVR) — DESIGN-PROPOSAL, not yet ratified."
+
+  - id: edda:ConstructedCap
+    prefLabel: "Constructed cap"
+    definition: >
+      "Constructed caps — exist only as the witnessed output of a process; no
+      grant verb, no projection verb. Come into existence when a process
+      completes (multisig quorum met, consent evaluated)... (cap(cth_admit),
+      consent-derived caps.) Closes governance-layer capability laundering: a
+      constructed cap cannot be granted OR projected to an individual."
+    status: design-proposal
+    axiom_grounding: none
+    broader: [edda:Cap]
+    narrower: []
+    related: [edda:GrantableCap]
+    source:
+      - file: /home/prime/Documents/Edda/doc/v0.3-decisions.md
+        quote: "lines 38-41"
+    notes: "Same PR #14 ratification status as edda:GrantableCap."
+
+  - id: edda:Stage0
+    prefLabel: "Stage 0"
+    definition: >
+      Minimal bootstrap subset, gated on §I4 ratification: ℂ tier only, QW64
+      width only, simple linear capability declarations + consumption tracking
+      (grantable caps only — no constructed caps, no multisig), hard revocation
+      only, minimal schemas. Explicitly out of scope: ℍ/𝕆/𝕊 tiers, other
+      widths, PhysicalQuantity, temporal/soft caps, lock/key, worktrees,
+      consent, delegation.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: [edda:Stage1a]
+    related: [edda:Cap]
+    source:
+      - file: /home/prime/Documents/Edda/doc/stage-0-plan.md
+        quote: "lines 1-4, 7-22"
+    notes: "Ratified gate (§I4)."
+
+  - id: edda:Stage1a
+    prefLabel: "Stage 1a"
+    definition: >
+      The first Stage-1 increment, landing the capability/mode surface
+      (World/posit/Discriminator/Fact) — first as a programmatic model, then as
+      real parsed/checked language surface. Branch: docs/stage1a-capability-
+      surface, impl feat/stage1a-capability-surface. Stage 1 overall tracks
+      features F1-F5 (function calls -> born_rule -> ℍ/commutator -> project ->
+      𝕊/zd_class).
+    status: design-proposal
+    axiom_grounding: none
+    broader: [edda:Stage0]
+    narrower: []
+    related: [edda:BornRule, edda:Project]
+    source:
+      - file: /home/prime/Documents/Edda/RESUME.md
+        quote: "line 37 ('F3 already landed in stage1a'), line 72 (F1-F5 feature list)"
+    notes: "In progress as of the harvesting pass (2026-09-27)."
+
+  - id: edda:BornRule
+    prefLabel: "born_rule builtin"
+    definition: >
+      Language builtin, ℂ->Real, implementing the quantum Born rule P=|ψ|² via
+      a Gearbox complex multiply: "checker (Real writable/TierReal +
+      born_rule:ℂ->Real) + IR (KindBornRule, arg lowered at ℂ) + codegen
+      (CMul64(z,conj z)[0] IIFE + tier-aware FloatLit)... round-trip
+      born_rule((1.2,1.6))==4.0." Backed by Lean theorem
+      edda_born_rule_result_is_real (PROVEN).
+    status: derived
+    axiom_grounding: >
+      Possible but UNCONFIRMED chain: RESUME.md and the qbp-paper-test brief
+      describe the Born rule as "ONE algebraic consequence of the Hurwitz norm
+      multiplicativity in ℍ" — and Hurwitz's theorem itself concerns exactly
+      the division-algebra structure AXIOM-1's selection clause names. This
+      ontology notes the connection but does NOT assert it as a verified
+      derivation chain — that would need a citable proof linking Hurwitz
+      multiplicativity back to AXIOM-1 specifically, which was not located in
+      this pass. Flag as a plausible but unconfirmed grounding.
+    broader: []
+    narrower: []
+    related: [wyrd:Tier, edda:Gearbox]
+    source:
+      - file: /home/prime/Documents/Edda/RESUME.md
+        quote: "line 15"
+      - file: /home/prime/Documents/Edda/archive/test-cases/qbp-paper-test/brief.md
+        quote: "line 269, 'ONE algebraic consequence of the Hurwitz norm multiplicativity in ℍ'"
+    notes: "Numeric |z|² semantic flagged 'research-tier' pending qbp-cu Gearbox review."
+
+  - id: edda:Project
+    prefLabel: "project (F4, ℍ->ℂ downward tier projection)"
+    definition: >
+      Lossy component extraction, NOT the inverse of the ℂ->ℍ commutator:
+      "extracts the (re, imI) components of the quaternion [4]float64 as a ℂ
+      [2]float64, dropping imJ/imK... This is component EXTRACTION, not a
+      Gearbox multiply — the lossy downward counterpart of commutator (ℂ->ℍ),
+      NOT a bijective inverse: project ∘ commutator ≠ id."
+    status: derived
+    axiom_grounding: >
+      Grounded in Wyrd.Projection.π (T2.2), the "canonical projection CD A -> A"
+      in the Cayley-Dickson tower (ℍ⊂𝕆⊂𝕊) — "drop the higher generators; keep
+      only the inner-ring component." This is a real, cited soundness link
+      ([[Wyrd.Projection]] T2.2, Wyrd/lean/Wyrd/Projection.lean, no-sorry) —
+      but note the CORRECTION below on naming.
+    broader: []
+    narrower: []
+    related: [wyrd:Tier, edda:BornRule]
+    source:
+      - file: /home/prime/Documents/worktrees/edda-f4cg/internal/stage1/codegen/codegen.go
+        quote: "lines 82-99, ProjectExtractC + soundness comment"
+      - file: /home/prime/Documents/Wyrd/lean/Wyrd/Projection.lean
+        quote: "defines the canonical projection π, no-sorry"
+    notes: >
+      CORRECTION to this task's own directive: the phrase "projection functor"
+      (used in the task brief and in RECORD.md's Projection (L) discussion) is
+      NOT attested as Wyrd/Edda vocabulary. The actual named object is
+      Wyrd.Projection.π, described in-source as "the canonical projection,"
+      never called a functor. The only "functor" hits in the Wyrd/Edda Lean
+      corpus are generic category-theory library code from an imported
+      mathlib dependency, not Wyrd/Edda-authored. Recommend citing π/T2.2
+      rather than "projection functor" going forward, OR treating "projection
+      functor" as the spike's own looser usage (see spike:ProductProjectionProvenance)
+      rather than Edda's technical term.
+
+  - id: edda:Gearbox
+    prefLabel: "Gearbox"
+    definition: "The precision-and-algebra dispatcher (emulator/public_api.go); Edda's Crawl-phase compilation target. Codegen dispatches Edda expressions to typed Gearbox API calls by (tier, width), e.g. g.QMul64, g.CMul64, g.OMul64, g.SMul64."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [edda:BornRule, edda:Project]
+    source:
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.2.md
+        quote: "line 598 (glossary)"
+      - file: /home/prime/Documents/Edda/edda-compiler-spec-v0.2.md
+        quote: "lines 119, 156, 165, 368-372"
+    notes: "At Walk+ phase, direct QBP-CU ISA emission replaces the Gearbox wrapper for hot paths (compiler spec line 174)."
+
+  # ==========================================================================
+  # SYSTEMA — workspace process framework
+  # ==========================================================================
+
+  - id: systema:TheoryEngineeringCarts
+    prefLabel: "Theory Cart / Engineering Cart"
+    definition: >
+      "The single-cart model obscures a fundamental distinction. Understanding
+      a problem and making a thing from that understanding are different
+      activities with different tools, outputs, evaluation criteria, and
+      review processes." Theory Cart -> Spec (requirements + tests) ->
+      Engineering Cart -> Reference Design (test results + compliance) ->
+      World (product development). Theory Cart produces TWO outputs (per the
+      v0.8 addendum): Theory (general, reusable, built on trust anchors) and
+      Spec (specific instance with requirements and tests, depends on theory).
+    status: derived
+    axiom_grounding: "none — independent process-design lineage (Systema v0.8), not derived from AXIOM-1."
+    broader: []
+    narrower: [systema:ThreeLoopModel]
+    related: [systema:TrustAnchor, systema:OKHDomainTaxonomy]
+    source:
+      - file: /home/prime/Documents/Systema/docs/systema-spec-v08.md
+        quote: "§2, §2.1 heading '## 2.1 The Two Carts', line 75 quote above"
+      - file: /home/prime/Documents/Systema/docs/systema-v08-addendum.md
+        quote: "§1.1 'Theory Cart: Two Outputs'"
+    notes: >
+      BEEKEEPER-DECISION / NAMING-DRIFT FLAG: this is the PRIMARY, ratified
+      Systema spec definition — verified directly (2026-09-27, grep of both
+      systema-spec-v08.md and systema-v08-addendum.md) — and it defines exactly
+      TWO carts (Theory, Engineering). The project's own /home/prime/Documents/
+      CLAUDE.md refers to "Three Carts (Theory/Engineering/Information)" — an
+      "Information Cart" does not appear ANYWHERE in the Systema corpus (zero
+      grep hits for "information cart" / "third cart" / "three cart" in either
+      spec file). Either CLAUDE.md's phrasing is stale/incorrect, or a third
+      cart was proposed somewhere not yet located. This ontology roots on the
+      verified Two-Carts model and flags the discrepancy rather than silently
+      adopting either claim.
+
+  - id: systema:ThreeLoopModel
+    prefLabel: "Three-loop progressive hardening"
+    definition: >
+      Loop 1 Ideation ("Could this work?", constraint = References/awareness,
+      no formal test) -> Loop 2 Architectural ("Will this work?", constraint =
+      Guidances/directional) -> Loop 3 Real-World ("Does this work?",
+      constraint = Requirements/mandatory). "The engineering cart operates
+      through three iterative loops. Each loop tightens the constraint space
+      and raises the bar for gate review... the same body of regulatory and
+      standards knowledge is present at all three loops but viewed through
+      progressively harder lenses."
+    status: derived
+    axiom_grounding: none
+    broader: [systema:TheoryEngineeringCarts]
+    narrower: []
+    related: [systema:OKHDomainTaxonomy]
+    source:
+      - file: /home/prime/Documents/Systema/docs/systema-spec-v08.md
+        quote: "§3, lines 209-260"
+    notes: "The three loops apply identically across every OKH domain (see systema:OKHDomainTaxonomy's Loop1/2/3 table)."
+
+  - id: systema:TrustAnchor
+    prefLabel: "Trust Anchor"
+    definition: >
+      "A trust anchor is an independent piece of evidence that constructively
+      reinforces a pattern. When multiple anchors point to the same conclusion
+      through different methods, the resulting confidence is greater than any
+      single anchor could provide. This is the epistemological foundation the
+      entire pipeline stands on." Self-reinforcing / constructive-interference
+      property is explicit. AnchorStatus = Active/Weakened/Retracted.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [systema:VigilanceBackflow, cth:Anchor]
+    source:
+      - file: /home/prime/Documents/Systema/docs/systema-v08-addendum.md
+        quote: "§1.2, lines 69-73 (verified directly 2026-09-27)"
+    notes: "Distinct concept/term from cth:Anchor (CTH's proof-ledger record) — both use 'anchor' but for different things across projects; worth flagging as a second minor naming overlap alongside the Tier collision."
+
+  - id: systema:VigilanceBackflow
+    prefLabel: "Vigilance backflow"
+    definition: >
+      "The pipeline flows in both directions... Backward flow carries two
+      distinct signals: vigilance (something went wrong) and challenge
+      identification (something needs doing)." "When harm or failure occurs in
+      the world, the signal propagates upstream to the appropriate level" —
+      Reference Design (manufacturing defect) -> Spec (design flaw) -> Theory
+      (theory error) -> Trust Anchors (anchor failure, "halt everything").
+      Severity-dependent reach with corresponding actions (review, hold,
+      recall, halt).
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [systema:TrustAnchor, systema:TheoryEngineeringCarts]
+    source:
+      - file: /home/prime/Documents/Systema/docs/systema-v08-addendum.md
+        quote: "§5.1-5.2, lines 385-433 (verified directly 2026-09-27)"
+    notes: "Distinct from 'challenge identification' backflow — two separate backward signals per the same section."
+
+  - id: systema:OKHDomainTaxonomy
+    prefLabel: "OKH domain taxonomy"
+    definition: >
+      Five domains classifying OKH manifests by deliverable: Hardware
+      (physical artefact, atomic), Software (code that runs, atomic), Process
+      (a procedure, atomic), Biological (living-system interventions, atomic),
+      System (composition of OKH manifests from any domain, compositional).
+      "Hybrid" explicitly rejected as a domain: "A project that combines
+      software and hardware... is a system whose sub-components span the
+      software and hardware domains."
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [systema:ThreeLoopModel]
+    source:
+      - file: /home/prime/Documents/Systema/okh-domains/DOMAINS.md
+        quote: "full file, verified directly 2026-09-27"
+    notes: "Each domain has characteristic Loop1/2/3 standards (e.g. Software: coding standards -> architecture review -> formal verification/pen-testing/code audit)."
+
+  # ==========================================================================
+  # SPIKE — hypergraph-generativity spike (2026-09-25). ALL entries here are
+  # DESIGN-PROPOSAL / DRAFT. Explicitly NOT ratified — quoting RECORD.md:
+  # "a design record for review, not a ratified spec and not a run."
+  # ==========================================================================
+
+  - id: spike:ActiveMode
+    prefLabel: "Active mode"
+    definition: >
+      "Operating entirely within the existing model of the circumstance,
+      executing known patterns/skills directly from settled structure — no
+      simulation, no conceptualization, no open quarantine. Match a settled
+      pattern, act. It is the default and by far the cheapest path." Escalates
+      to napkin only "when the known patterns fail."
+    status: design-proposal
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [spike:FormalityGradient, spike:Leader]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'The gradient's floor' section, lines 42-50 (verified directly 2026-09-27)"
+    notes: "Grounded in cited cognitive-science literature (Rasmussen's SRK ladder, Kahneman System 1, Dreyfus expert fluidity, predictive-processing low-prediction-error steady-state) — those citations are the spike's own, not independently re-verified here."
+
+  - id: spike:BoundedSimulation
+    prefLabel: "Bounded simulation"
+    definition: >
+      Circumstance-bounded forward simulation, safe because "generation is
+      architecturally SEPARATED from fact-commitment, and only a
+      filtered/reconciled residue crosses." Bounded by: circumstance-launch,
+      narrow scope, short hop-count with explicit kill-condition,
+      provenance-tagging, reconciliation.
+    status: design-proposal
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [spike:ActiveMode, spike:ProductProjectionProvenance]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "Thesis section, line 7 (verified directly 2026-09-27)"
+    notes: "The load-bearing safety claim: 'biological generativity is safe not because it is accurate, but because generation is architecturally separated from fact-commitment.'"
+
+  - id: spike:ProductProjectionProvenance
+    prefLabel: "(Product, Projection, Provenance) output triple"
+    definition: >
+      "A bounded simulation does not output language. It outputs a (Product,
+      Projection, Provenance) triple: Product (P) — the domain-typed substrate
+      structure the simulation produced... PRIMARY, lives in the substrate.
+      Projection (L) — a rendering of P into a target-legible form... L must
+      be dual — both human-readable AND computer-readable... L is derived FROM
+      P, never an independent output. Provenance (V) — NOT a binary
+      open/settled flag but a formality-graded quality state... carried by
+      CTH's anchor kinds (CONJ-/DERIV-/PROOF-), ProofState, and closure."
+    status: design-proposal
+    axiom_grounding: "none direct, but explicitly built ON cth:ProofState and cth:closure as its Provenance mechanism — those are derived/canonical; the triple itself as a design pattern is design-proposal."
+    broader: []
+    narrower: []
+    related: [cth:ProofState, cth:closure, spike:FormalityGradient]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'The output model' section, lines 20-28 (verified directly 2026-09-27)"
+    notes: >
+      This is the SAME dual-readability requirement (L must be human AND
+      machine readable) this ontology itself is built to satisfy — the
+      ontology dogfoods this pattern, not just AXIOM-1's provenance discipline.
+      Also NOTE: this section calls L "a projection functor" — see the naming
+      correction under edda:Project (the term "functor" is not attested for
+      Wyrd's actual π projection; the spike's usage here is looser/informal).
+
+  - id: spike:FormalityGradient
+    prefLabel: "Formality gradient (active -> napkin -> engineering -> formal)"
+    definition: >
+      "The formality gradient runs napkin/back-of-envelope -> engineering ->
+      formal/theory." Napkin = minimal oracle, loose is fine because tagged
+      low-formality. Engineering = schema-validation, buildability, constraint
+      satisfaction. Formal = proven (closure: derivation) or validated against
+      experimental data (closure: measurement). Below napkin sits active mode
+      (see spike:ActiveMode). "The declared formality tier MUST match the
+      oracle that was cleared... claiming a higher formality than the oracle
+      actually passed is the laundering failure."
+    status: design-proposal
+    axiom_grounding: "built on cth:closure and cth:ProofState (derived/canonical) as its formal-tier mechanism."
+    broader: []
+    narrower: [spike:ActiveMode]
+    related: [cth:closure, cth:ProofState, cth:four-bucket-audit]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'Good-quality output' section, lines 30-40 (verified directly 2026-09-27)"
+    notes: "Explicitly parallels CTH's own anti-laundering rule (S3), generalized here from claims to simulated-output formality."
+
+  - id: spike:Leader
+    prefLabel: "Leader (chain of skills)"
+    definition: >
+      "A leader (cth-implementor's sense) is a chain / path from a
+      circumstance to an intended outcome. Goal-directed action = compose a
+      chain of skills/known tools toward the outcome, guided by wisdoms,
+      bounded by ethics." Four layers: Skills/tools (object-level) -> Leader/
+      chain (the path) -> Wisdoms (meta-guidance, does not execute) -> Ethics/
+      morals (outer envelope, hard constraint on which chains may be
+      constructed at all).
+    status: design-proposal
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [fed:Skill, fed:Wisdom, wyrd:Hyperedge, spike:GenerativeRatchet]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'The control structure' section, lines 52-63 (verified directly 2026-09-27)"
+    notes: "Two closed loops noted: (1) validated leaders become settled skills (today's deliberated novelty becomes tomorrow's routine); (2) ethics bounds simulation too, resolved into a separate Spike 3 (theory-of-mind, intent-as-provenance-dimension)."
+
+  - id: spike:GenerativeRatchet
+    prefLabel: "Generative ratchet"
+    definition: >
+      "Roles are relational — an output of one step is the input or tool of
+      another (Edda is an output that becomes a mechanism). Each validated new
+      skill becomes a building block -> the reachable-outcome space expands ->
+      the generator strengthens as the graph matures... The ratchet advances
+      only on validated (settled) outputs through the oracle — so it
+      accumulates truth, not activity."
+    status: design-proposal
+    axiom_grounding: "built on cth:decision_state's settled value as its advance-condition."
+    broader: []
+    narrower: []
+    related: [spike:Leader, fed:Capability]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'The generative ratchet' paragraph, line 74 (verified directly 2026-09-27)"
+    notes: >
+      NAMING CORRECTION for this task's own directive: the task brief asked
+      for "the capability ratchet" — that exact phrase is NOT attested in the
+      corpus. The real, sourced term is "generative ratchet." Recorded here
+      under its actual name with the correction noted, rather than silently
+      renaming the corpus to match the brief.
+
+  - id: spike:ICOMVessel
+    prefLabel: "ICOM + Vessel step anatomy"
+    definition: >
+      A skill is Input -> Transformation -> Output; Transformation decomposes
+      into ICOM (IDEF0) plus a Vessel: "Input (subject transformed) · Control
+      (the controller — human or the graph — plus setpoints/tolerances) ·
+      Output · Mechanism (the effector/tool) · Vessel (what holds the subject
+      during the transform — beaker / memory-cell / test-tube)." "The
+      mechanism is itself a skill with its own inputs -> input accounting
+      recurses... giving a complete BOM/cost."
+    status: design-proposal
+    axiom_grounding: none
+    broader: [spike:Leader]
+    narrower: [spike:HeldVsConsumed, spike:ByproductConservation]
+    related: [fed:Skill]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "'Skill & Step anatomy' section, lines 65-72 (verified directly 2026-09-27)"
+    notes: >
+      RECORD.md is explicit that "this decomposition is genuinely new — no
+      ICOM vocabulary exists in the corpus" prior to this spike. Filed here as
+      design-proposal, not retroactively presented as established BMA/Wyrd
+      vocabulary.
+
+  - id: spike:HeldVsConsumed
+    prefLabel: "Held vs. consumed resources"
+    definition: "\"The vessel is borrowed (reusable capability, returned); consumables are consumed (linear capability, spent) — maps to Edda's reusable-vs-linear caps.\""
+    status: design-proposal
+    axiom_grounding: none
+    broader: [spike:ICOMVessel]
+    narrower: []
+    related: [edda:Cap]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "line 70 (verified directly 2026-09-27)"
+    notes: "Explicit mapping onto Edda's linear-capability semantics — this is a real cross-reference, not a coincidental term reuse."
+
+  - id: spike:ByproductConservation
+    prefLabel: "Byproducts / conservation"
+    definition: >
+      "'Consume' = re-type, not delete. Matter/energy is conserved; a consumed
+      input transitions type to a byproduct node (low-salience) — a
+      first-class unintended output. So conservation is a validity oracle for
+      physical steps (mass/energy balance = a cheap graph-internal Gate-1
+      check), and 'delete' is only ever a logical abstraction over
+      transform-to-entropy."
+    status: design-proposal
+    axiom_grounding: "Notably invokes AXIOM-1's own subject matter (information/matter preservation) by analogy — but is NOT claimed by RECORD.md itself as a formal derivation from AXIOM-1, only a Landauer/information-erasure-at-𝕊 cross-reference. Do not over-read this as a proven chain."
+    broader: [spike:ICOMVessel]
+    narrower: []
+    related: [cth:AXIOM-1]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: "line 71 (verified directly 2026-09-27)"
+    notes: "Cites 'Landauer; cf. #666 information-erasure at 𝕊' — a suggestive but informal link to AXIOM-1's information-preservation theme, not a stated proof."
+
+  # ==========================================================================
+  # FEDERATION — cross-cutting terms, including THE capability clash
+  # ==========================================================================
+
+  - id: fed:Capability
+    prefLabel: "Capability (CROSS-PROJECT CLASH — BEEKEEPER DECISION NEEDED)"
+    definition: >
+      TWO ATTESTED, INCOMPATIBLE SENSES IN ACTIVE USE:
+      (1) BMA/Systema/Edda sense — capability = tool, a raw/primitive ability
+      held (fed:FourLayerRegistry layer 1: "Tools: Raw capabilities"; Edda's
+      Cap is this same primitive-resource sense). (2) Hypergraph-generativity
+      spike sense — capability = what a skill grants when instantiated (a
+      composite, exercisable power produced by running a skill).
+    status: design-proposal
+    axiom_grounding: none
+    broader: []
+    narrower: [fed:Tool, edda:Cap]
+    related: [fed:FourLayerRegistry, spike:Leader, spike:GenerativeRatchet]
+    source:
+      - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
+        quote: >
+          line 18: "'capability' is overloaded — BMA/Systema capability ≡ tool
+          (a raw ability held); this design capability = what a skill grants.
+          Reconciliation adopted (flagged for beekeeper ratification): a tool
+          is a primitive capability; a skill, instantiated, grants a composite
+          capability."
+    notes: >
+      BEEKEEPER-DECISION NEEDED — status is design-proposal, NOT settled. The
+      reconciliation quoted above is already drafted in the spike's own
+      RECORD.md, explicitly "flagged for beekeeper ratification" there — this
+      ontology does not invent a new reconciliation, it surfaces the one
+      already proposed and preserves its unratified status rather than
+      treating it as decided. Until ratified, any document using "capability"
+      should state which of the two senses it means.
+
+terms_count_by_status:
+  axiom: 1
+  derived: 37
+  conjectural: 1
+  design-proposal: 15
+  unlocated: 1
+  total: 55
