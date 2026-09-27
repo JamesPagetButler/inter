@@ -918,6 +918,16 @@ terms:
       cart was proposed somewhere not yet located. This ontology roots on the
       verified Two-Carts model and flags the discrepancy rather than silently
       adopting either claim.
+      RESOLVED 2026-09-27 (beekeeper): a "cart" is a flexible *domain / grouping
+      of skills* — once skills are lowered to hyperedges (Spike 0), a cart is a
+      subgraph or a single domain-binding hyperedge (the OKH "System" domain is
+      already this compositional case). So the fixed count (2 vs 3) is NOT
+      fundamental; carts are a flexible, nestable partition. Two distinct axes,
+      both expressible as groupings: process-kind (Theory=understand /
+      Engineering=make — the ratified two-cart distinction) × domain
+      (Hardware/Software/Process/Bio/System). CLAUDE.md's "three" is therefore
+      not a contradiction, just a non-canonical snapshot of a flexible
+      structure — no CLAUDE.md edit is forced by this ontology.
 
   - id: systema:ThreeLoopModel
     prefLabel: "Three-loop progressive hardening"
@@ -1195,7 +1205,7 @@ terms:
   # ==========================================================================
 
   - id: fed:Capability
-    prefLabel: "Capability (CROSS-PROJECT CLASH — BEEKEEPER DECISION NEEDED)"
+    prefLabel: "Capability (RESOLVED 2026-09-27: tool = primitive capability)"
     definition: >
       TWO ATTESTED, INCOMPATIBLE SENSES IN ACTIVE USE:
       (1) BMA/Systema/Edda sense — capability = tool, a raw/primitive ability
@@ -1203,7 +1213,9 @@ terms:
       Cap is this same primitive-resource sense). (2) Hypergraph-generativity
       spike sense — capability = what a skill grants when instantiated (a
       composite, exercisable power produced by running a skill).
-    status: design-proposal
+      RESOLVED 2026-09-27 (beekeeper): tool = primitive capability; a skill,
+      instantiated, grants a composite capability.
+    status: derived
     axiom_grounding: none
     broader: []
     narrower: [fed:Tool, edda:Cap]
@@ -1217,13 +1229,12 @@ terms:
           is a primitive capability; a skill, instantiated, grants a composite
           capability."
     notes: >
-      BEEKEEPER-DECISION NEEDED — status is design-proposal, NOT settled. The
-      reconciliation quoted above is already drafted in the spike's own
-      RECORD.md, explicitly "flagged for beekeeper ratification" there — this
-      ontology does not invent a new reconciliation, it surfaces the one
-      already proposed and preserves its unratified status rather than
-      treating it as decided. Until ratified, any document using "capability"
-      should state which of the two senses it means.
+      RATIFIED 2026-09-27 by the beekeeper: **tool = primitive capability; a
+      skill, instantiated, grants a composite capability.** The clash is
+      resolved — both senses coexist under this reconciliation (tool = the
+      primitive held ability; skill-granted = the composite exercisable power).
+      Documents may still name which sense they mean for clarity, but this is
+      no longer an open decision.
 
 terms_count_by_status:
   axiom: 1
