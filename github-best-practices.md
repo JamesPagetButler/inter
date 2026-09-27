@@ -433,6 +433,16 @@ Canonical rules live in `inter/issue-authoring-best-practices.md` §11. Summary:
 
 These rules were codified following the confluent-trust#84 process breakdown (see `inter/process-breakdowns.md`); sub-rules 1a and 1b added following wyrd#68/#71/#74 (same sprint, same root cause — cross-repo recurrence confirmed systemic). Named reviewers may DEFER any PR that violates Rule 1 or Rule 2.
 
+### 7.5 Referencing PRs & issues — always `<repo>#N`
+
+Every reference to a PR or issue — in PR bodies, review comments, sessionbridge posts, status tables, and reports — is **fully qualified with the actual repo name**: `<repo>#N` (e.g. `bma-systema#297`, `qbp-compute-unit#76`, `wyrd#93`, `contextus#37`, `confluent-trust#84`), or the linkable `JamesPagetButler/<repo>#N`.
+
+- **Never abbreviate the repo.** `bma#297` is ambiguous — the repo is `bma-systema`, and `bma` is also an orchestrator persona. Use the real slug.
+- **Never a bare `#N`** outside the thread of the PR/issue it names — with 8+ federation repos the reader (or an agent on a merge pass) can't tell which repo it means and may act on the wrong one.
+- When unsure of a slug, verify (`gh repo view`) before referencing.
+
+This makes explicit the convention the rest of this doc already follows. Codified 2026-09-27 (beekeeper-directed) after an ambiguous `bma#297` reference during a live merge pass; a recurrence is a `process-breakdowns.md`-class event.
+
 ---
 
 ## 8. Maintenance
@@ -443,7 +453,7 @@ This doc updates when:
 - CI patterns shift across federation repos
 - ADR-003 §I4 evolves
 
-Last updated: 2026-06-01 (§7.4 issue-PR discipline added, inter#43; §5.6 constitutional-doc PR gate + §7.4 sub-rules 1a/1b added, inter#52).
+Last updated: 2026-09-27 (§7.5 PR/issue reference convention `<repo>#N` added, beekeeper-directed). Prior: 2026-06-01 (§7.4 issue-PR discipline, inter#43; §5.6 constitutional-doc PR gate + §7.4 sub-rules 1a/1b, inter#52).
 
 ---
 
