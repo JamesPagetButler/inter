@@ -25,6 +25,7 @@ If a cth-implementor "leader" becomes the effective reasoning engine over the hy
 - `spike-2-concept-dream.md` — **first-draft concept** for spike 2 (offline consolidation; skill→wisdom promotion / maturation ladder; CLS/SHY/Hoel).
 - `spike-3-concept-theory-of-mind.md` — **first-draft concept** for spike 3 (ToM: threat-simulation / camouflage / empathy = modelling other **Personas**); resolves the ethics-simulation nuance via a purpose/intent provenance dimension.
 - `../../ontology/` — companion **first-draft ontology** of the whole system's vocabulary: dual human+machine-readable, AXIOM-1-grounded (in progress).
+- `ontology-cth-lowering-addendum.md` — **addendum:** ontology ↔ CTH as **TBox / ABox** (terms vs. truth-tracked claims), both AXIOM-1-rooted, converging on one Wyrd substrate at lowering; a living **lowering-tracker** + current ontology snapshot, for the next theory rebuild.
 - `spike-chain-to-epistemic-hypergraph.md` — the **full 0–8 chain** bridging to functioning infra + math-domain import; the capability-gaps→sprint principle.
 - `ebom-cth-connection.md` — the **eBOM** (fan-out / blast-radius / eVaR) as a CTH `root_audit` extension; keystones vs empirical choke points (Spike 7).
 - `oppenheimer-math-curriculum.md` — the **bounded** Lean/Mathlib curriculum to verify the federation's *own* claims (formal-tier oracle; input to Spike 5). Explicitly not "formalize all of math."
