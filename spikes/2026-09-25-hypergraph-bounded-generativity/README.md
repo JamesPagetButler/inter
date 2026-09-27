@@ -1,12 +1,12 @@
 # Spike: Hypergraph-as-brain — bounded generativity without confident-falsehood
 
-> **Status:** spike-1 design COMPLETE, for beekeeper review (uncommitted → this PR) · **Opened:** 2026-09-25 · **Director:** qbp-architecture · **Type:** research-conversation spike → theory artifact (not an implementation) · **Hygiene:** per `inter#132` (spike-best-practices) — isolated worktree, clean-`main` base, source/artifact only, single-director.
+> **Status:** spike-1 design + spike-0/2/3 concepts + registry-lowering frame, for beekeeper review (draft PR #133) · **Opened:** 2026-09-25 · **Director:** qbp-architecture · **Type:** research-conversation spike → theory artifact (not an implementation) · **Hygiene:** per `inter#132` (spike-best-practices) — isolated worktree, clean-`main` base, source/artifact only, single-director.
 
 ## Question
 
 If a cth-implementor "leader" becomes the effective reasoning engine over the hypergraph, the hypergraph begins to take the role the model plays in today's AI — a **static substrate that grows and refines with interaction**, like a brain. The beekeeper's reframe: useful human "hallucination" is not the LLM failure mode but **bounded generativity**, and biological generativity is safe because **generation is architecturally separated from fact-commitment** — an LLM hallucinates because it collapses that separation.
 
-**Three-spike sequence:** **1 — active/world simulation (this spike)** · 2 — dream/offline reprocessing · 3 — theory of mind (threat-simulation / camouflage / empathy). Each informs the next.
+**Four-spike sequence:** **0 — lower the registry** · **1 — active/world simulation (this record)** · 2 — dream/offline reprocessing · 3 — theory of mind. Each builds on the prior. The unifying frame: **lowering the four-layer registry (Tools→Skills→Wisdoms→Personas) into the CTH hypergraph** — not inventing an ontology (a companion first-draft ontology, AXIOM-1-grounded, lives in `../../ontology/`).
 
 ## Method (all done for spike 1)
 
@@ -19,9 +19,12 @@ If a cth-implementor "leader" becomes the effective reasoning engine over the hy
 - `conversation-brief.md` — reframed crux, verified grounding facts, sealed positions S1–S6, §3 gate criteria.
 - `transcript/gemini-conversation-2026-09-26.md` — the conversation (runner's paraphrase; raw session is primary).
 - `RECORD.md` — **the draft cross-cutting architecture record** (output model, formality gradient + active floor, control structure, four-bucket findings with confirmer downgrades, honest cost). Draft, not ratified — repo-specific addenda spin off as the validation spike warrants; kept as an `inter/` record to stay clear of the owed BMA-Theory v3.0 compile gate.
-- `validation-spike-spec.md` — the validation spike: `A-gen` (load-bearing), `A-launder`, `A-provenance`, `A-bound`, `A-formality`; oracle = the Gearbox ℂ path; needs Deming box-safety sign-off before it runs.
+- `validation-spike-spec.md` — the validation spike: `A-gen` (load-bearing, type-directed composition over Spike-0's skill-nodes), `A-launder`, `A-provenance`, `A-bound`, `A-conserve`, `A-formality`; oracle = the Gearbox ℂ path; needs Deming box-safety sign-off before it runs.
 - `architecture-diagram.md` — the bounded-simulation pipeline (Mermaid) + gates + control structure. Rendered: see PR.
-- `spike-3-concept-theory-of-mind.md` — **first-draft concept** for spike 3 (ToM: threat-simulation / camouflage / empathy); resolves the ethics-simulation nuance via a purpose/intent provenance dimension.
+- `spike-0-concept-lower-the-registry.md` — **first-draft concept**, the foundational spike (prior to 1): lower Tools/Skills/Steps/Capabilities to typed nodes; skill = ICOM+Vessel hyperedge; skill→capability grant; conservation-oracle.
+- `spike-2-concept-dream.md` — **first-draft concept** for spike 2 (offline consolidation; skill→wisdom promotion / maturation ladder; CLS/SHY/Hoel).
+- `spike-3-concept-theory-of-mind.md` — **first-draft concept** for spike 3 (ToM: threat-simulation / camouflage / empathy = modelling other **Personas**); resolves the ethics-simulation nuance via a purpose/intent provenance dimension.
+- `../../ontology/` — companion **first-draft ontology** of the whole system's vocabulary: dual human+machine-readable, AXIOM-1-grounded (in progress).
 
 ## Ratification / next
-This is a **design record for review**, not a ratified spec and not a run. Ratification of `RECORD.md`'s Open-bucket claims waits on the validation spike (which itself waits on Deming box-safety). Spike 2 (dream) and Spike 3 (ToM) are sequenced after.
+This is a **design record for review**, not a ratified spec and not a run. Ratification of `RECORD.md`'s Open-bucket claims waits on the validation spike (which itself waits on Deming box-safety). Spikes 0 (lower the registry — foundational/prior), 2 (dream), and 3 (ToM) are conceptualized; the companion ontology is in progress.

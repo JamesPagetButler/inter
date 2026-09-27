@@ -22,8 +22,9 @@ The conversation's load-bearing asymmetry: physically-formalizable domains have 
 
 ## Test batteries
 
-### A-gen — does exact-fragment recombination generate beyond replay, and where does it break? *(load-bearing)*
-- **Setup:** a real (not toy) formal-domain graph at varying density; a held-out set of *novel* target configurations the graph did not directly store.
+### A-gen — does type-directed composition over skills generate beyond replay, and where does it break? *(load-bearing; depends on Spike 0's lowered skill-nodes)*
+The generator, made precise: **type-directed composition search over lowered skill-nodes** (Spike 0). Bridging available-inputs → desired-output = finding a *type-valid chain* of settled skills where each link is an **exact** type-matched skill (no fuzzing → no hallucination) but the *composition* may be new (→ genuine novelty, not replay). "Exact-fragment recombination" = this composition search.
+- **Setup:** a real (not toy) formal-domain graph of lowered skill-nodes at varying density; a held-out set of *novel* target outputs reachable only by a not-previously-used composition.
 - **Outcomes measured:**
   - **Fire-rate vs density** — at what graph density does exact-fragment recombination stop returning the null set (the "Ontological Maturity Gate")? Curve, not a point.
   - **Beyond-replay** — of the configurations it *does* produce, what fraction are genuinely novel (not a stored fragment reproduced)? (Replay-rate vs anticipation-rate.)
@@ -42,6 +43,10 @@ The conversation's load-bearing asymmetry: physically-formalizable domains have 
 ### A-bound — does an explicit GC bound the open-ledger under realistic branching?
 - **Setup:** semantic-like branching factor (where the pre-filter is sparse); the net-new step-count/temporal GC.
 - **Outcome:** `open` accumulation stays bounded (no deadlock/explosion), OR the GC parameters that bound it. Tests Failure Mode C.
+
+### A-conserve — is conservation a working validity oracle? *(the cheap physical Gate-1 check)*
+- **Setup:** physical-domain steps with known byproducts; check the balance inputs = intended-output + byproducts + losses, graph-internally (no external ground-truth call).
+- **Outcome:** valid steps balance; a fabricated step (mass/energy not conserved) is caught. PASS = conservation catches invalid physical products cheaply → confirms the physical-domain oracle the conversation predicted; FAIL = balance is not checkable graph-internally (physical domain loses its cheap oracle).
 
 ### Projection-fidelity & provenance checks (domain-general, run across all batteries)
 - **Fidelity:** automated trace — every claim in L maps to a P element; flag orphan claims (in L, not in P) and silent omissions.

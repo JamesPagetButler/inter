@@ -15,6 +15,8 @@ Theory of Mind (ToM) is **nested simulation**: simulating what *another agent* w
 ## The core capability
 An **agent-model** as a first-class hypergraph object: a node/subgraph representing another agent's inferred settled-patterns, skills, goals, and — critically — *what they know and can perceive* (which differs from what is true). Simulation then runs a bounded forward-rollout *inside that agent-model* (what would they do / infer / see), quarantined in CTH `open`, tagged as belonging to the other agent, never confused with one's own settled structure.
 
+**This *is* the fourth registry layer — a Persona.** An other-agent model is a persona-model, so ToM reuses the existing **persona-as-quaternion-operator** machinery (q·v·q⁻¹, wisdom ≡ persona): modelling another mind = holding another persona's *lens* as a first-class, quarantined, foreign-tagged operator. Camouflage/empathy = applying/reading another persona's lens; threat-simulation = rolling forward that foreign persona's likely leader/chain. So Spike 3 lowers the **Persona** layer to the graph the way Spikes 0–2 lower Tools/Skills/Wisdoms.
+
 ## The three faces of ToM — one capability, three uses
 All three draw on the same "model another's model," differing only in **purpose**:
 - **Threat-simulation** (adversarial/defensive): model an adversary's likely leader/chain toward a *harmful* outcome, in order to **avoid or counter** it. This is exactly the ethics nuance that spawned the spike — simulating a forbidden path *for avoidance*.
@@ -35,7 +37,8 @@ Spike 1 flagged an open nuance: *can you simulate a forbidden outcome?* ToM answ
 - **A-perception-gap:** can the model represent *what another agent knows/perceives* as distinct from ground truth (the load-bearing ToM requirement — false-belief modelling)?
 - **A-camouflage/empathy:** do the adversarial (camouflage) and prosocial (empathy) uses genuinely reduce to the same substrate with only an intent difference?
 
-## Relation to spikes 1 & 2
+## Relation to spikes 0, 1 & 2
+- Reuses spike 0's lowered registry — an agent-model is a **Persona** (registry layer 4) holding the other agent's Skills/Wisdoms.
 - Depends on spike 1's generator + quarantine (ToM rollouts are bounded simulations *inside* an agent-model).
 - Depends on spike 2's consolidation (agent-models are learned/refined over interaction — offline reprocessing updates them).
-- Introduces the **purpose/intent provenance dimension** and the **other-agent object** — neither is built in spikes 1/2.
+- Introduces the **purpose/intent provenance dimension** and lowers the **Persona** layer — neither is built in spikes 0–2.
