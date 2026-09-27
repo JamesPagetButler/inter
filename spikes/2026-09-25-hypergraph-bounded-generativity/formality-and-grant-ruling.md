@@ -1,6 +1,6 @@
-# Ruling (DRAFT, for beekeeper ratification) — formality tier×state + capability-grant gate
+# Ruling (RATIFIED — beekeeper, 2026-09-27) — formality tier×state + capability-grant gate
 
-> Resolves Spike-0 gaps **#7** (three non-commensurable formality scales) and **#8** (no settled-gate on `ETGrants`). Approved in principle by the beekeeper 2026-09-27 ("tier×state grid seems functional"; "#8 reasonable"); this is the formal ruling for sign-off. It is the design context for the Spike-0 build issues.
+> Resolves Spike-0 gaps **#7** (three non-commensurable formality scales) and **#8** (no settled-gate on `ETGrants`). **RATIFIED by the beekeeper 2026-09-27** ("both #7 and #8 are approved"). It is the authoritative design context for the Spike-0 build issues — `bma-systema#296`'s grant-gate implements Ruling 2.
 
 ## Ruling 1 (#7) — formality is TWO axes, not one scale; "min over steps" is over *cleared-tier*
 
