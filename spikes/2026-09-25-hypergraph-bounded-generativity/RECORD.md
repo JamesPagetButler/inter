@@ -94,7 +94,7 @@ A skill is Input → Transformation → Output; the **Transformation** decompose
 - The bifurcation "physics = novelty-capable / semantic = replay-only" (false dichotomy).
 
 ## Honest cost — the generation half is substantially unbuilt
-- **n-ary hyperedges** in BMA (edges are BINARY today) — MAJOR; the generator's fragment-recombination needs them.
+- **Typed n-ary edges — CORRECTED by Spike 0 (code-verified 2026-09-27):** the earlier "BMA lacks n-ary — MAJOR" framing was imprecise. **Wyrd already has Lean-verified n-ary hyperedges.** The real, precise gap: `Wyrd.model.Hyperedge` has **no `Type` field**, and BMA's only typed edge (`hg.HGEdge`) is **binary** while its mirror (`projectHGToWyrd`) **flattens every edge to arity-2** (`Heads:[0],Tails:[1]`), discarding Wyrd's native n-ary/Transit. So today: *typed-but-binary XOR n-ary-but-untyped, never both.* Smaller and more locatable than "MAJOR." (See `spike-0-run/RESULT.md`.)
 - **The generator subsystem** itself — NET-NEW.
 - **Provenance-Masked Activation** — a rewrite of F01, BMA's *only* built functor — MAJOR.
 - **Temporal/episodic GC** to bound `open` accumulation — NEW infrastructure (verified: CTH v0.3.4 `kill_condition` is an epistemic falsifier, not an operational step-count/timeout — a step-count kill can be *declared* but nothing *fires* it).
