@@ -86,6 +86,34 @@ Near-term this runs **alongside** the CI executable specs, not instead of them �
 
 ---
 
+## 7. The closure-test → spec-delta loop (and the anti-weakening guardrail)
+
+When an executable specification (a closure test / lock) **fails**, do NOT file one issue per raw failure. **Triage each failure first**, then act by kind:
+
+| Kind | What it means | Coherent action |
+|---|---|---|
+| **spec-gap** | the spec was incomplete/wrong — the failure revealed *under-specified intent* | **update the spec first** (add/clarify), add or extend the CV assertion, *then* derive the issue from the updated spec ("implement spec §X") |
+| **implementation-gap** | the spec is already right; the code just doesn't do it yet | file the issue directly against the existing spec/AC — **no spec change** |
+| **test-artifact** | spec + code are fine; the *test conditions or grader* were wrong | fix the test conditions/grader — after **verifying the answer was genuinely correct**, not the gap graded away |
+
+Issues then flow from the **(updated) spec**, which stays the single source of truth — this is what stops **spec-drift** (the spec silently falling behind the code and tests).
+
+### THE GUARDRAIL (load-bearing)
+
+> **A spec update driven by a test failure may only ADD, CLARIFY, or RAISE intent — NEVER relax an assertion to make a failing test pass.**
+
+The failure must still be **solved by implementation**, not dissolved by redefinition. Moving the goalpost to match broken code is banned. Litmus test on any delta: does it make the bar **higher / more complete** (legitimate) or **lower / easier** (banned)? The only "make-it-pass-by-changing-the-test" move allowed is a **test-artifact/grader fix**, and only after confirming the graded answer was genuinely *correct* (correct the measurement; never grade away a real gap). This is the "clean negative over false positive" value applied to the spec itself: the loop exists to *complete* the intent, not to teach-to-the-test.
+
+### Worked example — Sprint-3 CV run (2026-09-28)
+
+9 fails, triaged rather than filed-per-failure:
+- **1 spec-gap** — self-state injection (#304): the spec required sensor *read* (CV-4.4) but never required self-state *injection into context* → spec delta **adds** `R-SELF-STATE-INJECTION` + **CV-4.6** (a *stricter* bar that fails until injection works), then #304 re-anchors to it.
+- **2 implementation-gaps** — CV-7.2 routing violation (#305), placeholder-echo regression (#306) → filed direct against existing spec.
+- **1 grader false-fail** — B-02: the instance answered its generation correctly; the regex was over-strict → grader fix, verified the answer was right (accept the bare number only when it matches the real generation).
+- **1 short-run test-artifact** — HG-04 (Hebbian): no sleep cycle fired → held for re-validation, not filed.
+
+A coarse "file an issue per failure" would have created **2 phantom issues** (B-02, HG-04), **mis-scoped** one (P25-02 as a cognition gap rather than a prompt regression), and **entirely missed** the spec-violation hiding inside the cluster (the routing bug). Triage-first, spec-first — with the guardrail — is what surfaced the truth.
+
 ## References
 - Beck & Cunningham — SpikeSolution (c2 wiki); Extreme Programming.
 - Scaled Agile (SAFe) — Spikes (enabler stories; technical vs functional; use sparingly).
