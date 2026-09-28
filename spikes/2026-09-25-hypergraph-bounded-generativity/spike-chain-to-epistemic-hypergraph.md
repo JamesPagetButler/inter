@@ -5,6 +5,9 @@
 ## Governing principle (beekeeper 2026-09-27): spikes surface capability-gaps → sprint inputs
 Each spike is a *probe*. Working it reveals **capabilities we need but don't have** — those become **sprint-planning candidates**. So the spike chain is the federation's own gap-discovery loop (the generative ratchet + eBOM, dogfooded on our own build). **Every spike carries a required output: "Capability gaps surfaced → sprint candidates."** The chain is reorderable, not a waterfall — a gap found early can reshuffle later spikes.
 
+## Governing principle 2 (beekeeper 2026-09-27): every spike has a LOCK; it passes only when the lock is green
+A spike is **not done when its build merges** — it is done when an **integrated, CI-gated test-set (its "lock", edda-lock style) is green**. The lock has **one assertion per finding/goal the spike raised**, so green ⇒ those findings are confirmed *resolved*, and it stays in CI as a **regression guard** (fails if a later change reopens what the spike closed). Round structure: **round-1 = the probe (finds the gaps); round-2 = build the lock + confirm the gaps are closed.** Per-piece unit tests on the individual fix-PRs are necessary but **not sufficient** — the lock is the integrated re-confirmation. *(Worked example — Spike 0: round-1 `spike-0-run/RESULT.md` found the gaps; the fixes merged (`wyrd#93`, `bma-systema#297`/`#298`); round-2 lock = `bma-systema#299`, one assertion per round-1 finding. Spike 0 is NOT done until `#299` is green.)* Canonical home: the spike-best-practices doc (`inter#132`).
+
 ## The chain
 
 **Foundation — bounded generativity (designed/conceptualized, PR #133):**
