@@ -86,6 +86,7 @@
 | CV-4.3 | Possum (GPU yield) | GL/Vulkan on GPU → KV-cache saved, llama-server killed, GPU yielded, restart; BMA's own PID not killed | [LIVE] |
 | CV-4.4 | **#248 single source of truth** | `status` + `/api/context` report the **same live disk/RAM/VRAM/thermal** as AUTO-S reads (no boot-probe staleness); self-report matches `df`/`Statfs` | [UT]+[LIVE] |
 | CV-4.5 | **#217 disk-pressure** | AUTO-S trips on disk >90% alongside RAM/VRAM | [UT] |
+| CV-4.6 | **#304 self-state injection completeness** | Instance states the **correct live value** for each self-state field (CPU temp, RAM%, disk%, generation, inference-budget, command-registry) and does **not fabricate** a value/command. Distinct from CV-4.4: the state must REACH the answer, not merely be readable (R-Spec-33). Expected RED until #304 lands — the bar is explicit and higher. | [LIVE] |
 
 ## CV-5 — Cognitive access (focal cone + shard)
 | ID | Validates | Pass criterion | Method |
