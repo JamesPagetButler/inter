@@ -1,0 +1,41 @@
+# NT_NOTARY_VERIFICATION_EVIDENCE_CORRECTION
+# Correction record — supersedes the METHOD LABEL of:
+#   cycle-4-cd-convention-intertwiner-ac5-2026-08-20.yaml
+# Append-only: the original is preserved and marked superseded; this record carries the honest relabel.
+# Author: notary-implementor (Claude Opus 4.8). Date: 2026-09-30.
+
+correction:
+  supersedes: "cycle-4-cd-convention-intertwiner-ac5-2026-08-20.yaml"
+  target_claim_node: "NT_CD_CONVENTION_INTERTWINER_SCHAFER_BAEZ_AC5"
+  scope: "METHOD LABEL ONLY — the verification RESULT is unchanged and stands."
+
+  what_was_wrong:
+    field: "competency_invoked"
+    original_value: "lean_coq_port"
+    problem: >
+      "lean_coq_port" denotes competency #1 — a CROSS-PROVER check: port the Lean statement/proof to
+      Coq and confirm the Coq kernel accepts it. No such thing happened. The work was mechanized in
+      LEAN 4 ONLY (see the original's `mechanization.prover: "Lean 4 …"`). Coq has never run on this
+      host (`coqc` not installed). The label asserted a cross-prover trust base that does not exist.
+
+  corrected_value:
+    competency_invoked: "cross_formalism_correspondence"   # abstract-* intertwiner mechanized in Lean 4; the link to the ACTUAL CDAlg.lean/CDJoinBR.agda source is HAND-verified (read-back), NOT mechanized
+    honest_method: "Independent cold hand-derivation + a Lean-4 kernel-checked mechanization (axioms=[propext]) over an ABSTRACT star-algebra (StarNAlg); triple-derivation concurrence (Red Team + Gemini + notary). The correspondence to the concrete Lean/Agda source formulas is hand-read-back, not mechanized."
+    trust_base: "Lean kernel (single prover; NOT cross-prover) + hand read-back transcription of BOTH concrete source formulas (QBP CDAlg.lean @ master, CDJoinBR.agda @ 1eb3544) + the abstract-* axioms (additive, involutive, anti-automorphism) ASSUMED to hold of both `star` implementations. [K1 fix per qbp-architecture §I4 on inter#141: the earlier 'LEAN kernel only' understated these deps that the original record honestly listed.]"
+
+  verdict_unchanged:
+    verification_outcome: "VERIFIED (AC5 PASS, not blocking)"
+    why_it_still_stands: >
+      The intertwiner identity is real and genuinely Lean-kernel-checked (propext only), and was
+      independently concurred by three derivations. Nothing about the result depended on Coq. Only the
+      *method attestation* overclaimed.
+
+  outstanding:
+    - "GENUINE lean_coq_port (cross-prover) NOT DONE → INCONCLUSIVE_RESOURCE_BOUND. Coq is not installed; install is beekeeper-gated (on-machine sudo). When Coq is in, port #575 to Coq and confirm the Coq kernel accepts it — that is the real cross-prover backstop the original label falsely implied."
+    - "BASE-CASE / INVOLUTION-AGREEMENT (QBP#579 AC1) — STILL OPEN. The mechanization proves the doubling-STEP intertwines over an abstract shared `*`; it does NOT verify that Lean's `star` and Agda's `starS`, nor the base algebra (ℝ) + its conjugation, actually COINCIDE between the two formalisms. This is the real cross-formalism seam and remains unverified (carried forward from the original record per §I4 K1)."
+
+  root_cause: >
+    A closed competency enum with no honest value forced a false one; the label was never reconciled
+    against the recorded `prover` field; no toolchain pre-flight. See the durable fix (gates PR).
+
+  disclosure: "Self-disclosed + audited 2026-09-29/30; plan agreed with qbp-architecture + qbp-oppenheimer (live-test seq ~1993–1999). Blast radius double-swept clean (no downstream decision relied on the method label)."
