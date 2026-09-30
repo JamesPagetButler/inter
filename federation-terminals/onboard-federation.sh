@@ -22,11 +22,18 @@
 #   READY_TIMEOUT=75             # seconds to wait for a pane's chat prompt
 #                                # (needs headroom: 11 concurrent claude boots on
 #                                #  a slow host can take >30s to reach the prompt)
+#   ONBOARD_RENDER_FULL=1        # with --dry-run, print the full rendered prompt
+#                                # instead of the 160-char preview (debugging /
+#                                # golden-file testing; default unset — unset
+#                                # behavior is byte-for-byte what it was before
+#                                # inter#142, so this is purely additive)
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONF="${FED_TERMINALS_CONF:-$HERE/personas.conf}"
 TMPL="$HERE/onboard-prompt.tmpl"
+PERSONAFILE_TMPL="$HERE/onboard-prompt-personafile.tmpl"
+INTER_REPO="${INTER_REPO_DIR:-$(cd "$HERE/.." && pwd)}"
 SESSION="${FED_TMUX_SESSION:-fed}"
 SKIP=" ${ONBOARD_SKIP:-} "
 READY_TIMEOUT="${READY_TIMEOUT:-75}"
@@ -36,8 +43,27 @@ for a in "$@"; do if [ "$a" = "--dry-run" ]; then DRY=1; else ONLY="$ONLY $a"; f
 die() { echo "ERROR: $*" >&2; exit 1; }
 [ -f "$CONF" ] || die "config not found: $CONF"
 [ -f "$TMPL" ] || die "template not found: $TMPL"
+[ -f "$PERSONAFILE_TMPL" ] || die "template not found: $PERSONAFILE_TMPL"
 command -v tmux >/dev/null || die "tmux not installed"
 [ "$DRY" -eq 1 ] || tmux has-session -t "$SESSION" 2>/dev/null || die "no tmux session '$SESSION'"
+
+# Resolve a personas.conf persona-file (4th column) against origin/main of THIS
+# repo (inter#142 AC2) — never a local/worktree copy. Prints nothing on
+# success; on failure prints a loud, path-naming error to stderr and returns
+# non-zero. Callers MUST NOT silently fall back to the generic onboard on
+# failure — that silent fallback is exactly the fault mode AC2 guards against.
+resolve_persona_file() {
+  local path="$1" out
+  if ! command -v git >/dev/null 2>&1; then
+    echo "PERSONA-FILE RESOLUTION FAILED: git not available — cannot resolve '$path' from origin/main. NO silent fallback." >&2
+    return 1
+  fi
+  if ! out="$(git -C "$INTER_REPO" show "origin/main:$path" 2>&1)"; then
+    echo "PERSONA-FILE RESOLUTION FAILED: '$path' not found at origin/main of $INTER_REPO (git show: $out). NO silent fallback." >&2
+    return 1
+  fi
+  return 0
+}
 
 # handle -> sessionbridge role tag (free-form; keep in step with the roster)
 role_of() {
@@ -71,28 +97,47 @@ wait_ready() {
   return 1
 }
 
-render() {  # $1=handle $2=workdir $3=role $4=template(optional, defaults to $TMPL)
-  sed -e "s#{{HANDLE}}#$1#g" -e "s#{{WORKDIR}}#$2#g" -e "s#{{ROLE}}#$3#g" "${4:-$TMPL}" | tr -d '\n'
+render() {  # $1=handle $2=workdir $3=role $4=template(optional, defaults to $TMPL) $5=persona_file(optional)
+  sed -e "s#{{HANDLE}}#$1#g" -e "s#{{WORKDIR}}#$2#g" -e "s#{{ROLE}}#$3#g" -e "s#{{PERSONA_FILE}}#${5:-}#g" "${4:-$TMPL}" | tr -d '\n'
 }
 
 onboarded=0; skipped=0
 while IFS= read -r line; do
   line="${line%%#*}"; [[ "$line" =~ ^[[:space:]]*$ ]] && continue
-  IFS='|' read -r persona workdir _sid <<<"$line"
+  IFS='|' read -r persona workdir _sid pfile <<<"$line"
   persona="$(echo "$persona" | xargs)"; workdir="$(echo "$workdir" | xargs)"
+  pfile="$(echo "${pfile:-}" | xargs)"
   workdir="${workdir/#\~/$HOME}"
   [ -z "$persona" ] && continue
   # filters
   if [ -n "${ONLY// /}" ]; then case " $ONLY " in *" $persona "*) : ;; *) continue ;; esac; fi
   case "$SKIP" in *" $persona "*) echo "· skip $persona (ONBOARD_SKIP)"; skipped=$((skipped+1)); continue ;; esac
   role="$(role_of "$persona")"
+  # persona-file column (inter#142): a canonical persona def replaces the
+  # generic boot text, naming the path + "run its §0" — but only once its
+  # origin/main path is verified to resolve (AC2: no silent fallback on
+  # failure; empty column = today's generic onboard, unchanged, for every
+  # other seat).
+  tmpl="$TMPL"; pf_arg=""
+  if [ -n "$pfile" ]; then
+    if resolve_persona_file "$pfile"; then
+      tmpl="$PERSONAFILE_TMPL"; pf_arg="$pfile"
+    else
+      echo "⚠ $persona: persona-file '$pfile' FAILED to resolve from origin/main — refusing to onboard with an unverified identity (no silent fallback to the generic onboard). Beekeeper must fix personas.conf or origin/main."
+      skipped=$((skipped+1)); continue
+    fi
+  fi
   # deming gets its own boot directive (register/subscribe/monitor + babysit-the-team job)
-  tmpl="$TMPL"; [ "$persona" = "deming" ] && [ -f "$HERE/deming-boot.tmpl" ] && tmpl="$HERE/deming-boot.tmpl"
-  prompt="$(render "$persona" "$workdir" "$role" "$tmpl")"
+  [ "$persona" = "deming" ] && [ -f "$HERE/deming-boot.tmpl" ] && tmpl="$HERE/deming-boot.tmpl"
+  prompt="$(render "$persona" "$workdir" "$role" "$tmpl" "$pf_arg")"
 
   if [ "$DRY" -eq 1 ]; then
     echo "── $persona  ($workdir)  role=$role ──"
-    echo "$prompt" | cut -c1-160; echo "   …[$(echo -n "$prompt" | wc -c) chars]"
+    if [ "${ONBOARD_RENDER_FULL:-0}" = "1" ]; then
+      echo "$prompt"
+    else
+      echo "$prompt" | cut -c1-160; echo "   …[$(echo -n "$prompt" | wc -c) chars]"
+    fi
     onboarded=$((onboarded+1)); continue
   fi
 

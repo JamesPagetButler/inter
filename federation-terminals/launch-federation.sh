@@ -20,6 +20,10 @@
 #     LAYOUT=windows               # one tmux window per persona instead of tiled panes (default: panes)
 #     FED_TMUX_SESSION=fed         # tmux session name (default: fed)
 #     FED_TERMINALS_CONF=/path     # override config location
+#     REANCHOR=1                   # send the resume re-anchor to resumed, persona-file-bound
+#                                   # panes (inter#142). Default on; set 0 to disable.
+#     READY_TIMEOUT=75             # seconds to wait for a resumed pane's chat prompt before
+#                                   # sending its re-anchor (mirrors onboard-federation.sh)
 #
 set -uo pipefail
 
@@ -28,14 +32,87 @@ CONF="${FED_TERMINALS_CONF:-$HERE/personas.conf}"
 PROJECTS="$HOME/.claude/projects"
 CLAUDE_BIN="$(command -v claude || echo "$HOME/.local/bin/claude")"
 WATCHER_DIR="$HOME/Documents/inter/federation-watcher"
+INTER_REPO="${INTER_REPO_DIR:-$(cd "$HERE/.." && pwd)}"
 SESSION="${FED_TMUX_SESSION:-fed}"
 LAYOUT="${LAYOUT:-panes}"          # panes | windows
+REANCHOR="${REANCHOR:-1}"          # send resume re-anchor to persona-file-bound resumed panes
+READY_TIMEOUT="${READY_TIMEOUT:-75}"
+REANCHOR_TMPL="$HERE/resume-reanchor-prompt.tmpl"
 MODE="${1:-launch}"
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 
 [ -f "$CONF" ] || die "config not found: $CONF"
 command -v tmux >/dev/null || die "tmux not installed"
+
+# Resolve a personas.conf persona-file (4th column) against origin/main of THIS
+# repo (inter#142 AC2) — never a local/worktree copy. Prints nothing on
+# success; on failure prints a loud, path-naming error to stderr and returns
+# non-zero. Callers MUST NOT silently fall back to generic behavior on
+# failure — that silent fallback is exactly the fault mode AC2 guards against.
+resolve_persona_file() {
+  local path="$1" out
+  if ! command -v git >/dev/null 2>&1; then
+    echo "PERSONA-FILE RESOLUTION FAILED: git not available — cannot resolve '$path' from origin/main. NO silent fallback." >&2
+    return 1
+  fi
+  if ! out="$(git -C "$INTER_REPO" show "origin/main:$path" 2>&1)"; then
+    echo "PERSONA-FILE RESOLUTION FAILED: '$path' not found at origin/main of $INTER_REPO (git show: $out). NO silent fallback." >&2
+    return 1
+  fi
+  return 0
+}
+
+# first pane in $SESSION whose cwd == $1 (tilde-expanded); '' if none
+# (mirrors onboard-federation.sh's helper of the same name)
+pane_for_cwd() {
+  local want="$1" p path
+  for p in $(tmux list-panes -t "$SESSION" -F '#{pane_id}' 2>/dev/null); do
+    path="$(tmux display -p -t "$p" '#{pane_current_path}' 2>/dev/null)"
+    [ "$path" = "$want" ] && { printf '%s' "$p"; return; }
+  done
+  printf ''
+}
+
+# wait until a pane shows a chat input prompt (❯) or timeout; best-effort
+# (mirrors onboard-federation.sh's helper of the same name)
+wait_ready() {
+  local p="$1" end=$(( SECONDS + READY_TIMEOUT ))
+  while [ "$SECONDS" -lt "$end" ]; do
+    tmux capture-pane -p -t "$p" 2>/dev/null | grep -q '❯' && return 0
+    sleep 1
+  done
+  return 1
+}
+
+render_reanchor() {  # $1=handle $2=workdir $3=persona_file
+  sed -e "s#{{HANDLE}}#$1#g" -e "s#{{WORKDIR}}#$2#g" -e "s#{{PERSONA_FILE}}#$3#g" "$REANCHOR_TMPL" | tr -d '\n'
+}
+
+# Resume re-anchor (inter#142, AC3): a RESUMED pane whose persona-file column
+# is set gets sent a short prompt telling it to re-read that file (from
+# origin/main) and re-run its §0 boot protocol — this is what fixes the
+# 2026-09-18 notary identity-loss fault (a resumed seat with a stale/forked
+# def in context, thinking it was a qbp-architecture subagent). A resumed pane
+# WITHOUT a persona-file gets nothing new (unchanged).
+send_resume_reanchor() {  # $1=persona $2=workdir $3=persona_file
+  local persona="$1" wd="$2" pfile="$3"
+  if ! resolve_persona_file "$pfile"; then
+    echo "  ⚠ $persona: persona-file resolution FAILED — skipping resume re-anchor (no silent fallback)"
+    return 1
+  fi
+  local pane; pane="$(pane_for_cwd "$wd")"
+  if [ -z "$pane" ]; then
+    echo "  ⚠ $persona: no pane found for cwd $wd — skipping resume re-anchor"
+    return 1
+  fi
+  wait_ready "$pane" || echo "  (⚠ $persona pane $pane not showing a prompt after ${READY_TIMEOUT}s — sending anyway)"
+  local msg; msg="$(render_reanchor "$persona" "$wd" "$pfile")"
+  tmux send-keys -t "$pane" -l "$msg"
+  sleep 0.4
+  tmux send-keys -t "$pane" Enter
+  echo "  → resume re-anchor sent to $persona (pane $pane)"
+}
 
 # path -> claude project-history slug  (/home/prime/Documents -> -home-prime-Documents)
 slug_of() { printf '%s' "$1" | sed 's#/#-#g'; }
@@ -88,21 +165,25 @@ discover_sid() {
   printf ''
 }
 
-declare -a P_PERSONA P_WORKDIR P_SID
+declare -a P_PERSONA P_WORKDIR P_SID P_PFILE
 load_conf() {
   while IFS= read -r line; do
     line="${line%%#*}"
     [[ "$line" =~ ^[[:space:]]*$ ]] && continue
-    IFS='|' read -r persona workdir sid <<<"$line"
+    # 4th field (persona_file, inter#142) is OPTIONAL: a 3-field row leaves
+    # pfile unset, and `${pfile:-}` below treats that identically to an
+    # explicit empty 4th field — this is the backward-compatibility contract.
+    IFS='|' read -r persona workdir sid pfile <<<"$line"
     persona="$(echo "$persona" | xargs)"
     workdir="$(echo "$workdir" | xargs)"
     sid="$(echo "$sid" | xargs)"
+    pfile="$(echo "${pfile:-}" | xargs)"
     workdir="${workdir/#\~/$HOME}"
     [ -z "$persona" ] && continue
     if [ "$sid" = "AUTO" ] || [ -z "$sid" ]; then
       sid="$(discover_sid "$persona" "$workdir")"
     fi
-    P_PERSONA+=("$persona"); P_WORKDIR+=("$workdir"); P_SID+=("$sid")
+    P_PERSONA+=("$persona"); P_WORKDIR+=("$workdir"); P_SID+=("$sid"); P_PFILE+=("$pfile")
   done < "$CONF"
 }
 
@@ -149,12 +230,20 @@ cmd_refresh() {
   while IFS= read -r line; do
     local raw="$line"; line="${line%%#*}"
     [[ "$line" =~ ^[[:space:]]*$ ]] && { echo "$raw" >> "$tmp"; continue; }
-    IFS='|' read -r persona workdir sid <<<"$line"
+    # Preserve an optional 4th (persona_file, inter#142) column across a
+    # refresh — a 3-field row stays 3-field (byte-for-byte format unchanged,
+    # backward-compatible); a 4-field row keeps its persona_file untouched.
+    IFS='|' read -r persona workdir sid pfile <<<"$line"
     persona="$(echo "$persona" | xargs)"; workdir="$(echo "$workdir" | xargs)"
+    pfile="$(echo "${pfile:-}" | xargs)"
     local wd="${workdir/#\~/$HOME}" newsid
     newsid="$(discover_sid "$persona" "$wd")"
     [ -z "$newsid" ] && newsid="$(echo "$sid" | xargs)"
-    printf '%-20s | %-18s | %s\n' "$persona" "$workdir" "$newsid" >> "$tmp"
+    if [ -n "$pfile" ]; then
+      printf '%-20s | %-18s | %-38s | %s\n' "$persona" "$workdir" "$newsid" "$pfile" >> "$tmp"
+    else
+      printf '%-20s | %-18s | %s\n' "$persona" "$workdir" "$newsid" >> "$tmp"
+    fi
   done < "$CONF"
   mv "$tmp" "$CONF"
   echo "✓ refreshed $CONF (backup at $CONF.bak)"; cmd_list
@@ -178,14 +267,18 @@ cmd_launch() {
 
   local i first=1
   local -a FRESH=()
+  local -a REANCHOR_PERSONA=() REANCHOR_WD=() REANCHOR_PFILE=()
   for i in "${!P_PERSONA[@]}"; do
-    local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
+    local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}" pfile="${P_PFILE[$i]}"
     if [ -n "$sid" ] && [ ! -f "$PROJECTS/$(slug_of "$wd")/$sid.jsonl" ]; then
       echo "⚠  $persona: session $sid not found — pane falls back to fresh 'claude'"
       sid=""
     fi
     # fresh panes (no resumable session) get auto-onboarded below
     [ -z "$sid" ] && FRESH+=("$persona")
+    # a genuinely-resumed pane WITH a persona-file (inter#142 AC3) gets a
+    # resume re-anchor below; a resumed pane without one is unchanged.
+    [ -n "$sid" ] && [ -n "$pfile" ] && { REANCHOR_PERSONA+=("$persona"); REANCHOR_WD+=("$wd"); REANCHOR_PFILE+=("$pfile"); }
     local run; run="$(resume_cmd "$sid")"
 
     if [ "$LAYOUT" = "windows" ]; then
@@ -226,6 +319,17 @@ cmd_launch() {
     echo "  Each persona re-arms its own §2.i Monitor on session start (federation-watcher boot protocol)."
   fi
 
+  # resume re-anchor (inter#142 AC3): resumed, persona-file-bound panes only —
+  # tells them to re-read their canonical persona file and re-run its §0.
+  # Gate: REANCHOR=1 (default). A resumed pane with no persona-file is
+  # untouched by this block (REANCHOR_* arrays simply don't include it).
+  if [ "$REANCHOR" = "1" ] && [ "${#REANCHOR_PERSONA[@]}" -gt 0 ]; then
+    echo "  Sending resume re-anchor to ${#REANCHOR_PERSONA[@]} persona-file-bound resumed pane(s): ${REANCHOR_PERSONA[*]}"
+    for i in "${!REANCHOR_PERSONA[@]}"; do
+      send_resume_reanchor "${REANCHOR_PERSONA[$i]}" "${REANCHOR_WD[$i]}" "${REANCHOR_PFILE[$i]}"
+    done
+  fi
+
   if [ -t 1 ]; then
     [ -n "${TMUX:-}" ] && exec tmux switch-client -t "$SESSION" || exec tmux attach -t "$SESSION"
   else
@@ -233,11 +337,18 @@ cmd_launch() {
   fi
 }
 
-case "$MODE" in
-  launch|"") cmd_launch ;;
-  list)      cmd_list ;;
-  refresh)   cmd_refresh ;;
-  kill)      cmd_kill ;;
-  help|-h|--help) sed -n '2,33p' "$0" | sed 's/^# \{0,1\}//' ;;
-  *) die "unknown mode: $MODE (try: launch | list | refresh | kill | help)" ;;
-esac
+# Guard the dispatch so this file can be `source`d (e.g. by
+# test-persona-file-loading.sh, inter#142) to unit-test its functions in
+# isolation without ever running cmd_launch/cmd_refresh/cmd_kill. When run
+# normally (./launch-federation.sh ...) BASH_SOURCE[0] == $0 and this is a
+# no-op — behavior is unchanged.
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  case "$MODE" in
+    launch|"") cmd_launch ;;
+    list)      cmd_list ;;
+    refresh)   cmd_refresh ;;
+    kill)      cmd_kill ;;
+    help|-h|--help) sed -n '2,27p' "$0" | sed 's/^# \{0,1\}//' ;;
+    *) die "unknown mode: $MODE (try: launch | list | refresh | kill | help)" ;;
+  esac
+fi
