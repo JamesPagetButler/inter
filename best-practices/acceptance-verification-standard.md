@@ -22,9 +22,18 @@ For a lock/assertion to check a product it must read the product's real state th
 - **Kept honest by mutation** — mutate the real path; the seam read (and the guarded behavior) must diverge → the assertion goes red. If a mutation to real behavior doesn't move the seam, the seam is lying.
 - Dual-use: the validation seam is also the observability/diagnostic surface (why-did-X-happen), so it pays for itself twice.
 
-## 4. Review levels = formality tiers [validated for napkin/engineering; formal is in-probe]
-Levels are the formality gradient, not a separate taxonomy: **napkin** (stated sketch) · **engineering** (real-guard test, mutation-survivable, CI) · **formal** (machine-checked / Edda executable-spec). The review LEVEL sets the required floor; a cell is green-at-level-L iff its *inferred* formality ≥ L's floor and it passes.
-- **Anti-overclaim** (edda E3, annotated ≤ inferred): can't stamp a napkin assertion "formal"; can't ship formal-grade work with only napkin validation. The unlocking checks *inferred* rigor, not the annotation.
+## 4. Review levels = the rigor spine [validated for napkin/research/engineering; proof is in-probe]
+Levels are the **4-rung rigor spine** — one ladder that defines, per rung, the *phase* of work, the *spend* it may draw, and the *review rigor* that governs it (canonical definition: Niðavellir `spec/SPEC.md` §1; the same ladder prices spend in the Niðavellir value model and maps to BMA/Edda's E3 grade):
+
+| rung | phase | what "green" means at this level |
+|---|---|---|
+| **napkin** | sketch / intent (disposable) | self-check only; never cited as settled |
+| **research** | investigate → findings / gap-maps; *done = the question is answered* | **research review:** evidence real, gaps genuinely mapped, no premature conclusion |
+| **engineering** | build to a known spec | this document's DoD (§1–§3): strong-logic AC, mutation-survivable guards, declared verification boundary |
+| **proof** | formally certain | machine-checked (Edda executable-spec / Lean); anti-overclaim |
+
+`napkin < research < engineering < proof`; **`formal` ≡ `proof`** (the name this section used before the spine was unified). **Research is its own rung, not a kind of napkin**: it converts a sketch into established findings that then fork into engineering or proof — skipping it builds or proves on an unvalidated premise (cf. bma-systema #317/#323: unit tests passed; the live-soak *research* found the real blockers). The review LEVEL sets the required floor; a cell is green-at-level-L iff its *inferred* rung ≥ L's floor and it passes.
+- **Anti-overclaim** (edda E3, annotated ≤ inferred): can't stamp a napkin or research assertion "proof"; can't ship proof-grade work with only napkin/research validation. The unlocking checks *inferred* rigor, not the annotation.
 - **MIN-over-chain**: a strike's assurance = the minimum tier across its cells — it names the weakest link honestly.
 
 ## 5. Non-approve → reissue → loop [validated]
