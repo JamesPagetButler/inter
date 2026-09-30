@@ -30,6 +30,12 @@
 #     FETCH_TIMEOUT=10             # seconds to allow `git fetch origin main` before failing
 #                                   # loud (§I4 D2) — never resolve persona-files against a
 #                                   # silently-stale origin/main ref.
+#     STAGGER_SECONDS=4            # crash-recovery R4 (inter#92): seconds to sleep between
+#                                   # successive pane launches, so ~12 `claude --resume` starts
+#                                   # don't hit the API in the same second (the 429 thundering-
+#                                   # herd seen 2026-08-24 and again, on contextus, 2026-09-04).
+#                                   # 0 disables. Paired with CLAUDE_CODE_RETRY_WATCHDOG=1 on the
+#                                   # resume path in resume_cmd() below.
 #
 set -uo pipefail
 
@@ -45,6 +51,12 @@ LAYOUT="${LAYOUT:-panes}"          # panes | windows
 REANCHOR="${REANCHOR:-1}"          # send resume re-anchor to persona-file-bound resumed panes
 READY_TIMEOUT="${READY_TIMEOUT:-75}"
 FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
+# crash-recovery R4 (inter#92): space out successive `claude --resume` pane
+# starts so ~12 sessions don't hit the API in the same second (the 429
+# thundering-herd seen on 2026-08-24 and again — on contextus — 2026-09-04).
+# Seconds between pane launches; 0 disables. Paired with CLAUDE_CODE_RETRY_WATCHDOG
+# on the resume path in resume_cmd() below.
+STAGGER_SECONDS="${STAGGER_SECONDS:-4}"
 REANCHOR_TMPL="$HERE/resume-reanchor-prompt.tmpl"
 MODE="${1:-launch}"
 
@@ -273,7 +285,14 @@ resume_cmd() {
   # With a resolved id: resume it in place. Without one (e.g. a just-migrated
   # persona's first launch in a fresh dir): plain `claude` — a new session.
   # `--continue` is wrong here: it errors when the cwd has no prior conversation.
-  if [ -n "$sid" ]; then echo "$CLAUDE_BIN --resume $sid"
+  #
+  # CLAUDE_CODE_RETRY_WATCHDOG=1 makes a resumed session retry 429/529
+  # rate-limit errors indefinitely instead of giving up (default ~10 attempts).
+  # This is the confirmed fix for the crash-recovery relaunch 429 storm
+  # (inter#92): 2026-09-04, contextus-impl resumed into 429 "attempt 9/10" and
+  # only survived on the built-in retry — with the watchdog it can't exhaust.
+  # Only on the resume path; a fresh `claude` has nothing to retry.
+  if [ -n "$sid" ]; then echo "CLAUDE_CODE_RETRY_WATCHDOG=1 $CLAUDE_BIN --resume $sid"
   else echo "$CLAUDE_BIN"; fi
 }
 
@@ -381,6 +400,13 @@ cmd_launch() {
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
     local run; run="$(resume_cmd "$sid")"
+
+    # crash-recovery R4 (inter#92): stagger pane starts so ~12 resumes don't
+    # storm the API at once. Skip the wait before the first pane (nothing to
+    # stagger against yet).
+    if [ $first -eq 0 ] && [ "$STAGGER_SECONDS" != "0" ]; then
+      sleep "$STAGGER_SECONDS"
+    fi
 
     if [ "$LAYOUT" = "windows" ]; then
       if [ $first -eq 1 ]; then tmux new-session -d -s "$SESSION" -n "$persona" -c "$wd"
