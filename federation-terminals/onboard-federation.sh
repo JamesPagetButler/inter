@@ -27,6 +27,9 @@
 #                                # golden-file testing; default unset — unset
 #                                # behavior is byte-for-byte what it was before
 #                                # inter#142, so this is purely additive)
+#   FETCH_TIMEOUT=10             # seconds to allow `git fetch origin main` before failing
+#                                # loud (§I4 D2) — never resolve persona-files against a
+#                                # silently-stale origin/main ref.
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -37,6 +40,7 @@ INTER_REPO="${INTER_REPO_DIR:-$(cd "$HERE/.." && pwd)}"
 SESSION="${FED_TMUX_SESSION:-fed}"
 SKIP=" ${ONBOARD_SKIP:-} "
 READY_TIMEOUT="${READY_TIMEOUT:-75}"
+FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
 DRY=0; ONLY=""
 for a in "$@"; do if [ "$a" = "--dry-run" ]; then DRY=1; else ONLY="$ONLY $a"; fi; done
 
@@ -46,6 +50,35 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 [ -f "$PERSONAFILE_TMPL" ] || die "template not found: $PERSONAFILE_TMPL"
 command -v tmux >/dev/null || die "tmux not installed"
 [ "$DRY" -eq 1 ] || tmux has-session -t "$SESSION" 2>/dev/null || die "no tmux session '$SESSION'"
+
+# D2 (§I4): `git show origin/main:<path>` only reads the LOCAL remote-tracking
+# ref — a stale one would onboard a fresh pane with an old persona while
+# believing it read main. Runs the actual fetch once per process before the
+# first resolution. On failure: FAIL LOUD and name the local ref's age —
+# never silently resolve against a possibly-stale ref. (Same contract as
+# launch-federation.sh's copy of this function.)
+ORIGIN_MAIN_FRESH=0
+ensure_origin_main_fresh() {
+  [ "$ORIGIN_MAIN_FRESH" = "1" ] && return 0
+  if ! command -v git >/dev/null 2>&1; then
+    echo "ORIGIN/MAIN FETCH FAILED: git not available — cannot fetch origin/main of $INTER_REPO." >&2
+    return 1
+  fi
+  local age="" last
+  last="$(git -C "$INTER_REPO" log -1 --format=%ct origin/main 2>/dev/null)"
+  [ -n "$last" ] && age="$(( $(date +%s) - last ))"
+  local errout; errout="$(mktemp)"
+  if ! timeout "$FETCH_TIMEOUT" git -C "$INTER_REPO" fetch origin main >"$errout" 2>&1; then
+    local agemsg=""
+    [ -n "$age" ] && agemsg=" — local origin/main ref is ${age}s old"
+    echo "ORIGIN/MAIN FETCH FAILED: \`git fetch origin main\` (timeout ${FETCH_TIMEOUT}s) did not succeed for $INTER_REPO${agemsg}. Refusing to resolve persona-files against a possibly-stale ref. $(cat "$errout" 2>/dev/null)" >&2
+    rm -f "$errout"
+    return 1
+  fi
+  rm -f "$errout"
+  ORIGIN_MAIN_FRESH=1
+  return 0
+}
 
 # Resolve a personas.conf persona-file (4th column) against origin/main of THIS
 # repo (inter#142 AC2) — never a local/worktree copy. Prints nothing on
@@ -58,6 +91,7 @@ resolve_persona_file() {
     echo "PERSONA-FILE RESOLUTION FAILED: git not available — cannot resolve '$path' from origin/main. NO silent fallback." >&2
     return 1
   fi
+  ensure_origin_main_fresh || return 1
   if ! out="$(git -C "$INTER_REPO" show "origin/main:$path" 2>&1)"; then
     echo "PERSONA-FILE RESOLUTION FAILED: '$path' not found at origin/main of $INTER_REPO (git show: $out). NO silent fallback." >&2
     return 1

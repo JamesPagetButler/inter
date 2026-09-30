@@ -41,8 +41,25 @@ COPY_FILE="$2"
 
 die_loud() { echo "DRIFT-CHECK RESOLUTION FAILED: $*" >&2; exit 2; }
 
+FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
+
 command -v git >/dev/null 2>&1 || die_loud "git not available — cannot resolve '$SRC_PATH' from origin/main. NO silent pass."
 [ -f "$COPY_FILE" ] || die_loud "runtime-copy file not found: $COPY_FILE"
+
+# D2 (§I4): keep origin/main fresh before resolving — same contract as
+# launch-federation.sh / onboard-federation.sh's resolve_persona_file. On
+# fetch failure: fail loud, name the local ref's age, never silently compare
+# against a possibly-stale ref.
+AGE=""
+LAST="$(git -C "$INTER_REPO" log -1 --format=%ct origin/main 2>/dev/null)"
+[ -n "$LAST" ] && AGE="$(( $(date +%s) - LAST ))"
+FETCH_ERR="$(mktemp)"
+if ! timeout "$FETCH_TIMEOUT" git -C "$INTER_REPO" fetch origin main >"$FETCH_ERR" 2>&1; then
+  AGEMSG=""
+  [ -n "$AGE" ] && AGEMSG=" — local origin/main ref is ${AGE}s old"
+  die_loud "\`git fetch origin main\` (timeout ${FETCH_TIMEOUT}s) did not succeed for $INTER_REPO${AGEMSG}. $(cat "$FETCH_ERR" 2>/dev/null)"
+fi
+rm -f "$FETCH_ERR"
 
 CANON_SRC="$(git -C "$INTER_REPO" show "origin/main:$SRC_PATH" 2>&1)" \
   || die_loud "'$SRC_PATH' not found at origin/main of $INTER_REPO (git show: $CANON_SRC)"
@@ -81,6 +98,16 @@ strip_runtime_wrapper() {
 
 CANON_BLOCK="$(printf '%s' "$CANON_SRC" | extract_prompt_block)"
 [ -n "$CANON_BLOCK" ] || die_loud "no '## The prompt' fenced block found in origin/main:$SRC_PATH"
+
+# N1 (§I4): extract_prompt_block stops at the FIRST closing ``` fence, so a
+# persona file whose prompt block contains an inner fence (e.g. a ```yaml
+# snippet) truncates silently before §0 — persona-v0.2 §12 requires "no inner
+# fences" for exactly this reason. Guard: if the extracted block doesn't even
+# contain §0, fail loud rather than silently compare a truncated block.
+case "$CANON_BLOCK" in
+  *'§0'*) : ;;
+  *) die_loud "extracted '## The prompt' block from origin/main:$SRC_PATH contains no '§0' — likely truncated by an inner \`\`\` fence (extract_prompt_block stops at the FIRST closing fence; persona-v0.2 §12 requires the block to contain no inner fences). Refusing a silent partial-block comparison." ;;
+esac
 
 COPY_BODY="$(strip_runtime_wrapper < "$COPY_FILE")"
 

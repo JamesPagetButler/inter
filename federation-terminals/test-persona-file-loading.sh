@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 #
 # test-persona-file-loading.sh — unit/golden-file tests for inter#142
-# (persona-file loading on launch/resume). Covers qbp-architecture's
-# acceptance tests AC1-AC5. These are "unit/golden tests with fake panes" per
-# the issue's stated verification boundary — the true acceptance evidence
-# (a live Notary-pane restart) is a separate, post-merge, beekeeper-timed step
-# and is NOT what this script attempts.
+# (persona-file loading on launch/resume), REISSUED after qbp-architecture's
+# §I4 CHANGES-REQUESTED on PR #143. Covers AC1-AC7 plus the mutation-kill
+# evidence the review required (M1/M1b/M2 KILLED) and the D1 overlay split
+# (personas.local.conf).
 #
-# Touches NO real federation state: it never targets the real "fed" tmux
-# session, never calls sessionbridge, and any working-tree edit it makes to
-# prove the origin/main-vs-worktree distinction (AC2) is reverted before exit
-# (trap, runs even on failure/interrupt).
+# These are "unit/golden tests with fake panes" per the issue's stated
+# verification boundary — the true acceptance evidence (a live Notary-pane
+# restart) is a separate, post-merge, beekeeper-timed step and is NOT what
+# this script attempts.
+#
+# Touches NO real federation state: never targets the real "fed" tmux
+# session, never calls sessionbridge, never mutates the tracked working-tree
+# copy of any file in this repo (§I4 N2 — the old AC2 test appended to the
+# REAL prompt file and relied on a trap to revert it; a SIGKILL mid-test would
+# have left it dirty). All divergence/mutation fixtures below live entirely
+# under $TMPDIR (throwaway git worktrees, throwaway bare repos, throwaway
+# personas.conf/personas.local.conf files) and are destroyed on exit.
 #
 # Usage: ./test-persona-file-loading.sh
 set -uo pipefail
@@ -18,9 +25,12 @@ set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INTER_REPO="$(cd "$HERE/.." && pwd)"
 TMPDIR="$(mktemp -d)"
-REVERT_FILE=""
+DIVERGE_WT=""
 cleanup() {
-  [ -n "$REVERT_FILE" ] && git -C "$INTER_REPO" checkout -- "$REVERT_FILE" 2>/dev/null
+  if [ -n "$DIVERGE_WT" ]; then
+    git -C "$INTER_REPO" worktree remove --force "$DIVERGE_WT" 2>/dev/null
+    git -C "$INTER_REPO" worktree prune 2>/dev/null
+  fi
   rm -rf "$TMPDIR"
 }
 trap cleanup EXIT
@@ -29,8 +39,11 @@ pass=0; fail=0
 check() { if [ "$1" = "0" ]; then echo "  ✓ $2"; pass=$((pass+1)); else echo "  ✗ $2"; fail=$((fail+1)); fi; }
 checkeq() { if [ "$1" = "$2" ]; then echo "  ✓ $3"; pass=$((pass+1)); else echo "  ✗ $3 (got [$1], want [$2])"; fail=$((fail+1)); fi; }
 
+REAL_PATH="prompt/notary-implementor-launch-prompt.md"
+
 # ─────────────────────────────────────────────────────────────────────────
 echo "== setup: origin/main baseline copy (old script + old conf side by side, so each resolves its OWN default CONF) =="
+git -C "$INTER_REPO" fetch origin main >/dev/null 2>&1
 git -C "$INTER_REPO" show origin/main:federation-terminals/launch-federation.sh  > "$TMPDIR/old-launch.sh"
 git -C "$INTER_REPO" show origin/main:federation-terminals/onboard-federation.sh > "$TMPDIR/old-onboard.sh"
 git -C "$INTER_REPO" show origin/main:federation-terminals/onboard-prompt.tmpl   > "$TMPDIR/old-onboard-prompt.tmpl"
@@ -44,29 +57,32 @@ cp "$TMPDIR/old-personas.conf" "$TMPDIR/oldft/personas.conf"
 [ -f "$TMPDIR/deming-boot.tmpl" ] && cp "$TMPDIR/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 chmod +x "$TMPDIR/oldft/launch-federation.sh" "$TMPDIR/oldft/onboard-federation.sh"
 
-echo "== AC5 (part 1/2): launch-federation.sh 'list' output unchanged =="
-# each script run with its OWN default (same-dir) personas.conf: old-vs-old-conf,
-# new-vs-new-conf — cmd_list's printed columns don't include persona_file, so
-# adding that 4th column to notary's row must not change this output at all.
+# origin/main (post-D1) already pins qbp-oppenheimer inline (cc9bae42...); the
+# reissue moves that pin to the gitignored overlay and leaves personas.conf
+# all-AUTO. For the byte-identical-old-vs-new comparisons below to hold, the
+# NEW script needs an overlay fixture supplying that same pin — this is
+# exactly the point of the split: CONF(structure)+overlay(pin) together must
+# reproduce the old inline-pin behavior.
+OPPENHEIMER_PIN="$(awk -F'|' '/^qbp-oppenheimer/ { gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }' "$TMPDIR/old-personas.conf")"
+AC5_OVERLAY="$TMPDIR/ac5-personas.local.conf"
+printf 'qbp-oppenheimer | %s\n' "$OPPENHEIMER_PIN" > "$AC5_OVERLAY"
+
+echo "== AC5 (part 1/2): launch-federation.sh 'list' output unchanged (structure+overlay reproduces old inline-pin behavior) =="
 OLD_LIST="$("$TMPDIR/oldft/launch-federation.sh" list 2>&1)"
-NEW_LIST="$("$HERE/launch-federation.sh" list 2>&1)"
+NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh" list 2>&1)"
 checkeq "$(printf '%s' "$NEW_LIST" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST" | md5sum | awk '{print $1}')" \
-  "launch-federation.sh list output byte-identical old vs new (all 12 seats, incl. notary's new 4th column)"
+  "launch-federation.sh list output byte-identical old vs new (all 13 seats, incl. notary's new 4th column, incl. hutchins, via structure+overlay)"
 
-echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 11 non-notary seats =="
+echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 12 non-notary seats =="
 
-NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl herschel edda-implementor deming"
+NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl herschel edda-implementor deming hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for all 11 non-notary seats"
+  "onboard-federation.sh --dry-run byte-identical old vs new for all 12 non-notary seats (incl. hutchins)"
 
 # ─────────────────────────────────────────────────────────────────────────
 echo "== AC1: golden-render byte-identity (per-persona, full untruncated prompt) =="
-# Extract render()/role_of() from OLD and NEW onboard-federation.sh and run
-# each in isolation (no tmux, no CLI truncation) against the SAME 11 personas,
-# proving true byte-for-byte identity of the full rendered prompt, not just
-# the 160-char CLI preview.
 extract_fn() { awk -v fn="$1" '$0 ~ "^"fn"\\(\\) \\{" {p=1} p {print} p && /^}/ {exit}' "$2"; }
 
 make_render_wrapper() {  # $1=out-file $2=source-onboard.sh $3=tmpl-file $4=personafile-tmpl(or "")
@@ -98,7 +114,8 @@ for p in qbp-architecture:/home/prime/Documents/inter \
          contextus-impl:/home/prime/Documents/Contextus \
          herschel:/home/prime/Documents/herschel \
          edda-implementor:/home/prime/Documents/Edda \
-         deming:/home/prime/Documents; do
+         deming:/home/prime/Documents \
+         hutchins:/home/prime/Documents/Craft; do
   handle="${p%%:*}"; wd="${p##*:}"
   old_out="$("$TMPDIR/render_old.sh" "$handle" "$wd" "")"
   new_out="$("$TMPDIR/render_new.sh" "$handle" "$wd" "")"
@@ -106,23 +123,39 @@ for p in qbp-architecture:/home/prime/Documents/inter \
     echo "    ✗ $handle differs"; all_ident=1
   fi
 done
-check "$all_ident" "all 11 non-notary personas: full rendered prompt byte-identical old vs new"
+check "$all_ident" "all 12 non-notary personas (incl. hutchins): full rendered prompt byte-identical old vs new"
 
-NOTARY_NEW="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "prompt/notary-implementor-launch-prompt.md")"
+NOTARY_NEW="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
 case "$NOTARY_NEW" in
-  *"prompt/notary-implementor-launch-prompt.md"*"§0"*) check 0 "notary render names the persona-file path AND '§0'" ;;
+  *"$REAL_PATH"*"§0"*) check 0 "notary render names the persona-file path AND '§0'" ;;
   *) check 1 "notary render names the persona-file path AND '§0'" ;;
 esac
 
+echo "== Golden: both templates literally instruct 'git show origin/main:<path>' (that instruction IS the runtime property — §I4) =="
+grep -q 'git show origin/main:{{PERSONA_FILE}}' "$HERE/onboard-prompt-personafile.tmpl" \
+  && check 0 "onboard-prompt-personafile.tmpl source contains the literal git-show-origin/main instruction" \
+  || check 1 "onboard-prompt-personafile.tmpl source contains the literal git-show-origin/main instruction"
+grep -q 'git show origin/main:{{PERSONA_FILE}}' "$HERE/resume-reanchor-prompt.tmpl" \
+  && check 0 "resume-reanchor-prompt.tmpl source contains the literal git-show-origin/main instruction" \
+  || check 1 "resume-reanchor-prompt.tmpl source contains the literal git-show-origin/main instruction"
+case "$NOTARY_NEW" in
+  *"git show origin/main:$REAL_PATH"*) check 0 "RENDERED onboard prompt contains the literal 'git show origin/main:$REAL_PATH' instruction" ;;
+  *) check 1 "RENDERED onboard prompt contains the literal 'git show origin/main:$REAL_PATH' instruction" ;;
+esac
+REANCHOR_GOLDEN="$(sed -e "s#{{HANDLE}}#notary-implementor#g" -e "s#{{WORKDIR}}#/home/prime/Documents/notary#g" -e "s#{{PERSONA_FILE}}#$REAL_PATH#g" "$HERE/resume-reanchor-prompt.tmpl" | tr -d '\n')"
+case "$REANCHOR_GOLDEN" in
+  *"git show origin/main:$REAL_PATH"*) check 0 "RENDERED resume re-anchor contains the literal 'git show origin/main:$REAL_PATH' instruction" ;;
+  *) check 1 "RENDERED resume re-anchor contains the literal 'git show origin/main:$REAL_PATH' instruction" ;;
+esac
+
 # ─────────────────────────────────────────────────────────────────────────
-echo "== AC2: origin/main resolution, never a worktree copy; fails loud =="
+echo "== AC2 / §I4 M1+M1b: origin/main resolution DRIVES resolve_persona_file (real function, not reimplemented); never a worktree copy; fails loud =="
 # source launch-federation.sh's functions without running cmd_launch/list/etc
 # — the BASH_SOURCE-vs-$0 guard added at the bottom of the file (inter#142)
 # skips the case-dispatch entirely whenever the file is sourced rather than
 # executed, regardless of MODE's resolved value.
 source "$HERE/launch-federation.sh"
 
-REAL_PATH="prompt/notary-implementor-launch-prompt.md"
 resolve_persona_file "$REAL_PATH" >/dev/null 2>&1
 check "$?" "resolve_persona_file succeeds for a real origin/main path ($REAL_PATH)"
 
@@ -138,21 +171,143 @@ grep -qi "git not available" /tmp/ac2_nogit.$$ && loudok=0 || loudok=1
 [ "$rc" -ne 0 ] && [ "$loudok" -eq 0 ] && check 0 "git unavailable: fails loud, non-zero, no silent fallback" || check 1 "git unavailable: fails loud, non-zero, no silent fallback"
 rm -f /tmp/ac2_nogit.$$
 
-# divergent local worktree copy must NOT be used
-REVERT_FILE="$REAL_PATH"
-MARKER="AC2-DIVERGENCE-MARKER-$$"
-printf '\n%s\n' "$MARKER" >> "$INTER_REPO/$REAL_PATH"
-DIVERGED_CONTENT="$(git -C "$INTER_REPO" show "origin/main:$REAL_PATH" 2>/dev/null)"
-if printf '%s' "$DIVERGED_CONTENT" | grep -q "$MARKER"; then
-  check 1 "resolution reads origin/main, NOT the dirty local worktree copy"
+# §I4 M1/M1b mutation-kill: the old test called `git show origin/main` ITSELF
+# and never called resolve_persona_file — it proved git works, not that the
+# launcher uses origin/main (mutant `git show origin/main:$path` -> `cat
+# "$INTER_REPO/$path"` SURVIVED). The fix: a throwaway DETACHED git worktree
+# at origin/main (shares this repo's object db/refs — never touches the real
+# tracked working tree, satisfying N2), diverged on disk WITHOUT committing,
+# then resolve_persona_file is called with INTER_REPO pointed at it and the
+# REAL function's return code is asserted. Two directions, both required to
+# kill the mutant:
+#   Test A: a path that exists ONLY in the local worktree (untracked,
+#            absent from origin/main) — real code MUST FAIL (git show
+#            origin/main can't find it); mutant `cat` would SUCCEED.
+#   Test B: a path that exists at origin/main but is DELETED from the local
+#            worktree (uncommitted rm) — real code MUST SUCCEED (git show
+#            reads the object db, independent of working-tree state);
+#            mutant `cat` would FAIL (no such file).
+# Asserting both directions means a mutant surviving one is still caught by
+# the other — this is what M1 requires ("drive the real code path").
+DIVERGE_WT="$TMPDIR/diverge-worktree"
+git -C "$INTER_REPO" worktree add --detach "$DIVERGE_WT" origin/main >/tmp/wt_add.$$ 2>&1
+if [ $? -ne 0 ]; then
+  check 1 "M1 setup: throwaway detached worktree at origin/main created"
+  cat /tmp/wt_add.$$
 else
-  check 0 "resolution reads origin/main, NOT the dirty local worktree copy"
+  check 0 "M1 setup: throwaway detached worktree at origin/main created"
 fi
-git -C "$INTER_REPO" checkout -- "$REVERT_FILE"
-REVERT_FILE=""
+rm -f /tmp/wt_add.$$
+
+LOCAL_ONLY_PATH="prompt/zz-mutation-test-local-only-$$.md"
+mkdir -p "$(dirname "$DIVERGE_WT/$LOCAL_ONLY_PATH")"
+echo "local-only content, never committed, never at origin/main" > "$DIVERGE_WT/$LOCAL_ONLY_PATH"
+
+ORIG_INTER_REPO="$INTER_REPO"
+INTER_REPO="$DIVERGE_WT"
+resolve_persona_file "$LOCAL_ONLY_PATH" >/tmp/m1_a.$$ 2>&1
+rc_a=$?
+[ "$rc_a" -ne 0 ] && check 0 "§I4 M1 kill (launch-federation.sh) Test A: path exists ONLY in local worktree -> resolve_persona_file FAILS (real git-show-origin/main; a 'cat local worktree' mutant would wrongly SUCCEED here)" \
+  || check 1 "§I4 M1 kill (launch-federation.sh) Test A: path exists ONLY in local worktree -> resolve_persona_file FAILS (real git-show-origin/main; a 'cat local worktree' mutant would wrongly SUCCEED here)"
+rm -f /tmp/m1_a.$$ "$DIVERGE_WT/$LOCAL_ONLY_PATH"
+
+rm -f "$DIVERGE_WT/$REAL_PATH"
+resolve_persona_file "$REAL_PATH" >/tmp/m1_b.$$ 2>&1
+rc_b=$?
+[ "$rc_b" -eq 0 ] && check 0 "§I4 M1 kill (launch-federation.sh) Test B: path DELETED locally but present at origin/main -> resolve_persona_file SUCCEEDS (real git-show-origin/main reads the object db; a 'cat local worktree' mutant would wrongly FAIL here)" \
+  || { check 1 "§I4 M1 kill (launch-federation.sh) Test B: path DELETED locally but present at origin/main -> resolve_persona_file SUCCEEDS (real git-show-origin/main reads the object db; a 'cat local worktree' mutant would wrongly FAIL here)"; cat /tmp/m1_b.$$; }
+rm -f /tmp/m1_b.$$
+git -C "$DIVERGE_WT" checkout -- "$REAL_PATH" 2>/dev/null
+INTER_REPO="$ORIG_INTER_REPO"
+
+# §I4 M1b: the identical mutation in onboard-federation.sh's OWN copy of
+# resolve_persona_file — source it in a subshell (it has its own top-level
+# flow, so isolate via a subshell rather than double-sourcing into this one).
+M1B_RESULT="$(
+  source "$HERE/onboard-federation.sh" --dry-run deming >/dev/null 2>&1 || true
+  INTER_REPO="$DIVERGE_WT"
+  mkdir -p "$(dirname "$DIVERGE_WT/$LOCAL_ONLY_PATH")"
+  echo "local-only" > "$DIVERGE_WT/$LOCAL_ONLY_PATH"
+  resolve_persona_file "$LOCAL_ONLY_PATH" >/dev/null 2>&1
+  rc_a=$?
+  rm -f "$DIVERGE_WT/$LOCAL_ONLY_PATH"
+  rm -f "$DIVERGE_WT/$REAL_PATH"
+  resolve_persona_file "$REAL_PATH" >/dev/null 2>&1
+  rc_b=$?
+  git -C "$DIVERGE_WT" checkout -- "$REAL_PATH" 2>/dev/null
+  echo "$rc_a $rc_b"
+)"
+M1B_A="$(echo "$M1B_RESULT" | awk '{print $1}')"
+M1B_B="$(echo "$M1B_RESULT" | awk '{print $2}')"
+[ "$M1B_A" != "0" ] && check 0 "§I4 M1b kill (onboard-federation.sh) Test A: local-only path -> resolve_persona_file FAILS" \
+  || check 1 "§I4 M1b kill (onboard-federation.sh) Test A: local-only path -> resolve_persona_file FAILS"
+[ "$M1B_B" = "0" ] && check 0 "§I4 M1b kill (onboard-federation.sh) Test B: path deleted locally, present at origin/main -> resolve_persona_file SUCCEEDS" \
+  || check 1 "§I4 M1b kill (onboard-federation.sh) Test B: path deleted locally, present at origin/main -> resolve_persona_file SUCCEEDS"
 
 # ─────────────────────────────────────────────────────────────────────────
-echo "== AC3: resume re-anchor mechanism (fake-pane tmux session; not a live restart) =="
+echo "== §I4 D2: origin/main freshness — fetch before resolution; stale ref resolves to newer, or fails loud =="
+# Fully isolated sandbox (bare repo + 3 local clones) — never touches the
+# real ~/Documents/inter repo/worktrees or any shared ref.
+D2_REMOTE="$TMPDIR/d2-remote.git"
+git init -q --bare "$D2_REMOTE"
+D2_SEED="$TMPDIR/d2-seed"
+git clone -q "$D2_REMOTE" "$D2_SEED"
+(
+  cd "$D2_SEED"
+  git checkout -q -b main 2>/dev/null || git checkout -q main
+  echo "v1" > testfile.md
+  git add testfile.md
+  git -c user.email=t@t.test -c user.name=tester commit -q -m v1
+  git push -q origin main
+)
+# "the launcher's repo" — clones v1, does NOT re-fetch before the remote moves
+D2_LAUNCHER_REPO="$TMPDIR/d2-launcher-repo"
+git clone -q "$D2_REMOTE" "$D2_LAUNCHER_REPO"
+# a third clone pushes v2 directly to the bare remote, simulating someone
+# else's merge landing on main after the launcher's last fetch
+D2_PUSHER="$TMPDIR/d2-pusher"
+git clone -q "$D2_REMOTE" "$D2_PUSHER"
+(
+  cd "$D2_PUSHER"
+  git checkout -q main 2>/dev/null || git checkout -q -b main origin/main
+  echo "v2" > testfile.md
+  git add testfile.md
+  git -c user.email=t@t.test -c user.name=tester commit -q -m v2
+  git push -q origin main
+)
+
+ORIG_INTER_REPO="$INTER_REPO"
+INTER_REPO="$D2_LAUNCHER_REPO"; ORIGIN_MAIN_FRESH=0
+ensure_origin_main_fresh
+CONTENT_BEFORE_ARG="$(git -C "$D2_LAUNCHER_REPO" show origin/main:testfile.md 2>/dev/null)"
+checkeq "$CONTENT_BEFORE_ARG" "v2" "D2: ensure_origin_main_fresh() fetches; local ref resolves to the NEWER remote content, not the stale-at-clone-time v1"
+
+# fail-loud path: point origin at a nonexistent remote, force the fetch to fail
+D2_BADREMOTE_REPO="$TMPDIR/d2-badremote-repo"
+git clone -q "$D2_REMOTE" "$D2_BADREMOTE_REPO"
+git -C "$D2_BADREMOTE_REPO" remote set-url origin "$TMPDIR/does-not-exist-remote-$$"
+INTER_REPO="$D2_BADREMOTE_REPO"; ORIGIN_MAIN_FRESH=0
+ensure_origin_main_fresh >/tmp/d2_fail.$$ 2>&1
+rc=$?
+grep -qi "FETCH FAILED" /tmp/d2_fail.$$ && loud=0 || loud=1
+grep -Eq '[0-9]+s old' /tmp/d2_fail.$$ && namesage=0 || namesage=1
+[ "$rc" -ne 0 ] && [ "$loud" -eq 0 ] && [ "$namesage" -eq 0 ] && check 0 "D2: fetch failure fails loud (non-zero, names 'FETCH FAILED' + local ref age), no silent stale-ref use" \
+  || { check 1 "D2: fetch failure fails loud (non-zero, names 'FETCH FAILED' + local ref age), no silent stale-ref use"; cat /tmp/d2_fail.$$; }
+rm -f /tmp/d2_fail.$$
+INTER_REPO="$ORIG_INTER_REPO"; ORIGIN_MAIN_FRESH=0
+
+# smoke-check onboard-federation.sh carries the identical contract (subshell,
+# reusing the same D2 fixtures — cheap, no need to rebuild the remote)
+D2_ONBOARD_RESULT="$(
+  source "$HERE/onboard-federation.sh" --dry-run deming >/dev/null 2>&1 || true
+  INTER_REPO="$D2_LAUNCHER_REPO"; ORIGIN_MAIN_FRESH=0
+  ensure_origin_main_fresh >/dev/null 2>&1
+  echo $?
+)"
+checkeq "$D2_ONBOARD_RESULT" "0" "D2 (onboard-federation.sh): ensure_origin_main_fresh() present and succeeds against the same fixture"
+
+# ─────────────────────────────────────────────────────────────────────────
+echo "== AC3 / §I4 M2: resume re-anchor mechanism drives the REAL cmd_launch gate (build_launch_plan), not a reimplementation =="
 TESTSESSION="fed-test-142-$$"
 FAKEDIR="$TMPDIR/fake-notary-workdir"
 mkdir -p "$FAKEDIR"
@@ -175,15 +330,58 @@ else
 fi
 rm -f /tmp/ac3.$$
 
-# "WITHOUT -> nothing new (unchanged)": build the REANCHOR_* candidate list the
-# way cmd_launch does and confirm a pfile-less row is never added to it.
-P_PERSONA=(bma-implementor); P_WORKDIR=(/home/prime/Documents/BMA); P_SID=(deadbeef-0000-0000-0000-000000000000); P_PFILE=("")
-declare -a REANCHOR_PERSONA=() REANCHOR_WD=() REANCHOR_PFILE=()
-for i in "${!P_PERSONA[@]}"; do
-  persona="${P_PERSONA[$i]}"; wd="${P_WORKDIR[$i]}"; sid="${P_SID[$i]}"; pfile="${P_PFILE[$i]}"
-  [ -n "$sid" ] && [ -n "$pfile" ] && { REANCHOR_PERSONA+=("$persona"); REANCHOR_WD+=("$wd"); REANCHOR_PFILE+=("$pfile"); }
-done
-checkeq "${#REANCHOR_PERSONA[@]}" "0" "resumed pane WITHOUT persona-file: not added to the re-anchor list (unchanged)"
+# §I4 M2 kill: drive the REAL gate. cmd_launch's per-pane decision logic was
+# factored into build_launch_plan() (called by cmd_launch itself, unchanged
+# behavior) precisely so this test can call the SAME function instead of
+# reimplementing `[ -n "$sid" ] && [ -n "$pfile" ]` inline. Covers the full
+# SID x PFILE truth table, including the "sid pinned but no matching
+# transcript file -> falls to FRESH, never reanchored" case cmd_launch
+# actually implements.
+FAKE_PROJDIR="$TMPDIR/fake-projects"
+mkdir -p "$FAKE_PROJDIR"
+HAS_SESSION_WD="$TMPDIR/has-session-wd"; mkdir -p "$HAS_SESSION_WD"
+HAS_SESSION_SID="deadbeef-0000-0000-0000-m2session001"
+mkdir -p "$FAKE_PROJDIR/$(slug_of "$HAS_SESSION_WD")"
+: > "$FAKE_PROJDIR/$(slug_of "$HAS_SESSION_WD")/$HAS_SESSION_SID.jsonl"
+NO_SESSION_WD="$TMPDIR/no-session-wd"; mkdir -p "$NO_SESSION_WD"
+NO_SESSION_SID="deadbeef-0000-0000-0000-m2missingfil"
+
+ORIG_PROJECTS="$PROJECTS"
+PROJECTS="$FAKE_PROJDIR"
+P_PERSONA=(resumed-no-pfile resumed-with-pfile pinned-no-transcript fresh-already)
+P_WORKDIR=("$HAS_SESSION_WD" "$HAS_SESSION_WD" "$NO_SESSION_WD" "$HAS_SESSION_WD")
+P_SID=("$HAS_SESSION_SID" "$HAS_SESSION_SID" "$NO_SESSION_SID" "")
+P_PFILE=("" "$REAL_PATH" "$REAL_PATH" "$REAL_PATH")
+build_launch_plan >/tmp/m2.$$ 2>&1
+
+in_array() { local needle="$1"; shift; local x; for x in "$@"; do [ "$x" = "$needle" ] && return 0; done; return 1; }
+
+in_array "resumed-no-pfile" "${REANCHOR_PERSONA[@]:-}" && r1=0 || r1=1
+[ "$r1" -eq 1 ] && check 0 "M2 kill: resumed pane WITHOUT persona-file -> NOT added to the real cmd_launch reanchor plan" \
+  || check 1 "M2 kill: resumed pane WITHOUT persona-file -> NOT added to the real cmd_launch reanchor plan"
+
+in_array "resumed-with-pfile" "${REANCHOR_PERSONA[@]:-}" && r2=0 || r2=1
+[ "$r2" -eq 0 ] && check 0 "M2: resumed pane WITH persona-file -> IS added to the real cmd_launch reanchor plan" \
+  || check 1 "M2: resumed pane WITH persona-file -> IS added to the real cmd_launch reanchor plan"
+
+in_array "pinned-no-transcript" "${REANCHOR_PERSONA[@]:-}" && r3=1 || r3=0
+in_array "pinned-no-transcript" "${FRESH[@]:-}" && r3f=0 || r3f=1
+[ "$r3" -eq 0 ] && [ "$r3f" -eq 0 ] && check 0 "M2: pinned sid with NO matching transcript file -> cleared to FRESH by the real gate, never reanchored (not a reimplementation: build_launch_plan did the clearing)" \
+  || check 1 "M2: pinned sid with NO matching transcript file -> cleared to FRESH by the real gate, never reanchored"
+
+in_array "fresh-already" "${FRESH[@]:-}" && r4=0 || r4=1
+[ "$r4" -eq 0 ] && check 0 "M2: already-fresh (no sid) row -> in FRESH plan" || check 1 "M2: already-fresh (no sid) row -> in FRESH plan"
+
+PROJECTS="$ORIG_PROJECTS"
+rm -f /tmp/m2.$$
+
+# "WITHOUT -> nothing new (unchanged)" via the exact production boolean too
+wants_resume_reanchor "deadbeef" "" && w1=0 || w1=1
+[ "$w1" -eq 1 ] && check 0 "wants_resume_reanchor: sid set, pfile empty -> false (same boolean cmd_launch calls)" || check 1 "wants_resume_reanchor: sid set, pfile empty -> false"
+wants_resume_reanchor "deadbeef" "$REAL_PATH" && w2=0 || w2=1
+[ "$w2" -eq 0 ] && check 0 "wants_resume_reanchor: sid set, pfile set -> true" || check 1 "wants_resume_reanchor: sid set, pfile set -> true"
+wants_resume_reanchor "" "$REAL_PATH" && w3=0 || w3=1
+[ "$w3" -eq 1 ] && check 0 "wants_resume_reanchor: sid empty (fresh, not resumed) -> false" || check 1 "wants_resume_reanchor: sid empty (fresh, not resumed) -> false"
 
 # ─────────────────────────────────────────────────────────────────────────
 echo "== AC4: drift-check — byte-identical passes; 1-byte mutation fails loud, naming the file =="
@@ -206,9 +404,6 @@ SHA="$(git -C "$INTER_REPO" rev-parse origin/main)"
 check "$?" "byte-identical runtime copy: exit 0"
 rm -f /tmp/ac4_ok.$$
 
-# header/frontmatter are excluded from comparison: a different-but-valid
-# wrapper (frontmatter + a differently-worded header) around the SAME body
-# must still pass.
 COPY_FM="$TMPDIR/runtime-copy-with-frontmatter.md"
 {
   printf -- '---\nname: notary-implementor\ndescription: test\n---\n'
@@ -219,14 +414,12 @@ COPY_FM="$TMPDIR/runtime-copy-with-frontmatter.md"
 check "$?" "header + frontmatter excluded from comparison: exit 0 despite different wrapper"
 rm -f /tmp/ac4_fm.$$
 
-# mutation test (required by AC4): flip one byte in the BODY (not the header)
 COPY_MUT="$TMPDIR/runtime-copy-mutated.md"
 cp "$COPY" "$COPY_MUT"
 python3 - "$COPY_MUT" <<'PYEOF'
 import sys
 p = sys.argv[1]
 b = bytearray(open(p, "rb").read())
-# find a body line (after the header+blank) and flip one alnum byte
 lines = b.split(b"\n")
 for i in range(2, len(lines)):
     line = bytearray(lines[i])
@@ -248,6 +441,47 @@ grep -q "$COPY_MUT" /tmp/ac4_mut.$$ && namedok=0 || namedok=1
 cat /tmp/ac4_mut.$$ | sed 's/^/    /'
 rm -f /tmp/ac4_mut.$$
 
+echo "== §I4 N1: extract_prompt_block guard — an inner-fence-truncated block (no §0) fails loud instead of silently comparing partial content =="
+# check-persona-drift.sh now also enforces D2 (fetch origin main first), so
+# the fixture needs a REAL origin remote, not a bare `git init`.
+N1_REMOTE="$TMPDIR/n1-remote.git"
+git init -q --bare "$N1_REMOTE"
+N1_REPO="$TMPDIR/n1-repo"
+git clone -q "$N1_REMOTE" "$N1_REPO"
+git -C "$N1_REPO" checkout -q -b main 2>/dev/null || git -C "$N1_REPO" checkout -q main
+mkdir -p "$N1_REPO/prompt"
+{
+  echo "# Fake persona (N1 fixture)"
+  echo
+  echo "## The prompt"
+  echo
+  echo '```'
+  echo "Intro line before an inner fence — this is all extract_prompt_block will see."
+  echo '```yaml'
+  echo "key: value"
+  echo '```'
+  echo '§0 Identity check — never reached, because the block already truncated above.'
+  echo '```'
+} > "$N1_REPO/prompt/fake-persona.md"
+git -C "$N1_REPO" add -A
+git -C "$N1_REPO" -c user.email=t@t.test -c user.name=tester commit -q -m "N1 fixture: inner-fence-truncated prompt block"
+git -C "$N1_REPO" push -q origin main
+
+N1_COPY="$TMPDIR/n1-copy.md"
+: > "$N1_COPY"
+INTER_REPO_DIR="$N1_REPO" "$HERE/check-persona-drift.sh" "prompt/fake-persona.md" "$N1_COPY" >/tmp/n1.$$ 2>&1
+rc=$?
+grep -qi '§0' /tmp/n1.$$ && named0=0 || named0=1
+[ "$rc" -eq 2 ] && [ "$named0" -eq 0 ] && check 0 "N1 guard: inner-fence truncation (no §0 in extracted block) -> fails loud, exit 2, names '§0'" \
+  || { check 1 "N1 guard: inner-fence truncation (no §0 in extracted block) -> fails loud, exit 2, names '§0'"; cat /tmp/n1.$$ | sed 's/^/    /'; }
+rm -f /tmp/n1.$$
+# and confirm it's NOT a false positive against the real, well-formed (v0.2,
+# no-inner-fences) notary block already proven byte-identical above.
+case "$CANON_BLOCK" in
+  *'§0'*) check 0 "N1 guard: NOT a false positive — the real notary prompt block (no inner fences) contains §0 and passes" ;;
+  *) check 1 "N1 guard: NOT a false positive — the real notary prompt block (no inner fences) contains §0 and passes" ;;
+esac
+
 # ─────────────────────────────────────────────────────────────────────────
 echo "== Backward compatibility: personas.conf rows with no 4th column still parse and launch =="
 FIXTURE="$TMPDIR/personas-backcompat.conf"
@@ -258,6 +492,7 @@ EOF
 unset P_PERSONA P_WORKDIR P_SID P_PFILE 2>/dev/null
 declare -a P_PERSONA=() P_WORKDIR=() P_SID=() P_PFILE=()
 CONF="$FIXTURE"
+LOCAL_CONF="/nonexistent-overlay-backcompat-$$.conf"
 ROSTER="/nonexistent-roster-$$"
 load_conf
 ok=1
@@ -269,19 +504,89 @@ ok=1
 [ -z "${P_PFILE[1]}" ] || ok=0
 [ "$ok" = "1" ] && check 0 "3-column rows parse correctly (persona/workdir/sid intact, pfile empty)" || check 1 "3-column rows parse correctly (persona/workdir/sid intact, pfile empty)"
 
-echo "== Backward compatibility: cmd_refresh preserves format for 3-column rows, keeps a 4th column when present =="
-FIXTURE2="$TMPDIR/personas-refresh.conf"
-cat > "$FIXTURE2" <<EOF
-gamma-persona        | /tmp/gamma-wd                | fixed-sid-aaaa
-notary-implementor   | /tmp/notary-wd               | fixed-sid-bbbb | some/persona-file.md
+# ─────────────────────────────────────────────────────────────────────────
+echo "== AC6: an overlay pin for a seat wins over its structural AUTO =="
+# Hermetic: use a fake empty $PROJECTS dir (not the real ~/.claude/projects)
+# so AUTO-discovery's content-sniff can never coincidentally reproduce the
+# same value this machine's real history happens to carry — a genuine
+# resolution here can ONLY have come from the overlay.
+AC6_FAKE_PROJECTS="$TMPDIR/ac6-fake-projects"; mkdir -p "$AC6_FAKE_PROJECTS"
+AC6_WD="$TMPDIR/ac6-fake-qbp-wd"; mkdir -p "$AC6_WD"
+AC6_CONF="$TMPDIR/personas-ac6.conf"
+cat > "$AC6_CONF" <<EOF
+qbp-oppenheimer | $AC6_WD | AUTO
 EOF
-CONF="$FIXTURE2"
+AC6_OVERLAY="$TMPDIR/personas-ac6.local.conf"
+printf 'qbp-oppenheimer | %s\n' "$OPPENHEIMER_PIN" > "$AC6_OVERLAY"
+ORIG_PROJECTS_AC="$PROJECTS"; PROJECTS="$AC6_FAKE_PROJECTS"
+unset P_PERSONA P_WORKDIR P_SID P_PFILE 2>/dev/null
+declare -a P_PERSONA=() P_WORKDIR=() P_SID=() P_PFILE=()
+CONF="$AC6_CONF"; LOCAL_CONF="$AC6_OVERLAY"; ROSTER="/nonexistent-roster-ac6-$$"
+load_conf
+checkeq "${P_SID[0]}" "$OPPENHEIMER_PIN" "AC6: overlay pin wins over structural AUTO (roster + content-sniff both hermetically empty — proves the overlay, not a coincidental match, supplied the sid)"
+
+echo "== AC7: missing/empty overlay => AUTO resolution for all seats (backward-compat: no overlay = today's behavior) =="
+unset P_PERSONA P_WORKDIR P_SID P_PFILE 2>/dev/null
+declare -a P_PERSONA=() P_WORKDIR=() P_SID=() P_PFILE=()
+CONF="$AC6_CONF"
+LOCAL_CONF="/nonexistent-overlay-ac7-$$.conf"
+ROSTER="/nonexistent-roster-ac7-$$"
+load_conf
+checkeq "${P_SID[0]}" "" "AC7: missing overlay file => falls through to ordinary AUTO discovery (empty here: no roster match, no jsonl to content-sniff) — unchanged backward-compat behavior"
+
+: > "$AC6_OVERLAY.empty"
+unset P_PERSONA P_WORKDIR P_SID P_PFILE 2>/dev/null
+declare -a P_PERSONA=() P_WORKDIR=() P_SID=() P_PFILE=()
+CONF="$AC6_CONF"; LOCAL_CONF="$AC6_OVERLAY.empty"; ROSTER="/nonexistent-roster-ac7b-$$"
+load_conf
+checkeq "${P_SID[0]}" "" "AC7: EMPTY (present but zero-entry) overlay file => same as missing — AUTO for all seats"
+PROJECTS="$ORIG_PROJECTS_AC"
+
+echo "== Overlay split: tracked personas.conf is pin-free (grep-assert zero session-id pins) =="
+PINS="$(awk -F'|' '
+  { line=$0; sub(/#.*/, "", line); if (line ~ /^[[:space:]]*$/) next }
+  { n=split(line, f, "|"); if (n<3) next; sid=f[3]; gsub(/^[ \t]+|[ \t]+$/, "", sid); if (sid != "" && sid != "AUTO") print f[1] ": " sid }
+' "$HERE/personas.conf")"
+if [ -z "$PINS" ]; then
+  check 0 "tracked personas.conf: zero session-id pins (all-AUTO; overlay carries every ephemeral pin, incl. the moved qbp-oppenheimer $OPPENHEIMER_PIN)"
+else
+  check 1 "tracked personas.conf: zero session-id pins (all-AUTO; overlay carries every ephemeral pin)"
+  echo "$PINS" | sed 's/^/    still pinned: /'
+fi
+
+echo "== Overlay: refresh writes discovered pins to personas.local.conf ONLY — personas.conf is never rewritten =="
+REFRESH_CONF="$TMPDIR/personas-refresh.conf"
+cat > "$REFRESH_CONF" <<EOF
+gamma-persona        | /tmp/gamma-wd-$$                | AUTO
+notary-implementor   | /tmp/notary-wd-$$               | AUTO | some/persona-file.md
+EOF
+BEFORE_HASH="$(md5sum "$REFRESH_CONF" | awk '{print $1}')"
+CONF="$REFRESH_CONF"; LOCAL_CONF="$TMPDIR/refresh.local.conf"; ROSTER="/nonexistent-roster-refresh-$$"
+rm -f "$LOCAL_CONF"
 cmd_refresh >/tmp/refresh_out.$$ 2>&1
-ok=1
-grep -Eq '^gamma-persona +\| /tmp/gamma-wd +\| fixed-sid-aaaa *$' "$FIXTURE2" || ok=0
-grep -q "some/persona-file.md" "$FIXTURE2" || ok=0
-[ "$ok" = "1" ] && check 0 "refresh: 3-col row stays 3-col; 4-col row keeps its persona_file" || check 1 "refresh: 3-col row stays 3-col; 4-col row keeps its persona_file"
-rm -f /tmp/refresh_out.$$ "$FIXTURE2.bak"
+AFTER_HASH="$(md5sum "$REFRESH_CONF" | awk '{print $1}')"
+checkeq "$AFTER_HASH" "$BEFORE_HASH" "refresh: personas.conf byte-unchanged (structure file never rewritten; pins live only in the overlay)"
+[ -f "$LOCAL_CONF" ] && check 0 "refresh: personas.local.conf overlay file created" || check 1 "refresh: personas.local.conf overlay file created"
+rm -f /tmp/refresh_out.$$
+
+echo "== Overlay: refresh actually WRITES a discovered pin into the overlay (real discover_sid against a fake roster row) =="
+REFRESH2_CONF="$TMPDIR/personas-refresh2.conf"
+DELTA_WD="$TMPDIR/delta-wd"; mkdir -p "$DELTA_WD"
+cat > "$REFRESH2_CONF" <<EOF
+delta-persona | $DELTA_WD | AUTO
+EOF
+FAKE_ROSTER="$TMPDIR/fake-roster.tsv"
+printf 'delta-persona\t%s\tdeadbeef-refresh-0000-0000-000000000000\n' "$DELTA_WD" > "$FAKE_ROSTER"
+CONF="$REFRESH2_CONF"; LOCAL_CONF="$TMPDIR/refresh2.local.conf"; ROSTER="$FAKE_ROSTER"
+rm -f "$LOCAL_CONF"
+cmd_refresh >/tmp/refresh2_out.$$ 2>&1
+grep -q "deadbeef-refresh-0000-0000-000000000000" "$LOCAL_CONF" 2>/dev/null \
+  && check 0 "refresh: a freshly-discovered (roster-matched) pin lands in the overlay" \
+  || { check 1 "refresh: a freshly-discovered (roster-matched) pin lands in the overlay"; cat "$LOCAL_CONF" 2>/dev/null; }
+grep -Eq '^delta-persona +\|' "$REFRESH2_CONF" && grep -q ' AUTO' "$REFRESH2_CONF" \
+  && check 0 "refresh: personas.conf row for that same persona is STILL AUTO (untouched)" \
+  || check 1 "refresh: personas.conf row for that same persona is STILL AUTO (untouched)"
+rm -f /tmp/refresh2_out.$$
 
 echo
 echo "RESULT: $pass passed, $fail failed"
