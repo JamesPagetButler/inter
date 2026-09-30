@@ -1,0 +1,56 @@
+State 1: <Initial predicate>
+/\ tainted = FALSE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = FALSE
+/\ admitted = FALSE
+State 2: <Steal line 32, col 3 to line 33, col 99 of module verdandi_attestation_containment_plants>
+/\ tainted = FALSE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ admitted = FALSE
+State 3: <AdmitStep line 46, col 3 to line 53, col 62 of module verdandi_attestation_containment_plants>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ admitted = TRUE
+State 4: <ConfirmTick line 57, col 3 to line 63, col 72 of module verdandi_attestation_containment_plants>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ admitted = TRUE
+State 5: <ConfirmTick line 57, col 3 to line 63, col 72 of module verdandi_attestation_containment_plants>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ admitted = TRUE
+State 6: <ConfirmTick line 57, col 3 to line 63, col 72 of module verdandi_attestation_containment_plants>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = TRUE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = FALSE
+/\ admitted = TRUE
+State 7: <Consume line 66, col 3 to line 69, col 97 of module verdandi_attestation_containment_plants>
+/\ tainted = TRUE
+/\ revoked = FALSE
+/\ final = TRUE
+/\ detect = 1
+/\ stolen = TRUE
+/\ consumed = TRUE
+/\ admitted = TRUE

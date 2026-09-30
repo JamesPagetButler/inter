@@ -1,0 +1,56 @@
+State 1: <Initial predicate>
+/\ compromised = {}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = FALSE
+/\ events = 0
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]
+State 2: <StealShare line 130, col 3 to line 139, col 60 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = FALSE
+/\ events = 1
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]
+State 3: <Detect line 143, col 3 to line 146, col 87 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = TRUE
+/\ events = 2
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]
+State 4: <AttackerStart line 163, col 3 to line 170, col 92 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = TRUE
+/\ events = 3
+/\ adm = [active |-> TRUE, signers |-> {t1a, t1b}, step |-> 1, attacker |-> TRUE]
+State 5: <Step line 185, col 3 to line 192, col 92 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = TRUE
+/\ events = 4
+/\ adm = [active |-> TRUE, signers |-> {t1a, t1b}, step |-> 2, attacker |-> TRUE]
+State 6: <Step line 185, col 3 to line 192, col 92 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = TRUE
+/\ events = 5
+/\ adm = [active |-> TRUE, signers |-> {t1a, t1b}, step |-> 3, attacker |-> TRUE]
+State 7: <Step line 185, col 3 to line 192, col 92 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = FALSE
+/\ detected = TRUE
+/\ events = 6
+/\ adm = [active |-> TRUE, signers |-> {t1a, t1b}, step |-> 4, attacker |-> TRUE]
+State 8: <Complete line 196, col 3 to line 205, col 73 of module verdandi_principal_revocation>
+/\ compromised = {t1a, t1b, t2a, t2b, t2c}
+/\ revoked = {}
+/\ payoff = TRUE
+/\ detected = TRUE
+/\ events = 7
+/\ adm = [active |-> FALSE, signers |-> {}, step |-> 0, attacker |-> FALSE]

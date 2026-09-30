@@ -1,0 +1,47 @@
+Error: Invariant INV_ContainmentBeatsExploit is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 0
+/\ confirm = 0
+/\ admitted = FALSE
+
+State 2: <AdmitStep line 55, col 3 to line 61, col 62 of module verdandi_authority_attestation_containment>
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 1
+/\ confirm = 0
+/\ admitted = FALSE
+
+State 3: <AdmitStep line 55, col 3 to line 61, col 62 of module verdandi_authority_attestation_containment>
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = FALSE
+/\ revokeDue = FALSE
+/\ admit = 2
+/\ confirm = 0
+/\ admitted = TRUE
+
+State 4: <Consume line 72, col 3 to line 75, col 88 of module verdandi_authority_attestation_containment>
+/\ revoked = FALSE
+/\ final = FALSE
+/\ detect = 0
+/\ stolen = FALSE
+/\ consumed = TRUE
+/\ revokeDue = FALSE
+/\ admit = 2
+/\ confirm = 0
+/\ admitted = TRUE
+
+16 states generated, 15 distinct states found, 6 states left on queue.

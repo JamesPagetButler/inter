@@ -1,0 +1,24 @@
+State 1: <Initial predicate>
+/\ compromised = {}
+/\ held = {}
+/\ constructed = {}
+State 2: <NextP line 64, col 7 to line 64, col 34 of module verdandi_attestation_safety_plants>
+/\ compromised = {t2a, t2b}
+/\ held = {}
+/\ constructed = {}
+State 3: <StealT1P(t1a) line 41, col 16 to line 41, col 61 of module verdandi_attestation_safety_plants>
+/\ compromised = {t1a, t2a, t2b}
+/\ held = {}
+/\ constructed = {}
+State 4: <StealT1P(t1b) line 41, col 16 to line 41, col 61 of module verdandi_attestation_safety_plants>
+/\ compromised = {t1a, t1b, t2a, t2b}
+/\ held = {}
+/\ constructed = {}
+State 5: <NextP line 67, col 6 to line 67, col 48 of module verdandi_attestation_safety_plants>
+/\ compromised = {t1a, t1b, t2a, t2b}
+/\ held = {{t1a, t1b, t2a}}
+/\ constructed = {{t1a, t1b, t2a}}
+State 6: <NextP line 69, col 6 to line 69, col 63 of module verdandi_attestation_safety_plants>
+/\ compromised = {t1a, t1b, t2a, t2b}
+/\ held = {{t1a, t2a}, {t1a, t1b, t2a}}
+/\ constructed = {{t1a, t1b, t2a}}

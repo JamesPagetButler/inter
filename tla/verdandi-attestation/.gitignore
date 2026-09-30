@@ -1,0 +1,5 @@
+states/
+*.bin
+*_TTrace_*.tla
+*.st
+__pycache__/

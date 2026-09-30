@@ -1,4 +1,5 @@
 # NT_NOTARY_VERIFICATION_EVIDENCE
+# ⚠⚠ SUPERSEDED (method label) 2026-09-30 — `competency_invoked: "lean_go_differential"` below is a MISLABEL: this is a sha256/cmp BYTE-IDENTITY check, NO Lean, NO Go. VERDICT UNCHANGED. See cycle-3-cth-schema-vendoring-differential-CORRECTION-2026-09-30.yaml. Disclosure: live-test seq~1993.
 # Notary-implementor Cycle 3 — Phase 1 dispatch (CANONICAL RECORD — promoted from the notary
 #   repo via PR (working copy: notary@e994891). Isolation-safe: added via PR, not a shared worktree).
 # Date: 2026-08-20
