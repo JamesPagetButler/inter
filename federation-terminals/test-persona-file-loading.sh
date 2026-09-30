@@ -26,11 +26,13 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INTER_REPO="$(cd "$HERE/.." && pwd)"
 TMPDIR="$(mktemp -d)"
 DIVERGE_WT=""
+STAGGER_TEST_SESSION=""
 cleanup() {
   if [ -n "$DIVERGE_WT" ]; then
     git -C "$INTER_REPO" worktree remove --force "$DIVERGE_WT" 2>/dev/null
     git -C "$INTER_REPO" worktree prune 2>/dev/null
   fi
+  [ -n "$STAGGER_TEST_SESSION" ] && tmux kill-session -t "$STAGGER_TEST_SESSION" 2>/dev/null
   rm -rf "$TMPDIR"
 }
 trap cleanup EXIT
@@ -47,25 +49,44 @@ git -C "$INTER_REPO" fetch origin main >/dev/null 2>&1
 git -C "$INTER_REPO" show origin/main:federation-terminals/launch-federation.sh  > "$TMPDIR/old-launch.sh"
 git -C "$INTER_REPO" show origin/main:federation-terminals/onboard-federation.sh > "$TMPDIR/old-onboard.sh"
 git -C "$INTER_REPO" show origin/main:federation-terminals/onboard-prompt.tmpl   > "$TMPDIR/old-onboard-prompt.tmpl"
+# onboard-federation.sh (origin/main, post-#143) now hard-requires its own
+# PERSONAFILE_TMPL to exist next to it (`die` if missing) — the "old" fixture
+# needs this sibling too, or the AC5-part-2 dry-run comparison below fails on
+# a bootstrap error before either side even renders anything. Fixed
+# (cutover-prep PR, unrelated to this PR's own scope): fetch it alongside
+# the other old-* origin/main copies.
+git -C "$INTER_REPO" show origin/main:federation-terminals/onboard-prompt-personafile.tmpl > "$TMPDIR/old-onboard-prompt-personafile.tmpl"
 git -C "$INTER_REPO" show origin/main:federation-terminals/personas.conf        > "$TMPDIR/old-personas.conf"
 git -C "$INTER_REPO" show origin/main:federation-terminals/deming-boot.tmpl     > "$TMPDIR/deming-boot.tmpl" 2>/dev/null
 mkdir -p "$TMPDIR/oldft"
 cp "$TMPDIR/old-launch.sh" "$TMPDIR/oldft/launch-federation.sh"
 cp "$TMPDIR/old-onboard.sh" "$TMPDIR/oldft/onboard-federation.sh"
 cp "$TMPDIR/old-onboard-prompt.tmpl" "$TMPDIR/oldft/onboard-prompt.tmpl"
+cp "$TMPDIR/old-onboard-prompt-personafile.tmpl" "$TMPDIR/oldft/onboard-prompt-personafile.tmpl"
 cp "$TMPDIR/old-personas.conf" "$TMPDIR/oldft/personas.conf"
 [ -f "$TMPDIR/deming-boot.tmpl" ] && cp "$TMPDIR/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 chmod +x "$TMPDIR/oldft/launch-federation.sh" "$TMPDIR/oldft/onboard-federation.sh"
 
-# origin/main (post-D1) already pins qbp-oppenheimer inline (cc9bae42...); the
-# reissue moves that pin to the gitignored overlay and leaves personas.conf
-# all-AUTO. For the byte-identical-old-vs-new comparisons below to hold, the
-# NEW script needs an overlay fixture supplying that same pin — this is
-# exactly the point of the split: CONF(structure)+overlay(pin) together must
-# reproduce the old inline-pin behavior.
+# Originally (pre-#145 D1) origin/main pinned qbp-oppenheimer inline
+# (cc9bae42...); the reissue moved that pin to the gitignored overlay and
+# left personas.conf all-AUTO. #145 (D1 roster reconciliation) has SINCE
+# merged and flipped origin/main's own personas.conf row to AUTO too — so
+# extracting the 3rd column here now yields the literal string "AUTO", not a
+# real session id. Fixed (cutover-prep PR, unrelated to this PR's own
+# scope): only synthesize an overlay pin when a REAL sid was extracted;
+# otherwise leave the overlay empty so both OLD and NEW fall through to
+# their own (matching) ordinary AUTO discovery — a literal "AUTO" string
+# must never be written into the overlay as if it were a resolved sid (that
+# previously made NEW report "AUTO (!! session file missing)" while OLD's
+# genuine AUTO discovery correctly resolved the real session, a spurious
+# byte-mismatch unrelated to any real behavior difference).
 OPPENHEIMER_PIN="$(awk -F'|' '/^qbp-oppenheimer/ { gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3 }' "$TMPDIR/old-personas.conf")"
 AC5_OVERLAY="$TMPDIR/ac5-personas.local.conf"
-printf 'qbp-oppenheimer | %s\n' "$OPPENHEIMER_PIN" > "$AC5_OVERLAY"
+if [ -n "$OPPENHEIMER_PIN" ] && [ "$OPPENHEIMER_PIN" != "AUTO" ]; then
+  printf 'qbp-oppenheimer | %s\n' "$OPPENHEIMER_PIN" > "$AC5_OVERLAY"
+else
+  : > "$AC5_OVERLAY"
+fi
 
 echo "== AC5 (part 1/2): launch-federation.sh 'list' output unchanged (structure+overlay reproduces old inline-pin behavior) =="
 OLD_LIST="$("$TMPDIR/oldft/launch-federation.sh" list 2>&1)"
@@ -617,6 +638,78 @@ grep -Eq '^delta-persona +\|' "$REFRESH2_CONF" && grep -q ' AUTO' "$REFRESH2_CON
   && check 0 "refresh: personas.conf row for that same persona is STILL AUTO (untouched)" \
   || check 1 "refresh: personas.conf row for that same persona is STILL AUTO (untouched)"
 rm -f /tmp/refresh2_out.$$
+
+# ─────────────────────────────────────────────────────────────────────────
+echo "== inter#92 (Part A, cutover-prep): resumed pane's command carries CLAUDE_CODE_RETRY_WATCHDOG=1; fresh pane does NOT =="
+# resume_cmd() is already live in this shell from the `source` above — driving
+# the real function, not a reimplementation of the 429-retry fix.
+RESUMED_CMD="$(resume_cmd "some-fake-sid-1234")"
+case "$RESUMED_CMD" in
+  CLAUDE_CODE_RETRY_WATCHDOG=1\ *--resume\ some-fake-sid-1234)
+    check 0 "resumed pane's launch command is prefixed with CLAUDE_CODE_RETRY_WATCHDOG=1 (so a resumed session retries 429/529 instead of dying)" ;;
+  *)
+    check 1 "resumed pane's launch command is prefixed with CLAUDE_CODE_RETRY_WATCHDOG=1 (got: $RESUMED_CMD)" ;;
+esac
+
+FRESH_CMD="$(resume_cmd "")"
+case "$FRESH_CMD" in
+  CLAUDE_CODE_RETRY_WATCHDOG=1*)
+    check 1 "fresh (non-resumed) pane's command does NOT carry the watchdog prefix — nothing to retry (got: $FRESH_CMD)" ;;
+  *)
+    check 0 "fresh (non-resumed) pane's command does NOT carry the watchdog prefix — nothing to retry" ;;
+esac
+
+echo "== inter#92 (Part A, cutover-prep): STAGGER_SECONDS gates the real cmd_launch inter-pane wait (not a reimplementation) =="
+STAGGER_TEST_SESSION="fed-test-92-stagger-$$"
+STAGGER_CONF="$TMPDIR/personas-stagger.conf"
+STAGGER_A_WD="$TMPDIR/stagger-a-wd"; STAGGER_B_WD="$TMPDIR/stagger-b-wd"
+mkdir -p "$STAGGER_A_WD" "$STAGGER_B_WD"
+cat > "$STAGGER_CONF" <<EOF
+stagger-a | $STAGGER_A_WD |
+stagger-b | $STAGGER_B_WD |
+EOF
+STAGGER_FAKE_PROJECTS="$TMPDIR/stagger-fake-projects"; mkdir -p "$STAGGER_FAKE_PROJECTS"
+tmux kill-session -t "$STAGGER_TEST_SESSION" 2>/dev/null
+
+# Drives the REAL cmd_launch loop (build_launch_plan + the launch for-loop +
+# the stagger sleep inside it), with ONBOARD/REANCHOR disabled and CLAUDE_BIN
+# swapped for /bin/true so no onboarding traffic or real `claude` process is
+# ever spawned — only the timing of the loop itself is under test. Echoes the
+# whole-second elapsed wall time for a 2-persona launch at the given
+# STAGGER_SECONDS value.
+run_stagger_launch() {
+  local secs="$1" start end
+  unset P_PERSONA P_WORKDIR P_SID P_PFILE 2>/dev/null
+  declare -a P_PERSONA=() P_WORKDIR=() P_SID=() P_PFILE=()
+  CONF="$STAGGER_CONF"
+  LOCAL_CONF="/nonexistent-overlay-stagger-$$.conf"
+  ROSTER="/nonexistent-roster-stagger-$$"
+  PROJECTS="$STAGGER_FAKE_PROJECTS"
+  WATCHER_DIR="/nonexistent-watcher-dir-$$"
+  FED_TMUX_SESSION="$STAGGER_TEST_SESSION"; SESSION="$STAGGER_TEST_SESSION"
+  CLAUDE_BIN="/bin/true"
+  LAYOUT="panes"
+  ONBOARD=0
+  REANCHOR=0
+  STAGGER_SECONDS="$secs"
+  start=$(date +%s)
+  cmd_launch >/tmp/stagger_launch.$$ 2>&1
+  end=$(date +%s)
+  tmux kill-session -t "$STAGGER_TEST_SESSION" 2>/dev/null
+  rm -f /tmp/stagger_launch.$$
+  echo $(( end - start ))
+}
+
+ELAPSED_ON="$(run_stagger_launch 3)"
+[ "$ELAPSED_ON" -ge 3 ] \
+  && check 0 "STAGGER_SECONDS=3 (nonzero): the real cmd_launch loop actually waits before the 2nd pane (elapsed ${ELAPSED_ON}s >= 3s)" \
+  || check 1 "STAGGER_SECONDS=3 (nonzero): the real cmd_launch loop actually waits before the 2nd pane (got ${ELAPSED_ON}s, want >=3s)"
+
+ELAPSED_OFF="$(run_stagger_launch 0)"
+[ "$ELAPSED_OFF" -lt 3 ] \
+  && check 0 "STAGGER_SECONDS=0 disables the inter-launch wait (elapsed ${ELAPSED_OFF}s < 3s)" \
+  || check 1 "STAGGER_SECONDS=0 disables the inter-launch wait (got ${ELAPSED_OFF}s, want <3s)"
+STAGGER_TEST_SESSION=""
 
 echo
 echo "RESULT: $pass passed, $fail failed"
