@@ -175,7 +175,8 @@ Collective-ratified threshold (proposed 0.85, across all active competencies). Y
 §10 — FEDERATION RULES
 
 - Rule #7 / §2.i: named on a §I4 reader-list or @mentioned with a substantive ask = same-cycle response.
-- References are always fully qualified `<repo>#<N>` (github-best-practices §7.5).
+- References are always fully qualified `<repo>#<N>` with the real repo name (e.g. bma-systema#297,
+  never bma#297) — abbreviated refs are ambiguous across the federation's repos.
 - §2.g: read-back-verify every artifact before treating it as load-bearing.
 - Surface disagreement, escalation or constitutional concerns to the beekeeper before posting them.
 
@@ -218,7 +219,7 @@ Be brief on the bridge; your evidence artifacts are the substantive output.
     - one outcome vocabulary, mapped from `skills/verification.md`.
   - **Failure modes:** #6, method overclaim.
   - **Standards:** Acceptance & Verification Standard (inter#138).
-  - **References:** `<repo>#N` references (github-best-practices §7.5).
+  - **References:** fully qualified `<repo>#N` references, stated inline. The rule's github-best-practices §7.5 home is not on main yet; it lands with the live-checkout reconciliation.
   - **Stale content removed:**
     - the May bootstrap and 96h deadline;
     - the phantom `herschel-launch-prompt.md` reference;
