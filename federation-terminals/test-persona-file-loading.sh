@@ -70,8 +70,17 @@ printf 'qbp-oppenheimer | %s\n' "$OPPENHEIMER_PIN" > "$AC5_OVERLAY"
 echo "== AC5 (part 1/2): launch-federation.sh 'list' output unchanged (structure+overlay reproduces old inline-pin behavior) =="
 OLD_LIST="$("$TMPDIR/oldft/launch-federation.sh" list 2>&1)"
 NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh" list 2>&1)"
-checkeq "$(printf '%s' "$NEW_LIST" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST" | md5sum | awk '{print $1}')" \
-  "launch-federation.sh list output byte-identical old vs new (all 13 seats, incl. notary's new 4th column, incl. hutchins, via structure+overlay)"
+# The hutchins row is EXCLUDED from this byte-identical comparison (inter#143
+# C1 item 1, qbp-architecture §I4): FED_HANDLES on this branch now includes
+# hutchins, so on a machine with a real hutchins-dominant transcript under
+# $PROJECTS, NEW correctly content-sniffs a session-id that OLD (origin/main,
+# still missing hutchins from FED_HANDLES) structurally cannot see. That row
+# is EXPECTED to diverge — it's the fix, not a regression — and is verified
+# directly by the dedicated content-sniff test below instead.
+OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -v '^hutchins ')"
+NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -v '^hutchins ')"
+checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \
+  "launch-federation.sh list output byte-identical old vs new (12 of 13 seats, incl. notary's new 4th column, via structure+overlay; hutchins row excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
 
 echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 12 non-notary seats =="
 
@@ -541,6 +550,27 @@ CONF="$AC6_CONF"; LOCAL_CONF="$AC6_OVERLAY.empty"; ROSTER="/nonexistent-roster-a
 load_conf
 checkeq "${P_SID[0]}" "" "AC7: EMPTY (present but zero-entry) overlay file => same as missing — AUTO for all seats"
 PROJECTS="$ORIG_PROJECTS_AC"
+
+echo "== Content-sniff: a transcript dominated by 'hutchins' mentions resolves to the hutchins seat (inter#143 C1 item 1, qbp-architecture §I4 — hutchins is a committed roster seat, FED_HANDLES now carries |hutchins so AUTO content-sniff can match it) =="
+# Hermetic, same shape as AC6/AC7: fake PROJECTS dir, real discover_sid (not a
+# reimplementation). A jsonl fixture where 'hutchins' is the DOMINANT handle
+# (more mentions than any other federation handle) must resolve to hutchins —
+# proving |hutchins is live in the FED_HANDLES grep alternation, not just
+# declared in a comment.
+CS_FAKE_PROJECTS="$TMPDIR/cs-fake-projects"; mkdir -p "$CS_FAKE_PROJECTS"
+CS_WD="$TMPDIR/cs-fake-craft-wd"; mkdir -p "$CS_WD"
+CS_PDIR="$CS_FAKE_PROJECTS/$(slug_of "$CS_WD")"
+mkdir -p "$CS_PDIR"
+CS_SID="deadbeef-0000-0000-0000-cshutchins01"
+cat > "$CS_PDIR/$CS_SID.jsonl" <<'EOF'
+{"role":"user","text":"@hutchins please pick up the render pipeline task"}
+{"role":"assistant","text":"hutchins here, on it"}
+{"role":"user","text":"thanks hutchins — one more thing for hutchins"}
+EOF
+ORIG_PROJECTS_CS="$PROJECTS"; PROJECTS="$CS_FAKE_PROJECTS"
+CS_RESULT="$(discover_sid "hutchins" "$CS_WD")"
+PROJECTS="$ORIG_PROJECTS_CS"
+checkeq "$CS_RESULT" "$CS_SID" "content-sniff: pane content dominated by 'hutchins' mentions resolves to the hutchins seat via discover_sid (hermetic fixture, no roster match — content-sniff alone supplied the sid)"
 
 echo "== Overlay split: tracked personas.conf is pin-free (grep-assert zero session-id pins) =="
 PINS="$(awk -F'|' '

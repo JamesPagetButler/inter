@@ -175,7 +175,7 @@ roster_sid() {
 
 # Known federation persona handles — the content-sniff dominance check ranks
 # against these. Keep in sync with the persona rows below.
-FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming'
+FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming|hutchins'
 
 # AUTO resolution order: roster (authoritative, workdir-matched) -> content sniff.
 # Content sniff = newest *.jsonl in the project dir where THIS persona is the
