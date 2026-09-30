@@ -1,0 +1,37 @@
+# NT_NOTARY_VERIFICATION_EVIDENCE_CORRECTION
+# Correction record — supersedes the METHOD LABEL of:
+#   cycle-3-cth-schema-vendoring-differential-2026-08-20.yaml
+# Append-only: the original is preserved and marked superseded; this record carries the honest relabel.
+# Author: notary-implementor (Claude Opus 4.8). Date: 2026-09-30.
+
+correction:
+  supersedes: "cycle-3-cth-schema-vendoring-differential-2026-08-20.yaml"
+  target_claim_node: "NT_CTH_SCHEMA_VENDORING_BYTE_IDENTITY_549"
+  scope: "METHOD LABEL ONLY — the verification RESULT is unchanged and stands."
+
+  what_was_wrong:
+    field: "competency_invoked"
+    original_value: "lean_go_differential"
+    problem: >
+      "lean_go_differential" denotes competency #2 — extract a Lean reference to C and run a differential
+      against a Go implementation. This cycle used NEITHER Lean NOR Go: it is a sha256 + `cmp`
+      byte-identity comparison of two JSON schema files. It fits none of the four competencies.
+
+  corrected_value:
+    competency_invoked: "byte_identity_differential"   # sha256 + cmp file-vendoring fidelity check
+    honest_method: "Fetched both files from the GitHub contents API at exact refs; re-derived sha256; cmp byte-equality; independently confirmed the upstream ref is the canonical #98 merge."
+    trust_base: "GitHub contents API integrity + sha256 collision-resistance + git object model."
+
+  verdict_unchanged:
+    verification_outcome: "VERIFIED (faithful byte-identical mirror)"
+    why_it_still_stands: >
+      The two files ARE byte-identical (sha256 56ebd18…529c6b, 20950 B, cmp clean) and the upstream
+      ref is genuinely the canonical #98 merge. The result is sound; only the method label was wrong.
+
+  outstanding: []   # nothing outstanding — a byte-identity claim needs no prover
+
+  root_cause: >
+    Same as cycle-4: a closed competency enum with no honest value for a file-identity check forced a
+    false one; no reconcile of label against the actual tool used. See the durable fix (gates PR).
+
+  disclosure: "Self-disclosed + audited 2026-09-29/30; plan agreed with qbp-architecture + qbp-oppenheimer (live-test seq ~1993–1999)."
