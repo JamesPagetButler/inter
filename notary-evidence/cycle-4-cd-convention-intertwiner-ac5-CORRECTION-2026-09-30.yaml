@@ -19,9 +19,9 @@ correction:
       host (`coqc` not installed). The label asserted a cross-prover trust base that does not exist.
 
   corrected_value:
-    competency_invoked: "cross_formalism_correspondence"   # Lean-source <-> Agda-source, mechanized in Lean 4
-    honest_method: "Independent cold hand-derivation + a Lean-4 kernel-checked mechanization (axioms=[propext]) over an abstract star-algebra; triple-derivation concurrence (Red Team + Gemini + notary)."
-    trust_base: "LEAN kernel only (single prover). NOT cross-prover."
+    competency_invoked: "cross_formalism_correspondence"   # abstract-* intertwiner mechanized in Lean 4; the link to the ACTUAL CDAlg.lean/CDJoinBR.agda source is HAND-verified (read-back), NOT mechanized
+    honest_method: "Independent cold hand-derivation + a Lean-4 kernel-checked mechanization (axioms=[propext]) over an ABSTRACT star-algebra (StarNAlg); triple-derivation concurrence (Red Team + Gemini + notary). The correspondence to the concrete Lean/Agda source formulas is hand-read-back, not mechanized."
+    trust_base: "Lean kernel (single prover; NOT cross-prover) + hand read-back transcription of BOTH concrete source formulas (QBP CDAlg.lean @ master, CDJoinBR.agda @ 1eb3544) + the abstract-* axioms (additive, involutive, anti-automorphism) ASSUMED to hold of both `star` implementations. [K1 fix per qbp-architecture §I4 on inter#141: the earlier 'LEAN kernel only' understated these deps that the original record honestly listed.]"
 
   verdict_unchanged:
     verification_outcome: "VERIFIED (AC5 PASS, not blocking)"
@@ -32,6 +32,7 @@ correction:
 
   outstanding:
     - "GENUINE lean_coq_port (cross-prover) NOT DONE → INCONCLUSIVE_RESOURCE_BOUND. Coq is not installed; install is beekeeper-gated (on-machine sudo). When Coq is in, port #575 to Coq and confirm the Coq kernel accepts it — that is the real cross-prover backstop the original label falsely implied."
+    - "BASE-CASE / INVOLUTION-AGREEMENT (QBP#579 AC1) — STILL OPEN. The mechanization proves the doubling-STEP intertwines over an abstract shared `*`; it does NOT verify that Lean's `star` and Agda's `starS`, nor the base algebra (ℝ) + its conjugation, actually COINCIDE between the two formalisms. This is the real cross-formalism seam and remains unverified (carried forward from the original record per §I4 K1)."
 
   root_cause: >
     A closed competency enum with no honest value forced a false one; the label was never reconciled
