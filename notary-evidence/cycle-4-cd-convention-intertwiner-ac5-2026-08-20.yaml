@@ -1,4 +1,5 @@
 # NT_NOTARY_VERIFICATION_EVIDENCE
+# ⚠⚠ SUPERSEDED (method label) 2026-09-30 — `competency_invoked: "lean_coq_port"` below is a MISLABEL: mechanized in LEAN 4 ONLY, NO Coq (never run on this host). NOT cross-prover. VERDICT UNCHANGED (Lean-kernel-checked, propext). Cross-prover Coq check = INCONCLUSIVE_RESOURCE_BOUND. See cycle-4-cd-convention-intertwiner-ac5-CORRECTION-2026-09-30.yaml. Disclosure: live-test seq~1993.
 # Notary-implementor Cycle 4 — Phase 1 dispatch (CANONICAL RECORD — promoted from the notary
 #   repo via PR (working copy: notary@e994891). Isolation-safe: added via PR, not the live
 #   worktree.
