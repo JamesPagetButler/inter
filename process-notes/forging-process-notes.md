@@ -167,6 +167,18 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - Rulings live in exactly one place, named in the milestone meta issue.
   - While waiting, the architect reports **on change only**. A combined @mention + repo-change watcher now does the waiting.
 
+### C9. Duplicate upstream issue from an owner-less ruling action (confluent-trust#111 / #113)
+- **What:** two seats filed the same upstream-adoption issue **113 seconds apart**: #111 by qbp-oppenheimer (13:57:39Z) and #113 by cth-implementor (13:59:32Z). Each then declared the *other* the duplicate, and the comments crossed. I then advised the beekeeper to close the wrong one (#111). That was corrected after re-reading both threads.
+- **Root cause (mine):**
+  - My ruling (bridge seq 2274; QBP#692 comment) said "plus an upstream adoption issue" / "file an upstream confluent-trust issue" and **named no owner**. Two seats each reasonably took the action.
+  - Contributing: neither filer searched open issues first (both said so), and the issue wasn't attached to the milestone or to the forge's thread map, so the duplicate wasn't visible where the forging is tracked.
+- **Cost:** a duplicate to resolve, contradictory "this one is superseded" comments on each thread, and a beekeeper close request that would have closed an issue outside the Rule-1 PR path.
+- **Proposed:**
+  - **Every action in a ruling names exactly one owner** ("@X files …"), the same discipline as one director per runner.
+  - **Search before filing:** `gh issue list --search` on the key terms, recorded in the new issue's body.
+  - Every issue spawned by a milestone's forging is either attached to the milestone or linked from the meta issue's thread map, with an explicit in/out-of-DoD flag.
+  - **Duplicates close by the PR that resolves the survivor** (`Closes #111, Closes #113`), not by a standalone close.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -181,6 +193,8 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 8. **Finish inter#132** (spike best-practices): fold A1's six rules into the forging doc, so the spike layer isn't a separate, stale document.
 9. **One ruling location** per milestone (C8).
 10. **Strike-level retro.** A short notes entry (this file's format) at each strike close, so the next refinement has evidence and not recollection.
+
+11. **Owner-named ruling actions + search-before-file + duplicates close via the survivor's PR** (C9).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
