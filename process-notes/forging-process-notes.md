@@ -178,6 +178,22 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - **Search before filing:** `gh issue list --search` on the key terms, recorded in the new issue's body.
   - Every issue spawned by a milestone's forging is either attached to the milestone or linked from the meta issue's thread map, with an explicit in/out-of-DoD flag.
   - **Duplicates close by the PR that resolves the survivor** (`Closes #111, Closes #113`), not by a standalone close.
+- **A full root-cause analysis is OWED (beekeeper, 2026-10-02).** The causes above are the architect's preliminary read. The architect is a party to the cause, so per the independence principle we apply to proof correspondence (checked_by ≠ producer), the RCA should be owned by a seat that didn't cause it. **Proposed owner: Herschel.** Tracked in inter#153.
+
+### C10. Control and authorization of forging efforts: the sustained-ops seat was empty (beekeeper, 2026-10-02)
+- **Observation:** C2 (relayed authorization), C7 (silent waits on gates), C8 (architect status noise), C9 (duplicate issues, crossed rulings) and the stalled Deming capacity nod share one shape. **Nobody owned the forging's operational control plane.**
+  - `herschel-role-definition.md` §3 already assigns most of it to **Herschel**: stall detection, the dependency graph, stale or crossed messages, registering new issues on the board, SLA tracking.
+  - But the Criticality v1 forging never had a **§5 handoff** to Herschel. The architect ran the sustained watch itself on Opus (the 30-minute re-arm loop), which is exactly the misallocation that role was created to fix.
+  - Bridge `last_active` on 2026-10-02 ~18:00Z: **herschel 2026-10-01 03:45Z** and **deming 2026-10-01 04:32Z**, both about 38 hours silent, and nothing flagged it. Seat liveness of the ops and enabler seats is itself unmonitored.
+- **The control and authorization questions this raises (to think through, not yet ruled):**
+  1. **Who holds the forging's control plane?** A proposal: Herschel takes the sustained watch for any milestone forging after a §5 handoff:
+     - the **thread map**: every spawned issue registered against the milestone, with an in/out-of-DoD flag and duplicate detection at filing;
+     - stall and crossed-message detection;
+     - gate tracking.
+     The architect stays episodic: rulings and §I4.
+  2. **Authorization ledger.** Grants stay the beekeeper's alone. A recorder (Herschel) could keep a per-seat ledger of grants, each citing the beekeeper's own first-hand act (an issue comment or in-session message), so no seat relays authority (C2). An open question is whether milestone-scoped grants should live as a beekeeper comment on the meta issue (inter#153 AC5).
+  3. **Liveness of critical seats.** Who notices that a seat on a forging's critical path (Deming's capacity nod, Herschel's watch) has gone dark, and what is the fallback (a waiver, a delegate, a restart)?
+  4. **Herschel's authority boundary.** Per §3.5, Herschel doesn't make policy. Any of the above that changes federation policy is a **beekeeper + architect ruling**, and Herschel executes and records it.
 
 ---
 
@@ -195,6 +211,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 10. **Strike-level retro.** A short notes entry (this file's format) at each strike close, so the next refinement has evidence and not recollection.
 
 11. **Owner-named ruling actions + search-before-file + duplicates close via the survivor's PR** (C9).
+12. **A forging control-and-authorization model:** a Herschel §5 handoff for every milestone forging; a thread map with duplicate detection; a recorded (not relayed) authorization ledger; liveness monitoring for critical-path seats. Policy parts are a beekeeper ruling (C10).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
