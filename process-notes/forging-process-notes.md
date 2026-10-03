@@ -195,6 +195,37 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   3. **Liveness of critical seats.** Who notices that a seat on a forging's critical path (Deming's capacity nod, Herschel's watch) has gone dark, and what is the fallback (a waiver, a delegate, a restart)?
   4. **Herschel's authority boundary.** Per §3.5, Herschel doesn't make policy. Any of the above that changes federation policy is a **beekeeper + architect ruling**, and Herschel executes and records it.
 
+### C11. Seats interrupt and cross each other (beekeeper, 2026-10-03: "add a strike process for interrupting each other")
+- **What:** during the Criticality v1 strikes, messages crossed again and again. A seat posted a position or ruling that had already been superseded by a message it hadn't read. Examples (live-test seq):
+  - 2266/2267 (consumption model ruled while the counter-proposal was in flight);
+  - 2274/2276 (store-both ruled while "compute-only" was being argued);
+  - 2299/2302 (composite key vs evidence-file key);
+  - 2303/2306;
+  - 2293/2294–2295 (blob key, Coq own-file blob);
+  - 2314/2315 (option (a) vs (b));
+  - 2332/2333 (who lands R1/R5);
+  - 2401/2402 (record shape).
+
+  Each cost a correction round. Twice (2306, 2401) it nearly produced a build against a superseded rule. The beekeeper's own redirects mid-task land the same way: as an interrupt that may not be seen before the seat acts.
+- **Root cause:**
+  - Everyone posts as soon as they finish thinking. Nobody re-reads the thread right before posting or acting.
+  - Messages don't say which state they respond to.
+  - There's no shared signal for "stop: what you're about to do is superseded".
+- **Proposed interrupt protocol, for the strike process:**
+  1. **Read-before-write.** Immediately before posting a ruling or starting a build, poll the thread. If anything newer touches the same point, re-read it and reconcile first.
+  2. **Reply-to anchor.** Every substantive post names the seq it answers ("re: seq 2299"). A reader can then see at a glance whether a reply predates a newer ruling.
+  3. **One record per decision.** The issue comment is the ruling of record (adopted 2026-10-02 on QBP#692), not the bridge. Bridge posts point to it, so a crossed bridge message can be checked against one place.
+  4. **An explicit interrupt marker.** A short `HOLD: <thing> superseded by <ref>` from the decision's owner, or from the beekeeper, means stop before acting. The receiving seat acks before resuming. This is for a real stop-work, not routine replies.
+  5. **Supersession is explicit.** A ruling that changes an earlier one says "supersedes seq N / comment X", as the edda#60 (B′) refinement did.
+  6. **Beekeeper interrupts outrank in-flight work.** A seat receiving one finishes only its current atomic step, then re-reads before continuing.
+
+### C12. Idle-watch noise (beekeeper, 2026-10-03)
+- **What:** the architect re-armed its @mention watch every 30 minutes (the tool's cap) and posted a "nothing new" line each time. That's a recurrence of C8 after it was logged. A watch is passive; the noise came from treating each expiry as a reportable event.
+- **Proposed:**
+  - A seat at rest is silent. It speaks only on a mention, a task, or a finding.
+  - Watch expiry is re-armed without comment.
+  - Confirm whether the federation watcher already wakes idle seats on @mention (Deming's lane). If it does, idle seats don't need their own watch at all.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -212,6 +243,9 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 
 11. **Owner-named ruling actions + search-before-file + duplicates close via the survivor's PR** (C9).
 12. **A forging control-and-authorization model:** a Herschel §5 handoff for every milestone forging; a thread map with duplicate detection; a recorded (not relayed) authorization ledger; liveness monitoring for critical-path seats. Policy parts are a beekeeper ruling (C10).
+
+13. **An interrupt protocol for strikes** (read-before-write, reply-to anchors, one record per decision, a HOLD marker with ack, explicit supersession, beekeeper interrupts first) (C11).
+14. **Silent rest:** speak only on a mention, task or finding; confirm the federation watcher's idle-wake path (C12).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
