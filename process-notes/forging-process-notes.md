@@ -226,6 +226,11 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - Watch expiry is re-armed without comment.
   - Confirm whether the federation watcher already wakes idle seats on @mention (Deming's lane). If it does, idle seats don't need their own watch at all.
 
+### C13. Descoping a gate defect because today's inputs don't hit it (beekeeper-caught, 2026-10-03)
+- **What:** the architect ruled QBP#696 a follow-up *outside* the Criticality v1 DoD. QBP#696 is the staleness closure being blind to the second lake library and to Agda imports. The reason given was that the pinned Fano proofs aren't affected. The beekeeper challenged it, and it was reversed: DoD condition 3 requires a source change to auto-dispatch the Notary, so a staleness blind spot is a hole in the gate itself.
+- **Root cause:** judging scope by *current inputs* instead of by *the guarantee the gate makes*, under pressure to finish. This is the same pull as the earlier "finish the milestone" shortcuts.
+- **Proposed rule:** a finding is in a milestone's DoD if it weakens a guarantee that DoD states, whether or not today's data happens to trigger it. "Not affected yet" decides urgency, not scope.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -246,6 +251,8 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 
 13. **An interrupt protocol for strikes** (read-before-write, reply-to anchors, one record per decision, a HOLD marker with ack, explicit supersession, beekeeper interrupts first) (C11).
 14. **Silent rest:** speak only on a mention, task or finding; confirm the federation watcher's idle-wake path (C12).
+
+15. **Scope by guarantee, not by current inputs** (C13).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
