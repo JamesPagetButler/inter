@@ -1,0 +1,66 @@
+# NT_NOTARY v2 PA-record — CANONICAL top-level engine shape (testdata/pa v2).
+# Cycle 8 COMPANION anchor: PROOF-fano-table-equals-cd-products (QBP#693).
+# Re-wrapped per unanimous ruling A (architect §I4 seq 2400 / cth seq 2402 / oppenheimer seq 2401):
+# engine keys at top level; notary prose under notary_provenance (ignored by the engine/encoder).
+# Re-wrap only — content, runs (2026-10-02, deming nod seq 2382) and cth's corresponds=TRUE unchanged.
+claim: "PROOF-fano-table-equals-cd-products"            # QBP#693 companion anchor (proof_file FanoOrientationF3.lean)
+consumer: "qbp-compute-unit"                            # gcg-fano-proof-tie.yml pins the Fano ROM + fanoLUT via this companion
+policy: {require_signature: false}
+proof_assistants:
+  - assistant: "lean4"
+    evidence_ref: "proofs/QBP/Foundations/FanoOrientationF3.lean@f452532#fanoTableF4_eq_cayleyDickson"  # no prefix => QBP; enters S
+    producer: "qbp-oppenheimer"                         # QBP Foundations PR#470 (ea62394) lineage
+    source_sha: "0f32f71460763945ff2c6d0a9a713163b0ca4dca"   # claim-source manifest, S={FanoOrientationF3.lean}
+    declared: {mode: "decide", axioms: ["propext"], exit_code: 0, output_hash: "sha256:f9d0ac83374d546f6a7d7fc6d6433c6fb175032d2dada589f31bbc101a9e1743"}
+    derived:  {tactics_used: ["decide"], axioms: ["propext"], exit_code: 0, output_hash: "sha256:f9d0ac83374d546f6a7d7fc6d6433c6fb175032d2dada589f31bbc101a9e1743", kernel_clean: true}
+    trust_check: pass
+    attestation: {signer: "", role: none, method: unsigned}
+  - assistant: "coq"
+    evidence_ref: "JamesPagetButler/notary:proofs/FanoTableCrossProver.v@b4c92818#fanoTableF4_eq_cayleyDickson_coq"  # cross-repo; carries commit; NOT in S
+    producer: "notary-implementor"
+    source_sha: "0f32f71460763945ff2c6d0a9a713163b0ca4dca"
+    declared: {mode: "reflexivity", axioms: [], exit_code: 0, output_hash: "sha256:8350d33f63398204267ac45cf0b7139ae7d6a72aa5c3fd94ffaf134883e34955"}
+    derived:  {tactics_used: ["reflexivity"], axioms: [], exit_code: 0, output_hash: "sha256:8350d33f63398204267ac45cf0b7139ae7d6a72aa5c3fd94ffaf134883e34955", kernel_clean: true}
+    trust_check: pass
+    attestation: {signer: "", role: none, method: unsigned}
+correspondence:
+  corresponds: true
+  basis: >
+    cth Part-1 (live-test seq 2288), non-producer statement-level read, 64/64 entries verbatim: the
+    cross-kernel covers table <-> CD-products (fanoTableF4 = F3 CD products), same Schafer doubling,
+    same quantifier (Coq forallb over 8x8 == Lean forall i j : Fin 8). Does NOT cover mulCoeff (that is
+    the headline record).
+  checked_by: "cth-implementor"                         # non-producer of both sides; engine author; no QBP#692 build role
+  checked_at: "companion manifest 0f32f714 (Lean @ f452532 blob 4cd7a94f; Coq @ b4c92818 blob ba0e98bf)"
+  maps:
+    - {target: "fanoTableF4_eq_cayleyDickson_coq", lean_theorem: "QBP.Foundations.FanoOrientationF3.fanoTableF4_eq_cayleyDickson"}
+corroborated_by: []
+flags: []
+
+# ---- notary provenance (sibling key; engine + encoder ignore unknown top-level keys) ----
+notary_provenance:
+  record: "NT_NOTARY_VERIFICATION_EVIDENCE"
+  supersedes: "cycle-8-fano-table-coq-crossprover-2026-09-30.yaml"
+  invoking_persona: "qbp-architecture"
+  verification_date: "2026-10-02"
+  competency_invoked: "lean_coq_port"                   # backed by coqc + lean below
+  method_evidence:
+    tools:
+      - {tool: coqc, version: "8.15.0", command: "run-bounded 5G 300 coqc proofs/FanoTableCrossProver.v", exit_code: 0, result: "Closed under the global context (AXIOM-FREE); checkAll = true"}
+      - {tool: lean, version: "4.30.0", command: "run-bounded 8G 600 lake env lean <axcheck>; #print axioms fanoTableF4_eq_cayleyDickson", exit_code: 0, result: "depends on axioms: [propext]"}
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    PA-2 companion. Two independent kernels accept that the F3 CD products equal the F4 table on all 64
+    octonion basis pairs: Lean decide (axioms [propext]) and Coq reflexivity (AXIOM-FREE). cth (non-producer)
+    confirmed the two statements correspond. The Coq side RE-COMPUTES Omul and checks it against the table,
+    so a transcription error would have failed the check. Scope: table<->CD-products companion only.
+  trust_dependencies:
+    - "Coq kernel 8.15.0 (axiom-free) AND Lean kernel (axioms [propext]) — a flaw must exist in both to carry a false result."
+    - "Faithful transcription of the tower + fanoTableF4 into Coq — MITIGATED: Coq re-computes Omul and rejects a mismatched table."
+  seam_records_fired:
+    - "NT_SEAM_RECORD (INFORMATIVE): fanoTableF4 is transcribed verbatim in BOTH FanoTableCrossProver.v and MulCoeffThreeCrossProver.v; a drift check must keep the two Coq copies byte-identical."
+  prediction_accuracy_ledger:
+    predicted_outcome: "Both kernels accept the 64-pair table<->CD-products identity; Coq axiom-free, Lean [propext]; cth confirms => PA-2 companion."
+    predicted_delta: "64 pairs match; coqc exit 0 axiom-free; lean axioms [propext]."
+    actual_outcome: "Exactly as predicted. coqc exit 0 axiom-free; lean #print axioms = [propext]; cth Part-1 corresponds:true."
+    actual_delta: "0 kernel disagreement; 0 table-vs-computation mismatch across 64 pairs; 0 axioms Coq side."
