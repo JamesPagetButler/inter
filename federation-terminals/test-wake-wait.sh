@@ -35,6 +35,17 @@ chk "C second waiter bails"     "grep -q 'already running' '$oD'"
 chk "C first waiter still live" "kill -0 $w1 2>/dev/null"
 kill $w1 2>/dev/null; wait $w1 2>/dev/null
 
+echo "== Test D: first arm on a non-empty file does NOT replay history =="
+FF="$TD/wake/freshseat"; printf 'OLD-1\nOLD-2\nOLD-3\n' > "$FF"
+oE=$(mktemp); bash "$W" freshseat >"$oE" 2>&1 & wpd=$!
+sleep 1.0
+chk "D does not replay history"      "! grep -q 'OLD-' '$oE'"
+chk "D still blocking (waits new)"   "kill -0 $wpd 2>/dev/null"
+chk "D seeded offset to EOF (3)"     "[ \"\$(cat $TD/state/freshseat.offset 2>/dev/null)\" = 3 ]"
+echo 'WAKE:MENTION fresh-new' >> "$FF"
+waitexit $wpd
+chk "D fires on new line only"       "grep -q 'fresh-new' '$oE' && ! grep -q 'OLD-' '$oE'"
+
 echo "---- $pass passed, $fail failed ----"
-rm -rf "$TD" "$oA" "$oB" "$oC" "$oD"
+rm -rf "$TD" "$oA" "$oB" "$oC" "$oD" "$oE"
 [ "$fail" = 0 ]

@@ -38,11 +38,15 @@ echo $$ > "$PID"
 trap 'rm -f "$PID"' EXIT
 
 [ -f "$F" ] || : > "$F"
-# --- #1 no-skip: start from the persisted offset, not the current EOF ---
-n=$(cat "$OFF" 2>/dev/null || echo 0)
-case "$n" in ''|*[!0-9]*) n=0 ;; esac
 cur=$(wc -l < "$F")
-[ "$n" -gt "$cur" ] && n=0        # file rotated/truncated → reset
+# --- #1 no-skip: resume from the persisted offset across re-arms ---
+if [ -f "$OFF" ]; then
+  n=$(cat "$OFF" 2>/dev/null); case "$n" in ''|*[!0-9]*) n="$cur" ;; esac
+  [ "$n" -gt "$cur" ] && n=0        # file shrank (rotated) → from the new start
+else
+  # FIRST arm for this seat: start at EOF so we do NOT replay the wake history
+  n="$cur"; echo "$n" > "$OFF"
+fi
 
 have_inotify=0; command -v inotifywait >/dev/null 2>&1 && have_inotify=1
 while :; do
