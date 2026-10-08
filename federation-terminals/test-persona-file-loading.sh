@@ -103,13 +103,25 @@ NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -v '^hutchins ')"
 checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \
   "launch-federation.sh list output byte-identical old vs new (12 of 13 seats, incl. notary's new 4th column, via structure+overlay; hutchins row excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
 
-echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 12 non-notary seats =="
+echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 11 seats without a persona_file =="
 
-NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl herschel edda-implementor deming hutchins"
+# herschel is EXCLUDED (inter#160): its row now carries persona_file
+# personas/herschel.md, so — like notary — its onboard intentionally diverges
+# from the generic boot. Before that file reaches origin/main its dry-run
+# fails loud by design (AC2, no silent fallback). Its wiring is asserted by
+# the dedicated herschel check below instead.
+NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl edda-implementor deming hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for all 12 non-notary seats (incl. hutchins)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for all 11 seats without a persona_file (incl. hutchins; notary + herschel excluded)"
+
+echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
+HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
+checkeq "$HERSCHEL_PFILE" "personas/herschel.md" "personas.conf herschel row: 4th field (persona_file) = personas/herschel.md"
+grep -q '^## §0' "$INTER_REPO/personas/herschel.md" 2>/dev/null \
+  && check 0 "personas/herschel.md has a '## §0' boot / re-anchor section" \
+  || check 1 "personas/herschel.md has a '## §0' boot / re-anchor section"
 
 # ─────────────────────────────────────────────────────────────────────────
 echo "== AC1: golden-render byte-identity (per-persona, full untruncated prompt) =="
