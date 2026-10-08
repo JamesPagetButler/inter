@@ -2,12 +2,43 @@
 
 **The federation's live project-management dashboard. Read this at the start of every workspace session.**
 
-> Owner: qbp-architecture (Claude Opus 4.7) — managed continuously across sessions
+> Owner: qbp-architecture — managed continuously across sessions
 > Beekeeper: James Paget Butler (terminal-side approvals)
 > Created: 2026-05-14
 > **GitHub Project (live): https://github.com/users/JamesPagetButler/projects/2** (public)
 > Companion: `~/Documents/inter/project-management-best-practices.md`
 > Inherits from: `~/Documents/QBP/docs/workflows/` (sprint_mode_workflow, pivot_protocol, parallel_subagent_workflow) + `~/Documents/QBP/SPRINT_STATUS.md` (operational logbook pattern)
+
+## Now — 2026-09-30 (refreshed after the Herschel Check)
+
+> **Source of truth:** this file on `origin/main` of `JamesPagetButler/inter`. The ~20 other copies on disk (the `~/Documents/inter-*` clones and worktrees) are stale checkouts; don't edit them. Everything below this section was last maintained 2026-06-01 and is **historical (Sprints 1–2)** until the sections are rewritten. A generated view is being designed to replace hand maintenance: inter#146, prototype https://claude.ai/artifact/84cxdkt2LA1DoZgYkWoRxy.
+
+### Sprint state
+- **Sprint 3 is open and not ready to close.** The beekeeper's minimum for close: **BMA 72-hour soak passed** and **bma-systema#10** (Step 9: seed protocol, governance, instantiation) done.
+  - #10 waits on bma-systema#140 (succession contacts, a human action), #141 (Governance Document, constitutional), and #86 (Crawl readiness suite).
+  - Other open Sprint 3 items: bma-systema#157, #159, #162, #200; inter 2, confluent-trust 3, contextus 2, qbp-compute-unit 1.
+- **After close:** one full federation restart, and only one, after wisdoms, personas and RESUME files are updated (beekeeper directive 2026-09-30). The live-checkout switch to main and inter#142's live evidence ride that restart.
+
+### Threads in flight (destination → frontier)
+| Thread | Destination | Frontier now | Waiting on |
+|---|---|---|---|
+| BMA | Crawl Step 8: 72h soak passes | sleep fires live (bma-systema#318/#325); VRAM telemetry (#329) | Beekeeper: fan check (fan2 = 0 RPM), then the go |
+| Notary | Phase 1 hardened, evidence machine-checked | persona v0.2 (inter#144), corrections (inter#141), reconcile gate, real Coq cross-prover on #575 | Notary: PROOF-hessian, then the Fano table (beekeeper ruling) · beekeeper: inter-side CI (key vs copy) · Antigravity fork cleanup |
+| Restart & roster | a crash-restart restores every seat correctly | inter#143 + #145 merged | Deming: inter#92 storm fix + cutover pre-flight, merged before the Sprint 3 boundary |
+| Criticality | promote → notarize, ordered by criticality | design MET (3 conversations, Gemini-confirmed) | Beekeeper: plan review (artifact "Criticality & the Notary") · prover calibration for the Claude arms |
+| QBP substrate | #473 AC1(c) | QBP#689 + #691 merged (ledger 6.13.0/344) | qbp-oppenheimer |
+| Niðavellir | value-per-dollar allocation spec | Nidavellir#2 (spec v0.3); #4 (model-level landscape granularity) | Beekeeper: merge + §9 parameters |
+
+### Beekeeper actions
+1. Fan/cooling check, then the go for the 72h soak.
+2. bma-systema#140 (succession contacts) and #141 (Governance Document): these gate #10, and so gate Sprint 3 close.
+3. Review the criticality execution plan (4 questions: top-tier size, promotion priority, island roots, root admission).
+4. Notary inter-side CI: read-only key as a secret, or publish the script.
+5. Give Gemini a turn in Antigravity. Also: Antigravity has crashed after idle for the 3rd time; Deming is examining it before any reboot.
+6. Merge Nidavellir#2.
+
+### Diversions logged (return point: the BMA 72h soak)
+The Notary fault → persona v0.2 → restart infra (inter#142/#143/#145) → criticality metric → federation map (inter#146). All were beekeeper-directed on 2026-09-29/30.
 
 ## GitHub Project layout
 

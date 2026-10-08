@@ -538,8 +538,9 @@ BRIDGE routes requests to the appropriate tier and model based on:
 - Cost/latency constraints from the current autonomic state
 - **Token budget:** 250 calls/day default. `budget` reins command shows usage.
 - **Pre-computed context bundles (R-Spec-28) [WALK: SPECIFIED]:** Each Request carries a Contextus-traversed `ContextBundle` (RelatedNodes, ActiveSeams, CTHMetrics, RecentInsights). One well-contextualised query beats five blind queries.
+- **Self-state injection completeness (R-Spec-33) [CRAWL: SPECIFIED]:** The context assembled for conversation MUST inject the instance's live self-state — telemetry (CPU temp, RAM%, disk%, VRAM/thermal), **generation**, **inference-budget remaining**, and the **command-registry** (available reins commands) — into the inference context the instance reasons over. Readability at the sensor/API layer (R-Spec-16, §1.3, CV-4.4) is *necessary but not sufficient*: an instance that cannot state its own correct live value when asked — or **fabricates** a value or a non-existent command — is in violation even if the sensor reads correctly. Proprioception is real only when the self-state reaches the reasoning surface. *(This raises the self-report bar; it does not relax CV-4.4. Validated by CV-4.6; implemented by #304.)*
 
-*Source: `internal/bma/bridge/crawl.go` (router), `budget.go`, `wheels.go`, `converse.go`.*
+*Source: `internal/bma/bridge/crawl.go` (router), `budget.go`, `wheels.go`, `converse.go`; self-state injection: the Σ self-state block (#289) in `converse.go`.*
 
 ### 10.4 Instance Access to Development Infrastructure (R-Spec-13)
 
