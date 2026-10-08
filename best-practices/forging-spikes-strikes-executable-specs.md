@@ -1,7 +1,7 @@
 # Forging — spikes, strikes & executable specifications
 
 > The federation's de-risking & validation methodology.
-> Authority: @qbp-architecture · Last updated: 2026-10-08 · Status: RATIFIED (beekeeper 2026-09-27; vocabulary reconciliation — *thread*, *meta-lock*, strike entry condition, spike placement — ratified by the beekeeper 2026-10-08, inter#160)
+> Authority: @qbp-architecture · Last updated: 2026-10-08 · Status: RATIFIED (beekeeper 2026-09-27; vocabulary reconciliation — *thread*, *meta-lock*, strike entry condition, spike placement — ratified by the beekeeper 2026-10-08, inter#160; weave orientation — *warp*, *weft*, *crossing*, *standing crossing*, *pick*, *float*, *fabric*, *fabric acceptance* — ratified 2026-10-08, inter#161 r2)
 > Partially addresses inter#132 (spike best-practices).
 
 ## Why this vocabulary
@@ -18,6 +18,8 @@ The metaphor is the **forge**: you heat the work, then shape it through repeated
 | **Spike** | the *probe* in the thread phase (finds the gaps before a strike is defined) | XP spike (Beck & Cunningham) — kept in its true sense |
 | **Executable specification** | the oracle that certifies a strike landed (CI-gated, permanent) | Specification by Example → Living Documentation (Adzic) |
 | **Meta-lock** | the aggregate of a strike's per-repo locks — a cross-repo strike's executable specification | — (federation term; ratified 2026-10-08) |
+| **Warp / weft** | a repo's own lengthwise progression (one seat tends one warp) / a cross-repo thread (weft ≡ thread) | weaving orientation (federation terms; ratified 2026-10-08, §1b) |
+| **Crossing / float** | where a weft or consumer meets another warp, bidirectionally linked and lock-proven / a concept present in a warp with **no** crossing (a defect) | §1b |
 
 ---
 
@@ -34,9 +36,30 @@ The metaphor is the **forge**: you heat the work, then shape it through repeated
 
 ## 1a. Thread — the conceptual stage before a strike
 
-A **thread** is the **ephemeral conceptual-development** unit within a sprint. In it the intent, the theory or approach, and every per-repo **spec-delta** are spelled out until the strike's executable specification can be written down in full. Threads run **in parallel**. **Spikes** run here: when the thread is knowledge-limited, a time-boxed probe surfaces the gaps (§3).
+A **thread** is the **ephemeral conceptual-development** unit within a sprint. It comes in two kinds (§1b): a **warp thread** advances one repo along its own spec; a **weft thread** runs across repos. Weft ≡ thread: one definition, and "weft" names its cross-repo orientation. In it the intent, the theory or approach, and every per-repo **spec-delta** are spelled out until the strike's executable specification can be written down in full. Threads run **in parallel**. **Spikes** run here: when the thread is knowledge-limited, a time-boxed probe surfaces the gaps (§3).
 
 A thread **converts into a strike** when its slice is fully spelled out, meaning the executable specification (for a cross-repo strike, every per-repo lock plus the meta-lock) is defined. A thread may yield several strikes in sequence. The thread itself is not retained; its strikes and their record are.
+
+---
+
+## 1b. Weaving — the topology of forging
+
+Forging says *how* an increment is made and hardened. **Weaving** says *which direction* the work runs and *where* it interlocks. They are two metaphors over **one** model: *we forge each strike; we weave the federation.*
+
+| Term | Definition |
+|---|---|
+| **Warp** | A repo's own lengthwise progression: its spec, backlog and roadmap. **A seat tends exactly one warp, its write axis (Seat Charter R1). Everything else it touches is a crossing or a read.** A seat in transition changes *which* warp it tends; it never tends two. |
+| **Weft** | A cross-repo thread. **Weft ≡ thread (§1a):** one concept, one definition. |
+| **Crossing** | Where a weft or a consumer meets another warp: a **per-repo spec-delta** proven by that repo's **lock**. **Required:** a **bidirectional link** across the strike or seam record ↔ the issue on the crossed repo ↔ the lock's verification handle. Without links in both directions it is not a crossing. |
+| **Standing crossing** | A crossing that persists: a **consumption seam** where one warp continuously consumes another's output (e.g. qbp-compute-unit consuming the proven Fano table). Its lock is a **handle** (grade + pinned source sha + artifact tie) that keeps checking while the warps interlace. **A standing crossing carries the handle, not the upstream justification.** |
+| **Pick** | One pass of a weft, i.e. one cross-repo strike. It lands on its **meta-lock** (§4). |
+| **Float** | A concept present in a warp **without a crossing**: copied or re-implemented from another warp with no link and no lock (in weaving, a thread passing over others unbound, where cloth snags). **A float is a defect.** Each one found is converted into a standing crossing with a handle, or justified on record. A **load-bearing float** (re-implemented and *run*) is the highest risk. |
+| **Fabric** | The integrated federation at a sprint target. **Fabric-green is computable** by walking every crossing's bidirectional links: fabric-green ⇔ every warp's executable specifications green ∧ every weft's meta-lock green ∧ every standing crossing's handle fresh. Floats surface as concepts with no crossing record. |
+| **Fabric acceptance** | The **external** check. Fabric-green proves internal consistency; fabric acceptance proves **correspondence to reality**: an end-to-end acceptance suite run against the instantiated fabric (for QBP, the physics-acceptance suite owned by the physics seat). A fabric can hold together and still be the wrong cloth. |
+
+**Two kinds of strike:**
+- a **warp strike** is repo-local: it lands on its repo's own executable specification and merges under that repo's gates;
+- a **weft strike (pick)** is cross-repo: it lands on its meta-lock, recorded in a Strike Record whose index rows are its crossings (inter#161).
 
 ---
 
