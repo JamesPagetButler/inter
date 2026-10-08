@@ -231,6 +231,14 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 - **Root cause:** judging scope by *current inputs* instead of by *the guarantee the gate makes*, under pressure to finish. This is the same pull as the earlier "finish the milestone" shortcuts.
 - **Proposed rule:** a finding is in a milestone's DoD if it weakens a guarantee that DoD states, whether or not today's data happens to trigger it. "Not affected yet" decides urgency, not scope.
 
+### C14. A chained command fell through into the shared checkout (architect, 2026-10-08)
+- **What:** to apply inter#125's changes, the architect ran `git worktree add … && cd <worktree> && edit ; git add -A && git commit …`. The `worktree add` failed (the branch was already checked out in another worktree), so the edit never ran. But the `;` let `git add -A && git commit` run in the **shared** `~/Documents/inter` checkout. That made a local commit on `process/52-rules-gaps` sweeping in 77 untracked and modified files, including embedded repos. The push to the PR branch was rejected (not a fast-forward), so **nothing left the machine**. The commit was undone with a mixed reset, and the checkout was verified to be restored exactly (same HEAD, same 4 modified files, untracked files untracked again).
+- **Root cause:** shell sequencing that keeps going after a failure, plus `git add -A` (stage everything) instead of naming the file. That is a worktree-isolation hard-gate violation waiting to happen.
+- **Rule (applied immediately):**
+  - multi-step git work runs under `set -euo pipefail`, or as a single `&&` chain with no `;`;
+  - **never `git add -A`:** add named paths only;
+  - assert the working directory and HEAD before committing.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
