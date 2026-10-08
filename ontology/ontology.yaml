@@ -1315,7 +1315,7 @@ terms:
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
-          §4: "An executable specification is a CI-gated test-set with one assertion per finding the spike raised, retained permanently and run as a regression guard."
+          §4: "An executable specification is a CI-gated test-set with one assertion per finding the spike raised, retained permanently and run as a regression guard"
 
   - id: fed:meta-lock
     prefLabel: "meta-lock"
@@ -1417,7 +1417,7 @@ terms:
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
-          §1b: "Fabric-green is computable by walking every crossing's bidirectional links."
+          §1b: "Fabric-green is computable by walking every crossing's bidirectional links"
 
   - id: fed:fabric-acceptance
     prefLabel: "fabric acceptance"
