@@ -1,7 +1,7 @@
 # Forging — spikes, strikes & executable specifications
 
 > The federation's de-risking & validation methodology.
-> Authority: @qbp-architecture · Last updated: 2026-09-27 · Status: RATIFIED (beekeeper 2026-09-27)
+> Authority: @qbp-architecture · Last updated: 2026-10-08 · Status: RATIFIED (beekeeper 2026-09-27; vocabulary reconciliation — *thread*, *meta-lock*, strike entry condition, spike placement — ratified by the beekeeper 2026-10-08, inter#160)
 > Partially addresses inter#132 (spike best-practices).
 
 ## Why this vocabulary
@@ -13,9 +13,11 @@ The metaphor is the **forge**: you heat the work, then shape it through repeated
 | Our term | What it is | Canonical anchor |
 |---|---|---|
 | **Forging** | the whole process — a chain of retained, risk-ordered increments | tracer-bullet development (Hunt & Thomas); walking skeleton (Cockburn) |
-| **Strike** | one increment of forging (a spike → build → executable spec green) | a retained, test-gated delivery increment |
-| **Spike** | the *probe* inside a strike (round-1, finds the gaps) | XP spike (Beck & Cunningham) — kept in its true sense |
+| **Thread** | the ephemeral, parallel conceptual-development stage within a sprint, where a strike's intent, theory and per-repo spec-deltas are spelled out (and where spikes run) | — (federation term; ratified 2026-10-08) |
+| **Strike** | one retained increment of forging: **starts** when its executable specification is fully defined, **lands** when that spec is green | a retained, test-gated delivery increment |
+| **Spike** | the *probe* in the thread phase (finds the gaps before a strike is defined) | XP spike (Beck & Cunningham) — kept in its true sense |
 | **Executable specification** | the oracle that certifies a strike landed (CI-gated, permanent) | Specification by Example → Living Documentation (Adzic) |
+| **Meta-lock** | the aggregate of a strike's per-repo locks — a cross-repo strike's executable specification | — (federation term; ratified 2026-10-08) |
 
 ---
 
@@ -25,22 +27,33 @@ The metaphor is the **forge**: you heat the work, then shape it through repeated
 
 - Forging is **risk-ordered and reorderable**, not a waterfall — a gap found in one strike can reshuffle later strikes.
 - The one-way property — the metal holds each new shape; a landed strike doesn't silently regress — is enforced by the executable specifications staying in CI. (Informally, the *ratchet*.)
+- Forging is **repo-agnostic**. Its common case is a **cross-repo forging**, which melds several repos' work into one whole (the *Damascus* image: many layers folded into one blade). That is a case of the method, not a second definition.
+- **Hierarchy:** a **sprint** contains **threads** (in parallel); each thread converts into one or more **strikes** (in sequence); each strike lands against its **executable specification**. For a cross-repo strike, that specification is the **meta-lock** over the per-repo locks.
+
+---
+
+## 1a. Thread — the conceptual stage before a strike
+
+A **thread** is the **ephemeral conceptual-development** unit within a sprint. In it the intent, the theory or approach, and every per-repo **spec-delta** are spelled out until the strike's executable specification can be written down in full. Threads run **in parallel**. **Spikes** run here: when the thread is knowledge-limited, a time-boxed probe surfaces the gaps (§3).
+
+A thread **converts into a strike** when its slice is fully spelled out, meaning the executable specification (for a cross-repo strike, every per-repo lock plus the meta-lock) is defined. A thread may yield several strikes in sequence. The thread itself is not retained; its strikes and their record are.
 
 ---
 
 ## 2. Strike — one increment of forging
 
-A **strike** is one increment: a **spike** surfaces the gaps → the increment is built → the strike **lands** only when its **executable specification is green**. A strike is retained (it permanently shapes the artifact). Forging is the chain of strikes.
+A **strike** is one retained increment. **Entry:** its executable specification is fully defined; the thread's slice is spelled out (§1a). **Exit:** the strike **lands** only when that **executable specification is green**. A strike is retained (it permanently shapes the artifact). Forging is the chain of strikes.
 
 > **Governing principle 2:** a strike is **not done when its build merges** — it is done when its **executable specification is green**. Per-piece unit tests on the individual fix-PRs are necessary but **not sufficient**; the executable spec is the *integrated re-confirmation* of the strike's findings, and it stays in CI as a regression guard.
 
-**Two rounds within a strike:**
-- **Round 1 = the spike (probe).** Finds the gaps. Disposable. (§3)
-- **Round 2 = build + the executable specification.** One assertion per round-1 finding; confirm the gaps are closed; the spec stays in CI. (§4)
+**Lifecycle:**
+- **Before the strike (thread phase):** spikes find the gaps; the executable specification is written, one assertion per finding. (§1a, §3)
+- **The strike:** build until the executable specification is green. The spec stays in CI. (§4)
+- If building surfaces a gap the specification missed, triage it by §7: a spec-gap updates the spec first, under the guardrail.
 
 ---
 
-## 3. Spike — the probe inside a strike
+## 3. Spike — the probe in the thread phase
 
 A **spike** is a **time-boxed, exploratory investigation to reduce uncertainty**. Its product is *knowledge*, not shipped software. (XP; Beck & Cunningham — *"the simplest thing we can program that will convince us we are on the right track… drive a spike all the way through a log."*) We keep the word in its true XP sense.
 
@@ -65,6 +78,8 @@ An **executable specification** is a **CI-gated test-set with one assertion per 
 This is the **opposite of a spike**: retained, production-grade, permanent. It is the acceptance test when the strike lands and the regression guard forever after.
 
 **Where it lives:** in the **repo whose CI runs it** — never in a repo with no build. A cross-cutting strike may have executable specs in several repos; the record indexes them.
+
+**Meta-lock (cross-repo strikes):** a cross-repo strike's executable specification is the **meta-lock**, the aggregate of its per-repo locks. Each repo's lock proves that repo met its spec-delta, and the strike lands only when **every** per-repo lock is green. The meta-lock is not a separate gate: it *is* the strike's executable specification, and the strike's record (e.g. a Strike Record issue, inter#161) states it as the close condition.
 
 *Migration note:* prior artifacts using "lock"/"edda-lock" (bma-systema#299, inter#132, the relocated records in bma-systema#300) refer to this concept. New work says "executable specification"; "edda-lock" → *an executable specification expressed in Edda* (§6).
 
