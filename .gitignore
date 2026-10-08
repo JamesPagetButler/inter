@@ -1,0 +1,6 @@
+# Ephemeral per-boot session-id pins (inter#142 reissue overlay split). Never
+# committed — launch-federation.sh layers this on top of the structural,
+# tracked federation-terminals/personas.conf. Missing/absent = AUTO for every
+# seat (backward-compat). Written exclusively by `launch-federation.sh refresh`.
+federation-terminals/personas.local.conf
+federation-terminals/personas.local.conf.bak
