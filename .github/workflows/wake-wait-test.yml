@@ -1,0 +1,56 @@
+name: wake-wait tests
+
+# Runs federation-terminals/test-wake-wait.sh against THIS checkout's
+# wake-wait.sh (inter#157 §I4). wake-wait.sh blocks via inotifywait when it is
+# on PATH and otherwise falls back to sleep-polling (FED_WAKE_POLL), so the
+# suite runs once per wait path. Each leg asserts which path it took.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - federation-terminals/wake-wait.sh
+      - federation-terminals/test-wake-wait.sh
+      - .github/workflows/wake-wait-test.yml
+  pull_request:
+    paths:
+      - federation-terminals/wake-wait.sh
+      - federation-terminals/test-wake-wait.sh
+      - .github/workflows/wake-wait-test.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: wake-wait suite (${{ matrix.wait_path }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        wait_path: [polling, inotify]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure inotify-tools absent (polling leg)
+        if: matrix.wait_path == 'polling'
+        run: |
+          if command -v inotifywait >/dev/null 2>&1; then
+            sudo apt-get remove -y inotify-tools
+          fi
+          ! command -v inotifywait
+
+      - name: Install inotify-tools (inotify leg)
+        if: matrix.wait_path == 'inotify'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq inotify-tools
+          command -v inotifywait
+
+      - name: Run suite
+        run: |
+          set -o pipefail
+          # Outer bound: a future hang fails the job instead of stalling the runner.
+          timeout 90 bash federation-terminals/test-wake-wait.sh | tee out.txt
+          grep -q "wait path: ${{ matrix.wait_path == 'inotify' && 'inotify' || 'polling fallback' }}" out.txt
