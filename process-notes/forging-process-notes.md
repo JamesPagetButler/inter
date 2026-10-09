@@ -239,6 +239,19 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - **never `git add -A`:** add named paths only;
   - assert the working directory and HEAD before committing.
 
+### C15. The beekeeper is asked the same question by several seats (beekeeper, 2026-10-08)
+- **What:** the notary#5 promotion question (who writes the copy into `inter/notary-evidence/`) reached the beekeeper three ways at once:
+  - notary-implementor surfaced it on the bridge;
+  - herschel asked it in its pane, and the beekeeper ruled there (charter-clean path, relayed at seq 2537);
+  - the architect asked it again in its own session, which produced a second, differently-worded answer ("go: notary PR, inter#156 pattern").
+  
+  inter#171 already existed by then. Acting on the second answer would have opened a duplicate PR. The architect caught it and checked back with the beekeeper instead.
+- **Root cause:** there is no single queue for beekeeper decisions. Each seat surfaces its own blockers straight to the beekeeper, and none of them checks whether the question is already out or already ruled. Persona v2 (inter#160/inter#169) gives herschel the *decision-ready queue*, but seats don't route through it yet. The beekeeper's ruling lands in one pane and is relayed, so an answer given in another pane doesn't know about it. The beekeeper's own words: "a process fault a little bit on my side, but something to know for the federation generally."
+- **Rule (proposed):**
+  - Beekeeper-gated questions go to **herschel's decision queue**, one entry per question with a named asker. Before asking the beekeeper directly, a seat checks the queue and the thread for an existing ruling.
+  - A ruling is recorded once (where C8 says) and referenced, not re-asked.
+  - An answer that arrives after the question was settled is checked back with the beekeeper, never executed as a second instruction.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -261,6 +274,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 14. **Silent rest:** speak only on a mention, task or finding; confirm the federation watcher's idle-wake path (C12).
 
 15. **Scope by guarantee, not by current inputs** (C13).
+16. **One beekeeper-decision queue (herschel):** check-before-ask, one asker per question, rule once and reference, and late answers are confirmed, not executed (C15).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
