@@ -252,6 +252,15 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - A ruling is recorded once (where C8 says) and referenced, not re-asked.
   - An answer that arrives after the question was settled is checked back with the beekeeper, never executed as a second instruction.
 
+### C16. A PR merged before its named reviewer's written sign-off (architect, 2026-10-09)
+- **What:** inter#157 (wake-wait.sh) changed owner mid-review. Once the architect had authored the fixes, the architect could no longer be the reviewer, so @deming (the original author, independent of the new commits) was asked for the §I4 at 20:41Z. The beekeeper merged at **20:44:29Z**. Deming's written **APPROVE** landed on the PR at **20:47:37Z**, about 3 minutes later, after Deming had run the suite (17/17) and the mutants.
+- **Impact:** none to content: the approval came, and CI (both wake-wait legs) was green at merge. But the `pr-merge-completeness` hard gate (named reviewer signed off *before* merge) was not met at the moment of merge.
+- **Root cause:** the review hand-off was announced on the bridge only. The PR itself showed green checks and no outstanding reviewer, so nothing at the merge point showed that a §I4 was pending. When ownership changes, the reviewer changes too, and that change has to be visible on the PR.
+- **Rule (proposed):**
+  - When a review is pending, the PR carries it visibly: a GitHub review request, or a `§I4 pending: @seat` line at the top of the body.
+  - The merge-readiness summary to the beekeeper lists any pending §I4 explicitly.
+  - Herschel's decision queue doesn't mark a PR "ready to merge" until every named §I4 is written.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -275,6 +284,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 
 15. **Scope by guarantee, not by current inputs** (C13).
 16. **One beekeeper-decision queue (herschel):** check-before-ask, one asker per question, rule once and reference, and late answers are confirmed, not executed (C15).
+17. **Pending reviews visible on the PR itself:** a review request or a `§I4 pending` line; merge-ready only when every named §I4 is written, re-checked whenever ownership changes (C16).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
