@@ -8,14 +8,14 @@ beekeeper (James) can look up what a term means, where it comes from, and how
 solid the ground under it is, in one place.
 
 It deliberately does **not** try to cover the whole federation. It covers the
-55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries) — the core vocabulary already in active
+55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest) — the core vocabulary already in active
 use, plus the known "capability" clash — with a clear path for adding more.
 
 ## What's here
 
 | File | What it is |
 |---|---|
-| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 68 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
+| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 72 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
 | `ONTOLOGY-BEST-PRACTICES.md` | The research behind why this format was chosen (RDF/OWL/SKOS/JSON-LD/Turtle survey, dual-readability patterns, upper ontologies, versioning/drift) and the upgrade path to SKOS/JSON-LD if the vocabulary ever needs real machine inference. |
 | `README.md` | This file. |
 
@@ -35,7 +35,7 @@ in the `terms` list with a stable `id` (namespaced, e.g. `cth:AXIOM-1`), and
 exact field-name mapping if you need to lift this into real SKOS/JSON-LD later
 — see `ONTOLOGY-BEST-PRACTICES.md` §5 for the full table and rationale.
 
-**Namespaces:** `cth:` (Confluent Trust Hierarchy — the axiom/proof ledger),
+**Namespaces:** `cth:` (Confluent Trust Hypergraph — the axiom/proof ledger; schema `$defs` are canonical in confluent-trust `schema/inventory.schema.json`),
 `wyrd:` (the hypergraph DB), `bma:` (Biological Mind Architecture), `edda:`
 (the theory-to-executable compiler/language), `systema:` (the workspace
 process framework), `spike:` (the 2026-09-25 hypergraph-generativity spike —
@@ -109,6 +109,11 @@ Two things worth being honest about up front:
    open beekeeper-decisions below for the pattern this ontology already
    follows.
 6. Update `terms_count_by_status` at the bottom of `ontology.yaml`.
+7. **Review provenance.** When a review finding changes or confirms an entry,
+   add a `review_ref:` list to that entry with the review comment's URL
+   (`html_url`), and verify the finding against its cited source on the owning
+   repo's default branch before applying it. Introduced in v0.3.0 for the
+   inter#164 harvest.
 
 As the vocabulary grows past a size where one YAML file is still comfortably
 reviewable, split into one Markdown-file-per-term with YAML frontmatter (the
@@ -154,15 +159,17 @@ These are surfaced, not resolved. Each is marked in `ontology.yaml` with a
    found in BMA's code.** The spike's `RECORD.md` states these are already
    lowered into the graph ("Transformation-as-invariant — the Type-Node...
    + reversible Ratio-Edges"), but BMA's actual `NodeType` enum
-   (`internal/bma/hg/types.go`) has no corresponding constant among its ~11
-   `NT_*` types. Needs beekeeper triage: is this concept implemented
+   (`internal/bma/hg/types.go`) has no corresponding constant among its 14
+   `NT_*` types (re-confirmed v0.3.0; the spike's capability part did land as
+   `NT_CAPABILITY`/`ET_GRANTS`/`ET_BYPRODUCT_OF`, bma-systema#296). Needs beekeeper triage: is this concept implemented
    elsewhere un-harvested by this pass, or is "already lowered" aspirational
    rather than code-verified?
 
 5. **`NT_SKILL` spec/code gap.** `BMA-Spec-Consolidated-v9_0.md`'s memory-tier
    table names `NTSkill` for Tier 2, but no such constant exists in
    `internal/bma/hg/types.go`. A concrete, low-stakes implementation gap
-   worth a tracked issue.
+   worth a tracked issue. **RESOLVED (v0.3.0):** `NTSkill` now exists
+   (`types.go` NodeType 11, bma-systema#296).
 
 6. **Wisdom-entry schema field count.** `BMA-Cognitive-Foundation.md` §10.4
    defines a 7-field wisdom schema (Statement/Axes/Strength/Domain/Transform/
@@ -182,6 +189,24 @@ These are surfaced, not resolved. Each is marked in `ontology.yaml` with a
    described in-source as "the canonical projection," never called a
    functor. Both are recorded under their real names with the correction
    noted rather than silently renamed to match the brief.
+
+## Open beekeeper decisions carried from the inter#164 review (v0.3.0)
+
+The v0.3.0 harvest applied verified corrections and left these unchanged in
+`ontology.yaml`:
+
+1. **Capability by kind.** Bragi (edda) reads the clash as "Tool = instrument,
+   Capability = authority" (edda `edda:Cap` is authority-to-act). That differs
+   from the ratified 2026-09-27 resolution ("tool = primitive capability").
+   `fed:Capability` is unchanged.
+2. **Tier as senses.** `wyrd:Tier` now lists six attested "Tier" senses. Whether
+   to split Tier into per-sense concept ids is open.
+3. **New namespaces.** `notary:` (Trust Tiers T0–T7, PA grade, the six
+   `verification_outcome` values, PA-record vocabulary), `contextus:` (scope
+   kinds, ScopeMembership, InsightSignal, ScalarReferent, the attention-scalar
+   seam) and `craft:` (attention salience) were proposed. None is added.
+4. **`cth:belief-tiers`.** The Notary proposes Trust Tiers + PA grade as the
+   answer. This depends on decision 3; the term stays `unlocated`.
 
 ## What this draft does not cover (by design)
 
