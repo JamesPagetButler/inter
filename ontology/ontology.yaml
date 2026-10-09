@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 # ============================================================================
-# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.1.0)
+# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.3.0)
 # ============================================================================
 # Human AND machine entry point. Read top to bottom as prose, or parse as YAML.
 # See ../README.md for the guided tour and ../ONTOLOGY-BEST-PRACTICES.md for
@@ -18,8 +18,8 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.2.0"
-  date: "2026-10-08"
+  version: "0.3.0"
+  date: "2026-10-09"
   root_axiom: cth:AXIOM-1
   scope: >
     Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
@@ -52,9 +52,10 @@ _meta:
     related: "List of term ids this term relates to without being a kind of. Maps to skos:related."
     source: "List of {file: <absolute path>, quote: <verbatim or tight paraphrase>}."
     notes: "Discrepancies, gaps, corrections, or BEEKEEPER-DECISION flags."
+    review_ref: "Optional. List of review-comment URLs (html_url) whose finding changed or confirmed this entry. Added in v0.3.0 for the inter#164 federation review harvest; every changed entry carries one."
 
   namespaces:
-    cth: "Confluent Trust Hierarchy — QBP-implementor/CTH corpus (the axiom/proof ledger)"
+    cth: "Confluent Trust Hypergraph — schema $defs canonical in confluent-trust schema/inventory.schema.json; ledger data in the QBP corpus (the axiom/proof ledger)"
     wyrd: "Wyrd — quaternion-native typed holographic hypergraph DB"
     bma: "BMA — Biological Mind Architecture"
     edda: "Edda — theory-to-executable compiler/language"
@@ -132,9 +133,13 @@ terms:
     source:
       - file: /home/prime/Documents/QBP-implementor/scripts/root_audit.py
         quote: "ROOT_PREFIXES = (\"AXIOM-\", \"POST-\", \"META-\", \"INTERP-\")"
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.Interpretation (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.Interpretation carries provenance_kind: philosophy + decision_state + kill_condition"
     notes: "Only AXIOM-1 (cth:AXIOM-1) is harvested by id in this first draft; POST-/META-/INTERP- example records are an extension-path item (README.md)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
 
   - id: cth:decision_state
     prefLabel: "decision_state (open | settled)"
@@ -148,9 +153,24 @@ terms:
     narrower: []
     related: [cth:kill_condition, cth:AXIOM-1, cth:four-bucket-audit]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.DecisionState (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.DecisionState — see definition above, canonical v0.3.4"
-    notes: "Canonical."
+      - file: /home/prime/Documents/Edda/doc/stage1a-e2-open-settled-spec.md
+        quote: "EDDA-AUTH-018 — exercise-before-settle (an open/unsettled step presented at an `exercise` site — the grant is non-exercisable until settled)"
+    notes: >
+      Canonical. EDDA USAGE (edda#48, E2, merged to edda Main): the same open|settled
+      vocabulary is realized as a linear proof-state handle, settle(s): Step[open] ⊸
+      Step[settled], with a grant-gate: `exercise` requires a grantable cap AND a
+      Step[settled] witness, so a grant is non-exercisable until settled
+      (exercise-before-settle → EDDA-AUTH-018; use-after-settle → EDDA-AUTH-017). Per the
+      merged E2 spec, settle yields only the settled witness and does NOT mint a cap; the
+      exercise verb is the v0.3 B1 process-witness node. In Edda, "settled" therefore
+      carries an authority consequence, not only a status.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687133
 
   - id: cth:kill_condition
     prefLabel: "kill_condition"
@@ -166,9 +186,13 @@ terms:
     narrower: []
     related: [cth:decision_state, cth:closure, cth:AXIOM-1]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.KillConditionEntry (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.KillConditionEntry"
     notes: "Canonical. AXIOM-1's own kill_condition array (2 entries) is the worked example carried in cth:AXIOM-1 above."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
 
   - id: cth:ProofState
     prefLabel: "ProofState (verified | partial | written)"
@@ -180,13 +204,18 @@ terms:
     axiom_grounding: "none — CTH schema mechanism for grading formal claims."
     broader: []
     narrower: []
-    related: [cth:closure, spike:FormalityGradient]
+    related: [cth:closure, spike:FormalityGradient, cth:proof_assistants]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProofState (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.ProofState"
       - file: /home/prime/Documents/QBP-implementor/docs/rca/cth-proof-evidence-process-2026-09-02.md
         quote: "proof_state:written + no verification + native_decide is not a proof"
-    notes: "Canonical."
+    notes: "Canonical. Proof-assistant (PA) grading (confluent-trust#108 / inter#150) is a separate, derived axis that post-dates the v0.1 cut — see cth:proof_assistants and the pa_local / pa_effective fields on cth:Anchor."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
 
   - id: cth:closure
     prefLabel: "closure (derivation | measurement | ruling-rescope)"
@@ -198,11 +227,21 @@ terms:
     axiom_grounding: "none — CTH schema mechanism."
     broader: []
     narrower: []
-    related: [cth:kill_condition, cth:AXIOM-1, spike:ProductProjectionProvenance]
+    related: [cth:kill_condition, cth:AXIOM-1, spike:ProductProjectionProvenance, cth:claim-source-manifest]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.KillConditionEntry.closure (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.KillConditionEntry.closure"
-    notes: "Canonical. AXIOM-1's two kill_condition entries use closure: derivation and closure: ruling-rescope respectively — both live examples."
+    notes: >
+      Canonical. AXIOM-1's two kill_condition entries use closure: derivation and
+      closure: ruling-rescope respectively — both live examples. DISAMBIGUATION: this is
+      the kill-condition closure KIND. It is unrelated to the PA layer's claim-source
+      import closure (the transitive set of same-repo files a proof's statement depends
+      on, hashed into pinned_sha), which is cth:claim-source-manifest.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224680997
 
   - id: cth:four-bucket-audit
     prefLabel: "Four-bucket audit (PROVED / FORCED / OPEN / RETIRED)"
@@ -246,21 +285,37 @@ terms:
       rather than harvested vocabulary.
 
   - id: cth:Anchor
-    prefLabel: "Anchor (CONJ- / DERIV- / PROOF- kinds)"
+    prefLabel: "Anchor (PROOF- / DERIV- / CONJ- / MEAS- / … kinds)"
     definition: >
-      A proof-bearing or evidence-bearing ledger record. Kinds distinguished by
-      id prefix (CONJ- conjecture, DERIV- derivation, PROOF- formally proven).
-      Anchors carry ProofState and, per the CTH/Wyrd integration doc, map onto
-      Wyrd Nodes.
+      A proof-bearing or evidence-bearing ledger record. Its kind is classified by
+      provenance_kind (cth:ProvenanceKind); the id prefix is a naming convention
+      (QBP-local, 22 prefixes documented, not upstream-registered), e.g. PROOF- formally
+      proven, DERIV- derivation, CONJ- conjecture, MEAS- measurement, PRED- prediction,
+      OBS- observation. AXIOM-/POST-/META-/INTERP- ids live in the ledger's root lists,
+      not among anchors (cth:ROOT-Prefix-Taxonomy). Anchors carry ProofState and, as of
+      ledger 6.17.0, the PA-grade fields pa_local / pa_effective (integers 0..2,
+      computed-not-declared, CI-reconciled) alongside proof_assistants. Per the CTH/Wyrd
+      integration doc, anchors map onto Wyrd Nodes.
     status: derived
     axiom_grounding: "none directly — the general ledger unit that AXIOM-1's own kill_condition entries reference (e.g. PROOF-42zd, DERIV-arrow)."
     broader: []
     narrower: []
-    related: [cth:ProofState, cth:AnchorStatus, cth:ProvenanceKind, wyrd:CTHIntegration]
+    related: [cth:ProofState, cth:AnchorStatus, cth:ProvenanceKind, wyrd:CTHIntegration, cth:proof_assistants, cth:claim-source-manifest, cth:derivation-edge]
     source:
       - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
         quote: "PROOF-42zd, DERIV-arrow, DERIV-crystallisation-asymptotic cited inside AXIOM-1's own kill_condition text"
-    notes: "Definition assembled from usage across the ledger schema and AXIOM-1's own record; not a single quoted docstring."
+      - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
+        quote: "version 6.17.0 (QBP#697, master 516dfcb; unchanged at master 3b73b24): PROOF-cd-structure-constant-tables and PROOF-fano-table-equals-cd-products pa_local 2 / pa_effective 2; PROOF-hessian 0 / 0"
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields (QBP#692): pa_local / pa_effective are QBP-local extensions, 'computed-not-declared'; §Anchor ID prefixes table (22 prefixes)"
+    notes: >
+      Definition assembled from usage across the ledger schema and AXIOM-1's own record;
+      not a single quoted docstring. pa_local / pa_effective are a QBP-local extension;
+      canon adoption is tracked at confluent-trust#113 (confluent-trust#111 superseded).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665515
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
 
   - id: cth:AnchorStatus
     prefLabel: "Anchor Status enum"
@@ -271,9 +326,13 @@ terms:
     narrower: []
     related: [cth:belief-tiers]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.Status (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.Status"
     notes: "Canonical."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
 
   - id: cth:ProvenanceKind
     prefLabel: "Provenance Kind enum"
@@ -282,11 +341,121 @@ terms:
     axiom_grounding: none
     broader: [cth:Anchor]
     narrower: []
-    related: [cth:ROOT-Prefix-Taxonomy, cth:belief-tiers]
+    related: [cth:ROOT-Prefix-Taxonomy, cth:belief-tiers, cth:proof_assistants]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProvenanceKind (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.ProvenanceKind"
-    notes: "INTERP- records use provenance_kind: philosophy specifically."
+    notes: >
+      INTERP- records use provenance_kind: philosophy specifically. internal-compute is
+      load-bearing in the PA layer: such an anchor carries no proof_assistants array and
+      grades pa_local = pa_effective = 0 by absence; an independent recomputation is
+      recorded as corroborated_by, never as a grade. Live example: PROOF-hessian (ledger
+      6.17.0: 0 / 0; notary evidence
+      /home/prime/Documents/inter/notary-evidence/cycle-7-hessian-recompute-v2-2026-10-02.yaml:
+      proof_assistants: [], flags: [not_kernel_clean]). confluent-trust#112 (OPEN at this
+      harvest) proposes schema 0.3.6 restricting proof_assistants to provenance_kind in
+      {proof, derivation}; schema 0.3.5 does not yet enforce it. HOMONYM: Contextus has a
+      separate provenance vocabulary, ProvenanceTag on scope-membership edges (P asserted /
+      D inferred / T theoretical / I imported; contextus pkg/types/scope.go), so federation
+      "provenance" is not CTH-only.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661961
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665508
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
+
+  - id: cth:proof_assistants
+    prefLabel: "proof_assistants (ProofAssistant attestations — the PA-grade evidence)"
+    definition: >
+      Array of $defs.ProofAssistant {assistant in {lean4, coq, agda}, evidence_ref,
+      trust_check in {pass, fail}} on proof and derivation anchors: "records WHICH
+      assistant checked the claim and a pointer to its re-executable evidence. The PA count
+      is DERIVED by the engine from the evidence at evidence_ref — never from this record
+      alone." trust_check is veto-only. The engine grades a claim 0 (none), 1 (one clean)
+      or 2 (two-or-more clean + corresponding — the PA-2 gate); two assistants count as two
+      only if a non-producer recorded that their statements correspond.
+    status: derived
+    axiom_grounding: "none — CTH schema/engine mechanism for grading formal claims."
+    broader: [cth:Anchor]
+    narrower: []
+    related: [cth:ProofState, cth:ProvenanceKind, cth:derivation-edge, cth:claim-source-manifest]
+    source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProofAssistant (confluent-trust main 6e8a84f, x-schema-semver 0.3.5)"
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "package doc: 'PA is DERIVED, never typed ... Two assistants count as two only if a NON-PRODUCER recorded that their statements correspond. Effective PA is the minimum along derivation edges.'"
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields: 'Kernel diversity is the maps criterion' — a correspondence may rescue only an assistant whose prover differs from the headline's (QBP master 3b73b24)"
+    notes: >
+      Landed via confluent-trust#108 / inter#150. Kernel diversity: a cross-prover
+      correspondence can lift a headline only through a different prover kernel, and the
+      QBP encoder collapses same-kind survivors to one per kernel. confluent-trust#112
+      (OPEN) proposes restricting the array to proof/derivation anchors in schema 0.3.6;
+      an internal-compute anchor already carries none and grades PA-0 by absence (see
+      cth:ProvenanceKind). The Notary-side record vocabulary (the notary-request record,
+      canonical at confluent-trust testdata/pa/notary-request.schema.json, "v1.3", dedupe
+      key (claim_id, source_sha, reason, artifact_digest)) is left for a possible notary:
+      namespace, which is an open beekeeper decision.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661961
+
+  - id: cth:claim-source-manifest
+    prefLabel: "claim-source manifest (pinned_sha, the PA staleness key)"
+    definition: >
+      The staleness key for a PA grade. S = the transitive closure, over QBP-local
+      `import QBP.…` lines read at the pinned commit, of {anchor proof_file} ∪ {same-repo
+      paths named by the claim's evidence_refs} (cross-repo refs excluded and reported
+      cross_repo_evidence); sorted lines `path <blob>`; `git hash-object --stdin` over them
+      gives pinned_sha. Report-side, not a ledger field: "pinned_sha is NOT stored on the
+      anchor (no ledger home at 0.3.5); the encoder derives it".
+    status: derived
+    axiom_grounding: "none — PA-layer engineering mechanism."
+    broader: []
+    narrower: []
+    related: [cth:proof_assistants, cth:Anchor, cth:closure]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields (QBP#692), the pa_local row and Rules paragraph (QBP master 3b73b24)"
+      - file: /home/prime/Documents/QBP-implementor/analysis/692-pa-backfill/README.md
+        quote: "pinned_sha, S and the blobs live HERE and not in the ledger (no ledger home at schema 0.3.5; the pa-reconcile CI job re-derives them the same way)."
+    notes: >
+      QBP-local (canon adoption tracked at confluent-trust#113). DISAMBIGUATION: this
+      "closure" is an import closure over source files and is unrelated to cth:closure,
+      the kill-condition closure kind. The committed rule is Lean-import based. Extending
+      it to every lake library and to Agda (QBP#696) and deriving S from each prover's own
+      dependency tool (QBP#700) were both OPEN at this harvest, so neither is recorded
+      here as the rule.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224680997
+
+  - id: cth:derivation-edge
+    prefLabel: "derivation edge (the pa_effective dependency)"
+    definition: >
+      An edge from an anchor to an anchor its prediction_chain points at. The engine takes
+      pa_effective = the minimum PA over the anchor and its derivation-edge dependencies:
+      "the anchors this anchor's prediction_chain points at, never its dependents (edges
+      read from prediction_chain; relevance/mention edges never lower it)".
+    status: derived
+    axiom_grounding: "none — PA-layer engineering mechanism."
+    broader: []
+    narrower: []
+    related: [cth:proof_assistants, cth:Anchor]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields, the pa_effective row: 'EffectivePA = min over this anchor and its derivation-edge dependencies' (QBP master 3b73b24)"
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "EffectivePA returns the minimum PA of target and every claim reachable from it"
+    notes: >
+      Worked referent: PROOF-alpha-particle-quaternion → PROOF-quat-closure. The notary
+      evidence record /home/prime/Documents/inter/notary-evidence/cycle-9-alpha-pa1-referent-2026-10-03.yaml
+      expects pa_local 1 and pa_effective 0 through this edge. The QBP ledger at master
+      3b73b24 still records 0 / 0 for that anchor, so the backfill has not landed yet.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
 
   # ==========================================================================
   # WYRD — quaternion-native typed holographic hypergraph DB
@@ -314,19 +483,49 @@ terms:
       not settled how far that grounding reaches.
     broader: []
     narrower: []
-    related: [cth:AXIOM-1, wyrd:HolographicProperty, edda:BornRule]
+    related: [cth:AXIOM-1, wyrd:HolographicProperty, edda:BornRule, fed:float]
     source:
       - file: /home/prime/Documents/Wyrd/model/tier.go
         quote: "lines 8-37, Tier type + doubling/property-loss docstring"
       - file: /home/prime/Documents/Wyrd/lean/Wyrd/Foundations.lean
         quote: "proves no ring homomorphism from inner->outer tier is surjective (T2.1.a/b/c)"
+      - file: /home/prime/Documents/Wyrd/compute/privilege.go
+        quote: "CanSynthesize: a caller at tier T can author edges at any tier T' ≤ T (wyrd main 5c36988)"
+      - file: /home/prime/Documents/QBP-implementor/proofs/QBP/Foundations/CDAlg.lean
+        quote: "structure CDAlg (R : Type*) [CommRing R] (n : ℕ) — QBP's Cayley-Dickson algebra, the justification side of this tower (QBP master 3b73b24)"
     notes: >
-      Enforced at runtime by the "Skuld supervisor" via compute.CanSynthesize.
-      Distinct from BMA's memory Tier (0-4, see bma:MemoryTier) and CTH's own
-      Anchor.Tier (axiom/proof/measurement/prediction) — a three-way "Tier"
-      naming collision across the federation, flagged explicitly in
-      /home/prime/Documents/Wyrd/doc/integration/cth.md. Recommend the ontology
-      (and future docs) always qualify which Tier is meant.
+      Enforced at runtime by the "Skuld supervisor" via compute.CanSynthesize
+      (compute/privilege.go).
+      TIER NAMING COLLISION — always qualify which Tier is meant. Six attested senses:
+      (1) Wyrd algebraic tier ℂ⊂ℍ⊂𝕆⊂𝕊 (this term; model/tier.go);
+      (2) BMA memory tier T0-T4 (bma:MemoryTier; BMA-Spec-Consolidated-v9_0.md tier table);
+      (3) CTH Anchor.Tier (axiom/proof/measurement/prediction; flagged as "not the same as"
+      this tier in /home/prime/Documents/Wyrd/doc/integration/cth.md);
+      (4) Notary Trust Tier T0-T7, a set with an explicit trust base and never a scalar,
+      distinct from the PA grade 0/1/2 (/home/prime/Documents/notary/CLAUDE.md, citing BMA
+      Theory v3.0 §3.1-§3.6);
+      (5) Contextus retention tier, Core (full content) down through Skeleton (DOI + year)
+      (/home/prime/Documents/Contextus/README.md, citing Contextus Spec §9 Proportional
+      Data Retention);
+      (6) Edda application-authority tier, teacup / one_cup <: teacup / two_cup / three_cup
+      (/home/prime/Documents/Edda/edda-language-theory-v0.2.md §3.8, which flags the
+      algebra-tier vs auth-tier clash itself; a `precautionary` tier is an open v0.3
+      question, doc/v0.3-decisions.md C2).
+      Whether to split Tier into per-sense concept ids is an open beekeeper decision; this
+      entry only enumerates the senses.
+      FLOAT (inter#162; see fed:float): Wyrd defines this tower from its own
+      lean/Wyrd/CayleyDickson.lean and model/tier.go, with zero `import QBP`. The same
+      tower is QBP's CDAlg (proofs/QBP/Foundations/CDAlg.lean), whose structure-constant and
+      Fano tables are PA 2/2 at ledger 6.17.0 (PROOF-cd-structure-constant-tables,
+      PROOF-fano-table-equals-cd-products). The justification lives in QBP; the Wyrd copy
+      is a re-derivation pending a correspondence crossing, not an independent definition
+      of a second object. There is no qbp: namespace, so the cross-reference is by source
+      path and anchor id rather than a related: id.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666043
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665530
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681246
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:Node
     prefLabel: "Node / NodeType"
@@ -344,14 +543,30 @@ terms:
     source:
       - file: /home/prime/Documents/Wyrd/model/node.go
         quote: "lines 8-66"
-    notes: "Salience is incremented by Hebbian reinforcement, decremented by Ebbinghaus decay."
+    notes: >
+      Salience: the field is Crawl-live and range-validated [0,1] in Validate(), but its
+      Hebbian-increment / Ebbinghaus-decay dynamics are documented intent only (Walk-phase
+      per the Wyrd README phase table; see wyrd:Salience). Consumer example: Contextus
+      registers Insight Signals as Nodes of Type "contextus.signal.<agent>" and first-class
+      scope nodes contextus.scope.physical / contextus.scope.conceptual
+      (/home/prime/Documents/Contextus/README.md). Edda note: Edda's own NodeType (E5.1,
+      edda#55) is linear/non-copyable — edges hold copyable NodeID refs and aliasing a node
+      is EDDA-AUTH-021 — because a copyable node would duplicate conserved mass under E4
+      (/home/prime/Documents/Edda/doc/stage1a-e5.1-nodetype-spec.md). Wyrd's Node carries
+      no such rule; if it backs Edda skill nodes, that linearity is load-bearing.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666162
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687376
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:Hyperedge
     prefLabel: "Hyperedge (Heads / Tails / Transit)"
     definition: >
-      Hyperedge{ID, Nodes []NodeID, Weight, IsSymmetric, Heads []int, Tails
-      []int}. Heads/Tails are index sets into Nodes encoding orientation
-      ("Heads = upstream, Tails = downstream" is the CTH-opcode convention;
+      Hyperedge{ID, Nodes []NodeID, Weight, IsSymmetric, Created, Type string,
+      Heads []int, Tails []int}. Type is a free-form, tenant-settable edge
+      classification mirroring Node.Type without the reserved-prefix semantics
+      (wyrd#92, merged as wyrd#93, 5c36988). Heads/Tails are index sets into
+      Nodes encoding orientation ("Heads = upstream, Tails = downstream" is the CTH-opcode convention;
       semantics are tenant-defined); their intersection must be empty. Nodes in
       neither set are "transit" — present in the edge but not directional
       endpoints (the "N-to-M-with-transit" pattern, PR #31 §3). Symmetric edges
@@ -363,8 +578,28 @@ terms:
     related: [wyrd:Node, wyrd:HolographicProperty, spike:Leader]
     source:
       - file: /home/prime/Documents/Wyrd/model/hyperedge.go
-        quote: "lines 26-53, struct + TransitNodes()"
-    notes: "spike:Leader's skill anatomy explicitly maps a skill onto this shape: Tails = inputs, Transit = transform, Heads = outputs (RECORD.md)."
+        quote: "lines 26-53, struct + TransitNodes(); Type field verified at wyrd main 5c36988"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e5.2-hyperedge-spec.md
+        quote: "Tails = inputs/sources, Heads = outputs/sinks, Transit = pass-through (referenced but neither consumed nor produced — catalysts/templates/environment)"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e4-conservation-spec.md
+        quote: "`transit` stays unquantified (pass-through/catalyst — not consumed/produced)"
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§D: 'skill / op (top-level scoped hypergraph anatomy; op = a named edge)'; §E prerequisite 1: 'Wyrd Heads=upstream, Edda Tails=inputs (reversed)'"
+    notes: >
+      spike:Leader's skill anatomy (RECORD.md) maps a skill onto this shape as Tails =
+      inputs, Transit = transform, Heads = outputs. CORRECTED in v0.3.0: in Edda's merged
+      specs, Transit is pass-through / catalyst (referenced, neither consumed nor produced,
+      excluded from mass-balance), and the transform is the op/edge itself. Edda E5.4 adds
+      Control and Mechanism as further non-mass-bearing roles (ICOM: Input=tails,
+      Control=control, Output=heads, Mechanism=mechanism; see spike:ICOMVessel).
+      DIRECTION: Wyrd's CTH-opcode convention is Heads = upstream, but Edda uses Tails =
+      inputs, which is reversed; Edda Addendum A §E makes an explicit direction map a Wyrd
+      prerequisite for lowering. Consumer example: Contextus scope membership is an arity-2
+      HE_SCOPE_MEMBERSHIP model.Hyperedge (contextus pkg/types/scope.go).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665884
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666104
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:HolographicProperty
     prefLabel: "Holographic property"
@@ -388,10 +623,12 @@ terms:
       - file: /home/prime/Documents/Wyrd/README.md
         quote: "lines 33-35, listed among the four load-bearing Lean-verified invariants"
     notes: "Generalized to all n>=3 in HolographicHypergraphHigherArity.lean. This is the formal grounding for why Wyrd is called a 'holographic' hypergraph DB."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666276
 
   - id: wyrd:Salience
     prefLabel: "Salience"
-    definition: "A 0.0-1.0 field on Node modulating eviction priority; incremented by Hebbian co-activation, decremented by Ebbinghaus decay."
+    definition: "A 0.0-1.0 field on Node modulating eviction priority (TierImmune nodes are excluded; among the rest, ascending Salience is evicted first). Documented intent: incremented by Hebbian co-activation and decremented by Ebbinghaus decay. Those dynamics are Walk-phase and not implemented at Crawl (see notes)."
     status: derived
     axiom_grounding: none
     broader: [wyrd:Node]
@@ -400,7 +637,26 @@ terms:
     source:
       - file: /home/prime/Documents/Wyrd/model/node.go
         quote: "Salience field, see node.go"
-    notes: ""
+      - file: /home/prime/Documents/Wyrd/README.md
+        quote: "Phases table: Walk (v0.2.x) — 'Hebbian co-activation, Ebbinghaus decay'"
+      - file: /home/prime/Documents/Contextus/doc/design/attention-scalar-wire-contract.md
+        quote: "Salience float64 `json:\"salience\"` // [0,1] default rank = AnomalyScore (operational: MaxScore of Referents) — the HOMONYM, not this term"
+    notes: >
+      PHASE PRECISION: the field is Crawl-live (model/node.go; Validate() range-checks
+      [0,1]). The Hebbian/Ebbinghaus dynamics are documented intent only: no reinforce or
+      decay function exists on wyrd main 5c36988, and the README phase table places them at
+      Walk. HOMONYM: the craft / Contextus attention-scalar `salience` is a different
+      quantity — an attention/render rank, "[0,1] default rank = AnomalyScore"
+      (/home/prime/Documents/Craft/CLAUDE.md attention scalar v0.1; Contextus
+      attention-scalar wire contract §2). It is not eviction priority and has nothing to do
+      with Hebbian/Ebbinghaus dynamics; do not conflate the two. Whether to add a craft:
+      term is part of the open new-namespaces decision. Contextus also writes THIS field:
+      its scope-config loader threads a Wyrd-envelope salience to model.Node.Salience
+      (contextus schema/scope-config.schema.json).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666162
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224668991
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:CTHIntegration
     prefLabel: "Wyrd/CTH integration mapping"
@@ -460,7 +716,7 @@ terms:
 
   - id: fed:Skill
     prefLabel: "Skill"
-    definition: "Layer 2 of the four-layer registry: a learned/composed pattern for using one or more tools, with gotchas/fallbacks. In the spike's ICOM+Vessel anatomy, formalized as a typed transform Input -> Transformation -> Output, realised as a directed hyperedge (Tails=inputs, Transit=transform, Heads=outputs)."
+    definition: "Layer 2 of the four-layer registry: a learned/composed pattern for using one or more tools, with gotchas/fallbacks. In the spike's ICOM+Vessel anatomy, formalized as a typed transform Input -> Transformation -> Output, realised as a directed hyperedge (Tails=inputs, Heads=outputs; the op/edge itself is the transform, and Transit is pass-through/catalyst — see notes)."
     status: derived
     axiom_grounding: none
     broader: [fed:FourLayerRegistry]
@@ -471,7 +727,20 @@ terms:
         quote: "see fed:FourLayerRegistry"
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'a skill is a typed transform — Input(type, quantity, quality) -> Transformation -> Output — realised as a directed hyperedge'"
-    notes: "The RECORD.md formalization is design-proposal (DRAFT); the registry-layer definition itself is ratified BMA spec."
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§A: 'A skill is a hypergraph closed under mass-balance (on conserved types) + accountability, with a bound vessel and complete ICOM anatomy. Authority and rigor are gates on that object'"
+    notes: >
+      The RECORD.md formalization is design-proposal (DRAFT); the registry-layer
+      definition itself is ratified BMA spec. CORRECTED in v0.3.0: the earlier
+      "Transit=transform" gloss conflicts with Edda's merged specs, where Transit is
+      pass-through/catalyst (referenced, not consumed) and the op/edge is the transform (see
+      wyrd:Hyperedge). Edda's realized skill (Addendum A §A, merged as edda#61) is a
+      conserving, gated hypergraph: mass-balance per op on conserved/linear types only
+      (plain copyable data is not balanced), a bound Vessel and complete ICOM anatomy, with
+      authority and rigor as gates on it.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686609
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666104
 
   - id: fed:Wisdom
     prefLabel: "Wisdom"
@@ -508,7 +777,10 @@ terms:
       seed doc/Tier 4 no-decay, NT_IDENTITY(5) self-knowledge,
       NT_LIFE_CERTIFICATE(6)/NT_DEATH_CERTIFICATE(7)/NT_MEMORIAL(8) — Layer 3,
       no decay, RS_Confirmed, NT_SIGNAL(9) subconscious->conscious queued
-      signal, NT_POD_STATE(10) flushed Pentagon cell state.
+      signal, NT_POD_STATE(10) flushed Pentagon cell state, NT_SKILL(11) a skill
+      (grants a composite capability when instantiated), NT_STEP(12) a step within a
+      skill, NT_CAPABILITY(13) a capability (CapabilityKind: primitive = Tool/layer-1,
+      composite = granted by a skill instantiation).
     status: derived
     axiom_grounding: "none — engineering implementation of BMA's own node typing scheme, an instance of wyrd:Node's tenant-defined NodeType."
     broader: [wyrd:Node]
@@ -516,27 +788,30 @@ terms:
     related: [bma:MemoryTier, bma:EdgeType, bma:ResolutionState]
     source:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
-        quote: "lines 30-71, NodeType enum"
+        quote: "NodeType enum, 14 values 0-13, + CapabilityKind (bma-systema main d53af0a)"
     notes: >
-      No NT_SKILL / NT_CAPABILITY / NT_STEP exists among these ~11 types (RECORD.md
-      confirms: "there is no NT_SKILL / NT_CAPABILITY / NT_STEP among BMA's ~50
-      node types") — this is the concrete code-level gap the hypergraph-spike
-      work is proposing to fill. Also: BMA-Spec's tier table (bma:MemoryTier)
-      references NTSkill for Tier 2, but no such constant exists in types.go —
-      flagged as a spec/code mismatch below.
+      UPDATED in v0.3.0: the gap RECORD.md described ("there is no NT_SKILL /
+      NT_CAPABILITY / NT_STEP among BMA's ~50 node types") is closed in code.
+      NTSkill(11), NTStep(12) and NTCapability(13) landed via bma-systema#296 (spike-0
+      bounded-generativity lowering), so the enum now has 14 types. BMA-Spec's NTSkill for
+      Tier 2 (bma:MemoryTier) now has its constant.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676149
 
   - id: bma:EdgeType
     prefLabel: "ET_* edge types"
-    definition: "ET_EPISODIC .. ET_INHERITED — the edge-type enum paired with NodeType."
+    definition: "ET_EPISODIC(0) .. ET_INHERITED(9), plus ET_MECHANISM_OF(10), ET_GRANTS(11, gated by the grant-gate), ET_BYPRODUCT_OF(12) and ET_HOLDS(13) — the edge-type enum paired with NodeType."
     status: derived
     axiom_grounding: none
     broader: []
     narrower: []
-    related: [bma:NodeType]
+    related: [bma:NodeType, fed:Capability]
     source:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
-        quote: "same file as NodeType"
-    notes: ""
+        quote: "EdgeType enum, 14 values 0-13 (bma-systema main d53af0a)"
+    notes: "ET_MECHANISM_OF / ET_GRANTS / ET_BYPRODUCT_OF / ET_HOLDS are the capability/byproduct edge vocabulary from bma-systema#296 — the BMA code surface of fed:Capability."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676156
 
   - id: bma:ResolutionState
     prefLabel: "ResolutionState (RS_*)"
@@ -550,6 +825,8 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
         quote: "same file as NodeType"
     notes: "Structurally parallel to cth:decision_state's open/settled, but a distinct BMA-local enum — not the same field."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676162
 
   - id: bma:MemoryTier
     prefLabel: "Memory tiers T0-T4"
@@ -562,15 +839,18 @@ terms:
     axiom_grounding: none
     broader: []
     narrower: []
-    related: [bma:NodeType, bma:F01Functor, wyrd:Tier]
+    related: [bma:NodeType, bma:F01Functor, wyrd:Tier, bma:MemoryPin]
     source:
       - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
         quote: "lines 220-224, tier table"
     notes: >
-      SPEC/CODE GAP: T2's NTSkill has no corresponding constant in
-      internal/bma/hg/types.go (see bma:NodeType) — the tier is specified but
-      not yet implemented. Distinct concept from wyrd:Tier (algebraic tower) —
+      RESOLVED in v0.3.0: T2's NTSkill now exists (types.go NodeType 11, via
+      bma-systema#296), so T2 is implemented at the constant level. T3/T4
+      "Pinned-No-Decay" is now generalized by bma:MemoryPin, which can exempt any node
+      from decay. Distinct concept from wyrd:Tier (algebraic tower) —
       see the naming-collision note there.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676168
 
   - id: bma:F01Functor
     prefLabel: "F01 functor (EPISODIC -> SEMANTIC compression)"
@@ -589,6 +869,8 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/compress/f01.go
         quote: "lines 1-3 (package doc), CompressF01 lines 48-55"
     notes: "IMPLEMENTED, has tests (f01_test.go). Per RECORD.md, this is 'BMA's only built functor' and the spike's proposed Provenance-Masked Activation fix would require rewriting it (flagged there as MAJOR cost)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676174
 
   - id: bma:SleepCycle
     prefLabel: "Sleep cycle"
@@ -607,6 +889,36 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/sleep/cycle.go
         quote: "lines 1-31"
     notes: "IMPLEMENTED, has tests (cycle_test.go)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676183
+
+  - id: bma:MemoryPin
+    prefLabel: "Memory Pin (two-tier decay-exemption capability)"
+    definition: >
+      "A two-tier decay-exemption capability. Granting a pin to a node exempts it from
+      Ebbinghaus decay; revoking it lets the node resume decaying." Only an
+      already-exercisable NT_CAPABILITY can mint a pin (GrantPin), and it is recorded as
+      pin_grantor. The authority tier is read from the authorizing node, never from the
+      caller: PinAuthorityBeekeeper gives a permanent/structural pin (no TTL);
+      PinAuthoritySelf gives a bounded pin (concurrent self-pin cap + mandatory TTL). The
+      decay path reads a single predicate, HGNode.PinValid(now).
+    status: derived
+    axiom_grounding: "none — BMA engineering implementation, an independent design lineage."
+    broader: []
+    narrower: []
+    related: [bma:MemoryTier, bma:NodeType, bma:SleepCycle, fed:Capability]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/hg/pin.go
+        quote: "package comment (grant-gate, two-tier authority) + GrantPin (bma-systema main d53af0a)"
+      - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
+        quote: "PinAuthority enum (None/Self/Beekeeper); PinGrantor 'witnessed grantor: exercisable NT_CAPABILITY node ID that minted the pin'; IsPinned / PinValid"
+    notes: >
+      Generalizes bma:MemoryTier's T3/T4 "Pinned-No-Decay" to any node. Pinning is a
+      capability exercise (pin_grantor is an exercisable NT_CAPABILITY), which ties this
+      term to fed:Capability. Landed via bma-systema#319 (merged 2026-09-29, closes
+      bma-systema#322); the code comments cite #322.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676168
 
   - id: bma:PersonaQuaternionOperator
     prefLabel: "Persona as quaternion operator (q·v·q⁻¹)"
@@ -689,11 +1001,17 @@ terms:
     notes: >
       DISCREPANCY flagged for beekeeper: RECORD.md claims this is "ALREADY
       lowered" (i.e., already exists), but bma:NodeType's actual enum
-      (types.go) has no corresponding constant — it is not among BMA's ~11
-      NT_* types. Either this concept lives elsewhere in the BMA corpus
+      (types.go) has no corresponding constant — it is not among BMA's 14
+      NT_* types (bma-systema main d53af0a). Either this concept lives elsewhere in the BMA corpus
       un-harvested by this pass, or RECORD.md's "already lowered" claim is
       aspirational/theoretical rather than code-verified. Recommend
       resolving before treating this as settled vocabulary.
+      CONFIRMED in v0.3.0 (bma-implementor): still no NT_TYPE_NODE. Nuance: the
+      capability part of the same RECORD.md spike did land (NT_CAPABILITY, ET_GRANTS,
+      ET_BYPRODUCT_OF via bma-systema#296); Type-Node and Ratio-Edge are the un-lowered
+      remainder.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676190
 
   - id: bma:RatioEdge
     prefLabel: "Ratio-Edge (reversible)"
@@ -706,7 +1024,9 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "line 16, see bma:TypeNode"
-    notes: "Same discrepancy flag as bma:TypeNode — not found as an implemented Wyrd or BMA edge type by direct search of wyrd:Hyperedge's EdgeType/NodeType enums."
+    notes: "Same discrepancy flag as bma:TypeNode — not found as an implemented Wyrd or BMA edge type by direct search of wyrd:Hyperedge's EdgeType/NodeType enums. CONFIRMED in v0.3.0: no ratio edge in BMA's 14-value EdgeType enum (bma-systema main d53af0a)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676198
 
   # ==========================================================================
   # EDDA — theory-to-executable compiler/language
@@ -865,6 +1185,8 @@ terms:
       rather than "projection functor" going forward, OR treating "projection
       functor" as the spike's own looser usage (see spike:ProductProjectionProvenance)
       rather than Edda's technical term.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224647162
 
   - id: edda:Gearbox
     prefLabel: "Gearbox"
@@ -879,7 +1201,16 @@ terms:
         quote: "line 598 (glossary)"
       - file: /home/prime/Documents/Edda/edda-compiler-spec-v0.2.md
         quote: "lines 119, 156, 165, 368-372"
-    notes: "At Walk+ phase, direct QBP-CU ISA emission replaces the Gearbox wrapper for hot paths (compiler spec line 174)."
+      - file: github.com/JamesPagetButler/qbp-compute-unit/emulator/public_api.go
+        quote: "OMul64 / SMul64: 'Crawl phase: returns ErrTierUnsupported' (qbp-compute-unit main d69b050)"
+    notes: >
+      At Walk+ phase, direct QBP-CU ISA emission replaces the Gearbox wrapper for hot paths
+      (compiler spec line 174). PHASE NOTE (v0.3.0): of the four dispatch targets, only
+      QMul64 and CMul64 execute at Crawl. OMul64 and SMul64 are tier-gated stubs that
+      return ErrTierUnsupported: OMul64 lands with the Xqbpoct extension (M1), SMul64 with
+      Xqbpqec / ZDCHK (M2). 𝕆/𝕊 arithmetic does not run today.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224646848
 
   # ==========================================================================
   # SYSTEMA — workspace process framework
@@ -1098,7 +1429,17 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'Good-quality output' section, lines 30-40 (verified directly 2026-09-27)"
-    notes: "Explicitly parallels CTH's own anti-laundering rule (S3), generalized here from claims to simulated-output formality."
+      - file: /home/prime/Documents/Edda/doc/stage1a-e3-formality-spec.md
+        quote: "Formality is a NEW orthogonal axis — napkin < engineering < formal ... MIN-over-chain composition = lattice meet ... LITERALS DEFAULT TO formal (TOP)"
+    notes: >
+      Explicitly parallels CTH's own anti-laundering rule (S3), generalized here from
+      claims to simulated-output formality. REALIZED in Edda E3 (edda#49, merged): a
+      value-level graded type napkin < engineering < formal, composed MIN-over-chain
+      (lattice meet), with literals defaulting to formal (top) and an overclaim rejected
+      as EDDA-TYPE-008. The Edda type covers napkin..formal; the spike's active mode sits
+      below it. The spike term itself stays design-proposal.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687009
 
   - id: spike:Leader
     prefLabel: "Leader (chain of skills)"
@@ -1118,7 +1459,11 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'The control structure' section, lines 52-63 (verified directly 2026-09-27)"
-    notes: "Two closed loops noted: (1) validated leaders become settled skills (today's deliberated novelty becomes tomorrow's routine); (2) ethics bounds simulation too, resolved into a separate Spike 3 (theory-of-mind, intent-as-provenance-dimension)."
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§C: 'A CASH leader is a type of federation leader whose sub-features each instantiate one cross-axis invariant (the CASH).'"
+    notes: "Two closed loops noted: (1) validated leaders become settled skills (today's deliberated novelty becomes tomorrow's routine); (2) ethics bounds simulation too, resolved into a separate Spike 3 (theory-of-mind, intent-as-provenance-dimension). FORMALIZED in Edda Theory Addendum A §B-§C (merged as edda#61) as the CASH leader (Cross-Axis Structural Homomorphism, the beekeeper's coinage): a leader-type whose sub-features each reflect one named invariant, I = 'no lack converts into a passing claim', via gate reflection G_A(φ(x)) ⇒ G_A(x) under conditions P1-P4. The addendum folds into Edda theory v0.3; this entry stays design-proposal."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686766
 
   - id: spike:GenerativeRatchet
     prefLabel: "Generative ratchet"
@@ -1162,11 +1507,18 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'Skill & Step anatomy' section, lines 65-72 (verified directly 2026-09-27)"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e5.4-icom-vessel-spec.md
+        quote: "ICOM = Input=tails, Control=control, Output=heads, Mechanism=mechanism. transit stays DISTINCT ... Exactly one [vessel] per skill ... EDDA-TYPE-012 — incomplete-skill-anatomy"
     notes: >
       RECORD.md is explicit that "this decomposition is genuinely new — no
       ICOM vocabulary exists in the corpus" prior to this spike. Filed here as
       design-proposal, not retroactively presented as established BMA/Wyrd
-      vocabulary.
+      vocabulary. REALIZED in Edda E5.4 (edda#59, merged): Control and Mechanism are
+      non-mass-bearing op roles, distinct from Transit (catalyst); each skill has exactly
+      one bound Vessel; anatomy completeness is enforced structurally by VerifyAnatomy
+      (missing/duplicate vessel or a no-dataflow op → EDDA-TYPE-012), with no serializer.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686895
 
   - id: spike:HeldVsConsumed
     prefLabel: "Held vs. consumed resources"
@@ -1437,8 +1789,8 @@ terms:
 
 terms_count_by_status:
   axiom: 1
-  derived: 51
+  derived: 55
   conjectural: 1
   design-proposal: 14
   unlocated: 1
-  total: 68
+  total: 72
