@@ -261,6 +261,14 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - The merge-readiness summary to the beekeeper lists any pending §I4 explicitly.
   - Herschel's decision queue doesn't mark a PR "ready to merge" until every named §I4 is written.
 
+### C17. A stacked PR merged into its stale base, not master (2026-10-15)
+- **What:** QBP#702 was stacked on QBP#701's branch. The beekeeper squash-merged QBP#701 (`a80be57`) with its branch left in place, then merged QBP#702. GitHub never retargeted QBP#702, so it landed in `qbp/692-pa-reconcile-real-ledger` (`0b0f373`), not master. Master kept ledger 6.17.0, alpha 0/0 and `INTER_PIN 333134c`. qbp-oppenheimer verified this on origin within minutes and opened a byte-identical re-land PR to master.
+- **Root cause:** the C4 stacked-PR hazard, realized. Squash-merging the base doesn't retarget or close the stacked PR's base, and nothing at the merge point shows the PR is still aimed at a now-dead branch.
+- **Rule (proposed):**
+  - Before merging a stacked PR, its base must be `main`/`master`. Seats retarget immediately after the base PR merges, with a merge-main push for CI.
+  - Herschel's merge-readiness check lists the **base branch** for every PR handed to the beekeeper.
+  - Delete-branch-on-merge stays on for squash-merged bases.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -285,6 +293,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 15. **Scope by guarantee, not by current inputs** (C13).
 16. **One beekeeper-decision queue (herschel):** check-before-ask, one asker per question, rule once and reference, and late answers are confirmed, not executed (C15).
 17. **Pending reviews visible on the PR itself:** a review request or a `§I4 pending` line; merge-ready only when every named §I4 is written, re-checked whenever ownership changes (C16).
+18. **Stacked PRs retarget to the default branch before merge:** the readiness summary shows each PR's base, and deleting the branch on merge avoids dead bases (C17, C4).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
