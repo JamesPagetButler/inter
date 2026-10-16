@@ -269,6 +269,15 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - Herschel's merge-readiness check lists the **base branch** for every PR handed to the beekeeper.
   - Delete-branch-on-merge stays on for squash-merged bases.
 
+### C18. GitHub closing keywords: both too strict and too greedy (2026-10-16)
+- **What (greedy):** QBP#708's body said "Does not close #703 (that's oppenheimer's PR)". GitHub's parser matched the substring `close #703`, ignored the negation, and when QBP#708 merged it **closed QBP#703** (16:17:49Z, same second). Closed PRs ignore pushes, so QBP#703's master re-merge (`666626f`, `8c7744d`) never reached CI, and the PR sat at `dda881c` with zero check-runs. qbp-oppenheimer diagnosed it from the timeline. No content was lost; the reopen is the beekeeper's click.
+- **What (strict), seen earlier:** `Closes inter#170` and `Closes inter#160` did **not** auto-close, because GitHub only parses `#N` or `owner/repo#N`.
+- **Root cause:** the keyword parser is lexical, not semantic. Any `close/closes/closed/fix/fixes/fixed/resolve/resolves/resolved` followed by an issue ref is an instruction to GitHub, whatever the surrounding sentence means.
+- **Rule (proposed):**
+  - Use closing keywords **only** for intended closes, and always as `Closes owner/repo#N`, one per line, per issue.
+  - Never put a closing verb next to a reference you are *not* closing. Write "see #N", "does not auto-close #N" or "#N stays open".
+  - Herschel's readiness check scans PR bodies for closing-keyword references and lists them before handing a PR to the beekeeper.
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -294,6 +303,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 16. **One beekeeper-decision queue (herschel):** check-before-ask, one asker per question, rule once and reference, and late answers are confirmed, not executed (C15).
 17. **Pending reviews visible on the PR itself:** a review request or a `§I4 pending` line; merge-ready only when every named §I4 is written, re-checked whenever ownership changes (C16).
 18. **Stacked PRs retarget to the default branch before merge:** the readiness summary shows each PR's base, and deleting the branch on merge avoids dead bases (C17, C4).
+19. **Closing-keyword hygiene:** `Closes owner/repo#N` only for intended closes; no closing verb next to any other ref; the readiness check lists every parsed close (C18).
 
 ## Part E — Open questions for the refinement
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
