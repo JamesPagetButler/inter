@@ -127,6 +127,27 @@ C6 is **closed**. No further action needed. Noting in `repo-inter-issue-#4` for 
 
 ---
 
-*Authored by: @qbp-architecture (2026-05-20)*
-*Canonical source: `repo-inter-issue-#4`*
-*Next audit pass: Sprint 2 mid-point*
+## §6 — Close-out dispositions (2026-10-18)
+
+The inter#4 inventory has done its job: it made Sprint 1's unverified claims explicit. It now closes, and each open claim **moves to the issue that owns its verification**, so verification debt lives next to the code that pays it rather than in a federation-wide list.
+
+| Claim | Status | Evidence / new home |
+|---|---|---|
+| C3 OnSeam contracts-tier invariant | ✅ VERIFIED | bma-systema#213 (4 state-boundary tests + <40µs benchmarks) |
+| C4 research→substrate Lean promotion e2e | ✅ VERIFIED | wyrd#69 `a932413` |
+| C5 contracts-tier promotion path | ✅ VERIFIED | bma-systema#214 (OnSeam promoted 2026-05-29) |
+| C6 Compute Manifest round-trip | ✅ VERIFIED | wyrd#58 (§1 above) |
+| C7 cycle-counter substrate-tier theorem | ✅ VERIFIED | wyrd#69 (`cycle_counter_monotonic_per_phase`; spec v9.1 §15.10) |
+| C1 pod hot-swap state-flush + resume | ⏳ OPEN | **bma-systema#157** (bilateral architecture; provisional Sprint 4 pick), to become a named AC |
+| C2 Conscious-singular / Subconscious-concurrent split under load | ⏳ OPEN | **bma-systema#157**, to become a named AC |
+| C8 cross-tenant signal provenance chain | ⏳ OPEN (Walk-α) | **bma-systema#165** (A22), comment 2026-10-18 |
+| C9 Translation Functor magnitude preservation | ⏳ OPEN (Walk-α) | **bma-systema#165** (A22), comment 2026-10-18 |
+| C10 literature scaffold consumable | ⏳ OPEN (Walk-α) | **bma-systema#339** (ACs + coverage matrix) |
+| C11 actuation airgap + observation loop-closure | ⏳ OPEN (Walk-α) | **bma-systema#340** (ACs + coverage matrix) |
+
+**Rule going forward:** a new architectural claim with no running-code verification is filed in the *owning* repo as a `[claim-verification]` issue with numbered ACs and a coverage matrix (`issue-authoring-best-practices.md`). It is not added to a federation-wide inventory. This document stays as the historical record of the Sprint 1–2 audit.
+
+---
+
+*Authored by: @qbp-architecture (2026-05-20); close-out §6 2026-10-18*
+*Canonical source: `repo-inter-issue-#4` (closed by the §6 PR)*
