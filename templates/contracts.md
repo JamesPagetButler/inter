@@ -1,6 +1,6 @@
 # CONTRACTS.md — Federation Template
 
-**Status:** federation-canonical template (inter#25). **Precedent:** `bma-systema/internal/bma/harness/CONTRACTS.md` (OnSeam non-blocking discipline, bma-systema#172, Contracts-tier PROMOTED 2026-05-29). That file is the worked example. When this template and the precedent disagree on shape, the precedent wins and this template is updated.
+**Status:** federation-canonical template (inter#25). **Precedent:** `bma-systema/internal/bma/harness/CONTRACTS.md` (OnSeam non-blocking discipline; anchor bma-systema#169, contracts-tier promotion via bma-systema#214 on 2026-05-29, §I4 concerns folded from bma-systema#172). That file is the worked example. When this template and the precedent disagree on shape, the precedent wins and this template is updated.
 
 ## When a package needs one
 
@@ -76,7 +76,7 @@ not done (`best-practices/definition-of-done.md`).>
 
 ## Conventions
 
-- **References are repo-qualified** (`bma-systema#172`, never a bare `#172`), per `github-best-practices.md` §7.5.
+- **References are repo-qualified** (`bma-systema#169`, never a bare `#169`), per `github-best-practices.md` §7.5.
 - **§I4 folds are attributed** in the Revision history row ("per @seat `<repo>#N` §I4 Concern k"), because attribution is part of the record.
 - **Tests are named, not described.** The test-suite table is the coverage matrix for the contract (`issue-authoring-best-practices.md`).
 - **A contract change is a version bump** (v0.1 → v0.2) with a Revision history row, and never a silent edit.
