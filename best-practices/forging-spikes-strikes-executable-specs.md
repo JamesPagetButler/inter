@@ -152,6 +152,43 @@ The failure must still be **solved by implementation**, not dissolved by redefin
 
 A coarse "file an issue per failure" would have created **2 phantom issues** (B-02, HG-04), **mis-scoped** one (P25-02 as a cognition gap rather than a prompt regression), and **entirely missed** the spec-violation hiding inside the cluster (the routing bug). Triage-first, spec-first — with the guardrail — is what surfaced the truth.
 
+## 7a. When the lock won't open — the key loop (beekeeper-directed 2026-10-21)
+
+§7 triages the individual *failures* of a lock. This section is for the case one level up: **the in-scope work has landed and the sprint's lock still won't open.** The sprint does not end by declaring the lock "close enough", and it does not end by quietly carrying the miss forward. It ends by **finding the key**: going back to the theory and the spec, and asking what is missing.
+
+**Trigger.** Sprint close is intended (or a Condition C status check is posted, see `sprint-handoff-protocol.md` §3), and the sprint's lock is red after its in-scope strikes have merged.
+
+### A round (one full turn of the loop)
+
+1. **Diagnose: review the theory and the spec against the failing lock.** qbp-architecture leads, with the lock owner and the theory seat for that domain (qbp-oppenheimer for QBP; the BMA theory author for BMA). The miss gets exactly one class:
+
+   | Class | What it means | The key |
+   |---|---|---|
+   | **implementation-gap** | spec and theory are right; the build isn't finished | not a key problem: finish the build (§7). **Does not count as a round.** |
+   | **test-artifact** | the grader or test conditions are wrong; the answer was genuinely correct | grader fix, after verifying the answer (§7). **Does not count as a round.** |
+   | **spec-gap** | the theory is sound, but the spec under-asks or the lock tests the wrong thing | **refined-spec strike**: a spec delta (ADD / CLARIFY / RAISE only, per the §7 guardrail) and a refined lock |
+   | **theory-gap** | the spec can't say what to require because the theory doesn't yet explain it (no measurable definition, an unproven step, a missing model) | **research strike**: a theory increment (addendum / derivation) the spec can then cite, then the spec delta, then the lock. If even the *question* is unclear, run a spike (§3) first. Its answer feeds the research strike. |
+
+2. **Choose the key.** qbp-architecture recommends a class and a key in writing, and the beekeeper rules (the theory-axis call is his).
+3. **Cut the key as a strike.** It is a normal strike, with an issue, ACs, the coverage matrix and §I4, and it lands on main.
+4. **Re-run the lock.** A round is **full** only when the lock has actually been re-run against the landed key. A round that ends without a re-run doesn't count, and the next step is to finish it.
+
+### The bound: two full rounds, then the beekeeper
+
+After **two full rounds** with the lock still red, the loop stops and goes to the beekeeper with a **lock-impasse record** (the same shape as the conversation modus operandi's §10 impasse record). The record contains:
+- the lock and its current red assertions;
+- per round: the diagnosis class, the key cut (PR), and what the re-run showed (which assertions moved, or that none did);
+- qbp-architecture's read of *why* the keys haven't fit;
+- the options: (a) a third round with a named key, (b) a larger research track (theory work that outgrows a strike), (c) **re-scope the phase gate in writing**, stating exactly which guarantee is deferred and why, or (d) close the sprint and carry the lock as the next sprint's first thread.
+
+The beekeeper chooses. **Re-scoping the gate is his call alone and must be written.** No seat may weaken a lock to make it pass (§7 guardrail), and "the lock is too strict" is a diagnosis to present, not an action to take.
+
+### Why rounds, not time
+A round produces evidence (a landed key plus a re-run), so after two of them the beekeeper decides on data, not on a feeling of being stuck. Classifying before cutting keeps the loop honest. A build that isn't finished never earns a research strike, and a theory hole is never papered over with a spec tweak.
+
+### Worked example — Sprint 3, bma-systema#86 (cognition lock)
+In-scope work merged, but the lock could not open honestly. The probe suite failed **open**: it didn't grade against ground truth, didn't attribute an answer to the local mind versus the cousin model, and counted timeouts as non-failures. Diagnosis: **spec-gap** (the lock tested the wrong thing). Key: a refined #86 Toddle-exit lock with ground-truth grading, answer attribution, timeout = FAIL, and the self-state-injection assertion that already passes. The open question for round 2, if the refined lock is still red, is whether "cognition" itself needs a measurable definition from theory. That would be a **theory-gap**, and the key would be a research strike.
+
 ## References
 - Beck & Cunningham — SpikeSolution (c2 wiki); Extreme Programming.
 - Scaled Agile (SAFe) — Spikes (enabler stories; technical vs functional; use sparingly).
