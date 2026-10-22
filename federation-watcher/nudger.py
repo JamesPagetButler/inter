@@ -26,9 +26,16 @@ D5  Idle = composer is `❯` + nothing, or only dim (SGR 2) ghost suggestion;
 D6  Nudge text is a fixed template from a validated channel + int seq.
 D7  `send-keys -l <text>` then `Enter`; never a bare Enter. Re-capture after
     sending: text still in the composer = not delivered.
-D8  One nudge per wake, persisted. Ack = the waiter offset passing the line
-    within ACK_MIN. No ack, or non-delivery -> escalate ONCE (escalation log +
-    a wake line to herschel; herschel's own case goes to deming). No re-nudge.
+D8' (amended spec, supersedes D8) One nudge per wake, persisted. Ack = the
+    waiter offset passing the line.
+    - BUSY or UNKNOWN screen: don't send; retry every poll; escalate only if the
+      line is still unacked and undelivered at ACK_MIN from first sighting
+      (a BUSY seat with a dead waiter is usually mid-turn and re-arms itself).
+    - DIALOG, TYPED, pane missing, failed send, or still undelivered after a
+      send: escalate at once.
+    - Sent but no ack within ACK_MIN of the send: escalate.
+    Every escalation happens ONCE (escalation log + a wake line to herschel;
+    herschel's own case goes to deming). No re-nudge loop.
 D9  --dry-run is the default; only --enforce sends or writes escalations.
 
 Every decision is a pure function below; tmux, the filesystem, the clock and
@@ -58,6 +65,7 @@ from typing import Callable, Optional
 
 IDLE, BUSY, TYPED, DIALOG, UNKNOWN = "IDLE", "BUSY", "TYPED", "DIALOG", "UNKNOWN"
 SCREEN_CLASSES = (IDLE, BUSY, TYPED, DIALOG, UNKNOWN)
+DEFER_CLASSES = (BUSY, UNKNOWN)      # D8': retry each poll; escalate at ACK_MIN
 
 TMUX_SESSION = "fed"                 # D4: the only session the nudger touches
 ESCALATE_TO = "herschel"             # D8: first escalation tier
@@ -521,10 +529,15 @@ class Nudger:
         offset = effective_offset(
             self.files.read(self.files.state_dir / f"{persona}.offset"), len(lines), baseline)
 
-        # 1. outstanding nudges: ack or (once) escalate
+        pidfile = self.files.state_dir / f"{persona}.waiter.pid"
+
+        # 1. outstanding records: ack, (once) escalate, or retry a deferred one.
+        #    `nudged`  = sent; ack clock runs from the send.
+        #    `pending` = deferred on a BUSY/UNKNOWN screen (D8'); ack clock runs
+        #                from first sighting, and it is retried every poll.
         outstanding = None
-        for key, rec in records.items():
-            if rec.get("persona") != persona or rec.get("status") != "nudged":
+        for key, rec in list(records.items()):
+            if rec.get("persona") != persona or rec.get("status") not in ("nudged", "pending"):
                 continue
             st = ack_status(rec["at"], rec["line_no"], offset, now, self.ack_window)
             if st == "acked":
@@ -532,15 +545,19 @@ class Nudger:
                 rec["acked_at"] = now
                 self.log(persona, "acked", channel=rec["channel"], seq=rec["seq"])
             elif st == "escalate":
-                self._escalate(persona, rec, "no-ack")
+                reason = "no-ack" if rec["status"] == "nudged" else f"no-ack:{rec.get('last_class')}"
+                self._escalate(persona, rec, reason)
             else:
-                outstanding = key
+                if rec["status"] == "pending" and not self.alive(pidfile, persona):
+                    self._attempt(persona, rec)
+                if rec["status"] in ("nudged", "pending"):
+                    outstanding = key
 
         # 2. new wakes
         new = [w for w in unconsumed_wakes(lines, offset) if w.key(persona) not in records]
         if not new:
             return
-        if self.alive(self.files.state_dir / f"{persona}.waiter.pid", persona):
+        if self.alive(pidfile, persona):
             return      # D3: a live waiter delivers; leave them unrecorded
         if outstanding is not None:
             for w in new:   # the pending nudge already tells the seat to look
@@ -583,11 +600,23 @@ class Nudger:
             self._escalate(persona, rec, "pane-missing")
             return
         cls = classify_screen(self.tmux.capture(target), cmd)
+        if cls in DEFER_CLASSES:
+            # D8': the seat is probably mid-turn (or we can't tell). Never send;
+            # stay pending, retry next poll, escalate only at ACK_MIN from first
+            # sighting (handled in _tick_persona).
+            if rec.get("last_class") != cls:
+                self.log(persona, "defer", reason=f"not-idle:{cls}",
+                         channel=rec["channel"], seq=rec["seq"])
+            rec["status"] = "pending"
+            rec["last_class"] = cls
+            return
         if cls != IDLE:
+            # DIALOG / TYPED: a human or herschel has to act, now.
             self._escalate(persona, rec, f"not-idle:{cls}")
             return
         if not self.enforce:
             rec["status"] = "nudged"
+            rec["at"] = self.clock()
             self.log(persona, "would-nudge", target=target, text=json.dumps(text))
             return
         sent = (self.tmux.send_keys(target, ["-l", text])

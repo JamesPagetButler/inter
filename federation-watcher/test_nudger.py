@@ -161,8 +161,14 @@ class NoSendUnlessIdleTest(unittest.TestCase):
                 e.wake("alpha", mention())
                 e.n.tick()
                 self.assertEqual(e.tmux.sends, [])
+                if cls in ("BUSY", "UNKNOWN"):        # D8': deferred, not escalated yet
+                    self.assertEqual(e.escalations(), [])
+                    e.clock.t += 16 * 60
+                    e.n.tick()
+                    self.assertEqual(e.tmux.sends, [])
                 self.assertEqual(len(e.escalations()), 1)
-                self.assertIn(f"not-idle:{cls}", e.escalations()[0])
+                self.assertIn(f"not-idle:{cls}" if cls in ("TYPED", "DIALOG")
+                              else f"no-ack:{cls}", e.escalations()[0])
         with self.subTest(screen="idle-but-not-claude"):
             e = Env(tmux=FakeTmux(command="bash"))
             e.wake("alpha", mention())
@@ -364,8 +370,64 @@ class EscalationTest(unittest.TestCase):
         self.assertEqual(len(e.escalations()), 1)
         self.assertEqual(len(e.wake_lines("herschel")), 1)
 
-    def test_herschel_escalates_to_deming(self):
+    def test_busy_retries_then_escalates_at_ackmin(self):
+        """D8' / AC7b: BUSY is retried every poll, never sent to, and escalates
+        only if still unacked at ACK_MIN from first sighting."""
+        e = Env(tmux=FakeTmux(screen=fixture("busy-spinner.ansi")), ack_min=15)
+        e.wake("alpha", mention(seq=20))
+        t0 = e.clock.t
+        for k in range(30):                      # every 30 s up to exactly ACK_MIN
+            e.clock.t = t0 + k * 30
+            e.n.tick()
+        e.clock.t = t0 + 15 * 60
+        e.n.tick()
+        self.assertEqual(e.tmux.sends, [])
+        self.assertEqual(e.escalations(), [])    # nothing at or before ACK_MIN
+        for k in range(1, 5):                    # past ACK_MIN: exactly one
+            e.clock.t = t0 + 15 * 60 + k
+            e.n.tick()
+        self.assertEqual(e.tmux.sends, [])
+        self.assertEqual(len(e.escalations()), 1)
+        self.assertIn("no-ack:BUSY", e.escalations()[0])
+        self.assertEqual(len(e.wake_lines("herschel")), 1)
+
+        # busy -> idle within the window: the retry nudges, nothing escalates
         e = Env(tmux=FakeTmux(screen=fixture("busy-spinner.ansi")))
+        e.wake("alpha", mention(seq=21))
+        e.n.tick()
+        e.clock.t += 120
+        e.tmux.screen = fixture("idle-ghost.ansi")
+        e.n.tick()
+        self.assertEqual(e.texts_sent(), [["-l", nudger.build_nudge_text("live-test", 21)],
+                                          ["Enter"]])
+        e.offset("alpha", 1)
+        e.clock.t += 60
+        e.n.tick()
+        e.clock.t += 3600
+        e.n.tick()
+        self.assertEqual(e.escalations(), [])
+
+        # busy, then the seat re-arms and consumes the line: acked, no send
+        e = Env(tmux=FakeTmux(screen=fixture("busy-spinner.ansi")))
+        e.wake("alpha", mention(seq=22))
+        e.n.tick()
+        e.offset("alpha", 1)
+        e.clock.t += 3600
+        e.n.tick()
+        self.assertEqual((e.tmux.sends, e.escalations()), ([], []))
+
+        # busy, then a dialog appears: escalate at once (not at ACK_MIN)
+        e = Env(tmux=FakeTmux(screen=fixture("busy-spinner.ansi")))
+        e.wake("alpha", mention(seq=23))
+        e.n.tick()
+        e.clock.t += 30
+        e.tmux.screen = fixture("dialog.ansi")
+        e.n.tick()
+        self.assertEqual(len(e.escalations()), 1)
+        self.assertIn("not-idle:DIALOG", e.escalations()[0])
+
+    def test_herschel_escalates_to_deming(self):
+        e = Env(tmux=FakeTmux(screen=fixture("dialog.ansi")))
         e.wake("herschel", mention(seq=10))
         e.n.tick()
         self.assertEqual(e.wake_lines("herschel"), [mention(seq=10)])   # nothing added

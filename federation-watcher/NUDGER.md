@@ -14,9 +14,9 @@ separate process (watcher.py is untouched) that, for each `personas.conf` seat:
 3. otherwise captures the `fed:<persona>` pane. If, and only if, the pane is
    **IDLE**, it types one nudge:
    `[wake] @mention on <channel> seq <N>: check your sessionbridge inbox`.
+   If the pane is BUSY or UNKNOWN it sends nothing and retries on the next poll.
 4. waits up to `ACK_MIN` (default 15 min) for the waiter offset to pass that
-   line. If there is no ack, or the nudge could not be delivered, it **escalates
-   once**.
+   line, then escalates **once** per D8′ (below).
 
 ## Safety rules
 
@@ -39,16 +39,25 @@ separate process (watcher.py is untouched) that, for each `personas.conf` seat:
   target is the exact-match `=fed:=<persona>`. After sending it re-captures the
   pane: if the nudge is still in the composer, or the pane can't be read, the
   nudge was not delivered.
-- **D8, once only.** There is one nudge per wake, and state is persisted
-  atomically in `state/nudger-state.json`, so a restart never re-nudges. A burst
-  of lines, or lines arriving while a nudge awaits its ack, are covered by that
-  one nudge. Non-delivery or no ack escalates **once**. An escalation appends a
-  line to `~/.federation-watcher/escalation-log.md` and writes a
+- **D8′, once only (spec amendment, supersedes D8).** There is one nudge per
+  wake, and state is persisted atomically in `state/nudger-state.json`, so a
+  restart never re-nudges. A burst of lines, or lines arriving while a nudge is
+  pending or awaiting its ack, are covered by that one nudge.
+
+  | Situation | Action |
+  |---|---|
+  | **BUSY** or **UNKNOWN** screen | Don't send. Retry every poll. Escalate (`no-ack:BUSY` / `no-ack:UNKNOWN`) only if the line is still unacked and undelivered **at ACK_MIN from first sighting**. |
+  | **DIALOG** or **TYPED** screen, pane missing, failed send, or nudge still in the composer after sending | Escalate **at once** (a human or herschel has to act). |
+  | Nudge sent but no ack within ACK_MIN of the send | Escalate (`no-ack`). |
+
+  The reason for deferring on BUSY: a waiter exits when it fires, so "unconsumed
+  lines, dead waiter, BUSY pane" is normal whenever a mention lands while the
+  seat is handling the previous one, and the seat re-arms at the end of its turn.
+
+  Every escalation happens **once**. It appends a line to
+  `~/.federation-watcher/escalation-log.md` and writes a
   `WAKE:NUDGE_ESCALATION ...` line to **herschel**'s wake file. Herschel's own
   case goes to **deming**. There is no re-nudge loop.
-
-  Non-delivery covers a missing pane, a non-IDLE screen, a failed send, and text
-  left in the composer.
 - **D4, allowlist.** Only `fed:<persona>` windows for `personas.conf` rows are
   targeted, and both the engine and the tmux wrapper refuse anything else. The
   `study` session and any other session are never targeted.
