@@ -1,0 +1,42 @@
+name: nudger tests
+
+# Runs federation-watcher/test_nudger.py (inter#75 wake nudger) against THIS
+# checkout. Pure stdlib: no tmux, no PyYAML, no live ~/.federation-watcher.
+# The tests use a fake tmux and temp dirs; the seam test reads watcher.py's own
+# WAKE:* f-strings from source (so it catches format drift without importing it).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - federation-watcher/**
+      - .github/workflows/nudger-test.yml
+  pull_request:
+    paths:
+      - federation-watcher/**
+      - .github/workflows/nudger-test.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: nudger suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Compile
+        run: python3 -m py_compile federation-watcher/nudger.py federation-watcher/test_nudger.py
+
+      - name: Run suite
+        run: |
+          set -o pipefail
+          # Outer bound: a future hang fails the job instead of stalling the runner.
+          timeout 120 python3 federation-watcher/test_nudger.py -v 2>&1 | tee out.txt
+          grep -q '^OK' out.txt
