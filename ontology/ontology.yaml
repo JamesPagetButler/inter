@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 # ============================================================================
-# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.4.0)
+# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.5.0)
 # ============================================================================
 # Human AND machine entry point. Read top to bottom as prose, or parse as YAML.
 # See ../README.md for the guided tour and ../ONTOLOGY-BEST-PRACTICES.md for
@@ -18,7 +18,7 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.4.0"
+  version: "0.5.0"
   date: "2026-10-22"
   root_axiom: cth:AXIOM-1
   scope: >
@@ -64,9 +64,21 @@ _meta:
     fed: "cross-cutting federation-level terms (registry layers, capability, the Tier sense index)"
     notary: "Notary — the federation verification-and-validation function (Trust Tiers, verification outcomes, PA-record vocabulary). Owner seat: notary-implementor. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
     contextus: "Contextus — ecosystem insight discovery (scope nodes, scope membership, insight signals, retention tiers, the emit side of the attention-scalar seam). Owner seat: contextus-impl."
+    math: "math — general mathematical structures used by ≥2 tenants; sourced to Mathlib (Lean core for `Type`). Owner seat: qbp-oppenheimer."
     craft: "Craft — the cockpit that renders the attention scalar (render side of the craft/Contextus seam). Owner seat: hutchins. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
 
   change_history:
+    "0.5.0": >
+      2026-10-22. Forging-product vocabulary, beekeeper-ratified 2026-10-22 per
+      @qbp-architecture's dispatch (inter#196 rulings incl. D2 "yes, can be many";
+      the provable-AC thread on inter#194). New fed: terms fed:thread-path,
+      fed:lock, fed:forging-product, fed:interface, fed:trait, fed:characteristic
+      (design-proposal: defined in rulings/issues, not yet in the forging doc);
+      fed:thread extended in place (it already existed). New namespace math:
+      (owner qbp-oppenheimer) with math:group, math:category, math:type, sourced
+      to Mathlib c5ea003 / Lean v4.30.0; the forging mappings (lock = type,
+      product = term, federation = category, thread = diagram, forging is not a
+      group) are design-proposal notes. 92 -> 101 terms (9 new).
     "0.4.0": >
       2026-10-22. Applies the four beekeeper rulings recorded on inter#173
       (https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133):
@@ -1773,13 +1785,22 @@ terms:
     axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
     broader: []
     narrower: []
-    related: [fed:strike, fed:spike, fed:warp, fed:crossing]
+    related: [fed:strike, fed:spike, fed:warp, fed:crossing, fed:thread-path, fed:lock, math:category]
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
           §1a: "A thread is the ephemeral conceptual-development unit within a sprint." §1b: "Weft ≡ thread (§1a): one concept, one definition."
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "| **Weft** | A cross-repo thread. **Weft ≡ thread (§1a):** one concept, one definition. |" (inter main a3bfbb6)
     notes: >
       RATIFIED 2026-10-08 (inter#160 → #165; weave orientation inter#161 r2 → #166). Deliberately ONE entry: 'weft' is an alias, not a separate term (deming refinement R3), so the two names cannot drift apart.
+      v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch): read a
+      thread as the ACTIVE STATE of a spec-driven path toward a lock: a weft crossing
+      warps, whose route is its fed:thread-path and whose end is its fed:lock. That
+      wording is from the dispatch; no committed or GitHub record of it was found, so
+      the ratified forging-doc definition above stays unchanged. DESIGN-PROPOSAL
+      mapping: a thread is a DIAGRAM in the federation category (see math:category).
 
   - id: fed:strike
     prefLabel: "strike"
@@ -1818,12 +1839,16 @@ terms:
     status: derived
     axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
     broader: []
-    narrower: [fed:meta-lock]
+    narrower: [fed:meta-lock, fed:lock]
     related: [fed:strike, fed:crossing]
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
           §4: "An executable specification is a CI-gated test-set with one assertion per finding the spike raised, retained permanently and run as a regression guard"
+    notes: >
+      v0.5.0: the alias "lock" is revived for a narrower concept, fed:lock, the
+      executable specification at the end of a thread, with legs and a lock-scope
+      rule (inter#196).
 
   - id: fed:meta-lock
     prefLabel: "meta-lock"
@@ -1942,6 +1967,194 @@ terms:
           §1b: "A fabric can hold together and still be the wrong cloth."
     notes: >
       For QBP: the physics-acceptance suite owned by qbp-oppenheimer, run against qbp-systema (inter#162).
+
+  - id: fed:thread-path
+    prefLabel: "thread path (the proof plan)"
+    definition: >
+      The spec-driven, ordered route of strikes a thread takes to its lock: the
+      thread's proof plan. Example (the provable-AC thread): "S1 → (S2 ∥ S3) → S4",
+      with the lock at the end.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:thread, fed:strike, fed:lock, fed:Skill, math:category]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/194#issuecomment-6346990992
+        quote: >
+          "**Thread path (the spec-driven route to the lock):** S1 → (S2 ∥ S3) → S4."
+      - file: https://github.com/JamesPagetButler/inter/issues/197
+        quote: >
+          lowering table row: "| thread / thread path | `skill` (scoped hypergraph of
+          `op`s) with `[budget: …]` | exists (stage1a E5.3) + proposed budget |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      Status design-proposal: the term is defined in issue comments, not in the
+      forging doc. The "(the proof plan)" gloss comes from the dispatch; no
+      committed or GitHub record of that wording was found. inter#197 proposes
+      lowering a thread path to an Edda `skill`, hence the fed:Skill relation.
+      DESIGN-PROPOSAL mapping: in category terms a thread path is a composable
+      chain of morphisms (strikes) ending at the lock (see math:category).
+
+  - id: fed:lock
+    prefLabel: "lock (the executable specification a thread must open)"
+    definition: >
+      The executable specification a thread must open. Its LEGS are every AC of
+      every issue on the thread; a lock is green only when every leg is discharged
+      and its own assertions pass. Lock-scope rule: the lock's own integrated
+      assertions are stated at the forging product's EXTERNAL interface ("the legs
+      (the issue ACs) cover the parts; the lock covers the whole"). Its criteria are
+      content-addressed, and any loosening needs a beekeeper witness.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: [fed:executable-specification]
+    narrower: []
+    related: [fed:thread, fed:thread-path, fed:meta-lock, fed:strike, fed:forging-product, fed:interface, fed:trait, math:type]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §4 migration note: "prior artifacts using "lock"/"edda-lock" ... refer to
+          this concept. New work says "executable specification"" (inter main
+          a3bfbb6)
+      - file: https://github.com/JamesPagetButler/inter/issues/196
+        quote: >
+          "**D1 (ruled):** the lock's legs = **all** AC ids of the issues on its
+          thread." ... "A lock must never go green while an issue on its thread still
+          has an open AC."
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350163354
+        quote: >
+          "**Adopted:** a lock's *own* integrated assertions must be stated over the
+          thread's external interface. The legs (the issue ACs) cover the parts; the
+          lock covers the whole." ... "Criteria are hashed, and the lock keeps a
+          versioned criteria diff. **Any loosening is refused unless it carries a
+          beekeeper-witnessed cap.**"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      NAMING: the forging doc treats "lock" as a historical alias of
+      fed:executable-specification. This entry revives the word for a narrower
+      concept, the executable specification at the end of a thread, with legs, a
+      scope rule and content-addressed criteria; hence broader
+      fed:executable-specification rather than a second definition. Status
+      design-proposal: the legs, scope and content-addressing rules are recorded in
+      issue comments (D1 ruled; the other two adopted by qbp-architecture as S3/S4
+      requirements), not yet in the forging doc. The loosening rule mechanizes the
+      §7 anti-weakening guardrail. DESIGN-PROPOSAL mapping (from the dispatch; not
+      found in a committed or GitHub record): a lock read as a TYPE, which the
+      forging product inhabits as a term (see math:type).
+
+  - id: fed:forging-product
+    prefLabel: "forging product (the term that inhabits a lock)"
+    definition: >
+      What a forging produces: a typed package with a manifest of its interfaces,
+      MANY traits and MANY characteristics, a bill of materials, and provenance,
+      proven by its lock at the external interface. "A product = interfaces + many
+      traits + many characteristics + its lock."
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:lock, fed:interface, fed:trait, fed:characteristic, fed:forging, fed:standing-crossing, fed:Capability, math:type]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "**D2: "yes, can be many."** A forging product may implement many traits
+          and carry many characteristics." ... "A product = interfaces + many traits +
+          many characteristics + its lock."
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350163354
+        quote: >
+          "*OKH System = components (Edda skills with typed I/O + config schema +
+          **characteristics**) + typed interfaces + an end-to-end lock over the
+          external interface, witnessed per run.*"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch;
+      D2 itself is a recorded beekeeper ruling). The bill of materials and the
+      provenance via the inter#168 handle come from the dispatch. inter#168 (OPEN at
+      this harvest) drafts the Handle as "the unit that crosses" a standing crossing,
+      hence the fed:standing-crossing relation. inter#197 lists the capability triple
+      (fed:Capability) among the forging concepts its lowering contract maps to Edda
+      (`requires: cap(...)` + `budget`). DESIGN-PROPOSAL mapping (from the dispatch):
+      the product is a TERM that inhabits its lock's type (see math:type).
+
+  - id: fed:interface
+    prefLabel: "interface (the product's typed external boundary)"
+    definition: >
+      The forging product's typed external boundary: its inputs, outputs and config
+      schema, verified by type checks. The analogue of an OKI interface or a function
+      signature. The lock-scope rule states a lock's own assertions at this
+      boundary.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:forging-product, fed:trait, fed:lock, fed:Tool]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:interface`** | the product's **typed external boundary** (inputs,
+          outputs, config schema) | type checks | OKI interface; a function signature |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      The source table is qbp-architecture's "proposed reading", which ends "The
+      beekeeper confirms or adjusts"; the dispatch reports it as ratified. Related to
+      fed:Tool because the instrument a capability binds is used through such a
+      boundary; that link is this ontology's, not the source's.
+
+  - id: fed:trait
+    prefLabel: "trait (a behavioral promise stated at an interface)"
+    definition: >
+      A behavioral promise stated at an interface: what consumers may rely on (for
+      example Lossless, FailClosed, DryRunDefault). It is discharged by the lock at
+      the external interface plus its AC legs. The analogue of a Rust `trait` impl.
+      A trait can be conditional on characteristics, like a Rust `where` clause (for
+      example, Lossless holds only where width ≥ QW128). A product may implement many.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:interface, fed:characteristic, fed:lock, fed:forging-product]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:trait`** | a **behavioral promise stated at an interface**: what
+          consumers may rely on (e.g. *Lossless*, *FailClosed*, *DryRunDefault*) | the
+          **lock at the external interface** (lock-scope rule) plus its AC legs | a
+          Rust `trait` impl |" ... "traits can be **conditional on characteristics**,
+          like a Rust `where` clause. For example, *Lossless* holds only `where width
+          ≥ QW128`."
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      TERMINOLOGY DRIFT: inter#196's D2 text and inter#197's lowering table still
+      use "characteristic" for this concept ("a named bundle of obligations a
+      product claims" → Edda `trait`, missing). The 2026-10-22 reading moves that
+      sense to trait. Edda has no `trait` form yet (inter#197).
+
+  - id: fed:characteristic
+    prefLabel: "characteristic (a property of the product itself)"
+    definition: >
+      A property of the forging product itself: internal configuration or a
+      measured attribute, carried with a value, a unit and evidence (for example
+      precision width QW128, cycle budget, PA grade, peak RSS). Verified by evidence
+      (a measurement, CI artifact or ledger). The analogue of an OKH manifest
+      "characteristic", or a Rust associated const or type. A product may carry many.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:trait, fed:forging-product, cth:proof_assistants, notary:PA-record]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:characteristic`** | a **property of the product itself**: internal
+          configuration or a measured attribute, with a value, unit and evidence (e.g.
+          precision width QW128, cycle budget, PA grade, peak RSS) | evidence
+          (measurement, CI artifact, ledger) | OKH manifest "characteristics"; a Rust
+          associated const or type |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      The PA grade example is the CTH grade (cth:proof_assistants), evidenced by a
+      Notary PA-record (notary:PA-record); it is related, not redefined. See the
+      drift note on fed:trait: before this reading, "characteristic" named the
+      obligation bundle that is now a trait.
 
   # ==========================================================================
   # NOTARY — the federation V&V function. Owner seat: notary-implementor.
@@ -2473,10 +2686,110 @@ terms:
     review_ref:
       - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
+  # ==========================================================================
+  # MATH — general mathematical structures used by ≥2 tenants, sourced to
+  # Mathlib. Owner seat: qbp-oppenheimer. Added v0.5.0. Verified against Mathlib
+  # c5ea003 (the pin in QBP master a4d4383 proofs/lakefile.lean) and the Lean
+  # v4.30.0 toolchain (QBP proofs/lean-toolchain).
+  # ==========================================================================
+
+  - id: math:group
+    prefLabel: "group"
+    definition: >
+      "A `Group` is a `Monoid` with an operation `⁻¹` satisfying `a⁻¹ * a = 1`."
+      In Mathlib: class Group (G : Type u) extends DivInvMonoid G, with the field
+      inv_mul_cancel : ∀ a : G, a⁻¹ * a = 1.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:category, wyrd:Tier, fed:forging, fed:strike]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Algebra/Group/Defs.lean
+        quote: >
+          "/-- A `Group` is a `Monoid` with an operation `⁻¹` satisfying `a⁻¹ * a =
+          1`." ... "class Group (G : Type u) extends DivInvMonoid G where protected
+          inv_mul_cancel : ∀ a : G, a⁻¹ * a = 1" (Mathlib c5ea003, lines 1184-1193)
+      - file: /home/prime/Documents/QBP/proofs/QBP/Foundations/UnitQuaternion.lean
+        quote: "@[reducible] noncomputable def sp1Group : Group (Metric.sphere (0 : Q) 1) := inferInstance (QBP master a4d4383)"
+    notes: >
+      Tenant use: QBP's unit quaternions carry a Mathlib Group instance
+      (UnitQuaternion.lean); the related wyrd:Tier tower is built from the same
+      Cayley-Dickson algebras. DESIGN-PROPOSAL mapping: forging is NOT a group,
+      because strikes are not invertible. A landed strike is retained and
+      never undone (the ratchet); there is no inverse strike.
+
+  - id: math:category
+    prefLabel: "category"
+    definition: >
+      "The typeclass `Category C` describes morphisms associated to objects of type
+      `C`." It extends CategoryStruct (identity morphisms and composition f ≫ g)
+      with three laws: id_comp, comp_id and assoc.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:group, bma:F01Functor, fed:thread, fed:thread-path]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/CategoryTheory/Category/Basic.lean
+        quote: >
+          "/-- The typeclass `Category C` describes morphisms associated to objects of
+          type `C`. The universe levels of the objects and morphisms are unconstrained,
+          and will often need to be specified explicitly, as `Category.{v} C`." ...
+          "/-- Identity morphisms are left identities for composition. -/ id_comp" ...
+          "/-- Identity morphisms are right identities for composition. -/ comp_id" ...
+          "/-- Composition in a category is associative. -/ assoc" (Mathlib c5ea003,
+          lines 226-241)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/CategoryTheory/Category/Basic.lean
+        quote: >
+          "/-- A preliminary structure on the way to defining a category, containing
+          the data, but none of the axioms. -/ class CategoryStruct" ... "/-- The
+          identity morphism on an object. -/ id" ... "/-- Composition of morphisms in
+          a category, written `f ≫ g`. -/ comp" (Mathlib c5ea003, lines 120-127)
+    notes: >
+      Tenant use: QBP Lean opens CategoryTheory (Foundations/SpatialFirstLink.lean,
+      QBP master a4d4383); BMA describes its compression functors as
+      category-theoretic (bma:F01Functor). DESIGN-PROPOSAL mapping: the federation
+      read as a category, and a thread as a DIAGRAM in it (a functor from an index
+      shape into the federation category; Mathlib's limits library speaks of cones
+      "for the same diagram"). A thread path is then a composable chain of strikes.
+      The objects and morphisms of the federation category are not yet defined
+      anywhere on the record.
+
+  - id: math:type
+    prefLabel: "type (and universe)"
+    definition: >
+      In Lean's type theory every term has a type, and every type lives in a
+      universe: "A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`." `Sort u`
+      is "A specific universe in Lean's infinite hierarchy of universes", and
+      "The universe of propositions. `Prop ≡ Sort 0`." A term INHABITS its type;
+      under propositions-as-types, a proof is a term of the proposition it proves.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — the foundational notion of Lean's type theory."
+    broader: []
+    narrower: []
+    related: [math:category, math:group, fed:lock, fed:forging-product]
+    source:
+      - file: /home/prime/.elan/toolchains/leanprover--lean4---v4.30.0/src/lean/Lean/Parser/Term.lean
+        quote: >
+          "/-- A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. -/" ... "/--
+          A specific universe in Lean's infinite hierarchy of universes. -/" ... "/--
+          The universe of propositions. `Prop ≡ Sort 0`." (Lean v4.30.0, lines 134-140)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Algebra/Group/Defs.lean
+        quote: "class Group (G : Type u) — Mathlib's structures are stated over a type in a universe (Mathlib c5ea003, line 1192)"
+    notes: >
+      SOURCE NOTE: `Type` is Lean core, not Mathlib; it is quoted from the Lean
+      v4.30.0 toolchain that QBP pins. The last sentence of the definition
+      (inhabitation, propositions-as-types) is a standard gloss, not a quote.
+      Tenant use: the Lean proofs in QBP and Wyrd, and Edda's typed surface.
+      DESIGN-PROPOSAL mapping: a lock read as a TYPE and the forging product as a
+      TERM that inhabits it. A green lock is then a witness that the product has
+      that type.
+
 terms_count_by_status:
   axiom: 1
-  derived: 75
+  derived: 78
   conjectural: 1
-  design-proposal: 15
+  design-proposal: 21
   unlocated: 0
-  total: 92
+  total: 101

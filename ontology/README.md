@@ -8,14 +8,14 @@ beekeeper (James) can look up what a term means, where it comes from, and how
 solid the ground under it is, in one place.
 
 It deliberately does **not** try to cover the whole federation. It covers the
-55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0) — the core vocabulary already in active
+55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0; 101 since the forging-product and `math:` additions, v0.5.0) — the core vocabulary already in active
 use, plus the known "capability" clash — with a clear path for adding more.
 
 ## What's here
 
 | File | What it is |
 |---|---|
-| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 92 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
+| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 101 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
 | `ONTOLOGY-BEST-PRACTICES.md` | The research behind why this format was chosen (RDF/OWL/SKOS/JSON-LD/Turtle survey, dual-readability patterns, upper ontologies, versioning/drift) and the upgrade path to SKOS/JSON-LD if the vocabulary ever needs real machine inference. |
 | `README.md` | This file. |
 
@@ -46,6 +46,8 @@ process framework), `spike:` (the 2026-09-25 hypergraph-generativity spike —
 attention-scalar seam; owner seat contextus-impl) and `craft:` (the cockpit's
 render-side vocabulary; owner seat hutchins). notary and craft are private
 repos: their namespaces publish vocabulary only, with no internal mechanics.
+Since v0.5.0 there is also `math:` (general mathematical structures used by two
+or more tenants, sourced to Mathlib; owner seat qbp-oppenheimer).
 
 ## The AXIOM-1 grounding
 
@@ -101,7 +103,7 @@ Two things worth being honest about up front:
    tightly paraphrase it. Do not invent a definition to fill a gap; if you
    can't find one, add the term with `status: unlocated` and say so (see
    `cth:belief-tiers` for the pattern).
-2. Pick a namespace (`cth:`/`wyrd:`/`bma:`/`edda:`/`systema:`/`spike:`/`fed:`/`notary:`/`contextus:`/`craft:`)
+2. Pick a namespace (`cth:`/`wyrd:`/`bma:`/`edda:`/`systema:`/`spike:`/`fed:`/`notary:`/`contextus:`/`craft:`/`math:`)
    and a stable `id`.
 3. Fill every field in `_meta.field_glossary` — especially `status` and
    `axiom_grounding`. If there's a genuine derivation chain to `cth:AXIOM-1` or
@@ -224,6 +226,28 @@ v0.3.0 left four decisions open. The beekeeper ruled on all four on 2026-10-22
 
 The named seats (notary-implementor, contextus-impl, hutchins, cth-implementor, and
 edda for `edda:Cap` / `edda:AuthorityTier`) re-read their rows on inter#173.
+
+## Forging-product vocabulary and `math:` (v0.5.0)
+
+Beekeeper-ratified on 2026-10-22, per @qbp-architecture. The sources are the
+rulings on [inter#196](https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780),
+including D2 ("yes, can be many"), and the provable-AC thread on
+[inter#194](https://github.com/JamesPagetButler/inter/issues/194#issuecomment-6346990992):
+
+- **New `fed:` terms:** `fed:thread-path` (the ordered route of strikes to the
+  lock), `fed:lock` (the executable specification a thread must open; its legs are
+  every AC on the thread, and its own assertions are stated at the external
+  interface), `fed:forging-product`, `fed:interface`, `fed:trait` and
+  `fed:characteristic`. They are `design-proposal` until the forging doc defines
+  them. `fed:thread` already existed and is extended in place.
+- **`fed:lock` and `fed:executable-specification`:** the forging doc calls "lock" a
+  historical alias of the executable specification. `fed:lock` revives the word for
+  a narrower concept and sits under `fed:executable-specification`.
+- **New `math:` namespace:** `math:group`, `math:category` and `math:type`, quoted
+  from Mathlib `c5ea003` (QBP's pin) and Lean `v4.30.0`. The mappings to forging
+  (lock = type, product = term, federation = category, thread = diagram; forging is
+  not a group, because strikes aren't invertible) are design-proposal notes, not
+  definitions.
 
 ## What this draft does not cover (by design)
 
