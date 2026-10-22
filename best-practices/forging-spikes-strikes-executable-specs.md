@@ -181,6 +181,8 @@ After **two full rounds** with the lock still red, the loop stops and goes to th
 - qbp-architecture's read of *why* the keys haven't fit;
 - the options: (a) a third round with a named key, (b) a larger research track (theory work that outgrows a strike), (c) **re-scope the phase gate in writing**, stating exactly which guarantee is deferred and why, or (d) close the sprint and carry the lock as the next sprint's first thread.
 
+**Two rounds is a ceiling, not a floor.** It is the point at which escalation is *forced*. The beekeeper may choose any of options (a)–(d) at any round boundary, including before round 1 starts (e.g. he directs close-and-carry with the refined lock as the next sprint's close test). The loop never blocks an earlier beekeeper decision.
+
 The beekeeper chooses. **Re-scoping the gate is his call alone and must be written.** No seat may weaken a lock to make it pass (§7 guardrail), and "the lock is too strict" is a diagnosis to present, not an action to take.
 
 ### Why rounds, not time

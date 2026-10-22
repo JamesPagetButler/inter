@@ -164,7 +164,7 @@ Round 1: <class> → key <PR> → re-run <result>      (if any)
 Next: qbp-architecture diagnosis against theory + spec (forging doc §7a)
 ```
 
-qbp-architecture runs the key loop (§7a of the forging doc). After two full rounds still red, the post becomes a lock-impasse record addressed to @beekeeper.
+`k` = the round now under way. The first post opens round 1. qbp-architecture runs the key loop (§7a of the forging doc). The beekeeper may rule a disposition at any round boundary (two rounds is the ceiling that forces escalation, not a floor). After two full rounds still red, the post becomes a lock-impasse record addressed to @beekeeper.
 
 ### Condition C: Sprint partial (close vs continue?)
 
