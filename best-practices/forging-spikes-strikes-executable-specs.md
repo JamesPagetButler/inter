@@ -63,9 +63,20 @@ Forging says *how* an increment is made and hardened. **Weaving** says *which di
 
 ---
 
+## 1c. The sprint weave issue (beekeeper-ruled 2026-10-22, inter#153)
+
+Every sprint has **one weave issue on inter** (title `Sprint N weave`), filed at Sprint-Prep (`sprint-handoff-protocol.md`). It is the sprint's map of the fabric:
+- **every warp** in play (one per seat/repo) and **every weft thread** crossing them, each linked to its issues;
+- **every lock** (executable specification) the sprint must open, linked. Each lock is tracked by a **GitHub milestone** on its home repo. @herschel sets up the milestones after the weave issue is filed, and keeps the issue current as threads convert to strikes;
+- the **strike-retro reports** (R7), posted as comments as each strike closes, and the key-loop round records (§7a) when a lock stays red.
+
+The weave issue is the sprint's single record. Bridge posts point to it.
+
 ## 2. Strike — one increment of forging
 
-A **strike** is one retained increment. **Entry:** its executable specification is fully defined; the thread's slice is spelled out (§1a). **Exit:** the strike **lands** only when that **executable specification is green**. A strike is retained (it permanently shapes the artifact). Forging is the chain of strikes.
+A **strike** is one retained increment. **Entry:** its executable specification is fully defined; the thread's slice is spelled out (§1a). **Exit:** the strike **lands** only when that **executable specification is green**.
+
+**Entry criterion: design closure (R1, inter#153).** Before build dispatch, the strike issue carries a **design-closure table** listing every design decision its ACs rest on. Each decision is either **ruled** (one record, on the issue) or **assigned to a spike** that answers it first. A strike whose build produces about three or more architecture rulings mid-flight should have started as a spike; stop and re-classify it. *(Evidence: strike 2 of Criticality v1 had numbered ACs, yet seven ruling comments landed mid-build in one day, and most of the crossed messages clustered there; process notes C20. Strike 1 locked its contract first and didn't move.)* A strike is retained (it permanently shapes the artifact). Forging is the chain of strikes.
 
 > **Governing principle 2:** a strike is **not done when its build merges** — it is done when its **executable specification is green**. Per-piece unit tests on the individual fix-PRs are necessary but **not sufficient**; the executable spec is the *integrated re-confirmation* of the strike's findings, and it stays in CI as a regression guard.
 
@@ -73,6 +84,8 @@ A **strike** is one retained increment. **Entry:** its executable specification 
 - **Before the strike (thread phase):** spikes find the gaps; the executable specification is written, one assertion per finding. (§1a, §3)
 - **The strike:** build until the executable specification is green. The spec stays in CI. (§4)
 - If building surfaces a gap the specification missed, triage it by §7: a spec-gap updates the spec first, under the guardrail.
+- **Bounded review (R2).** When review round 3 of a PR finds a *new instance of a finding type* that rounds 1–2 already found, stop patching and run a **cause check**: is a tool we don't own already authoritative for this? Fix the cause, not the instance. This is the same two-rounds bound as the key loop (§7a). *(Evidence: QBP#698 ran six rounds hardening a regex Lake/Agda parser before the cause, a load-bearing float, was named; QBP#703 replaced it with the provers' own tools. Process notes C19.)*
+- **Strike close: retro note (R7).** At strike close, the strike owner posts a short **strike-retro comment on the sprint's weave issue** (§1c): what landed, the review rounds, any breakdowns (with their process-notes C-ids) and any rule it suggests. The next refinement then has evidence, not recollection.
 
 ---
 
@@ -89,6 +102,14 @@ A **spike** is a **time-boxed, exploratory investigation to reduce uncertainty**
 **Federation role (our one deliberate addition):** a spike's answer is a **capability-gap list** → *sprint-planning inputs*.
 
 > **Governing principle 1:** every spike carries a required output — *"capability gaps surfaced → sprint candidates."*
+
+**Spike rules (folded from inter#132; evidence: the Efimov inference spike, rounds 1–2):**
+1. **Isolation.** The spike runs in its own worktree, branched from clean `origin/main`, and its PR is **source-only**: generated data and binaries are `.gitignore`d, and it carries no launch scripts, persona config or launch prompts. *(The round-1 PR carried 621k additions.)*
+2. **Honest review, not ratification.** Sort the spike's claims into grounded / mislabeled / fabricated / contradicts-established. Graduate **only** what was earned, as exactly that narrow claim. Verify against the code, not the write-up.
+3. **No trust-laundering.** A spike never self-wires a "trusted" signal, capability, quorum or admission into Contextus, BMA or any gate. External-AI-authored spikes get extra scrutiny.
+4. **Single director** for any external runner. Exactly one voice instructs it, and every other steer routes through that director (`Director:` line at the top of each brief).
+5. **Measurement discipline.** Correctness is checked against an independent reference. Timing is an `ns/op` microbenchmark, never a single wall-clock run. Every number is tagged *measured* or *assumed*.
+6. **Pre-run box-safety.** The `pre-run-resource-estimate` hard gate applies to any spike that compiles or runs on the box, and @deming confirms box-safety on the plan before launch.
 
 **Types** (SAFe over the XP base): *technical* and *functional*. **Anti-patterns:** un-time-boxed spikes; spikes as a dumping ground; shipping probe code; spiking when time-limited rather than knowledge-limited. Use sparingly.
 
