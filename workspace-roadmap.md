@@ -541,6 +541,7 @@ Future expected entries:
 | `~/Documents/QBP/SPRINT_STATUS.md` | QBP operational sprint state |
 | `~/Documents/wyrd/README.md` | Wyrd phase definitions |
 | `~/Documents/CTH/cth/README.md` | CTH phase definitions |
+| `JamesPagetButler/Nidavellir` (`~/Documents/Nidavellir/`, private) | **Niðavellir**, the federation's value-optimization forge, operated by deming. It holds the **active** Seat Charter (`charters/seat-charter.md`, which traces to the inter reference `charters/seat-charter.md`), the formal value model (`spec/SPEC.md`), the federation reliability logs (`ops/logs/`) and the foundation for the self-hosted Forge(s) (`docs/forge-foundation.md`). It is methodology-only; financials live in a separate private store. |
 
 ---
 
