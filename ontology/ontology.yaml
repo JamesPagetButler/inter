@@ -78,7 +78,10 @@ _meta:
       (owner qbp-oppenheimer) with math:group, math:category, math:type, sourced
       to Mathlib c5ea003 / Lean v4.30.0; the forging mappings (lock = type,
       product = term, federation = category, thread = diagram, forging is not a
-      group) are design-proposal notes. 92 -> 101 terms (9 new).
+      group) are design-proposal notes. math:set added in a follow-up commit
+      (beekeeper-directed 2026-10-22): Mathlib's Set, a predicate on a type,
+      with the classical ZFC sense (ZFSet) kept in its notes. 92 -> 102 terms
+      (10 new).
     "0.4.0": >
       2026-10-22. Applies the four beekeeper rulings recorded on inter#173
       (https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133):
@@ -2703,7 +2706,7 @@ terms:
     axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
     broader: []
     narrower: []
-    related: [math:type, math:category, wyrd:Tier, fed:forging, fed:strike]
+    related: [math:type, math:set, math:category, wyrd:Tier, fed:forging, fed:strike]
     source:
       - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Algebra/Group/Defs.lean
         quote: >
@@ -2768,7 +2771,7 @@ terms:
     axiom_grounding: "none from AXIOM-1 — the foundational notion of Lean's type theory."
     broader: []
     narrower: []
-    related: [math:category, math:group, fed:lock, fed:forging-product]
+    related: [math:set, math:category, math:group, fed:lock, fed:forging-product]
     source:
       - file: /home/prime/.elan/toolchains/leanprover--lean4---v4.30.0/src/lean/Lean/Parser/Term.lean
         quote: >
@@ -2786,10 +2789,62 @@ terms:
       TERM that inhabits it. A green lock is then a witness that the product has
       that type.
 
+  - id: math:set
+    prefLabel: "set (a predicate on a type)"
+    definition: >
+      "A set is a collection of elements of some type `α`." In Mathlib, def Set
+      (α : Type u) := α → Prop: a set is a predicate on a type, and membership
+      x ∈ S is the proposition S x. So every Lean set is a set of elements of some
+      type. A type is different: it is a universe of terms, and a : A is a typing
+      judgment, not a proposition that can be true or false, proved or assumed.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:group, math:category, fed:thread]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Data/Set/Defs.lean
+        quote: >
+          "/-- A set is a collection of elements of some type `α`. Although `Set` is
+          defined as `α → Prop`, this is an implementation detail which should not be
+          relied on. Instead, `setOf` and membership of a set (`∈`) should be used to
+          convert between sets and predicates. -/ def Set (α : Type u) := α → Prop"
+          (Mathlib c5ea003, lines 43-49)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Data/Set/Defs.lean
+        quote: >
+          "/-- Membership in a set -/ protected def Mem (s : Set α) (a : α) : Prop :=
+          s a" ... "instance : Membership α (Set α) := ⟨Set.Mem⟩" (Mathlib c5ea003,
+          lines 69-74)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/SetTheory/ZFC/Basic.lean
+        quote: >
+          "/-- The ZFC universe of sets consists of the type of pre-sets, quotiented by
+          extensional equivalence. -/ @[pp_with_univ] def ZFSet : Type (u + 1) :=
+          Quotient PSet.setoid.{u}" (Mathlib c5ea003, lines 45-49)
+    notes: >
+      TYPE vs SET: a : A (math:type) is a judgment the kernel checks, while x ∈ S is
+      a Prop, which can be proved, refuted or left open. A set never stands alone: it
+      is always Set α for some type α. Mathlib itself warns that "α → Prop" is an
+      implementation detail; use setOf and ∈. Tenant use: QBP master a4d4383 states
+      Set-valued hypotheses over its Cayley-Dickson algebras (e.g. "({x, y} : Set
+      (CDAlg ℝ 3))" in proofs/QBP/Foundations/Artin.lean).
+      CLASSICAL SENSE, ZFSet: Mathlib separately models Zermelo-Fraenkel set theory
+      with choice. There a set is a TERM of the type ZFSet (pre-sets quotiented by
+      extensional equivalence), and membership is between ZFSets, not between a term
+      and a predicate on its type. It is kept in these notes rather than as its own
+      math:ZFSet id, because the math: namespace admits structures used by two or
+      more tenants, and no tenant Lean code (QBP master a4d4383, wyrd main 5c36988,
+      edda Main 9d571a5) references ZFSet. If a tenant starts using it, split it out,
+      as the Tier senses were.
+      math:group relation: a group is a structure ON A TYPE (class Group (G : Type
+      u)), not a set of things.
+      DESIGN-PROPOSAL mapping: when a thread is said to "host a group of things",
+      what is meant precisely is a set (of issues, strikes, ACs) or a diagram (see
+      math:category). It is not a math:group, because strikes are not invertible.
+
 terms_count_by_status:
   axiom: 1
-  derived: 78
+  derived: 79
   conjectural: 1
   design-proposal: 21
   unlocated: 0
-  total: 101
+  total: 102
