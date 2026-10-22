@@ -134,6 +134,7 @@ qbp-architecture (or beekeeper) responds with resolution; Herschel resumes after
 Triggered by beekeeper close-intent (per `~/Documents/CLAUDE.md` §Sprint-Lifecycle Triggers → confirm-handshake). Once confirmed, these steps execute **in order**, each with an owner. This is a fixed runbook so "close the sprint" runs deterministically, not improvised:
 
 1. **Completeness gate** (qbp-architecture + Herschel). Verify every sprint-scope issue closed and every PR merged with written §I4 sign-offs + ticked test-plan boxes (`pr-merge-completeness` hard gate). Any gap → carry-item or the close pauses; never wave it through.
+   - **Lock check.** If the sprint has a lock (an executable specification it was meant to open) and the lock is **red** after the in-scope work has landed, the close pauses and the **key loop** runs (`best-practices/forging-spikes-strikes-executable-specs.md` §7a): diagnose against theory and spec → refined-spec strike or research strike → re-run the lock. After **two full rounds** still red, qbp-architecture brings a lock-impasse record to the beekeeper, who chooses: another round, a research track, a written gate re-scope, or close-and-carry. Implementation-gaps and test-artifacts are finished, not looped, and don't count as rounds.
 2. **Housekeeping gate** (qbp-architecture). Confirm `housekeeping-before-sprint` for the *next* sprint is satisfiable — incl. the 10-addendum compile rule for any theory/spec the next sprint touches.
 3. **Builder-learnings harvest** (each implementor owns their builder; qbp-architecture ratifies federation-wide). For each builder deployed this sprint, read its `inter/wisdoms/<builder>.md` deltas and promote the *general* ones into that builder's launch prompt (bump "Last updated"); route cross-builder lessons to `wisdoms/_federation.md` for qbp-architecture coherence-ratification. "No new learnings" is a valid, common outcome — overhead scales with real learning, not run count. *(The org-scale sleep cycle: per-run episodic learnings → consolidated into semantic prompt/wisdoms. See `architecture-records/2026-08-23-builder-refinement-loop-RECORD.md`.)*
 4. **Retrospective + Reliability Review** (qbp-architecture owns it; deming supplies the reliability logs). Close the sprint's tracked **retrospective issue**, which Sprint-Prep step 2 opened, by posting:
@@ -145,11 +146,25 @@ Triggered by beekeeper close-intent (per `~/Documents/CLAUDE.md` §Sprint-Lifecy
      - the **forging process notes**, for any forging that ran (`process-notes/`).
      
      From these, **name the recurring failure classes**: count each class, and state its trigger and its cost (hours dark, reviews stalled, reruns). To date the classes are seat deafness from an unarmed wake waiter, tool-parse hangs, usage caps, Vulkan/tty, and GitHub keyword/stacking mis-merges. Then **promote each class's prevention item** to the next sprint's backlog, **with one named owner each** (`ruling-actions-name-one-owner`). "No recurring class" is a valid outcome, but it must be stated, not skipped.
-   - **(c) Durability.** The escalation log and crash RECORD must already be in **inter** (git-versioned, or as issues) before this step runs, so that losing the box doesn't lose the learnings. deming promotes them, as their maintainer.
+   - **(c) Durability.** The escalation log and crash RECORD must already be **off-box and git-versioned** (canonical: Nidavellir `ops/logs/`, per Nidavellir#13; or as issues) before this step runs, so that losing the box doesn't lose the learnings. deming promotes them, as their maintainer.
 5. **Dashboard + carry-forward** (qbp-architecture; Herschel assists). Update `BMA-BADASS.md` (Sprint Lifecycle State, Decisions log, History); roll unfinished scope + new follow-ups into the next sprint's backlog.
 6. **Announce close** (qbp-architecture). One channel post declaring Sprint N CLOSED + the next-sprint housekeeping-gate status, so every seat re-grounds to the new state.
 
 The federation "picks this up" because each step names an owner and step 6 is the communication event the seats re-ground from — rules + communication, crash-durable via the always-loaded trigger rule + this on-disk runbook.
+
+### Condition D: Lock won't open (in-scope work done)
+
+All Sprint-N items are Done, but the sprint's lock is still red. This is not Condition C: no work remains in progress. Herschel posts:
+
+```
+## Sprint N LOCK RED — @qbp-architecture key loop (round k of 2)
+
+Lock: <executable spec / issue> — red assertions: <list>
+Round 1: <class> → key <PR> → re-run <result>      (if any)
+Next: qbp-architecture diagnosis against theory + spec (forging doc §7a)
+```
+
+`k` = the round now under way. The first post opens round 1. qbp-architecture runs the key loop (§7a of the forging doc). The beekeeper may rule a disposition at any round boundary (two rounds is the ceiling that forces escalation, not a floor). After two full rounds still red, the post becomes a lock-impasse record addressed to @beekeeper.
 
 ### Condition C: Sprint partial (close vs continue?)
 
