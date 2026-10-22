@@ -1,6 +1,6 @@
 # Forging — process notes (working reference)
 
-> **Status:** WORKING NOTES. Not ratified. This is the input to the housekeeping issue that refines the forging process.
+> **Status:** WORKING NOTES. Not ratified. This is the input to the housekeeping issue that refines the forging process. **Part F/G (2026-10-22):** the strike 1–2 review and recommendations for inter#153.
 > **Author:** @qbp-architecture · **Started:** 2026-10-01 · Directed by the beekeeper.
 > **Canonical method (ratified):** `best-practices/forging-spikes-strikes-executable-specs.md` (inter#135) and `best-practices/acceptance-verification-standard.md` (inter#138). These notes record **how forging has actually gone**, so the method can be refined against evidence rather than memory.
 > **Visibility:** inter is public. These notes stay at process level and carry no internals of private repos (bma-systema, edda, notary). Private-repo detail lives in those repos' own records, per the record-visibility rule (inter#135 §5).
@@ -77,13 +77,13 @@ Ordered by date. Each entry gives the forging's shape, what worked, what broke, 
 **Interface isolation:** the thread depends on authority/authentication (inter#149) only through `verify()`.
 
 ### B1. Strike plan (risk-ordered, with native blocked-by edges)
-| Strike | Content | Repos | Status (2026-10-01) |
+| Strike | Content | Repos | Status (updated 2026-10-22) |
 |---|---|---|---|
 | 0 | `verify()` v0 stub + fakes + shared contract | confluent-trust#109 | **merged** (34e031f) |
-| 1 | PA grading engine + fixtures + notary-request v1.3 emit record; notary gate hardening | confluent-trust#110, notary#2, notary#1 | #110 approved, CI green, awaiting merge; notary#2 approved |
-| 2 | ledger CI reconcile (emitter `qbp-pa-reconcile`) | QBP#692 | blocked on strike 1 |
-| 3 | silicon gate (warn mode → enforce) | qbp-compute-unit#77 | blocked on strike 2 |
-| 4 | Notary wired: Deming filer + Notary consumer, end-to-end live | notary#3 | blocked on strike 3 |
+| 1 | PA grading engine + fixtures + notary-request v1.3 emit record; notary gate hardening | confluent-trust#110, notary#2, notary#1 | **done** (CT#110 merged 2026-10-01; notary#2 merged 2026-10-02) |
+| 2 | ledger CI reconcile (emitter `qbp-pa-reconcile`) | QBP#692 | **done** (QBP#692 closed 2026-10-15; DoD tail QBP#709 merged 2026-10-16) |
+| 3 | silicon gate (warn mode → enforce) | qbp-compute-unit#77 | held for Sprint 4 (beekeeper, 2026-10-17) |
+| 4 | Notary wired: Deming filer + Notary consumer, end-to-end live | notary#3 | held for Sprint 4 |
 
 ### B2. Timeline
 | When | Event | Outcome |
@@ -278,6 +278,47 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   - Never put a closing verb next to a reference you are *not* closing. Write "see #N", "does not auto-close #N" or "#N stays open".
   - Herschel's readiness check scans PR bodies for closing-keyword references and lists them before handing a PR to the beekeeper.
 
+### C19. Six review rounds patching a parser before anyone asked why (QBP#698, 2026-10-03 → 10-08)
+- **What:** QBP#698 (claim-source closure for QBP#696) went through six review rounds in one evening: Red Team, Gemini, and four narrow re-checks (M1 → N7 → N10 → N14 → N19/N20). Each round found a new legal Lake or Agda syntax form that the hand-written regex parser mishandled. The fixes were sound, but nobody stepped back until the beekeeper asked on 2026-10-08 whether we were papering over a fundamental issue.
+- **Root cause (from the RCA on QBP#698, 2026-10-08):** a load-bearing **float**. We were re-implementing module resolution that each prover's own toolchain already owns. My earlier "stop rule" (refusal-only findings are non-blocking) managed the symptoms and never asked the cause question.
+- **Fix:** QBP#703 replaced the parser with closures derived from the provers' own tools, and QBP#698 closed unmerged (2026-10-16).
+- **Proposed rule:** when review round 3 finds a new instance of a finding type that rounds 1–2 already found, stop patching and run a cause check: is a tool we don't own already authoritative for this? This is the same two-rounds bound as the key loop (inter#192).
+
+### C20. Design settled during the build, not before it (QBP#692, 2026-10-02)
+- **What:** strike 2's issue had numbered ACs and a coverage matrix, so it passed the C5 standard. Yet on 2026-10-02 nine architecture rulings landed on QBP#692 in about ten hours, mid-build:
+  - evidence shape;
+  - the staleness key, ruled at 14:07, **superseded by my own ruling at 14:09**, and refined again at 23:41 (QBP-local imports);
+  - what PA-2 attaches to;
+  - a companion anchor;
+  - the target guard;
+  - kernel diversity for `maps`.
+  
+  Most of C11's crossed messages (seq 2266–2402) cluster in this window.
+- **Root cause:** the ACs said *what* to prove but rested on design decisions nobody had listed. The encoder build discovered them one by one, and each became a ruling under time pressure.
+- **Proposed rule:** a strike has a **design-closure check** before build dispatch. The strike issue lists the design decisions its ACs depend on. Each one is either ruled (one record) or assigned to a spike. More than about three rulings mid-build is the signal that the strike should have started as a spike.
+
+### C21. Strike 2's cycle time was set by outages, not by the work
+- **Measured:** strike 1 took about 1.5 days (CT#110: 3 review rounds in ~90 min; notary#2 merged 10-02). Strike 2 took about 16 days (QBP#692 opened 10-01, DoD tail merged 10-16): 11 PRs, 9 merged, 2 closed unmerged. Inside that span:
+  - **10-04 → 10-08:** no strike-2 PR activity. The box crashed on 10-07 (a power event; it is now on a UPS), and deming ran a staged relaunch on 10-08.
+  - **10-12 → 10-14:** my wake waiter was unarmed (memory `rearm-wake-waiter-every-fire`). QBP#703 waited from 10-11 to 10-15 for its first approval. Bridge traffic fell to 5 messages a day.
+  - **10-16:** a host reboot (the RCU stall); I was deaf through it, and the PR-2 scope ruling was made in my absence.
+  - **Approve → merge:** strike 1 took minutes. Strike 2 had several waits of about 35 h (QBP#701: last approve 10-13 15:51 → merged 10-15 02:55; QBP#708: 10-15 05:27 → 10-16 16:17).
+- **Read:** roughly 6–7 of strike 2's 16 days were outage or deafness. Correctly folding QBP#696 into the DoD (C13) added real work, and that was a cost worth paying. The rest was waiting.
+- **Proposed:**
+  - Seat liveness is critical-path infrastructure for a forging. Session-independent wake delivery (inter#75) goes on the next forging's critical path.
+  - The charter's A1 ladder (15 min → herschel, 1 h → deming) has to actually *fire* on a dark critical-path seat. herschel's own waiter also died (seq 3000), so the watcher needs a watcher (deming).
+
+### C22. "Ready to merge" called on a PR that was DIRTY (QBP#704, 2026-10-15; the architect's own)
+- **What:** I said QBP#704 (the re-land of QBP#702) was ready once CI went green, without checking that it was mergeable. It was DIRTY. qbp-oppenheimer re-cut it as QBP#705, which I then verified for both content and mergeability.
+- **Proposed:** "ready" means **one readiness check**:
+  - base is the default branch (C17);
+  - every named §I4 is written at the head SHA (C16);
+  - every parsed closing reference is intended (C18);
+  - mergeable (not DIRTY or BEHIND);
+  - CI green at the head.
+  
+  That check belongs to herschel's merge queue, and I run it before ever saying "ready".
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -309,3 +350,56 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
 - Should milestone-scoped authorization be a GitHub artefact (a meta-issue comment) only, or also mirrored to the bridge for seats that boot mid-milestone?
 - Is the stacked-PR pattern worth keeping, given the CI blind spot, or should strikes wait for their predecessor's merge?
+
+---
+
+## Part F — Strikes 1 and 2: what the evidence says (review for inter#153, 2026-10-22)
+
+**Method.** Sources: PR and issue timestamps and comments via `gh` (confluent-trust#109/#110, QBP#692 and its PRs QBP#694–#709), the QBP#692 comment thread, the QBP#698 RCA, the inter#150 meta issue, bridge traffic counts, and these notes (C1–C22). notary is private, so it appears here only at process level.
+
+| | Strike 0 | Strike 1 | Strike 2 |
+|---|---|---|---|
+| Work | `verify()` stub + contract (CT#109) | PA engine + emit record (CT#110), notary gate (notary#2) | real-ledger reconcile + backfills + closure (QBP#692) |
+| Span | ~12 h | ~1.5 days | ~16 days |
+| PRs | 1 | 2 | 11 (9 merged; QBP#698 superseded, QBP#704 DIRTY) |
+| Review rounds (worst PR) | 2 | 3 (CT#110) | 6 (QBP#698) |
+| Mid-build rulings | ~0 | few | ~9 on 10-02 alone (C20) |
+| Process incidents | — | C1, C2, C3, C4, C7 | C11, C13, C17, C18, C19, C20, C22 |
+| Outage time | none | ~4 h push-gate wait (C2/C7) | ~6–7 days (C21) |
+
+**What worked, and should be kept:**
+- **Contract locked before builds.** The notary-request v1.3 schema didn't move during strike 1 and four parties built to it. Strike 2's trouble came from decisions that *weren't* locked (C20). The same principle cuts both ways.
+- **Reviewer-authored omission probes.** These found what the implementer's mutation table couldn't (C3), and the same class reappeared as QBP#698's type B. This is the strongest single quality lever we have.
+- **Independent, fast reissue loops.** CT#110 went through three rounds in ~90 min, each narrower than the last.
+- **Scope by guarantee (C13).** Bringing QBP#696 into the DoD lengthened strike 2, and it was right to.
+- **Root-cause analysis when asked.** The QBP#698 RCA turned six rounds of patching into a deleted parser and a sounder closure (QBP#703).
+- **The milestone-authorization comment on inter#150.** After the beekeeper's 2026-10-01 record there, no further relayed-authorization incident appears in strike 2.
+
+**What the evidence says went wrong, as patterns rather than incidents:**
+1. **Unclosed design** (C20, and much of C11). Strike 1 locked its contract first; strike 2 settled its design in-flight.
+2. **Unbounded iteration** (C19). Six rounds before the cause question was asked. The key loop (inter#192) bounds lock misses at two rounds; PR review had no such bound.
+3. **One readiness check, assembled from separate incidents** (C16, C17, C18, C22). Four separate "merged wrong / not ready" events came from four missing items in what should be a single pre-merge check.
+4. **Liveness** (C21, C10). Outages and dead waiters, not work, set strike 2's pace.
+5. **Records lag the work.** Reconstructing strike 2 for this review needed PR timestamps and session transcripts. 10-04 to 10-07 has no record at all. These notes (inter#154) are still a draft, and inter#132 is still open.
+
+---
+
+## Part G — Recommendations (for the beekeeper's ruling; inter#153)
+
+Consolidated from Part D and Part F. Each has evidence, the change, its home, and one owner. Items already landed since 2026-10-01 are marked ✅ and not re-proposed.
+
+| # | Recommendation | Evidence | Change → home | Owner |
+|---|---|---|---|---|
+| **R1** | **Close the design before the build.** A strike's issue lists the design decisions its ACs rest on; each is ruled (one record) or assigned to a spike before build dispatch. About 3+ mid-build rulings means re-classify as a spike. | C20, C11 | forging doc §2 (strike entry criteria) + the issue template's design-decisions block | qbp-architecture |
+| **R2** | **Bounded iteration everywhere: two rounds, then step back.** PR review: if round 3 finds a new instance of an already-seen finding type, stop and run a cause check ("is a tool we don't own already authoritative?"). Same bound as the key loop. | C19 | A&V standard §5 (reissue loop) + forging doc §7a cross-ref | qbp-architecture |
+| **R3** | **Guards that catch omissions.** KILLED/SURVIVED as the only mutation vocabulary. A **must-reject-on-absence** row in every coverage matrix for gates and graders (this answers Part E Q1: a named test class, not just reviewer discipline, so it's auditable). Fail-closed authoring rule. | C1, C3, C19 type B | A&V standard (inter#153 AC2/AC3) | qbp-architecture |
+| **R4** | **One merge-readiness check**, run by herschel before any PR goes to the beekeeper:<br>– base = default branch;<br>– every named §I4 written at the head;<br>– parsed closes listed and intended;<br>– mergeable;<br>– CI green at the head.<br>Posted as one daily ready-queue. **Stacking off by default** (Part E Q3), allowed only under the inter#189 protocol. | C16, C17, C18, C22, C4; ~35 h approve→merge waits | herschel persona + `sprint-handoff-protocol.md` §4; stacked-PR rule in `github-best-practices.md` §5.4 (inter#189) | herschel |
+| **R5** | **Liveness is forging infrastructure.**<br>– inter#75 (session-independent wake) lands before the next forging starts;<br>– the A1 escalation ladder is tested by deliberately darkening a seat once;<br>– deming watches the watcher (herschel). | C21, C10, seq 3000 | inter#75; charter A1 test; deming persona | deming (with qbp-architecture on inter#75) |
+| **R6** | **Minimal interrupt protocol** in the seat charter: every ruling names what it supersedes ("supersedes <ref>"); substantive posts carry "re: seq N"; read-before-write before posting a ruling or starting a build; a `HOLD:` marker with ack for real stop-work. | C11 (incl. my own 2-minute self-supersession, C20) | `charters/seat-charter.md` amendment | qbp-architecture |
+| **R7** | **Records keep up with the work.** A short strike-retro entry in these notes at every strike close (Part D 10); land these notes (inter#154 out of draft); fold inter#132's six spike rules into the forging doc and close inter#132. | Part F pattern 5 | forging doc + inter#154 + inter#132 | qbp-architecture |
+| **R8** | **Ratify the milestone-authorization convention** (inter#153 AC5): the beekeeper's comment on the milestone meta issue is the record, and bridge posts point to it (Part E Q2: the bridge mirrors, never holds). | C2, plus no recurrence in strike 2 after inter#150's comment | ruling comment on inter#153 | **beekeeper** |
+| ✅ | Search-before-file, one owner per ruling action, forging watch → herschel; §5 handoff for continuing forgings | C9, C10 | `personas/herschel.md` §7.8–7.12; `sprint-handoff-protocol.md` Sprint-Prep step 2 | landed |
+
+**Still owed on inter#153:** AC8 (the C9 RCA by a non-party seat). I found no record of it on inter#153; herschel to confirm or deliver.
+
+**Proposed sequencing:** the beekeeper rules on R1–R8. qbp-architecture then lands R1/R2/R3/R6/R7 as one docs PR (closing inter#153 AC1–AC4 and AC7, and inter#132). herschel takes R4, and deming R5. All of it should land before strike 3 starts in Sprint 4.
