@@ -400,6 +400,6 @@ Consolidated from Part D and Part F. Each has evidence, the change, its home, an
 | **R8** | **Ratify the milestone-authorization convention** (inter#153 AC5): the beekeeper's comment on the milestone meta issue is the record, and bridge posts point to it (Part E Q2: the bridge mirrors, never holds). | C2; no recurrence recorded after inter#150's comment | ruling comment on inter#153 | **beekeeper** |
 | ✅ | Search-before-file, one owner per ruling action, forging watch → herschel; §5 handoff for continuing forgings | C9, C10 | `personas/herschel.md` §7.8–7.12; `sprint-handoff-protocol.md` Sprint-Prep step 2 | landed |
 
-**Still owed on inter#153:** AC8 (the C9 RCA by a non-party seat). I found no record of it on inter#153; herschel to confirm or deliver.
+**AC8 delivered (2026-10-22):** herschel's independent C9 RCA (inter#153 issuecomment-6332477895). Its root cause is the un-owned ruling action; the two-minute gap was a true race that search-before-file alone would not have caught. It sharpens the landed one-owner rule: **a ruling that spawns an issue names both the single filing owner and the target repo inline**, and near-duplicate detection goes into the R4 queue. This supersedes the C9 preliminary read above, which over-weighted search discipline.
 
 **Proposed sequencing:** the beekeeper rules on R1–R8. qbp-architecture then lands R1/R2/R3/R6/R7 as one docs PR (closing inter#153 AC1–AC4 and AC7, and inter#132). herschel takes R4, and deming R5. All of it should land before strike 3 starts in Sprint 4.
