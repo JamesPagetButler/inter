@@ -8,14 +8,14 @@ beekeeper (James) can look up what a term means, where it comes from, and how
 solid the ground under it is, in one place.
 
 It deliberately does **not** try to cover the whole federation. It covers the
-55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest) — the core vocabulary already in active
+55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0) — the core vocabulary already in active
 use, plus the known "capability" clash — with a clear path for adding more.
 
 ## What's here
 
 | File | What it is |
 |---|---|
-| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 72 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
+| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 92 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
 | `ONTOLOGY-BEST-PRACTICES.md` | The research behind why this format was chosen (RDF/OWL/SKOS/JSON-LD/Turtle survey, dual-readability patterns, upper ontologies, versioning/drift) and the upgrade path to SKOS/JSON-LD if the vocabulary ever needs real machine inference. |
 | `README.md` | This file. |
 
@@ -40,7 +40,12 @@ exact field-name mapping if you need to lift this into real SKOS/JSON-LD later
 (the theory-to-executable compiler/language), `systema:` (the workspace
 process framework), `spike:` (the 2026-09-25 hypergraph-generativity spike —
 **all `spike:` terms are DRAFT design-proposal, not ratified**), `fed:`
-(cross-cutting terms that don't belong to one project alone).
+(cross-cutting terms that don't belong to one project alone), and since v0.4.0
+`notary:` (the Notary V&V function; owner seat notary-implementor),
+`contextus:` (scope nodes, insight signals, retention tiers, the emit side of the
+attention-scalar seam; owner seat contextus-impl) and `craft:` (the cockpit's
+render-side vocabulary; owner seat hutchins). notary and craft are private
+repos: their namespaces publish vocabulary only, with no internal mechanics.
 
 ## The AXIOM-1 grounding
 
@@ -96,7 +101,7 @@ Two things worth being honest about up front:
    tightly paraphrase it. Do not invent a definition to fill a gap; if you
    can't find one, add the term with `status: unlocated` and say so (see
    `cth:belief-tiers` for the pattern).
-2. Pick a namespace (`cth:`/`wyrd:`/`bma:`/`edda:`/`systema:`/`spike:`/`fed:`)
+2. Pick a namespace (`cth:`/`wyrd:`/`bma:`/`edda:`/`systema:`/`spike:`/`fed:`/`notary:`/`contextus:`/`craft:`)
    and a stable `id`.
 3. Fill every field in `_meta.field_glossary` — especially `status` and
    `axiom_grounding`. If there's a genuine derivation chain to `cth:AXIOM-1` or
@@ -147,7 +152,9 @@ These are surfaced, not resolved. Each is marked in `ontology.yaml` with a
    stale, or a third cart was designed somewhere not yet located and should
    be pointed to.
 
-3. **`cth:belief-tiers` — unlocated.** No defined "belief tier" scheme was
+3. **`cth:belief-tiers` — unlocated.** *(RESOLVED v0.4.0: now `derived` as
+   Notary Trust Tier × PA grade, pending @cth-implementor's co-sign; see below.)*
+   No defined "belief tier" scheme was
    found anywhere in the searched CTH corpus, despite it being named in the
    founding brief as core vocabulary. Closest analogs (an anchor `Status`
    enum, `ProvenanceKind`, and a prose reference to Dempster-Shafer/
@@ -190,23 +197,33 @@ These are surfaced, not resolved. Each is marked in `ontology.yaml` with a
    functor. Both are recorded under their real names with the correction
    noted rather than silently renamed to match the brief.
 
-## Open beekeeper decisions carried from the inter#164 review (v0.3.0)
+## Beekeeper decisions from the inter#164 review — RESOLVED (v0.4.0)
 
-The v0.3.0 harvest applied verified corrections and left these unchanged in
-`ontology.yaml`:
+v0.3.0 left four decisions open. The beekeeper ruled on all four on 2026-10-22
+([ruling on inter#173](https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133)), and v0.4.0 applies them:
 
-1. **Capability by kind.** Bragi (edda) reads the clash as "Tool = instrument,
-   Capability = authority" (edda `edda:Cap` is authority-to-act). That differs
-   from the ratified 2026-09-27 resolution ("tool = primitive capability").
-   `fed:Capability` is unchanged.
-2. **Tier as senses.** `wyrd:Tier` now lists six attested "Tier" senses. Whether
-   to split Tier into per-sense concept ids is open.
-3. **New namespaces.** `notary:` (Trust Tiers T0–T7, PA grade, the six
-   `verification_outcome` values, PA-record vocabulary), `contextus:` (scope
-   kinds, ScopeMembership, InsightSignal, ScalarReferent, the attention-scalar
-   seam) and `craft:` (attention salience) were proposed. None is added.
-4. **`cth:belief-tiers`.** The Notary proposes Trust Tiers + PA grade as the
-   answer. This depends on decision 3; the term stays `unlocated`.
+1. **Capability: the bound triple. RESOLVED.** Tool = instrument; Capability =
+   tool + authority to use it + allocated capacity, bound at instantiation. A
+   skill, instantiated, still grants a composite capability. This refines the
+   2026-09-27 ruling ("tool = primitive capability"): a bare tool is no longer a
+   capability. `fed:Capability`, `fed:Tool` and `edda:Cap` (the authority-bearing
+   token) are updated, and the 2026-09-27 history is kept in their notes.
+2. **Tier: split, with a sense index. RESOLVED.** Each sense has its own id in its
+   owner's namespace: `wyrd:Tier` (algebraic), `bma:MemoryTier`, `cth:AnchorTier`,
+   `notary:TrustTier`, `contextus:RetentionTier` and `edda:AuthorityTier`.
+   `fed:Tier` is a disambiguation entry that lists them.
+3. **Namespaces: all three added. RESOLVED.** `notary:` (owner seat
+   notary-implementor), `contextus:` (contextus-impl) and `craft:` (hutchins), with
+   their terms source-verified on each repo's default branch. notary and craft are
+   private repos, so only vocabulary is published. The PA grade stays at
+   `cth:proof_assistants` and is related rather than duplicated as a notary: term.
+4. **`cth:belief-tiers`: accepted. RESOLVED,** pending co-sign. It is mapped to
+   `notary:TrustTier` × PA grade, status `unlocated` → `derived`. Because it is a
+   CTH term, the ruling requires @cth-implementor's co-sign; its notes record that
+   the co-sign is still awaited.
+
+The named seats (notary-implementor, contextus-impl, hutchins, cth-implementor, and
+edda for `edda:Cap` / `edda:AuthorityTier`) re-read their rows on inter#173.
 
 ## What this draft does not cover (by design)
 
