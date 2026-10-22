@@ -285,7 +285,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 - **Proposed rule:** when review round 3 finds a new instance of a finding type that rounds 1–2 already found, stop patching and run a cause check: is a tool we don't own already authoritative for this? This is the same two-rounds bound as the key loop (inter#192).
 
 ### C20. Design settled during the build, not before it (QBP#692, 2026-10-02)
-- **What:** strike 2's issue had numbered ACs and a coverage matrix, so it passed the C5 standard. Yet on 2026-10-02 nine architecture rulings landed on QBP#692 in about ten hours, mid-build:
+- **What:** strike 2's issue had numbered ACs and a coverage matrix, so it passed the C5 standard. Yet on 2026-10-02 **seven architecture ruling comments** (several holding more than one numbered ruling) plus a schema-authority ruling from cth landed on QBP#692 in about ten hours, mid-build:
   - evidence shape;
   - the staleness key, ruled at 14:07, **superseded by my own ruling at 14:09**, and refined again at 23:41 (QBP-local imports);
   - what PA-2 attaches to;
@@ -299,11 +299,11 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 
 ### C21. Strike 2's cycle time was set by outages, not by the work
 - **Measured:** strike 1 took about 1.5 days (CT#110: 3 review rounds in ~90 min; notary#2 merged 10-02). Strike 2 took about 16 days (QBP#692 opened 10-01, DoD tail merged 10-16): 11 PRs, 9 merged, 2 closed unmerged. Inside that span:
-  - **10-04 → 10-08:** no strike-2 PR activity. The box crashed on 10-07 (a power event; it is now on a UPS), and deming ran a staged relaunch on 10-08.
-  - **10-12 → 10-14:** my wake waiter was unarmed (memory `rearm-wake-waiter-every-fire`). QBP#703 waited from 10-11 to 10-15 for its first approval. Bridge traffic fell to 5 messages a day.
+  - **10-04 → 10-08:** no strike-2 PR activity. The box crashed on 10-07 (a power event; it is now on a UPS), and deming ran a staged relaunch on 10-08. **10-04 to 10-06 has no record of why**: my last resumed to-do list dates from 10-05, and nothing else survives.
+  - **10-12 → 10-14:** my wake waiter was unarmed (memory `rearm-wake-waiter-every-fire`). QBP#703 waited from 10-11 to 10-15 for its first approval. Messages reaching my inbox fell to 5 a day.
   - **10-16:** a host reboot (the RCU stall); I was deaf through it, and the PR-2 scope ruling was made in my absence.
   - **Approve → merge:** strike 1 took minutes. Strike 2 had several waits of about 35 h (QBP#701: last approve 10-13 15:51 → merged 10-15 02:55; QBP#708: 10-15 05:27 → 10-16 16:17).
-- **Read:** roughly 6–7 of strike 2's 16 days were outage or deafness. Correctly folding QBP#696 into the DoD (C13) added real work, and that was a cost worth paying. The rest was waiting.
+- **Read:** roughly 6–7 of strike 2's 16 days show no strike progress. About 3 of them are attributable (the crash and relaunch, and my deafness); the rest are unrecorded. Correctly folding QBP#696 into the DoD (C13) added real work, and that was a cost worth paying. The rest was waiting.
 - **Proposed:**
   - Seat liveness is critical-path infrastructure for a forging. Session-independent wake delivery (inter#75) goes on the next forging's critical path.
   - The charter's A1 ladder (15 min → herschel, 1 h → deming) has to actually *fire* on a dark critical-path seat. herschel's own waiter also died (seq 3000), so the watcher needs a watcher (deming).
@@ -363,9 +363,9 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 | Span | ~12 h | ~1.5 days | ~16 days |
 | PRs | 1 | 2 | 11 (9 merged; QBP#698 superseded, QBP#704 DIRTY) |
 | Review rounds (worst PR) | 2 | 3 (CT#110) | 6 (QBP#698) |
-| Mid-build rulings | ~0 | few | ~9 on 10-02 alone (C20) |
+| Mid-build ruling comments | ~0 | few | 7 + 1 on 10-02 alone (C20) |
 | Process incidents | — | C1, C2, C3, C4, C7 | C11, C13, C17, C18, C19, C20, C22 |
-| Outage time | none | ~4 h push-gate wait (C2/C7) | ~6–7 days (C21) |
+| Time without progress | none | ~4 h push-gate wait (C2/C7) | ~6–7 days, ~3 attributable (C21) |
 
 **What worked, and should be kept:**
 - **Contract locked before builds.** The notary-request v1.3 schema didn't move during strike 1 and four parties built to it. Strike 2's trouble came from decisions that *weren't* locked (C20). The same principle cuts both ways.
@@ -373,7 +373,7 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 - **Independent, fast reissue loops.** CT#110 went through three rounds in ~90 min, each narrower than the last.
 - **Scope by guarantee (C13).** Bringing QBP#696 into the DoD lengthened strike 2, and it was right to.
 - **Root-cause analysis when asked.** The QBP#698 RCA turned six rounds of patching into a deleted parser and a sounder closure (QBP#703).
-- **The milestone-authorization comment on inter#150.** After the beekeeper's 2026-10-01 record there, no further relayed-authorization incident appears in strike 2.
+- **The milestone-authorization comment on inter#150.** After the beekeeper's 2026-10-01 record there, these notes record no further relayed-authorization incident.
 
 **What the evidence says went wrong, as patterns rather than incidents:**
 1. **Unclosed design** (C20, and much of C11). Strike 1 locked its contract first; strike 2 settled its design in-flight.
@@ -397,7 +397,7 @@ Consolidated from Part D and Part F. Each has evidence, the change, its home, an
 | **R5** | **Liveness is forging infrastructure.**<br>– inter#75 (session-independent wake) lands before the next forging starts;<br>– the A1 escalation ladder is tested by deliberately darkening a seat once;<br>– deming watches the watcher (herschel). | C21, C10, seq 3000 | inter#75; charter A1 test; deming persona | deming (with qbp-architecture on inter#75) |
 | **R6** | **Minimal interrupt protocol** in the seat charter: every ruling names what it supersedes ("supersedes <ref>"); substantive posts carry "re: seq N"; read-before-write before posting a ruling or starting a build; a `HOLD:` marker with ack for real stop-work. | C11 (incl. my own 2-minute self-supersession, C20) | `charters/seat-charter.md` amendment | qbp-architecture |
 | **R7** | **Records keep up with the work.** A short strike-retro entry in these notes at every strike close (Part D 10); land these notes (inter#154 out of draft); fold inter#132's six spike rules into the forging doc and close inter#132. | Part F pattern 5 | forging doc + inter#154 + inter#132 | qbp-architecture |
-| **R8** | **Ratify the milestone-authorization convention** (inter#153 AC5): the beekeeper's comment on the milestone meta issue is the record, and bridge posts point to it (Part E Q2: the bridge mirrors, never holds). | C2, plus no recurrence in strike 2 after inter#150's comment | ruling comment on inter#153 | **beekeeper** |
+| **R8** | **Ratify the milestone-authorization convention** (inter#153 AC5): the beekeeper's comment on the milestone meta issue is the record, and bridge posts point to it (Part E Q2: the bridge mirrors, never holds). | C2; no recurrence recorded after inter#150's comment | ruling comment on inter#153 | **beekeeper** |
 | ✅ | Search-before-file, one owner per ruling action, forging watch → herschel; §5 handoff for continuing forgings | C9, C10 | `personas/herschel.md` §7.8–7.12; `sprint-handoff-protocol.md` Sprint-Prep step 2 | landed |
 
 **Still owed on inter#153:** AC8 (the C9 RCA by a non-party seat). I found no record of it on inter#153; herschel to confirm or deliver.
