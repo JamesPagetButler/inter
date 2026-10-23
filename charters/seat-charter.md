@@ -1,17 +1,19 @@
-# Seat Charter — v1.1 (REFERENCE / canonical)
+# Seat Charter — v1.2 (REFERENCE / canonical)
 
 > **This is the REFERENCE charter**, canonical on `inter` and owned by the architect. It is
 > ratified when the beekeeper merges it. The **active** charter that seats boot from lives on
 > Nidavellir (`charters/seat-charter.md`), and deming operates it. The active charter always
 > traces as `reference + operational-deltas-pending-ratification`.
 >
-> **Status:** v1.1 · 2026-10-16 · reference established from the active v1
+> **Status:** v1.2 · 2026-10-22 (v1.1 · 2026-10-16) · reference established from the active v1
 > (`JamesPagetButler/Nidavellir` `charters/seat-charter.md` @ `1d1d0d7`, deming, 2026-10-07)
 > per inter#158, plus two amendments:
 > - **(A1) D3 review-escalation path** — beekeeper-defined 2026-10-16, relayed by herschel
 >   (live-test seq 2824), confirmed by the beekeeper in session.
 > - **(A2) R1 one-warp-per-seat** — the weave orientation ratified 2026-10-08 (inter#161 r2,
 >   forging doc §1b).
+> - **(A3) D5 interrupt protocol** — R6, beekeeper-ratified 2026-10-22 (inter#153; process
+>   notes C11). *v1.2, 2026-10-22.*
 >
 > Mechanism-agnostic: chat now, structured APIs later.
 
@@ -70,6 +72,18 @@ three parameters vary — **bus name**, **home repo**, **domain**.
   task: request capacity first, and run it through `run-bounded`. Never launch a
   machine-impacting job unasked — *via the capacity API when it exists; via deming on the
   bus until then.*
+
+- **D5 — Don't talk past each other (the interrupt protocol).** *(A3, inter#153 R6)*
+  - **Read before you write.** Immediately before posting a ruling or starting a build, re-read
+    the thread. If anything newer touches the same point, reconcile first.
+  - **Anchor replies.** A substantive post names the message it answers (`re: seq N`, or the
+    comment link).
+  - **Supersede explicitly.** A ruling that changes an earlier one says
+    `supersedes <seq / comment>`.
+  - **`HOLD: <what> — superseded by <ref>`** from a decision's owner or the beekeeper means stop
+    before acting. The receiving seat acks before resuming. This is for a real stop-work only.
+  - **Beekeeper interrupts outrank in-flight work.** Finish the current atomic step, then re-read
+    before continuing.
 
 ## The interlock (the safety)
 
@@ -145,4 +159,4 @@ its harness.
    the architect ratifies it into the reference. Active always = `reference + pending deltas`.
 
 ---
-*v1.1 reference — established on inter per inter#158 from the active v1. deming re-syncs the active charter as `reference v1.1 + pending deltas`.*
+*v1.2 reference — v1.1 established on inter per inter#158 from the active v1; v1.2 adds A3 (D5) per inter#153. deming re-syncs the active charter as `reference v1.2 + pending deltas`.*
