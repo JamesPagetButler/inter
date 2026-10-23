@@ -953,7 +953,7 @@ Research-tier promotion PRs require: wyrd-implementor (substrate ownership), qbp
 ### 15.10 Sequencing Notes
 
 - **Crawl:** Research-tier only. Wyrd's `HolographicHypergraph.lean` is grandfathered as the seed substrate corpus.
-- **Toddle:** Compute Manifest v0.2 in `repo-wyrd` — DELIVERED 2026-05-18 (v0.1 base + credibility-block extension). First substrate-tier promotion (`cycle_counter_monotonic_per_phase`) exercised end-to-end 2026-05-21 via `repo-wyrd-pr-#69`.
+- **Toddle:** Compute Manifest v0.2 in `repo-wyrd` — DELIVERED 2026-05-18 (v0.1 base + credibility-block extension). First substrate-tier promotion (`cycle_counter_monotonic_per_phase`) exercised end-to-end 2026-05-21 via `repo-wyrd-pr-#69` (commit `a932413`); `repo-bma-systema-issue-#170` and `-#171` CLOSED 2026-05-21. First-10 HVR count per §15.8 at that date: 1/10.
 - **Walk:** Routine operation; multi-tenant promotions become the norm.
 - **Run:** Compute Manifest may name new substrate per §0.13.2 silicon ladder.
 
