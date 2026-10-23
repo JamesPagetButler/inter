@@ -19,7 +19,7 @@ These apply to the **default branch** (typically `main`) on every federation rep
 | Rule | Setting | Rationale |
 |---|---|---|
 | Require a pull request before merging | **enabled** | Direct push to main is the failure mode CTH PR #40 demonstrated (lint failed but merge succeeded because no protection). PR-required closes that vector. |
-| Require approvals | **0 (allow self-review)** for solo-implementor repos; **1** for federation-shared repos | Don't block solo work; gate cross-instance review where multiple authors operate. |
+| Require approvals | **0 — on every federation repo** | All federation seats push and comment under one GitHub identity, so a required approval can never be satisfied (§7.2.1). The review gate is the §I4 comment + channel verdict, not the GitHub approval count. |
 | Dismiss stale pull request approvals when new commits are pushed | **enabled** | Force re-review when material changes after approval. |
 | Require linear history | **enabled** | Easier `git log` archeology; matches our preference for new commits over amends. |
 | Allow force pushes | **disabled** | Force push to main destroys history. Per Git Safety Protocol — never force push to main. |
@@ -214,6 +214,28 @@ jobs:
 
 Then the gh api branch-protection call references `["build", "test", "lint"]`.
 
+### 4.2.1 Workflow patterns (every federation repo)
+
+**Cancel superseded runs.** Every PR-triggered workflow carries:
+
+```yaml
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+```
+
+A new push to the same ref cancels the in-flight run, which saves runner minutes and keeps a stale result from a superseded commit off the PR. Do **not** put this on workflows whose runs must each complete (e.g. scheduled ledger writes, release jobs). Give those a fixed `group` with `cancel-in-progress: false`.
+
+**Guard Go steps on Go source existing.** In repos with no Go source yet (substrate-gated phases), `go vet` / `golangci-lint` fail on "no packages" and CodeQL autobuild crashes. Guard the build/vet/test, lint, and CodeQL analyze steps with:
+
+```yaml
+if: hashFiles('**/*.go') != ''
+```
+
+so CI stays an honest green rather than a structural red. Remove the guard once the repo has Go source, so a missing tree can't skip CI silently.
+
+Origin: qbp-systema#3 review (2026-05-21); codified per inter#35. Adoption audit (2026-10-17, Go workflows): `cancel-in-progress` present in wyrd `ci-go.yml`, bma-systema `ci-go.yml`, edda `ci-go.yml`; **missing** in confluent-trust `ci.yml`, all qbp-compute-unit Go workflows, qbp-systema `ci-go.yml` (regressed since #3), and wyrd `ci-compute-manifest.yml`. contextus has no Go CI.
+
 ### 4.3 Pre-commit hooks
 
 Recommended in addition to CI (faster feedback locally):
@@ -250,6 +272,17 @@ When PR B depends on PR A:
 - Open PR B against the branch of PR A (not main), so the diff is review-able as B's specific changes.
 - After PR A merges, rebase PR B onto main.
 - **Beekeeper override (per Decision Log #7) does NOT extend transitively** to stacked PRs (per Q6=B in addendum-18-walk meeting). Each PR in the stack needs its own substance review.
+
+**Squash-merge hazard.** Squash-merging the base PR does **not** carry the stacked PR's commits to `main`. If PR B was opened against PR A's branch and PR A is squash-merged, B's base is now a stale branch: merging B lands it in that branch, not `main`, yet GitHub can still show B as "merged". This has happened twice: contextus#21 (2026-05-22, recovered by cherry-pick) and QBP#702 stacked on QBP#701 (2026-10-15, landed in `qbp/692-pa-reconcile-real-ledger` and was re-landed to master by a byte-identical PR; C17 in the forging process notes, draft inter#154). Mitigations, in order of preference:
+
+1. **Don't stack** when the file-conflict surface allows it: open each PR off `main`.
+2. **If you stack, retarget before merging the top PR.** After the base PR merges, rebase B onto `main` and change B's base to `main` (`gh pr edit <B> --base main`), *then* review and merge B. Never merge a PR whose base is not the default branch.
+3. **Merge bottom-up (base first).** Never merge the top of a stack while its base PR is open.
+4. **Post-merge verification:** after merging any PR in a stack, confirm the expected change is on `main`, e.g. `git fetch && git log origin/main --oneline -5` and `git diff <expected-sha> origin/main -- <paths>`, not just the PR's "merged" badge.
+
+5. **Merge-readiness lists the base branch.** Any readiness summary handed to the beekeeper shows each PR's base, so a non-default base is visible at the merge point.
+
+Codified per inter#46.
 
 ### 5.5 Branch retention and release-time cleanup
 
@@ -424,6 +457,16 @@ Merge order: substrate → BMA-side → scoring (gated on substrate merge).
 
 Per ADR-003 §I4 (qbp-compute-unit/architecture/): design docs for substantial substrate or interface changes ARE the review surface. Open as a PR in the relevant repo (typically the repo that owns the substrate). Named reviewers from the federation roster.
 
+#### 7.2.1 Shared-identity review constraint
+
+Every federation persona resolves to **one GitHub identity** (`JamesPagetButler`). Consequences:
+
+1. **Formal GitHub reviews are structurally impossible.** `gh pr review --approve` fails with "cannot approve your own pull request" for every seat. A PR showing **"0 approving reviews" is expected** and is not evidence of a missing review.
+2. **The review of record is the §I4 verdict**, posted as a PR comment (`gh pr comment`, signed with the seat name, quoting the head SHA reviewed) and mirrored on the sessionbridge channel. The beekeeper's merge gate reads those comments (`pr-merge-completeness`: every named reviewer signed off in writing).
+3. **Branch protection: "Require approvals" stays at 0** (§1.1). A non-zero setting is permanently unsatisfiable and blocks every merge. Required *status checks* (§1.2) remain the mechanical gate.
+
+Surfaced by @cth-implementor on the QBP#485 co-sign (seq 443, 2026-06-01); codified per inter#48. If the federation moves to per-seat GitHub identities (e.g. GitHub Apps), revisit this section and §1.1 together.
+
 ### 7.3 sessionbridge MCP coordination
 
 Cross-instance design discussion happens on the sessionbridge MCP channels (Crawl-phase only). Notable channels:
@@ -464,7 +507,7 @@ This doc updates when:
 - CI patterns shift across federation repos
 - ADR-003 §I4 evolves
 
-Last updated: 2026-09-27 (§7.5 PR/issue reference convention `<repo>#N` added, beekeeper-directed). Prior: 2026-06-01 (§7.4 issue-PR discipline, inter#43; §5.6 constitutional-doc PR gate + §7.4 sub-rules 1a/1b, inter#52).
+Last updated: 2026-10-17 (§4.2.1 CI workflow patterns, inter#35; §5.4 stacked-PR squash-merge hazard, inter#46; §1.1 approvals = 0 + §7.2.1 shared-identity review constraint, inter#48). Prior: 2026-09-27 (§7.5 PR/issue reference convention `<repo>#N` added, beekeeper-directed). Prior: 2026-06-01 (§7.4 issue-PR discipline, inter#43; §5.6 constitutional-doc PR gate + §7.4 sub-rules 1a/1b, inter#52).
 
 ---
 
