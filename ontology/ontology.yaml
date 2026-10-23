@@ -18,8 +18,8 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.1.0"
-  date: "2026-09-27"
+  version: "0.2.0"
+  date: "2026-10-08"
   root_axiom: cth:AXIOM-1
   scope: >
     Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
@@ -1236,10 +1236,209 @@ terms:
       Documents may still name which sense they mean for clarity, but this is
       no longer an open decision.
 
+  # ==========================================================================
+  # FED — forging & weaving (federation process vocabulary). Ratified 2026-10-08:
+  # inter#160 → #165 (reconciliation), inter#161 r2 → #166 (weave orientation).
+  # ==========================================================================
+
+  - id: fed:forging
+    prefLabel: "forging"
+    definition: >
+      The method: a chain of retained, risk-ordered strikes that de-risks and builds a capability; repo-agnostic. Forging says how an increment is made and hardened; weaving (§1b) says its topology.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: [fed:strike]
+    related: [fed:thread, fed:fabric, fed:executable-specification]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          "Forging is how we build something durable and de-risked: a sequence of strikes (thin, end-to-end increments) that are kept and grown, each advancing only when its executable specification is green."
+    notes: >
+      RATIFIED 2026-09-27 (inter#135); reconciled 2026-10-08 (inter#160/#165). Cross-repo 'Damascus melding' is the common case, not a second definition.
+
+  - id: fed:thread
+    prefLabel: "thread (weft)"
+    definition: >
+      The ephemeral, parallel conceptual-development unit within a sprint, where intent, theory and per-repo spec-deltas are spelled out and where spikes run; converts into one or more strikes once its executable specification is fully defined. Two kinds: warp thread (one repo) and weft thread (cross-repo). 'Weft' is this same concept named for its cross-repo orientation (weft ≡ thread).
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: []
+    related: [fed:strike, fed:spike, fed:warp, fed:crossing]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1a: "A thread is the ephemeral conceptual-development unit within a sprint." §1b: "Weft ≡ thread (§1a): one concept, one definition."
+    notes: >
+      RATIFIED 2026-10-08 (inter#160 → #165; weave orientation inter#161 r2 → #166). Deliberately ONE entry: 'weft' is an alias, not a separate term (deming refinement R3), so the two names cannot drift apart.
+
+  - id: fed:strike
+    prefLabel: "strike"
+    definition: >
+      One retained increment of forging. Entry: its executable specification is fully defined. Exit (lands): that executable specification is green, not when its build merges (Governing Principle 2). Kinds: warp strike (repo-local) and weft strike / pick (cross-repo, lands on its meta-lock).
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: [fed:forging]
+    narrower: [fed:pick]
+    related: [fed:executable-specification, fed:meta-lock, fed:thread]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          "Governing principle 2: a strike is not done when its build merges — it is done when its executable specification is green."
+
+  - id: fed:spike
+    prefLabel: "spike (forging sense)"
+    definition: >
+      A time-boxed, disposable probe that answers an explicit question and outputs a capability-gap list; runs in the thread phase, before a strike is defined. Distinct from the `spike:` namespace, which holds terms from one specific spike (hypergraph generativity).
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: []
+    related: [fed:thread, fed:strike]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §3: "A spike is a time-boxed, exploratory investigation to reduce uncertainty. Its product is knowledge, not shipped software."
+    notes: >
+      Disambiguation: `fed:spike` = the method's probe; `spike:*` = vocabulary harvested from the 2026-09-25 hypergraph-generativity spike.
+
+  - id: fed:executable-specification
+    prefLabel: "executable specification"
+    definition: >
+      The CI-gated oracle a strike lands against: one assertion per finding, retained permanently as a regression guard. Historical aliases: 'lock', 'edda-lock'.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: [fed:meta-lock]
+    related: [fed:strike, fed:crossing]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §4: "An executable specification is a CI-gated test-set with one assertion per finding the spike raised, retained permanently and run as a regression guard"
+
+  - id: fed:meta-lock
+    prefLabel: "meta-lock"
+    definition: >
+      The aggregate of a cross-repo strike's per-repo locks; it IS that strike's executable specification, not a separate gate. The strike lands only when every per-repo lock is green.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: [fed:executable-specification]
+    narrower: []
+    related: [fed:pick, fed:crossing]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §4: "a cross-repo strike's executable specification is the meta-lock, the aggregate of its per-repo locks."
+
+  - id: fed:warp
+    prefLabel: "warp"
+    definition: >
+      A repo's own lengthwise progression (spec, backlog, roadmap). A seat tends exactly one warp, its write axis (Seat Charter R1); everything else it touches is a crossing or a read.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: []
+    related: [fed:thread, fed:crossing, fed:float]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "A seat tends exactly one warp, its write axis (Seat Charter R1). Everything else it touches is a crossing or a read."
+
+  - id: fed:crossing
+    prefLabel: "crossing"
+    definition: >
+      Where a weft or a consumer meets another warp: a per-repo spec-delta proven by that repo's lock. Requires a bidirectional link across the strike or seam record, the issue on the crossed repo, and the lock's verification handle.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: [fed:standing-crossing]
+    related: [fed:warp, fed:thread, fed:meta-lock, fed:float]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "Without links in both directions it is not a crossing."
+
+  - id: fed:standing-crossing
+    prefLabel: "standing crossing"
+    definition: >
+      A persistent crossing: a consumption seam where one warp continuously consumes another's output. Its lock is a handle (grade + pinned source sha + artifact tie). It carries the handle, not the upstream justification.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: [fed:crossing]
+    narrower: []
+    related: [fed:float, fed:fabric]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "A standing crossing carries the handle, not the upstream justification."
+    notes: >
+      Worked instance: qbp-compute-unit's tie to the proven Fano table (PROOF-fano-table-equals-cd-products, PA-2). See inter#162 for the QBP→qbp-systema boundary.
+
+  - id: fed:pick
+    prefLabel: "pick"
+    definition: >
+      One pass of a weft, i.e. one cross-repo strike; it lands on its meta-lock and is recorded in a Strike Record whose index rows are its crossings.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: [fed:strike]
+    narrower: []
+    related: [fed:meta-lock, fed:crossing]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "One pass of a weft, i.e. one cross-repo strike. It lands on its meta-lock (§4)."
+
+  - id: fed:float
+    prefLabel: "float"
+    definition: >
+      A concept present in a warp without a crossing: copied or re-implemented from another warp with no link and no lock. A defect: each one found is converted into a standing crossing with a handle, or justified on record. A load-bearing float (re-implemented and run) is the highest risk.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: []
+    related: [fed:crossing, fed:standing-crossing, fed:warp]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "A float is a defect."
+    notes: >
+      Known instances at ratification (inter#162): Wyrd re-derives 𝕆/𝕊 without importing QBP (vertical float); Craft's wasm re-implements the Fano-axis physics (load-bearing float, the 'blue blip').
+
+  - id: fed:fabric
+    prefLabel: "fabric"
+    definition: >
+      The integrated federation at a sprint target. Fabric-green is computable: every warp's executable specifications green ∧ every weft's meta-lock green ∧ every standing crossing's handle fresh.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: []
+    narrower: [fed:fabric-acceptance]
+    related: [fed:crossing, fed:forging]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "Fabric-green is computable by walking every crossing's bidirectional links"
+
+  - id: fed:fabric-acceptance
+    prefLabel: "fabric acceptance"
+    definition: >
+      The external check: an end-to-end acceptance suite run against the instantiated fabric, proving correspondence to reality, not just internal consistency.
+    status: derived
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
+    broader: [fed:fabric]
+    narrower: []
+    related: [fed:standing-crossing]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "A fabric can hold together and still be the wrong cloth."
+    notes: >
+      For QBP: the physics-acceptance suite owned by qbp-oppenheimer, run against qbp-systema (inter#162).
+
 terms_count_by_status:
   axiom: 1
-  derived: 37
+  derived: 51
   conjectural: 1
-  design-proposal: 15
+  design-proposal: 14
   unlocated: 1
-  total: 55
+  total: 68

@@ -1,0 +1,69 @@
+# NT_NOTARY v2 PA-record — CANONICAL top-level engine shape (testdata/pa v2).
+# Cycle 8 HEADLINE anchor: PROOF-cd-structure-constant-tables (QBP: mulCoeff_three_eq_fano).
+# Re-wrapped per unanimous ruling A. Re-wrap only — content/runs/correspondence unchanged.
+# Closes cth's single-kernel gap (seq 2312) via the new Coq mulCoeff port (path a); cth fresh
+# correspondence seq 2390; source_sha = transitive import closure 6b972a7d (4-way cross-checked).
+claim: "PROOF-cd-structure-constant-tables"             # headline lean_theorem = mulCoeff_three_eq_fano; proof_file CDAlg.lean
+consumer: "qbp#692-ci"
+policy: {require_signature: false}
+proof_assistants:
+  - assistant: "lean4"
+    evidence_ref: "proofs/QBP/Foundations/CDAlg.lean@f452532#mulCoeff_three_eq_fano"   # no prefix => QBP; closure root in S
+    producer: "qbp-oppenheimer"
+    source_sha: "6b972a7d2c4febf398811b42d79a33ee46878930"   # transitive QBP-local import closure {CDAlg, FanoOrientationF3, SedenionOctonionCount}
+    declared: {mode: "decide", axioms: ["propext", "Classical.choice", "Quot.sound"], exit_code: 0, output_hash: "sha256:645813f30c465f654dc41118a8b047a4a95151549db8501cdbc87905947392a2"}
+    derived:  {tactics_used: ["decide"], axioms: ["propext", "Classical.choice", "Quot.sound"], exit_code: 0, output_hash: "sha256:645813f30c465f654dc41118a8b047a4a95151549db8501cdbc87905947392a2", kernel_clean: true}
+    trust_check: pass
+    attestation: {signer: "", role: none, method: unsigned}
+  - assistant: "coq"
+    evidence_ref: "JamesPagetButler/notary:proofs/MulCoeffThreeCrossProver.v@6d7066b#mulCoeff_three_eq_fano_coq"   # cross-repo; carries commit; NOT in S
+    producer: "notary-implementor"
+    source_sha: "6b972a7d2c4febf398811b42d79a33ee46878930"
+    declared: {mode: "reflexivity", axioms: [], exit_code: 0, output_hash: "sha256:a8110a75c84ff8afbfaf3983c5286d5b93d59d2d627149f68252b199c4c351cb"}
+    derived:  {tactics_used: ["reflexivity"], axioms: [], exit_code: 0, output_hash: "sha256:a8110a75c84ff8afbfaf3983c5286d5b93d59d2d627149f68252b199c4c351cb", kernel_clean: true}
+    trust_check: pass
+    attestation: {signer: "", role: none, method: unsigned}
+correspondence:
+  corresponds: true
+  basis: >
+    cth (live-test seq 2390), non-producer line-by-line read: Lean mulCoeff_three_eq_fano (decide) and Coq
+    mulCoeff_three_eq_fano_coq (reflexivity) both state mulCoeff 3 i j = sign(fanoTableF4 i j) over all 64
+    Fin-8 pairs; Coq mulCoeff + conjSign are a VERBATIM port of CDAlg.lean:112-131; fanoTableF4 byte-identical
+    to the companion Coq copy and the Lean table; quantifier not weakened; both kernel-clean, distinct kernels.
+  checked_by: "cth-implementor"
+  checked_at: "headline closure manifest 6b972a7d (CDAlg.lean blob f9181336 @ f452532); Coq notary@6d7066b blob 1ac7588e"
+  maps:
+    - {target: "mulCoeff_three_eq_fano_coq", lean_theorem: "QBP.Foundations.CDAlg.mulCoeff_three_eq_fano"}
+corroborated_by: []
+flags: []
+
+# ---- notary provenance (sibling key; engine + encoder ignore) ----
+notary_provenance:
+  record: "NT_NOTARY_VERIFICATION_EVIDENCE"
+  supersedes: "cycle-8-fano-table-coq-crossprover-2026-09-30.yaml (headline portion)"
+  invoking_persona: "qbp-architecture"
+  verification_date: "2026-10-02"
+  competency_invoked: "lean_coq_port"
+  method_evidence:
+    tools:
+      - {tool: coqc, version: "8.15.0", command: "run-bounded 2G 300 coqc proofs/MulCoeffThreeCrossProver.v", exit_code: 0, result: "Closed under the global context (AXIOM-FREE); checkMulCoeff = true"}
+      - {tool: lean, version: "4.30.0", command: "run-bounded 8G 600 lake env lean <axcheck>; #print axioms mulCoeff_three_eq_fano", exit_code: 0, result: "depends on axioms: [propext, Classical.choice, Quot.sound]"}
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    Genuine headline PA-2 (not a relabel). Two independent kernels accept the anchor's OWN statement
+    mulCoeff_three_eq_fano: Lean decide (axioms [propext, Classical.choice, Quot.sound]) and Coq reflexivity
+    (AXIOM-FREE). cth confirmed the statements correspond and the Coq mulCoeff/conjSign port is verbatim to
+    CDAlg.lean:112-131. Closes the single-kernel gap cth flagged (seq 2312). Companion is its own PA-2 record (QBP#693).
+  trust_dependencies:
+    - "Coq kernel 8.15.0 (axiom-free) AND Lean kernel (axioms [propext, Classical.choice, Quot.sound]) — a flaw must exist in both."
+    - "Verbatim port of CDAlg mulCoeff + conjSign (cth-verified) and byte-identical fanoTableF4 (seam drift check)."
+  residual_obligations:
+    - "Staleness bound to the transitive QBP-local import closure {CDAlg, FanoOrientationF3, SedenionOctonionCount} (6b972a7d): an edit to any — incl. fanoTableF4 or sgnTable — stales this headline. Mathlib/Std bumps NOT covered (open: inter#153)."
+  seam_records_fired:
+    - "NT_SEAM_RECORD (RESOLVED): headline source_sha — flagged (seq 2393) that S={CDAlg.lean} is blind to fanoTableF4 which the statement names; architect ruling (seq 2394) = transitive import closure => 6b972a7d; notary cross-checked independently (import-closure scan): MATCH (4-way with architect/oppenheimer/cth)."
+    - "NT_SEAM_RECORD (INFORMATIVE): fanoTableF4 transcribed verbatim in BOTH Coq files; drift check must keep them byte-identical."
+  prediction_accuracy_ledger:
+    predicted_outcome: "mulCoeff Coq port compiles axiom-free; Lean carries standard axioms (no ofReduceBool); cth confirms => genuine headline PA-2."
+    predicted_delta: "64 pairs match; coqc exit 0 axiom-free; lean axioms {propext, Classical.choice, Quot.sound}."
+    actual_outcome: "Exactly as predicted. coqc exit 0 axiom-free; lean #print axioms = [propext, Classical.choice, Quot.sound]; cth corresponds:true. UNPREDICTED SEAM (informative): naive source_sha key under-captured the fanoTableF4 dependency — caught, ruled to the transitive import closure, cross-checked MATCH."
+    actual_delta: "0 kernel disagreement across 64 pairs; 0 axioms Coq side; 1 staleness-key seam caught+resolved before emit."

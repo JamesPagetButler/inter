@@ -21,6 +21,8 @@ The split:
 
 If a tenant CONTRIBUTING.md restates federation policy verbatim, the doc has drifted from canonical. Trim the duplication; replace with a citation.
 
+**Companion: `CONTRACTS.md` per boundary package.** A package that enforces a contract at an L3f boundary, or is a contracts-tier promotion candidate (Spec v9.1 §15.13), carries a `CONTRACTS.md` beside its code. The template is `templates/contracts.md`, and the worked precedent is `bma-systema/internal/bma/harness/CONTRACTS.md`. CONTRIBUTING.md says how to work in the repo; CONTRACTS.md says what a package guarantees and which named tests prove it. A tenant CONTRIBUTING.md should list its CONTRACTS.md files in §2 (Tenant overview). Added per inter#25.
+
 ---
 
 ## 2. The template

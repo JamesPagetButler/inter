@@ -1,0 +1,49 @@
+# NT_NOTARY v2 PA-record — CANONICAL top-level engine shape (testdata/pa v2).
+# Cycle 7: PROOF-hessian (hessian_traceSq_1152_universal, QBP#582) — internal-compute, PA-0.
+# Re-wrapped per unanimous ruling A. INTERNAL-COMPUTE => proof_assistants is EMPTY (no kernel
+# attestation): the engine grades 0 assistants -> PA-0 (first-class, R3). A disjoint-TCB re-computation
+# is corroboration (never a grade). Re-run 2026-10-02 (run-bounded; deming nod seq 2382).
+claim: "PROOF-hessian"                                  # QBP: hessian_traceSq_1152_universal (#582); provenance_kind internal-compute
+consumer: "qbp#692-ci"
+policy: {require_signature: false}
+proof_assistants: []                                    # internal-compute: NO kernel attestation => graded 0 (encoder must refuse any assistant entry here)
+correspondence: {corresponds: false, basis: "", checked_by: "", checked_at: ""}
+corroborated_by:
+  - "independent_recomputation@sha256:32f3c2f2facbe82a3c9738aef00e0ee7bffa9193a4603dc66022812fff8ad3d6"   # annotation ONLY — never raises the grade
+flags: ["not_kernel_clean"]                             # the underlying Lean proof is native_decide (ofReduceBool); this record does not change that
+
+# ---- notary provenance (sibling key; engine + encoder ignore) ----
+notary_provenance:
+  record: "NT_NOTARY_VERIFICATION_EVIDENCE"
+  supersedes: "cycle-7-hessian-independent-recompute-2026-09-30.yaml"
+  invoking_persona: "qbp-architecture"
+  verification_date: "2026-10-02"
+  competency_invoked: "other"
+  method: >
+    Independent exact-integer re-computation (python3) MIRRORING the Lean definitions in QBP
+    proofs/Sprint12-Inherited/Sedenion.lean (mulSignData/mulIdxData verbatim; isZD, hessianEntry,
+    hessianTrace, hessianTraceSq, 42-ZD enumeration line-for-line). Disjoint trust base from Lean's
+    compiler — the honest cross-check for a native_decide theorem. NOT a proof-assistant attestation.
+  method_evidence:
+    tools:
+      - {tool: python3, version: "3.10.12", command: "run-bounded 2G 300 python3 proofs/hessian_recompute.py", exit_code: 0, result: "ZD count=42; Tr(H) distinct={128}; Tr(H^2) distinct={1152}; all 42 == 128 and == 1152 (re-run 2026-10-02)", output_hash: "sha256:32f3c2f2facbe82a3c9738aef00e0ee7bffa9193a4603dc66022812fff8ad3d6"}
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    NUMERICAL claim INDEPENDENTLY CORROBORATED at PA-0 (internal-compute): a disjoint-TCB python
+    implementation reproduces exactly count=42, Tr(H)=128 and Tr(H^2)=1152 at all 42 ZDs. This RAISES
+    confidence but is NOT a grade: pa_local = pa_effective = 0 by design, because (1) it is not a second
+    proof-assistant kernel and (2) the Lean proof itself remains native_decide/ofReduceBool (not kernel-
+    clean). An honest PA-0 with a corroboration annotation — never a success-shaped PA-2.
+  trust_dependencies:
+    - "CPython 3.10.12 (independent of Lean's compiler/runtime — the point of the cross-check)"
+    - "Faithful transcription of Sedenion.lean's mulSignData/mulIdxData and hessian defs (verbatim; residual risk = transcription error, mitigated by exact copy)"
+  residual_obligations:
+    - "KERNEL-CLEANLINESS OPEN: kernel-decide in Lean = INCONCLUSIVE_RESOURCE_BOUND (>5 GB non-converging; NOT run). Durable fix = a STRUCTURAL kernel-clean proof of Tr(H^2)=1152, tracked QBP #582/#618."
+    - "DEFINITIONAL FIDELITY: corroborates the computation over Sedenion.lean's defs; a claim<->statement read is a separate pass."
+  seam_records_fired:
+    - "NT_SEAM_RECORD (INFORMATIVE): PROOF-eigenratios rests on PROOF-hessian; this re-computation corroborates the number; if a future structural/kernel proof ever DIVERGES from 1152, eigenratios reopens. No divergence found."
+  prediction_accuracy_ledger:
+    predicted_outcome: "Independent re-computation reproduces 1152 for all 42; grade stays PA-0 (internal-compute)."
+    predicted_delta: "count 42, Tr(H)=128, Tr(H^2)=1152 uniformly; pa_effective 0."
+    actual_outcome: "Exactly as predicted on re-run 2026-10-02 — 42 ZDs, Tr(H)=128 and Tr(H^2)=1152 uniformly, disjoint-TCB; PA-0 by design."
+    actual_delta: "0 divergence across all 42 ZDs on both invariants."

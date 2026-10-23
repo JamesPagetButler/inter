@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-10-08, inter#160)** by [`personas/herschel.md`](personas/herschel.md) — herschel persona v2, the canonical persona file `launch-federation.sh` loads (personas.conf `persona_file`). Kept for history; do not boot from or edit this file. The §5 architect→herschel handoff now lives in `personas/herschel.md` §7.12.
+
 # Herschel — Sprint Driver Role
 
 **Federation-level operational sprint driver. Sonnet instance. Inherits the QBP "Herschel Check" naming convention (Caroline Herschel, astronomer's keeper — observed, tracked, kept records).**

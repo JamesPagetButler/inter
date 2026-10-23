@@ -12,7 +12,11 @@
 5. **CI green + spec coherence** — spec / threshold / doc changes land in the same reviewable unit as the code they describe.
 
 ## 2. The coverage matrix [validated]
-Rows = AC from the issue; cells = named assertions. **Completeness = no empty cell** (every AC has ≥1 named assertion) **AND no orphan** (every assertion traces to an AC — this is what kills vacuous "green" lines). The matrix is the live fix-round dashboard: each cell carries a state (red/green) and a formality tier (§4). "Unlocked" = all cells green at their required tier.
+Rows = AC from the issue; cells = named assertions. **Completeness = no empty cell** (every AC has ≥1 named assertion) **AND no orphan** (every assertion traces to an AC — this is what kills vacuous "green" lines). The matrix is the live fix-round dashboard: each cell carries a state (**PASS / FAIL**) and a formality tier (§4).
+- **Columns (R3, inter#153):** `AC → guard → named test → mutation it must kill → result → boundary`. The *guard* column names the code that enforces the AC, so the reader can see what the mutation attacks.
+- **Mutation vocabulary is fixed: KILLED / SURVIVED** (plus INVALID for a mutant that fails to compile, §8). **Never colours.** In the federation's light system red means *stop*, so "RED ✓" reads as a contradiction (confluent-trust#110, process notes C1).
+- **Gates and graders need a must-reject-on-absence row (R3).** For any gate, grader, validator or checker, the matrix has at least one **omission probe** per required input: the input supplied with that field absent, empty or degraded, which the gate must reject. Mutation testing removes code that exists; it cannot find a require-good check that was never written. Only an omission probe can. *(Worked example: confluent-trust#110 round 1 had 10/10 mutants KILLED, yet 8 reviewer omission probes all still graded PA1. Missing fields passed.)*
+- **Fail-closed authoring (R3).** Gates are written as "count only if every required good value is present", never as "reject if a bad value is present". Unknown input is refused, not skipped (QBP#698 type B). "Unlocked" = all cells green at their required tier.
 - Cross-component ACs must show the seam: a feature whose AC span two packages (bma-systema#319: `hg` mint + `sleep` decay-honor) is hidden by a flat matrix — structure it so the component boundary is visible (a mutation in one package can fail a test in another; the matrix should predict that).
 
 ## 3. The validation seam [validated]
@@ -37,7 +41,7 @@ Levels are the **4-rung rigor spine** — one ladder that defines, per rung, the
 - **MIN-over-chain**: a strike's assurance = the minimum tier across its cells — it names the weakest link honestly.
 
 ## 5. Non-approve → reissue → loop [validated]
-A non-APPROVE names the **exact failing clause + the missing AC/test** and is a **reissue to the builder**, not a terminal verdict. The reviewer drives the loop until **(a)** the standard is met, or **(b)** a **provable argument** the clause is mis-set → adjust + re-document. "Follow-up PR / CI green / verbal OK" do NOT resolve a non-approve. (Worked example: bma-systema#318 — a mis-named regression test that passed under its own bug was reissued and mutation-re-verified to green.)
+A non-APPROVE names the **exact failing clause + the missing AC/test** and is a **reissue to the builder**, not a terminal verdict. **Bounded (R2):** if round 3 finds a new instance of a finding type that rounds 1–2 already found, the reviewer stops the instance loop and asks for a **cause check** (forging doc §2) before another fix round. The reviewer drives the loop until **(a)** the standard is met, or **(b)** a **provable argument** the clause is mis-set → adjust + re-document. "Follow-up PR / CI green / verbal OK" do NOT resolve a non-approve. (Worked example: bma-systema#318 — a mis-named regression test that passed under its own bug was reissued and mutation-re-verified to green.)
 
 ## 6. Reviewer commitment [validated]
 - **Logic/safety-critical PRs** (state machines, auth/grant gates, conservation, thermal/autonomic, any invariant): reviewer checks out the head in an isolated worktree, builds, runs the suites, and **mutation-spot-checks** the key guards — reintroduce the bug, confirm the test fails. Not read-diff-plus-trust-CI.

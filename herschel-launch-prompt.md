@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-10-08, inter#160)** by [`personas/herschel.md`](personas/herschel.md) — herschel persona v2. Do not paste this prompt: the seat now boots from that file's §0, which `launch-federation.sh` points fresh and resumed panes to (personas.conf `persona_file`, inter#142). Kept for history.
+
 # Herschel — Launch Prompt
 
 **Paste this into a new Claude Code session running Sonnet to instantiate the Herschel sprint driver.**

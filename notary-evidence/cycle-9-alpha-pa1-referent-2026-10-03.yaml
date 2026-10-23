@@ -1,0 +1,56 @@
+# NT_NOTARY v2 PA-record — CANONICAL top-level engine shape.
+# Cycle 9 — AC3 PA-1 referent: PROOF-alpha-particle-quaternion (clean single-kernel Lean).
+# Gives confluent-trust#108 AC3 ("a clean Lean-only proof = 1") a live referent (architect ruling,
+# live-test seq 2438/2446). Single lean4 assistant, no correspondence -> pa_local 1; pa_effective 0
+# (weakest-link via the PROOF-quat-closure derivation edge). derived{} from an actual build + #print
+# axioms at origin/master 516dfcb in an isolated worktree (symlinked version-matched Mathlib; the shared
+# worktrees' Cosmo oleans were toolchain-stale). deming capacity-nod seq 2462/2463; beekeeper go.
+claim: "PROOF-alpha-particle-quaternion"
+consumer: "qbp#692-ci"
+policy: {require_signature: false}
+proof_assistants:
+  - assistant: "lean4"
+    evidence_ref: "proofs/QBP/Cosmo/Nucleosynthesis.lean@516dfcb#alpha_particle_is_quaternionic"   # no prefix => QBP; enters S
+    producer: "qbp-oppenheimer"       # QBP-side producer (Cosmo/Foundations lineage); not the notary
+    source_sha: "5237e2b14467eec3c88b262f63298c7fe81b3009"   # transitive QBP-local import closure of the proof_file @ origin/master
+    declared: {mode: "rw;norm_num", axioms: ["propext", "Classical.choice", "Quot.sound"], exit_code: 0, output_hash: "sha256:144b577612ffb098941b08aecbf9664bc265080ff7b4024987af20ecf2f5a9e3"}
+    derived:  {tactics_used: ["rw", "norm_num"], axioms: ["propext", "Classical.choice", "Quot.sound"], exit_code: 0, output_hash: "sha256:144b577612ffb098941b08aecbf9664bc265080ff7b4024987af20ecf2f5a9e3", kernel_clean: true}
+    trust_check: pass
+    attestation: {signer: "", role: none, method: unsigned}
+correspondence: {corresponds: false, basis: "", checked_by: "", checked_at: ""}   # single kernel -> no cross-prover correspondence (PA-1 by construction)
+corroborated_by: []
+flags: []
+
+# ---- notary provenance (sibling key; engine + encoder ignore) ----
+notary_provenance:
+  record: "NT_NOTARY_VERIFICATION_EVIDENCE"
+  invoking_persona: "qbp-architecture"
+  verification_date: "2026-10-03"
+  competency_invoked: "lean_single_prover"           # backed by the lean run below
+  source_commit: "QBP origin/master 516dfcb (proof_file + closure byte-identical here; derived in an isolated worktree)"
+  method_evidence:
+    tools:
+      - {tool: lean, version: "4.30.0", command: "run-bounded 10G 1800 lake build QBP.Cosmo.Nucleosynthesis (isolated worktree @ origin/master 516dfcb; symlinked Mathlib c5ea00351c); in-file #print axioms alpha_particle_is_quaternionic", exit_code: 0, result: "depends on axioms: [propext, Classical.choice, Quot.sound]"}
+  verification_outcome: VERIFIED
+  outcome_qualification: >
+    AC3 referent for the clean-Lean-only PA-1 path (confluent-trust#108 AC3). alpha_particle_is_quaternionic
+    (`(4:ℕ) = finrank ℝ (CDAlg ℝ 2)`, proof `rw [finrank_cdAlg]; norm_num`) is a single kernel-clean Lean proof:
+    #print axioms on the MASTER version = [propext, Classical.choice, Quot.sound] (standard Mathlib base;
+    NO ofReduceBool, NO sorryAx). One lean4 assistant, no cross-prover correspondence => pa_local 1.
+    pa_effective is 0, held there by the derivation edge to PROOF-quat-closure (an unlinked theory anchor,
+    quaternion_closure @ Quaternion.lean:381, no PA evidence today): EffectivePA = min(1, 0) = 0 correctly
+    reports the weakest link. So AC3's "clean Lean-only = 1" reads as pa_LOCAL; pa_effective auto-rises to 1
+    once quat-closure is join-key-linked and gets its own Lean record — no further action on alpha.
+    Axioms derived per the FQ theorem (not a file-level scan) from an actual build at origin/master in an
+    ISOLATED worktree — the shared ~/Documents/QBP worktree is on foundations/589 (deletes Nucleosynthesis.lean)
+    and both available warm caches had toolchain-incompatible Cosmo oleans.
+  trust_dependencies:
+    - "Lean kernel 4.30.0; axioms [propext, Classical.choice, Quot.sound] — standard Mathlib base, kernel-checked."
+    - "The derivation to PROOF-quat-closure (currently unproven) — this is what holds pa_effective at 0."
+  seam_records_fired:
+    - "NT_SEAM_RECORD (INFORMATIVE): pa_effective 0 != pa_local 1 is the honest weakest-link report, not a defect in alpha — it is the unproven PROOF-quat-closure dependency. Flagged so AC3's spot value is read as pa_local."
+  prediction_accuracy_ledger:
+    predicted_outcome: "Single kernel-clean lean4 assistant, standard axioms (no ofReduceBool) => pa_local 1; pa_effective 0 via the PROOF-quat-closure chain (per oppenheimer rehearsal seq 2445)."
+    predicted_delta: "axioms [propext, Classical.choice, Quot.sound]; pa_local 1 / pa_effective 0."
+    actual_outcome: "Exactly as predicted. Master-build #print axioms = [propext, Classical.choice, Quot.sound], kernel-clean; engine grades pa_local 1 / pa_effective 0 (next backfill confirms, names AC3)."
+    actual_delta: "0 unexpected axioms; local/effective split as predicted."
