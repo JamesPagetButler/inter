@@ -125,6 +125,12 @@ This is the **opposite of a spike**: retained, production-grade, permanent. It i
 
 **Meta-lock (cross-repo strikes):** a cross-repo strike's executable specification is the **meta-lock**, the aggregate of its per-repo locks. Each repo's lock proves that repo met its spec-delta, and the strike lands only when **every** per-repo lock is green. The meta-lock is not a separate gate: it *is* the strike's executable specification, and the strike's record (e.g. a Strike Record issue, inter#161) states it as the close condition.
 
+**Lock-scope rule: a lock is stated at the external interface.** At least one assertion in every executable specification must test the **end-to-end mapping at the boundary its consumers use**: input as the outside world supplies it, output as the outside world reads it, checked against an **independent reference** (a textbook formula, a spec, a known-good tool). Strong tests of internal identities (round-trips, golden values, defining constants) do not satisfy it, because a component can satisfy all of them and still map its input to its output wrongly. This is a recurring failure class, *strong internal tests, wrong end-to-end mapping*, with two instances so far:
+- **json2yaml (OKH manifests, studybuddy napkin, live-test seq 3071):** the internal checks passed, but the external-interface mapping was never locked.
+- **QBP `si_conversion` / Exp-03 (studybuddy, 2026-10-24, live-test seq 3304):** 148 tests locked internal identities. None locked SI-vs-textbook end to end, so a **×40 error on the propagation axis** went undetected. An end-to-end lock (BPM → SI against textbook σ(z)) fails on the bug (relative error 0.13) and passes on the fix (3×10⁻¹⁵).
+
+*How to apply:* the coverage matrix of every strike issue carries at least one AC row whose named test crosses the external interface against an independent reference. A matrix whose tests are all internal identities is incomplete.
+
 *Migration note:* prior artifacts using "lock"/"edda-lock" (bma-systema#299, inter#132, the relocated records in bma-systema#300) refer to this concept. New work says "executable specification"; "edda-lock" → *an executable specification expressed in Edda* (§6).
 
 ---
