@@ -68,6 +68,7 @@ flowchart TB
         R1["<b>Federation</b> — multi-tenant peering (Sharp Butler + future) · judge collective live"]:::later
         R2["<b>Wyrd</b> v0.3 + Skuld + HAMA Tier-N + Bridge · <b>CTH</b> continuous Confluence · <b>Contextus</b> Bridge-Agent routing"]:::later
         R3["<b>QBP-CU</b> M2 ternary matmul + ROCm · <b>QBP</b> ongoing programme · Beekeeper steward (weekly snapshots)"]:::later
+        R4["<b>BMA</b> self-bootstrap to formal — a research-tier BMA builds a formal BMA via the federation process; verified externally (Lean · Notary · probate), never by itself (napkin, bma-systema#351)"]:::later
         R1 --> R2 --> R3
     end
 
