@@ -121,6 +121,48 @@ def initialize_last_seq(state_dir: Path, channel: str) -> int:
     return max_seq
 
 
+
+def _parse_ts(ts: str) -> Optional[datetime]:
+    try:
+        return datetime.fromisoformat(ts)
+    except (TypeError, ValueError):
+        return None
+
+
+def initialize_last_seq_since(state_dir: Path, channel: str, since: datetime) -> int:
+    """For a channel that appears AFTER the watcher started (inter#211): set
+    last_seq to the highest seq posted *before* `since`, so every message posted
+    since the watcher started is still delivered (a new channel's first
+    @mention is not silently skipped), while older history is not replayed."""
+    path = SESSIONBRIDGE_CHANNELS / f"{channel}.jsonl"
+    if not path.exists():
+        set_last_seq(state_dir, channel, 0)
+        return 0
+    before = 0
+    with open(path, errors="replace") as f:
+        for line in f:
+            try:
+                msg = json.loads(line.strip())
+            except json.JSONDecodeError:
+                continue
+            t = _parse_ts(msg.get("ts", ""))
+            if t is not None and t < since:
+                before = max(before, msg.get("seq", 0))
+    set_last_seq(state_dir, channel, before)
+    return before
+
+
+def refresh_channels(channels: list[str], state_dir: Path, since: datetime) -> list[str]:
+    """Re-discover channels each poll (inter#211). Returns the names newly added
+    to `channels` (mutated in place). A newly-seen channel with no state file is
+    initialized via initialize_last_seq_since; one that already has state keeps it."""
+    added = [ch for ch in discover_channels() if ch not in channels]
+    for ch in added:
+        if not (state_dir / f"last_seq_{ch}").exists():
+            initialize_last_seq_since(state_dir, ch, since)
+        channels.append(ch)
+    return added
+
 # ── Fan-out routing ───────────────────────────────────────────────────────
 
 def ensure_wake_file(wake_dir: Path, persona: str) -> Path:
@@ -410,7 +452,11 @@ def main() -> None:
     if heartbeat_enabled:
         heartbeat_state = load_heartbeat_state(heartbeat_status_file)
 
+    started_at = datetime.now(timezone.utc)
     while True:
+        if channels_cfg == "auto":
+            for ch in refresh_channels(channels, state_dir, started_at):
+                emit(f"WATCHER_CHANNEL_ADDED channel={ch}")
         for channel in channels:
             last_seq = get_last_seq(state_dir, channel)
             new_msgs = read_new_messages(channel, last_seq)
