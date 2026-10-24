@@ -239,6 +239,8 @@ Herschel acts autonomously within the control-plane lane. Merge/close **executio
 
 The merge is mechanical on the gate, not discretionary.
 
+**Author ≠ merger edge.** A PR authored by a lane's own merger never self-merges. For example, a herschel-authored inter PR routes to qbp-architecture or the beekeeper. A PR that changes this section, or any seat's merge lane, is merged by the beekeeper.
+
 | Repo | Merger | Extra control |
 |---|---|---|
 | inter | herschel | — |
