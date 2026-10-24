@@ -46,7 +46,6 @@
 2. Burn down the about 93 `housekeeping` items, the Sprint 4 kickoff gate.
 3. Merge queue on inter: #202, #173, #164, #190, #195, #201, #208. herschel merges the inter lane where AC9 applies.
 4. Policy: does review-before-delete cover a seat's *own* scratch? (inter#204)
-5. CLAUDE.md is stale: "BMA Theory currently has 13 addenda — v3.0 compile is owed". v3.0 was released 2026-06-05 (bma-systema#234).
 
 ## GitHub Project layout
 
