@@ -212,6 +212,59 @@ A round produces evidence (a landed key plus a re-run), so after two of them the
 ### Worked example — Sprint 3, bma-systema#86 (cognition lock)
 In-scope work merged, but the lock could not open honestly. The probe suite failed **open**: it didn't grade against ground truth, didn't attribute an answer to the local mind versus the cousin model, and counted timeouts as non-failures. Diagnosis: **spec-gap** (the lock tested the wrong thing). Key: a refined #86 Toddle-exit lock with ground-truth grading, answer attribution, timeout = FAIL, and the self-state-injection assertion that already passes. The open question for round 2, if the refined lock is still red, is whether "cognition" itself needs a measurable definition from theory. That would be a **theory-gap**, and the key would be a research strike.
 
+## 8. Control & authorization of a forging (beekeeper ruling, 2026-10-24: inter#153 AC9)
+
+The ruling of record is [inter#153 issuecomment-6378629043](https://github.com/JamesPagetButler/inter/issues/153#issuecomment-6378629043). It was posted under the shared login and recorded by @herschel at the beekeeper's direction (provenance caveat, inter#136). This section transcribes it; if the two ever differ, the comment wins.
+
+**Activation.** Per the ruling's own authorization clause, a grant lives in the CLAUDE.md standing-authorization block and in the R8 milestone comment. It is never relayed. So the merge/close delegation below is **in force for a seat once the beekeeper has confirmed it first-hand to that seat, or has written it into CLAUDE.md standing-auth**. Until then, `gh pr merge` stays per-action beekeeper confirmation. The CLAUDE.md edit is the beekeeper's.
+
+### Control plane
+Herschel owns the forging's operational control plane through a §5 handoff per milestone forging (`personas/herschel.md` §7.12). The control plane covers:
+- the thread map;
+- duplicate detection;
+- the board and weave (§1c);
+- the R4 merge-readiness check;
+- A1 liveness escalation.
+
+The architect stays episodic: rulings and §I4.
+
+### Authorization
+Grants are **recorded, never relayed**. They stay the beekeeper's, in CLAUDE.md standing-auth plus the R8 milestone comment. No peer infers a grant from a relay (C2).
+
+### Merge/close delegation
+Herschel acts autonomously within the control-plane lane. Merge/close **execution** is delegated under three conditions:
+- the `pr-merge-completeness` gate is **objectively green**: CI pass, the named reviewer's *written* §I4, and the test plan ticked or deferred-with-link;
+- **author ≠ merger**;
+- the merge is **audited**: it cites its R4 verification and its §I4 legs.
+
+The merge is mechanical on the gate, not discretionary.
+
+| Repo | Merger | Extra control |
+|---|---|---|
+| inter | herschel | — |
+| qbp-systema | qbp-oppenheimer | notary-implementor's notarisation record is required on the PR before merge, and the merge cites it |
+| qbp-compute-unit | qbp-architecture | the structural Lean-ROM hard gate (`verify-lean-roms`: a checksum mismatch is a hard fail on every PR) already blocks unverified content |
+| bma-systema, wyrd, edda, contextus, confluent-trust, notary | qbp-architecture | — |
+| Gestalt, Nidavellir | qbp-architecture | the owner direct-commits routine content (Gestalt notes/curation; Nidavellir log appends). Consequential changes go via a PR the architect merges: Gestalt `proposals/`; Nidavellir watcher/delivery-contract code and any rewrite of existing log records. The architect holds standing review and independent beekeeper-escalation on both |
+| **QBP** | **beekeeper** | core theory, held |
+| **craft** | **beekeeper-engaged** | human-in-the-loop review |
+
+### Liveness fallback
+If a delegated merger is dark past the A1 SLA, **deming** may reboot, triage, or resolve the issue with that specific agent. This grants **no merge rights**: deming never merges in a dark seat's place, but works to revive the seat so it clears its own queue. If deming can't resolve it, deming escalates to the beekeeper (revive, reassign, or hold). Merge authority is exactly the table above, and it is never acquired through the liveness path.
+
+### Kickoff
+Kickoff stays a **joint go** by the beekeeper and herschel. The sprint must be sufficiently defined **and** the required merges complete before "go Sprint N".
+
+### Still beekeeper-gated, escalate-only
+These are unchanged:
+- HVR (human verification review) and YubiKey-signed merges;
+- gate re-scoping (§7a, and only after two full key-loop rounds);
+- constitutional and governance writes (`governance/`, succession, judge-collective);
+- novel external actions (email, repo settings, branch protection, secret rotation);
+- success-threshold pre-registration (the B4 type), unless pre-delegated.
+
+**Intent.** The beekeeper can say "go Sprint N" and stay hands-off until the sprint is close-ready. The federation closes the sprint itself, and only questions the federation truly cannot resolve escalate.
+
 ## References
 - Beck & Cunningham — SpikeSolution (c2 wiki); Extreme Programming.
 - Scaled Agile (SAFe) — Spikes (enabler stories; technical vs functional; use sparingly).
