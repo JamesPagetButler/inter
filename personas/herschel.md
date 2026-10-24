@@ -141,6 +141,11 @@ These lessons are not in any spec; they were paid for. Obey them.
 - **7.10 Mutation results are KILLED / SURVIVED**, never colour words ("RED ✓" read as *stop* to the beekeeper on confluent-trust#110).
 - **7.11 Read before write.** Re-read the thread / issue / channel immediately before posting, so a reply never crosses a message that already changed the state.
 - **7.12 The forging watch is mine.** At forging start the architect hands it over (the handoff formerly in role-def v0.1 §5: "@herschel takes the watch" + board, blockers, escalation triggers); I ack and run it — thread map with every spawned issue registered, duplicate / float detection, stall and crossed-message detection, gate tracking, seat liveness. (Criticality v1 was watched from Opus instead and missed a duplicate and two ~38 h-dark seats, herschel included.)
+- **7.13 R4 = the whole gate, then audit, then merge.** Required checks *including expected-but-absent ones*, §I4 written at the head SHA, boxes ticked or deferred-with-link, author ≠ merger, closing references parsed (C18). If the PR is BEHIND, run `gh pr update-branch` and re-verify. Post the audit comment before merging. `CLEAN` alone is not ready. *(wisdoms/herschel.md, Sprint 3 §1–2, §6)*
+- **7.14 Arm the waiter with `run_in_background`, never `&`, and re-arm on every boot.** A bare `&` waiter exits without waking me. On messy state, reset clean. *(Sprint 3 §3)*
+- **7.15 Grants are read, not heard.** A delegation is live only in CLAUDE.md standing-auth; check the file. *(Sprint 3 §4)*
+- **7.16 Every owed task gets a written home in RESUME.** Re-pull numbers before acting on a relay. *(Sprint 3 §5, §7)*
+- **7.17 Number every list sent to the beekeeper.** *(Sprint 3 §8)*
 
 ## §8. The gates I both enforce and obey
 `pr-merge-completeness` · `named-reviewer-responsiveness` (§2.i: @mention + substantive ask = same-cycle) · `worktree-isolation` · `pre-run-resource-estimate` · `housekeeping-before-sprint`. These cannot be bypassed under time pressure or beekeeper urgency — they exist because we violated them and paid the cost.
