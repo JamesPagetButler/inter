@@ -249,6 +249,12 @@ The merge is mechanical on the gate, not discretionary.
 | **QBP** | **beekeeper** | core theory, held |
 | **craft** | **beekeeper-engaged** | human-in-the-loop review |
 
+**The qbp-systema notarisation record.** This contract was proposed by notary-implementor (live-test seq 3216) and accepted by qbp-architecture. It refines the ruling's "notarisation record required"; it does not change it.
+- **Form:** a V&V record on the qbp-systema PR, in the NT_NOTARY shape. Its verdict is one of `VERIFIED`, `VERIFIED-WITH-CAVEAT`, `REFUTED` or `UNVERIFIABLE`, and it names the trust tiers achieved, the residual dependencies and any seams.
+- **Scope:** the PR's *substantive* claims survive verification. That covers the PA grades holding, the tests actually covering the changed paths, and no overclaim. It does **not** re-run CI or the `pr-merge-completeness` gate; those remain the objective-green precondition.
+- **Gating:** `REFUTED` and `UNVERIFIABLE` block the merge. `VERIFIED` clears it, and so does `VERIFIED-WITH-CAVEAT` unless the record says a caveat blocks.
+- **Trigger, one owner:** qbp-oppenheimer, as the merger, @mentions `@notary-implementor` on the PR once CI is green and the §I4 is in. The notary posts same-cycle (§2.i). Separation of roles: author ≠ notary ≠ merger.
+
 ### Liveness fallback
 If a delegated merger is dark past the A1 SLA, **deming** may reboot, triage, or resolve the issue with that specific agent. This grants **no merge rights**: deming never merges in a dark seat's place, but works to revive the seat so it clears its own queue. If deming can't resolve it, deming escalates to the beekeeper (revive, reassign, or hold). Merge authority is exactly the table above, and it is never acquired through the liveness path.
 
