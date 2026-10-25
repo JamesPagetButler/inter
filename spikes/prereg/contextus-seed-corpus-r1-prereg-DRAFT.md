@@ -1,6 +1,6 @@
 # Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
 
-Status: **DRAFT r3. Nothing built, nothing run.** (r2 added the local-extraction arm, per deming seq 3488; r3 adds round 1b for when the local arm isn't ready, per nugent seq 3489.) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Status: **DRAFT r4. Nothing built, nothing run.** (r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
 Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
@@ -60,14 +60,16 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 
 1. The extractor runs with **no federation file access**. Its input is a **neutral restatement artifact** built from the paper text only, with no QBP vocabulary, hashed before extraction. The hash is recorded on every claim.
 2. **Model tier (primary): haiku**, the bulk-sweep tier (deming seq 3488). It is used for every paper and is the graded reference. The prompt is frozen and hashed at freeze.
-4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`). **If the local arm isn't ready at run time** (the model download is gated on the reboot-window disk reclaim, and nugent's VRAM-fit preflight must pass), round 1 runs haiku-only. The local arm then runs later as **round 1b** on the **same 20 graded papers**, with the same frozen prompt and restatements and no rule change. A failed preflight is a finding; the fallback extractor is nugent's 12B profile, which is named at the round 1b start.
+4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`). **If the local arm isn't ready at run time** (the model download is gated on the reboot-window disk reclaim, and nugent's VRAM-fit preflight must pass), round 1 runs haiku-only. The local arm then runs later as **round 1b** on the **same 20 graded papers**, with the same frozen prompt and restatements and no rule change. **The local model and quant are named at the round 1b start, after nugent's VRAM-fit preflight** (primary: a Qwen coder model in the 30–32B class at the largest quant that fits 16 GB with headroom; fallback: a 12–14B Q4 model), and they are recorded in the r1b report header. A failed preflight is a finding, not a rule change. GPU order (nugent seq 3493): `nugent-gemma12b` runs first, then this arm, under deming's combined disk estimate (pull, run, prune, then pull).
 3. The extractor emits the claims and nothing else: no syntheses, no "inspirations", no QBP mappings. **Cross-domain synthesis is out of scope for round 1.** It belongs to `substrate-native-vs-batch`, and only over extracted, never authored, edges.
 
 ## 5. Grading (Q2)
 
 - **Sample:** 20 papers (10 per domain), drawn by PCG seed `250125` from the papers with status `extracted`. Every claim from a sampled paper is graded.
-- **Grader:** @qbp-oppenheimer. Each claim is rated `faithful` (relation, direction and locator all correct) / `wrong-relation` / `wrong-direction` / `wrong-locator` / `not-in-paper`.
-- **Inter-rater check:** 4 of the 20 papers (2 per domain, the first 4 drawn) are also graded independently by @cth-implementor. Cohen's κ on faithful vs not is reported.
+- **Grader:** @qbp-oppenheimer. Each claim is rated `faithful` (relation, direction, modality and locator all correct) / `wrong-relation` / `wrong-direction` / `wrong-modality` (stated vs cited swapped) / `wrong-locator` / `not-in-paper`.
+- **Grader input:** the paper's own text (abstract, intro, statements) plus the claim. **The restatement artifact is hidden from the grader**, so a restatement error can't propagate into a "faithful" grade.
+- **Per-paper claim cap:** if a sampled paper yields more than 30 claims, 30 are drawn by PCG from the same seed stream. Precision is then estimated on the graded subset, and the cap is disclosed.
+- **Inter-rater check:** 4 of the 20 papers (2 per domain, the first 4 drawn) are also graded independently by @cth-implementor. Cohen's κ on faithful vs not is reported. **Small-n rule:** if fewer than 40 claims are double-graded, κ is reported but isn't a gate. Round 2 go/no-go then rests on precision and locator accuracy alone, and that is disclosed.
 - **Primary metric:** claim precision = faithful / graded, with a Wilson 95% CI. Locator accuracy is reported separately.
 - **Local arm:**
   - claim-level agreement with the haiku reference on the 20 papers (same subject/relation/object/locator after normalisation), reported with a CI;
@@ -85,7 +87,7 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 - **Round 2 (1,000 papers) is go** only if all four hold:
   - precision ≥ 0.85, with the Wilson lower bound ≥ 0.75;
   - locator accuracy ≥ 0.85;
-  - κ ≥ 0.6;
+  - κ ≥ 0.6 (unless the §5 small-n rule applies);
   - the projected round 2 cost is inside the budget deming sets.
 
   Otherwise it is **no-go**, and §8 decides what happens next.
