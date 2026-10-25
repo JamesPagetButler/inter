@@ -1,6 +1,6 @@
 # Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
 
-Status: **DRAFT r2. Nothing built, nothing run.** (r2 adds the local-extraction arm, per deming's live-test seq 3488.) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Status: **DRAFT r3. Nothing built, nothing run.** (r2 added the local-extraction arm, per deming seq 3488; r3 adds round 1b for when the local arm isn't ready, per nugent seq 3489.) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
 Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
@@ -60,7 +60,7 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 
 1. The extractor runs with **no federation file access**. Its input is a **neutral restatement artifact** built from the paper text only, with no QBP vocabulary, hashed before extraction. The hash is recorded on every claim.
 2. **Model tier (primary): haiku**, the bulk-sweep tier (deming seq 3488). It is used for every paper and is the graded reference. The prompt is frozen and hashed at freeze.
-4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`).
+4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`). **If the local arm isn't ready at run time** (the model download is gated on the reboot-window disk reclaim, and nugent's VRAM-fit preflight must pass), round 1 runs haiku-only. The local arm then runs later as **round 1b** on the **same 20 graded papers**, with the same frozen prompt and restatements and no rule change. A failed preflight is a finding; the fallback extractor is nugent's 12B profile, which is named at the round 1b start.
 3. The extractor emits the claims and nothing else: no syntheses, no "inspirations", no QBP mappings. **Cross-domain synthesis is out of scope for round 1.** It belongs to `substrate-native-vs-batch`, and only over extracted, never authored, edges.
 
 ## 5. Grading (Q2)
