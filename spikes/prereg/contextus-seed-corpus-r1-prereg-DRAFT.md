@@ -1,7 +1,7 @@
 # Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
 
-Status: **DRAFT r1. Nothing built, nothing run.** Spike / napkin grade. No outcome can by itself raise a claim above **research**.
-Director: @qbp-architecture. Runner: @contextus-impl. Seeds and grading: @qbp-oppenheimer. Box-safety: @deming. Run go: the beekeeper.
+Status: **DRAFT r2. Nothing built, nothing run.** (r2 adds the local-extraction arm, per deming's live-test seq 3488.) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
 Seeds: inter#121, oppenheimer's comment of 2026-10-25 (24 seeds, 12 per domain).
@@ -59,7 +59,8 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 ## 4. Extraction (blind, per D1-2)
 
 1. The extractor runs with **no federation file access**. Its input is a **neutral restatement artifact** built from the paper text only, with no QBP vocabulary, hashed before extraction. The hash is recorded on every claim.
-2. **Model tier:** `<<filled at freeze from deming's live-test answer to seq 3484; one tier for the whole round>>`. The prompt is frozen and hashed at freeze.
+2. **Model tier (primary): haiku**, the bulk-sweep tier (deming seq 3488). It is used for every paper and is the graded reference. The prompt is frozen and hashed at freeze.
+4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`).
 3. The extractor emits the claims and nothing else: no syntheses, no "inspirations", no QBP mappings. **Cross-domain synthesis is out of scope for round 1.** It belongs to `substrate-native-vs-batch`, and only over extracted, never authored, edges.
 
 ## 5. Grading (Q2)
@@ -68,6 +69,9 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 - **Grader:** @qbp-oppenheimer. Each claim is rated `faithful` (relation, direction and locator all correct) / `wrong-relation` / `wrong-direction` / `wrong-locator` / `not-in-paper`.
 - **Inter-rater check:** 4 of the 20 papers (2 per domain, the first 4 drawn) are also graded independently by @cth-implementor. Cohen's κ on faithful vs not is reported.
 - **Primary metric:** claim precision = faithful / graded, with a Wilson 95% CI. Locator accuracy is reported separately.
+- **Local arm:**
+  - claim-level agreement with the haiku reference on the 20 papers (same subject/relation/object/locator after normalisation), reported with a CI;
+  - oppenheimer also grades the local arm's claims on the 4 inter-rater papers, so agreement isn't mistaken for faithfulness.
 - **Recall** is not scored; there is no gold claim set. The report states this as a limitation.
 
 ## 6. Measurements (Q1, Q4)
@@ -85,6 +89,7 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - the projected round 2 cost is inside the budget deming sets.
 
   Otherwise it is **no-go**, and §8 decides what happens next.
+- **Round 2 extraction tier:** **local** iff local–haiku agreement ≥ 0.90 **and** the local arm's graded precision on the 4 papers is no more than 0.05 below haiku's on the same papers. Otherwise **haiku** (13M haiku tokens still fits the cap, deming seq 3488).
 - **Q3 is counted, not thresholded:**
   - the number of the 14 UNANCHORED seeds that gained a verified id plus a proposed REF anchor;
   - the number of candidate items for #660/#661/#473 and W6, each graded `useful` / `not` by oppenheimer.
@@ -96,6 +101,8 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 | **Round 2 go** | `contextus-seed-corpus-r2` (1,000) is pre-registered from round 1's measured costs. The corpus is the named input for `substrate-native-vs-batch`. The maths relation set becomes an AC on D1 S1 (contextus#40). | @qbp-architecture; @contextus-impl |
 | **Precision fails** | Extraction quality becomes a **D1 design-closure item** (R1), and D1 S3 (the runners) doesn't dispatch until it's ruled. Round 1' runs on a fresh 100 with the refined prompt or model, under a new pre-reg. This is recorded as a negative. | @qbp-architecture |
 | **Locator accuracy fails, precision passes** | Provenance is the gap. The locator requirement is tightened in S1, and round 1' re-runs on a fresh sample. | @contextus-impl |
+| **Local arm passes** | Round 2 runs local: electricity, not the token budget. The data also feeds nugent's harness-130 quality leg (local vs cloud extraction). | @nugent |
+| **Local arm fails** | Round 2 runs on haiku. Local extraction is recorded as a negative for this domain, with its reopen conditions. | @nugent |
 | **Cost fails, quality passes** | Round 2 is re-scoped: abstract plus statements only, a cheaper tier or a local model (nugent), or higher concurrency. It is a new pre-reg. | @deming; @qbp-architecture |
 | **Fan-out < 100 unique within 2 hops** | Domain sparsity is recorded as a finding. Round 2 may widen to hop 3, pre-registered. | @qbp-architecture |
 | **Every outcome** | Verified ids plus **proposed** REF anchors for the UNANCHORED seeds go to the anchor owner through the CTH propose path. **They are never adopted claims** (oppenheimer ask b). The 14 UNANCHORED seeds are **#660's first re-audit batch** (oppenheimer ask c). The missing doi/arXiv field in the CTH schema is a forward row on confluent-trust#122. | @qbp-oppenheimer; @cth-implementor |
@@ -104,7 +111,8 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 
 1. **@contextus-impl:** the runner design (§2, §4, §6) and the S1 schema fit (§3) are buildable as written.
 2. **@qbp-oppenheimer:** the seeds as pinned, the grading protocol (§5) and the thresholds (§7).
-3. **@deming:** the model tier for §4.2, the budget for §7, and box-safety (§10).
+3. **@deming:** the tier choice (§4.2, answered seq 3488), the budget (§7), box-safety (§10), and the per-run capacity grant logged in `ops/capacity/capacity-ledger.py`.
+4. **@nugent:** the local model is named and fits the 16 GB VRAM profile; it is sequenced against `nugent-gemma12b`.
 
 ## 10. Resources and kill conditions (pre-run-resource-estimate)
 
@@ -114,13 +122,15 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - ≤ 1 GB RAM;
   - concurrency 1;
   - nice 19;
-  - ~2–5 h wall time.
+  - ~2–5 h wall time;
+  - the PDF cache is pruned after extraction (deming).
 - **Kill conditions:**
   - token spend > 1.5× the round 1 estimate;
   - disk > 1 GB;
   - more than 20% of papers erroring at any stage;
   - `~/.federation-watcher/box-pause/contextus` present.
-- **Network:** public APIs only (arXiv, Crossref, OpenAlex, Semantic Scholar), at polite rates. No credentials beyond the model API.
+- **Network:** public APIs only (arXiv, Crossref, OpenAlex, Semantic Scholar), at polite rates. Fetching stays rate-limited whatever the concurrency. All responses are cached. **No new API keys in round 1:** an S2 key is a new external credential, so it's a beekeeper call before round 2.
+- **GPU:** the local arm needs ≤ 16 GB VRAM and is serialised against the GPU lane.
 
 ## 11. Spike rules (forging doc §3)
 
