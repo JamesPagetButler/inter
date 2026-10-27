@@ -288,6 +288,29 @@ For full architecture of each phase, see `~/Documents/inter/workspace-phase-arch
 
 ---
 
+### 2.9 State/memory convergence: federation seats → BMA conscious layer (S0 → S3)
+
+**Owner:** qbp-architecture (phasing) + beekeeper (ratification). Stage owners are named per stage.
+**Origin:** Nidavellir#38 (decision provenance; the beekeeper's bootstrapping progression, 2026-10-27; the architect's four-layer synthesis).
+**The idea:** federation seats are the **live testbed** for BMA's conscious-layer memory. A seat that operates on compact, typed **state** (not an append-only transcript), with decisions recorded as provenance, is a proto-BMA. Each stage is usable on its own and de-risks the next. This is a bootstrap, not a big-bang.
+
+**Target stack:** conscious layer (state) → **Edda** (typed read/write: `Decision`/`Ruling`/skill ops, with nuance and defeasibility) → **Wyrd** (hypergraph + Mímir decay) → **CTH** (trust + provenance-graph overlay).
+**Invariant at every stage:** compression moves detail down a layer and **never removes structure**. Applicability conditions, defeaters, edge types and the weakest-link grade survive every summary.
+
+| Stage | Phase | What changes | Exit gate | Depends on |
+|---|---|---|---|---|
+| **S0** | now | seats run on append-only context; provenance is scattered | — | — |
+| **S1** | Crawl (Sprint 4) | each seat gets a **typed state file** (identity, obligations, armed infra, active work, decisions *by pointer*, watch items), loaded by its persona §0. Provenance is harvested on close. Decisions are recorded in the edda#96 shape, with `applies_when` / witnessed `defeated_by`. | `check_personas.py --strict` green; a state-schema lint green; a rebuild **re-derives** each seat's state from its pointers (dry-run) | inter#228 (persona/rebuild gate); edda#96 |
+| **S2** | Walk (early) | seat state + provenance move **onto Wyrd via Edda-typed read/write** ("Edda through Wyrd"). CTH semantics govern the provenance graph (closure-aware pruning, required companions); Mímir salience applies, with defeaters `TierImmune`. | a seat's state is read and written only via Edda ops lowered to Wyrd; the recomputed view matches the stored view; **the "baby" test** (compress, and the override survives); prune refused without its closure precondition | inter#197 (lowering contract); edda#96 merged + `edda check`; Wyrd v0.2 with Mímir (§2.2) |
+| **S3** | Walk → Run | **BMA's conscious layer is a seat with this state property**, reading and writing the same hypergraph. Defeater authority migrates from the beekeeper role to the judge collective. | a BMA instance and a federation seat read and write the same L1 graph; judge-collective override recorded as a witnessed `defeated_by` | BMA Walk-α hypergraph read/traverse (bma-systema#332); BMA governance (judge collective) |
+
+**Disanalogies to close on the way** (Nidavellir#38 synthesis):
+1. seats have no sleep cycle, so Sprint-Prep step 4 serves as the federation's "sleep";
+2. seat state is self-authored, so decisions must point to sources (derived, not declared);
+3. override authority is typed as a **role**, so it migrates without a schema change.
+
+**Current status:** S0. S1 is proposed for the Sprint 4 weave.
+
 ## 3. Phase architecture
 
 See `~/Documents/inter/workspace-phase-architecture.md` for per-phase ASCII diagrams covering:
