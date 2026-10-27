@@ -85,6 +85,9 @@ A **strike** is one retained increment. **Entry:** its executable specification 
 - **The strike:** build until the executable specification is green. The spec stays in CI. (§4)
 - If building surfaces a gap the specification missed, triage it by §7: a spec-gap updates the spec first, under the guardrail.
 - **Bounded review (R2).** When review round 3 of a PR finds a *new instance of a finding type* that rounds 1–2 already found, stop patching and run a **cause check**: is a tool we don't own already authoritative for this? Fix the cause, not the instance. This is the same two-rounds bound as the key loop (§7a). *(Evidence: QBP#698 ran six rounds hardening a regex Lake/Agda parser before the cause, a load-bearing float, was named; QBP#703 replaced it with the provers' own tools. Process notes C19.)*
+- **Blocked on a gate: say so at once (C7).** The moment a seat blocks on a gate (a push grant, a review, a capacity nod, a beekeeper call), it posts one line on the forging's channel: "blocked on <gate>, waiting on <whom>". That way the director and herschel's queue can see it. *(Evidence: an implementor waited about 4h on a push gate surfaced only to the beekeeper.)*
+- **Report on change only (C8, C12).** A seat at rest is silent. It speaks on a mention, a task, a finding or a state change, never to say "nothing new". Re-arming a waiter is not news. Rulings live in exactly one named place (the issue of record), so nobody has to poll for them.
+- **Scope by guarantee, not by today's inputs (C13).** A finding is inside a milestone's DoD if it **weakens a guarantee the DoD states**, whether or not current data triggers it. "Not affected yet" decides urgency, not scope. *(Evidence: QBP#696, a staleness blind spot, was first ruled out of Criticality v1 because the pinned proofs weren't hit; the beekeeper reversed it.)*
 - **Strike close: retro note (R7).** At strike close, the strike owner posts a short **strike-retro comment on the sprint's weave issue** (§1c): what landed, the review rounds, any breakdowns (with their process-notes C-ids) and any rule it suggests. The next refinement then has evidence, not recollection.
 
 ---
@@ -124,6 +127,12 @@ This is the **opposite of a spike**: retained, production-grade, permanent. It i
 **Where it lives:** in the **repo whose CI runs it** — never in a repo with no build. A cross-cutting strike may have executable specs in several repos; the record indexes them.
 
 **Meta-lock (cross-repo strikes):** a cross-repo strike's executable specification is the **meta-lock**, the aggregate of its per-repo locks. Each repo's lock proves that repo met its spec-delta, and the strike lands only when **every** per-repo lock is green. The meta-lock is not a separate gate: it *is* the strike's executable specification, and the strike's record (e.g. a Strike Record issue, inter#161) states it as the close condition.
+
+**Lock-scope rule: a lock is stated at the external interface.** At least one assertion in every executable specification must test the **end-to-end mapping at the boundary its consumers use**: input as the outside world supplies it, output as the outside world reads it, checked against an **independent reference** (a textbook formula, a spec, a known-good tool). Strong tests of internal identities (round-trips, golden values, defining constants) do not satisfy it, because a component can satisfy all of them and still map its input to its output wrongly. This is a recurring failure class, *strong internal tests, wrong end-to-end mapping*, with two instances so far:
+- **json2yaml (OKH manifests, studybuddy napkin, live-test seq 3071):** the internal checks passed, but the external-interface mapping was never locked.
+- **QBP `si_conversion` / Exp-03 (studybuddy, 2026-10-24, live-test seq 3304):** 148 tests locked internal identities. None locked SI-vs-textbook end to end, so a **×40 error on the propagation axis** went undetected. An end-to-end lock (BPM → SI against textbook σ(z)) fails on the bug (relative error 0.13) and passes on the fix (3×10⁻¹⁵).
+
+*How to apply:* the coverage matrix of every strike issue carries at least one AC row whose named test crosses the external interface against an independent reference. A matrix whose tests are all internal identities is incomplete.
 
 *Migration note:* prior artifacts using "lock"/"edda-lock" (bma-systema#299, inter#132, the relocated records in bma-systema#300) refer to this concept. New work says "executable specification"; "edda-lock" → *an executable specification expressed in Edda* (§6).
 
@@ -211,6 +220,67 @@ A round produces evidence (a landed key plus a re-run), so after two of them the
 
 ### Worked example — Sprint 3, bma-systema#86 (cognition lock)
 In-scope work merged, but the lock could not open honestly. The probe suite failed **open**: it didn't grade against ground truth, didn't attribute an answer to the local mind versus the cousin model, and counted timeouts as non-failures. Diagnosis: **spec-gap** (the lock tested the wrong thing). Key: a refined #86 Toddle-exit lock with ground-truth grading, answer attribution, timeout = FAIL, and the self-state-injection assertion that already passes. The open question for round 2, if the refined lock is still red, is whether "cognition" itself needs a measurable definition from theory. That would be a **theory-gap**, and the key would be a research strike.
+
+## 8. Control & authorization of a forging (beekeeper ruling, 2026-10-24: inter#153 AC9)
+
+The ruling of record is [inter#153 issuecomment-6378629043](https://github.com/JamesPagetButler/inter/issues/153#issuecomment-6378629043). It was posted under the shared login and recorded by @herschel at the beekeeper's direction (provenance caveat, inter#136). This section transcribes it; if the two ever differ, the comment wins.
+
+**Activation.** Per the ruling's own authorization clause, a grant lives in the CLAUDE.md standing-authorization block and in the R8 milestone comment. It is never relayed. So the merge/close delegation below is **in force for a seat once the beekeeper has confirmed it first-hand to that seat, or has written it into CLAUDE.md standing-auth**. Until then, `gh pr merge` stays per-action beekeeper confirmation. The CLAUDE.md edit is the beekeeper's.
+
+### Control plane
+Herschel owns the forging's operational control plane through a §5 handoff per milestone forging (`personas/herschel.md` §7.12). The control plane covers:
+- the thread map;
+- duplicate detection;
+- the board and weave (§1c);
+- the R4 merge-readiness check;
+- A1 liveness escalation.
+
+The architect stays episodic: rulings and §I4.
+
+### Authorization
+Grants are **recorded, never relayed**. They stay the beekeeper's, in CLAUDE.md standing-auth plus the R8 milestone comment. No peer infers a grant from a relay (C2).
+
+### Merge/close delegation
+Herschel acts autonomously within the control-plane lane. Merge/close **execution** is delegated under three conditions:
+- the `pr-merge-completeness` gate is **objectively green**: CI pass, the named reviewer's *written* §I4, and the test plan ticked or deferred-with-link;
+- **author ≠ merger**;
+- the merge is **audited**: it cites its R4 verification and its §I4 legs.
+
+The merge is mechanical on the gate, not discretionary.
+
+**Author ≠ merger edge.** A PR authored by a lane's own merger never self-merges. For example, a herschel-authored inter PR routes to qbp-architecture or the beekeeper. A PR that changes this section, or any seat's merge lane, is merged by the beekeeper.
+
+| Repo | Merger | Extra control |
+|---|---|---|
+| inter | herschel | — |
+| qbp-systema | qbp-oppenheimer | notary-implementor's notarisation record is required on the PR before merge, and the merge cites it |
+| qbp-compute-unit | qbp-architecture | the structural Lean-ROM hard gate (`verify-lean-roms`: a checksum mismatch is a hard fail on every PR) already blocks unverified content |
+| bma-systema, wyrd, edda, contextus, confluent-trust, notary | qbp-architecture | — |
+| Gestalt, Nidavellir | qbp-architecture | the owner direct-commits routine content (Gestalt notes/curation; Nidavellir log appends). Consequential changes go via a PR the architect merges: Gestalt `proposals/`; Nidavellir watcher/delivery-contract code and any rewrite of existing log records. The architect holds standing review and independent beekeeper-escalation on both |
+| **QBP** | **beekeeper** | core theory, held |
+| **craft** | **beekeeper-engaged** | human-in-the-loop review |
+
+**The qbp-systema notarisation record.** This contract was proposed by notary-implementor (live-test seq 3216) and accepted by qbp-architecture. It refines the ruling's "notarisation record required"; it does not change it.
+- **Form:** a V&V record on the qbp-systema PR, in the NT_NOTARY shape. Its verdict is one of `VERIFIED`, `VERIFIED-WITH-CAVEAT`, `REFUTED` or `UNVERIFIABLE`, and it names the trust tiers achieved, the residual dependencies and any seams.
+- **Scope:** the PR's *substantive* claims survive verification. That covers the PA grades holding, the tests actually covering the changed paths, and no overclaim. It does **not** re-run CI or the `pr-merge-completeness` gate; those remain the objective-green precondition.
+- **Gating:** `REFUTED` and `UNVERIFIABLE` block the merge. `VERIFIED` clears it, and so does `VERIFIED-WITH-CAVEAT` unless the record says a caveat blocks.
+- **Trigger, one owner:** qbp-oppenheimer, as the merger, @mentions `@notary-implementor` on the PR once CI is green and the §I4 is in. The notary posts same-cycle (§2.i). Separation of roles: author ≠ notary ≠ merger.
+
+### Liveness fallback
+If a delegated merger is dark past the A1 SLA, **deming** may reboot, triage, or resolve the issue with that specific agent. This grants **no merge rights**: deming never merges in a dark seat's place, but works to revive the seat so it clears its own queue. If deming can't resolve it, deming escalates to the beekeeper (revive, reassign, or hold). Merge authority is exactly the table above, and it is never acquired through the liveness path.
+
+### Kickoff
+Kickoff stays a **joint go** by the beekeeper and herschel. The sprint must be sufficiently defined **and** the required merges complete before "go Sprint N".
+
+### Still beekeeper-gated, escalate-only
+These are unchanged:
+- HVR (human verification review) and YubiKey-signed merges;
+- gate re-scoping (§7a, and only after two full key-loop rounds);
+- constitutional and governance writes (`governance/`, succession, judge-collective);
+- novel external actions (email, repo settings, branch protection, secret rotation);
+- success-threshold pre-registration (the B4 type), unless pre-delegated.
+
+**Intent.** The beekeeper can say "go Sprint N" and stay hands-off until the sprint is close-ready. The federation closes the sprint itself, and only questions the federation truly cannot resolve escalate.
 
 ## References
 - Beck & Cunningham — SpikeSolution (c2 wiki); Extreme Programming.

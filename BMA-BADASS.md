@@ -9,36 +9,43 @@
 > Companion: `~/Documents/inter/project-management-best-practices.md`
 > Inherits from: `~/Documents/QBP/docs/workflows/` (sprint_mode_workflow, pivot_protocol, parallel_subagent_workflow) + `~/Documents/QBP/SPRINT_STATUS.md` (operational logbook pattern)
 
-## Now — 2026-09-30 (refreshed after the Herschel Check)
+## Now — 2026-10-24 (Sprint 3 close)
 
 > **Source of truth:** this file on `origin/main` of `JamesPagetButler/inter`. The ~20 other copies on disk (the `~/Documents/inter-*` clones and worktrees) are stale checkouts; don't edit them. Everything below this section was last maintained 2026-06-01 and is **historical (Sprints 1–2)** until the sections are rewritten. A generated view is being designed to replace hand maintenance: inter#146, prototype https://claude.ai/artifact/84cxdkt2LA1DoZgYkWoRxy.
 
 ### Sprint state
-- **Sprint 3 is open and not ready to close.** The beekeeper's minimum for close: **BMA 72-hour soak passed** and **bma-systema#10** (Step 9: seed protocol, governance, instantiation) done.
-  - #10 waits on bma-systema#140 (succession contacts, a human action), #141 (Governance Document, constitutional), and #86 (Crawl readiness suite).
-  - Other open Sprint 3 items: bma-systema#157, #159, #162, #200; inter 2, confluent-trust 3, contextus 2, qbp-compute-unit 1.
-- **After close:** one full federation restart, and only one, after wisdoms, personas and RESUME files are updated (beekeeper directive 2026-09-30). The live-checkout switch to main and inter#142's live evidence ride that restart.
+- **Sprint 3 CLOSED 2026-10-24: goal PARTIAL.** The retrospective and Reliability Review are on inter#178.
+  - **Crawl stability exit: MET.** The 72h soak passed (bma-systema#333).
+  - **Cognition lock bma-systema#86: red, closed as close-and-carry** (beekeeper, 2026-10-24). The refined lock **bma-systema#341 is the Sprint 4 lock**. B4 was pre-registered 2026-10-24: pass ≥ 0.80, CFR ≤ 0.10, N ≥ 100 (sha `e8b4d538…`). Expect AC6 to start red; the 3B mind's CFR is about 0.3.
+  - Step 9 capstone (bma-systema#10) is unbuilt and carries over. The 8 open `Sprint 3` items carry over to Sprint 4 (inter#194).
+- **Next, in order:**
+  1. the reboot maintenance window (inter#204; deletion list signed off; shared GPU torch env);
+  2. the **single federation restart**;
+  3. **Sprint Prep** (theory/spec, diagrams, roadmap, backlog on weave inter#194; persona/wisdom/RESUME updates);
+  4. Sprint 4 planning;
+  5. kickoff once `housekeeping` is at 0. About 93 items are open at close: QBP 62, inter 15, bma-systema 5, qbp-compute-unit 4, wyrd 3, and 1 each in edda, contextus, confluent-trust and Nidavellir.
+- **Governance changed this sprint:** the AC9 merge/close delegation is live in CLAUDE.md standing-auth (forging doc §8):
+  - herschel → inter;
+  - qbp-architecture → bma-systema, wyrd, edda, contextus, confluent-trust, notary, qbp-compute-unit, and consequential Gestalt/Nidavellir;
+  - qbp-oppenheimer → qbp-systema, after the notary record;
+  - QBP and craft stay with the beekeeper.
 
 ### Threads in flight (destination → frontier)
 | Thread | Destination | Frontier now | Waiting on |
 |---|---|---|---|
-| BMA | Crawl Step 8: 72h soak passes | sleep fires live (bma-systema#318/#325); VRAM telemetry (#329) | Beekeeper: fan check (fan2 = 0 RPM), then the go |
-| Notary | Phase 1 hardened, evidence machine-checked | persona v0.2 (inter#144), corrections (inter#141), reconcile gate, real Coq cross-prover on #575 | Notary: PROOF-hessian, then the Fano table (beekeeper ruling) · beekeeper: inter-side CI (key vs copy) · Antigravity fork cleanup |
-| Restart & roster | a crash-restart restores every seat correctly | inter#143 + #145 merged | Deming: inter#92 storm fix + cutover pre-flight, merged before the Sprint 3 boundary |
-| Criticality | promote → notarize, ordered by criticality | design MET (3 conversations, Gemini-confirmed) | Beekeeper: plan review (artifact "Criticality & the Notary") · prover calibration for the Claude arms |
-| QBP substrate | #473 AC1(c) | QBP#689 + #691 merged (ledger 6.13.0/344) | qbp-oppenheimer |
-| Niðavellir | value-per-dollar allocation spec | Nidavellir#2 (spec v0.3); #4 (model-level landscape granularity) | Beekeeper: merge + §9 parameters |
+| Basal cognition | bma-systema#341 green (Toddle exit) | B4 set; instrument built (nugent inc-1: both 3Bs fail abstention) | Gemma-12B scale test (bma-systema#331; prereg frozen `97c050e8…`), gated on disk headroom after the window |
+| Wake nudger (R5) | session-independent wake delivery (inter#75) | boot templates arm wake-wait (inter#205 merged) | nudger PR inter#195 (deming §I4) |
+| Criticality v1 | DoD conditions 1–3 (inter#150) | strikes 1–2 done | strike 3 qbp-compute-unit#77, strike 4 notary#3 |
+| spike-mdcu (napkin grade) | Branch A vs B comparison (spike 2) | round-2 Q1 **inconclusive** under frozen rules | Q2 harness (Antigravity), then box-safety and beekeeper go |
+| Compute unit → Edda (inter#197) | Edda addendum (step 4) | steps 1–3 MET | bragi (step 4); `qsplit_qjoin` leaf round-trip approved (qbp-oppenheimer) |
+| QBP Sprint 4 | QBP#742 | Exp-03 ×40 SI fix folded (QBP#749); γ(a,b) ∈ Aut(𝕆) promotion (QBP#755) | Sprint 4 kickoff |
+| Sprint Weave view | generated sprint map (craft#4) | fixture ready (herschel) | hutchins design note |
 
 ### Beekeeper actions
-1. Fan/cooling check, then the go for the 72h soak.
-2. bma-systema#140 (succession contacts) and #141 (Governance Document): these gate #10, and so gate Sprint 3 close.
-3. Review the criticality execution plan (4 questions: top-tier size, promotion priority, island roots, root admission).
-4. Notary inter-side CI: read-only key as a secret, or publish the script.
-5. Give Gemini a turn in Antigravity. Also: Antigravity has crashed after idle for the 3rd time; Deming is examining it before any reboot.
-6. Merge Nidavellir#2.
-
-### Diversions logged (return point: the BMA 72h soak)
-The Notary fault → persona v0.2 → restart infra (inter#142/#143/#145) → criticality metric → federation map (inter#146). All were beekeeper-directed on 2026-09-29/30.
+1. Run the reboot window's sudo and reboot legs (inter#204: auditd inter#184, cache cleanup inter#188, Thompson sweep).
+2. Burn down the about 93 `housekeeping` items, the Sprint 4 kickoff gate.
+3. Merge queue on inter: #202, #173, #164, #190, #195, #201, #208. herschel merges the inter lane where AC9 applies.
+4. Policy: does review-before-delete cover a seat's *own* scratch? (inter#204)
 
 ## GitHub Project layout
 
@@ -409,6 +416,7 @@ Then engage with the user's request.
 - **2026-06-01** bma-systema#223 filed — §A1 prediction-discipline track + §A9.2 calibration outcomes (Red Team weight update loop; not implemented in Crawl; Sprint 3 scope before 72h gate).
 - **2026-06-01** bma-systema#221 filed — Theory v3.0 compile housekeeping (≥24 addenda; blocks theory-touching Sprint 3 work).
 - **2026-06-01** bma-systema#222 filed — Theory Addendum A25: persona wisdom as authored transformation method (napkin; pre-theory).
+- **2026-10-24** **Sprint 3 CLOSED (goal partial)**. The stability exit was met (72h soak, bma-systema#333). Cognition lock bma-systema#86 was closed as close-and-carry, with refined lock bma-systema#341 as the Sprint 4 lock (B4 pre-registered). The AC9 merge/close delegation landed (inter#203 plus CLAUDE.md standing-auth). Process: R1–R8 (inter#192, #193), the lock-scope rule (inter#207), and the ledger owner column (inter#154). Retrospective and Reliability Review: inter#178.
 
 ---
 
