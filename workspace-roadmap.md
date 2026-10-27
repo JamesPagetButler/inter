@@ -288,6 +288,29 @@ For full architecture of each phase, see `~/Documents/inter/workspace-phase-arch
 
 ---
 
+### 2.9 State/memory convergence: federation seats → BMA conscious layer (S0 → S3)
+
+**Owner:** qbp-architecture (phasing) + beekeeper (ratification). Stage owners are named per stage.
+**Origin:** Nidavellir#38 (decision provenance; the beekeeper's bootstrapping progression, 2026-10-27; the architect's four-layer synthesis; the Wyrd and Edda S2 addenda).
+**The idea:** federation seats are the **live testbed** for BMA's conscious-layer memory. A seat that operates on compact, typed **state** (not an append-only transcript), with decisions recorded as provenance, is a proto-BMA. Each stage is usable on its own and de-risks the next. This is a bootstrap, not a big-bang.
+
+**Target stack:** conscious layer (state) → **Edda** (typed read/write: `Decision`/`Ruling`/skill ops, with nuance and defeasibility) → **Wyrd** (hypergraph + Mímir decay) → **CTH** (trust + provenance-graph overlay).
+**Invariant at every stage:** compression moves detail down a layer and **never removes structure**. Applicability conditions, defeaters, edge types and the weakest-link grade survive every summary.
+
+| Stage | Phase | Owner | What changes | Exit gate | Depends on |
+|---|---|---|---|---|---|
+| **S0** | now | — | seats run on append-only context; provenance is scattered | — | — |
+| **S1** | Crawl (Sprint 4) | qbp-architecture (schema + lint) · herschel (rebuild re-derivation) · hutchins (pilot seat). Tracked: **inter#232** | **pilot first, on a non-central seat** (hutchins; beekeeper 2026-10-27): it runs on a state file for one full sprint-cycle before any other seat adopts it. Roll-out is the beekeeper's decision, on the pilot's evidence. Each seat gets a **typed state file** (identity, obligations, armed infra, active work, decisions *by pointer*, watch items), loaded by its persona §0. Provenance is harvested on close. Decisions are recorded in the edda#96 base `Ruling` shape; `applies_when` / witnessed `defeated_by` are recorded **by convention** (prose fields) until edda#96-v2 types them. **Builders** (single-task instances) keep no state file: their dispatch carries the decisions they must not re-open (by pointer), and their `[COMPLETE]` hands back any decision they made, by pointer, for the dispatching seat to record. A builder never writes a seat's state (one writer per resource). | `check_personas.py --strict` green; a state-schema lint green; a rebuild **re-derives** each seat's state from its pointers (dry-run); pilot measure: zero rulings from state without its pointer read in the pilot cycle, with an activity floor of ≥ 5 decisions so the pass isn't vacuous | inter#228 (persona/rebuild gate); edda#96 (base `Ruling`, **merged** 3466bfa) |
+| **S2** | Walk (early) | edda-implementor (edda#96-v2 = **edda#98**, `edda check`) · wyrd-implementor (Mímir + `Neighborhood` guard) · cth-implementor (provenance-graph semantics) · qbp-architecture (seam) | seat state + provenance move **onto Wyrd via Edda-typed read/write** ("Edda through Wyrd"). CTH semantics govern the provenance graph (closure-aware pruning, required companions); Mímir salience applies, with defeaters `TierImmune`. | a seat's state is read and written only via Edda ops lowered to Wyrd, using **working-set view reads** (`query.Neighborhood`; never materialising the full graph); `applies_when` is **re-checked at read**, and every write carries a **witness with author ≠ owner** (runtime gates at the Edda boundary); the recomputed view matches the stored view; **the "baby" test** (compress, and the override survives); prune refused without its closure precondition | inter#197 (lowering contract); edda#96 (merged) → **edda#96-v2 = edda#98** (typed `applies_when` / `defeated_by`, role-typed `min_authority`, owner edda-implementor) + `edda check`; Wyrd v0.2 with Mímir (§2.2), including the `Neighborhood` no-evict-`TierImmune` guard; D2 (inter#200) as the live-store prerequisite |
+| **S3** | Walk → Run | bma-implementor (the conscious layer's **state/memory**: hypergraph read/write, tiers, F01, sleep) · nugent (the **local reasoner**, Huginn, and the Edda check on its output; a parallel track, not on S3's critical path) · beekeeper (judge-collective governance) | **BMA's conscious layer is a seat with this state property**, reading and writing the same hypergraph. Defeater authority migrates from the beekeeper role to the judge collective. | a BMA instance and a federation seat read and write the same L1 graph; judge-collective override recorded as a witnessed `defeated_by` | BMA Walk-α hypergraph read/traverse (bma-systema#332); **the conscious-layer interface contract** (bma-systema#356: shard in, typed proposal out, engine-agnostic); BMA governance (judge collective) |
+
+**Disanalogies to close on the way** (Nidavellir#38 synthesis):
+1. seats have no sleep cycle, so Sprint-Prep step 4 serves as the federation's "sleep";
+2. seat state is self-authored, so decisions must point to sources (derived, not declared);
+3. override authority is typed as a **role**, so it migrates without a schema change.
+
+**Current status:** S0. S1 (pilot: hutchins, inter#232) is proposed for the Sprint 4 weave; adding it is a Sprint 4 planning decision, not implied by ratifying this section.
+
 ## 3. Phase architecture
 
 See `~/Documents/inter/workspace-phase-architecture.md` for per-phase ASCII diagrams covering:
