@@ -153,6 +153,7 @@ The federation spans ~15 repos, so a **bare `#292` is ambiguous** — the reader
 - **In chat / sessionbridge / terminal / dashboards** (no auto-linking) → the federation handle **`repo-<name>-<type>-#<num>`**, e.g. `repo-bma-systema-pr-#292`, `repo-qbp-pr-#424` (beekeeper directive 2026-05-14 — the beekeeper reads from terminal context where repo scope isn't visible). Naming the repo in words is equally fine: "PR #292 **on bma-systema**".
 - **Never** a bare `#N` in any context that doesn't already name the repo — including a thread already scoped to one repo (the reader may not see that scope).
 - **Cross-repo `Closes`:** GitHub only auto-closes **same-repo** references. To close an issue in another repo, use `Closes owner/repo#N` for the link, but it **won't auto-close** — close it by hand on merge. (Example: `JamesPagetButler/bma-systema#292` implements `JamesPagetButler/inter#112`; the issue is closed manually.)
+- **Closing keywords are lexical, not semantic (C18).** GitHub treats any `close/closes/closed/fix/fixes/fixed/resolve/resolves/resolved` followed by an issue ref as an instruction, whatever the sentence means. "Does not close #703" **closed** QBP#703 when QBP#708 merged, and a closed PR ignores later pushes, so its re-merge never reached CI. Use a closing keyword **only** for an intended close, written as `Closes owner/repo#N` on its own line, one per issue. Never put a closing verb next to a reference you are *not* closing; write "see #N", "refs #N" or "#N stays open". The R4 readiness check scans PR bodies for closing references before handing a PR to the beekeeper.
 
 Rationale: repo-qualification is the difference between a reference someone follows in one click and one they have to interrogate. Codified 2026-09-17 (unifying the 2026-05-14 chat-handle directive with the GitHub auto-linking form) after a bare `#292` needed a "which repo?" round-trip.
 
@@ -338,6 +339,13 @@ Constitutional documents are: anything under `governance/`, `BMA-Governance-Docu
 **Why verbal isn't enough:** Constitutional documents have provenance chains. A future audit of "when was this rule changed and by whom" reads PR history, not chat logs. Direct pushes are invisible to the provenance chain and cannot be audited.
 
 **Demonstrated failure mode:** bma-systema#219 (2026-06-01) — governance document pushed directly to main on verbal "commit and push" instruction. Remediated by force-push reversal + branch + PR in the same session; classified systemic in process-breakdowns.md.
+
+### 5.7 Git command chains fail closed (C14)
+
+Multi-step git work must **stop at the first failure**. A failed `git worktree add` followed by `; git add -A && git commit` once committed straight into the shared inter checkout (caught before push, 2026-10-08), and it recurred once.
+- Chain every step with `&&`, or end each line with `|| exit 1`. **Never `;`** between steps that depend on each other. Don't rely on `set -e` alone; it doesn't stop every chain.
+- **Never `git add -A` or `git add .`.** Stage named paths only.
+- **Assert where you are before you commit:** check the working directory and that `git rev-parse --abbrev-ref HEAD` is the branch you expect, inside your own worktree (`worktree-isolation` hard gate).
 
 ---
 
