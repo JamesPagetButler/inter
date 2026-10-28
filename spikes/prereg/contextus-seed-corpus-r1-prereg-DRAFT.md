@@ -1,6 +1,6 @@
 # Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
 
-Status: **DRAFT r5. Nothing built, nothing run.** (r5 adds the §2 domain guard and the §2a safety-stop halt rule. Both followed contextus-impl's two model safety stops on this task, 2026-10-27, and were approved by the beekeeper in qbp-architecture's session. Earlier: r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Status: **DRAFT r6. Nothing built, nothing run.** (r6 applies the beekeeper's seed ruling, option (b), given in qbp-architecture's session on 2026-10-28, plus deming's wall-clock kill and the Nidavellir#41 thread pin. r5: r5 adds the §2 domain guard and the §2a safety-stop halt rule. Both followed contextus-impl's two model safety stops on this task, 2026-10-27, and were approved by the beekeeper in qbp-architecture's session. Earlier: r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
 Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
@@ -32,7 +32,7 @@ This spike measures that loading process, on real papers, with **blind extractio
 1. **Intake pins every identifier itself** (oppenheimer ask a). Each seed is resolved to a DOI or arXiv id with no version suffix, via arXiv, Crossref or OpenAlex. Two seeds carry 2026 arXiv ids that couldn't be verified independently (D1 #1, #2). A seed that doesn't resolve is recorded as `unresolved` and still counts as a seed. Its id is never guessed.
 2. **Fan-out sources:** each seed's references (backward) and its citing papers (forward), from OpenAlex, with Semantic Scholar as fallback. **Hop limit: 2**, following the per-seed `hop` column.
 3. **Selection rule** (deterministic). A candidate's score is the number of distinct seeds it is linked to within the hop limit, minus 0.5 per extra hop. Candidates are ranked by score, then by the year nearest the seed's median year, then by id. The top candidates are taken until there are **100 unique papers: 50 per domain**, seeds included. A paper linked to both domains counts once, towards the domain with its higher score, and is flagged `bridge`.
-3a. **Domain guard (r5).** A paper, seeds included, is **admitted** only if its OpenAlex primary topic's field is **Mathematics** or **Physics and Astronomy**. Every other field is **excluded before any fetch of the paper's text**, and the OpenAlex domains **Life Sciences** and **Health Sciences** are named explicitly so there is no ambiguity. An excluded paper is never fetched, parsed or extracted. It is recorded as `out-of-domain` with its id, its hop and its OpenAlex field, and **counted as a result** (Q4 reports the excluded fraction per hop). The guard is applied to OpenAlex **metadata only**. A paper with no OpenAlex topic is `out-of-domain`, never guessed. If the guard leaves fewer than 50 admitted papers in a domain, that is the existing "fan-out < 100" outcome (§8), not a reason to relax the guard.
+3a. **Domain guard (r5).** A paper, seeds included, is **admitted** only if its OpenAlex primary topic's field is **Mathematics** or **Physics and Astronomy**. Every other field is **excluded before any fetch of the paper's text**, and the OpenAlex domains **Life Sciences** and **Health Sciences** are named explicitly so there is no ambiguity. An excluded paper is never fetched, parsed or extracted. It is recorded as `out-of-domain` with its id, its hop and its OpenAlex field, and **counted as a result** (Q4 reports the excluded fraction per hop). The guard is applied to OpenAlex **metadata only**. A paper with no OpenAlex topic is `out-of-domain`, never guessed. **Seed exception (r6; beekeeper ruling, option (b)):** seeds stay inside the guard, with one narrow exception. Two formalisation seeds are admitted although OpenAlex files them under Computer Science: **Scholze, "Liquid Tensor Experiment" (Exp. Math. 2022)** and **Commelin 2023**. They are admitted **by pinned identifier only**, and the exception never widens to the Computer Science field for any other paper. The guard check found 15 seeds in-domain (oppenheimer, live-test seq 3700). With the two exceptions, 17 seeds are admitted. The 7 seeds with no OpenAlex record are `unresolved` (§2.1) and `out-of-domain`: they count as seeds and contribute no fan-out. If the guard leaves fewer than 50 admitted papers in a domain, that is the existing "fan-out < 100" outcome (§8), not a reason to relax the guard.
 4. **Dedup:**
    - canonical id normalisation (DOI lowercased; arXiv id with no version, `/pdf/` or `/abs/`);
    - **then** title token-Jaccard ≥ 0.85 on normalised titles;
@@ -133,6 +133,7 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - ≤ 0.5 GB disk (a PDF/text cache, pruned after extraction; claims are JSONL, ≤ 20 MB);
   - ≤ 1 GB RAM;
   - concurrency 1;
+  - **threads pinned** (r6, Nidavellir#41): `OMP_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1` and `MKL_NUM_THREADS=1` for any numpy/BLAS/torch use on the CPU, so the core budget is declared and not just the process count;
   - nice 19;
   - ~2–5 h wall time;
   - the PDF cache is pruned after extraction (deming).
@@ -140,7 +141,9 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - token spend > 1.5× the round 1 estimate;
   - disk > 1 GB;
   - more than 20% of papers erroring at any stage;
-  - `~/.federation-watcher/box-pause/contextus` present.
+  - `~/.federation-watcher/box-pause/contextus` present;
+  - **wall clock > 8 h** (r6, deming live-test seq 3702: a backstop for a network-stalled, low-token hang);
+  - **a model safety decline** (§2a): halt at that paper; never retried or rerouted.
 - **Network:** public APIs only (arXiv, Crossref, OpenAlex, Semantic Scholar), at polite rates. Fetching stays rate-limited whatever the concurrency. All responses are cached. **No new API keys in round 1:** an S2 key is a new external credential, so it's a beekeeper call before round 2.
 - **GPU:** the local arm needs ≤ 16 GB VRAM and is serialised against the GPU lane.
 
