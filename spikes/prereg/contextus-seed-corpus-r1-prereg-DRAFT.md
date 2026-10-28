@@ -1,6 +1,6 @@
 # Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
 
-Status: **DRAFT r4. Nothing built, nothing run.** (r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Status: **DRAFT r5. Nothing built, nothing run.** (r5 adds the §2 domain guard and the §2a safety-stop halt rule. Both followed contextus-impl's two model safety stops on this task, 2026-10-27, and were approved by the beekeeper in qbp-architecture's session. Earlier: r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
 Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
@@ -32,6 +32,7 @@ This spike measures that loading process, on real papers, with **blind extractio
 1. **Intake pins every identifier itself** (oppenheimer ask a). Each seed is resolved to a DOI or arXiv id with no version suffix, via arXiv, Crossref or OpenAlex. Two seeds carry 2026 arXiv ids that couldn't be verified independently (D1 #1, #2). A seed that doesn't resolve is recorded as `unresolved` and still counts as a seed. Its id is never guessed.
 2. **Fan-out sources:** each seed's references (backward) and its citing papers (forward), from OpenAlex, with Semantic Scholar as fallback. **Hop limit: 2**, following the per-seed `hop` column.
 3. **Selection rule** (deterministic). A candidate's score is the number of distinct seeds it is linked to within the hop limit, minus 0.5 per extra hop. Candidates are ranked by score, then by the year nearest the seed's median year, then by id. The top candidates are taken until there are **100 unique papers: 50 per domain**, seeds included. A paper linked to both domains counts once, towards the domain with its higher score, and is flagged `bridge`.
+3a. **Domain guard (r5).** A paper, seeds included, is **admitted** only if its OpenAlex primary topic's field is **Mathematics** or **Physics and Astronomy**. Every other field is **excluded before any fetch of the paper's text**, and the OpenAlex domains **Life Sciences** and **Health Sciences** are named explicitly so there is no ambiguity. An excluded paper is never fetched, parsed or extracted. It is recorded as `out-of-domain` with its id, its hop and its OpenAlex field, and **counted as a result** (Q4 reports the excluded fraction per hop). The guard is applied to OpenAlex **metadata only**. A paper with no OpenAlex topic is `out-of-domain`, never guessed. If the guard leaves fewer than 50 admitted papers in a domain, that is the existing "fan-out < 100" outcome (§8), not a reason to relax the guard.
 4. **Dedup:**
    - canonical id normalisation (DOI lowercased; arXiv id with no version, `/pdf/` or `/abs/`);
    - **then** title token-Jaccard ≥ 0.85 on normalised titles;
@@ -39,6 +40,15 @@ This spike measures that loading process, on real papers, with **blind extractio
 
    This reuses the Federation Work dedup design, which is a good idea worth keeping.
 5. **No full PDFs of book-length lecture notes.** The extraction input is the abstract, the introduction and the **statements** of theorems, definitions and conjectures, at most about 10k tokens. A paper with no accessible text is recorded `text-unavailable` and contributes metadata only.
+
+## 2a. Model safety-stop rule (r5)
+
+If **any** model in the pipeline (extraction, restatement or grading, hosted or local) declines a request on safety grounds, the run **halts at that paper**. The runner then:
+1. records the paper's id, hop and stage, and **only those** (no excerpt of the content);
+2. stops the run (the pause file);
+3. reports it to the director and deming.
+
+The paper is **never retried on another model or with a reworded prompt**. Rerouting a declined request is not a permitted recovery. Resumption, with that paper excluded, is the beekeeper's decision.
 
 ## 3. Claim schema (maths relations)
 
