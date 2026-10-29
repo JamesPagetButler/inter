@@ -121,7 +121,14 @@ A **spike** is a **time-boxed, exploratory investigation to reduce uncertainty**
    |---|---|---|---|---|
    | one sentence | theory/spec/ontology doc + §, and the ledger anchor id | e.g. `unconfronted → falsified (candidate)` | unchanged unless the spike produced a proof | the PR or issue that changes the text |
 
-   - **E moves, F rarely.** A spike is a confrontation with reality, so its result sets the claim's **E-grade** (`fed:EvidenceE`, ontology v0.6.0). It almost never raises F. **notary verifies every E move** (`fed:AntiLaunderingPerAxis`), and `validated` needs the pre-registered confrontation on record.
+   - **E moves, F rarely.** A spike is a confrontation with reality, so its result sets the claim's **E-grade** (`fed:EvidenceE`). It almost never raises F, and a proof moves F, never E. *(Both terms land in ontology v0.6.0, PR inter#241. Until it merges, this clause is v0.6.0-pending: it applies, but the notary's enforcement rides the merge.)*
+   - **notary verifies every E move** (`fed:AntiLaunderingPerAxis`). **What it verifies is provenance, not truth:** that the confrontation was run, is of the right kind, is on record, and that the E value follows the rules. Its verdicts are VERIFIED / VERIFIED-WITH-CAVEAT / REFUTED / UNVERIFIABLE, and none of them certifies the claim is empirically true. Per move:
+     - leaving `unconfronted` needs an `evidence_ref` to an actual confrontation, not a proof or an assertion;
+     - `validated` needs a **pre-registered** confrontation that predates the result;
+     - `consistent` without pre-registration carries the `post_hoc` flag;
+     - `falsified` needs the failed pre-registered confrontation on record.
+
+     Each E-move row files a notary request, manually for now, and automatically through notary#3 auto-dispatch when that lands. *(notary-implementor §I4, inter#247.)*
    - **Where the write-back goes:** an addendum or spec PR in the home repo, through its normal merge lane. For a beekeeper-lane document (QBP theory and paper, craft, governance), it is an **issue carrying the drafted text** for the beekeeper. The ten-addendum compile rule applies as usual.
    - **Inconclusive and negative results write back too.** The claim's text gains the attempt, the reason it was inconclusive and the reopen condition, so the next reader knows it was tried.
    - **Return to the originator.** If the spike came from a studybuddy note (or another seat's proposal), the director sends the verdict and the E move back to it. For studybuddy, that's a `re-<slug>.md` in its inbox.
