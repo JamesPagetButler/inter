@@ -371,6 +371,10 @@ If a criterion has a temporal component (e.g., "SAFETY_CRITICAL 72h cooldown com
 
 If a criterion is not load-bearing for closing the issue, it does not belong in closes-when. Wishlist items belong in follow-up sub-issues filed alongside close. The closes-when list is the *minimum sufficient* set of criteria.
 
+### 5.5 Cited ids are verified at authoring (C6)
+
+An AC that cites an id (ledger anchor, fixture, theorem, issue, PR, file path, SHA) must cite one that **exists**, checked against the live source when the AC is written. Paste ids from same-turn tool output; never retype them from memory. QBP#692 AC3 cited an anchor that didn't exist, and only a peer review caught it. Under the provable-AC manifest (inter#196), the criteria file is the place this check becomes mechanical.
+
 ---
 
 ## 6. Linking conventions
