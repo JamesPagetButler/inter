@@ -18,8 +18,8 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.5.0"
-  date: "2026-10-22"
+  version: "0.5.1"
+  date: "2026-10-28"
   root_axiom: cth:AXIOM-1
   scope: >
     Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
@@ -1555,8 +1555,20 @@ terms:
       (lattice meet), with literals defaulting to formal (top) and an overclaim rejected
       as EDDA-TYPE-008. The Edda type covers napkin..formal; the spike's active mode sits
       below it. The spike term itself stays design-proposal.
+      SUPERSEDED IN PART (2026-10-26, beekeeper-ratified two-axis model, inter#223):
+      "engineering" is NO LONGER a tier. The F axis is napkin < research < formal;
+      engineering is a composition label (a leg manifest; a composition is formal iff
+      every leg is formal, recursively; otherwise "engineered (k of n legs formal)").
+      The "validated against experimental data (closure: measurement)" clause moves to a
+      SEPARATE E axis (experimental backing), independent of F. The quotes above are
+      kept as provenance for the original wording; they are not the current model.
+      Edda theory+spec adopted the ratified F axis in edda#97 (merged 4b914dd); the
+      compiler issue edda#95 was re-scoped 2026-10-28. The full two-axis vocabulary
+      (fed:FormalityF, fed:EvidenceE, fed:LegManifest) lands in v0.6.0 after design
+      surface inter#238 (inter#237 AC2).
     review_ref:
       - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687009
+      - https://github.com/JamesPagetButler/inter/issues/223
 
   - id: spike:Leader
     prefLabel: "Leader (chain of skills)"
