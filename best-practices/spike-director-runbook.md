@@ -20,6 +20,8 @@ The director owns the spike's **integrity**, not its physics or its code. You de
 
 **One director, one voice.** Every steer to the runner goes through you. Two of us ruling in the same minute caused contradictory instructions twice on mdcu-kz (seq 222–227). **When a runner's question needs a co-signer's read, post "waiting on X" and don't post run steps until X has answered. Then post one numbered instruction marked FINAL that supersedes the earlier ones.**
 
+**The crossing protocol, if it happens anyway** (oppenheimer, inter#250 review): when two signers rule on the same item within a cycle, the director posts one line, "FINAL, supersedes seq N", and the other signer posts a one-line withdrawal. After that there are no further rulings on the item unless the runner asks. **The runner acts only on a line marked FINAL.**
+
 ## 2. Choosing the runner: sub-agent or antigravity
 
 antigravity, Gemini driven through a local session, is an **artifact of token access**: it was how the work started, not a requirement. Choose per spike, and it's fine to try both on a small step first.
@@ -32,6 +34,7 @@ antigravity, Gemini driven through a local session, is an **artifact of token ac
 
 Either way:
 - **deming clears capacity and box safety** on the frozen plan before any run (CPU lane, RAM/disk bound, wall cap, pause file). For antigravity, also check that its waker is alive (`pgrep -af waker`). If it isn't, the beekeeper has to give Gemini a turn.
+- **Box hygiene.** Before any heavy run or Lean elaboration, check for other seats' heavy processes (`pgrep -af 'lean|lake|mdcu'`). The one-heavy-process rule spans seats. Any harness pre-step (tests, builds) runs **before** the quiet-load wait, not between the wait and the measurement (mdcu-kz probe load artefact, seq 246/248).
 - A sub-agent works **in its own worktree** (the worktree-isolation hard gate), with named paths and `|| exit 1` per step. It never shares a checkout.
 - **External contact** (literature, web, datasets not already pinned) routes through **Belle** once she's live (inter#244). Until then it needs a beekeeper ruling. Gemini `deep_research` is external contact too.
 
@@ -46,9 +49,10 @@ Either way:
    - **sensitivity checks** (a planted effect the instrument must detect, or the battery is a *blind instrument*);
    - the **kill conditions**;
    - the seed ranges, checked against every used range;
+   - **every instrument calibration, with its ensemble, its reading (pooled or per field) and its seed block named.** "20 pinned fields" with no ensemble was an open choice that only surfaced after the harness was built (mdcu-kz seq 221);
    - the resource estimate;
    - the predictions with probabilities.
-3. **The planning-consequence table, pre-data.** For every outcome row: what changes in the plan, the claims or the theory, and who owns it. A result then routes mechanically, and nobody re-argues scope after seeing data. **Commit it somewhere immutable** (a comment, or a file with its sha) before any output exists.
+3. **The planning-consequence table, pre-data.** For every outcome row: what changes in the plan, the claims or the theory, and who owns it. A result then routes mechanically, and nobody re-argues scope after seeing data. **Commit it somewhere immutable** (a comment, or a file with its sha) before any output exists. **Planning-table addenda:** a pre-data finding that changes how a row *reads* (not its verdict rule) goes in as a dated addendum to the table, before data. The director owns it (mdcu-kz A1/A2).
 4. **Freeze checks.** The physics signer confirms the physics. Run these physics freeze-checks before filing probabilities:
    - **Does the order parameter admit a cubic Landau invariant?** If yes, first-order is the prior (mdcu-kz lesson).
    - **Are a derived formula's two known limits asserted in code?** (#774 lesson.)
@@ -59,6 +63,8 @@ Either way:
 ### 3.2 Building
 6. **Harness tests-first.** Watch each test go red before it goes green. Record mutation results as **KILLED/SURVIVED** (never "RED ✓"). Seed guards refuse every frozen or used range outside its mode.
 7. **Implicit choices surface as amendments, before data.** Anything the frozen text didn't specify (a threshold that turns out vacuous, a calibration, an ensemble) goes into a **dated amendment file citing FROZEN-v1**. All signers sign it, bound to its file sha. Never edit FROZEN-v1. Planning-table changes driven by pre-data findings go in as **dated addenda** (mdcu-kz A1 and A2 are the model).
+   - **Frozen-text self-contradiction:** when two frozen clauses disagree (e.g. a seed list of 5 against a wall formula counting 3), the harness follows the explicit numeric clause. The runner records the discrepancy in the check-in, and the director rules in a dated note before the run which clause governs. Never pick silently.
+   - **The raw record stores the arrays behind every verdict scalar** (e.g. the full cool/heat curves, not only `max_gap`), and a reason string names the maximum, not the last failing point. Otherwise a negative can't be diagnosed from the data (mdcu-kz round 1).
 8. **No dead alternate paths.** A withdrawn option, exploration test or unused flag is removed from the harness before the push. Keep any exploration record reachable with a **git tag**, not as live code.
 9. **The run commit must be on origin.** The home-repo implementor reviews and pushes. Verify the pushed sha and diff yourself (`git rev-parse origin/<branch>`, `git diff --stat`).
 
@@ -86,10 +92,10 @@ Either way:
     - the lock, or why there is none;
     - **the theory write-back table** (rule 7): claim · where it is stated · E before → after · F · write-back PR/issue.
 
-    Prediction misses that were knowable pre-data get **their own row** (mdcu-kz P5).
+    Prediction misses that were knowable pre-data get **their own row** (mdcu-kz P5). **When an early gate stops the run, list every arm, control and check that was never exercised** (mdcu-kz round 1: the S³ arm, option B, the tilt), so a clean negative isn't read as a validated instrument. The report merges through **the home repo's lane**: QBP-homed goes to the beekeeper, qbp-compute-unit-homed is AC9.
 15. **Notary verifies every E move.** It checks provenance, not truth: `validated` needs a pre-registered confrontation that predates the result, and `falsified` needs the failed one on record.
 16. **The write-back** goes into the theory or spec text and the ledger anchor that state the claim. For a beekeeper-lane document (QBP theory and the paper), that means an issue carrying the drafted text (QBP#791 → PR #792 is the model). The spike isn't closed until every row is merged or filed with one owner.
-17. **Return the result to the originator.** If the idea came from studybuddy, write `re-<slug>.md` to `~/Documents/studybuddy/inbox/`. It carries the verdict, the E move, the lesson and the open threads.
+17. **Return the result to the originator.** If the idea came from studybuddy, write `re-<slug>.md` to `~/Documents/studybuddy/inbox/`. It carries the verdict, the E move, the lesson and the open threads, in the agreed formats in that inbox (`note-format-for-qbp-oppenheimer.md` / `note-format-for-qbp-architecture.md`: asks first, claims tagged CITED/COMPUTED/RECALLED/SPECULATIVE, one disposition per ask).
 
 ## 4. Grading what comes out
 
@@ -109,13 +115,17 @@ Either way:
 
 ```
 [ ] on an approved list (link)               [ ] DRAFT pre-reg + planning table (pre-data, immutable)
-[ ] physics freeze-checks run                [ ] FROZEN-v1 pushed, sha posted
+[ ] physics freeze-checks run                [ ] calibration ensemble + reading + seeds named
+[ ] FROZEN-v1 pushed, sha posted             [ ] frozen-text contradictions ruled (dated note)
 [ ] feasibility GO (home implementor)        [ ] deming box-safety on the frozen plan
 [ ] harness tests-first, mutations recorded  [ ] amendments signed by sha (if any)
 [ ] no dead alternate paths; tags for exploration
+[ ] raw record stores the arrays behind each verdict scalar
+[ ] box hygiene: no other heavy process; pre-steps before the quiet-load wait
 [ ] run commit on origin, verified           [ ] run go citing the 3 conditions + commit
 [ ] mechanical mid-run decisions recomputed  [ ] raw sha before analysis, reproduced
 [ ] verdict against frozen rules only        [ ] report PR with write-back table
+[ ] unexercised arms/controls listed (if an early gate stopped the run)
 [ ] notary on every E move                   [ ] write-back merged/filed (one owner per row)
 [ ] originator's re- note sent               [ ] burndown row updated
 ```
