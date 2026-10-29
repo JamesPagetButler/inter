@@ -274,7 +274,7 @@ Landed under housekeeping [inter#237](https://github.com/JamesPagetButler/inter/
 - **`fed:AntiLaunderingPerAxis` (derived):** neither axis can be raised by
   summarising or composing. F is enforced by Edda EDDA-TYPE-008, E by notary.
 - **`_meta.open_questions`** lists what is still open, so nobody reads it as
-  ruled: the E ↔ CTH cluster-state mapping, `consistent (post-hoc)` as a flag or
+  ruled: the E ↔ `cth:AnchorStatus` mapping (not the 3-value `cluster_state` field), `consistent (post-hoc)` as a flag or
   a value, E strength, the leg unit, E over a composition, internal compute on F,
   and kill grades.
 - **`_meta.retagging_policy`:** retag on touch, except anything on QBP's critical

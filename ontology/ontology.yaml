@@ -107,9 +107,9 @@ _meta:
   open_questions:
     # inter#237 AC4: recorded as open, NOT silently decided. Each is owned by
     # design surface inter#238 and moves to a ruling only there.
-    - id: E-cth-cluster-mapping
+    - id: E-cth-anchorstatus-mapping
       status: open
-      question: "How does fed:EvidenceE relate to CTH's 9 cluster states — a projection, a separate field, or a re-cut? (inter#238 Q1; for discussion with the beekeeper)"
+      question: "How does fed:EvidenceE relate to cth:AnchorStatus, CTH's 9-value status enum (coherent, untested, incoherent, contested, refuted, killed, marginal, converged, falsified) — a projection, a separate field, or a re-cut? NOT to be confused with CTH's cluster_state field, a different 3-value coverage enum (nascent, developing, confluent), which is orthogonal to E. (inter#238 Q1; for discussion with the beekeeper. CTH-side input, not a ruling: AnchorStatus also carries coherence states, so 'separate field' or 're-cut' fits better than 'projection' — cth-implementor, inter#241 issuecomment-6502643560)"
     - id: E-post-hoc-flag-vs-value
       status: open
       question: "Is 'consistent (post-hoc)' a flag on consistent or a fourth E value? (inter#238 Q2; qbp-architecture recommends a flag)"
@@ -2341,20 +2341,27 @@ terms:
       (post-hoc)") / validated / falsified. A proof leg carries "e: n/a"; E is
       folded over a composition's EMPIRICAL legs only.
     status: design-proposal
-    axiom_grounding: "none — independent design lineage; independence from F comes from CTH cluster_state."
+    axiom_grounding: "none — independent design lineage; its empirical verdicts overlap cth:AnchorStatus (see notes on the cluster_state misnaming)."
     broader: []
     narrower: []
-    related: [fed:FormalityF, fed:AntiLaunderingPerAxis, cth:ProofState]
+    related: [fed:FormalityF, fed:AntiLaunderingPerAxis, cth:ProofState, cth:AnchorStatus]
     source:
       - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
         quote: "'Axis E: unconfronted / consistent (incl. consistent (post-hoc)) / validated / falsified, separate from F. Independence comes from CTH cluster_state.'"
       - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6485146372
         quote: "'E captures experimental backing ... It's a dimension. Its exact mapping onto CTH's cluster states is still open for discussion; it isn't ruled yet.'"
     notes: >
+      NAMING CORRECTION (cth-implementor, inter#241 §I4): the ratification
+      text quoted above says "Independence comes from CTH cluster_state" and
+      "CTH's cluster states". The 9-value enum meant there is
+      cth:AnchorStatus; CTH's literal cluster_state field is a different,
+      3-value coverage enum (nascent, developing, confluent) and does not fold
+      into E. The quotes are kept verbatim as provenance; the corrected
+      reading is AnchorStatus.
       design-proposal, not derived: the VALUES are ratified, but E's final
       shape is still in design on inter#238 and nothing realises it yet (no
       Edda type, no CTH field). OPEN (see _meta.open_questions): the E <->
-      CTH cluster-state mapping (inter#238 Q1); whether "consistent
+      cth:AnchorStatus mapping (inter#238 Q1); whether "consistent
       (post-hoc)" is a flag or a fourth value (Q2; qbp-architecture
       recommends a flag); whether E needs a strength (Q2); E over a
       composition (Q4). E is per-claim, never per-tool (registry
