@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 # ============================================================================
-# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.1.0)
+# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.5.0)
 # ============================================================================
 # Human AND machine entry point. Read top to bottom as prose, or parse as YAML.
 # See ../README.md for the guided tour and ../ONTOLOGY-BEST-PRACTICES.md for
@@ -18,8 +18,8 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.2.0"
-  date: "2026-10-08"
+  version: "0.5.1"
+  date: "2026-10-28"
   root_axiom: cth:AXIOM-1
   scope: >
     Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
@@ -52,15 +52,47 @@ _meta:
     related: "List of term ids this term relates to without being a kind of. Maps to skos:related."
     source: "List of {file: <absolute path>, quote: <verbatim or tight paraphrase>}."
     notes: "Discrepancies, gaps, corrections, or BEEKEEPER-DECISION flags."
+    review_ref: "Optional. List of review-comment URLs (html_url) whose finding changed or confirmed this entry. Added in v0.3.0 for the inter#164 federation review harvest; every changed entry carries one."
 
   namespaces:
-    cth: "Confluent Trust Hierarchy — QBP-implementor/CTH corpus (the axiom/proof ledger)"
+    cth: "Confluent Trust Hypergraph — schema $defs canonical in confluent-trust schema/inventory.schema.json; ledger data in the QBP corpus (the axiom/proof ledger)"
     wyrd: "Wyrd — quaternion-native typed holographic hypergraph DB"
     bma: "BMA — Biological Mind Architecture"
     edda: "Edda — theory-to-executable compiler/language"
     systema: "Systema — workspace process framework"
     spike: "hypergraph-generativity spike (2026-09-25) — DRAFT, NOT ratified"
-    fed: "cross-cutting federation-level terms (registry layers, capability clash)"
+    fed: "cross-cutting federation-level terms (registry layers, capability, the Tier sense index)"
+    notary: "Notary — the federation verification-and-validation function (Trust Tiers, verification outcomes, PA-record vocabulary). Owner seat: notary-implementor. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
+    contextus: "Contextus — ecosystem insight discovery (scope nodes, scope membership, insight signals, retention tiers, the emit side of the attention-scalar seam). Owner seat: contextus-impl."
+    math: "math — general mathematical structures used by ≥2 tenants; sourced to Mathlib (Lean core for `Type`). Owner seat: qbp-oppenheimer."
+    craft: "Craft — the cockpit that renders the attention scalar (render side of the craft/Contextus seam). Owner seat: hutchins. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
+
+  change_history:
+    "0.5.0": >
+      2026-10-22. Forging-product vocabulary, beekeeper-ratified 2026-10-22 per
+      @qbp-architecture's dispatch (inter#196 rulings incl. D2 "yes, can be many";
+      the provable-AC thread on inter#194). New fed: terms fed:thread-path,
+      fed:lock, fed:forging-product, fed:interface, fed:trait, fed:characteristic
+      (design-proposal: defined in rulings/issues, not yet in the forging doc);
+      fed:thread extended in place (it already existed). New namespace math:
+      (owner qbp-oppenheimer) with math:group, math:category, math:type, sourced
+      to Mathlib c5ea003 / Lean v4.30.0; the forging mappings (lock = type,
+      product = term, federation = category, thread = diagram, forging is not a
+      group) are design-proposal notes. math:set added in a follow-up commit
+      (beekeeper-directed 2026-10-22): Mathlib's Set, a predicate on a type,
+      with the classical ZFC sense (ZFSet) kept in its notes. 92 -> 102 terms
+      (10 new).
+    "0.4.0": >
+      2026-10-22. Applies the four beekeeper rulings recorded on inter#173
+      (https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133):
+      (1) fed:Capability becomes the bound triple tool + authority + allocated
+      capacity, with fed:Tool the instrument (refines the 2026-09-27 ruling);
+      (2) Tier split into one concept id per sense, with fed:Tier as a
+      disambiguation index; (3) notary:, contextus: and craft: namespaces added,
+      each term source-verified on its owner repo's default branch; (4)
+      cth:belief-tiers mapped to notary:TrustTier x PA grade, unlocated -> derived,
+      pending @cth-implementor's co-sign. 72 -> 92 terms (20 new).
+    "0.3.0": "2026-10-09. inter#164 federation review harvest; review_ref field introduced. 68 -> 72 terms."
 
   format_mapping_to_skos_jsonld:
     id: "@id"
@@ -132,9 +164,13 @@ terms:
     source:
       - file: /home/prime/Documents/QBP-implementor/scripts/root_audit.py
         quote: "ROOT_PREFIXES = (\"AXIOM-\", \"POST-\", \"META-\", \"INTERP-\")"
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.Interpretation (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.Interpretation carries provenance_kind: philosophy + decision_state + kill_condition"
     notes: "Only AXIOM-1 (cth:AXIOM-1) is harvested by id in this first draft; POST-/META-/INTERP- example records are an extension-path item (README.md)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
 
   - id: cth:decision_state
     prefLabel: "decision_state (open | settled)"
@@ -148,9 +184,24 @@ terms:
     narrower: []
     related: [cth:kill_condition, cth:AXIOM-1, cth:four-bucket-audit]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.DecisionState (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.DecisionState — see definition above, canonical v0.3.4"
-    notes: "Canonical."
+      - file: /home/prime/Documents/Edda/doc/stage1a-e2-open-settled-spec.md
+        quote: "EDDA-AUTH-018 — exercise-before-settle (an open/unsettled step presented at an `exercise` site — the grant is non-exercisable until settled)"
+    notes: >
+      Canonical. EDDA USAGE (edda#48, E2, merged to edda Main): the same open|settled
+      vocabulary is realized as a linear proof-state handle, settle(s): Step[open] ⊸
+      Step[settled], with a grant-gate: `exercise` requires a grantable cap AND a
+      Step[settled] witness, so a grant is non-exercisable until settled
+      (exercise-before-settle → EDDA-AUTH-018; use-after-settle → EDDA-AUTH-017). Per the
+      merged E2 spec, settle yields only the settled witness and does NOT mint a cap; the
+      exercise verb is the v0.3 B1 process-witness node. In Edda, "settled" therefore
+      carries an authority consequence, not only a status.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687133
 
   - id: cth:kill_condition
     prefLabel: "kill_condition"
@@ -166,9 +217,13 @@ terms:
     narrower: []
     related: [cth:decision_state, cth:closure, cth:AXIOM-1]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.KillConditionEntry (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.KillConditionEntry"
     notes: "Canonical. AXIOM-1's own kill_condition array (2 entries) is the worked example carried in cth:AXIOM-1 above."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
 
   - id: cth:ProofState
     prefLabel: "ProofState (verified | partial | written)"
@@ -180,13 +235,18 @@ terms:
     axiom_grounding: "none — CTH schema mechanism for grading formal claims."
     broader: []
     narrower: []
-    related: [cth:closure, spike:FormalityGradient]
+    related: [cth:closure, spike:FormalityGradient, cth:proof_assistants]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProofState (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.ProofState"
       - file: /home/prime/Documents/QBP-implementor/docs/rca/cth-proof-evidence-process-2026-09-02.md
         quote: "proof_state:written + no verification + native_decide is not a proof"
-    notes: "Canonical."
+    notes: "Canonical. Proof-assistant (PA) grading (confluent-trust#108 / inter#150) is a separate, derived axis that post-dates the v0.1 cut — see cth:proof_assistants and the pa_local / pa_effective fields on cth:Anchor."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
 
   - id: cth:closure
     prefLabel: "closure (derivation | measurement | ruling-rescope)"
@@ -198,11 +258,21 @@ terms:
     axiom_grounding: "none — CTH schema mechanism."
     broader: []
     narrower: []
-    related: [cth:kill_condition, cth:AXIOM-1, spike:ProductProjectionProvenance]
+    related: [cth:kill_condition, cth:AXIOM-1, spike:ProductProjectionProvenance, cth:claim-source-manifest]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.KillConditionEntry.closure (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.KillConditionEntry.closure"
-    notes: "Canonical. AXIOM-1's two kill_condition entries use closure: derivation and closure: ruling-rescope respectively — both live examples."
+    notes: >
+      Canonical. AXIOM-1's two kill_condition entries use closure: derivation and
+      closure: ruling-rescope respectively — both live examples. DISAMBIGUATION: this is
+      the kill-condition closure KIND. It is unrelated to the PA layer's claim-source
+      import closure (the transitive set of same-repo files a proof's statement depends
+      on, hashed into pinned_sha), which is cth:claim-source-manifest.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224680997
 
   - id: cth:four-bucket-audit
     prefLabel: "Four-bucket audit (PROVED / FORCED / OPEN / RETIRED)"
@@ -225,42 +295,72 @@ terms:
     notes: "AXIOM-1 currently sorts into bucket 3 OPEN per root-audit-register.json's 2026-09-18 changelog entry."
 
   - id: cth:belief-tiers
-    prefLabel: "Belief tiers"
-    definition: "NOT FOUND as a literal defined term/enum anywhere in the searched CTH corpus."
-    status: unlocated
-    axiom_grounding: "n/a — unlocated"
+    prefLabel: "Belief tiers (= Notary Trust Tier x PA grade)"
+    definition: >
+      The grade of belief a claim has earned, read as the pair (Notary Trust Tier
+      set, PA grade): which verification rungs T0-T7 its evidence reached, with
+      their trust base (notary:TrustTier), and how many clean, corresponding proof
+      assistants checked it, 0 / 1 / 2 (cth:proof_assistants). No separate "belief
+      tier" enum exists; the term is this product.
+    status: derived
+    axiom_grounding: "none — composite of the Notary verification lineage and the CTH PA-grading mechanism."
     broader: []
     narrower: []
-    related: [cth:AnchorStatus, cth:ProvenanceKind]
-    source: []
+    related: [notary:TrustTier, cth:proof_assistants, cth:AnchorStatus, cth:ProvenanceKind]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+        quote: "\"`cth:belief-tiers`: accepted as notary trust tier × PA grade, status unlocated → derived, with @cth-implementor's co-sign (it's a CTH term).\""
+      - file: /home/prime/Documents/notary/doc/competencies-and-tiers.md
+        quote: "\"## Trust Tiers T0–T7 — a SET with explicit trust base, not a scalar\" (notary main fc20c36)"
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "package doc: 'PA is DERIVED, never typed' (confluent-trust main 6e8a84f)"
     notes: >
-      BEEKEEPER-DECISION NEEDED. Closest analogs found: (a) the Status enum on
-      anchors (coherent, untested, incoherent, contested, refuted, killed,
-      marginal, converged, falsified — see cth:AnchorStatus); (b) ProvenanceKind
-      (see cth:ProvenanceKind); (c) a prose reference to Dempster-Shafer belief
-      functions and Jøsang subjective-logic belief/disbelief/uncertainty triples
-      in CTH/Archive/Confluent-Trust-Hypergraph-Theory-v0_2.md ("trust anchors
-      represent provability from axioms, not truth about reality"). None of
-      these is a defined "belief tier" scheme. Either point us at the source, or
-      confirm this term belongs on the extension-path as design-proposal work
-      rather than harvested vocabulary.
+      RESOLVED 2026-10-22 by beekeeper ruling (inter#173): unlocated -> derived, as
+      notary:TrustTier x PA grade. AWAITING @cth-implementor's CO-SIGN: the ruling
+      makes the co-sign part of the acceptance because this is a CTH term; until it
+      is recorded on inter#173 this mapping is not final. The source for the mapping
+      is the ruling, a GitHub PR comment whose URL stands in the file field. HISTORY
+      (v0.1-v0.3.0, status unlocated): no literal "belief tier" scheme was found in
+      the CTH corpus. The closest analogs were the anchor Status enum
+      (cth:AnchorStatus), ProvenanceKind (cth:ProvenanceKind), and a prose reference
+      to Dempster-Shafer belief functions and Jøsang subjective-logic triples in
+      CTH/Archive/Confluent-Trust-Hypergraph-Theory-v0_2.md. In the inter#164 review
+      the Notary proposed Trust Tiers + PA grade as the answer.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: cth:Anchor
-    prefLabel: "Anchor (CONJ- / DERIV- / PROOF- kinds)"
+    prefLabel: "Anchor (PROOF- / DERIV- / CONJ- / MEAS- / … kinds)"
     definition: >
-      A proof-bearing or evidence-bearing ledger record. Kinds distinguished by
-      id prefix (CONJ- conjecture, DERIV- derivation, PROOF- formally proven).
-      Anchors carry ProofState and, per the CTH/Wyrd integration doc, map onto
-      Wyrd Nodes.
+      A proof-bearing or evidence-bearing ledger record. Its kind is classified by
+      provenance_kind (cth:ProvenanceKind); the id prefix is a naming convention
+      (QBP-local, 22 prefixes documented, not upstream-registered), e.g. PROOF- formally
+      proven, DERIV- derivation, CONJ- conjecture, MEAS- measurement, PRED- prediction,
+      OBS- observation. AXIOM-/POST-/META-/INTERP- ids live in the ledger's root lists,
+      not among anchors (cth:ROOT-Prefix-Taxonomy). Anchors carry ProofState and, as of
+      ledger 6.17.0, the PA-grade fields pa_local / pa_effective (integers 0..2,
+      computed-not-declared, CI-reconciled) alongside proof_assistants. Per the CTH/Wyrd
+      integration doc, anchors map onto Wyrd Nodes.
     status: derived
     axiom_grounding: "none directly — the general ledger unit that AXIOM-1's own kill_condition entries reference (e.g. PROOF-42zd, DERIV-arrow)."
     broader: []
     narrower: []
-    related: [cth:ProofState, cth:AnchorStatus, cth:ProvenanceKind, wyrd:CTHIntegration]
+    related: [cth:ProofState, cth:AnchorStatus, cth:ProvenanceKind, wyrd:CTHIntegration, cth:proof_assistants, cth:claim-source-manifest, cth:derivation-edge]
     source:
       - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
         quote: "PROOF-42zd, DERIV-arrow, DERIV-crystallisation-asymptotic cited inside AXIOM-1's own kill_condition text"
-    notes: "Definition assembled from usage across the ledger schema and AXIOM-1's own record; not a single quoted docstring."
+      - file: /home/prime/Documents/QBP-implementor/archive/cth-inventory/confluent-trust-inventory-v5_3.v0.3.json
+        quote: "version 6.17.0 (QBP#697, master 516dfcb; unchanged at master 3b73b24): PROOF-cd-structure-constant-tables and PROOF-fano-table-equals-cd-products pa_local 2 / pa_effective 2; PROOF-hessian 0 / 0"
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields (QBP#692): pa_local / pa_effective are QBP-local extensions, 'computed-not-declared'; §Anchor ID prefixes table (22 prefixes)"
+    notes: >
+      Definition assembled from usage across the ledger schema and AXIOM-1's own record;
+      not a single quoted docstring. pa_local / pa_effective are a QBP-local extension;
+      canon adoption is tracked at confluent-trust#113 (confluent-trust#111 superseded).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665515
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
 
   - id: cth:AnchorStatus
     prefLabel: "Anchor Status enum"
@@ -271,9 +371,39 @@ terms:
     narrower: []
     related: [cth:belief-tiers]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.Status (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.Status"
     notes: "Canonical."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+
+  - id: cth:AnchorTier
+    prefLabel: "Anchor tier (CTH: axiom / proof / measurement / prediction)"
+    definition: >
+      The CTH ledger's tier on an anchor: "Tier values per Theory v0.2 §4.1" —
+      TierAxiom = 0, TierProof = 1, TierMeasurement = 2, TierPrediction = 3. In the
+      inventory schema an anchor is "A Tier 1-3 node: proof, measurement,
+      prediction, or hypothesis"; axioms are Tier 0.
+    status: derived
+    axiom_grounding: "none — CTH ledger classification. Tier 0 holds the axioms (cth:AXIOM-1 among them), but the tier scale itself is not derived from AXIOM-1."
+    broader: [cth:Anchor]
+    narrower: []
+    related: [fed:Tier, cth:AnchorStatus, wyrd:CTHIntegration]
+    source:
+      - file: /home/prime/Documents/confluent-trust/model/enums.go
+        quote: "// Tier values per Theory v0.2 §4.1. const ( TierAxiom Tier = 0; TierProof Tier = 1; TierMeasurement Tier = 2; TierPrediction Tier = 3 ) (confluent-trust main 6e8a84f)"
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "\"A Tier 1-3 node: proof, measurement, prediction, or hypothesis.\" ... \"tier\": { \"type\": \"integer\", \"minimum\": 1, \"maximum\": 3 } (confluent-trust main 6e8a84f)"
+      - file: /home/prime/Documents/Wyrd/doc/integration/cth.md
+        quote: "\"The `model.Anchor.Tier` (CTH-internal: axiom/proof/measurement/prediction) is **not** the same as Wyrd `model.Tier` (algebraic ℂ/ℍ/𝕆/𝕊).\" (wyrd main 5c36988)"
+    notes: >
+      Split out of wyrd:Tier's v0.3.0 sense list per the 2026-10-22 beekeeper ruling
+      (inter#173). The schema also mentions "hypothesis" in the Tier 1-3 description,
+      though the Go enum names only proof, measurement and prediction above axiom.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: cth:ProvenanceKind
     prefLabel: "Provenance Kind enum"
@@ -282,11 +412,123 @@ terms:
     axiom_grounding: none
     broader: [cth:Anchor]
     narrower: []
-    related: [cth:ROOT-Prefix-Taxonomy, cth:belief-tiers]
+    related: [cth:ROOT-Prefix-Taxonomy, cth:belief-tiers, cth:proof_assistants, contextus:ScopeMembership]
     source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProvenanceKind (canonical — confluent-trust main 6e8a84f, x-schema-semver 0.3.5; the QBP copy below is a byte-identical vendored mirror)"
       - file: /home/prime/Documents/QBP-implementor/docs/cth/inventory.schema.v0.3.json
         quote: "$defs.ProvenanceKind"
-    notes: "INTERP- records use provenance_kind: philosophy specifically."
+    notes: >
+      INTERP- records use provenance_kind: philosophy specifically. internal-compute is
+      load-bearing in the PA layer: such an anchor carries no proof_assistants array and
+      grades pa_local = pa_effective = 0 by absence; an independent recomputation is
+      recorded as corroborated_by, never as a grade. Live example: PROOF-hessian (ledger
+      6.17.0: 0 / 0; notary evidence
+      /home/prime/Documents/inter/notary-evidence/cycle-7-hessian-recompute-v2-2026-10-02.yaml:
+      proof_assistants: [], flags: [not_kernel_clean]). confluent-trust#112 (OPEN at this
+      harvest) proposes schema 0.3.6 restricting proof_assistants to provenance_kind in
+      {proof, derivation}; schema 0.3.5 does not yet enforce it. HOMONYM: Contextus has a
+      separate provenance vocabulary, ProvenanceTag on scope-membership edges (P asserted /
+      D inferred / T theoretical / I imported; contextus pkg/types/scope.go), so federation
+      "provenance" is not CTH-only.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661950
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661961
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665508
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
+
+  - id: cth:proof_assistants
+    prefLabel: "proof_assistants (ProofAssistant attestations — the PA-grade evidence)"
+    definition: >
+      Array of $defs.ProofAssistant {assistant in {lean4, coq, agda}, evidence_ref,
+      trust_check in {pass, fail}} on proof and derivation anchors: "records WHICH
+      assistant checked the claim and a pointer to its re-executable evidence. The PA count
+      is DERIVED by the engine from the evidence at evidence_ref — never from this record
+      alone." trust_check is veto-only. The engine grades a claim 0 (none), 1 (one clean)
+      or 2 (two-or-more clean + corresponding — the PA-2 gate); two assistants count as two
+      only if a non-producer recorded that their statements correspond.
+    status: derived
+    axiom_grounding: "none — CTH schema/engine mechanism for grading formal claims."
+    broader: [cth:Anchor]
+    narrower: []
+    related: [cth:ProofState, cth:ProvenanceKind, cth:derivation-edge, cth:claim-source-manifest, cth:belief-tiers, notary:PA-record, notary:TrustTier]
+    source:
+      - file: /home/prime/Documents/confluent-trust/schema/inventory.schema.json
+        quote: "$defs.ProofAssistant (confluent-trust main 6e8a84f, x-schema-semver 0.3.5)"
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "package doc: 'PA is DERIVED, never typed ... Two assistants count as two only if a NON-PRODUCER recorded that their statements correspond. Effective PA is the minimum along derivation edges.'"
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields: 'Kernel diversity is the maps criterion' — a correspondence may rescue only an assistant whose prover differs from the headline's (QBP master 3b73b24)"
+    notes: >
+      Landed via confluent-trust#108 / inter#150. Kernel diversity: a cross-prover
+      correspondence can lift a headline only through a different prover kernel, and the
+      QBP encoder collapses same-kind survivors to one per kernel. confluent-trust#112
+      (OPEN) proposes restricting the array to proof/derivation anchors in schema 0.3.6;
+      an internal-compute anchor already carries none and grades PA-0 by absence (see
+      cth:ProvenanceKind). The Notary-side record vocabulary (the notary-request record,
+      canonical at confluent-trust testdata/pa/notary-request.schema.json, "v1.3", dedupe
+      key (claim_id, source_sha, reason, artifact_digest)) is recorded at
+      notary:notary-request since v0.4.0 (beekeeper ruling, inter#173). The PA grade
+      paired with notary:TrustTier gives cth:belief-tiers.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661958
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224661961
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: cth:claim-source-manifest
+    prefLabel: "claim-source manifest (pinned_sha, the PA staleness key)"
+    definition: >
+      The staleness key for a PA grade. S = the transitive closure, over QBP-local
+      `import QBP.…` lines read at the pinned commit, of {anchor proof_file} ∪ {same-repo
+      paths named by the claim's evidence_refs} (cross-repo refs excluded and reported
+      cross_repo_evidence); sorted lines `path <blob>`; `git hash-object --stdin` over them
+      gives pinned_sha. Report-side, not a ledger field: "pinned_sha is NOT stored on the
+      anchor (no ledger home at 0.3.5); the encoder derives it".
+    status: derived
+    axiom_grounding: "none — PA-layer engineering mechanism."
+    broader: []
+    narrower: []
+    related: [cth:proof_assistants, cth:Anchor, cth:closure]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields (QBP#692), the pa_local row and Rules paragraph (QBP master 3b73b24)"
+      - file: /home/prime/Documents/QBP-implementor/analysis/692-pa-backfill/README.md
+        quote: "pinned_sha, S and the blobs live HERE and not in the ledger (no ledger home at schema 0.3.5; the pa-reconcile CI job re-derives them the same way)."
+    notes: >
+      QBP-local (canon adoption tracked at confluent-trust#113). DISAMBIGUATION: this
+      "closure" is an import closure over source files and is unrelated to cth:closure,
+      the kill-condition closure kind. The committed rule is Lean-import based. Extending
+      it to every lake library and to Agda (QBP#696) and deriving S from each prover's own
+      dependency tool (QBP#700) were both OPEN at this harvest, so neither is recorded
+      here as the rule.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224680997
+
+  - id: cth:derivation-edge
+    prefLabel: "derivation edge (the pa_effective dependency)"
+    definition: >
+      An edge from an anchor to an anchor its prediction_chain points at. The engine takes
+      pa_effective = the minimum PA over the anchor and its derivation-edge dependencies:
+      "the anchors this anchor's prediction_chain points at, never its dependents (edges
+      read from prediction_chain; relevance/mention edges never lower it)".
+    status: derived
+    axiom_grounding: "none — PA-layer engineering mechanism."
+    broader: []
+    narrower: []
+    related: [cth:proof_assistants, cth:Anchor]
+    source:
+      - file: /home/prime/Documents/QBP-implementor/docs/cth/qbp-local-extensions.md
+        quote: "§Anchor fields, the pa_effective row: 'EffectivePA = min over this anchor and its derivation-edge dependencies' (QBP master 3b73b24)"
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "EffectivePA returns the minimum PA of target and every claim reachable from it"
+    notes: >
+      Worked referent: PROOF-alpha-particle-quaternion → PROOF-quat-closure. The notary
+      evidence record /home/prime/Documents/inter/notary-evidence/cycle-9-alpha-pa1-referent-2026-10-03.yaml
+      expects pa_local 1 and pa_effective 0 through this edge. The QBP ledger at master
+      3b73b24 still records 0 / 0 for that anchor, so the backfill has not landed yet.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
 
   # ==========================================================================
   # WYRD — quaternion-native typed holographic hypergraph DB
@@ -314,19 +556,37 @@ terms:
       not settled how far that grounding reaches.
     broader: []
     narrower: []
-    related: [cth:AXIOM-1, wyrd:HolographicProperty, edda:BornRule]
+    related: [cth:AXIOM-1, wyrd:HolographicProperty, edda:BornRule, fed:float, fed:Tier]
     source:
       - file: /home/prime/Documents/Wyrd/model/tier.go
         quote: "lines 8-37, Tier type + doubling/property-loss docstring"
       - file: /home/prime/Documents/Wyrd/lean/Wyrd/Foundations.lean
         quote: "proves no ring homomorphism from inner->outer tier is surjective (T2.1.a/b/c)"
+      - file: /home/prime/Documents/Wyrd/compute/privilege.go
+        quote: "CanSynthesize: a caller at tier T can author edges at any tier T' ≤ T (wyrd main 5c36988)"
+      - file: /home/prime/Documents/QBP-implementor/proofs/QBP/Foundations/CDAlg.lean
+        quote: "structure CDAlg (R : Type*) [CommRing R] (n : ℕ) — QBP's Cayley-Dickson algebra, the justification side of this tower (QBP master 3b73b24)"
     notes: >
-      Enforced at runtime by the "Skuld supervisor" via compute.CanSynthesize.
-      Distinct from BMA's memory Tier (0-4, see bma:MemoryTier) and CTH's own
-      Anchor.Tier (axiom/proof/measurement/prediction) — a three-way "Tier"
-      naming collision across the federation, flagged explicitly in
-      /home/prime/Documents/Wyrd/doc/integration/cth.md. Recommend the ontology
-      (and future docs) always qualify which Tier is meant.
+      Enforced at runtime by the "Skuld supervisor" via compute.CanSynthesize
+      (compute/privilege.go).
+      TIER NAMING COLLISION — always qualify which Tier is meant. This entry is the
+      Wyrd algebraic sense only. Per the 2026-10-22 beekeeper ruling (inter#173) each
+      sense has its own concept id; see fed:Tier, the disambiguation index of all six
+      senses (v0.3.0 enumerated them here).
+      FLOAT (inter#162; see fed:float): Wyrd defines this tower from its own
+      lean/Wyrd/CayleyDickson.lean and model/tier.go, with zero `import QBP`. The same
+      tower is QBP's CDAlg (proofs/QBP/Foundations/CDAlg.lean), whose structure-constant and
+      Fano tables are PA 2/2 at ledger 6.17.0 (PROOF-cd-structure-constant-tables,
+      PROOF-fano-table-equals-cd-products). The justification lives in QBP; the Wyrd copy
+      is a re-derivation pending a correspondence crossing, not an independent definition
+      of a second object. There is no qbp: namespace, so the cross-reference is by source
+      path and anchor id rather than a related: id.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666043
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665530
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681246
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: wyrd:Node
     prefLabel: "Node / NodeType"
@@ -344,14 +604,30 @@ terms:
     source:
       - file: /home/prime/Documents/Wyrd/model/node.go
         quote: "lines 8-66"
-    notes: "Salience is incremented by Hebbian reinforcement, decremented by Ebbinghaus decay."
+    notes: >
+      Salience: the field is Crawl-live and range-validated [0,1] in Validate(), but its
+      Hebbian-increment / Ebbinghaus-decay dynamics are documented intent only (Walk-phase
+      per the Wyrd README phase table; see wyrd:Salience). Consumer example: Contextus
+      registers Insight Signals as Nodes of Type "contextus.signal.<agent>" and first-class
+      scope nodes contextus.scope.physical / contextus.scope.conceptual
+      (/home/prime/Documents/Contextus/README.md). Edda note: Edda's own NodeType (E5.1,
+      edda#55) is linear/non-copyable — edges hold copyable NodeID refs and aliasing a node
+      is EDDA-AUTH-021 — because a copyable node would duplicate conserved mass under E4
+      (/home/prime/Documents/Edda/doc/stage1a-e5.1-nodetype-spec.md). Wyrd's Node carries
+      no such rule; if it backs Edda skill nodes, that linearity is load-bearing.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666162
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687376
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:Hyperedge
     prefLabel: "Hyperedge (Heads / Tails / Transit)"
     definition: >
-      Hyperedge{ID, Nodes []NodeID, Weight, IsSymmetric, Heads []int, Tails
-      []int}. Heads/Tails are index sets into Nodes encoding orientation
-      ("Heads = upstream, Tails = downstream" is the CTH-opcode convention;
+      Hyperedge{ID, Nodes []NodeID, Weight, IsSymmetric, Created, Type string,
+      Heads []int, Tails []int}. Type is a free-form, tenant-settable edge
+      classification mirroring Node.Type without the reserved-prefix semantics
+      (wyrd#92, merged as wyrd#93, 5c36988). Heads/Tails are index sets into
+      Nodes encoding orientation ("Heads = upstream, Tails = downstream" is the CTH-opcode convention;
       semantics are tenant-defined); their intersection must be empty. Nodes in
       neither set are "transit" — present in the edge but not directional
       endpoints (the "N-to-M-with-transit" pattern, PR #31 §3). Symmetric edges
@@ -363,8 +639,28 @@ terms:
     related: [wyrd:Node, wyrd:HolographicProperty, spike:Leader]
     source:
       - file: /home/prime/Documents/Wyrd/model/hyperedge.go
-        quote: "lines 26-53, struct + TransitNodes()"
-    notes: "spike:Leader's skill anatomy explicitly maps a skill onto this shape: Tails = inputs, Transit = transform, Heads = outputs (RECORD.md)."
+        quote: "lines 26-53, struct + TransitNodes(); Type field verified at wyrd main 5c36988"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e5.2-hyperedge-spec.md
+        quote: "Tails = inputs/sources, Heads = outputs/sinks, Transit = pass-through (referenced but neither consumed nor produced — catalysts/templates/environment)"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e4-conservation-spec.md
+        quote: "`transit` stays unquantified (pass-through/catalyst — not consumed/produced)"
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§D: 'skill / op (top-level scoped hypergraph anatomy; op = a named edge)'; §E prerequisite 1: 'Wyrd Heads=upstream, Edda Tails=inputs (reversed)'"
+    notes: >
+      spike:Leader's skill anatomy (RECORD.md) maps a skill onto this shape as Tails =
+      inputs, Transit = transform, Heads = outputs. CORRECTED in v0.3.0: in Edda's merged
+      specs, Transit is pass-through / catalyst (referenced, neither consumed nor produced,
+      excluded from mass-balance), and the transform is the op/edge itself. Edda E5.4 adds
+      Control and Mechanism as further non-mass-bearing roles (ICOM: Input=tails,
+      Control=control, Output=heads, Mechanism=mechanism; see spike:ICOMVessel).
+      DIRECTION: Wyrd's CTH-opcode convention is Heads = upstream, but Edda uses Tails =
+      inputs, which is reversed; Edda Addendum A §E makes an explicit direction map a Wyrd
+      prerequisite for lowering. Consumer example: Contextus scope membership is an arity-2
+      HE_SCOPE_MEMBERSHIP model.Hyperedge (contextus pkg/types/scope.go).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224665884
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666104
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
 
   - id: wyrd:HolographicProperty
     prefLabel: "Holographic property"
@@ -388,19 +684,42 @@ terms:
       - file: /home/prime/Documents/Wyrd/README.md
         quote: "lines 33-35, listed among the four load-bearing Lean-verified invariants"
     notes: "Generalized to all n>=3 in HolographicHypergraphHigherArity.lean. This is the formal grounding for why Wyrd is called a 'holographic' hypergraph DB."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666276
 
   - id: wyrd:Salience
     prefLabel: "Salience"
-    definition: "A 0.0-1.0 field on Node modulating eviction priority; incremented by Hebbian co-activation, decremented by Ebbinghaus decay."
+    definition: "A 0.0-1.0 field on Node modulating eviction priority (TierImmune nodes are excluded; among the rest, ascending Salience is evicted first). Documented intent: incremented by Hebbian co-activation and decremented by Ebbinghaus decay. Those dynamics are Walk-phase and not implemented at Crawl (see notes)."
     status: derived
     axiom_grounding: none
     broader: [wyrd:Node]
     narrower: []
-    related: []
+    related: [craft:AttentionSalience]
     source:
       - file: /home/prime/Documents/Wyrd/model/node.go
         quote: "Salience field, see node.go"
-    notes: ""
+      - file: /home/prime/Documents/Wyrd/README.md
+        quote: "Phases table: Walk (v0.2.x) — 'Hebbian co-activation, Ebbinghaus decay'"
+      - file: /home/prime/Documents/Contextus/doc/design/attention-scalar-wire-contract.md
+        quote: "Salience float64 `json:\"salience\"` // [0,1] default rank = AnomalyScore (operational: MaxScore of Referents) — the HOMONYM, not this term"
+    notes: >
+      PHASE PRECISION: the field is Crawl-live (model/node.go; Validate() range-checks
+      [0,1]). The Hebbian/Ebbinghaus dynamics are documented intent only: no reinforce or
+      decay function exists on wyrd main 5c36988, and the README phase table places them at
+      Walk. HOMONYM: the craft / Contextus attention-scalar `salience` is a different
+      quantity — an attention/render rank, "[0,1] default rank = AnomalyScore"
+      (/home/prime/Documents/Craft/CLAUDE.md attention scalar v0.1; Contextus
+      attention-scalar wire contract §2). It is not eviction priority and has nothing to do
+      with Hebbian/Ebbinghaus dynamics; do not conflate the two. Since v0.4.0 the
+      homonym has its own entry, craft:AttentionSalience (beekeeper ruling, inter#173).
+      Contextus also writes THIS field:
+      its scope-config loader threads a Wyrd-envelope salience to model.Node.Salience
+      (contextus schema/scope-config.schema.json).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666162
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224668991
+      - https://github.com/JamesPagetButler/inter/pull/164#issuecomment-6070473712
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: wyrd:CTHIntegration
     prefLabel: "Wyrd/CTH integration mapping"
@@ -440,27 +759,42 @@ terms:
       - file: /home/prime/Documents/BMA/infrastructure/BMA-Cognitive-Foundation.md
         quote: "line 765, §10.4, cites Theory 9.0 §4.7 as origin"
     notes: >
-      BOTH cited sources equate "Tool" with "capability" at layer 1 — this is
-      the "capability ≡ tool" side of the cross-project clash. See fed:Capability
-      for the full clash and the proposed reconciliation. "Theory 9.0 §4.7" (the
+      BOTH cited sources equate "Tool" with "capability" at layer 1 — this was
+      the "capability ≡ tool" side of the cross-project clash. Per the 2026-10-22
+      beekeeper ruling (inter#173), a tool is now the instrument only and a
+      capability is tool + authority + allocated capacity; see fed:Capability. "Theory 9.0 §4.7" (the
       registry's stated origin) was not independently re-verified in this pass.
 
   - id: fed:Tool
-    prefLabel: "Tool"
-    definition: "Raw/concrete capability — layer 1 of the four-layer registry. Example instances given: git, llama-server, rocm-smi."
+    prefLabel: "Tool (the instrument)"
+    definition: >
+      The instrument: layer 1 of the four-layer registry. Example instances given:
+      git, llama-server, rocm-smi. Per the 2026-10-22 ruling, a tool is the
+      instrument leg of a capability (fed:Capability = tool + authority to use it +
+      allocated capacity, bound at instantiation); a bare tool is not a
+      capability by itself.
     status: derived
     axiom_grounding: none
     broader: [fed:FourLayerRegistry]
     narrower: []
-    related: [fed:Capability, edda:Cap]
+    related: [fed:Capability, fed:Skill, edda:Cap]
     source:
       - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
         quote: "see fed:FourLayerRegistry"
-    notes: "This is the 'capability ≡ tool' pole of the clash — see fed:Capability."
+      - file: https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+        quote: "Tool = instrument."
+    notes: >
+      Before v0.4.0 this entry read "Raw/concrete capability" and was the
+      "capability ≡ tool" pole of the clash (ratified 2026-09-27 as "tool =
+      primitive capability"). The 2026-10-22 ruling refines it: the tool is the
+      instrument, and edda:Cap supplies the authority leg. The BMA spec source
+      still says "Raw capabilities"; that wording predates the ruling.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: fed:Skill
     prefLabel: "Skill"
-    definition: "Layer 2 of the four-layer registry: a learned/composed pattern for using one or more tools, with gotchas/fallbacks. In the spike's ICOM+Vessel anatomy, formalized as a typed transform Input -> Transformation -> Output, realised as a directed hyperedge (Tails=inputs, Transit=transform, Heads=outputs)."
+    definition: "Layer 2 of the four-layer registry: a learned/composed pattern for using one or more tools, with gotchas/fallbacks. In the spike's ICOM+Vessel anatomy, formalized as a typed transform Input -> Transformation -> Output, realised as a directed hyperedge (Tails=inputs, Heads=outputs; the op/edge itself is the transform, and Transit is pass-through/catalyst — see notes)."
     status: derived
     axiom_grounding: none
     broader: [fed:FourLayerRegistry]
@@ -471,7 +805,20 @@ terms:
         quote: "see fed:FourLayerRegistry"
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'a skill is a typed transform — Input(type, quantity, quality) -> Transformation -> Output — realised as a directed hyperedge'"
-    notes: "The RECORD.md formalization is design-proposal (DRAFT); the registry-layer definition itself is ratified BMA spec."
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§A: 'A skill is a hypergraph closed under mass-balance (on conserved types) + accountability, with a bound vessel and complete ICOM anatomy. Authority and rigor are gates on that object'"
+    notes: >
+      The RECORD.md formalization is design-proposal (DRAFT); the registry-layer
+      definition itself is ratified BMA spec. CORRECTED in v0.3.0: the earlier
+      "Transit=transform" gloss conflicts with Edda's merged specs, where Transit is
+      pass-through/catalyst (referenced, not consumed) and the op/edge is the transform (see
+      wyrd:Hyperedge). Edda's realized skill (Addendum A §A, merged as edda#61) is a
+      conserving, gated hypergraph: mass-balance per op on conserved/linear types only
+      (plain copyable data is not balanced), a bound Vessel and complete ICOM anatomy, with
+      authority and rigor as gates on it.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686609
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224666104
 
   - id: fed:Wisdom
     prefLabel: "Wisdom"
@@ -508,7 +855,10 @@ terms:
       seed doc/Tier 4 no-decay, NT_IDENTITY(5) self-knowledge,
       NT_LIFE_CERTIFICATE(6)/NT_DEATH_CERTIFICATE(7)/NT_MEMORIAL(8) — Layer 3,
       no decay, RS_Confirmed, NT_SIGNAL(9) subconscious->conscious queued
-      signal, NT_POD_STATE(10) flushed Pentagon cell state.
+      signal, NT_POD_STATE(10) flushed Pentagon cell state, NT_SKILL(11) a skill
+      (grants a composite capability when instantiated), NT_STEP(12) a step within a
+      skill, NT_CAPABILITY(13) a capability (CapabilityKind: primitive = Tool/layer-1,
+      composite = granted by a skill instantiation).
     status: derived
     axiom_grounding: "none — engineering implementation of BMA's own node typing scheme, an instance of wyrd:Node's tenant-defined NodeType."
     broader: [wyrd:Node]
@@ -516,27 +866,30 @@ terms:
     related: [bma:MemoryTier, bma:EdgeType, bma:ResolutionState]
     source:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
-        quote: "lines 30-71, NodeType enum"
+        quote: "NodeType enum, 14 values 0-13, + CapabilityKind (bma-systema main d53af0a)"
     notes: >
-      No NT_SKILL / NT_CAPABILITY / NT_STEP exists among these ~11 types (RECORD.md
-      confirms: "there is no NT_SKILL / NT_CAPABILITY / NT_STEP among BMA's ~50
-      node types") — this is the concrete code-level gap the hypergraph-spike
-      work is proposing to fill. Also: BMA-Spec's tier table (bma:MemoryTier)
-      references NTSkill for Tier 2, but no such constant exists in types.go —
-      flagged as a spec/code mismatch below.
+      UPDATED in v0.3.0: the gap RECORD.md described ("there is no NT_SKILL /
+      NT_CAPABILITY / NT_STEP among BMA's ~50 node types") is closed in code.
+      NTSkill(11), NTStep(12) and NTCapability(13) landed via bma-systema#296 (spike-0
+      bounded-generativity lowering), so the enum now has 14 types. BMA-Spec's NTSkill for
+      Tier 2 (bma:MemoryTier) now has its constant.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676149
 
   - id: bma:EdgeType
     prefLabel: "ET_* edge types"
-    definition: "ET_EPISODIC .. ET_INHERITED — the edge-type enum paired with NodeType."
+    definition: "ET_EPISODIC(0) .. ET_INHERITED(9), plus ET_MECHANISM_OF(10), ET_GRANTS(11, gated by the grant-gate), ET_BYPRODUCT_OF(12) and ET_HOLDS(13) — the edge-type enum paired with NodeType."
     status: derived
     axiom_grounding: none
     broader: []
     narrower: []
-    related: [bma:NodeType]
+    related: [bma:NodeType, fed:Capability]
     source:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
-        quote: "same file as NodeType"
-    notes: ""
+        quote: "EdgeType enum, 14 values 0-13 (bma-systema main d53af0a)"
+    notes: "ET_MECHANISM_OF / ET_GRANTS / ET_BYPRODUCT_OF / ET_HOLDS are the capability/byproduct edge vocabulary from bma-systema#296 — the BMA code surface of fed:Capability."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676156
 
   - id: bma:ResolutionState
     prefLabel: "ResolutionState (RS_*)"
@@ -550,6 +903,8 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
         quote: "same file as NodeType"
     notes: "Structurally parallel to cth:decision_state's open/settled, but a distinct BMA-local enum — not the same field."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676162
 
   - id: bma:MemoryTier
     prefLabel: "Memory tiers T0-T4"
@@ -562,15 +917,20 @@ terms:
     axiom_grounding: none
     broader: []
     narrower: []
-    related: [bma:NodeType, bma:F01Functor, wyrd:Tier]
+    related: [bma:NodeType, bma:F01Functor, wyrd:Tier, bma:MemoryPin, fed:Tier]
     source:
       - file: /home/prime/Documents/BMA/spec/BMA-Spec-Consolidated-v9_0.md
         quote: "lines 220-224, tier table"
     notes: >
-      SPEC/CODE GAP: T2's NTSkill has no corresponding constant in
-      internal/bma/hg/types.go (see bma:NodeType) — the tier is specified but
-      not yet implemented. Distinct concept from wyrd:Tier (algebraic tower) —
-      see the naming-collision note there.
+      RESOLVED in v0.3.0: T2's NTSkill now exists (types.go NodeType 11, via
+      bma-systema#296), so T2 is implemented at the constant level. T3/T4
+      "Pinned-No-Decay" is now generalized by bma:MemoryPin, which can exempt any node
+      from decay. Distinct concept from wyrd:Tier (algebraic tower). Since v0.4.0 this
+      is the BMA sense in the fed:Tier disambiguation index (beekeeper ruling,
+      inter#173).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676168
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: bma:F01Functor
     prefLabel: "F01 functor (EPISODIC -> SEMANTIC compression)"
@@ -589,6 +949,8 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/compress/f01.go
         quote: "lines 1-3 (package doc), CompressF01 lines 48-55"
     notes: "IMPLEMENTED, has tests (f01_test.go). Per RECORD.md, this is 'BMA's only built functor' and the spike's proposed Provenance-Masked Activation fix would require rewriting it (flagged there as MAJOR cost)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676174
 
   - id: bma:SleepCycle
     prefLabel: "Sleep cycle"
@@ -607,6 +969,36 @@ terms:
       - file: /home/prime/Documents/BMA/internal/bma/sleep/cycle.go
         quote: "lines 1-31"
     notes: "IMPLEMENTED, has tests (cycle_test.go)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676183
+
+  - id: bma:MemoryPin
+    prefLabel: "Memory Pin (two-tier decay-exemption capability)"
+    definition: >
+      "A two-tier decay-exemption capability. Granting a pin to a node exempts it from
+      Ebbinghaus decay; revoking it lets the node resume decaying." Only an
+      already-exercisable NT_CAPABILITY can mint a pin (GrantPin), and it is recorded as
+      pin_grantor. The authority tier is read from the authorizing node, never from the
+      caller: PinAuthorityBeekeeper gives a permanent/structural pin (no TTL);
+      PinAuthoritySelf gives a bounded pin (concurrent self-pin cap + mandatory TTL). The
+      decay path reads a single predicate, HGNode.PinValid(now).
+    status: derived
+    axiom_grounding: "none — BMA engineering implementation, an independent design lineage."
+    broader: []
+    narrower: []
+    related: [bma:MemoryTier, bma:NodeType, bma:SleepCycle, fed:Capability]
+    source:
+      - file: /home/prime/Documents/BMA/internal/bma/hg/pin.go
+        quote: "package comment (grant-gate, two-tier authority) + GrantPin (bma-systema main d53af0a)"
+      - file: /home/prime/Documents/BMA/internal/bma/hg/types.go
+        quote: "PinAuthority enum (None/Self/Beekeeper); PinGrantor 'witnessed grantor: exercisable NT_CAPABILITY node ID that minted the pin'; IsPinned / PinValid"
+    notes: >
+      Generalizes bma:MemoryTier's T3/T4 "Pinned-No-Decay" to any node. Pinning is a
+      capability exercise (pin_grantor is an exercisable NT_CAPABILITY), which ties this
+      term to fed:Capability. Landed via bma-systema#319 (merged 2026-09-29, closes
+      bma-systema#322); the code comments cite #322.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676168
 
   - id: bma:PersonaQuaternionOperator
     prefLabel: "Persona as quaternion operator (q·v·q⁻¹)"
@@ -689,11 +1081,17 @@ terms:
     notes: >
       DISCREPANCY flagged for beekeeper: RECORD.md claims this is "ALREADY
       lowered" (i.e., already exists), but bma:NodeType's actual enum
-      (types.go) has no corresponding constant — it is not among BMA's ~11
-      NT_* types. Either this concept lives elsewhere in the BMA corpus
+      (types.go) has no corresponding constant — it is not among BMA's 14
+      NT_* types (bma-systema main d53af0a). Either this concept lives elsewhere in the BMA corpus
       un-harvested by this pass, or RECORD.md's "already lowered" claim is
       aspirational/theoretical rather than code-verified. Recommend
       resolving before treating this as settled vocabulary.
+      CONFIRMED in v0.3.0 (bma-implementor): still no NT_TYPE_NODE. Nuance: the
+      capability part of the same RECORD.md spike did land (NT_CAPABILITY, ET_GRANTS,
+      ET_BYPRODUCT_OF via bma-systema#296); Type-Node and Ratio-Edge are the un-lowered
+      remainder.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676190
 
   - id: bma:RatioEdge
     prefLabel: "Ratio-Edge (reversible)"
@@ -706,24 +1104,36 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "line 16, see bma:TypeNode"
-    notes: "Same discrepancy flag as bma:TypeNode — not found as an implemented Wyrd or BMA edge type by direct search of wyrd:Hyperedge's EdgeType/NodeType enums."
+    notes: "Same discrepancy flag as bma:TypeNode — not found as an implemented Wyrd or BMA edge type by direct search of wyrd:Hyperedge's EdgeType/NodeType enums. CONFIRMED in v0.3.0: no ratio edge in BMA's 14-value EdgeType enum (bma-systema main d53af0a)."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224676198
 
   # ==========================================================================
   # EDDA — theory-to-executable compiler/language
   # ==========================================================================
 
   - id: edda:Cap
-    prefLabel: "Cap (linear capability)"
+    prefLabel: "Cap (linear capability token)"
     definition: "capability, linear by default. Maps to Wyrd.Capability.Capability A structure (T2.3). \"Capabilities are linear by default — use-once. The compiler tracks capability consumption flow.\""
     status: derived
     axiom_grounding: "none direct — Edda-language-design term grounded in its own type theory, not in AXIOM-1."
-    broader: [fed:Tool]
+    broader: []
     narrower: [edda:GrantableCap, edda:ConstructedCap]
-    related: [fed:Capability, spike:HeldVsConsumed]
+    related: [fed:Capability, fed:Tool, edda:AuthorityTier, spike:HeldVsConsumed]
     source:
       - file: /home/prime/Documents/Edda/edda-language-theory-v0.2.md
         quote: "line 596 (glossary), line 146 (linear-by-default)"
-    notes: "This is the tool/primitive-resource pole of the capability clash — see fed:Capability. Edda's usage matches BMA/Systema's 'capability ≡ tool', NOT the spike's 'capability = what a skill grants'."
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.3.md
+        quote: "glossary: \"Cap — capability, linear by default (T2.3). Grantable = minted/stored/delegated/projected; Constructed = witnessed process output, no grant/projection verb (§3.10).\" (edda Main 9d571a5)"
+    notes: >
+      REFRAMED in v0.4.0 per the 2026-10-22 ruling: edda:Cap is the authority-bearing
+      token, the authority leg of fed:Capability (tool + authority + allocated
+      capacity). It is no longer filed under fed:Tool (the instrument); before
+      v0.4.0 it was, as "the tool/primitive-resource pole of the capability clash".
+      Edda's own glossary still calls Cap a "capability"; read that as this
+      authority token, not the full bound triple.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: edda:GrantableCap
     prefLabel: "Grantable cap"
@@ -763,6 +1173,33 @@ terms:
       - file: /home/prime/Documents/Edda/doc/v0.3-decisions.md
         quote: "lines 38-41"
     notes: "Same PR #14 ratification status as edda:GrantableCap."
+
+  - id: edda:AuthorityTier
+    prefLabel: "Application-authority tier (teacup / one_cup / two_cup / three_cup)"
+    definition: >
+      A tier in an application authority schema, where "tier ordering is subtyping":
+      tier teacup; tier one_cup <: teacup; tier two_cup <: one_cup; tier three_cup
+      <: two_cup (the sharp_butler example). Schemas declare capability names, not
+      tier literals; a substrate vocabulary mapping binds names to tiers/scopes at
+      deployment.
+    status: derived
+    axiom_grounding: "none — Edda authority-schema design, an independent lineage (Authority v0.2 §4.2)."
+    broader: []
+    narrower: []
+    related: [fed:Tier, edda:Cap]
+    source:
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.3.md
+        quote: "§3.8: \"Application authority schemas are first-class types; tier ordering is subtyping. ... (\"Tier\" is overloaded — algebraic tier ℂ/ℍ/𝕆/𝕊 vs application-authority tiers teacup/one_cup/…; Edda's syntax disambiguates by declaration position.)\" (edda Main 9d571a5)"
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.2.md
+        quote: "§3.8: \"tier teacup / tier one_cup <: teacup / tier two_cup <: one_cup / tier three_cup <: two_cup\" (edda Main 9d571a5)"
+    notes: >
+      Split out of wyrd:Tier's v0.3.0 sense list per the 2026-10-22 beekeeper ruling
+      (inter#173). Edda's own v0.3 glossary says unqualified "tier" in Edda means the
+      algebraic axis. A `precautionary` authority tier is OPEN (v0.3 §4.15, C2), so it
+      is not listed here. The subtyping is a chain: two_cup <: one_cup, three_cup <:
+      two_cup.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   - id: edda:Stage0
     prefLabel: "Stage 0"
@@ -865,6 +1302,8 @@ terms:
       rather than "projection functor" going forward, OR treating "projection
       functor" as the spike's own looser usage (see spike:ProductProjectionProvenance)
       rather than Edda's technical term.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224647162
 
   - id: edda:Gearbox
     prefLabel: "Gearbox"
@@ -879,7 +1318,16 @@ terms:
         quote: "line 598 (glossary)"
       - file: /home/prime/Documents/Edda/edda-compiler-spec-v0.2.md
         quote: "lines 119, 156, 165, 368-372"
-    notes: "At Walk+ phase, direct QBP-CU ISA emission replaces the Gearbox wrapper for hot paths (compiler spec line 174)."
+      - file: github.com/JamesPagetButler/qbp-compute-unit/emulator/public_api.go
+        quote: "OMul64 / SMul64: 'Crawl phase: returns ErrTierUnsupported' (qbp-compute-unit main d69b050)"
+    notes: >
+      At Walk+ phase, direct QBP-CU ISA emission replaces the Gearbox wrapper for hot paths
+      (compiler spec line 174). PHASE NOTE (v0.3.0): of the four dispatch targets, only
+      QMul64 and CMul64 execute at Crawl. OMul64 and SMul64 are tier-gated stubs that
+      return ErrTierUnsupported: OMul64 lands with the Xqbpoct extension (M1), SMul64 with
+      Xqbpqec / ZDCHK (M2). 𝕆/𝕊 arithmetic does not run today.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224646848
 
   # ==========================================================================
   # SYSTEMA — workspace process framework
@@ -1098,7 +1546,29 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'Good-quality output' section, lines 30-40 (verified directly 2026-09-27)"
-    notes: "Explicitly parallels CTH's own anti-laundering rule (S3), generalized here from claims to simulated-output formality."
+      - file: /home/prime/Documents/Edda/doc/stage1a-e3-formality-spec.md
+        quote: "Formality is a NEW orthogonal axis — napkin < engineering < formal ... MIN-over-chain composition = lattice meet ... LITERALS DEFAULT TO formal (TOP)"
+    notes: >
+      Explicitly parallels CTH's own anti-laundering rule (S3), generalized here from
+      claims to simulated-output formality. REALIZED in Edda E3 (edda#49, merged): a
+      value-level graded type napkin < engineering < formal, composed MIN-over-chain
+      (lattice meet), with literals defaulting to formal (top) and an overclaim rejected
+      as EDDA-TYPE-008. The Edda type covers napkin..formal; the spike's active mode sits
+      below it. The spike term itself stays design-proposal.
+      SUPERSEDED IN PART (2026-10-26, beekeeper-ratified two-axis model, inter#223):
+      "engineering" is NO LONGER a tier. The F axis is napkin < research < formal;
+      engineering is a composition label (a leg manifest; a composition is formal iff
+      every leg is formal, recursively; otherwise "engineered (k of n legs formal)").
+      The "validated against experimental data (closure: measurement)" clause moves to a
+      SEPARATE E axis (experimental backing), independent of F. The quotes above are
+      kept as provenance for the original wording; they are not the current model.
+      Edda theory+spec adopted the ratified F axis in edda#97 (merged 4b914dd); the
+      compiler issue edda#95 was re-scoped 2026-10-28. The full two-axis vocabulary
+      (fed:FormalityF, fed:EvidenceE, fed:LegManifest) lands in v0.6.0 after design
+      surface inter#238 (inter#237 AC2).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687009
+      - https://github.com/JamesPagetButler/inter/issues/223
 
   - id: spike:Leader
     prefLabel: "Leader (chain of skills)"
@@ -1118,7 +1588,11 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'The control structure' section, lines 52-63 (verified directly 2026-09-27)"
-    notes: "Two closed loops noted: (1) validated leaders become settled skills (today's deliberated novelty becomes tomorrow's routine); (2) ethics bounds simulation too, resolved into a separate Spike 3 (theory-of-mind, intent-as-provenance-dimension)."
+      - file: /home/prime/Documents/Edda/doc/edda-theory-addendum-A-skills-CASH.md
+        quote: "§C: 'A CASH leader is a type of federation leader whose sub-features each instantiate one cross-axis invariant (the CASH).'"
+    notes: "Two closed loops noted: (1) validated leaders become settled skills (today's deliberated novelty becomes tomorrow's routine); (2) ethics bounds simulation too, resolved into a separate Spike 3 (theory-of-mind, intent-as-provenance-dimension). FORMALIZED in Edda Theory Addendum A §B-§C (merged as edda#61) as the CASH leader (Cross-Axis Structural Homomorphism, the beekeeper's coinage): a leader-type whose sub-features each reflect one named invariant, I = 'no lack converts into a passing claim', via gate reflection G_A(φ(x)) ⇒ G_A(x) under conditions P1-P4. The addendum folds into Edda theory v0.3; this entry stays design-proposal."
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686766
 
   - id: spike:GenerativeRatchet
     prefLabel: "Generative ratchet"
@@ -1162,11 +1636,18 @@ terms:
     source:
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: "'Skill & Step anatomy' section, lines 65-72 (verified directly 2026-09-27)"
+      - file: /home/prime/Documents/Edda/doc/stage1a-e5.4-icom-vessel-spec.md
+        quote: "ICOM = Input=tails, Control=control, Output=heads, Mechanism=mechanism. transit stays DISTINCT ... Exactly one [vessel] per skill ... EDDA-TYPE-012 — incomplete-skill-anatomy"
     notes: >
       RECORD.md is explicit that "this decomposition is genuinely new — no
       ICOM vocabulary exists in the corpus" prior to this spike. Filed here as
       design-proposal, not retroactively presented as established BMA/Wyrd
-      vocabulary.
+      vocabulary. REALIZED in Edda E5.4 (edda#59, merged): Control and Mechanism are
+      non-mass-bearing op roles, distinct from Transit (catalyst); each skill has exactly
+      one bound Vessel; anatomy completeness is enforced structurally by VerifyAnatomy
+      (missing/duplicate vessel or a no-dataflow op → EDDA-TYPE-012), with no serializer.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224686895
 
   - id: spike:HeldVsConsumed
     prefLabel: "Held vs. consumed resources"
@@ -1205,22 +1686,33 @@ terms:
   # ==========================================================================
 
   - id: fed:Capability
-    prefLabel: "Capability (RESOLVED 2026-09-27: tool = primitive capability)"
+    prefLabel: "Capability (the bound triple: tool + authority + allocated capacity; RULED 2026-10-22)"
     definition: >
-      TWO ATTESTED, INCOMPATIBLE SENSES IN ACTIVE USE:
-      (1) BMA/Systema/Edda sense — capability = tool, a raw/primitive ability
-      held (fed:FourLayerRegistry layer 1: "Tools: Raw capabilities"; Edda's
-      Cap is this same primitive-resource sense). (2) Hypergraph-generativity
-      spike sense — capability = what a skill grants when instantiated (a
-      composite, exercisable power produced by running a skill).
-      RESOLVED 2026-09-27 (beekeeper): tool = primitive capability; a skill,
-      instantiated, grants a composite capability.
+      A capability is a tool plus the authority to use it plus an allocated
+      capacity, bound together at instantiation. The tool is the instrument
+      (fed:Tool); the authority is an authority-bearing token (Edda's Cap,
+      edda:Cap); the capacity is the budget allocated to that use. A bare tool
+      is not a capability by itself. A skill, instantiated, still grants a
+      composite capability.
     status: derived
     axiom_grounding: none
     broader: []
-    narrower: [fed:Tool, edda:Cap]
-    related: [fed:FourLayerRegistry, spike:Leader, spike:GenerativeRatchet]
+    narrower: []
+    related: [fed:Tool, edda:Cap, fed:Skill, fed:FourLayerRegistry, spike:Leader, spike:GenerativeRatchet]
     source:
+      - file: https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+        quote: >
+          "Capability: the bound triple. Tool = instrument. Capability = tool +
+          authority to use it + allocated capacity, bound at instantiation. A
+          skill, instantiated, still grants a composite capability. This refines
+          the 2026-09-27 ruling ("tool = primitive capability"): a bare tool is
+          no longer a capability by itself. It merges Bragi's reading
+          (capability = authority) and the beekeeper's (tool + capacity
+          allocation), and matches Edda's `Cap` as an authority-bearing token."
+      - file: /home/prime/Documents/Edda/edda-language-theory-v0.3.md
+        quote: >
+          §4.13: "exercisable authority is never a standalone token; it is the
+          conjunction (hold grant) ∧ (step witnessed-settled)" (edda Main 9d571a5)
       - file: /home/prime/Documents/inter/worktrees/hypergraph-generativity/spikes/2026-09-25-hypergraph-bounded-generativity/RECORD.md
         quote: >
           line 18: "'capability' is overloaded — BMA/Systema capability ≡ tool
@@ -1229,12 +1721,55 @@ terms:
           is a primitive capability; a skill, instantiated, grants a composite
           capability."
     notes: >
-      RATIFIED 2026-09-27 by the beekeeper: **tool = primitive capability; a
-      skill, instantiated, grants a composite capability.** The clash is
-      resolved — both senses coexist under this reconciliation (tool = the
-      primitive held ability; skill-granted = the composite exercisable power).
-      Documents may still name which sense they mean for clarity, but this is
-      no longer an open decision.
+      RULED 2026-10-22 (beekeeper, inter#173; recorded by qbp-architecture). The
+      first source is a GitHub PR comment, not a repo file; its URL stands in the
+      file field. HISTORY (kept, not erased): two senses were attested at v0.1:
+      (1) BMA/Systema/Edda, capability = tool, a raw/primitive ability held
+      (fed:FourLayerRegistry layer 1, "Tools: Raw capabilities"); (2) the
+      hypergraph-generativity spike, capability = what a skill grants when
+      instantiated. The beekeeper RATIFIED on 2026-09-27 "tool = primitive
+      capability; a skill, instantiated, grants a composite capability" (the
+      RECORD.md reconciliation above). The inter#164 review then raised Bragi's
+      reading, "Tool = instrument, Capability = authority". The 2026-10-22 ruling
+      SUPERSEDES the "tool = primitive capability" half of the 2026-09-27 ruling
+      and KEEPS its skill half: a tool is now the instrument only, and a capability
+      also needs authority and allocated capacity. Until v0.4.0, fed:Tool and
+      edda:Cap were listed as narrower kinds of capability; they are now components
+      of it (related), not kinds. TERMINOLOGY DRIFT left in sources: the BMA spec
+      still words registry layer 1 as "Raw capabilities", and Edda's v0.3 glossary
+      (Cap entry, edda Main 9d571a5) still cites the 2026-09-27 relation. Both
+      predate this ruling; updating them is the owning seats' call.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: fed:Tier
+    prefLabel: "Tier (disambiguation — not itself a concept)"
+    definition: >
+      A homonym index, not a concept. "Tier" names six distinct concepts in the
+      federation; always say which one is meant: the Wyrd algebraic tier
+      ℂ⊂ℍ⊂𝕆⊂𝕊 (wyrd:Tier); the BMA memory tier T0-T4 (bma:MemoryTier); the CTH
+      anchor tier axiom/proof/measurement/prediction (cth:AnchorTier); the Notary
+      Trust Tier T0-T7, a set with explicit trust base (notary:TrustTier); the
+      Contextus retention tier Core/Near/Peripheral/Distant/Skeleton
+      (contextus:RetentionTier); and the Edda application-authority tier
+      teacup/one_cup/two_cup/three_cup (edda:AuthorityTier).
+    status: derived
+    axiom_grounding: "n/a — a disambiguation entry; each sense carries its own grounding."
+    broader: []
+    narrower: []
+    related: [wyrd:Tier, bma:MemoryTier, cth:AnchorTier, notary:TrustTier, contextus:RetentionTier, edda:AuthorityTier]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+        quote: "\"Tier: split, with a sense index. Each sense becomes its own concept id in its owner's namespace (`wyrd:Tier` stays the algebraic one, and `bma:MemoryTier` already exists). `fed:Tier` becomes a disambiguation entry listing the senses.\""
+    notes: >
+      Created in v0.4.0 per the beekeeper ruling on inter#173. The source is a GitHub
+      PR comment; its URL stands in the file field. The six senses were first
+      enumerated in wyrd:Tier's notes at v0.3.0. Its status tag reflects that the
+      index itself is ruled, not that the six senses are one concept. Edda's
+      language theory v0.3 glossary already points readers here ("the federation
+      ontology records multiple").
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
 
   # ==========================================================================
   # FED — forging & weaving (federation process vocabulary). Ratified 2026-10-08:
@@ -1265,13 +1800,22 @@ terms:
     axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
     broader: []
     narrower: []
-    related: [fed:strike, fed:spike, fed:warp, fed:crossing]
+    related: [fed:strike, fed:spike, fed:warp, fed:crossing, fed:thread-path, fed:lock, math:category]
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
           §1a: "A thread is the ephemeral conceptual-development unit within a sprint." §1b: "Weft ≡ thread (§1a): one concept, one definition."
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §1b: "| **Weft** | A cross-repo thread. **Weft ≡ thread (§1a):** one concept, one definition. |" (inter main a3bfbb6)
     notes: >
       RATIFIED 2026-10-08 (inter#160 → #165; weave orientation inter#161 r2 → #166). Deliberately ONE entry: 'weft' is an alias, not a separate term (deming refinement R3), so the two names cannot drift apart.
+      v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch): read a
+      thread as the ACTIVE STATE of a spec-driven path toward a lock: a weft crossing
+      warps, whose route is its fed:thread-path and whose end is its fed:lock. That
+      wording is from the dispatch; no committed or GitHub record of it was found, so
+      the ratified forging-doc definition above stays unchanged. DESIGN-PROPOSAL
+      mapping: a thread is a DIAGRAM in the federation category (see math:category).
 
   - id: fed:strike
     prefLabel: "strike"
@@ -1310,12 +1854,16 @@ terms:
     status: derived
     axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage; ratified by the beekeeper.
     broader: []
-    narrower: [fed:meta-lock]
+    narrower: [fed:meta-lock, fed:lock]
     related: [fed:strike, fed:crossing]
     source:
       - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
         quote: >
           §4: "An executable specification is a CI-gated test-set with one assertion per finding the spike raised, retained permanently and run as a regression guard"
+    notes: >
+      v0.5.0: the alias "lock" is revived for a narrower concept, fed:lock, the
+      executable specification at the end of a thread, with legs and a lock-scope
+      rule (inter#196).
 
   - id: fed:meta-lock
     prefLabel: "meta-lock"
@@ -1435,10 +1983,880 @@ terms:
     notes: >
       For QBP: the physics-acceptance suite owned by qbp-oppenheimer, run against qbp-systema (inter#162).
 
+  - id: fed:thread-path
+    prefLabel: "thread path (the proof plan)"
+    definition: >
+      The spec-driven, ordered route of strikes a thread takes to its lock: the
+      thread's proof plan. Example (the provable-AC thread): "S1 → (S2 ∥ S3) → S4",
+      with the lock at the end.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:thread, fed:strike, fed:lock, fed:Skill, math:category]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/194#issuecomment-6346990992
+        quote: >
+          "**Thread path (the spec-driven route to the lock):** S1 → (S2 ∥ S3) → S4."
+      - file: https://github.com/JamesPagetButler/inter/issues/197
+        quote: >
+          lowering table row: "| thread / thread path | `skill` (scoped hypergraph of
+          `op`s) with `[budget: …]` | exists (stage1a E5.3) + proposed budget |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      Status design-proposal: the term is defined in issue comments, not in the
+      forging doc. The "(the proof plan)" gloss comes from the dispatch; no
+      committed or GitHub record of that wording was found. inter#197 proposes
+      lowering a thread path to an Edda `skill`, hence the fed:Skill relation.
+      DESIGN-PROPOSAL mapping: in category terms a thread path is a composable
+      chain of morphisms (strikes) ending at the lock (see math:category).
+
+  - id: fed:lock
+    prefLabel: "lock (the executable specification a thread must open)"
+    definition: >
+      The executable specification a thread must open. Its LEGS are every AC of
+      every issue on the thread; a lock is green only when every leg is discharged
+      and its own assertions pass. Lock-scope rule: the lock's own integrated
+      assertions are stated at the forging product's EXTERNAL interface ("the legs
+      (the issue ACs) cover the parts; the lock covers the whole"). Its criteria are
+      content-addressed, and any loosening needs a beekeeper witness.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: [fed:executable-specification]
+    narrower: []
+    related: [fed:thread, fed:thread-path, fed:meta-lock, fed:strike, fed:forging-product, fed:interface, fed:trait, math:type]
+    source:
+      - file: /home/prime/Documents/inter/best-practices/forging-spikes-strikes-executable-specs.md
+        quote: >
+          §4 migration note: "prior artifacts using "lock"/"edda-lock" ... refer to
+          this concept. New work says "executable specification"" (inter main
+          a3bfbb6)
+      - file: https://github.com/JamesPagetButler/inter/issues/196
+        quote: >
+          "**D1 (ruled):** the lock's legs = **all** AC ids of the issues on its
+          thread." ... "A lock must never go green while an issue on its thread still
+          has an open AC."
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350163354
+        quote: >
+          "**Adopted:** a lock's *own* integrated assertions must be stated over the
+          thread's external interface. The legs (the issue ACs) cover the parts; the
+          lock covers the whole." ... "Criteria are hashed, and the lock keeps a
+          versioned criteria diff. **Any loosening is refused unless it carries a
+          beekeeper-witnessed cap.**"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      NAMING: the forging doc treats "lock" as a historical alias of
+      fed:executable-specification. This entry revives the word for a narrower
+      concept, the executable specification at the end of a thread, with legs, a
+      scope rule and content-addressed criteria; hence broader
+      fed:executable-specification rather than a second definition. Status
+      design-proposal: the legs, scope and content-addressing rules are recorded in
+      issue comments (D1 ruled; the other two adopted by qbp-architecture as S3/S4
+      requirements), not yet in the forging doc. The loosening rule mechanizes the
+      §7 anti-weakening guardrail. DESIGN-PROPOSAL mapping (from the dispatch; not
+      found in a committed or GitHub record): a lock read as a TYPE, which the
+      forging product inhabits as a term (see math:type).
+
+  - id: fed:forging-product
+    prefLabel: "forging product (the term that inhabits a lock)"
+    definition: >
+      What a forging produces: a typed package with a manifest of its interfaces,
+      MANY traits and MANY characteristics, a bill of materials, and provenance,
+      proven by its lock at the external interface. "A product = interfaces + many
+      traits + many characteristics + its lock."
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:lock, fed:interface, fed:trait, fed:characteristic, fed:forging, fed:standing-crossing, fed:Capability, math:type]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "**D2: "yes, can be many."** A forging product may implement many traits
+          and carry many characteristics." ... "A product = interfaces + many traits +
+          many characteristics + its lock."
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350163354
+        quote: >
+          "*OKH System = components (Edda skills with typed I/O + config schema +
+          **characteristics**) + typed interfaces + an end-to-end lock over the
+          external interface, witnessed per run.*"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch;
+      D2 itself is a recorded beekeeper ruling). The bill of materials and the
+      provenance via the inter#168 handle come from the dispatch. inter#168 (OPEN at
+      this harvest) drafts the Handle as "the unit that crosses" a standing crossing,
+      hence the fed:standing-crossing relation. inter#197 lists the capability triple
+      (fed:Capability) among the forging concepts its lowering contract maps to Edda
+      (`requires: cap(...)` + `budget`). DESIGN-PROPOSAL mapping (from the dispatch):
+      the product is a TERM that inhabits its lock's type (see math:type).
+
+  - id: fed:interface
+    prefLabel: "interface (the product's typed external boundary)"
+    definition: >
+      The forging product's typed external boundary: its inputs, outputs and config
+      schema, verified by type checks. The analogue of an OKI interface or a function
+      signature. The lock-scope rule states a lock's own assertions at this
+      boundary.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:forging-product, fed:trait, fed:lock, fed:Tool]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:interface`** | the product's **typed external boundary** (inputs,
+          outputs, config schema) | type checks | OKI interface; a function signature |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      The source table is qbp-architecture's "proposed reading", which ends "The
+      beekeeper confirms or adjusts"; the dispatch reports it as ratified. Related to
+      fed:Tool because the instrument a capability binds is used through such a
+      boundary; that link is this ontology's, not the source's.
+
+  - id: fed:trait
+    prefLabel: "trait (a behavioral promise stated at an interface)"
+    definition: >
+      A behavioral promise stated at an interface: what consumers may rely on (for
+      example Lossless, FailClosed, DryRunDefault). It is discharged by the lock at
+      the external interface plus its AC legs. The analogue of a Rust `trait` impl.
+      A trait can be conditional on characteristics, like a Rust `where` clause (for
+      example, Lossless holds only where width ≥ QW128). A product may implement many.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:interface, fed:characteristic, fed:lock, fed:forging-product]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:trait`** | a **behavioral promise stated at an interface**: what
+          consumers may rely on (e.g. *Lossless*, *FailClosed*, *DryRunDefault*) | the
+          **lock at the external interface** (lock-scope rule) plus its AC legs | a
+          Rust `trait` impl |" ... "traits can be **conditional on characteristics**,
+          like a Rust `where` clause. For example, *Lossless* holds only `where width
+          ≥ QW128`."
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      TERMINOLOGY DRIFT: inter#196's D2 text and inter#197's lowering table still
+      use "characteristic" for this concept ("a named bundle of obligations a
+      product claims" → Edda `trait`, missing). The 2026-10-22 reading moves that
+      sense to trait. Edda has no `trait` form yet (inter#197).
+
+  - id: fed:characteristic
+    prefLabel: "characteristic (a property of the product itself)"
+    definition: >
+      A property of the forging product itself: internal configuration or a
+      measured attribute, carried with a value, a unit and evidence (for example
+      precision width QW128, cycle budget, PA grade, peak RSS). Verified by evidence
+      (a measurement, CI artifact or ledger). The analogue of an OKH manifest
+      "characteristic", or a Rust associated const or type. A product may carry many.
+    status: design-proposal
+    axiom_grounding: none — federation process vocabulary (forging method), an independent design lineage.
+    broader: []
+    narrower: []
+    related: [fed:trait, fed:forging-product, cth:proof_assistants, notary:PA-record]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/196#issuecomment-6350348780
+        quote: >
+          "| **`fed:characteristic`** | a **property of the product itself**: internal
+          configuration or a measured attribute, with a value, unit and evidence (e.g.
+          precision width QW128, cycle budget, PA grade, peak RSS) | evidence
+          (measurement, CI artifact, ledger) | OKH manifest "characteristics"; a Rust
+          associated const or type |"
+    notes: >
+      Added v0.5.0 (beekeeper-ratified 2026-10-22 per @qbp-architecture's dispatch).
+      The PA grade example is the CTH grade (cth:proof_assistants), evidenced by a
+      Notary PA-record (notary:PA-record); it is related, not redefined. See the
+      drift note on fed:trait: before this reading, "characteristic" named the
+      obligation bundle that is now a trait.
+
+  # ==========================================================================
+  # NOTARY — the federation V&V function. Owner seat: notary-implementor.
+  # Added v0.4.0 (beekeeper ruling, inter#173). Private repo: vocabulary only.
+  # Verified against notary main fc20c36 (and confluent-trust main 6e8a84f for
+  # the notary-request record, whose canonical copy lives there).
+  # ==========================================================================
+
+  - id: notary:TrustTier
+    prefLabel: "Trust Tier T0-T7 (a set with explicit trust base, never a scalar)"
+    definition: >
+      A rung of evidence about a claim, each with its own trust dependencies: T0
+      compiles and runs; T1 hand-picked unit tests pass; T2 property tests derived
+      from Lean theorem statements, with coverage + mutation metrics; T3
+      differential against a Lean reference oracle; T4 TLA+ model-checked via TLC
+      to a stated bound (the bound's justification is the artifact); T5 production
+      traces continuously validate against the TLA+ spec; T6 Iris refinement proof
+      via Goose-style translation; T7 end-to-end verified to machine code
+      (aspirational). A verification reports the SET of tiers achieved plus the
+      union of trust dependencies, never a single number.
+    status: derived
+    axiom_grounding: "none — Notary verification design (BMA Theory v3.0 §3.1-§3.6), an independent lineage from AXIOM-1."
+    broader: []
+    narrower: []
+    related: [fed:Tier, notary:verification_outcome, cth:proof_assistants, cth:belief-tiers]
+    source:
+      - file: /home/prime/Documents/notary/doc/competencies-and-tiers.md
+        quote: >
+          "## Trust Tiers T0–T7 — a SET with explicit trust base, not a scalar ...
+          The scheme exists to prevent collapse to a single number ("this module is
+          Tier 4"). Emit the **union of tiers achieved** plus the **union of trust
+          dependencies**." (notary main fc20c36)
+      - file: /home/prime/Documents/notary/CLAUDE.md
+        quote: >
+          "`trust_tiers_achieved` is a **set with explicit trust base**, never a
+          scalar ("this is T4")." (notary main fc20c36)
+    notes: >
+      Split out of wyrd:Tier's v0.3.0 sense list per the 2026-10-22 beekeeper ruling
+      (inter#173). Distinct from the PA grade 0/1/2 (cth:proof_assistants): Trust
+      Tiers grade a verification method's evidence, the PA grade counts clean,
+      corresponding proof assistants. Tier disagreement between rungs is recorded as
+      an epistemic seam, never a silent demote. Notary's authoritative framework is
+      BMA Theory v3.0 §3.1-§3.6 and its launch prompt; the condensed reference above
+      defers to them.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:verification_outcome
+    prefLabel: "verification_outcome (six values; INCONCLUSIVE is first-class)"
+    definition: >
+      The outcome of one Notary verification cycle, exactly one of six values:
+      VERIFIED (proof completed; named trust tiers achieved); COUNTEREXAMPLE_FOUND
+      (disconfirming evidence; name the scenario); INCONCLUSIVE_TIMEOUT (resource
+      budget exhausted; name residual subgoals); INCONCLUSIVE_RESOURCE_BOUND (bound
+      prevents completion; name bound + alternative); INCONCLUSIVE_UNREACHED_GOAL
+      (proof obligation not discharged; name the obligation);
+      REFUSED_INSUFFICIENT_SPEC (input spec ambiguous/incomplete; name the
+      clarification).
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [notary:TrustTier, notary:PA-record]
+    source:
+      - file: /home/prime/Documents/notary/templates/NT_NOTARY_VERIFICATION_EVIDENCE.template.yaml
+        quote: >
+          "# ---- OUTCOME: exactly one of the six values" followed by the six values
+          and glosses quoted in the definition (notary main fc20c36)
+      - file: /home/prime/Documents/notary/CLAUDE.md
+        quote: >
+          "`verification_outcome` is one of six values — **four name distinct
+          INCONCLUSIVE shapes**. `INCONCLUSIVE_*` is a **first-class output**, not a
+          failure to disguise." (notary main fc20c36)
+    notes: >
+      COUNT NOTE: the "four INCONCLUSIVE shapes" are the three INCONCLUSIVE_* values
+      plus REFUSED_INSUFFICIENT_SPEC; only three carry the INCONCLUSIVE_ prefix. A
+      VERIFIED verdict is "a structured absence of disconfirming evidence at named
+      tiers", not a claim that the code is correct (notary CLAUDE.md). Not the same
+      vocabulary as the verification skill's VERIFIED / VERIFIED-WITH-CAVEAT /
+      REFUTED / UNVERIFIABLE (inter skills/verification.md), which grades a claim
+      checked against the live system.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:PA-record
+    prefLabel: "PA-record (the proof-assistant evidence block a Notary cycle emits)"
+    definition: >
+      The PA-grading block of a Notary verification record: one proof_assistants
+      entry per assistant (lean4 | coq | agda), each with an evidence_ref, the
+      producer seat, a declared{} block (informational only), a derived{} block
+      ("the graded truth", including kernel_clean) and a veto-only trust_check; plus
+      a correspondence record, corroborated_by annotations that never raise the
+      grade, and flags. "DERIVE-DON'T-DECLARE: grading reads `derived{}` only".
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: [notary:kernel_clean, notary:correspondence]
+    related: [cth:proof_assistants, notary:cross-prover, notary:notary-request, notary:verification_outcome]
+    source:
+      - file: /home/prime/Documents/notary/templates/NT_NOTARY_VERIFICATION_EVIDENCE.template.yaml
+        quote: >
+          "# ---- PA-RECORD (testdata/pa v2 format — verbatim-aligned to notary#1 /
+          confluent-trust#108) ... DERIVE-DON'T-DECLARE: grading reads `derived{}`
+          only; declared{} is informational." (notary main fc20c36)
+    notes: >
+      The PA GRADE itself (0 / 1 / 2) is computed by the CTH engine and is already
+      recorded at cth:proof_assistants; it is related here, not duplicated as a
+      notary: term. This record is the Notary-side evidence that grade is derived
+      from.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:kernel_clean
+    prefLabel: "kernel_clean"
+    definition: >
+      A boolean in a PA-record's derived{} block: whether the assistant's own kernel
+      accepted the proof without a trust shortcut. It sits with the tactics and
+      axioms actually used, which grading reads, not the declared ones. A record
+      that fails it can carry the flag not_kernel_clean (as the cycle-7 hessian
+      record does).
+    status: derived
+    axiom_grounding: none
+    broader: [notary:PA-record]
+    narrower: []
+    related: [notary:cross-prover, cth:proof_assistants]
+    source:
+      - file: /home/prime/Documents/notary/templates/NT_NOTARY_VERIFICATION_EVIDENCE.template.yaml
+        quote: >
+          "derived:  {tactics_used: [], axioms: [], exit_code: 0, output_hash: "",
+          kernel_clean: false}  # the graded truth" (notary main fc20c36)
+      - file: /home/prime/Documents/notary/proofs/FanoTableCrossProver.v
+        quote: "(* kernel's OWN conversion — NOT vm_compute/native_compute (PA-2 bar) *) (notary main fc20c36)"
+    notes: >
+      Definition paraphrased from the template field and its use in the evidence
+      records (e.g. cycle-9: "kernel-clean", standard axioms, "NO ofReduceBool, NO
+      sorryAx"). The exact admissible-axiom rule belongs to the PA engine
+      (cth:proof_assistants), not this vocabulary entry.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:cross-prover
+    prefLabel: "cross-prover (two distinct kernels)"
+    definition: >
+      Verification of the same claim in two proof assistants with distinct kernels
+      (the lean_coq_port competency: port a Lean theorem's statement and proof to
+      Coq and check the Coq kernel accepts it). It flags drift between provers, and
+      it is what a PA-2 grade needs: two kernel-clean assistants whose statements a
+      non-producer has recorded as corresponding.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [notary:kernel_clean, notary:correspondence, cth:proof_assistants]
+    source:
+      - file: /home/prime/Documents/notary/doc/competencies-and-tiers.md
+        quote: >
+          "**Lean→Coq porting and re-proof** — cross-prover validation. Port a Lean
+          theorem's statement and proof to Coq; verify the Coq kernel accepts it.
+          T0–T3 structural evidence; flags semantic drift between provers."
+          (notary main fc20c36)
+      - file: /home/prime/Documents/notary/evidence/cycle-8-cd-headline-v2-2026-10-02.yaml
+        quote: "\"both kernel-clean, distinct kernels\" ... \"Genuine headline PA-2 (not a relabel). Two independent kernels accept the anchor's OWN statement\" (notary main fc20c36)"
+    notes: >
+      The CTH-side rule is kernel diversity: a correspondence lifts a grade only
+      through a different prover kernel (cth:proof_assistants).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:correspondence
+    prefLabel: "correspondence (with non-producer checked_by)"
+    definition: >
+      The PA-record entry asserting that two assistants' statements are the same
+      claim: {corresponds, basis, checked_by, checked_at}, where checked_by MUST
+      differ from every producer. A correspondence a producer records for its own
+      work is flagged self_attested_correspondence and does not count.
+    status: derived
+    axiom_grounding: none
+    broader: [notary:PA-record]
+    narrower: []
+    related: [notary:cross-prover, cth:proof_assistants]
+    source:
+      - file: /home/prime/Documents/notary/templates/NT_NOTARY_VERIFICATION_EVIDENCE.template.yaml
+        quote: >
+          "correspondence: {corresponds: false, basis: "", checked_by: "", checked_at:
+          ""}  # checked_by MUST differ from every producer" ... "flags: []  #
+          declared_mismatch | hash_mismatch | wrong_role | self_attested |
+          self_attested_correspondence" (notary main fc20c36)
+      - file: /home/prime/Documents/confluent-trust/internal/pa/pa.go
+        quote: "package doc: 'Two assistants count as two only if a NON-PRODUCER recorded that their statements correspond.' (confluent-trust main 6e8a84f)"
+    notes: >
+      HOMONYM: distinct from a cross_formalism_correspondence (an
+      NT_CROSS_FORMALISM_CORRESPONDENCE node relied on by a cycle; notary
+      doc/failure-modes.md), which tracks correspondences between formalisms as
+      first-class nodes rather than the per-record PA check.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: notary:notary-request
+    prefLabel: "notary-request record (v1.3)"
+    definition: >
+      "The locked notary#3 v1.3 emit record. One JSON object per
+      shortfall/staleness/tie event", appended as JSON lines to a CI artifact the
+      filer consumes. reason is one of pa_shortfall, staleness,
+      artifact_tie_mismatch; the record names the claim, its pinned source sha, the
+      required and current PA, the pinning consumers and whether it is stale.
+      Dedupe key = (claim_id, source_sha, reason, artifact_digest).
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [notary:PA-record, cth:proof_assistants, cth:claim-source-manifest]
+    source:
+      - file: /home/prime/Documents/confluent-trust/testdata/pa/notary-request.schema.json
+        quote: >
+          "description": "The locked notary#3 v1.3 emit record. One JSON object per
+          shortfall/staleness/tie event, appended as JSON lines to a CI artifact the
+          filer consumes. Canonical copy lives in confluent-trust (architecture
+          R4-Q4); other repos vendor it under a byte-identity CI check. Dedupe key =
+          (claim_id, source_sha, reason, artifact_digest)." ... "reason": { "enum":
+          ["pa_shortfall", "staleness", "artifact_tie_mismatch"] }
+          (confluent-trust main 6e8a84f)
+    notes: >
+      NAMESPACE vs CANON: the term is filed under notary: (the PR inter#173 body
+      lists it there, and the record requests Notary work), but the canonical schema
+      lives in confluent-trust, not the notary repo; no copy of it is on notary main
+      fc20c36. Moved here from the v0.3.0 cth:proof_assistants note.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  # ==========================================================================
+  # CONTEXTUS — ecosystem insight discovery. Owner seat: contextus-impl.
+  # Added v0.4.0 (beekeeper ruling, inter#173). Verified against contextus
+  # main 4736c80.
+  # ==========================================================================
+
+  - id: contextus:ScopePhysical
+    prefLabel: "ScopePhysical (NT_SCOPE_PHYSICAL)"
+    definition: >
+      "a region of space-time with a name and queryable membership." Its membership
+      predicate is geometric intersection: a node is a member iff its Locale
+      intersects the scope's geometry and its timestamp falls within temporal_range.
+    status: derived
+    axiom_grounding: "none — Contextus spec design, an independent lineage."
+    broader: []
+    narrower: []
+    related: [contextus:ScopeConceptual, contextus:ScopeOperational, contextus:ScopeMembership, contextus:membership-predicate-catalogue]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/scope.go
+        quote: "// ScopePhysical is a region of space-time with a name and queryable membership. Spec v1.3 §4.6.2 + §11.4. (contextus main 4736c80)"
+      - file: /home/prime/Documents/Contextus/Contextus-Spec-v1.3.md
+        quote: >
+          §4.6.4: "**Physical scopes** use geometric intersection: a node has
+          membership iff its `Locale` (or `LocaleBounds` if it has spatial extent)
+          intersects the scope's `geometry` and its timestamp falls within
+          `temporal_range`." (contextus main 4736c80)
+    notes: >
+      The three scope kinds share one architectural role (queryable subgraph
+      definition; hierarchical containment via parent_scope_id; multiplicative
+      composition; anchoring retention-tier promotion) and differ only in their
+      membership predicate.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:ScopeConceptual
+    prefLabel: "ScopeConceptual (NT_SCOPE_CONCEPTUAL)"
+    definition: >
+      "a topic or domain with a name and queryable membership." Its membership
+      predicate is implementation-defined per adapter (Spec v1.3 §4.6.5). A theory
+      is a particular kind of conceptual scope, whose members are claims and
+      observations in the derivation chain rooted at a CTH anchor.
+    status: derived
+    axiom_grounding: "none — Contextus spec design, an independent lineage."
+    broader: []
+    narrower: []
+    related: [contextus:ScopePhysical, contextus:ScopeOperational, contextus:ScopeMembership, contextus:membership-predicate-catalogue, cth:Anchor]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/scope.go
+        quote: "// ScopeConceptual is a topic or domain with a name and queryable membership. Spec v1.3 §4.6.3 + §11.4. (contextus main 4736c80)"
+      - file: /home/prime/Documents/Contextus/doc/spec-v1.4-theory-as-conceptual-scope.md
+        quote: >
+          "A **theory**, for Contextus's purposes, is a particular kind of
+          conceptual scope: its members are claims and observations transitively in
+          the derivation chain rooted at a CTH anchor." (contextus main 4736c80)
+    notes: >
+      Theory and code scopes are BOTH ScopeConceptual; the attention-scalar seam
+      distinguishes them by a derived domain kind, not by scope kind
+      (contextus:attention-scalar-seam).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:ScopeOperational
+    prefLabel: "ScopeOperational (NT_SCOPE_OPERATIONAL)"
+    definition: >
+      "a hardware-instance-bounded region of the hypergraph whose members are nodes
+      attributable to a named host's named hardware subsystem." The third sibling
+      to ScopePhysical and ScopeConceptual; its membership predicate is
+      hardware-identifier-based (exact match on host and hardware class, no
+      wildcards at v0.1).
+    status: derived
+    axiom_grounding: "none — Contextus spec design, an independent lineage."
+    broader: []
+    narrower: []
+    related: [contextus:ScopePhysical, contextus:ScopeConceptual, contextus:ScopeMembership, contextus:membership-predicate-catalogue, contextus:ScalarReferent]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/scope.go
+        quote: >
+          "// ScopeOperational is a hardware-instance-bounded region of the
+          hypergraph whose members are nodes attributable to a named host's named
+          hardware subsystem. See Contextus-Spec-Addendum-NT-Scope-Operational
+          §§2-5." (contextus main 4736c80)
+      - file: /home/prime/Documents/Contextus/Contextus-Spec-Addendum-NT-Scope-Operational.md
+        quote: "§5: \"The membership predicate for `NT_SCOPE_OPERATIONAL` is hardware-identifier-based.\" (contextus main 4736c80)"
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:ScopeMembership
+    prefLabel: "ScopeMembership (HE_SCOPE_MEMBERSHIP edge metadata)"
+    definition: >
+      "the on-edge metadata for HE_SCOPE_MEMBERSHIP": an arity-2 Wyrd hyperedge
+      from a scope node to a member node, carrying since, confidence (0.0-1.0), a
+      provenance_tag and the method (the membership predicate that established it).
+      A member may belong to many scopes; each membership is a separate edge.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [contextus:membership-predicate-catalogue, contextus:ScopePhysical, contextus:ScopeConceptual, contextus:ScopeOperational, wyrd:Hyperedge, cth:ProvenanceKind]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/scope.go
+        quote: >
+          "// ScopeMembership is the on-edge metadata for HE_SCOPE_MEMBERSHIP. The
+          edge itself is a Wyrd model.Hyperedge of arity 2 connecting a scope node to
+          a member node. Spec v1.3 §4.6.4 + §11.4." (contextus main 4736c80)
+    notes: >
+      HOMONYM: provenance_tag uses Contextus's own ProvenanceTag values (P asserted /
+      D inferred / T theoretical / I imported), not CTH's ProvenanceKind (see
+      cth:ProvenanceKind). The Go comment on the field lists only P and D for
+      memberships.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:membership-predicate-catalogue
+    prefLabel: "membership-predicate catalogue (HE_SCOPE_MEMBERSHIP.method values)"
+    definition: >
+      The named rules by which a node becomes a member of a scope, recorded in the
+      membership edge's method field. Physical scopes use geometric intersection.
+      Conceptual scopes use an implementation-defined predicate; Spec v1.3 §4.6.5
+      lists asserted, tag overlap, embedding similarity, classifier output and
+      citation-graph proximity as non-exhaustive examples. Two canonical names are
+      registered since: cth-derivation (Spec v1.4, theory-as-conceptual-scope) and
+      hardware-identifier (the NT_SCOPE_OPERATIONAL addendum §5).
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [contextus:ScopeMembership, contextus:ScopePhysical, contextus:ScopeConceptual, contextus:ScopeOperational]
+    source:
+      - file: /home/prime/Documents/Contextus/Contextus-Spec-v1.3.md
+        quote: >
+          §4.6.5: "The membership predicate for conceptual scopes is deferred to the
+          adapter that establishes the membership. v1.3 documents the contract; v1.x
+          will document the canonical predicates as they emerge." (contextus main
+          4736c80)
+      - file: /home/prime/Documents/Contextus/doc/spec-v1.4-theory-as-conceptual-scope.md
+        quote: >
+          "§4.6.5 currently lists five non-exhaustive example methods (`asserted`,
+          `tag-overlap`, `embedding-similarity`, `classifier`, `citation-graph-hop`).
+          Adding a sixth: **`cth-derivation`**" (contextus main 4736c80)
+      - file: /home/prime/Documents/Contextus/Contextus-Spec-Addendum-NT-Scope-Operational.md
+        quote: "§5: \"The operational-scope predicate adds the canonical name `hardware-identifier` to the `HE_SCOPE_MEMBERSHIP.method` field\" (contextus main 4736c80)"
+    notes: >
+      The catalogue is open (non-exhaustive examples plus registered names), not a
+      closed enum. SPELLING DRIFT in the source: Spec v1.3 §11.4 gives the example
+      method "embedding-cosine", while §4.6.5 says "embedding similarity" and the
+      v1.4 doc spells it `embedding-similarity`. No canonical spelling is recorded
+      here.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:InsightSignal
+    prefLabel: "InsightSignal"
+    definition: >
+      "the atomic unit of agent output (Theory §3.6)": a signal an agent emits about
+      an anomaly it found in a subgraph, with an anomaly type and score, locale
+      envelope and grain, persistence, confidence, claim history and
+      tier-conditional evidence pointers. Surveillance-mode signals on operational
+      scopes also carry ScalarReferents.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [contextus:ScalarReferent, contextus:RetentionTier, contextus:attention-scalar-seam]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/signal.go
+        quote: >
+          "// InsightSignal is the atomic unit of agent output (Theory §3.6). Spec
+          v1.3 §11.1. // Tier-conditional field population is enforced by the
+          retention layer at write time, not by this struct." (contextus main
+          4736c80)
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:ScalarReferent
+    prefLabel: "ScalarReferent"
+    definition: >
+      "a predicted-vs-observed scalar value pair and a divergence score for a named
+      surveillance target on an operational scope": label, predicted, observed, a
+      normalised divergence score in [0.0, 1.0], and the operational scope it
+      tracks. It carries the summary tuple only, not the raw time-series.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [contextus:InsightSignal, contextus:ScopeOperational, contextus:attention-scalar-seam]
+    source:
+      - file: /home/prime/Documents/Contextus/pkg/types/signal.go
+        quote: >
+          "// ScalarReferent records a predicted-vs-observed scalar value pair and a
+          divergence score for a named surveillance target on an operational scope.
+          Spec v1.4 §2.4." (contextus main 4736c80)
+    notes: >
+      Score computation is Contextus-side; CTH's ScorePrediction is a separate
+      scoring surface, and any coupling is Walk-phase (signal.go ownership note). The
+      attention-scalar seam's v0.1 trajectory additions to ScalarReferent are
+      contract-only and not yet in the Go type.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:RetentionTier
+    prefLabel: "Retention tier (Core / Near / Peripheral / Distant / Skeleton)"
+    definition: >
+      A tier of Proportional Data Retention, where "storage cost per item is
+      proportional to epistemic proximity to active research flows": Core (full
+      text, parsed claims, ...; ~500 KB-2 MB), Near (~10-50 KB), Peripheral (~1-5
+      KB), Distant (~200-500 bytes) and Skeleton (DOI and publication year only;
+      ~50-100 bytes). Co-activation promotes; Ebbinghaus decay demotes; Skeleton
+      entries are never deleted.
+    status: derived
+    axiom_grounding: none
+    broader: []
+    narrower: []
+    related: [fed:Tier, contextus:InsightSignal, contextus:ScopeMembership]
+    source:
+      - file: /home/prime/Documents/Contextus/Contextus-Spec-v1.3.md
+        quote: >
+          "## 9. Proportional Data Retention ... storage cost per item is
+          proportional to epistemic proximity to active research flows." §9.1
+          Retention Tiers table: Core / Near / Peripheral / Distant / Skeleton
+          (contextus main 4736c80)
+      - file: /home/prime/Documents/Contextus/README.md
+        quote: "\"Spec §9 (Proportional Data Retention) tiers signals from Core (full content, 500 KB–2 MB) down through Skeleton (DOI + year, 50–100 bytes).\" (contextus main 4736c80)"
+    notes: >
+      Split out of wyrd:Tier's v0.3.0 sense list per the 2026-10-22 beekeeper ruling
+      (inter#173); v0.3.0 named only Core and Skeleton, the full five-tier list is
+      from Spec v1.3 §9.1. Activating a scope promotes its member signals toward
+      Core (Spec v1.3 §4.6.6).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  - id: contextus:attention-scalar-seam
+    prefLabel: "attention-scalar seam (craft/Contextus, v0.1 PINNED)"
+    definition: >
+      The read-only boundary between Contextus (emits) and the craft cockpit
+      (renders): a per-signal AttentionScalar payload with magnitude fields
+      (salience, divergence, persistence, structural, confidence, promote,
+      lead_time), placement (locale, grain), anchor handles (scope_ids, locus,
+      signal_id, detail_ref) and event_time. "Contextus emits; the craft renders.
+      Everything here is READ-ONLY to the craft."
+    status: design-proposal
+    axiom_grounding: none
+    broader: []
+    narrower: [craft:AttentionSalience]
+    related: [contextus:InsightSignal, contextus:ScalarReferent, contextus:ScopeConceptual]
+    source:
+      - file: /home/prime/Documents/Contextus/doc/design/attention-scalar-wire-contract.md
+        quote: >
+          "# Attention Scalar — emit-side wire contract (craft↔Contextus seam v0.1)
+          **Status:** Design/contract-of-record. The authoritative **emit-side**
+          shape Contextus hands the craft-server (inter#96)." (contextus main
+          4736c80)
+      - file: /home/prime/Documents/Craft/internal/scalar/scalar.go
+        quote: >
+          "// Package scalar defines the render-side wire types for the
+          craft↔Contextus seam contract (attention scalar v0.1). ... Contextus
+          emits; the craft renders. Everything here is READ-ONLY to the craft"
+          (craft main 3e27615)
+    notes: >
+      STATUS design-proposal: the emit-side contract is design/contract-of-record
+      and Contextus main 4736c80 has no AttentionScalar Go type yet (the emit build
+      is queued). The render side exists in craft (internal/scalar/scalar.go). Filed
+      under contextus: because Contextus holds the emit-side contract of record;
+      hutchins co-owns the render side.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  # ==========================================================================
+  # CRAFT — the cockpit that renders the attention scalar. Owner seat: hutchins.
+  # Added v0.4.0 (beekeeper ruling, inter#173). Private repo: vocabulary only.
+  # Verified against craft main 3e27615.
+  # ==========================================================================
+
+  - id: craft:AttentionSalience
+    prefLabel: "attention salience (the attention scalar's `salience`)"
+    definition: >
+      The [0,1] attention/render rank of a signal on the attention-scalar seam:
+      the "default cone rank" that assigns the signal's register (foveal cone vs
+      peripheral ring) and its glyph fidelity. Emit-side default is the signal's
+      AnomalyScore (for operational signals, the MaxScore of its Referents).
+    status: derived
+    axiom_grounding: none
+    broader: [contextus:attention-scalar-seam]
+    narrower: []
+    related: [wyrd:Salience]
+    source:
+      - file: /home/prime/Documents/Craft/internal/scalar/scalar.go
+        quote: "Salience           float64  `json:\"salience\"`             // [0,1] default cone rank (craft main 3e27615)"
+      - file: /home/prime/Documents/Craft/doc/design/craft-96-render-design.md
+        quote: "| `salience` | **Register assignment** (foveal cone vs peripheral ring) + glyph fidelity (detail scales with salience) | canopy (in-world) | (craft main 3e27615)"
+      - file: /home/prime/Documents/Contextus/doc/design/attention-scalar-wire-contract.md
+        quote: "Salience           float64  `json:\"salience\"`             // [0,1] default rank = AnomalyScore (operational: MaxScore of Referents) (contextus main 4736c80)"
+    notes: >
+      HOMONYM of wyrd:Salience (eviction priority on a Wyrd Node, with documented
+      Hebbian/Ebbinghaus dynamics); this is a different quantity and has nothing to do
+      with eviction. NAMING: "AttentionSalience" is this ontology's id for the
+      concept, from the PR inter#173 body; the identifier does not occur in the craft
+      repo, where the concept is the `salience` field of AttentionScalar. Status
+      derived because the render-side type and its use are committed on craft main;
+      the emit side is contract-only (contextus:attention-scalar-seam).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/pull/173#issuecomment-6345219133
+
+  # ==========================================================================
+  # MATH — general mathematical structures used by ≥2 tenants, sourced to
+  # Mathlib. Owner seat: qbp-oppenheimer. Added v0.5.0. Verified against Mathlib
+  # c5ea003 (the pin in QBP master a4d4383 proofs/lakefile.lean) and the Lean
+  # v4.30.0 toolchain (QBP proofs/lean-toolchain).
+  # ==========================================================================
+
+  - id: math:group
+    prefLabel: "group"
+    definition: >
+      "A `Group` is a `Monoid` with an operation `⁻¹` satisfying `a⁻¹ * a = 1`."
+      In Mathlib: class Group (G : Type u) extends DivInvMonoid G, with the field
+      inv_mul_cancel : ∀ a : G, a⁻¹ * a = 1.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:set, math:category, wyrd:Tier, fed:forging, fed:strike]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Algebra/Group/Defs.lean
+        quote: >
+          "/-- A `Group` is a `Monoid` with an operation `⁻¹` satisfying `a⁻¹ * a =
+          1`." ... "class Group (G : Type u) extends DivInvMonoid G where protected
+          inv_mul_cancel : ∀ a : G, a⁻¹ * a = 1" (Mathlib c5ea003, lines 1184-1193)
+      - file: /home/prime/Documents/QBP/proofs/QBP/Foundations/UnitQuaternion.lean
+        quote: "@[reducible] noncomputable def sp1Group : Group (Metric.sphere (0 : Q) 1) := inferInstance (QBP master a4d4383)"
+    notes: >
+      Tenant use: QBP's unit quaternions carry a Mathlib Group instance
+      (UnitQuaternion.lean); the related wyrd:Tier tower is built from the same
+      Cayley-Dickson algebras. DESIGN-PROPOSAL mapping: forging is NOT a group,
+      because strikes are not invertible. A landed strike is retained and
+      never undone (the ratchet); there is no inverse strike.
+
+  - id: math:category
+    prefLabel: "category"
+    definition: >
+      "The typeclass `Category C` describes morphisms associated to objects of type
+      `C`." It extends CategoryStruct (identity morphisms and composition f ≫ g)
+      with three laws: id_comp, comp_id and assoc.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:group, bma:F01Functor, fed:thread, fed:thread-path]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/CategoryTheory/Category/Basic.lean
+        quote: >
+          "/-- The typeclass `Category C` describes morphisms associated to objects of
+          type `C`. The universe levels of the objects and morphisms are unconstrained,
+          and will often need to be specified explicitly, as `Category.{v} C`." ...
+          "/-- Identity morphisms are left identities for composition. -/ id_comp" ...
+          "/-- Identity morphisms are right identities for composition. -/ comp_id" ...
+          "/-- Composition in a category is associative. -/ assoc" (Mathlib c5ea003,
+          lines 226-241)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/CategoryTheory/Category/Basic.lean
+        quote: >
+          "/-- A preliminary structure on the way to defining a category, containing
+          the data, but none of the axioms. -/ class CategoryStruct" ... "/-- The
+          identity morphism on an object. -/ id" ... "/-- Composition of morphisms in
+          a category, written `f ≫ g`. -/ comp" (Mathlib c5ea003, lines 120-127)
+    notes: >
+      Tenant use: QBP Lean opens CategoryTheory (Foundations/SpatialFirstLink.lean,
+      QBP master a4d4383); BMA describes its compression functors as
+      category-theoretic (bma:F01Functor). DESIGN-PROPOSAL mapping: the federation
+      read as a category, and a thread as a DIAGRAM in it (a functor from an index
+      shape into the federation category; Mathlib's limits library speaks of cones
+      "for the same diagram"). A thread path is then a composable chain of strikes.
+      The objects and morphisms of the federation category are not yet defined
+      anywhere on the record.
+
+  - id: math:type
+    prefLabel: "type (and universe)"
+    definition: >
+      In Lean's type theory every term has a type, and every type lives in a
+      universe: "A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`." `Sort u`
+      is "A specific universe in Lean's infinite hierarchy of universes", and
+      "The universe of propositions. `Prop ≡ Sort 0`." A term INHABITS its type;
+      under propositions-as-types, a proof is a term of the proposition it proves.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — the foundational notion of Lean's type theory."
+    broader: []
+    narrower: []
+    related: [math:set, math:category, math:group, fed:lock, fed:forging-product]
+    source:
+      - file: /home/prime/.elan/toolchains/leanprover--lean4---v4.30.0/src/lean/Lean/Parser/Term.lean
+        quote: >
+          "/-- A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. -/" ... "/--
+          A specific universe in Lean's infinite hierarchy of universes. -/" ... "/--
+          The universe of propositions. `Prop ≡ Sort 0`." (Lean v4.30.0, lines 134-140)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Algebra/Group/Defs.lean
+        quote: "class Group (G : Type u) — Mathlib's structures are stated over a type in a universe (Mathlib c5ea003, line 1192)"
+    notes: >
+      SOURCE NOTE: `Type` is Lean core, not Mathlib; it is quoted from the Lean
+      v4.30.0 toolchain that QBP pins. The last sentence of the definition
+      (inhabitation, propositions-as-types) is a standard gloss, not a quote.
+      Tenant use: the Lean proofs in QBP and Wyrd, and Edda's typed surface.
+      DESIGN-PROPOSAL mapping: a lock read as a TYPE and the forging product as a
+      TERM that inhabits it. A green lock is then a witness that the product has
+      that type.
+
+  - id: math:set
+    prefLabel: "set (a predicate on a type)"
+    definition: >
+      "A set is a collection of elements of some type `α`." In Mathlib, def Set
+      (α : Type u) := α → Prop: a set is a predicate on a type, and membership
+      x ∈ S is the proposition S x. So every Lean set is a set of elements of some
+      type. A type is different: it is a universe of terms, and a : A is a typing
+      judgment, not a proposition that can be true or false, proved or assumed.
+    status: derived
+    axiom_grounding: "none from AXIOM-1 — a standard mathematical definition, taken from Mathlib."
+    broader: []
+    narrower: []
+    related: [math:type, math:group, math:category, fed:thread]
+    source:
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Data/Set/Defs.lean
+        quote: >
+          "/-- A set is a collection of elements of some type `α`. Although `Set` is
+          defined as `α → Prop`, this is an implementation detail which should not be
+          relied on. Instead, `setOf` and membership of a set (`∈`) should be used to
+          convert between sets and predicates. -/ def Set (α : Type u) := α → Prop"
+          (Mathlib c5ea003, lines 43-49)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/Data/Set/Defs.lean
+        quote: >
+          "/-- Membership in a set -/ protected def Mem (s : Set α) (a : α) : Prop :=
+          s a" ... "instance : Membership α (Set α) := ⟨Set.Mem⟩" (Mathlib c5ea003,
+          lines 69-74)
+      - file: /home/prime/Documents/QBP/proofs/.lake/packages/mathlib/Mathlib/SetTheory/ZFC/Basic.lean
+        quote: >
+          "/-- The ZFC universe of sets consists of the type of pre-sets, quotiented by
+          extensional equivalence. -/ @[pp_with_univ] def ZFSet : Type (u + 1) :=
+          Quotient PSet.setoid.{u}" (Mathlib c5ea003, lines 45-49)
+    notes: >
+      TYPE vs SET: a : A (math:type) is a judgment the kernel checks, while x ∈ S is
+      a Prop, which can be proved, refuted or left open. A set never stands alone: it
+      is always Set α for some type α. Mathlib itself warns that "α → Prop" is an
+      implementation detail; use setOf and ∈. Tenant use: QBP master a4d4383 states
+      Set-valued hypotheses over its Cayley-Dickson algebras (e.g. "({x, y} : Set
+      (CDAlg ℝ 3))" in proofs/QBP/Foundations/Artin.lean).
+      CLASSICAL SENSE, ZFSet: Mathlib separately models Zermelo-Fraenkel set theory
+      with choice. There a set is a TERM of the type ZFSet (pre-sets quotiented by
+      extensional equivalence), and membership is between ZFSets, not between a term
+      and a predicate on its type. It is kept in these notes rather than as its own
+      math:ZFSet id, because the math: namespace admits structures used by two or
+      more tenants, and no tenant Lean code (QBP master a4d4383, wyrd main 5c36988,
+      edda Main 9d571a5) references ZFSet. If a tenant starts using it, split it out,
+      as the Tier senses were.
+      math:group relation: a group is a structure ON A TYPE (class Group (G : Type
+      u)), not a set of things.
+      DESIGN-PROPOSAL mapping: when a thread is said to "host a group of things",
+      what is meant precisely is a set (of issues, strikes, ACs) or a diagram (see
+      math:category). It is not a math:group, because strikes are not invertible.
+
 terms_count_by_status:
   axiom: 1
-  derived: 51
+  derived: 79
   conjectural: 1
-  design-proposal: 14
-  unlocated: 1
-  total: 68
+  design-proposal: 21
+  unlocated: 0
+  total: 102
