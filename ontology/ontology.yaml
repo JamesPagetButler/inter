@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 # ============================================================================
-# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.5.0)
+# FEDERATION ONTOLOGY — machine-readable core (DRAFT v0.6.0)
 # ============================================================================
 # Human AND machine entry point. Read top to bottom as prose, or parse as YAML.
 # See ../README.md for the guided tour and ../ONTOLOGY-BEST-PRACTICES.md for
@@ -18,8 +18,8 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.5.1"
-  date: "2026-10-28"
+  version: "0.6.0"
+  date: "2026-10-29"
   root_axiom: cth:AXIOM-1
   scope: >
     Core vocabulary in current active use across CTH, Wyrd, BMA, Edda, Systema,
@@ -68,6 +68,16 @@ _meta:
     craft: "Craft — the cockpit that renders the attention scalar (render side of the craft/Contextus seam). Owner seat: hutchins. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
 
   change_history:
+    "0.6.0": >
+      2026-10-29. The two-axis formality model (inter#223, beekeeper-ratified
+      2026-10-26; follow-through rulings 2026-10-28), inter#237 AC2/AC4/AC5.
+      New fed: terms fed:FormalityF, fed:LegManifest, fed:EngineeredComposition,
+      fed:AntiLaunderingPerAxis (derived: ratified and realised in Edda
+      Addendum B, edda#97 merged 4b914dd) and fed:EvidenceE (design-proposal:
+      values ratified, shape still in design on inter#238). New _meta sections
+      open_questions (AC4) and retagging_policy (AC5).
+      spike:FormalityGradient's supersession note now points at the landed
+      terms. 102 -> 107 terms (5 new).
     "0.5.0": >
       2026-10-22. Forging-product vocabulary, beekeeper-ratified 2026-10-22 per
       @qbp-architecture's dispatch (inter#196 rulings incl. D2 "yes, can be many";
@@ -93,6 +103,43 @@ _meta:
       cth:belief-tiers mapped to notary:TrustTier x PA grade, unlocated -> derived,
       pending @cth-implementor's co-sign. 72 -> 92 terms (20 new).
     "0.3.0": "2026-10-09. inter#164 federation review harvest; review_ref field introduced. 68 -> 72 terms."
+
+  open_questions:
+    # inter#237 AC4: recorded as open, NOT silently decided. Each is owned by
+    # design surface inter#238 and moves to a ruling only there.
+    - id: E-cth-cluster-mapping
+      status: open
+      question: "How does fed:EvidenceE relate to CTH's 9 cluster states — a projection, a separate field, or a re-cut? (inter#238 Q1; for discussion with the beekeeper)"
+    - id: E-post-hoc-flag-vs-value
+      status: open
+      question: "Is 'consistent (post-hoc)' a flag on consistent or a fourth E value? (inter#238 Q2; qbp-architecture recommends a flag)"
+    - id: E-strength
+      status: open
+      question: "Does E need a strength (one experiment vs replicated)? (inter#238 Q2)"
+    - id: leg-unit-and-rollup-owner
+      status: open
+      question: "What is the unit of a leg (AC, lemma, skill step), and who computes the min — CTH EffectivePA, Edda, or both? (inter#238 Q3)"
+    - id: E-over-composition
+      status: open
+      question: "Is a composition's E the min over its empirical legs, or something else? (inter#238 Q4)"
+    - id: internal-compute-on-F
+      status: open
+      question: "Where does internal compute (CAMB, emulators) sit on F? (inter#223 'still open for design work')"
+    - id: kill-grades
+      status: open
+      question: "How is a kill condition's F-tier recorded so a kill binds only at or below its tier? (inter#238 Q7; principle ruled by the beekeeper 2026-10-28: a napkin kill must not preclude a revisit implied by a higher-tier adjacent result)"
+
+  retagging_policy: >
+    inter#237 AC5 (beekeeper, 2026-10-28). Existing work is retagged to the
+    two-axis model ON TOUCH: whoever next edits an artefact re-derives its
+    F-tier (and, once inter#238 settles, its E-grade) and records the reason;
+    there is no big-bang retag. EXCEPTION: anything on QBP's critical path is
+    evaluated explicitly, not left to retag-on-touch; the sprint-close
+    critical-path re-derivation feeds it to the notary queue
+    (sprint-handoff-protocol §Sprint-Close step 3a, inter#239 R8). Edda
+    annotations follow Addendum B §4's migration rule: each ~engineering
+    annotation is re-graded to its own derivation's tier, with no silent
+    re-grade.
 
   format_mapping_to_skos_jsonld:
     id: "@id"
@@ -1563,9 +1610,10 @@ terms:
       SEPARATE E axis (experimental backing), independent of F. The quotes above are
       kept as provenance for the original wording; they are not the current model.
       Edda theory+spec adopted the ratified F axis in edda#97 (merged 4b914dd); the
-      compiler issue edda#95 was re-scoped 2026-10-28. The full two-axis vocabulary
-      (fed:FormalityF, fed:EvidenceE, fed:LegManifest) lands in v0.6.0 after design
-      surface inter#238 (inter#237 AC2).
+      compiler issue edda#95 was re-scoped 2026-10-28. The two-axis vocabulary
+      LANDED in v0.6.0 (inter#237 AC2): fed:FormalityF, fed:LegManifest,
+      fed:EngineeredComposition and fed:AntiLaunderingPerAxis are derived;
+      fed:EvidenceE stays design-proposal until design surface inter#238 settles.
     review_ref:
       - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224687009
       - https://github.com/JamesPagetButler/inter/issues/223
@@ -2177,6 +2225,171 @@ terms:
   # Verified against notary main fc20c36 (and confluent-trust main 6e8a84f for
   # the notary-request record, whose canonical copy lives there).
   # ==========================================================================
+
+  # --------------------------------------------------------------------------
+  # v0.6.0 — the two-axis formality model (inter#223, beekeeper-ratified
+  # 2026-10-26; follow-through rulings 2026-10-28). inter#237 AC2.
+  # F, legs and engineering are ratified AND realised in Edda (edda#97,
+  # merged 4b914dd) -> derived. E's values are ratified but its final shape
+  # is still in design (inter#238) -> design-proposal.
+  # --------------------------------------------------------------------------
+
+  - id: fed:FormalityF
+    prefLabel: "Formality (axis F): napkin < research < formal"
+    definition: >
+      Axis F records HOW a claim was derived. Three tiers, a total-order
+      meet-semilattice composed MIN-over-chain: "napkin < research < formal".
+      napkin = "exploratory; spikes". research = "checked by CI / tests /
+      mutation / review at the head SHA, not built on proven foundations".
+      formal = "itself Lean- or Notary-verified". "Engineering" is NOT a tier
+      (see fed:EngineeredComposition). An F-tier is derived from the evidence
+      the checker resolves, never declared; "An overclaim (annotated >
+      inferred) is EDDA-TYPE-008".
+    status: derived
+    axiom_grounding: "none — independent design lineage (federation process / Edda language design); its formal tier rests on cth:closure and cth:ProofState."
+    broader: []
+    narrower: []
+    related: [fed:EvidenceE, fed:LegManifest, fed:EngineeredComposition, fed:AntiLaunderingPerAxis, spike:FormalityGradient, cth:ProofState, cth:closure]
+    source:
+      - file: https://github.com/JamesPagetButler/edda/blob/4b914dd/doc/edda-theory-addendum-B-locks-legs.md
+        quote: "§4: 'napkin < research < formal (total-order meet-semilattice, MIN-over-chain unchanged). \"Engineering\" is no longer a lattice grade — it becomes a derived property' ... table rows napkin / research / formal ... 'An overclaim (annotated > inferred) is EDDA-TYPE-008.'"
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
+        quote: "'RATIFIED by the beekeeper ... 2026-10-26: \"confirmed two-axis model\"' — 'Axis F: napkin < research < formal (three tiers).'"
+    notes: >
+      SEAM (inter#237 matrix): this definition is Edda Addendum B §4's, word for
+      word in the quoted clauses; if the two diverge, Edda's merged text wins
+      and this entry is corrected. Unset formality in Edda still resolves to
+      formal/TOP (backward-compat, Edda spec §3.11). Registry
+      formality_ceiling (Nidavellir#36) is on F only. OPEN, in design
+      (inter#238): where internal compute (CAMB, emulators) sits on F; kill
+      grades (Q7: a kill binds only at or below its own F-tier, so a napkin
+      kill does not preclude a revisit implied by a higher-tier adjacent
+      result — beekeeper 2026-10-28, issuecomment-6485349287).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
+      - https://github.com/JamesPagetButler/inter/issues/237
+
+  - id: fed:LegManifest
+    prefLabel: "Leg manifest"
+    definition: >
+      The list of legs of a composed skill or proof, each with its DERIVED
+      F-tier. A leg is "a component of a composed skill or proof"; for the
+      composition to be formal "each sub-leg must itself be formal,
+      recursively (min over the legs, all the way down)". The manifest is
+      "computed, not declared": a leg settles only when the checker resolves
+      its typed, pinned evidence, and "an author-typed settle cannot discharge
+      a leg".
+    status: derived
+    axiom_grounding: "none — independent design lineage (Edda Addendum B; CTH EffectivePA min-rollup)."
+    broader: []
+    narrower: []
+    related: [fed:FormalityF, fed:EngineeredComposition, fed:lock, fed:executable-specification]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6485146372
+        quote: "'What a \"leg\" is: a component of a composed skill or proof. For the composition to be formal, each sub-leg must itself be formal, recursively (min over the legs, all the way down).'"
+      - file: https://github.com/JamesPagetButler/edda/blob/4b914dd/doc/edda-theory-addendum-B-locks-legs.md
+        quote: "§2: 'Leg: a stable AC identifier ... resolved against the inter#196 manifest.' 'Settle: a leg settles iff the checker resolves its typed, pinned evidence' ... 'An author-typed settle cannot discharge a leg'."
+    notes: >
+      Two realisations, one concept: the beekeeper's ruling defines a leg by
+      what it IS (a component of a composed skill or proof); Edda keys a leg
+      by an AC string id from the inter#196 manifest. They agree where a
+      component is specified by an AC. The unit of a leg (AC, lemma, skill
+      step) and who computes the min (CTH EffectivePA, Edda, or both) are
+      OPEN in inter#238 Q3. Worked example #1 (qbp-compute-unit, inter#238):
+      research with some formal legs, because its foundation is not fully
+      notarised.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/238#issuecomment-6485262798
+
+  - id: fed:EngineeredComposition
+    prefLabel: "Engineered composition (formally engineered / engineered k of n)"
+    definition: >
+      Engineering is "a composition label, not a tier". An engineered artefact
+      carries a fed:LegManifest; its effective F-tier is the min over its legs
+      (CTH EffectivePA semantics). It is "formally engineered" iff every leg is
+      formal, recursively; otherwise it is "engineered (k of n legs formal)". A
+      research composition may mix legs; research proof plus local tooling is
+      not formal engineering.
+    status: derived
+    axiom_grounding: "none — independent design lineage."
+    broader: []
+    narrower: []
+    related: [fed:LegManifest, fed:FormalityF, notary:TrustTier]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
+        quote: "'Engineering is a composition label, not a tier. Every engineered artefact carries a leg manifest with derived per-leg F-tiers. Its effective tier is the min over legs (CTH EffectivePA semantics). It is \"formally engineered\" iff every leg is formal; otherwise it is \"engineered (k of n legs formal)\".'"
+      - file: https://github.com/JamesPagetButler/inter/issues/239
+        quote: "'A QBP release must be formal engineering and notarised (beekeeper, 2026-10-28, recorded on inter#238).'"
+    notes: >
+      RELEASE GATE: a QBP release must be formally engineered AND notarised
+      (every leg formal all the way down, and notary has verified it). No QBP
+      release passes that gate today; the recovery is inter#239 (R6 = the
+      release-gate check in pa-reconcile).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/239
+
+  - id: fed:EvidenceE
+    prefLabel: "Evidence (axis E): experimental backing"
+    definition: >
+      Axis E records WHETHER REALITY WAS CONSULTED: for a given proof or claim,
+      is it backed by experimental evidence? It is "a dimension", independent
+      of F (a formal proof can be unconfronted; a napkin fit can be falsified).
+      Ratified values: unconfronted / consistent (including "consistent
+      (post-hoc)") / validated / falsified. A proof leg carries "e: n/a"; E is
+      folded over a composition's EMPIRICAL legs only.
+    status: design-proposal
+    axiom_grounding: "none — independent design lineage; independence from F comes from CTH cluster_state."
+    broader: []
+    narrower: []
+    related: [fed:FormalityF, fed:AntiLaunderingPerAxis, cth:ProofState]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
+        quote: "'Axis E: unconfronted / consistent (incl. consistent (post-hoc)) / validated / falsified, separate from F. Independence comes from CTH cluster_state.'"
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6485146372
+        quote: "'E captures experimental backing ... It's a dimension. Its exact mapping onto CTH's cluster states is still open for discussion; it isn't ruled yet.'"
+    notes: >
+      design-proposal, not derived: the VALUES are ratified, but E's final
+      shape is still in design on inter#238 and nothing realises it yet (no
+      Edda type, no CTH field). OPEN (see _meta.open_questions): the E <->
+      CTH cluster-state mapping (inter#238 Q1); whether "consistent
+      (post-hoc)" is a flag or a fourth value (Q2; qbp-architecture
+      recommends a flag); whether E needs a strength (Q2); E over a
+      composition (Q4). E is per-claim, never per-tool (registry
+      formality_ceiling is F only). Promote to derived when inter#238
+      ratifies and a checker realises it.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/238
+
+  - id: fed:AntiLaunderingPerAxis
+    prefLabel: "Anti-laundering, per axis"
+    definition: >
+      Neither axis can be raised by summarising, relabelling or composing: a
+      claim's F-tier and E-grade are what its own evidence supports, and "the
+      anti-laundering rule applies per axis". Enforcement on F is Edda
+      EDDA-TYPE-008 (an annotation above the inferred tier is rejected).
+      Enforcement on E is notary ("Anti-laundering on E is enforced by
+      notary").
+    status: derived
+    axiom_grounding: "none — generalises CTH's anti-laundering rule (S3) per axis."
+    broader: []
+    narrower: []
+    related: [fed:FormalityF, fed:EvidenceE, spike:FormalityGradient, notary:TrustTier]
+    source:
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301
+        quote: "'The anti-laundering rule applies per axis.'"
+      - file: https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6485146372
+        quote: "'Anti-laundering on E is enforced by notary.'"
+      - file: https://github.com/JamesPagetButler/edda/blob/4b914dd/doc/edda-theory-addendum-B-locks-legs.md
+        quote: "§4: 'An overclaim (annotated > inferred) is EDDA-TYPE-008.'"
+    notes: >
+      One checker per axis, so there is no second source of truth: consumers
+      such as BMA derive their tier and do not run their own over-claim audit
+      (proposed ruling bma-systema#361, from the bma-hg1-active F2 finding).
+      What evidence record makes an E grade verifiable rather than declared is
+      OPEN (inter#238 Q5; proposal: validated needs a pre-registered
+      confrontation on record).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/237
 
   - id: notary:TrustTier
     prefLabel: "Trust Tier T0-T7 (a set with explicit trust base, never a scalar)"
@@ -2855,8 +3068,8 @@ terms:
 
 terms_count_by_status:
   axiom: 1
-  derived: 79
+  derived: 83
   conjectural: 1
-  design-proposal: 21
+  design-proposal: 22
   unlocated: 0
-  total: 102
+  total: 107
