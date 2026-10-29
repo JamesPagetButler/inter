@@ -2229,8 +2229,9 @@ terms:
   # --------------------------------------------------------------------------
   # v0.6.0 — the two-axis formality model (inter#223, beekeeper-ratified
   # 2026-10-26; follow-through rulings 2026-10-28). inter#237 AC2.
-  # F, legs and engineering are ratified AND realised in Edda (edda#97,
-  # merged 4b914dd) -> derived. E's values are ratified but its final shape
+  # F, legs and engineering are ratified (inter#223) and realised in Edda
+  # (edda#97, merged 4b914dd) -> derived. Where a definition mixes the two,
+  # each phrase is attributed to its own source (ratification vs Edda text). E's values are ratified but its final shape
   # is still in design (inter#238) -> design-proposal.
   # --------------------------------------------------------------------------
 
@@ -2273,12 +2274,14 @@ terms:
     prefLabel: "Leg manifest"
     definition: >
       The list of legs of a composed skill or proof, each with its DERIVED
-      F-tier. A leg is "a component of a composed skill or proof"; for the
-      composition to be formal "each sub-leg must itself be formal,
-      recursively (min over the legs, all the way down)". The manifest is
-      "computed, not declared": a leg settles only when the checker resolves
-      its typed, pinned evidence, and "an author-typed settle cannot discharge
-      a leg".
+      F-tier. CONCEPT (beekeeper ruling, inter#223 issuecomment-6485146372): a
+      leg is "a component of a composed skill or proof"; for the composition
+      to be formal "each sub-leg must itself be formal, recursively (min over
+      the legs, all the way down)". REALISATION (Edda Addendum B §2/§4): a leg
+      is "a stable AC identifier" resolved against the inter#196 manifest; it
+      settles iff "the checker resolves its typed, pinned evidence"; "an
+      author-typed settle cannot discharge a leg"; and the manifest's
+      "min-rollup" is "computed, not declared".
     status: derived
     axiom_grounding: "none — independent design lineage (Edda Addendum B; CTH EffectivePA min-rollup)."
     broader: []
