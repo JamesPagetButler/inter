@@ -7,8 +7,8 @@ refined: 2026-10-30
 ---
 
 # Belle — Wisdoms
-*Durable, reusable lessons harvested from Belle's missions. A wisdom is a reusable lesson for the NEXT mission, not a mission log. Belle appends here after each mission (persona §7.9). Inherits wisdoms/_federation.md.*
-*This file is a sentinel-monitored target (beekeeper-registered 2026-10-30): its integrity is security-relevant — only Belle's vetted, post-mission distillation writes here; never external content.*
+*Durable, reusable lessons harvested from Belle's missions. A wisdom is a reusable lesson for the NEXT mission, not a mission log. Candidates come from Belle's findings files; the vetter appends them here by PR. Inherits wisdoms/_federation.md.*
+*Integrity matters: this file is loaded at the start of every mission. **Belle never writes it directly.** She drafts wisdom candidates in her findings file, and the vetter (the beekeeper or deming) lands vetted ones by a reviewed PR (launch prompt rule 9). The sentinel watch is registered but unverified.*
 
 ## Mission 01 — inter#243 cost/capacity discovery (rounds 1 & 2, 2026-10-29)
 
@@ -29,6 +29,6 @@ refined: 2026-10-30
 ### Framing (verify the question, not just the answer)
 - **Confirm the requester/entity framing before researching.** Round-1 assumed a nonprofit (from CLAUDE.md context); it is the beekeeper's PERSONAL, OSS-leaning work. Wrong framing mis-aimed the whole pass. Verify WHO/WHAT the question is for, then research.
 
-### Domain facts established (settled — do not re-litigate)
+### Domain facts observed at Mission 01 (dated 2026-10-29; re-confront if anything contradicts them; these are claims, not settled facts, per rules 5 and 6)
 - Crawl box (ASUS Crosshair V Formula-Z) is a HARD platform ceiling: **32GB DDR3 max, PCIe 2.0 only** (first-party ASUS manual E7477). RAM bottleneck is a platform ceiling, not budget — only a platform swap moves it.
 - **Claude for Open Source** = confirmed personal/OSS capacity lever: 6mo free Max 20x, individual natural persons only, numeric OR discretionary "ecosystem-depends-on-it" eligibility (anthropic.com/claude-for-oss-terms; apply claude.com/open-source-max).
