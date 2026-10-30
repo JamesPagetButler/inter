@@ -1,6 +1,6 @@
 # Workspace order and the salvage sweep
 
-> Status: **PROPOSED**. Choices marked *(proposed)* await the beekeeper's ratification on the PR.
+> Status: **RATIFIED** by the beekeeper, 2026-10-30 ("Ratify all": D1–D8, first-hand in qbp-architecture's session).
 > Owner: qbp-architecture (the doc and the sweep runbook). Every seat runs the sweep on its own area.
 > Sources: a best-practice synthesis (git docs; the Claude Code, Codex and Cursor worktree docs and issue
 > trackers; GitHub repo-size guidance; the XDG base-dir spec), and a read-only inventory of this box
@@ -28,20 +28,20 @@ is thrown away.**
 
 | Place | Rule |
 |---|---|
-| **The shared checkout** of each repo (`~/Documents/<repo>`) | **Read-only, on the default branch, fast-forwarded to `origin`.** Nobody works, branches or leaves files in it. A seat reads the canon there or through `git show origin/<default>:<path>`. *(proposed)* |
+| **The shared checkout** of each repo (`~/Documents/<repo>`) | **Read-only, on the default branch, fast-forwarded to `origin`.** Nobody works, branches or leaves files in it. A seat reads the canon there or through `git show origin/<default>:<path>`. |
 | **Repo roots** (what's committed) | Only the things the repo is *for*: source, docs, specs, CI. **No crash dumps, transcripts, run outputs, caches or scratch.** Generated data is either gitignored or committed under a named data directory with its provenance (spike rule 1). GitHub warns at 50 MiB per file and blocks at 100 MiB. |
-| **Worktrees** | **One agent, one worktree, one branch** (the worktree-isolation hard gate). Each lives **outside every checkout**, under one root: `~/.worktrees/<repo>/<seat>--<slug>`, on a branch named `<seat>/<slug>`. *(proposed)* Never nest worktrees inside a checkout, because tools resolve the parent's files and edits land in the wrong tree. |
-| **Clones** | **One clone per repo.** Two clones of the same remote (as `edda`/`Edda` and `qbp-cu`/`QBP-Compute-Unit` are today) are folded into one in the sweep. Moving clones to `~/src/github.com/<owner>/<repo>` is **deferred**: it breaks absolute paths in personas, scripts and memory, so it gets its own migration plan. *(proposed)* |
+| **Worktrees** | **One agent, one worktree, one branch** (the worktree-isolation hard gate). Each lives **outside every checkout**, under one root: `~/.worktrees/<repo>/<seat>--<slug>`, on a branch named `<seat>/<slug>`. Never nest worktrees inside a checkout, because tools resolve the parent's files and edits land in the wrong tree. |
+| **Clones** | **One clone per repo.** Two clones of the same remote (as `edda`/`Edda` and `qbp-cu`/`QBP-Compute-Unit` are today) are folded into one in the sweep. Moving clones to `~/src/github.com/<owner>/<repo>` is **deferred**: it breaks absolute paths in personas, scripts and memory, so it gets its own migration plan. |
 
 ## 2. The cutting floor: where mess is allowed
 
 Each seat owns a **cutting floor**: its own worktrees, plus a scratch area at
-`~/.local/state/federation/<seat>/scratch/` *(proposed)*. Inside it, anything goes: half-finished
+`~/.local/state/federation/<seat>/scratch/`. Inside it, anything goes: half-finished
 experiments, logs, notes, dumps. Three limits apply:
 
 - **It stays on the floor.** Nothing from scratch lands in a shared checkout or a repo root without going
   through a PR.
-- **It's bounded.** There's a soft cap of **10 live worktrees per seat per repo** *(proposed)*. Beyond
+- **It's bounded.** There's a soft cap of **10 live worktrees per seat per repo**. Beyond
   that, the oldest merged ones go first. Pinned worktrees (named in the seat's state file, inter#232) are
   exempt.
 - **It's swept regularly**, by the salvage sweep below, at every sprint close and whenever the disk passes
@@ -107,7 +107,7 @@ For Quarantine items, and for any worktree that isn't squeaky clean:
 - `tar czf <archive>/<name>.tgz <path>` keeps the files, including ignored ones, which `status` hides and
   `--force` would destroy.
 
-Archives go in `~/.local/state/federation/<seat>/archive/` *(proposed)*, with a one-line manifest per item
+Archives go in `~/.local/state/federation/<seat>/archive/`, with a one-line manifest per item
 (what it is, why it was archived, its sha). They're kept until the next sprint close, then reviewed again.
 
 ### 3.6 Approve
@@ -133,9 +133,9 @@ Archives go in `~/.local/state/federation/<seat>/archive/` *(proposed)*, with a 
 - **First run:** a pilot on qbp-architecture's area, then a roll-out seat by seat, with what the pilot
   taught folded into this doc.
 
-## 5. Decisions for the beekeeper
+## 5. Decisions (all RATIFIED 2026-10-30)
 
-| # | Decision | Proposed |
+| # | Decision | Ratified |
 |---|---|---|
 | D1 | Worktree root | `~/.worktrees/<repo>/<seat>--<slug>`, outside every checkout |
 | D2 | Shared checkout | read-only on the default branch, checked at session start |
