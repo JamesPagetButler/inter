@@ -8,14 +8,14 @@ beekeeper (James) can look up what a term means, where it comes from, and how
 solid the ground under it is, in one place.
 
 It deliberately does **not** try to cover the whole federation. It covers the
-55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0; 102 since the forging-product and `math:` additions, v0.5.0) — the core vocabulary already in active
+55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0; 102 since the forging-product and `math:` additions, v0.5.0; 107 since the two-axis formality model, v0.6.0) — the core vocabulary already in active
 use, plus the known "capability" clash — with a clear path for adding more.
 
 ## What's here
 
 | File | What it is |
 |---|---|
-| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 102 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
+| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 107 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
 | `ONTOLOGY-BEST-PRACTICES.md` | The research behind why this format was chosen (RDF/OWL/SKOS/JSON-LD/Turtle survey, dual-readability patterns, upper ontologies, versioning/drift) and the upgrade path to SKOS/JSON-LD if the vocabulary ever needs real machine inference. |
 | `README.md` | This file. |
 
@@ -251,7 +251,35 @@ including D2 ("yes, can be many"), and the provable-AC thread on
   not a group, because strikes aren't invertible) are design-proposal notes, not
   definitions.
 
-## What this draft does not cover (by design)
+## The two-axis formality model (v0.6.0)
+
+Beekeeper-ratified on 2026-10-26 ("confirmed two-axis model",
+[inter#223](https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6430817301)),
+with follow-through rulings on 2026-10-28
+([issuecomment-6485146372](https://github.com/JamesPagetButler/inter/issues/223#issuecomment-6485146372)).
+Landed under housekeeping [inter#237](https://github.com/JamesPagetButler/inter/issues/237):
+
+- **`fed:FormalityF` (derived):** napkin < research < formal, composed
+  MIN-over-chain. Its wording is Edda Addendum B §4's (edda#97, merged `4b914dd`);
+  if the two ever diverge, Edda's merged text wins.
+- **`fed:LegManifest` and `fed:EngineeredComposition` (derived):** engineering is a
+  composition label, not a tier. A leg is a component of a composed skill or proof.
+  A composition is formally engineered iff every leg is formal, recursively;
+  otherwise it is "engineered (k of n legs formal)". A QBP release must be formally
+  engineered *and* notarised (inter#239).
+- **`fed:EvidenceE` (design-proposal):** experimental backing, a separate
+  dimension. Its values are ratified (unconfronted / consistent / validated /
+  falsified), but its final shape is still being designed on
+  [inter#238](https://github.com/JamesPagetButler/inter/issues/238).
+- **`fed:AntiLaunderingPerAxis` (derived):** neither axis can be raised by
+  summarising or composing. F is enforced by Edda EDDA-TYPE-008, E by notary.
+- **`_meta.open_questions`** lists what is still open, so nobody reads it as
+  ruled: the E ↔ `cth:AnchorStatus` mapping (not the 3-value `cluster_state` field), `consistent (post-hoc)` as a flag or
+  a value, E strength, the leg unit, E over a composition, internal compute on F,
+  and kill grades.
+- **`_meta.retagging_policy`:** retag on touch, except anything on QBP's critical
+  path, which is evaluated explicitly and fed to the notary queue at sprint close.
+
 
 - Full enumeration of BMA's ~50 `NT_*`/edge types (only the representative
   set is harvested — see `bma:NodeType`'s `notes`).
