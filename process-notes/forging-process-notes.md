@@ -319,6 +319,12 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
   
   That check belongs to herschel's merge queue, and I run it before ever saying "ready".
 
+
+### C23. A base merged with `--delete-branch` closed its stacked PR (inter#249 → #253, 2026-10-30)
+- **What:** inter#253 (qbp-oppenheimer's persona) was stacked on #249's branch (his wisdoms). herschel merged #249 with `--delete-branch`. GitHub auto-closed #253, refused to reopen it (its base was gone), and left its branch carrying the now-redundant wisdoms commits.
+- **Recovery:** the same persona commit was cherry-picked onto a fresh branch off `main` and re-landed as inter#255, with no force-push. All §I4 carries were verified (seq 4014–4017).
+- **Rule:** this is the inverse of C17. Retarget the stacked PR to `main` **before** the base merges, so deleting the base branch is safe. Folded into the forging doc §2 stacked-PR protocol (inter#153 AC1).
+
 ---
 
 ## Part D — Candidate refinements (input to the housekeeping issue)
@@ -350,6 +356,11 @@ Each item is also logged in `process-breakdowns.md` for retro classification.
 - Should omission probes become a named test class in the coverage matrix ("must-reject-on-absence"), or stay as reviewer discipline?
 - Should milestone-scoped authorization be a GitHub artefact (a meta-issue comment) only, or also mirrored to the bridge for seats that boot mid-milestone?
 - Is the stacked-PR pattern worth keeping, given the CI blind spot, or should strikes wait for their predecessor's merge?
+
+**Answers (qbp-architecture, 2026-10-30; inter#153 AC7):**
+- **Omission probes:** answered. The A&V standard requires them for any gate or grader, with the fail-closed authoring rule (`best-practices/acceptance-verification-standard.md`, inter#153 AC3).
+- **Milestone-scoped authorization:** answered by the beekeeper's AC9 ruling (2026-10-24, inter#153). The GitHub record is canonical. A seat booting mid-milestone reads the meta-issue; the bridge carries a pointer, never a second copy.
+- **Stacked PRs:** keep them, under the protocol in the forging doc §2 (C4, C17, C23). Strikes needn't wait for their predecessor's merge.
 
 ---
 
