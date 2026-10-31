@@ -332,6 +332,40 @@ ensure_watcher() {
   fi
 }
 
+# Durable dark-seat detector (Nidavellir ops/watcher/fed-sweep-daemon.sh,
+# deming's loop around fed-sweep.sh; Nidavellir#45 merged, #46 AC3).
+# WHY: fed-sweep.sh existed but was never scheduled, so detection only happened
+# when someone ran it by hand; 7 seats went dark undetected, one for 98h
+# (beekeeper directive, 2026-10-28). The federation is relaunched on every
+# crash-reboot, so starting the daemon here (like ensure_watcher above) makes
+# detection survive restarts. Detect-and-escalate only: it writes WAKE:ESCALATE
+# to wake/deming-escalate and never types into a pane. The daemon's own flock
+# singleton (state/fed-sweep-daemon.lock) makes a double start a no-op.
+ensure_fed_sweep_daemon() {
+  local script="$HOME/.federation-watcher/fed-sweep-daemon.sh"
+  local pidf="$HOME/.federation-watcher/state/fed-sweep-daemon.pid"
+  # Liveness from the daemon's OWN pidfile + its /proc cmdline, never `pgrep -f`:
+  # a pattern match also hits any process that merely names the script (an
+  # editor, a tail, a seat's tool call), which would report "running" and skip
+  # the start, leaving detection silently off.
+  daemon_alive() {
+    local pid; pid="$(cat "$pidf" 2>/dev/null)"
+    [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null \
+      && tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null | grep -q 'fed-sweep-daemon\.sh'
+  }
+  if daemon_alive; then
+    echo "✓ fed-sweep-daemon already running (pid $(cat "$pidf"))"
+  elif [ -x "$script" ]; then
+    ( nohup bash "$script" "$SESSION" >> "$HOME/.federation-watcher/fed-sweep-daemon.out" 2>&1 & )
+    sleep 1
+    daemon_alive \
+      && echo "✓ fed-sweep-daemon started (pid $(cat "$pidf"))" \
+      || echo "✗ fed-sweep-daemon failed to start — check $HOME/.federation-watcher/fed-sweep-daemon.out"
+  else
+    echo "… fed-sweep-daemon.sh not found/executable at $script — skipping (detection stays manual-only)"
+  fi
+}
+
 # the command typed into each pane/window
 resume_cmd() {
   local sid="$1" persona="${2:-}"
@@ -453,6 +487,7 @@ cmd_launch() {
   fi
 
   ensure_watcher
+  ensure_fed_sweep_daemon
   load_conf
   [ "${#P_PERSONA[@]}" -gt 0 ] || die "no personas in $CONF"
 
