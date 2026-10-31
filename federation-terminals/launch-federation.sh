@@ -55,6 +55,9 @@
 #   and a session whose transcript holds a structured "stop_reason":"refusal" is never
 #   resumed (that seat goes FRESH and the summary says why). `plan` prints the per-seat
 #   decision table without touching tmux.
+#   A roster row's optional 5th column holds flags (inter#266): `deferred` seats are left out of
+#   the main launch and started by `start-deferred` once the post-launch health sweep is green;
+#   `no-onboard` seats get no bus boot prompt (off-bus seats driven by their own CLAUDE.md).
 #
 set -uo pipefail
 
@@ -79,6 +82,9 @@ STAGGER_SECONDS="${STAGGER_SECONDS:-4}"
 REANCHOR_TMPL="$HERE/resume-reanchor-prompt.tmpl"
 # inter#262: fresh-with-personas by default; resume only by named exception.
 LAUNCH_POLICY="${LAUNCH_POLICY:-fresh}"
+# inter#266: which seats a launch starts. "main" = every seat except those flagged `deferred`;
+# "deferred" = ONLY the deferred seats (set by `start-deferred`, run after the health sweep).
+LAUNCH_PHASE="${LAUNCH_PHASE:-main}"
 RESUME_EXCEPTIONS="${RESUME_EXCEPTIONS:-$HERE/resume-exceptions.conf}"
 # Sessions that may NEVER be resumed by any mode (beekeeper, Nidavellir#65): 4f3fa045 is the
 # contextus session quarantined after the 2026-10-27 stop. Extend via QUARANTINED_SIDS_EXTRA.
@@ -324,7 +330,7 @@ load_exceptions() {
   done < "$RESUME_EXCEPTIONS"
 }
 
-declare -a P_PERSONA P_WORKDIR P_SID P_PFILE
+declare -a P_PERSONA P_WORKDIR P_SID P_PFILE P_FLAGS
 declare -A OVERLAY_SID
 
 # Overlay split (inter#142 reissue, §I4 addendum): ephemeral per-boot pins
@@ -355,7 +361,11 @@ load_conf() {
     # 4th field (persona_file, inter#142) is OPTIONAL: a 3-field row leaves
     # pfile unset, and `${pfile:-}` below treats that identically to an
     # explicit empty 4th field — this is the backward-compatibility contract.
-    IFS='|' read -r persona workdir sid pfile <<<"$line"
+    # 5th field (flags, inter#266) is OPTIONAL, comma-separated: `deferred` = not started
+    # in the main launch, only by `start-deferred` after the post-launch health sweep;
+    # `no-onboard` = no bus onboarding (an off-bus seat driven by its own CLAUDE.md).
+    IFS='|' read -r persona workdir sid pfile flags <<<"$line"
+    flags="$(echo "${flags:-}" | tr -d '[:space:]')"
     persona="$(echo "$persona" | xargs)"
     workdir="$(echo "$workdir" | xargs)"
     sid="$(echo "$sid" | xargs)"
@@ -370,7 +380,7 @@ load_conf() {
         sid="$(discover_sid "$persona" "$workdir")"
       fi
     fi
-    P_PERSONA+=("$persona"); P_WORKDIR+=("$workdir"); P_SID+=("$sid"); P_PFILE+=("$pfile")
+    P_PERSONA+=("$persona"); P_WORKDIR+=("$workdir"); P_SID+=("$sid"); P_PFILE+=("$pfile"); P_FLAGS+=("$flags")
   done < "$CONF"
 }
 
@@ -474,8 +484,8 @@ cmd_refresh() {
   while IFS= read -r line; do
     line="${line%%#*}"
     [[ "$line" =~ ^[[:space:]]*$ ]] && continue
-    local persona workdir sid pfile
-    IFS='|' read -r persona workdir sid pfile <<<"$line"
+    local persona workdir sid pfile flags
+    IFS='|' read -r persona workdir sid pfile flags <<<"$line"
     persona="$(echo "$persona" | xargs)"; workdir="$(echo "$workdir" | xargs)"
     local wd="${workdir/#\~/$HOME}" newsid
     newsid="$(discover_sid "$persona" "$wd")"
@@ -520,13 +530,28 @@ declare -a FRESH REANCHOR_PERSONA REANCHOR_WD REANCHOR_PFILE P_MODE P_NOTE
 # spinning up tmux/claude — instead of reimplementing the gate in the test.
 # Populates the global FRESH / REANCHOR_* arrays (reset first) and corrects
 # P_SID in place when a pinned/resumed sid has no matching transcript file.
+has_flag() {  # $1=comma-separated flags $2=flag
+  case ",$1," in *",$2,"*) return 0 ;; esac; return 1
+}
+
 build_launch_plan() {
   FRESH=(); REANCHOR_PERSONA=(); REANCHOR_WD=(); REANCHOR_PFILE=(); P_MODE=(); P_NOTE=()
   load_exceptions
   local i
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}" pfile="${P_PFILE[$i]}"
+    local flags="${P_FLAGS[$i]:-}"
     local mode="" note="" transcript
+    # inter#266: deferred seats are not part of the main launch, and only they are part of
+    # the deferred phase. Neither kind is started, onboarded or re-anchored in the other phase.
+    if [ "$LAUNCH_PHASE" = "main" ] && has_flag "$flags" deferred; then
+      P_SID[$i]=""; P_MODE[$i]="DEFERRED"; P_NOTE[$i]="started by 'start-deferred' after the health sweep"
+      continue
+    fi
+    if [ "$LAUNCH_PHASE" = "deferred" ] && ! has_flag "$flags" deferred; then
+      P_SID[$i]=""; P_MODE[$i]="SKIP"; P_NOTE[$i]="main-phase seat"
+      continue
+    fi
     # 1. Quarantine (inter#262): never resumed, whatever the policy or exception list says.
     if [ -n "$sid" ] && is_quarantined "$sid"; then
       echo "⛔ $persona: session $sid is QUARANTINED — never resumed; pane goes FRESH"
@@ -554,7 +579,8 @@ build_launch_plan() {
     fi
     P_SID[$i]="$sid"; P_MODE[$i]="$mode"; P_NOTE[$i]="$note"
     # fresh panes (no resumable session) get auto-onboarded below
-    [ -z "$sid" ] && FRESH+=("$persona")
+    # no-onboard (inter#266): an off-bus seat runs from its own CLAUDE.md; no bus boot prompt.
+    if [ -z "$sid" ]; then has_flag "$flags" no-onboard || FRESH+=("$persona"); fi
     wants_resume_reanchor "$sid" "$pfile" && { REANCHOR_PERSONA+=("$persona"); REANCHOR_WD+=("$wd"); REANCHOR_PFILE+=("$pfile"); }
   done
 }
@@ -570,6 +596,7 @@ print_launch_summary() {
   echo "Launch plan (LAUNCH_POLICY=$LAUNCH_POLICY):"
   printf '  %-20s %-24s %-17s %-10s %-8s %-8s %s\n' SEAT MODE MODEL PERSONA WISDOMS RESUME NOTE
   for i in "${!P_PERSONA[@]}"; do
+    [ "${P_MODE[$i]:-}" = "SKIP" ] && continue
     persona="${P_PERSONA[$i]}"; wd="${P_WORKDIR[$i]}"; pfile="${P_PFILE[$i]}"
     model="$(model_for "$persona")"; [ -n "$model" ] || { model="MISSING"; gaps=$((gaps+1)); }
     if [ -n "$pfile" ]; then
@@ -588,6 +615,47 @@ print_launch_summary() {
   echo "  PERSONA: file = persona_file column resolved at origin/main; generic* = personas/<seat>.md exists but is not wired in personas.conf."
   if [ "$gaps" -gt 0 ]; then echo "  ⚠ $gaps gap(s) marked MISSING above — fix before relying on this launch."
   else echo "  ✓ no gaps."; fi
+}
+
+# inter#266: start the `deferred` seats (e.g. studybuddy) into the RUNNING session. Run this
+# last, after deming's post-launch health sweep confirms every other seat is up.
+cmd_start_deferred() {
+  tmux has-session -t "$SESSION" 2>/dev/null || die "no tmux session '$SESSION' — run the main launch first"
+  LAUNCH_PHASE=deferred
+  load_conf
+  build_launch_plan
+  print_launch_summary
+  local i started=0
+  for i in "${!P_PERSONA[@]}"; do
+    [ "${P_MODE[$i]:-}" = "SKIP" ] && continue
+    local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
+    # Never a second instance: refuse if ANY tmux session (e.g. studybuddy's own `study`
+    # session) already runs claude in this seat's workdir, or '$SESSION' has a pane for it.
+    if tmux list-panes -a -F '#{pane_current_command}	#{pane_current_path}' 2>/dev/null \
+         | awk -F'\t' -v wd="$wd" '$1=="claude" && $2==wd {f=1} END {exit !f}'; then
+      echo "… $persona: claude is already running in $wd (some tmux session) — not starting a second one"; continue
+    fi
+    if tmux list-panes -a -F '#{session_name} #{pane_title} #{window_name}' 2>/dev/null \
+         | awk -v s="$SESSION" -v p="$persona" '$1==s && ($2==p || $3==p) {f=1} END {exit !f}'; then
+      echo "… $persona already has a pane in '$SESSION' — not starting a second one"; continue
+    fi
+    local run; run="$(resume_cmd "$sid" "$persona")"
+    if [ "$LAYOUT" = "windows" ]; then
+      tmux new-window -t "$SESSION" -n "$persona" -c "$wd"
+      tmux send-keys -t "$SESSION:$persona" "$run" C-m
+    else
+      tmux split-window -t "$SESSION" -c "$wd"
+      tmux select-layout -t "$SESSION" tiled >/dev/null
+      tmux select-pane -t "$SESSION" -T "$persona" 2>/dev/null
+      tmux send-keys -t "$SESSION" "$run" C-m
+    fi
+    echo "→ $persona  ($wd)  ${P_MODE[$i]}  ${sid:-[fresh claude]}"
+    started=$((started+1))
+  done
+  if [ "${ONBOARD:-1}" = "1" ] && [ "${#FRESH[@]}" -gt 0 ] && [ -x "$HERE/onboard-federation.sh" ]; then
+    "$HERE/onboard-federation.sh" "${FRESH[@]}" || echo "  ⚠ onboard pass reported issues (see above)"
+  fi
+  echo "✓ started $started deferred seat(s)."
 }
 
 cmd_plan() {
@@ -612,9 +680,10 @@ cmd_launch() {
   build_launch_plan
   print_launch_summary
 
-  local i first=1
+  local i first=1 ndeferred=0
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
+    if [ "${P_MODE[$i]:-}" = "DEFERRED" ]; then ndeferred=$((ndeferred+1)); continue; fi
     local run; run="$(resume_cmd "$sid" "$persona")"
 
     # crash-recovery R4 (inter#92): stagger pane starts so ~12 resumes don't
@@ -648,6 +717,7 @@ cmd_launch() {
     tmux set -t "$SESSION" pane-border-format " #T " 2>/dev/null
   fi
   echo "✓ built tmux session '$SESSION' (${LAYOUT})."
+  [ "$ndeferred" -gt 0 ] && echo "  ⏸ $ndeferred deferred seat(s) NOT started. Once the post-launch health sweep is green: $0 start-deferred"
 
   # auto-onboard fresh panes (federation-optimization #6): ground → register →
   # subscribe → arm §2.i Monitor → re-anchor, so each comes up fully operational
@@ -689,10 +759,11 @@ if [ "${BASH_SOURCE[0]}" = "$0" ]; then
   case "$MODE" in
     launch|"") cmd_launch ;;
     plan)      cmd_plan ;;
+    start-deferred) cmd_start_deferred ;;
     list)      cmd_list ;;
     refresh)   cmd_refresh ;;
     kill)      cmd_kill ;;
     help|-h|--help) sed -n '2,/^set -uo pipefail/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//' ;;
-    *) die "unknown mode: $MODE (try: launch | plan | list | refresh | kill | help)" ;;
+    *) die "unknown mode: $MODE (try: launch | plan | start-deferred | list | refresh | kill | help)" ;;
   esac
 fi

@@ -130,6 +130,31 @@ run_suite() {  # $1 = launcher path; prints PASS/FAIL lines; returns #failures
       && printf '%s' "$out" | grep -q 'claude-sonnet-5' && printf '%s' "$out" | grep -qE 'gap\(s\) marked MISSING' \
       && ok "T10 summary lists each seat, its model, and counts gaps" || { bad "T10 summary"; printf '%s\n' "$out"; }
 
+    echo "== T12 main phase: a 'deferred' seat is not started, onboarded or resumed =="
+    LAUNCH_POLICY=fresh; LAUNCH_PHASE=main; : > "$EXC"
+    P_PERSONA=(seat-a seat-d); P_WORKDIR=("$WD_A" "$WD_A"); P_SID=("$SID_A" "$SID_A"); P_PFILE=("" ""); P_FLAGS=("" "deferred,no-onboard")
+    plan
+    [ "${P_MODE[1]}" = "DEFERRED" ] && [ -z "${P_SID[1]}" ] && ! printf '%s\n' "${FRESH[@]}" | grep -qx seat-d \
+      && printf '%s\n' "${FRESH[@]}" | grep -qx seat-a \
+      && ok "T12 deferred seat held back; the main seat launches normally" || bad "T12 deferred in main phase (mode=${P_MODE[1]:-} fresh=${FRESH[*]:-})"
+
+    echo "== T13 deferred phase: ONLY deferred seats are planned; no-onboard seats are not onboarded =="
+    LAUNCH_PHASE=deferred
+    P_PERSONA=(seat-a seat-d); P_WORKDIR=("$WD_A" "$WD_A"); P_SID=("$SID_A" "$SID_A"); P_PFILE=("" ""); P_FLAGS=("" "deferred,no-onboard")
+    plan
+    [ "${P_MODE[0]}" = "SKIP" ] && [ "${P_MODE[1]}" = "FRESH" ] && [ "${#FRESH[@]}" -eq 0 ] \
+      && ok "T13 main seat SKIPped; deferred seat FRESH and not onboarded (no-onboard)" || bad "T13 deferred phase (modes=${P_MODE[*]:-} fresh=${FRESH[*]:-})"
+    LAUNCH_PHASE=main
+
+    echo "== T14 the optional 5th roster column parses (flags), comments stripped =="
+    CONF="$TMPDIR/roster.conf"
+    printf '%s\n' "seat-x | $WD_A | AUTO |   | deferred,no-onboard   # a comment" "seat-y | $WD_A | AUTO" > "$CONF"
+    P_PERSONA=(); P_WORKDIR=(); P_SID=(); P_PFILE=(); P_FLAGS=()
+    LOCAL_CONF="$TMPDIR/none.local.conf"
+    load_conf >/dev/null 2>&1
+    [ "${P_FLAGS[0]:-}" = "deferred,no-onboard" ] && [ -z "${P_PFILE[0]:-}" ] && [ -z "${P_FLAGS[1]:-}" ] \
+      && ok "T14 flags parsed; pfile stays empty; a 3-column row has no flags" || bad "T14 parse (flags0=${P_FLAGS[0]:-} pfile0=${P_PFILE[0]:-} flags1=${P_FLAGS[1]:-})"
+
     echo "== T11 an invalid LAUNCH_POLICY is refused loudly =="
     if LAUNCH_POLICY=sometimes bash "$launcher" plan >/dev/null 2>&1; then bad "T11 invalid policy accepted"
     else ok "T11 invalid LAUNCH_POLICY exits non-zero"; fi
@@ -147,6 +172,8 @@ declare -A MUTANTS=(
   [no-quarantine]='s/^  for q in \$QUARANTINED_SIDS; do \[ "\$s" = "\$q" \] \&\& return 0; done/  :/'
   [no-refusal-guard]='s/grep -aqE .*"refusal".*"\$1"/false/'
   [reasonless-allowed]='s/^      continue$/      :/'
+  [no-defer]='s/if \[ "\$LAUNCH_PHASE" = "main" \] \&\& has_flag "\$flags" deferred; then/if false; then/'
+  [no-onboard-ignored]='s/has_flag "\$flags" no-onboard \|\| FRESH\+=/FRESH+=/'
 )
 echo ""
 echo "### mutation checks"
