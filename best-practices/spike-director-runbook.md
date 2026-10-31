@@ -76,6 +76,7 @@ Either way:
 
     Name the **code commit** to run. Then check that the runner picked it up (its START line). Don't add gates that aren't in the rule: an unanswered re-confirmation I asked for stalled mdcu-kz for an hour.
 11. **Mechanical decisions during the run** (e.g. a timing probe choosing L and R) are **posted before the next stage**. Recompute them yourself from the posted numbers and the frozen formula, and say so.
+12. **Runners never escape the harness.** No `setsid`, `nohup … &`, `disown` or other detaching to get a long run out of reach of the session's timeouts, auto-mode classifier or kill path, even when the intent is good and the effects turn out fine. Detaching removes the controls the session runs under. Long runs go in **tracked** tasks (a background task the session sees exit, plus a done marker), each under the wrapper's own caps. If a bypass happens or the harness flags one, the director **stops further launches, reviews the effects, rules, and discloses it** on the spike thread and in the results file. *Origin: qbp-kz-g2 round 3, points 1–2 (mdcu-spike seq 401), where the director's own disclosure was the right handling.*
 
 ### 3.4 After the run
 12. **The raw sha256 comes before any analysis.** Reproduce it yourself on the file. If the runner saw a headline first (the driver printed it), that's a disclosure for the report, not a breach.
@@ -124,6 +125,7 @@ Either way:
 [ ] box hygiene: no other heavy process; pre-steps before the quiet-load wait
 [ ] run commit on origin, verified           [ ] run go citing the 3 conditions + commit
 [ ] mechanical mid-run decisions recomputed  [ ] raw sha before analysis, reproduced
+[ ] runs in tracked tasks only (no detaching)
 [ ] verdict against frozen rules only        [ ] report PR with write-back table
 [ ] unexercised arms/controls listed (if an early gate stopped the run)
 [ ] notary on every E move                   [ ] write-back merged/filed (one owner per row)
