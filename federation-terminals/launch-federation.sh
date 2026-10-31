@@ -76,6 +76,10 @@ FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
 # Seconds between pane launches; 0 disables. Paired with CLAUDE_CODE_RETRY_WATCHDOG
 # on the resume path in resume_cmd() below.
 STAGGER_SECONDS="${STAGGER_SECONDS:-4}"
+# FED_SWEEP_HOOK=0 skips starting the fed-sweep detector (ensure_fed_sweep_daemon). Tests MUST
+# set it: a test launch once started the REAL daemon on a scratch tmux session, where it held
+# the singleton lock and kept the real detector from starting (2026-10-31).
+FED_SWEEP_HOOK="${FED_SWEEP_HOOK:-1}"
 REANCHOR_TMPL="$HERE/resume-reanchor-prompt.tmpl"
 # inter#262: fresh-with-personas by default; resume only by named exception.
 LAUNCH_POLICY="${LAUNCH_POLICY:-fresh}"
@@ -398,6 +402,10 @@ ensure_watcher() {
 # to wake/deming-escalate and never types into a pane. The daemon's own flock
 # singleton (state/fed-sweep-daemon.lock) makes a double start a no-op.
 ensure_fed_sweep_daemon() {
+  if [ "$FED_SWEEP_HOOK" != "1" ]; then
+    echo "… fed-sweep hook disabled (FED_SWEEP_HOOK=$FED_SWEEP_HOOK) — detector not started"
+    return 0
+  fi
   local script="$HOME/.federation-watcher/fed-sweep-daemon.sh"
   local pidf="$HOME/.federation-watcher/state/fed-sweep-daemon.pid"
   # Liveness from the daemon's OWN pidfile + its /proc cmdline, never `pgrep -f`:
