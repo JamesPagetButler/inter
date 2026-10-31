@@ -1,6 +1,7 @@
 # Workspace order and the salvage sweep
 
 > Status: **RATIFIED** by the beekeeper, 2026-10-30 ("Ratify all": D1–D8, first-hand in qbp-architecture's session).
+> §5 (live state outside the repo) added 2026-10-31 on the beekeeper's rule, first-hand in qbp-architecture's session.
 > Owner: qbp-architecture (the doc and the sweep runbook). Every seat runs the sweep on its own area.
 > Sources: a best-practice synthesis (git docs; the Claude Code, Codex and Cursor worktree docs and issue
 > trackers; GitHub repo-size guidance; the XDG base-dir spec), and a read-only inventory of this box
@@ -14,10 +15,10 @@ things that aren't fine:
 
 1. **Mess where it does damage.** A shared checkout parked on a stale branch made a seat state false facts
    (inter#228). Worktrees nested inside a checkout confuse tools and leak edits into the parent.
-2. **Mess with no sweep.** The 2026-10-28 inventory found 61 worktrees for inter alone, scattered across
-   six locations. Thirteen of them sat in `~/Documents` looking like separate repos. Two separate clones
-   each existed for edda and qbp-compute-unit. QBP's main checkout held 340 untracked or modified items.
-   The disk was 85% full.
+2. **Mess with no sweep.** The first inventory found dozens of worktrees for one repo, scattered across
+   several locations, some sitting in `~/Documents` looking like separate repos, duplicate clones, a main
+   checkout with hundreds of untracked items, and a disk past 80%. The current figures are live state, so
+   they live outside the repo (§5).
 3. **Sweeps that throw the necklace out with the sweepings.** A careless clean deletes the one unpushed
    commit, the crash report or the one-off result that mattered.
 
@@ -31,7 +32,7 @@ is thrown away.**
 | **The shared checkout** of each repo (`~/Documents/<repo>`) | **Read-only, on the default branch, fast-forwarded to `origin`.** Nobody works, branches or leaves files in it. A seat reads the canon there or through `git show origin/<default>:<path>`. |
 | **Repo roots** (what's committed) | Only the things the repo is *for*: source, docs, specs, CI. **No crash dumps, transcripts, run outputs, caches or scratch.** Generated data is either gitignored or committed under a named data directory with its provenance (spike rule 1). GitHub warns at 50 MiB per file and blocks at 100 MiB. |
 | **Worktrees** | **One agent, one worktree, one branch** (the worktree-isolation hard gate). Each lives **outside every checkout**, under one root: `~/.worktrees/<repo>/<seat>--<slug>`, on a branch named `<seat>/<slug>`. Never nest worktrees inside a checkout, because tools resolve the parent's files and edits land in the wrong tree. |
-| **Clones** | **One clone per repo.** Two clones of the same remote (as `edda`/`Edda` and `qbp-cu`/`QBP-Compute-Unit` are today) are folded into one in the sweep. Moving clones to `~/src/github.com/<owner>/<repo>` is **deferred**: it breaks absolute paths in personas, scripts and memory, so it gets its own migration plan. |
+| **Clones** | **One clone per repo.** Two clones of the same remote are folded into one in the sweep (the live inventory, §5, lists any that exist). Moving clones to `~/src/github.com/<owner>/<repo>` is **deferred**: it breaks absolute paths in personas, scripts and memory, so it gets its own migration plan. |
 
 ## 2. The cutting floor: where mess is allowed
 
@@ -110,6 +111,10 @@ For Quarantine items, and for any worktree that isn't squeaky clean:
 Archives go in `~/.local/state/federation/<seat>/archive/`, with a one-line manifest per item
 (what it is, why it was archived, its sha). They're kept until the next sprint close, then reviewed again.
 
+**Estimate before you archive** (the pre-run-resource-estimate gate): `du -sh` the set first. A shared
+checkout's untracked set can include nested worktree directories and run to hundreds of MB. If the
+estimate is over 50% of free disk, archive selectively.
+
 ### 3.6 Approve
 - **Removing a worktree whose branch has a merged PR**, archived or clean, is routine. The seat proceeds
   after posting the dry-run report.
@@ -121,6 +126,8 @@ Archives go in `~/.local/state/federation/<seat>/archive/`, with a one-line mani
 ### 3.7 Act, then prune
 1. `git worktree remove <path>`. This refuses on a dirty tree, and that refusal is a feature: stop and
    salvage. Then `git branch -d <branch>` (the lowercase `-d`, so an unmerged branch survives).
+   Squash-merged branches make `-d` refuse too, because git can't see the squash. Delete those with
+   `git branch -D` **only** after `gh pr list --head <branch> --state merged` returns the PR (D5).
 2. Then `git worktree prune`. Re-run the inventory and post the before/after counts and disk use.
 
 ## 4. Cadence
@@ -130,10 +137,35 @@ Archives go in `~/.local/state/federation/<seat>/archive/`, with a one-line mani
 - **Session start:** the seat checks the shared checkout is on the default branch and fast-forwarded. It
   never fixes another seat's mess; it reports it.
 - **Disk above 80%:** deming calls a sweep.
-- **First run:** a pilot on qbp-architecture's area, then a roll-out seat by seat, with what the pilot
-  taught folded into this doc.
+- **First run:** the pilot on qbp-architecture's area ran 2026-10-30/31 (report on inter#235). Its lessons
+  are folded into §3.5, §3.7 and §5. Roll-out is seat by seat, called by deming.
+- **Resetting a shared checkout (D2)** follows the same salvage order: stash or archive local edits (never
+  discard); move any live state they hold to its live home (§5) first; bundle local-only commits; check
+  untracked files that the default branch would overwrite (compare each with the branch's copy and keep
+  the newer); then fast-forward.
 
-## 5. Decisions (all RATIFIED 2026-10-30)
+## 5. Live state lives outside the repo (beekeeper rule, 2026-10-31)
+
+**The repo holds what is durable: rules, designs, specs and dated records. Box-specific current state
+lives in a live location that is regenerated, never committed.** Current state goes stale the moment it's
+committed, and a stale fact in the canon misleads the next reader (inter#228 was this failure).
+
+| Kind | Example | Home |
+|---|---|---|
+| **Rule or design** | this doc; the sweep runbook | the repo |
+| **Dated record of an event** | a sweep report, an audit, a verdict | the issue or PR thread (immutable, dated) |
+| **Current state** | worktree counts and lists, disk %, duplicate clones, inventories, session pins, who is live | a live file under `~/.local/state/federation/` (or a gitignored overlay next to the tool that reads it), regenerated by the tool that measures it |
+
+Existing instances:
+- **Session pins:** the gitignored `federation-terminals/personas.local.conf` overlay (inter#142). The
+  tracked `personas.conf` holds structure only (`AUTO`).
+- **Sweep inventory:** each sweep writes `~/.local/state/federation/<seat>/sweep/latest.md` (overwritten
+  each run). The dated before/after report goes on the issue as the record.
+
+A doc that needs a figure **points to the live file** or states the figure as a dated example; it never
+carries current numbers as if they stay true.
+
+## 6. Decisions (all RATIFIED 2026-10-30)
 
 | # | Decision | Ratified |
 |---|---|---|
