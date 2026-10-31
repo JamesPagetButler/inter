@@ -21,6 +21,9 @@
 #
 # Usage: ./test-persona-file-loading.sh
 set -uo pipefail
+# Never start the REAL fed-sweep detector from a test launch (the inter#92 stagger test
+# runs the real cmd_launch): a leaked daemon held the singleton lock on 2026-10-31.
+export FED_SWEEP_HOOK=0
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INTER_REPO="$(cd "$HERE/.." && pwd)"
@@ -772,5 +775,17 @@ ELAPSED_OFF="$(run_stagger_launch 0)"
 STAGGER_TEST_SESSION=""
 
 echo
+echo "== FED_SWEEP_HOOK: a test launch never starts the real detector =="
+LEAK="$(pgrep -af "fed-sweep-daemon\.sh ${STAGGER_TEST_SESSION:-fed-test-92-stagger-$$}\$" | grep -v pgrep || true)"
+[ -z "$LEAK" ]; check $? "no fed-sweep daemon left running for the stagger test session"
+HOOKHOME="$TMPDIR/hookhome"; mkdir -p "$HOOKHOME/.federation-watcher/state"
+printf '#!/bin/bash\necho $$ > "$HOME/.federation-watcher/state/fed-sweep-daemon.pid"; exec sleep 30\n' > "$HOOKHOME/.federation-watcher/fed-sweep-daemon.sh"
+chmod +x "$HOOKHOME/.federation-watcher/fed-sweep-daemon.sh"
+HOOKFN="$(sed -n '/^ensure_fed_sweep_daemon() {/,/^}/p' "$HERE/launch-federation.sh")"
+HOOKOUT="$(HOME="$HOOKHOME" FED_SWEEP_HOOK=0 SESSION=t bash -c "$HOOKFN
+ensure_fed_sweep_daemon")"
+printf '%s' "$HOOKOUT" | grep -q 'hook disabled' && [ ! -s "$HOOKHOME/.federation-watcher/state/fed-sweep-daemon.pid" ]
+check $? "FED_SWEEP_HOOK=0: ensure_fed_sweep_daemon starts nothing and says so"
+
 echo "RESULT: $pass passed, $fail failed"
 exit $([ "$fail" -eq 0 ] && echo 0 || echo 1)
