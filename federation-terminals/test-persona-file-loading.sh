@@ -113,8 +113,9 @@ NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh"
 # cannot. Both are intended changes, not regressions.
 # inter#262: a row whose OLD resolution is a QUARANTINED session id is excluded as well;
 # NEW deliberately never resolves to it (environment-dependent, so derived, not hard-coded).
+# studybuddy is a NEW roster row (inter#266), excluded like deming-triage.
 QUAR_ROWS="$(printf '%s\n' "$OLD_LIST" | grep -E '4f3fa045-30ee-4ee3-8fcd-0eadf0d92d68' | awk '{print $1}' | paste -sd'|' -)"
-QUAR_RE="^(hutchins|deming-triage|nugent${QUAR_ROWS:+|$QUAR_ROWS}) "
+QUAR_RE="^(hutchins|deming-triage|nugent|studybuddy${QUAR_ROWS:+|$QUAR_ROWS}) "
 OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -vE "$QUAR_RE")"
 NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -vE "$QUAR_RE")"
 checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \

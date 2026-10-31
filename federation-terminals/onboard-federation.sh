@@ -138,14 +138,17 @@ render() {  # $1=handle $2=workdir $3=role $4=template(optional, defaults to $TM
 onboarded=0; skipped=0
 while IFS= read -r line; do
   line="${line%%#*}"; [[ "$line" =~ ^[[:space:]]*$ ]] && continue
-  IFS='|' read -r persona workdir _sid pfile <<<"$line"
+  # 5th field = flags (inter#266); `no-onboard` seats (off-bus, e.g. studybuddy) never get the
+  # bus boot prompt, even when every seat is onboarded.
+  IFS='|' read -r persona workdir _sid pfile flags <<<"$line"
   persona="$(echo "$persona" | xargs)"; workdir="$(echo "$workdir" | xargs)"
-  pfile="$(echo "${pfile:-}" | xargs)"
+  pfile="$(echo "${pfile:-}" | xargs)"; flags="$(echo "${flags:-}" | tr -d '[:space:]')"
   workdir="${workdir/#\~/$HOME}"
   [ -z "$persona" ] && continue
   # filters
   if [ -n "${ONLY// /}" ]; then case " $ONLY " in *" $persona "*) : ;; *) continue ;; esac; fi
   case "$SKIP" in *" $persona "*) echo "· skip $persona (ONBOARD_SKIP)"; skipped=$((skipped+1)); continue ;; esac
+  case ",$flags," in *",no-onboard,"*) echo "· skip $persona (no-onboard: off-bus seat)"; skipped=$((skipped+1)); continue ;; esac
   role="$(role_of "$persona")"
   # persona-file column (inter#142): a canonical persona def replaces the
   # generic boot text, naming the path + "run its §0" — but only once its
