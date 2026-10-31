@@ -202,8 +202,13 @@ check "$miss" "generic onboard: names wisdoms/<seat>.md and <workdir>/RESUME.md;
 pf_out="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
 printf '%s' "$pf_out" | grep -qF "wisdoms/notary-implementor.md" && printf '%s' "$pf_out" | grep -qF "/home/prime/Documents/notary/RESUME.md"
 check $? "persona-file onboard: names the seat's wisdoms and RESUME handoff"
-grep -qF '{{WORKDIR}}/RESUME.md' "$HERE/deming-boot.tmpl"
-check $? "deming-boot.tmpl: loads deming's RESUME handoff"
+grep -qF '{{WORKDIR}}/RESUME.md' "$HERE/deming-boot.tmpl" \
+  && grep -qF 'git -C ~/Documents/Nidavellir show origin/main:wisdoms/deming.md' "$HERE/deming-boot.tmpl" \
+  && [ "$(grep -o '(3.5)' "$HERE/deming-boot.tmpl" | wc -l)" -eq 1 ] \
+  && awk '{ a=index($0,"(3.5)"); b=index($0,"THEN — YOUR FIRST JOB"); exit !(a>0 && b>a) }' "$HERE/deming-boot.tmpl"
+check $? "deming-boot.tmpl: step (3.5) before the first-job sweep reads deming's wisdoms from Nidavellir origin/main and its RESUME handoff (deming §I4 on #263)"
+grep -qF 'show origin/main:wisdoms/{{HANDLE}}.md' "$HERE/onboard-prompt.tmpl"
+check $? "generic onboard reads the seat's wisdoms from the committed blob, not the working tree"
 
 NOTARY_NEW="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
 case "$NOTARY_NEW" in

@@ -542,7 +542,12 @@ print_launch_summary() {
       origin_has "$pfile" && pf="file" || { pf="MISSING"; gaps=$((gaps+1)); }
     elif origin_has "personas/$persona.md"; then pf="generic*"
     else pf="generic"; fi
-    origin_has "wisdoms/$persona.md" && wis="ok" || { wis="MISSING"; gaps=$((gaps+1)); }
+    # deming's wisdoms live in private Nidavellir (security-operations lessons), not public inter.
+    if [ "$persona" = "deming" ]; then
+      git -C "$NIDAVELLIR_DIR" cat-file -e "origin/main:wisdoms/deming.md" 2>/dev/null && wis="ok" || { wis="MISSING"; gaps=$((gaps+1)); }
+    else
+      origin_has "wisdoms/$persona.md" && wis="ok" || { wis="MISSING"; gaps=$((gaps+1)); }
+    fi
     [ -f "$wd/RESUME.md" ] && res="ok" || { res="MISSING"; gaps=$((gaps+1)); }
     printf '  %-20s %-24s %-17s %-10s %-8s %-8s %s\n' "$persona" "${P_MODE[$i]:-?}" "$model" "$pf" "$wis" "$res" "${P_NOTE[$i]:-}"
   done
