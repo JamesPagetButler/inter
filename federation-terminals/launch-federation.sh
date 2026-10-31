@@ -23,6 +23,11 @@
 #     FED_TERMINALS_LOCAL_CONF=/path  # override overlay location (ephemeral pins, inter#142
 #                                   # reissue). Default: personas.local.conf next to CONF.
 #                                   # Missing/empty file = AUTO for all seats (AC7).
+#     FED_MODEL_MAP=/path          # override per-seat model map for TESTING
+#                                   # ONLY (reads a local file, no git lookup).
+#                                   # Default source is origin/main in the
+#                                   # Nidavellir checkout (see model_for()
+#                                   # below) — never the local working tree.
 #     REANCHOR=1                   # send the resume re-anchor to resumed, persona-file-bound
 #                                   # panes (inter#142). Default on; set 0 to disable.
 #     READY_TIMEOUT=75             # seconds to wait for a resumed pane's chat prompt before
@@ -187,7 +192,55 @@ roster_sid() {
 
 # Known federation persona handles — the content-sniff dominance check ranks
 # against these. Keep in sync with the persona rows below.
-FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming|hutchins'
+FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming-triage|deming|hutchins|nugent'
+
+# Per-seat model routing (deming/Nidavellir, inter#130 model×eval + CLAUDE.md
+# delegation policy — ops/model-routing/README.md has the provenance). Keyed
+# by persona, tab-delimited, column 2 is the exact string to pass to `claude
+# --model`. A persona missing from the map, or the map unreadable/empty,
+# resolves to '' — model_for()'s callers treat '' as "no --model flag", i.e.
+# today's behavior (account default). This can never break a launch: a stale,
+# unreachable, or absent map degrades silently to the pre-patch behavior,
+# never an error.
+#
+# DEFAULT SOURCE IS origin/main, never the local Nidavellir working tree —
+# the shared checkout is not guaranteed to be on main (inventory 2026-10-27:
+# parked on arch/1-formal-spec, 15 commits behind) and a launcher should
+# never route a seat's model off whatever branch that checkout happens to be
+# on (qbp-architecture §I4 on Nidavellir#40). `git show origin/main:<path>`
+# reads the committed-on-main blob directly, independent of the working
+# tree's checked-out branch or uncommitted state.
+#
+# This relies on `origin/main` being reasonably fresh in the Nidavellir
+# checkout's local refs; model_for() fetches it once per script run (below),
+# best-effort — a failed/offline fetch falls back to whatever origin/main
+# ref is already on disk (stale-but-present) rather than erroring, so a
+# flaky network degrades to a slightly-stale map, never a broken launch.
+NIDAVELLIR_DIR="${NIDAVELLIR_DIR:-$HOME/Documents/Nidavellir}"
+MODEL_MAP_PATH="ops/model-routing/seat-model-map.tsv"
+_MODEL_MAP_FETCHED=""
+
+model_for() {
+  local persona="$1"
+  # TESTING override: an explicit local file, no git/origin involved at all.
+  if [ -n "${FED_MODEL_MAP:-}" ]; then
+    [ -f "$FED_MODEL_MAP" ] || { printf ''; return; }
+    awk -v p="$persona" -F'\t' '
+      $1==p && NF>=2 && $2!="" { print $2; exit }
+    ' "$FED_MODEL_MAP"
+    return
+  fi
+  # Default path: origin/main in the Nidavellir checkout, via `git show` —
+  # never `cat`/read the local working-tree file.
+  [ -d "$NIDAVELLIR_DIR/.git" ] || { printf ''; return; }
+  if [ -z "$_MODEL_MAP_FETCHED" ]; then
+    git -C "$NIDAVELLIR_DIR" fetch origin main --quiet 2>/dev/null || true
+    _MODEL_MAP_FETCHED=1
+  fi
+  git -C "$NIDAVELLIR_DIR" show "origin/main:$MODEL_MAP_PATH" 2>/dev/null | awk -v p="$persona" -F'\t' '
+    $1==p && NF>=2 && $2!="" { print $2; exit }
+  '
+}
 
 # AUTO resolution order: roster (authoritative, workdir-matched) -> content sniff.
 # Content sniff = newest *.jsonl in the project dir where THIS persona is the
@@ -281,7 +334,16 @@ ensure_watcher() {
 
 # the command typed into each pane/window
 resume_cmd() {
-  local sid="$1"
+  local sid="$1" persona="${2:-}"
+  # Per-seat model routing (inter#130 + CLAUDE.md policy, Nidavellir
+  # ops/model-routing/, sourced from origin/main — see model_for() above):
+  # inject --model when this persona has a tested/policy model on record.
+  # Missing persona / missing map -> model='' -> no flag -> account default.
+  local model="" model_flag=""
+  if [ -n "$persona" ]; then
+    model="$(model_for "$persona")"
+    [ -n "$model" ] && model_flag=" --model $model"
+  fi
   # With a resolved id: resume it in place. Without one (e.g. a just-migrated
   # persona's first launch in a fresh dir): plain `claude` — a new session.
   # `--continue` is wrong here: it errors when the cwd has no prior conversation.
@@ -292,8 +354,8 @@ resume_cmd() {
   # (inter#92): 2026-09-04, contextus-impl resumed into 429 "attempt 9/10" and
   # only survived on the built-in retry — with the watchdog it can't exhaust.
   # Only on the resume path; a fresh `claude` has nothing to retry.
-  if [ -n "$sid" ]; then echo "CLAUDE_CODE_RETRY_WATCHDOG=1 $CLAUDE_BIN --resume $sid"
-  else echo "$CLAUDE_BIN"; fi
+  if [ -n "$sid" ]; then echo "CLAUDE_CODE_RETRY_WATCHDOG=1 $CLAUDE_BIN --resume $sid$model_flag"
+  else echo "$CLAUDE_BIN$model_flag"; fi
 }
 
 cmd_list() {
@@ -399,7 +461,7 @@ cmd_launch() {
   local i first=1
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}"
-    local run; run="$(resume_cmd "$sid")"
+    local run; run="$(resume_cmd "$sid" "$persona")"
 
     # crash-recovery R4 (inter#92): stagger pane starts so ~12 resumes don't
     # storm the API at once. Skip the wait before the first pane (nothing to
