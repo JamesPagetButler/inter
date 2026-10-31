@@ -1,0 +1,12 @@
+# resume-exceptions.conf — named exceptions to the fresh-with-personas relaunch (inter#262).
+# Copy to resume-exceptions.conf (gitignored, LIVE state) and list ONLY the seats that must
+# resume their existing session at the next launch. Every other seat starts FRESH with its
+# persona, wisdoms and RESUME handoff.
+#
+# Format:  persona | one-line reason (required — a line with no reason is ignored)
+# Guards that still apply to every listed seat:
+#   - a session whose transcript holds a structured refusal stop is never resumed;
+#   - a quarantined session id (QUARANTINED_SIDS in launch-federation.sh) is never resumed.
+#
+# Example:
+# qbp-implementor | mid-way through a multi-commit proof port; context not yet in RESUME.md

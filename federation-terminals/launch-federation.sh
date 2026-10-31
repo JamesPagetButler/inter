@@ -41,6 +41,20 @@
 #                                   # herd seen 2026-08-24 and again, on contextus, 2026-09-04).
 #                                   # 0 disables. Paired with CLAUDE_CODE_RETRY_WATCHDOG=1 on the
 #                                   # resume path in resume_cmd() below.
+#     LAUNCH_POLICY=fresh          # inter#262 (beekeeper 2026-10-30): every seat starts FRESH
+#                                   # with its persona by default (plain claude + seat-map model
+#                                   # + onboarding that loads persona, wisdoms, RESUME). A seat
+#                                   # resumes ONLY if named in RESUME_EXCEPTIONS with a reason.
+#                                   # LAUNCH_POLICY=auto = the old resume-by-default behaviour.
+#     RESUME_EXCEPTIONS=/path      # named-exception list (default: resume-exceptions.conf next
+#                                   # to this script; gitignored LIVE state). Format per line:
+#                                   # `persona | reason`. A line with no reason is ignored.
+#     QUARANTINED_SIDS_EXTRA="..." # extra session ids that may never be resumed, on top of the
+#                                   # built-in quarantine list (Nidavellir#65).
+#   Whatever the policy, two guards always apply: a quarantined session id is never resumed,
+#   and a session whose transcript holds a structured "stop_reason":"refusal" is never
+#   resumed (that seat goes FRESH and the summary says why). `plan` prints the per-seat
+#   decision table without touching tmux.
 #
 set -uo pipefail
 
@@ -63,7 +77,14 @@ FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
 # on the resume path in resume_cmd() below.
 STAGGER_SECONDS="${STAGGER_SECONDS:-4}"
 REANCHOR_TMPL="$HERE/resume-reanchor-prompt.tmpl"
+# inter#262: fresh-with-personas by default; resume only by named exception.
+LAUNCH_POLICY="${LAUNCH_POLICY:-fresh}"
+RESUME_EXCEPTIONS="${RESUME_EXCEPTIONS:-$HERE/resume-exceptions.conf}"
+# Sessions that may NEVER be resumed by any mode (beekeeper, Nidavellir#65): 4f3fa045 is the
+# contextus session quarantined after the 2026-10-27 stop. Extend via QUARANTINED_SIDS_EXTRA.
+QUARANTINED_SIDS="4f3fa045-30ee-4ee3-8fcd-0eadf0d92d68 ${QUARANTINED_SIDS_EXTRA:-}"
 MODE="${1:-launch}"
+case "$LAUNCH_POLICY" in fresh|auto) ;; *) echo "ERROR: LAUNCH_POLICY must be fresh or auto (got '$LAUNCH_POLICY')" >&2; exit 2 ;; esac
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 
@@ -253,7 +274,7 @@ model_for() {
 discover_sid() {
   local persona="$1" workdir="$2"
   local sid; sid="$(roster_sid "$persona" "$workdir")"
-  [ -n "$sid" ] && { printf '%s' "$sid"; return; }
+  [ -n "$sid" ] && ! is_quarantined "$sid" && { printf '%s' "$sid"; return; }
   local pdir="$PROJECTS/$(slug_of "$workdir")"
   [ -d "$pdir" ] || { printf ''; return; }
   local f top
@@ -262,10 +283,45 @@ discover_sid() {
   # no empty-pipe-into-ls-cwd footgun.
   while IFS= read -r f; do
     [ -n "$f" ] || continue
+    is_quarantined "$(basename "$f" .jsonl)" && continue   # inter#262: never a candidate
     top="$(grep -aoE "$FED_HANDLES" "$f" 2>/dev/null | sort | uniq -c | sort -rn | head -1 | awk '{print $2}')"
     [ "$top" = "$persona" ] && { basename "$f" .jsonl; return; }
   done < <(ls -t "$pdir"/*.jsonl 2>/dev/null)
   printf ''
+}
+
+# inter#262 guards. is_quarantined: exact match against QUARANTINED_SIDS.
+is_quarantined() {  # $1=session id
+  local s="$1" q
+  [ -n "$s" ] || return 1
+  for q in $QUARANTINED_SIDS; do [ "$s" = "$q" ] && return 0; done
+  return 1
+}
+# has_refusal: the transcript carries a STRUCTURED refusal stop (the JSON field, not the
+# word "refusal" in prose). Nidavellir#65: never resume such a session.
+has_refusal() {  # $1=transcript path
+  [ -f "$1" ] && grep -aqE '"stop_reason"[[:space:]]*:[[:space:]]*"refusal"' "$1"
+}
+# Named exceptions: persona -> reason. An entry with no reason is ignored (loudly), so a
+# seat can't resume by an unexplained line; ignoring it fails toward FRESH.
+declare -A EXC_REASON
+load_exceptions() {
+  EXC_REASON=()
+  [ -f "$RESUME_EXCEPTIONS" ] || return 0
+  local line persona reason
+  while IFS= read -r line; do
+    line="${line%%#*}"
+    [[ "$line" =~ ^[[:space:]]*$ ]] && continue
+    IFS='|' read -r persona reason <<<"$line"
+    persona="$(echo "$persona" | xargs)"
+    reason="$(echo "${reason:-}" | xargs)"
+    [ -z "$persona" ] && continue
+    if [ -z "$reason" ]; then
+      echo "⚠  resume exception for '$persona' has no reason — ignored (seat goes FRESH)" >&2
+      continue
+    fi
+    EXC_REASON["$persona"]="$reason"
+  done < "$RESUME_EXCEPTIONS"
 }
 
 declare -a P_PERSONA P_WORKDIR P_SID P_PFILE
@@ -455,7 +511,7 @@ wants_resume_reanchor() {  # $1=sid $2=pfile
   [ -n "$1" ] && [ -n "$2" ]
 }
 
-declare -a FRESH REANCHOR_PERSONA REANCHOR_WD REANCHOR_PFILE
+declare -a FRESH REANCHOR_PERSONA REANCHOR_WD REANCHOR_PFILE P_MODE P_NOTE
 
 # Build the launch plan (which panes are FRESH vs. resumed, and which resumed
 # panes get a resume re-anchor) from the already-loaded P_PERSONA/P_WORKDIR/
@@ -465,19 +521,81 @@ declare -a FRESH REANCHOR_PERSONA REANCHOR_WD REANCHOR_PFILE
 # Populates the global FRESH / REANCHOR_* arrays (reset first) and corrects
 # P_SID in place when a pinned/resumed sid has no matching transcript file.
 build_launch_plan() {
-  FRESH=(); REANCHOR_PERSONA=(); REANCHOR_WD=(); REANCHOR_PFILE=()
+  FRESH=(); REANCHOR_PERSONA=(); REANCHOR_WD=(); REANCHOR_PFILE=(); P_MODE=(); P_NOTE=()
+  load_exceptions
   local i
   for i in "${!P_PERSONA[@]}"; do
     local persona="${P_PERSONA[$i]}" wd="${P_WORKDIR[$i]}" sid="${P_SID[$i]}" pfile="${P_PFILE[$i]}"
-    if [ -n "$sid" ] && [ ! -f "$PROJECTS/$(slug_of "$wd")/$sid.jsonl" ]; then
-      echo "⚠  $persona: session $sid not found — pane falls back to fresh 'claude'"
-      sid=""
-      P_SID[$i]="$sid"
+    local mode="" note="" transcript
+    # 1. Quarantine (inter#262): never resumed, whatever the policy or exception list says.
+    if [ -n "$sid" ] && is_quarantined "$sid"; then
+      echo "⛔ $persona: session $sid is QUARANTINED — never resumed; pane goes FRESH"
+      mode="FRESH-quarantined"; note="quarantined session $sid"; sid=""
+    # 2. Policy: under fresh (the default), only a named exception may resume.
+    elif [ "$LAUNCH_POLICY" = "fresh" ] && [ -z "${EXC_REASON[$persona]+set}" ]; then
+      mode="FRESH"; note="default (fresh-with-personas)"; sid=""
     fi
+    # 3. The resumable transcript must exist.
+    transcript="$PROJECTS/$(slug_of "$wd")/$sid.jsonl"
+    if [ -n "$sid" ] && [ ! -f "$transcript" ]; then
+      echo "⚠  $persona: session $sid not found — pane falls back to fresh 'claude'"
+      mode="FRESH"; note="session $sid not found"; sid=""
+    fi
+    # 4. Refusal guard (Nidavellir#65): applies even to a named exception.
+    if [ -n "$sid" ] && has_refusal "$transcript"; then
+      echo "⛔ $persona: session $sid has a structured refusal stop — never resumed; pane goes FRESH"
+      mode="FRESH-forced-by-refusal"; note="refusal stop in $sid"; sid=""
+    fi
+    if [ -n "$sid" ]; then
+      if [ "$LAUNCH_POLICY" = "fresh" ]; then mode="RESUME-exception"; note="${EXC_REASON[$persona]}"
+      else mode="RESUME"; note="LAUNCH_POLICY=auto"; fi
+    elif [ -z "$mode" ]; then
+      mode="FRESH"; note="no resumable session found"
+    fi
+    P_SID[$i]="$sid"; P_MODE[$i]="$mode"; P_NOTE[$i]="$note"
     # fresh panes (no resumable session) get auto-onboarded below
     [ -z "$sid" ] && FRESH+=("$persona")
     wants_resume_reanchor "$sid" "$pfile" && { REANCHOR_PERSONA+=("$persona"); REANCHOR_WD+=("$wd"); REANCHOR_PFILE+=("$pfile"); }
   done
+}
+
+# inter#262: the loud per-seat summary. Never silent about a gap: a missing persona file,
+# wisdoms file, RESUME handoff or unmapped model is printed as MISSING and counted.
+origin_has() {  # $1=path in the inter repo at origin/main
+  git -C "$INTER_REPO" cat-file -e "origin/main:$1" 2>/dev/null
+}
+print_launch_summary() {
+  local i gaps=0 persona wd pfile model pf wis res
+  echo ""
+  echo "Launch plan (LAUNCH_POLICY=$LAUNCH_POLICY):"
+  printf '  %-20s %-24s %-17s %-10s %-8s %-8s %s\n' SEAT MODE MODEL PERSONA WISDOMS RESUME NOTE
+  for i in "${!P_PERSONA[@]}"; do
+    persona="${P_PERSONA[$i]}"; wd="${P_WORKDIR[$i]}"; pfile="${P_PFILE[$i]}"
+    model="$(model_for "$persona")"; [ -n "$model" ] || { model="MISSING"; gaps=$((gaps+1)); }
+    if [ -n "$pfile" ]; then
+      origin_has "$pfile" && pf="file" || { pf="MISSING"; gaps=$((gaps+1)); }
+    elif origin_has "personas/$persona.md"; then pf="generic*"
+    else pf="generic"; fi
+    # deming's wisdoms live in private Nidavellir (security-operations lessons), not public inter.
+    if [ "$persona" = "deming" ]; then
+      git -C "$NIDAVELLIR_DIR" cat-file -e "origin/main:wisdoms/deming.md" 2>/dev/null && wis="ok" || { wis="MISSING"; gaps=$((gaps+1)); }
+    else
+      origin_has "wisdoms/$persona.md" && wis="ok" || { wis="MISSING"; gaps=$((gaps+1)); }
+    fi
+    [ -f "$wd/RESUME.md" ] && res="ok" || { res="MISSING"; gaps=$((gaps+1)); }
+    printf '  %-20s %-24s %-17s %-10s %-8s %-8s %s\n' "$persona" "${P_MODE[$i]:-?}" "$model" "$pf" "$wis" "$res" "${P_NOTE[$i]:-}"
+  done
+  echo "  PERSONA: file = persona_file column resolved at origin/main; generic* = personas/<seat>.md exists but is not wired in personas.conf."
+  if [ "$gaps" -gt 0 ]; then echo "  ⚠ $gaps gap(s) marked MISSING above — fix before relying on this launch."
+  else echo "  ✓ no gaps."; fi
+}
+
+cmd_plan() {
+  ensure_origin_main_fresh >/dev/null 2>&1 || echo "⚠  origin/main fetch failed — persona/wisdoms columns may be stale"
+  load_conf
+  [ "${#P_PERSONA[@]}" -gt 0 ] || die "no personas in $CONF"
+  build_launch_plan
+  print_launch_summary
 }
 
 cmd_launch() {
@@ -492,6 +610,7 @@ cmd_launch() {
   [ "${#P_PERSONA[@]}" -gt 0 ] || die "no personas in $CONF"
 
   build_launch_plan
+  print_launch_summary
 
   local i first=1
   for i in "${!P_PERSONA[@]}"; do
@@ -519,7 +638,7 @@ cmd_launch() {
       tmux select-pane -t "$SESSION" -T "$persona" 2>/dev/null
       tmux send-keys -t "$SESSION" "$run" C-m
     fi
-    echo "→ $persona  ($wd)  ${sid:-[fresh claude]}"
+    echo "→ $persona  ($wd)  ${P_MODE[$i]}  ${sid:-[fresh claude]}"
     first=0
   done
 
@@ -569,10 +688,11 @@ cmd_launch() {
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
   case "$MODE" in
     launch|"") cmd_launch ;;
+    plan)      cmd_plan ;;
     list)      cmd_list ;;
     refresh)   cmd_refresh ;;
     kill)      cmd_kill ;;
-    help|-h|--help) sed -n '2,27p' "$0" | sed 's/^# \{0,1\}//' ;;
-    *) die "unknown mode: $MODE (try: launch | list | refresh | kill | help)" ;;
+    help|-h|--help) sed -n '2,/^set -uo pipefail/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//' ;;
+    *) die "unknown mode: $MODE (try: launch | plan | list | refresh | kill | help)" ;;
   esac
 fi
