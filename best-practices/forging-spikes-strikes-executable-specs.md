@@ -113,6 +113,8 @@ A **spike** is a **time-boxed, exploratory investigation to reduce uncertainty**
 
 > **Governing principle 1:** every spike carries a required output — *"capability gaps surfaced → sprint candidates."*
 
+> **Governing principle 2 (beekeeper-directed 2026-10-29: *"there's no point in doing the spike if we are not learning from them"*):** every spike also writes back what it learned into the **theory record**: the theory, spec or ontology text and the ledger anchor that state the claims it tested. Planning dispositions (principle 1) point *forward*. The write-back updates *what we believe*. A spike isn't closed until both are done (inter#246).
+
 **Spike rules (folded from inter#132; evidence: the Efimov inference spike, rounds 1–2):**
 1. **Isolation.** The spike runs in its own worktree, branched from clean `origin/main`, and its PR is **source-only**: generated data and binaries are `.gitignore`d, and it carries no launch scripts, persona config or launch prompts. *(The round-1 PR carried 621k additions.)*
 2. **Honest review, not ratification.** Sort the spike's claims into grounded / mislabeled / fabricated / contradicts-established. Graduate **only** what was earned, as exactly that narrow claim. Verify against the code, not the write-up.
@@ -120,6 +122,24 @@ A **spike** is a **time-boxed, exploratory investigation to reduce uncertainty**
 4. **Single director** for any external runner. Exactly one voice instructs it, and every other steer routes through that director (`Director:` line at the top of each brief).
 5. **Measurement discipline.** Correctness is checked against an independent reference. Timing is an `ns/op` microbenchmark, never a single wall-clock run. Every number is tagged *measured* or *assumed*.
 6. **Pre-run box-safety.** The `pre-run-resource-estimate` hard gate applies to any spike that compiles or runs on the box, and @deming confirms box-safety on the plan before launch.
+7. **Theory write-back (principle 2).** Every round's report has a **write-back table**, one row per claim the spike confronted:
+
+   | claim | where it is stated | E before → after | F | write-back |
+   |---|---|---|---|---|
+   | one sentence | theory/spec/ontology doc + §, and the ledger anchor id | e.g. `unconfronted → falsified (candidate)` | unchanged unless the spike produced a proof | the PR or issue that changes the text |
+
+   - **E moves, F rarely.** A spike is a confrontation with reality, so its result sets the claim's **E-grade** (`fed:EvidenceE`). It almost never raises F, and a proof moves F, never E. *(Both terms land in ontology v0.6.0, PR inter#241. Until it merges, this clause is v0.6.0-pending: it applies, but the notary's enforcement rides the merge.)*
+   - **notary verifies every E move** (`fed:AntiLaunderingPerAxis`). **What it verifies is provenance, not truth:** that the confrontation was run, is of the right kind, is on record, and that the E value follows the rules. Its verdicts are VERIFIED / VERIFIED-WITH-CAVEAT / REFUTED / UNVERIFIABLE, and none of them certifies the claim is empirically true. Per move:
+     - leaving `unconfronted` needs an `evidence_ref` to an actual confrontation, not a proof or an assertion;
+     - `validated` needs a **pre-registered** confrontation that predates the result;
+     - `consistent` without pre-registration carries the `post_hoc` flag;
+     - `falsified` needs the failed pre-registered confrontation on record.
+
+     Each E-move row files a notary request, manually for now, and automatically through notary#3 auto-dispatch when that lands. *(notary-implementor §I4, inter#247.)*
+   - **Where the write-back goes:** an addendum or spec PR in the home repo, through its normal merge lane. For a beekeeper-lane document (QBP theory and paper, craft, governance), it is an **issue carrying the drafted text** for the beekeeper. The ten-addendum compile rule applies as usual.
+   - **Inconclusive and negative results write back too.** The claim's text gains the attempt, the reason it was inconclusive and the reopen condition, so the next reader knows it was tried.
+   - **Return to the originator.** If the spike came from a studybuddy note (or another seat's proposal), the director sends the verdict and the E move back to it. For studybuddy, that's a `re-<slug>.md` in its inbox.
+   - **Closure:** a spike row on the burndown closes only when every write-back row is **merged, or filed with a single owner**.
 
 **Types** (SAFe over the XP base): *technical* and *functional*. **Anti-patterns:** un-time-boxed spikes; spikes as a dumping ground; shipping probe code; spiking when time-limited rather than knowledge-limited. Use sparingly.
 
