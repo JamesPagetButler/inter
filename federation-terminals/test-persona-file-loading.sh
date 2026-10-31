@@ -66,6 +66,15 @@ cp "$TMPDIR/old-onboard-prompt-personafile.tmpl" "$TMPDIR/oldft/onboard-prompt-p
 cp "$TMPDIR/old-personas.conf" "$TMPDIR/oldft/personas.conf"
 [ -f "$TMPDIR/deming-boot.tmpl" ] && cp "$TMPDIR/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 chmod +x "$TMPDIR/oldft/launch-federation.sh" "$TMPDIR/oldft/onboard-federation.sh"
+# inter#262 changed the onboarding TEMPLATES on purpose (seat wisdoms + RESUME handoff,
+# stale poll line removed). The old-vs-new equivalence checks below exist to prove the
+# SCRIPTS render identically (inter#142), so the old tree renders with the NEW templates:
+# any remaining difference is a script difference. The template change itself is asserted
+# directly in the inter#262 block below.
+cp "$HERE/onboard-prompt.tmpl" "$TMPDIR/oldft/onboard-prompt.tmpl"
+cp "$HERE/onboard-prompt.tmpl" "$TMPDIR/old-onboard-prompt.tmpl"
+cp "$HERE/onboard-prompt-personafile.tmpl" "$TMPDIR/oldft/onboard-prompt-personafile.tmpl"
+[ -f "$HERE/deming-boot.tmpl" ] && cp "$HERE/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 
 # Originally (pre-#145 D1) origin/main pinned qbp-oppenheimer inline
 # (cc9bae42...); the reissue moved that pin to the gitignored overlay and
@@ -102,8 +111,12 @@ NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh"
 # roster row (OLD has no such seat) and nugent is newly in FED_HANDLES, so —
 # like hutchins — its content-sniff can legitimately resolve a session OLD
 # cannot. Both are intended changes, not regressions.
-OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -vE '^(hutchins|deming-triage|nugent) ')"
-NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -vE '^(hutchins|deming-triage|nugent) ')"
+# inter#262: a row whose OLD resolution is a QUARANTINED session id is excluded as well;
+# NEW deliberately never resolves to it (environment-dependent, so derived, not hard-coded).
+QUAR_ROWS="$(printf '%s\n' "$OLD_LIST" | grep -E '4f3fa045-30ee-4ee3-8fcd-0eadf0d92d68' | awk '{print $1}' | paste -sd'|' -)"
+QUAR_RE="^(hutchins|deming-triage|nugent${QUAR_ROWS:+|$QUAR_ROWS}) "
+OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -vE "$QUAR_RE")"
+NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -vE "$QUAR_RE")"
 checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \
   "launch-federation.sh list output byte-identical old vs new (all seats except hutchins/deming-triage/nugent, incl. notary's 4th column, via structure+overlay; those rows excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
 
@@ -174,6 +187,23 @@ for p in qbp-architecture:/home/prime/Documents/inter \
   fi
 done
 check "$all_ident" "all 12 non-notary personas (incl. hutchins): full rendered prompt byte-identical old vs new"
+
+echo "== inter#262: every fresh onboard names the seat's own wisdoms and RESUME handoff =="
+miss=0
+for p in qbp-implementor:/home/prime/Documents/QBP-implementor cth-implementor:/home/prime/Documents/CTH \
+         contextus-impl:/home/prime/Documents/Contextus hutchins:/home/prime/Documents/Craft; do
+  handle="${p%%:*}"; wd="${p##*:}"
+  out="$("$TMPDIR/render_new.sh" "$handle" "$wd" "")"
+  printf '%s' "$out" | grep -qF "wisdoms/$handle.md" || { echo "    ✗ $handle: no wisdoms/$handle.md"; miss=1; }
+  printf '%s' "$out" | grep -qF "$wd/RESUME.md" || { echo "    ✗ $handle: no $wd/RESUME.md"; miss=1; }
+  printf '%s' "$out" | grep -q 'seq=707' && { echo "    ✗ $handle: stale poll line still present"; miss=1; }
+done
+check "$miss" "generic onboard: names wisdoms/<seat>.md and <workdir>/RESUME.md; stale seq=707 poll line gone"
+pf_out="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
+printf '%s' "$pf_out" | grep -qF "wisdoms/notary-implementor.md" && printf '%s' "$pf_out" | grep -qF "/home/prime/Documents/notary/RESUME.md"
+check $? "persona-file onboard: names the seat's wisdoms and RESUME handoff"
+grep -qF '{{WORKDIR}}/RESUME.md' "$HERE/deming-boot.tmpl"
+check $? "deming-boot.tmpl: loads deming's RESUME handoff"
 
 NOTARY_NEW="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
 case "$NOTARY_NEW" in
@@ -402,7 +432,12 @@ P_PERSONA=(resumed-no-pfile resumed-with-pfile pinned-no-transcript fresh-alread
 P_WORKDIR=("$HAS_SESSION_WD" "$HAS_SESSION_WD" "$NO_SESSION_WD" "$HAS_SESSION_WD")
 P_SID=("$HAS_SESSION_SID" "$HAS_SESSION_SID" "$NO_SESSION_SID" "")
 P_PFILE=("" "$REAL_PATH" "$REAL_PATH" "$REAL_PATH")
+# inter#262: this truth table tests RESUME mechanics, so it runs under the legacy
+# resume-by-default policy. The fresh default and its exceptions/guards are covered
+# by test-launch-policy.sh.
+ORIG_LAUNCH_POLICY="$LAUNCH_POLICY"; LAUNCH_POLICY=auto
 build_launch_plan >/tmp/m2.$$ 2>&1
+LAUNCH_POLICY="$ORIG_LAUNCH_POLICY"
 
 in_array() { local needle="$1"; shift; local x; for x in "$@"; do [ "$x" = "$needle" ] && return 0; done; return 1; }
 
