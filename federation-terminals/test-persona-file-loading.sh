@@ -98,10 +98,14 @@ NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh"
 # still missing hutchins from FED_HANDLES) structurally cannot see. That row
 # is EXPECTED to diverge — it's the fix, not a regression — and is verified
 # directly by the dedicated content-sniff test below instead.
-OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -v '^hutchins ')"
-NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -v '^hutchins ')"
+# deming-triage and nugent are EXCLUDED too (inter#261): deming-triage is a NEW
+# roster row (OLD has no such seat) and nugent is newly in FED_HANDLES, so —
+# like hutchins — its content-sniff can legitimately resolve a session OLD
+# cannot. Both are intended changes, not regressions.
+OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -vE '^(hutchins|deming-triage|nugent) ')"
+NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -vE '^(hutchins|deming-triage|nugent) ')"
 checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \
-  "launch-federation.sh list output byte-identical old vs new (12 of 13 seats, incl. notary's new 4th column, via structure+overlay; hutchins row excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
+  "launch-federation.sh list output byte-identical old vs new (all seats except hutchins/deming-triage/nugent, incl. notary's 4th column, via structure+overlay; those rows excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
 
 echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 11 seats without a persona_file =="
 
@@ -110,11 +114,15 @@ echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for th
 # from the generic boot. Before that file reaches origin/main its dry-run
 # fails loud by design (AC2, no silent fallback). Its wiring is asserted by
 # the dedicated herschel check below instead.
-NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl edda-implementor deming hutchins"
+# qbp-architecture and qbp-oppenheimer are EXCLUDED as well (inter#254/#255):
+# their rows now carry persona_file columns, so — like notary and herschel —
+# their onboard intentionally diverges from the generic boot. Their absence
+# here was the pre-existing failure on main.
+NON_NOTARY_SEATS="qbp-implementor qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl edda-implementor deming hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for all 11 seats without a persona_file (incl. hutchins; notary + herschel excluded)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for the 9 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer excluded)"
 
 echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
 HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
