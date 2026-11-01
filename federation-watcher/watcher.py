@@ -549,8 +549,12 @@ def route_wake(wake_dir: Path, watch_mentions: list[str], personas: list[str],
     it lands in. `roles` is omitted (None) for the non-mention classified
     path, which has no addressee structure to classify.
     """
-    known = [p for p in personas if p in roster]
-    unknown = [p for p in personas if p not in roster]
+    # ALWAYS_TO_HANDLES (the deming-escalate route) must clear this filter
+    # even when it's not itself a roster seat — item 2 forces its role to
+    # 'to' unconditionally (C4), and a forced-to mention that then gets no
+    # wake file would be a silent contradiction between the two items.
+    known = [p for p in personas if p in roster or p in ALWAYS_TO_HANDLES]
+    unknown = [p for p in personas if p not in known]
 
     for persona in known:
         persona_line = line if roles is None else f"{line} role={roles.get(persona, 'to')}"

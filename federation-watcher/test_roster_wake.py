@@ -111,6 +111,15 @@ class RosterWakeFileTest(unittest.TestCase):
         roster = watcher.resolve_roster(["beekeeper"], personas_conf)
         self.assertEqual(roster, {"beekeeper", "alpha"})
 
+    def test_escalate_route_gets_a_wakefile_even_though_not_roster(self):
+        """deming-escalate is forced to role=to by item 2 (C4) whether or
+        not it's a live seat — a cross-item contradiction would be writing
+        no file for it while still telling callers it's an unconditional
+        wake. route_wake must let it through regardless of roster."""
+        line = 'WAKE:MENTION channel=c seq=1 from=qbp-architecture personas=[\'deming-escalate\'] snippet="x"'
+        watcher.route_wake(self.wake_dir, [], ["deming-escalate"], line, [], self.roster)
+        self.assertTrue((self.wake_dir / "deming-escalate").exists())
+
 
 class RosterWakeFileMutationTest(unittest.TestCase):
     """Mutation checks: each mutant is built from a verified-single-match
@@ -133,7 +142,7 @@ class RosterWakeFileMutationTest(unittest.TestCase):
         unknown token, so it fails against this mutant. KILLED."""
         mutated = _one_sub(
             SOURCE,
-            r"known = \[p for p in personas if p in roster\]",
+            r"known = \[p for p in personas if p in roster or p in ALWAYS_TO_HANDLES\]",
             r"known = list(personas)",
         )
         mod = _load_mutant(self.tmpdir, mutated, "watcher_mutant_r1")
@@ -155,7 +164,7 @@ class RosterWakeFileMutationTest(unittest.TestCase):
         it DOES get one, so it fails against this mutant. KILLED."""
         mutated = _one_sub(
             SOURCE,
-            r"known = \[p for p in personas if p in roster\]",
+            r"known = \[p for p in personas if p in roster or p in ALWAYS_TO_HANDLES\]",
             r"known = [p for p in personas if p not in roster]",
         )
         mod = _load_mutant(self.tmpdir, mutated, "watcher_mutant_r2")
