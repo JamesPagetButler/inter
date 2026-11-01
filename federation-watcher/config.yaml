@@ -28,6 +28,14 @@ watch_mentions:
   - qbp-architecture
   - beekeeper
 
+# Canonical seat registry (inter#271 item 3 — roster-only wake files).
+# A wake FILE is written only for a handle resolved here OR in
+# watch_mentions above (the two are reconciled, not either-or — see
+# resolve_roster() in watcher.py). Every other @token gets one log line
+# and no file. Same file the heartbeat sweep below already reads; listed
+# here too so the roster check works even with heartbeat.enabled: false.
+personas_conf: ~/Documents/inter/federation-terminals/personas.conf
+
 # Sessionbridge channels to monitor.
 # "auto" = discover all *.jsonl files in the channels state directory
 # that have no spaces and don't start with '#'.

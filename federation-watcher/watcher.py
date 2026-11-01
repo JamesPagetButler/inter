@@ -29,6 +29,53 @@ Per-persona: ~/.federation-watcher/busy.{persona}
 (§2.i — named mention requires same-cycle response).
 
 Non-mention IMMEDIATE events are deferred when the relevant busy flag exists.
+
+Roster-only wake files (inter#271 item 3)
+==========================================
+A wake FILE is written only for a handle the roster resolves — the union of
+config.yaml's `watch_mentions` and the canonical `personas.conf` registry
+(`load_seat_personas`, the same roster `heartbeat` already reads). Every
+other `@token` in a message (a commit sha, `@v7`, a typo) gets exactly one
+`WAKE:SKIP` log line and no file — sender typos are already surfaced back to
+the sender via sessionbridge's own `mention_warnings`, so nothing is lost,
+only the junk-file growth in `wake/` is. See `resolve_roster()` /
+`route_wake()`. One-off cleanup of the pre-existing junk files lives in
+`quarantine_nonroster_wake_files.py` (moves, never deletes).
+
+Three-role mentions (inter#271 item 2)
+========================================
+Every `WAKE:MENTION` line now carries a trailing `role=to|input|cc` field
+(older lines, and any line from another writer that never added the field,
+have no `role=` and count as `to` — see `wake-wait.sh` on the Nidavellir
+side). Roles are classified from the message text alone, per `to` >
+`input` > `cc`:
+
+  - `to`    — a handle in the LEADING ADDRESSEE BLOCK (the text before the
+              first " — ", space-emdash-space), outside any `(cc ...)`
+              group. Responsibility: same-cycle reply, handled first.
+  - `input` — any `@handle` in the BODY (after the separator). Input
+              requested, not ownership — answered after that wake's `to`
+              items; may decline or defer with a one-line note.
+  - `cc`    — a handle inside a `(cc ...)` group in the leading block.
+              Awareness only — delivered with the next real wake, or a
+              `CC-DIGEST` within 4h (wake-wait.sh side).
+
+  Fail-closed: no " — " separator, or an unclosed "(cc", and EVERY mention
+  in the message is `to` — the input classifier never runs on that path (a
+  parser miss can only cost an extra wake, never a missed ask).
+
+  Always `to`, regardless of position: a message `from=beekeeper`, and any
+  mention of `deming-escalate` (the escalation route).
+
+  See `classify_mention_roles()` / `classify_roles_for_message()`.
+
+Sender convention (recommended, not enforced by the parser): put the owner
+in the leading block ("@deming — you're the §I4 reviewer"), @-name someone
+in the body when you want their input but they're not on the hook
+("...decision stands, cc @nugent for awareness, @wyrd-implementor what do
+you think of the fallback?"), and use `(cc ...)` in the leading block for
+pure awareness. Until senders adopt this, a real owner named only in the
+body is classified `input` ("may decline"), not `to` — see inter#271.
 """
 
 import json
@@ -55,7 +102,7 @@ def _now_iso() -> str:
 def load_config() -> dict:
     with open(CONFIG_PATH) as f:
         cfg = yaml.safe_load(f)
-    for key in ("wake_dir", "busy_flag", "state_dir", "deferred_queue"):
+    for key in ("wake_dir", "busy_flag", "state_dir", "deferred_queue", "personas_conf"):
         if key in cfg:
             cfg[key] = Path(os.path.expanduser(str(cfg[key])))
     hb = cfg.get("heartbeat")
@@ -210,6 +257,19 @@ def load_seat_personas(personas_conf: Path) -> list[str]:
     return out
 
 
+def resolve_roster(watch_mentions: list[str], personas_conf: Optional[Path]) -> set[str]:
+    """The roster for item 3 (inter#271): the union of the two places a seat
+    is listed today — config.yaml's `watch_mentions` and the canonical
+    `personas.conf` registry `load_seat_personas()` already parses for the
+    heartbeat sweep. A handle is roster if EITHER source names it, so
+    reconciling the two can only widen who gets a wake file, never narrow
+    it past what either config already granted."""
+    roster = set(watch_mentions)
+    if personas_conf is not None:
+        roster.update(load_seat_personas(personas_conf))
+    return roster
+
+
 def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
     """External liveness check for a persona's §2.i wake-file Monitor.
 
@@ -288,6 +348,95 @@ def run_heartbeat_sweep(wake_dir: Path, personas_conf: Path,
             emit(line)
 
     return new_state
+
+
+# ── Mention-role classification (inter#271 item 2) ──────────────────────────
+
+_ADDRESSEE_SEP = " — "  # space, em dash, space
+_MENTION_RE = re.compile(r"@([\w-]+)")
+_CC_GROUP_RE = re.compile(r"\(cc\b([^()]*)\)", re.I)
+
+# Mentions of these handles always resolve to 'to', regardless of position —
+# the escalation route itself (wake/deming-escalate) and anything addressed
+# to the beekeeper persona get the same unconditional-wake treatment as a
+# from=beekeeper message (see classify_roles_for_message).
+ALWAYS_TO_HANDLES = {"deming-escalate"}
+
+
+def _handles_with_pos(text: str) -> list[tuple[str, int]]:
+    return [(m.group(1), m.start()) for m in _MENTION_RE.finditer(text)]
+
+
+def classify_mention_roles(text: str) -> dict[str, str]:
+    """Classify every `@handle` in `text` as `to` / `input` / `cc`, per
+    to > input > cc (one role per handle per message — inter#271 item 2,
+    beekeeper ruling 2026-11-01).
+
+    - `to`: a handle in the leading addressee block (before the first
+      " — "), outside a `(cc ...)` group.
+    - `cc`: a handle inside a `(cc ...)` group in that leading block.
+    - `input`: any `@handle` in the body (after the separator). Overrides a
+      `cc` classification for the same handle, but never a `to` one.
+
+    Fail-closed: no " — " separator anywhere, or an unclosed "(cc" in the
+    leading block, and EVERY mention in the whole message is `to` — the
+    body/input branch below never runs on that path, so a parser miss can
+    only cost an extra wake, never a missed ask.
+    """
+    all_handles = [h for h, _ in _handles_with_pos(text)]
+
+    sep_idx = text.find(_ADDRESSEE_SEP)
+    if sep_idx == -1:
+        return {h: "to" for h in dict.fromkeys(all_handles)}
+
+    leading = text[:sep_idx]
+    body = text[sep_idx + len(_ADDRESSEE_SEP):]
+
+    open_idx = leading.lower().find("(cc")
+    if open_idx != -1 and leading.find(")", open_idx) == -1:
+        # unclosed (cc ... in the leading block: fail closed, no input pass
+        return {h: "to" for h in dict.fromkeys(all_handles)}
+
+    cc_spans = [m.span() for m in _CC_GROUP_RE.finditer(leading)]
+
+    def _in_cc(pos: int) -> bool:
+        return any(s <= pos < e for s, e in cc_spans)
+
+    roles: dict[str, str] = {}
+    for h, pos in _handles_with_pos(leading):
+        if _in_cc(pos):
+            roles.setdefault(h, "cc")  # don't downgrade an earlier 'to'
+        else:
+            roles[h] = "to"  # 'to' always wins, whatever order it's seen in
+
+    for h, _ in _handles_with_pos(body):
+        if roles.get(h) != "to":
+            roles[h] = "input"  # overrides a 'cc', never a 'to'
+
+    return roles
+
+
+def classify_roles_for_message(text: str, from_persona: str,
+                                mentioned_personas: list[str]) -> dict[str, str]:
+    """classify_mention_roles(), plus the two unconditional-`to` overrides:
+    a message from=beekeeper, or a mention of an ALWAYS_TO_HANDLES handle
+    (the deming-escalate route) — both wake regardless of the role the text
+    alone would have produced (inter#271 item 2, C4).
+
+    `mentioned_personas` is the caller's already-resolved mention list
+    (msg["mentions"] plus any inline @name not already in it — see main()).
+    A persona in that list with no @handle match in `text` itself (e.g. a
+    mentions-list entry the inline regex didn't also catch) fails closed to
+    `to` rather than being silently dropped from the role map.
+    """
+    roles = classify_mention_roles(text)
+    force_to = from_persona == "beekeeper"
+    for p in mentioned_personas:
+        if force_to or p in ALWAYS_TO_HANDLES:
+            roles[p] = "to"
+        else:
+            roles.setdefault(p, "to")
+    return roles
 
 
 # ── Classification ────────────────────────────────────────────────────────
@@ -384,12 +533,34 @@ def emit(line: str) -> None:
 
 
 def route_wake(wake_dir: Path, watch_mentions: list[str], personas: list[str],
-               line: str, stdout_personas: list[str]) -> None:
-    """Write wake line to each persona's wake file; emit to stdout if relevant."""
-    for persona in personas:
-        write_wake(wake_dir, persona, line)
+               line: str, stdout_personas: list[str], roster: set[str],
+               roles: Optional[dict[str, str]] = None) -> None:
+    """Write wake line to each ROSTER persona's wake file; emit to stdout if
+    relevant.
+
+    Item 3 (inter#271, R1/R2): a wake FILE is written only for a persona
+    `resolve_roster()` resolves. Every other mentioned token gets exactly
+    one `WAKE:SKIP` log line and no file.
+
+    Item 2 (inter#271): when `roles` is given (the @mention path), each
+    persona's own copy of the line gets ITS role appended as a trailing
+    `role=to|input|cc` field — personas in one message can carry different
+    roles, so the line is no longer byte-identical across every wake file
+    it lands in. `roles` is omitted (None) for the non-mention classified
+    path, which has no addressee structure to classify.
+    """
+    known = [p for p in personas if p in roster]
+    unknown = [p for p in personas if p not in roster]
+
+    for persona in known:
+        persona_line = line if roles is None else f"{line} role={roles.get(persona, 'to')}"
+        write_wake(wake_dir, persona, persona_line)
+
+    for persona in unknown:
+        emit(f'WAKE:SKIP persona={persona} reason=not-in-roster line="{line}"')
+
     # Emit to stdout for personas the host terminal cares about
-    if any(p in stdout_personas for p in personas):
+    if any(p in stdout_personas for p in known):
         emit(line)
 
 
@@ -423,6 +594,12 @@ def main() -> None:
     if heartbeat_enabled and not (heartbeat_personas_conf and heartbeat_status_file):
         emit('WATCHER_ERROR msg="heartbeat.enabled but personas_conf/status_file missing"')
         heartbeat_enabled = False
+
+    # Roster for item 3 (inter#271 R1/R2): reconcile config.yaml's own
+    # `personas_conf` (if set) with the heartbeat's, then union with
+    # watch_mentions — see resolve_roster()'s docstring.
+    personas_conf_path: Optional[Path] = cfg.get("personas_conf") or heartbeat_personas_conf
+    roster: set[str] = resolve_roster(watch_mentions, personas_conf_path)
 
     state_dir.mkdir(parents=True, exist_ok=True)
     wake_dir.mkdir(parents=True, exist_ok=True)
@@ -487,9 +664,10 @@ def main() -> None:
                         f"from={from_persona} personas={mentioned_personas} "
                         f"snippet=\"{snip(text)}\""
                     )
+                    roles = classify_roles_for_message(text, from_persona, mentioned_personas)
                     # Write to each mentioned persona's wake file simultaneously
                     route_wake(wake_dir, watch_mentions, mentioned_personas,
-                               line, watch_mentions)
+                               line, watch_mentions, roster, roles=roles)
                     max_seq = max(max_seq, seq)
                     continue
 
@@ -524,7 +702,7 @@ def main() -> None:
                                 f"snippet=\"{snip(text)}\""
                             )
                             route_wake(wake_dir, watch_mentions, active,
-                                       line, watch_mentions)
+                                       line, watch_mentions, roster)
 
                         if deferred_for:
                             queue_message(
