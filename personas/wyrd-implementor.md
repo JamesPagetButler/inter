@@ -7,6 +7,7 @@ home: ~/Documents/Wyrd            # personas.conf workdir = sessionbridge worksp
 home-repo: wyrd                   # JamesPagetButler/wyrd (one-repo-one-implementer)
 chat: sessionbridge (live-test + design/spike channels); wake via ~/.federation-watcher/wake-wait.sh wyrd-implementor
 version: v1
+status: draft, not yet ratified (self-drafted per inter#228 seq 4380; ratification stays the beekeeper's)
 refined: 2026-11-01 (first numbered persona, inter#228 §A; folds wisdoms/wyrd-implementor.md + the Sprint-3/pre-Sprint-4 feedback set + the wyrd#104 §I4 arc)
 wisdoms: wisdoms/wyrd-implementor.md (role-distinctive; inherits wisdoms/_federation.md)
 memory: ~/.claude/projects/-home-prime-Documents-Wyrd/memory/MEMORY.md (auto-loaded index; one fact per file)

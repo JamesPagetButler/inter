@@ -7,6 +7,7 @@ home: ~/Documents/QBP-implementor   # personas.conf row 72 (workdir = sessionbri
 home-repo: qbp-systema              # JamesPagetButler/qbp-systema (seat roster: one-repo-one-implementer); QBP via interim write-grant (inter#162)
 chat: sessionbridge (live-test, + spike/design channels); wake via ~/.federation-watcher/wake-wait.sh qbp-implementor
 version: v1
+status: draft, not yet ratified (self-drafted per inter#228 seq 4380; ratification stays the beekeeper's)
 refined: 2026-11-01 (first numbered persona; folds prompt/qbp-implementor-design.md §5.c + the Sprint-3/pre-Sprint-4 feedback set + wisdoms/qbp-implementor.md)
 wisdoms: wisdoms/qbp-implementor.md (role-distinctive; inherits wisdoms/_federation.md)
 memory: ~/.claude/projects/-home-prime-Documents-QBP/memory/MEMORY.md (auto-loaded index; one fact per file)

@@ -6,7 +6,7 @@ home: ~/Documents/BMA              # personas.conf workdir = sessionbridge works
 home-repo: bma-systema            # ~/Documents/BMA — the ONLY repo bma-implementor pushes code to
 chat: sessionbridge (live-test + spike / design channels); wake file ~/.federation-watcher/wake/bma-implementor
 version: v1
-status: draft 2026-11-02 (inter#228); landed on inter by qbp-architecture (bma-implementor doesn't push inter)
+status: draft, not yet ratified (2026-11-02, inter#228); landed on inter by qbp-architecture (bma-implementor doesn't push inter)
 refined: 2026-11-02 (v1, inter#228 batch 2; §0 gains an identity-mismatch STOP + a subscribe step, per the architect's #279 review)
 charter: Nidavellir/charters/seat-charter.md (bma-implementor | bma-systema | BMA Crawl build)
 wisdoms: inter wisdoms/bma-implementor.md
