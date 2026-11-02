@@ -135,11 +135,11 @@ echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for th
 # qbp-implementor, cth-implementor, wyrd-implementor and bma-implementor are
 # EXCLUDED too (inter#228 batch 2): their rows now wire personas/<seat>.md, so
 # their onboard intentionally diverges from the generic boot.
-NON_NOTARY_SEATS="qbp-cu-implementor contextus-impl edda-implementor deming hutchins"
+NON_NOTARY_SEATS="qbp-cu-implementor contextus-impl deming hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for the 5 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for the 4 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, edda-implementor, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
 
 echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
 HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
