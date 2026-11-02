@@ -1,16 +1,30 @@
 #!/usr/bin/env python3
 """quarantine_nonroster_wake_files.py — inter#271 item 3, one-off cleanup.
 
-watcher.py now writes a wake FILE only for a roster handle (see
-resolve_roster() / route_wake() in watcher.py). This script cleans up the
-~100 pre-existing junk files (commit shas, `@v7`-style tokens, typos) that
-accumulated in `wake/` under the old behaviour.
+watcher.py now writes a wake FILE only for an ALLOWED handle (see
+route_wake() in watcher.py: roster, extra_recipients, or an alias's
+resolved seat). This script cleans up the ~100 pre-existing junk files
+(commit shas, `@v7`-style tokens, typos) that accumulated in `wake/` under
+the old behaviour.
 
 It MOVES, never deletes: every top-level, non-hidden regular file in the
-wake dir whose name is not in the roster is moved into
+wake dir whose name is not PROTECTED is moved into
 `<wake-dir>/.quarantine-2026-11-01/`, and the move list is printed. Already-
 quarantined files are never revisited (the scan is top-level only), so
 re-running this script is a no-op the second time.
+
+PROTECTED (never moved, by this script, ever) is the union of:
+  - the roster (personas.conf + watch_mentions)
+  - `extra_recipients` from config.yaml (e.g. `antigravity`)
+  - every alias NAME from config.yaml's `aliases` map (e.g. `bragi`, `bma`)
+    — an alias is a real, currently-used sender handle (inter#271 B1); its
+    own leftover wake file is real traffic nobody reads, not junk, and
+    this script is not the place to decide what to do about it.
+  - ALWAYS_TO_HANDLES (the deming-escalate route)
+
+Of those, alias NAMES get their own separate "LEGACY ALIAS" listing (any
+alias's own file that still exists on disk) — printed, never moved, so the
+foreman can decide those by hand.
 
 Default is a DRY RUN — it only prints what it WOULD move. Pass --apply to
 actually perform the moves.
@@ -22,8 +36,8 @@ Usage:
         [--apply]
 
 With no --wake-dir/--personas-conf, both default to config.yaml's values
-(personas_conf, falling back to heartbeat.personas_conf; watch_mentions is
-always included in the roster regardless of which personas_conf is used).
+(personas_conf, falling back to heartbeat.personas_conf; watch_mentions,
+aliases and extra_recipients are always read from config.yaml directly).
 """
 from __future__ import annotations
 
@@ -41,28 +55,36 @@ import watcher  # noqa: E402
 QUARANTINE_DIRNAME = ".quarantine-2026-11-01"
 
 
-def find_nonroster_files(wake_dir: Path, roster: set[str]) -> list[Path]:
-    """Every regular, non-hidden, TOP-LEVEL file in `wake_dir` whose name is
-    not in `roster`. Never descends into subdirectories (e.g. a previous
-    quarantine dir), so a second run never re-visits an already-moved
-    file."""
+def _top_level_files(wake_dir: Path) -> list[Path]:
+    """Every regular, non-hidden, TOP-LEVEL file in `wake_dir`. Never
+    descends into subdirectories (e.g. a previous quarantine dir), so a
+    second run never re-visits an already-moved file."""
     if not wake_dir.is_dir():
         return []
-    out = []
-    for p in sorted(wake_dir.iterdir()):
-        if not p.is_file():
-            continue
-        if p.name.startswith("."):
-            continue
-        if p.name not in roster:
-            out.append(p)
-    return out
+    return [
+        p for p in sorted(wake_dir.iterdir())
+        if p.is_file() and not p.name.startswith(".")
+    ]
 
 
-def quarantine(wake_dir: Path, roster: set[str], apply: bool) -> list[Path]:
+def find_nonroster_files(wake_dir: Path, protected: set[str]) -> list[Path]:
+    """Every top-level wake file whose name is NOT in `protected` (B1:
+    roster UNION extra_recipients UNION alias names UNION
+    ALWAYS_TO_HANDLES) — the genuinely junk ones this script moves."""
+    return [p for p in _top_level_files(wake_dir) if p.name not in protected]
+
+
+def find_legacy_alias_files(wake_dir: Path, alias_names: set[str]) -> list[Path]:
+    """Any alias's OWN leftover wake file (e.g. `bragi`, `bma`) that still
+    exists on disk — real traffic, never moved by this script, listed
+    separately so a human decides."""
+    return [p for p in _top_level_files(wake_dir) if p.name in alias_names]
+
+
+def quarantine(wake_dir: Path, protected: set[str], apply: bool) -> list[Path]:
     """Return the files that are (or, with apply=False, would be) moved.
     MOVES, never deletes — matches architect ruling, inter#271."""
-    junk = find_nonroster_files(wake_dir, roster)
+    junk = find_nonroster_files(wake_dir, protected)
     if apply and junk:
         qdir = wake_dir / QUARANTINE_DIRNAME
         qdir.mkdir(parents=True, exist_ok=True)
@@ -95,8 +117,17 @@ def main(argv: Optional[list[str]] = None) -> int:
     personas_conf = _resolve_personas_conf(cfg, args.personas_conf)
     watch_mentions = cfg.get("watch_mentions", [])
     roster = watcher.resolve_roster(watch_mentions, personas_conf)
+    aliases: dict[str, str] = cfg.get("aliases") or {}
+    extra_recipients: set[str] = set(cfg.get("extra_recipients") or [])
+    alias_names: set[str] = set(aliases.keys())
 
-    junk = quarantine(wake_dir, roster, apply=args.apply)
+    protected = roster | extra_recipients | alias_names | watcher.ALWAYS_TO_HANDLES
+
+    legacy = find_legacy_alias_files(wake_dir, alias_names)
+    for p in legacy:
+        print(f"LEGACY ALIAS (not moved, decide by hand): {p} -> {aliases.get(p.name, '?')}")
+
+    junk = quarantine(wake_dir, protected, apply=args.apply)
     verb = "MOVED" if args.apply else "WOULD MOVE"
     if not junk:
         print("quarantine: no non-roster wake files found")

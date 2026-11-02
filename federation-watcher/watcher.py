@@ -42,6 +42,27 @@ only the junk-file growth in `wake/` is. See `resolve_roster()` /
 `route_wake()`. One-off cleanup of the pre-existing junk files lives in
 `quarantine_nonroster_wake_files.py` (moves, never deletes).
 
+Aliases and extra recipients (inter#271 B1, foreman review 2026-11-01)
+========================================================================
+The roster-only filter above would have turned real, actively-used traffic
+into dropped log lines: some senders address a seat by an older/shorthand
+handle (`bragi` for `edda-implementor`, `bma` for `bma-implementor`, ...)
+that was never itself a launched seat, and `antigravity` is a legitimate
+non-seat wake-file reader (its own bridge-waker) with no personas.conf
+entry at all. config.yaml's `aliases` map and `extra_recipients` list fix
+this without cementing the pre-existing "nobody reads that file" deafness
+bug into a silent drop:
+  - `aliases: {alias: seat, ...}` — `route_wake()` resolves the alias to
+    its seat and writes ONE wake file for the seat, never the alias's own
+    file. If a message mentions both the alias and the seat, it's one
+    wake carrying the HIGHEST role between them (`to` > `input` > `cc`).
+  - `extra_recipients: [...]` — non-seat handles that still legitimately
+    get a wake file (documented with their reader in config.yaml).
+`quarantine_nonroster_wake_files.py` skips both categories — and prints a
+separate "legacy alias" list for any alias's OWN leftover file on disk,
+without moving it; a human (the foreman) decides those by hand. See
+`resolve_mention_targets()`.
+
 Three-role mentions (inter#271 item 2)
 ========================================
 Every `WAKE:MENTION` line now carries a trailing `role=to|input|cc` field
@@ -268,6 +289,44 @@ def resolve_roster(watch_mentions: list[str], personas_conf: Optional[Path]) -> 
     if personas_conf is not None:
         roster.update(load_seat_personas(personas_conf))
     return roster
+
+
+_ROLE_PRIORITY = {"to": 3, "input": 2, "cc": 1}
+
+
+def _role_priority(role: str) -> int:
+    # An unrecognised/missing role fails closed to the highest priority
+    # ('to'), matching classify_mention_roles()'s own fail-closed default.
+    return _ROLE_PRIORITY.get(role, 3)
+
+
+def resolve_mention_targets(
+    personas: list[str], aliases: dict[str, str], roles: Optional[dict[str, str]],
+) -> tuple[list[str], Optional[dict[str, str]]]:
+    """Resolve each mentioned handle through `aliases` to its real seat
+    (inter#271 B1) — `bragi` -> `edda-implementor`, etc. — so the alias's
+    OWN wake file is never written to; the resolved seat's is.
+
+    Dedups: if a message mentions both an alias and its seat (or two
+    aliases for the same seat), they collapse to ONE entry for the seat,
+    keeping the HIGHEST role among all contributing mentions (to > input >
+    cc — the same precedence classify_mention_roles() uses). Order is
+    preserved by first occurrence among `personas`.
+
+    `roles` may be None (the non-mention classified path has no per-
+    mention roles at all); the returned role map is then also None.
+    """
+    resolved_order: list[str] = []
+    best_role: dict[str, str] = {}
+    for p in personas:
+        target = aliases.get(p, p)
+        if target not in resolved_order:
+            resolved_order.append(target)
+        if roles is not None:
+            role = roles.get(p, "to")
+            if target not in best_role or _role_priority(role) > _role_priority(best_role[target]):
+                best_role[target] = role
+    return resolved_order, (best_role if roles is not None else None)
 
 
 def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
@@ -534,13 +593,22 @@ def emit(line: str) -> None:
 
 def route_wake(wake_dir: Path, watch_mentions: list[str], personas: list[str],
                line: str, stdout_personas: list[str], roster: set[str],
-               roles: Optional[dict[str, str]] = None) -> None:
-    """Write wake line to each ROSTER persona's wake file; emit to stdout if
-    relevant.
+               roles: Optional[dict[str, str]] = None,
+               aliases: Optional[dict[str, str]] = None,
+               extra_recipients: Optional[set[str]] = None) -> None:
+    """Write wake line to each ALLOWED persona's wake file; emit to stdout
+    if relevant.
 
     Item 3 (inter#271, R1/R2): a wake FILE is written only for a persona
-    `resolve_roster()` resolves. Every other mentioned token gets exactly
-    one `WAKE:SKIP` log line and no file.
+    `resolve_roster()` resolves, plus `extra_recipients` (B1: legitimate
+    non-seat consumers like `antigravity`) and `ALWAYS_TO_HANDLES` (the
+    `deming-escalate` route). Every other mentioned token gets exactly one
+    `WAKE:SKIP` log line and no file.
+
+    B1 (inter#271 foreman review): `personas`/`roles` are resolved through
+    `aliases` FIRST (`resolve_mention_targets()`) — an alias's own file is
+    never written to; its seat's is, deduped to one entry with the
+    highest role if both were mentioned.
 
     Item 2 (inter#271): when `roles` is given (the @mention path), each
     persona's own copy of the line gets ITS role appended as a trailing
@@ -549,11 +617,10 @@ def route_wake(wake_dir: Path, watch_mentions: list[str], personas: list[str],
     it lands in. `roles` is omitted (None) for the non-mention classified
     path, which has no addressee structure to classify.
     """
-    # ALWAYS_TO_HANDLES (the deming-escalate route) must clear this filter
-    # even when it's not itself a roster seat — item 2 forces its role to
-    # 'to' unconditionally (C4), and a forced-to mention that then gets no
-    # wake file would be a silent contradiction between the two items.
-    known = [p for p in personas if p in roster or p in ALWAYS_TO_HANDLES]
+    personas, roles = resolve_mention_targets(personas, aliases or {}, roles)
+    allowed = roster | (extra_recipients or set()) | ALWAYS_TO_HANDLES
+
+    known = [p for p in personas if p in allowed]
     unknown = [p for p in personas if p not in known]
 
     for persona in known:
@@ -604,6 +671,11 @@ def main() -> None:
     # watch_mentions — see resolve_roster()'s docstring.
     personas_conf_path: Optional[Path] = cfg.get("personas_conf") or heartbeat_personas_conf
     roster: set[str] = resolve_roster(watch_mentions, personas_conf_path)
+
+    # B1 (inter#271 foreman review): aliases + extra, non-seat recipients —
+    # see the module docstring's "Aliases and extra recipients" section.
+    aliases: dict[str, str] = cfg.get("aliases") or {}
+    extra_recipients: set[str] = set(cfg.get("extra_recipients") or [])
 
     state_dir.mkdir(parents=True, exist_ok=True)
     wake_dir.mkdir(parents=True, exist_ok=True)
@@ -671,7 +743,8 @@ def main() -> None:
                     roles = classify_roles_for_message(text, from_persona, mentioned_personas)
                     # Write to each mentioned persona's wake file simultaneously
                     route_wake(wake_dir, watch_mentions, mentioned_personas,
-                               line, watch_mentions, roster, roles=roles)
+                               line, watch_mentions, roster, roles=roles,
+                               aliases=aliases, extra_recipients=extra_recipients)
                     max_seq = max(max_seq, seq)
                     continue
 
@@ -706,7 +779,8 @@ def main() -> None:
                                 f"snippet=\"{snip(text)}\""
                             )
                             route_wake(wake_dir, watch_mentions, active,
-                                       line, watch_mentions, roster)
+                                       line, watch_mentions, roster,
+                                       aliases=aliases, extra_recipients=extra_recipients)
 
                         if deferred_for:
                             queue_message(
