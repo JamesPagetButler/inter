@@ -235,7 +235,7 @@ if: hashFiles('**/*.go') != ''
 
 so CI stays an honest green rather than a structural red. Remove the guard once the repo has Go source, so a missing tree can't skip CI silently.
 
-Origin: qbp-systema#3 review (2026-05-21); codified per inter#35. Adoption audit (2026-10-17, Go workflows): `cancel-in-progress` present in wyrd `ci-go.yml`, bma-systema `ci-go.yml`, edda `ci-go.yml`; **missing** in confluent-trust `ci.yml`, all qbp-compute-unit Go workflows, qbp-systema `ci-go.yml` (regressed since #3), and wyrd `ci-compute-manifest.yml`. contextus has no Go CI.
+Origin: qbp-systema#3 review (2026-05-21); codified per inter#35. Adoption audit (2026-11-02, default branches, closing inter#35): `cancel-in-progress` present in every workflow of wyrd, edda, qbp-compute-unit and qbp-systema. confluent-trust `ci.yml` and bma-systema `ci.yml` use the PR-only form (`cancel-in-progress: ${{ github.event_name == 'pull_request' }}`), so every main commit still gets a completed run; prefer that form where main-branch history matters. contextus gains it with its first Go CI (contextus#48).
 
 ### 4.3 Pre-commit hooks
 
@@ -271,13 +271,13 @@ Per ADR-003 §I4 in qbp-compute-unit, design-doc PRs ARE the §I4 review surface
 
 When PR B depends on PR A:
 - Open PR B against the branch of PR A (not main), so the diff is review-able as B's specific changes.
-- After PR A merges, rebase PR B onto main.
+- **Merge order is fixed by the forging doc's stacked-PR protocol** (`best-practices/forging-spikes-strikes-executable-specs.md` §2, C4/C17/C23): retarget B to `main` **before** A merges, then merge A, then merge `main` into B with a normal push so CI runs, then merge B. That protocol is canonical. The mitigation list below is consistent with it except where noted.
 - **Beekeeper override (per Decision Log #7) does NOT extend transitively** to stacked PRs (per Q6=B in addendum-18-walk meeting). Each PR in the stack needs its own substance review.
 
 **Squash-merge hazard.** Squash-merging the base PR does **not** carry the stacked PR's commits to `main`. If PR B was opened against PR A's branch and PR A is squash-merged, B's base is now a stale branch: merging B lands it in that branch, not `main`, yet GitHub can still show B as "merged". This has happened twice: contextus#21 (2026-05-22, recovered by cherry-pick) and QBP#702 stacked on QBP#701 (2026-10-15, landed in `qbp/692-pa-reconcile-real-ledger` and was re-landed to master by a byte-identical PR; C17 in the forging process notes, draft inter#154). Mitigations, in order of preference:
 
 1. **Don't stack** when the file-conflict surface allows it: open each PR off `main`.
-2. **If you stack, retarget before merging the top PR.** After the base PR merges, rebase B onto `main` and change B's base to `main` (`gh pr edit <B> --base main`), *then* review and merge B. Never merge a PR whose base is not the default branch.
+2. **If you stack, retarget B to `main` *before* the base PR merges** (`gh pr edit <B> --base main`). Retargeting only *after* the base merges is too late if the base is merged with `--delete-branch`: GitHub then auto-closes B and can't reopen it (C23, inter#249 → #253). Then merge `main` into B with a normal push so CI runs, and review and merge B. Never merge a PR whose base is not the default branch.
 3. **Merge bottom-up (base first).** Never merge the top of a stack while its base PR is open.
 4. **Post-merge verification:** after merging any PR in a stack, confirm the expected change is on `main`, e.g. `git fetch && git log origin/main --oneline -5` and `git diff <expected-sha> origin/main -- <paths>`, not just the PR's "merged" badge.
 
