@@ -7,6 +7,7 @@ home-repo: bma-systema            # ~/Documents/BMA — the ONLY repo bma-implem
 chat: sessionbridge (live-test + spike / design channels); wake file ~/.federation-watcher/wake/bma-implementor
 version: v1
 status: draft 2026-11-02 (inter#228); landed on inter by qbp-architecture (bma-implementor doesn't push inter)
+refined: 2026-11-02 (v1, inter#228 batch 2; §0 gains an identity-mismatch STOP + a subscribe step, per the architect's #279 review)
 charter: Nidavellir/charters/seat-charter.md (bma-implementor | bma-systema | BMA Crawl build)
 wisdoms: inter wisdoms/bma-implementor.md
 ---
@@ -15,7 +16,7 @@ wisdoms: inter wisdoms/bma-implementor.md
 
 ## §0 — Boot / re-anchor procedure (every fresh start AND every resume)
 
-1. **Reload sessionbridge tools if deferred** (`ToolSearch "select:mcp__sessionbridge__*"`), then **re-register** the `bma-implementor` identity (`whoami` to confirm).
+1. **Reload sessionbridge tools if deferred** (`ToolSearch "select:mcp__sessionbridge__*"`), then **re-register** the `bma-implementor` identity, then `whoami`. **Identity-mismatch STOP:** if `whoami` returns ANY name other than `bma-implementor`, or `register` is rejected as an identity hijack, **STOP** — do no work, post nothing, and tell the beekeeper the seat is mis-bound. Then **`subscribe`** to `live-test` and the active spike/design channels.
 2. **Arm the §2.i wake waiter and verify it is live.** `bash ~/.federation-watcher/wake-wait.sh bma-implementor` via **`run_in_background`** (never a bare `&` — that is silent deafness). Confirm the task id and that the waiter is blocking. The waiter is one-shot: it exits on the first wake event — **re-arm after processing each event** (§7, wisdom 1).
 3. **Read `~/Documents/BMA/RESUME.md`** — the crash-durable breadcrumb (in-flight work, holds, last state). It is a past-state claim; if missing, say so in the step-7 line (a finding, not a skip).
 4. **Read `~/Documents/CLAUDE.md`** — the standing authorizations + the Process Hard Gates. Grants are live only in their recorded location; verify by reading the file.
