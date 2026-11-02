@@ -132,14 +132,17 @@ echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for th
 # their rows now carry persona_file columns, so — like notary and herschel —
 # their onboard intentionally diverges from the generic boot. Their absence
 # here was the pre-existing failure on main.
-# qbp-implementor, cth-implementor, wyrd-implementor and bma-implementor are
-# EXCLUDED too (inter#228 batch 2): their rows now wire personas/<seat>.md, so
-# their onboard intentionally diverges from the generic boot.
-NON_NOTARY_SEATS="qbp-cu-implementor contextus-impl deming hutchins"
+# deming is EXCLUDED too (inter#228): its row now wires personas/deming.md and
+# deming-boot.tmpl step (3.5) reads that persona, so its onboard intentionally
+# diverges. That wiring is asserted by the dedicated deming-boot check below.
+# qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor and
+# edda-implementor are EXCLUDED too (inter#228 batch 2): their rows now wire
+# personas/<seat>.md, so their onboard intentionally diverges from the generic boot.
+NON_NOTARY_SEATS="qbp-cu-implementor contextus-impl hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for the 4 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, edda-implementor, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for the 3 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, deming, edda-implementor, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
 
 echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
 HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
@@ -211,6 +214,9 @@ grep -qF '{{WORKDIR}}/RESUME.md' "$HERE/deming-boot.tmpl" \
   && [ "$(grep -o '(3.5)' "$HERE/deming-boot.tmpl" | wc -l)" -eq 1 ] \
   && awk '{ a=index($0,"(3.5)"); b=index($0,"THEN — YOUR FIRST JOB"); exit !(a>0 && b>a) }' "$HERE/deming-boot.tmpl"
 check $? "deming-boot.tmpl: step (3.5) before the first-job sweep reads deming's wisdoms from Nidavellir origin/main and its RESUME handoff (deming §I4 on #263)"
+grep -qF 'git -C ~/Documents/inter show origin/main:personas/deming.md' "$HERE/deming-boot.tmpl" \
+  && awk -F'|' '$1 ~ /^deming[[:space:]]+$/ { gsub(/[[:space:]]|#.*/, "", $4); exit !($4 == "personas/deming.md") }' "$HERE/personas.conf"
+check $? "deming-boot.tmpl step (3.5) reads deming's persona from inter origin/main, and personas.conf wires personas/deming.md (inter#228; deming-boot overrides the persona-file template, so the boot must load it itself)"
 grep -qF 'show origin/main:wisdoms/{{HANDLE}}.md' "$HERE/onboard-prompt.tmpl"
 check $? "generic onboard reads the seat's wisdoms from the committed blob, not the working tree"
 
