@@ -504,8 +504,15 @@ class AllowlistTest(unittest.TestCase):
 # ── seam: watcher.py's own wake-line format ───────────────────────────────
 
 def _watcher_templates():
-    """Evaluate watcher.py's own WAKE:* f-strings (and its snip()) from source,
-    without importing it (watcher.py needs PyYAML)."""
+    """Evaluate watcher.py's own per-WAKE-FILE f-strings (WAKE:MENTION,
+    WAKE:CLASSIFIED — and its snip()) from source, without importing it
+    (watcher.py needs PyYAML).
+
+    inter#271 item 3 added a third "WAKE:" literal, WAKE:SKIP — but that one
+    is a diagnostic emit()'d to stdout only, never written into a persona's
+    wake file via write_wake(), so it's deliberately excluded here: this
+    seam exists to test the two line KINDS nudger actually has to parse out
+    of a real wake file, not every string that happens to start "WAKE:"."""
     tree = ast.parse((WATCHER_DIR / "watcher.py").read_text())
     ns = {}
     for node in ast.walk(tree):
@@ -515,7 +522,7 @@ def _watcher_templates():
     for node in ast.walk(tree):
         if (isinstance(node, ast.JoinedStr) and node.values
                 and isinstance(node.values[0], ast.Constant)
-                and str(node.values[0].value).startswith("WAKE:")):
+                and str(node.values[0].value).startswith(("WAKE:MENTION", "WAKE:CLASSIFIED"))):
             templates.append(compile(ast.Expression(node), "watcher.py", "eval"))
     return templates, ns
 
