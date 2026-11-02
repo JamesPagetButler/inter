@@ -329,20 +329,46 @@ def resolve_mention_targets(
     return resolved_order, (best_role if roles is not None else None)
 
 
+def _waiter_pid_alive(state_dir: Path, persona: str) -> bool:
+    """True iff state/<persona>.waiter.pid names a live process whose cmdline
+    is wake-wait.sh for this persona (inter#157's churn-free waiter)."""
+    try:
+        pid = int((state_dir / f"{persona}.waiter.pid").read_text().strip())
+        cmd = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode(errors="replace")
+        return "wake-wait.sh" in cmd and persona in cmd.split()
+    except Exception:
+        return False
+
+
+WAITER_REARM_GRACE_SEC = 120
+
+
 def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
-    """External liveness check for a persona's §2.i wake-file Monitor.
+    """External liveness check for a persona's §2.i wake delivery.
 
-    Each agent terminal arms its Monitor as a literal
-    `tail -f -n 0 {wake_dir}/{persona}` child process on this host (see the
-    module docstring's fan-out architecture) — so `pgrep -f` against that
-    command line is a direct, zero-cost, zero-noise liveness probe: it never
-    touches the persona's own wake file, so a healthy seat gets no extra
-    wake event out of this check.
+    A seat counts as ALIVE if ANY of these holds (inter#271 follow-up: seats
+    moved off the 30-min Monitor onto wake-wait.sh, and the old tail-only
+    probe then reported every seat MONITOR_DEAD):
+      1. wake-wait.sh waiter: state/<persona>.waiter.pid is a live process
+         running wake-wait.sh for this persona;
+      2. the waiter just fired: state/<persona>.offset was advanced within
+         WAITER_REARM_GRACE_SEC (the one-shot exited on a real event and the
+         seat is mid-turn, about to re-arm) -- not a dead seat;
+      3. legacy Monitor: a literal `tail -f -n 0 {wake_dir}/{persona}` process.
 
-    Returns True (alive) / False (dead) / None (the check itself failed —
-    e.g. pgrep unavailable) so a tooling hiccup surfaces as "unknown"
-    rather than a false DEAD flag.
+    Returns True (alive) / False (dead) / None (the legacy probe itself
+    failed AND no waiter evidence) so a tooling hiccup surfaces as
+    "unknown" rather than a false DEAD flag.
     """
+    state_dir = wake_dir.parent / "state"
+    if _waiter_pid_alive(state_dir, persona):
+        return True
+    try:
+        off = state_dir / f"{persona}.offset"
+        if off.exists() and (time.time() - off.stat().st_mtime) < WAITER_REARM_GRACE_SEC:
+            return True
+    except Exception:
+        pass
     wake_path = wake_dir / persona
     try:
         result = subprocess.run(
