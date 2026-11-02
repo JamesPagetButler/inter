@@ -2,8 +2,9 @@
 
 After seats moved off the 30-min Monitor onto wake-wait.sh (inter#157), the
 tail-only probe reported every seat MONITOR_DEAD. check_monitor_alive now
-accepts (1) a live wake-wait.sh pidfile, (2) an offset advanced within the
-re-arm grace window, or (3) the legacy tail Monitor.
+reports POSITIVE liveness only: True for (1) a live wake-wait.sh pidfile or
+(2) the legacy tail Monitor; otherwise None (unknown), never False, because a
+seat mid-turn has no waiter by design. fed-sweep owns the DEAD verdict.
 """
 import os
 import subprocess
@@ -49,32 +50,43 @@ class WaiterLivenessTest(unittest.TestCase):
     def test_waiter_for_other_persona_not_alive(self):
         pid = self._fake_waiter("beta")
         (self.state / "alpha.waiter.pid").write_text(f"{pid}\n")
-        self.assertFalse(watcher.check_monitor_alive(self.wake, "alpha"))
+        self.assertIsNot(watcher.check_monitor_alive(self.wake, "alpha"), True)
 
-    def test_stale_pidfile_not_alive(self):
+    def test_no_waiter_old_offset_is_unknown(self):
         (self.state / "alpha.waiter.pid").write_text("999999\n")
         old = self.state / "alpha.offset"
         old.write_text("1\n")
         past = time.time() - 3600
         os.utime(old, (past, past))
-        self.assertFalse(watcher.check_monitor_alive(self.wake, "alpha"))
+        self.assertIsNone(watcher.check_monitor_alive(self.wake, "alpha"))
 
-    def test_recent_offset_within_grace_counts_as_alive(self):
-        (self.state / "alpha.offset").write_text("1\n")  # just fired; seat mid-turn
+    def test_legacy_tail_counts_as_alive(self):
+        p = subprocess.Popen(["tail", "-f", "-n", "0", str(self.wake / "alpha")])
+        self.procs.append(p)
+        deadline = time.time() + 3
+        while time.time() < deadline and not watcher.check_monitor_alive(self.wake, "alpha"):
+            time.sleep(0.05)
         self.assertTrue(watcher.check_monitor_alive(self.wake, "alpha"))
 
 
+class MutantsKilledTest(unittest.TestCase):
+    def test_mutants_killed(self):
+        self.assertTrue(_mutation_checks())
+
+
 def _mutation_checks():
-    """Mutants that must be KILLED: dropping the waiter check, or the grace check."""
+    """Mutants that must be KILLED: dropping the waiter check, or reverting
+    to the pre-review "no waiter => False" verdict (the 120s-grace churn)."""
     import importlib
     src = Path(watcher.__file__).read_text()
     cases = [
         ("waiter pidfile ignored",
          "    if _waiter_pid_alive(state_dir, persona):\n        return True\n",
          "", "test_waiter_pidfile_counts_as_alive"),
-        ("re-arm grace ignored",
-         "WAITER_REARM_GRACE_SEC = 120\n", "WAITER_REARM_GRACE_SEC = 0\n",
-         "test_recent_offset_within_grace_counts_as_alive"),
+        ("no waiter => False",
+         "            return True\n    except Exception:\n        pass\n    return None\n",
+         "            return True\n    except Exception:\n        pass\n    return False\n",
+         "test_no_waiter_old_offset_is_unknown"),
     ]
     killed = 0
     for name, old, new, test in cases:
@@ -102,6 +114,4 @@ def _mutation_checks():
 
 
 if __name__ == "__main__":
-    prog = unittest.main(exit=False)
-    ok = prog.result.wasSuccessful() and _mutation_checks()
-    sys.exit(0 if ok else 1)
+    unittest.main()

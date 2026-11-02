@@ -91,92 +91,71 @@ class HeartbeatTest(unittest.TestCase):
 
     # ── liveness probe ──────────────────────────────────────────────────
 
-    def test_alive_and_dead_probe(self):
+    def test_alive_and_unknown_probe(self):
+        """inter#276: positive liveness only. No waiter and no tail is
+        unknown (None), never False: mid-turn and dark look identical here."""
         proc = self._arm_monitor("alpha")
         self.assertTrue(watcher.check_monitor_alive(self.wake_dir, "alpha"))
-        self.assertFalse(watcher.check_monitor_alive(self.wake_dir, "beta"))
+        self.assertIsNone(watcher.check_monitor_alive(self.wake_dir, "beta"))
         self._kill_monitor(proc, "alpha")
 
     # ── sweep + notification behavior ───────────────────────────────────
 
-    def test_dead_monitor_flagged_on_first_sweep(self):
-        """beta never had a Monitor armed — must be flagged within one sweep."""
+    def _deming_lines(self, needle: str) -> list:
+        return [l for l in (self.wake_dir / "deming-test").read_text().splitlines()
+                if needle in l]
+
+    def test_no_waiter_never_pages_dead(self):
+        """beta has no waiter: recorded unknown, and NO MONITOR_DEAD page.
+        The DEAD verdict belongs to fed-sweep (pane-idle + 2-sweep debounce)."""
         self._arm_monitor("alpha")
         state = watcher.run_heartbeat_sweep(
             self.wake_dir, self.personas_conf, "deming-test", {}
         )
-        self.assertFalse(state["beta"]["alive"])
+        self.assertIsNone(state["beta"]["alive"])
         self.assertTrue(state["alpha"]["alive"])
-
-        notify_lines = (self.wake_dir / "deming-test").read_text().splitlines()
-        dead_lines = [l for l in notify_lines if "MONITOR_DEAD persona=beta" in l]
-        self.assertEqual(len(dead_lines), 1)
+        self.assertEqual(self._deming_lines("MONITOR_DEAD"), [])
 
     def test_healthy_seat_gets_zero_wake_noise(self):
         """Alive seats must not have anything written to their OWN wake file
-        by the heartbeat — only the notify_persona gets the flag line."""
+        by the heartbeat."""
         self._arm_monitor("alpha")
         watcher.run_heartbeat_sweep(self.wake_dir, self.personas_conf, "deming-test", {})
         alpha_lines = (self.wake_dir / "alpha").read_text().splitlines()
         self.assertEqual(alpha_lines, [], "healthy seat's own wake file must stay untouched")
 
-    def test_kill_monitor_flags_transition_within_one_sweep(self):
-        """The AC's literal scenario: kill a seat's monitor -> watcher flags
-        it within one interval (one run_heartbeat_sweep call)."""
+    def test_waiter_exit_mid_turn_is_silent(self):
+        """The #276 churn case: a seat's one-shot fires and it works a long
+        turn with no waiter. That must not page deming DEAD then RECOVERED."""
         proc = self._arm_monitor("alpha")
         state = watcher.run_heartbeat_sweep(
             self.wake_dir, self.personas_conf, "deming-test", {}
         )
         self.assertTrue(state["alpha"]["alive"])
-        before = (self.wake_dir / "deming-test").read_text().splitlines()
-        self.assertFalse(any("persona=alpha" in l for l in before))
-
-        self._kill_monitor(proc, "alpha")
-        state = watcher.run_heartbeat_sweep(
-            self.wake_dir, self.personas_conf, "deming-test", state
-        )
-        self.assertFalse(state["alpha"]["alive"])
-        after = (self.wake_dir / "deming-test").read_text().splitlines()
-        dead_lines = [l for l in after if "MONITOR_DEAD persona=alpha" in l]
-        self.assertEqual(len(dead_lines), 1)
-
-    def test_no_repeat_notify_while_still_dead(self):
-        """A seat dead across multiple sweeps gets exactly one flag, not one
-        per interval — low overhead / no notify-spam to deming."""
-        state = watcher.run_heartbeat_sweep(
-            self.wake_dir, self.personas_conf, "deming-test", {}
-        )
-        first_count = len([
-            l for l in (self.wake_dir / "deming-test").read_text().splitlines()
-            if "MONITOR_DEAD persona=beta" in l
-        ])
-        self.assertEqual(first_count, 1)
-
+        self._kill_monitor(proc, "alpha")          # waiter fired; seat mid-turn
         for _ in range(3):
             state = watcher.run_heartbeat_sweep(
                 self.wake_dir, self.personas_conf, "deming-test", state
             )
-        second_count = len([
-            l for l in (self.wake_dir / "deming-test").read_text().splitlines()
-            if "MONITOR_DEAD persona=beta" in l
-        ])
-        self.assertEqual(second_count, 1, "repeated dead state must not re-notify")
-
-    def test_recovery_flagged(self):
-        state = watcher.run_heartbeat_sweep(
-            self.wake_dir, self.personas_conf, "deming-test", {}
-        )
-        self.assertFalse(state["beta"]["alive"])
-
-        proc = self._arm_monitor("beta")
+        self.assertIsNone(state["alpha"]["alive"])
+        self._arm_monitor("alpha")                 # turn ends, re-arm
         state = watcher.run_heartbeat_sweep(
             self.wake_dir, self.personas_conf, "deming-test", state
         )
+        self.assertTrue(state["alpha"]["alive"])
+        self.assertEqual(self._deming_lines("persona=alpha"), [],
+                         "mid-turn gap must produce zero pages")
+
+    def test_recovery_from_legacy_dead_state_flagged(self):
+        """A False persisted by the pre-#276 heartbeat still clears with one
+        MONITOR_RECOVERED when the seat's waiter comes back."""
+        prev = {"beta": {"alive": False, "last_checked": 0, "since": 0}}
+        self._arm_monitor("beta")
+        state = watcher.run_heartbeat_sweep(
+            self.wake_dir, self.personas_conf, "deming-test", prev
+        )
         self.assertTrue(state["beta"]["alive"])
-        lines = (self.wake_dir / "deming-test").read_text().splitlines()
-        recovered = [l for l in lines if "MONITOR_RECOVERED persona=beta" in l]
-        self.assertEqual(len(recovered), 1)
-        self._kill_monitor(proc, "beta")
+        self.assertEqual(len(self._deming_lines("MONITOR_RECOVERED persona=beta")), 1)
 
     def test_status_file_roundtrip(self):
         state = watcher.run_heartbeat_sweep(
@@ -184,7 +163,7 @@ class HeartbeatTest(unittest.TestCase):
         )
         watcher.save_heartbeat_state(self.status_file, state)
         reloaded = watcher.load_heartbeat_state(self.status_file)
-        self.assertEqual(reloaded["beta"]["alive"], False)
+        self.assertIsNone(reloaded["beta"]["alive"])
         self.assertIn("last_checked", reloaded["beta"])
         self.assertIn("since", reloaded["beta"])
 

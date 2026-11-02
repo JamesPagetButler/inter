@@ -340,44 +340,35 @@ def _waiter_pid_alive(state_dir: Path, persona: str) -> bool:
         return False
 
 
-WAITER_REARM_GRACE_SEC = 120
-
-
 def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
-    """External liveness check for a persona's §2.i wake delivery.
+    """External POSITIVE-liveness check for a persona's §2.i wake delivery.
 
-    A seat counts as ALIVE if ANY of these holds (inter#271 follow-up: seats
-    moved off the 30-min Monitor onto wake-wait.sh, and the old tail-only
-    probe then reported every seat MONITOR_DEAD):
+    True (alive) if either holds (inter#271 follow-up: seats moved off the
+    30-min Monitor onto wake-wait.sh, and the old tail-only probe then
+    reported every seat MONITOR_DEAD):
       1. wake-wait.sh waiter: state/<persona>.waiter.pid is a live process
          running wake-wait.sh for this persona;
-      2. the waiter just fired: state/<persona>.offset was advanced within
-         WAITER_REARM_GRACE_SEC (the one-shot exited on a real event and the
-         seat is mid-turn, about to re-arm) -- not a dead seat;
-      3. legacy Monitor: a literal `tail -f -n 0 {wake_dir}/{persona}` process.
+      2. legacy Monitor: a literal `tail -f -n 0 {wake_dir}/{persona}` process.
 
-    Returns True (alive) / False (dead) / None (the legacy probe itself
-    failed AND no waiter evidence) so a tooling hiccup surfaces as
-    "unknown" rather than a false DEAD flag.
+    Otherwise None (unknown), never False: a seat mid-turn has no waiter by
+    design (the one-shot re-arms at turn end), so "no waiter" cannot tell
+    mid-turn from dark. The DEAD verdict belongs to fed-sweep (Nidavellir
+    ops), which has the pane-idle allow-list and the 2-sweep debounce.
     """
     state_dir = wake_dir.parent / "state"
     if _waiter_pid_alive(state_dir, persona):
         return True
-    try:
-        off = state_dir / f"{persona}.offset"
-        if off.exists() and (time.time() - off.stat().st_mtime) < WAITER_REARM_GRACE_SEC:
-            return True
-    except Exception:
-        pass
     wake_path = wake_dir / persona
     try:
         result = subprocess.run(
             ["pgrep", "-f", f"tail -f -n 0 {wake_path}"],
             capture_output=True, text=True, timeout=5,
         )
-        return bool(result.stdout.strip())
+        if result.stdout.strip():
+            return True
     except Exception:
-        return None
+        pass
+    return None
 
 
 def load_heartbeat_state(status_file: Path) -> dict:
