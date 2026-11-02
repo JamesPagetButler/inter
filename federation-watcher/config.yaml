@@ -51,6 +51,10 @@ aliases:
   bma: bma-implementor
   cth: cth-implementor
   contextus: contextus-impl
+  notary: notary-implementor     # rare (last seq 1358); found in the 2026-11-01 live quarantine dry-run
+  oppenheimer: qbp-oppenheimer   # rare (last seq 1353)
+  wyrd: wyrd-implementor         # rare (last seq 916)
+  qbp-cu: qbp-cu-implementor     # rare (last seq 796)
 
 # Non-seat consumers that legitimately get a wake file: not a personas.conf
 # seat, no Monitor/liveness check of their own, but a real reader exists.

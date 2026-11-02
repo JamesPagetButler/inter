@@ -329,29 +329,46 @@ def resolve_mention_targets(
     return resolved_order, (best_role if roles is not None else None)
 
 
+def _waiter_pid_alive(state_dir: Path, persona: str) -> bool:
+    """True iff state/<persona>.waiter.pid names a live process whose cmdline
+    is wake-wait.sh for this persona (inter#157's churn-free waiter)."""
+    try:
+        pid = int((state_dir / f"{persona}.waiter.pid").read_text().strip())
+        cmd = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode(errors="replace")
+        return "wake-wait.sh" in cmd and persona in cmd.split()
+    except Exception:
+        return False
+
+
 def check_monitor_alive(wake_dir: Path, persona: str) -> Optional[bool]:
-    """External liveness check for a persona's §2.i wake-file Monitor.
+    """External POSITIVE-liveness check for a persona's §2.i wake delivery.
 
-    Each agent terminal arms its Monitor as a literal
-    `tail -f -n 0 {wake_dir}/{persona}` child process on this host (see the
-    module docstring's fan-out architecture) — so `pgrep -f` against that
-    command line is a direct, zero-cost, zero-noise liveness probe: it never
-    touches the persona's own wake file, so a healthy seat gets no extra
-    wake event out of this check.
+    True (alive) if either holds (inter#271 follow-up: seats moved off the
+    30-min Monitor onto wake-wait.sh, and the old tail-only probe then
+    reported every seat MONITOR_DEAD):
+      1. wake-wait.sh waiter: state/<persona>.waiter.pid is a live process
+         running wake-wait.sh for this persona;
+      2. legacy Monitor: a literal `tail -f -n 0 {wake_dir}/{persona}` process.
 
-    Returns True (alive) / False (dead) / None (the check itself failed —
-    e.g. pgrep unavailable) so a tooling hiccup surfaces as "unknown"
-    rather than a false DEAD flag.
+    Otherwise None (unknown), never False: a seat mid-turn has no waiter by
+    design (the one-shot re-arms at turn end), so "no waiter" cannot tell
+    mid-turn from dark. The DEAD verdict belongs to fed-sweep (Nidavellir
+    ops), which has the pane-idle allow-list and the 2-sweep debounce.
     """
+    state_dir = wake_dir.parent / "state"
+    if _waiter_pid_alive(state_dir, persona):
+        return True
     wake_path = wake_dir / persona
     try:
         result = subprocess.run(
             ["pgrep", "-f", f"tail -f -n 0 {wake_path}"],
             capture_output=True, text=True, timeout=5,
         )
-        return bool(result.stdout.strip())
+        if result.stdout.strip():
+            return True
     except Exception:
-        return None
+        pass
+    return None
 
 
 def load_heartbeat_state(status_file: Path) -> dict:
