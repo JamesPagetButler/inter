@@ -218,6 +218,9 @@ check $? "deming-boot.tmpl: step (3.5) before the first-job sweep reads deming's
 grep -qF 'git -C ~/Documents/inter show origin/main:personas/deming.md' "$HERE/deming-boot.tmpl" \
   && awk -F'|' '$1 ~ /^deming[[:space:]]+$/ { gsub(/[[:space:]]|#.*/, "", $4); exit !($4 == "personas/deming.md") }' "$HERE/personas.conf"
 check $? "deming-boot.tmpl step (3.5) reads deming's persona from inter origin/main, and personas.conf wires personas/deming.md (inter#228; deming-boot overrides the persona-file template, so the boot must load it itself)"
+grep -qF 'wake-wait.sh deming-escalate' "$HERE/deming-boot.tmpl" \
+  && grep -qF 'state/deming-escalate.waiter.pid' "$HERE/deming-boot.tmpl"
+check $? "deming-boot.tmpl step (3) arms the deming-escalate waiter too and checks its pidfile (deming v1.1 note on inter#278; persona §0 step 4 arms both)"
 grep -qF 'show origin/main:wisdoms/{{HANDLE}}.md' "$HERE/onboard-prompt.tmpl"
 check $? "generic onboard reads the seat's wisdoms from the committed blob, not the working tree"
 
