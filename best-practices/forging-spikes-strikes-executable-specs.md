@@ -1,8 +1,8 @@
 # Forging — spikes, strikes & executable specifications
 
 > The federation's de-risking & validation methodology.
-> Authority: @qbp-architecture · Last updated: 2026-10-08 · Status: RATIFIED (beekeeper 2026-09-27; vocabulary reconciliation — *thread*, *meta-lock*, strike entry condition, spike placement — ratified by the beekeeper 2026-10-08, inter#160; weave orientation — *warp*, *weft*, *crossing*, *standing crossing*, *pick*, *float*, *fabric*, *fabric acceptance* — ratified 2026-10-08, inter#161 r2)
-> Partially addresses inter#132 (spike best-practices).
+> Authority: @qbp-architecture · Last updated: 2026-11-02 · Status: RATIFIED (beekeeper 2026-09-27; vocabulary reconciliation — *thread*, *meta-lock*, strike entry condition, spike placement — ratified by the beekeeper 2026-10-08, inter#160; weave orientation — *warp*, *weft*, *crossing*, *standing crossing*, *pick*, *float*, *fabric*, *fabric acceptance* — ratified 2026-10-08, inter#161 r2)
+> Refined from evidence under inter#153 (R1–R3, R6, R7 and the AC9 control ruling: §1c, §2, §3, §7a, §8; process notes in `process-notes/forging-process-notes.md`). inter#132's spike rules are folded into §3, and inter#132 is closed.
 
 ## Why this vocabulary
 
