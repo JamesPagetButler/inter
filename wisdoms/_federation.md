@@ -44,6 +44,14 @@ provenance: hoisted from the qbp-architecture pilot + existing best-practice doc
 - **Provenance is non-negotiable.** Attribution and the why-behind-a-decision travel with the
   artifact (Closes #N, decision records, these docs).
 
+- **Address by role: owner in `to`, input in the body, awareness in `(cc …)`.** The watcher
+  classifies every @-mention (inter#271, beekeeper-approved 2026-11-04). The leading block
+  before the first ` — ` is `to`: responsibility, same-cycle reply. A body @-name is `input`:
+  answered after the `to` items, or declined in one line. `(cc …)` is `cc`: awareness only, and
+  it does not wake the seat. So the seat that owns the ask goes in `to`. Never hide an ask in a
+  cc, and never put the owner only in the body (it would be downgraded to "may decline"). Don't
+  @-tag aliases, SHAs or seats in prose: each tag wakes someone. → `federation-watcher/WAKE-ROLES.md`.
+
 ## Meta
 - **Skill-before-blind-use.** No persona or sub-agent uses a tool without its skill loaded;
   if the skill doesn't exist, generating it is the first task. → `inter/skills/`.
