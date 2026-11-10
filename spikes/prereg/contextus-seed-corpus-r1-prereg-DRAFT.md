@@ -1,12 +1,13 @@
-# Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT r1)
+# Spike `contextus-seed-corpus` — round 1 pre-registration (DRAFT)
 
-Status: **DRAFT r7. Nothing built, nothing run.** (r7 adds the §2.3a scope sentence only, per the beekeeper, 2026-10-28: "control the blast radius … to this spike". No rule changes for this round. r6: r6 applies the beekeeper's seed ruling, option (b), given in qbp-architecture's session on 2026-10-28, plus deming's wall-clock kill and the Nidavellir#41 thread pin. r5: r5 adds the §2 domain guard and the §2a safety-stop halt rule. Both followed contextus-impl's two model safety stops on this task, 2026-10-27, and were approved by the beekeeper in qbp-architecture's session. Earlier: r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
-Director: @qbp-architecture. Runner: @contextus-impl. Local extraction tier: @nugent. Seeds and grading: @qbp-oppenheimer. Box-safety and capacity grant: @deming. Run go: the beekeeper.
+Status: **DRAFT r8. Nothing built, nothing run.** (r8 contains the run to one implementation seat, per the beekeeper, 2026-11-10, first-hand in qbp-architecture's session: the spike's blast radius "should be contained to one implementation agent with you overseeing … it's acceptable to pull in other federation members to do small checking jobs on highly critical stuff, but they shouldn't be the agents running large portions of the spike". So: contextus-impl runs every stage through fresh sub-agents; grading moves from oppenheimer's seat to fresh Opus grader sub-agents dispatched by the director; oppenheimer keeps a 50-call spot-check; the inter-rater check moves from cth-implementor to Gemini (a different model family); nugent's local arm leaves round 1 and becomes round 1b under its own pre-registration; an Opus extraction arm is added on the 20 graded papers; the per-paper claim cap drops from 30 to 10. The questions, corpus rules, domain guard, seed exception, safety-stop rule, thresholds and kill conditions are unchanged. r7 adds the §2.3a scope sentence only, per the beekeeper, 2026-10-28: "control the blast radius … to this spike". No rule changes for this round. r6: r6 applies the beekeeper's seed ruling, option (b), given in qbp-architecture's session on 2026-10-28, plus deming's wall-clock kill and the Nidavellir#41 thread pin. r5: r5 adds the §2 domain guard and the §2a safety-stop halt rule. Both followed contextus-impl's two model safety stops on this task, 2026-10-27, and were approved by the beekeeper in qbp-architecture's session. Earlier: r2 added the local-extraction arm, per deming seq 3488. r3 added round 1b for when the local arm isn't ready, per nugent seq 3489. r4 folds in oppenheimer's four grading amendments (seq 3492) and nugent's model naming (seq 3493).) Spike / napkin grade. No outcome can by itself raise a claim above **research**.
+Director: @qbp-architecture (also dispatches the §5 graders). Runner: @contextus-impl, the **only seat that runs any stage**; it runs each stage through fresh sub-agents. Small checks only: @qbp-oppenheimer (seeds, already given; the §5 spot-check), @deming (box-safety and capacity grant). Run go: the beekeeper — **given first-hand 2026-11-10 ("get the spike done, do a full round"), conditional on the freeze, the §9 confirmations and deming's clear**; the director cites all three when he issues it.
+**Containment rule (r8).** No federation seat other than the runner executes a pipeline stage. A sub-agent is dispatched fresh per paper (or per batch of at most 5 papers) with only that stage's inputs: no federation file access, no bus, no memory of earlier papers. Its output is written to the run directory; nothing it produces is posted to the bus or wired into CTH, BMA, Wyrd or Contextus.
 Lane: **token** (network + LLM). Light CPU. Inter#194 § Spike queue.
 Origin: beekeeper direction, 2026-10-25. This spike is the pre-Sprint 4 probe for inter#121's continuous research loop, which is folded into D1 (inter#199). Its corpus is the input to `substrate-native-vs-batch` after Sprint 4.
 Seeds: inter#121, oppenheimer's comment of 2026-10-25 (24 seeds, 12 per domain).
 
-**Freeze procedure.** When the three confirmations in §9 are in, this file is copied verbatim to `-FROZEN-v1.md`. The only permitted edits are the status line, the §9 answers and the model-tier slot in §4.2. The copy is committed and pushed, and its sha256 is posted on live-test. After that, no rule may change once any round 1 output exists.
+**Freeze procedure.** When the three confirmations in §9 are in, this file is copied verbatim to `-FROZEN-v1.md`. The only permitted edits are the status line and the §9 answers. The extraction, grader and inter-rater prompts are committed alongside it and their sha256s are listed in the frozen copy. The copy is committed and pushed, and its sha256 is posted on live-test. After that, no rule may change once any round 1 output exists.
 
 ---
 
@@ -69,21 +70,22 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 ## 4. Extraction (blind, per D1-2)
 
 1. The extractor runs with **no federation file access**. Its input is a **neutral restatement artifact** built from the paper text only, with no QBP vocabulary, hashed before extraction. The hash is recorded on every claim.
-2. **Model tier (primary): haiku**, the bulk-sweep tier (deming seq 3488). It is used for every paper and is the graded reference. The prompt is frozen and hashed at freeze.
-4. **Local arm (secondary; decides round 2's tier).** @nugent's local model (the qwen3-32b or coder-30b profile; named at freeze) extracts the **same 20 graded papers** (§5) with the same frozen prompt and restatement. It runs on the GPU, serialised against the GPU lane (`nugent-gemma12b`). **If the local arm isn't ready at run time** (the model download is gated on the reboot-window disk reclaim, and nugent's VRAM-fit preflight must pass), round 1 runs haiku-only. The local arm then runs later as **round 1b** on the **same 20 graded papers**, with the same frozen prompt and restatements and no rule change. **The local model and quant are named at the round 1b start, after nugent's VRAM-fit preflight** (primary: a Qwen coder model in the 30–32B class at the largest quant that fits 16 GB with headroom; fallback: a 12–14B Q4 model), and they are recorded in the r1b report header. A failed preflight is a finding, not a rule change. GPU order (nugent seq 3493): `nugent-gemma12b` runs first, then this arm, under deming's combined disk estimate (pull, run, prune, then pull).
-3. The extractor emits the claims and nothing else: no syntheses, no "inspirations", no QBP mappings. **Cross-domain synthesis is out of scope for round 1.** It belongs to `substrate-native-vs-batch`, and only over extracted, never authored, edges.
+2. **Model tier (primary): haiku**, the bulk-sweep tier (deming seq 3488). It is used for every paper and is the graded reference. The prompt is frozen and hashed at freeze. The restatement is also produced by a haiku sub-agent, from the paper text only, with its own frozen, hashed prompt.
+3. **Opus arm (r8; comparison only).** A fresh Opus sub-agent extracts the **same 20 graded papers** (§5) with the same frozen prompt and the same restatements. Its claims are graded exactly like haiku's. It answers one question: if haiku fails, does a stronger tier fix it? It never replaces haiku's results in the corpus.
+4. **Local arm → round 1b (r8).** @nugent's local-model arm is **not part of round 1**. It runs later as round 1b, under its own pre-registration, on the same 20 graded papers with the same frozen prompts and restatements, after the reboot-window disk reclaim and nugent's VRAM-fit preflight. Round 1b decides whether round 2 can run local; round 1 does not depend on it.
+5. **Safety:** each extraction, restatement and grading call is a separate fresh sub-agent, so no model sees a long accumulated context. §2a applies to every one of them.
+6. The extractor emits the claims and nothing else: no syntheses, no "inspirations", no QBP mappings. **Cross-domain synthesis is out of scope for round 1.** It belongs to `substrate-native-vs-batch`, and only over extracted, never authored, edges.
 
 ## 5. Grading (Q2)
 
 - **Sample:** 20 papers (10 per domain), drawn by PCG seed `250125` from the papers with status `extracted`. Every claim from a sampled paper is graded.
-- **Grader:** @qbp-oppenheimer. Each claim is rated `faithful` (relation, direction, modality and locator all correct) / `wrong-relation` / `wrong-direction` / `wrong-modality` (stated vs cited swapped) / `wrong-locator` / `not-in-paper`.
-- **Grader input:** the paper's own text (abstract, intro, statements) plus the claim. **The restatement artifact is hidden from the grader**, so a restatement error can't propagate into a "faithful" grade.
-- **Per-paper claim cap:** if a sampled paper yields more than 30 claims, 30 are drawn by PCG from the same seed stream. Precision is then estimated on the graded subset, and the cap is disclosed.
-- **Inter-rater check:** 4 of the 20 papers (2 per domain, the first 4 drawn) are also graded independently by @cth-implementor. Cohen's κ on faithful vs not is reported. **Small-n rule:** if fewer than 40 claims are double-graded, κ is reported but isn't a gate. Round 2 go/no-go then rests on precision and locator accuracy alone, and that is disclosed.
-- **Primary metric:** claim precision = faithful / graded, with a Wilson 95% CI. Locator accuracy is reported separately.
-- **Local arm:**
-  - claim-level agreement with the haiku reference on the 20 papers (same subject/relation/object/locator after normalisation), reported with a CI;
-  - oppenheimer also grades the local arm's claims on the 4 inter-rater papers, so agreement isn't mistaken for faithfulness.
+- **Grader (r8):** a **fresh Opus sub-agent per paper, dispatched by the director** (not by the runner, so the runner never grades its own extraction). Each claim is rated `faithful` (relation, direction, modality and locator all correct) / `wrong-relation` / `wrong-direction` / `wrong-modality` (stated vs cited swapped) / `wrong-locator` / `not-in-paper`, with a one-line reason. The grader prompt is frozen and hashed at freeze.
+- **Grader input:** the paper's own text (abstract, intro, statements), read from the runner's text cache by sha, plus the claims. **The restatement artifact and the extractor's identity (haiku or Opus) are hidden from the grader**, so a restatement error can't propagate into a "faithful" grade and the two arms are graded blind. The two arms' claims for a paper are shuffled together by PCG before grading.
+- **Per-paper claim cap (r8):** if a sampled paper yields more than **10** claims, 10 are drawn by PCG from the same seed stream (per arm). Precision is then estimated on the graded subset, and the cap is disclosed. At most 200 claims per arm are graded.
+- **Domain-owner spot-check (r8):** @qbp-oppenheimer re-grades **50 grader calls** drawn by PCG from the haiku arm (25 per domain), from the same inputs the grader saw. If he disagrees with the grader on more than 10 of the 50, the grader is not trusted: precision is reported but **round 2 is no-go on grading validity**, whatever the precision (§8 row "Grader fails the spot-check").
+- **Inter-rater check (r8):** 4 of the 20 papers (2 per domain, the first 4 drawn), both arms, are also graded independently by **Gemini** (the federation's cross-family model, via the runner's `review_document` call) with the same frozen grader prompt. Cohen's κ on faithful vs not, Opus grader vs Gemini, is reported. **Small-n rule:** if fewer than 40 claims are double-graded, κ is reported but isn't a gate. Round 2 go/no-go then rests on precision, locator accuracy and the spot-check, and that is disclosed.
+- **Primary metric:** claim precision = faithful / graded, with a Wilson 95% CI. Locator accuracy is reported separately. Both are reported per arm.
+- **Opus arm:** precision and locator accuracy on the same 20 papers, with the paired difference (Opus − haiku) and its CI.
 - **Recall** is not scored; there is no gold claim set. The report states this as a limitation.
 
 ## 6. Measurements (Q1, Q4)
@@ -98,10 +100,11 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - precision ≥ 0.85, with the Wilson lower bound ≥ 0.75;
   - locator accuracy ≥ 0.85;
   - κ ≥ 0.6 (unless the §5 small-n rule applies);
+  - the §5 spot-check passes (at most 10 of 50 disagreements);
   - the projected round 2 cost is inside the budget deming sets.
 
   Otherwise it is **no-go**, and §8 decides what happens next.
-- **Round 2 extraction tier:** **local** iff local–haiku agreement ≥ 0.90 **and** the local arm's graded precision on the 4 papers is no more than 0.05 below haiku's on the same papers. Otherwise **haiku** (13M haiku tokens still fits the cap, deming seq 3488).
+- **Round 2 extraction tier (r8):** **haiku** if haiku passes. If haiku fails precision or locator accuracy **and** the Opus arm passes both thresholds on the 20 papers, round 2 is re-scoped to **Opus**, with deming re-estimating cost (a new pre-reg). If both fail, extraction quality is a D1 design-closure item (§8). Whether round 2 can run **local** is decided by round 1b, not here (13M haiku tokens still fits the cap, deming seq 3488).
 - **Q3 is counted, not thresholded:**
   - the number of the 14 UNANCHORED seeds that gained a verified id plus a proposed REF anchor;
   - the number of candidate items for #660/#661/#473 and W6, each graded `useful` / `not` by oppenheimer.
@@ -113,30 +116,34 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
 | **Round 2 go** | `contextus-seed-corpus-r2` (1,000) is pre-registered from round 1's measured costs. The corpus is the named input for `substrate-native-vs-batch`. The maths relation set becomes an AC on D1 S1 (contextus#40). | @qbp-architecture; @contextus-impl |
 | **Precision fails** | Extraction quality becomes a **D1 design-closure item** (R1), and D1 S3 (the runners) doesn't dispatch until it's ruled. Round 1' runs on a fresh 100 with the refined prompt or model, under a new pre-reg. This is recorded as a negative. | @qbp-architecture |
 | **Locator accuracy fails, precision passes** | Provenance is the gap. The locator requirement is tightened in S1, and round 1' re-runs on a fresh sample. | @contextus-impl |
-| **Local arm passes** | Round 2 runs local: electricity, not the token budget. The data also feeds nugent's harness-130 quality leg (local vs cloud extraction). | @nugent |
-| **Local arm fails** | Round 2 runs on haiku. Local extraction is recorded as a negative for this domain, with its reopen conditions. | @nugent |
+| **Haiku fails, Opus arm passes** (r8) | Round 2 is re-scoped to the Opus tier under a new pre-reg; deming re-estimates the cost. Haiku extraction is recorded as a negative for maths papers, with its reopen condition (a better prompt or a newer bulk tier). | @qbp-architecture; @deming |
+| **Both arms fail** (r8) | As "Precision fails": a D1 design-closure item. The Opus arm's result says whether the gap is the tier or the task (if Opus is also below 0.75 lower bound, the task framing or schema is the suspect, not the model). | @qbp-architecture |
+| **Grader fails the spot-check** (r8) | Round 2 is no-go on grading validity. The grader prompt is the gap; round 1' re-grades the **same** frozen claims with a revised grader under a new pre-reg (no re-extraction). | @qbp-architecture |
+| **Local arm** (r8) | Not decided by round 1. Round 1b (own pre-reg, @nugent) decides whether round 2 can run local. | @nugent |
 | **Cost fails, quality passes** | Round 2 is re-scoped: abstract plus statements only, a cheaper tier or a local model (nugent), or higher concurrency. It is a new pre-reg. | @deming; @qbp-architecture |
 | **Fan-out < 100 unique within 2 hops** | Domain sparsity is recorded as a finding. Round 2 may widen to hop 3, pre-registered. | @qbp-architecture |
 | **Every outcome** | Verified ids plus **proposed** REF anchors for the UNANCHORED seeds go to the anchor owner through the CTH propose path. **They are never adopted claims** (oppenheimer ask b). The 14 UNANCHORED seeds are **#660's first re-audit batch** (oppenheimer ask c). The missing doi/arXiv field in the CTH schema is a forward row on confluent-trust#122. | @qbp-oppenheimer; @cth-implementor |
 
 ## 9. Confirmations (freeze gates)
 
-1. **@contextus-impl:** the runner design (§2, §4, §6) and the S1 schema fit (§3) are buildable as written.
-2. **@qbp-oppenheimer:** the seeds as pinned, the grading protocol (§5) and the thresholds (§7).
-3. **@deming:** the tier choice (§4.2, answered seq 3488), the budget (§7), box-safety (§10), and the per-run capacity grant logged in `ops/capacity/capacity-ledger.py`.
-4. **@nugent:** the local model is named and fits the 16 GB VRAM profile; it is sequenced against `nugent-gemma12b`.
+All three are re-given against **r8's own sha256**; confirmations given on r4 or earlier do not carry.
+1. **@contextus-impl:** the runner design (§2, §4, §6), the sub-agent containment rule, and the S1 schema fit (§3) are buildable as written; and it **accepts** the runner role for round 1.
+2. **@qbp-oppenheimer:** the seeds as pinned, the grading protocol (§5, including the 50-call spot-check, which is his only run-time task) and the thresholds (§7).
+3. **@deming:** the tier choice (§4), the round 2 **budget figure** (§7; a number, stated in the confirmation), box-safety (§10), and the per-run capacity grant logged in `ops/capacity/capacity-ledger.py`.
+
+(@nugent's r4 local-model confirmation moves to the round 1b pre-registration.)
 
 ## 10. Resources and kill conditions (pre-run-resource-estimate)
 
 - **Upper bound:**
-  - ~1.3M tokens;
-  - ≤ 0.5 GB disk (a PDF/text cache, pruned after extraction; claims are JSONL, ≤ 20 MB);
+  - ~1.3M haiku tokens (restatement + extraction, 100 papers), plus ~0.3M Opus tokens for the Opus arm (20 papers), ~0.5M Opus tokens for grading (2 arms × ≤ 200 claims, paper text re-read per paper), and ~0.1M Gemini tokens (4 papers × 2 arms): **≈ 2.2M tokens in all** (r8);
+  - ≤ 0.5 GB disk (a PDF/text cache, kept until grading and the spot-check finish, then pruned (r8); claims are JSONL, ≤ 20 MB);
   - ≤ 1 GB RAM;
-  - concurrency 1;
+  - fetch concurrency 1 (sub-agent concurrency below);
   - **threads pinned** (r6, Nidavellir#41): `OMP_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1` and `MKL_NUM_THREADS=1` for any numpy/BLAS/torch use on the CPU, so the core budget is declared and not just the process count;
   - nice 19;
   - ~2–5 h wall time;
-  - the PDF cache is pruned after extraction (deming).
+  - the PDF cache is pruned after grading and the spot-check (deming; r8).
 - **Kill conditions:**
   - token spend > 1.5× the round 1 estimate;
   - disk > 1 GB;
@@ -145,7 +152,8 @@ Signed causal edges are **not** used for maths papers. This schema is the propos
   - **wall clock > 8 h** (r6, deming live-test seq 3702: a backstop for a network-stalled, low-token hang);
   - **a model safety decline** (§2a): halt at that paper; never retried or rerouted.
 - **Network:** public APIs only (arXiv, Crossref, OpenAlex, Semantic Scholar), at polite rates. Fetching stays rate-limited whatever the concurrency. All responses are cached. **No new API keys in round 1:** an S2 key is a new external credential, so it's a beekeeper call before round 2.
-- **GPU:** the local arm needs ≤ 16 GB VRAM and is serialised against the GPU lane.
+- **GPU:** none in round 1 (r8: the local arm moved to round 1b).
+- **Concurrency of sub-agents:** at most 2 in flight at once (runner), at most 2 graders in flight (director); fetching stays serial and rate-limited.
 
 ## 11. Spike rules (forging doc §3)
 
