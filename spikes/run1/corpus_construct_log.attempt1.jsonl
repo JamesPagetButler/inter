@@ -1,0 +1,32 @@
+{"kind": "start", "ts": 1794345037.3771577}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 1, "status": "resolved", "field": "Mathematics", "ts": 1794345038.0688345}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794345039.211684}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 3, "status": "unresolved", "field": null, "ts": 1794345040.3795998}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 4, "status": "resolved", "field": "Computer Science", "ts": 1794345041.5464418}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 5, "status": "resolved", "field": "Computer Science", "ts": 1794345042.7114923}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794345043.8617363}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794345045.0664139}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794345046.2346768}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794345047.4027524}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794345048.5888693}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794345049.7535577}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794345050.9280524}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 1, "status": "resolved", "field": "Physics and Astronomy", "ts": 1794345052.0944858}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794345053.2966037}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 3, "status": "resolved", "field": "Mathematics", "ts": 1794345054.4539452}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 4, "status": "resolved", "field": "Mathematics", "ts": 1794345055.6104789}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 5, "status": "resolved", "field": "Mathematics", "ts": 1794345056.7963612}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794345057.9732323}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794345059.1674838}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794345060.3022308}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794345061.4636686}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794345062.6731877}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794345063.8343687}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794345064.996656}
+{"kind": "http_error", "what": "work:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794345117.9670537}
+{"kind": "fanout_done", "n_candidates": 14456, "ts": 1794346104.7889369}
+{"kind": "http_error", "what": "guard:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794346198.9377096}
+{"kind": "http_error", "what": "guard:W4285719527", "url": "https://api.openalex.org/works/W4285719527", "code": 404, "ts": 1794346242.9448364}
+{"kind": "http_error", "what": "guard:W6633544273", "url": "https://api.openalex.org/works/W6633544273", "code": 404, "ts": 1794346244.0882785}
+{"kind": "http_error", "what": "guard:W6636275850", "url": "https://api.openalex.org/works/W6636275850", "code": 404, "ts": 1794346644.9111285}
+{"kind": "http_error", "what": "guard:W103556523", "url": "https://api.openalex.org/works/W103556523", "code": 404, "ts": 1794347513.0158749}

@@ -1,0 +1,1872 @@
+{
+  "pre_reg_sha256": "f31c62fcf8e4586f947a803123c4b17a122b3ef05146a73465c8e8387608fb17",
+  "seeds": [
+    {
+      "domain": "math",
+      "seed_n": 1,
+      "title": "Scholze (w/ Clausen), Lectures on Condensed Mathematics, 2019",
+      "id_kind": "arxiv",
+      "id_value": "2605.03658",
+      "hop_limit": 1,
+      "note": "2026-posted id, verify-at-intake",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W7160450264",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 2,
+      "title": "Scholze (w/ Clausen), Lectures on Analytic Geometry, 2019/20",
+      "id_kind": "arxiv",
+      "id_value": "2605.03655",
+      "hop_limit": 1,
+      "note": "2026-posted id, verify-at-intake",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W7160385925",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 3,
+      "title": "Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022",
+      "id_kind": "title",
+      "id_value": "Condensed Mathematics and Complex Geometry",
+      "hop_limit": 1,
+      "note": "no id (MPIM pdf)",
+      "status": "unresolved",
+      "openalex_id": null,
+      "field": null,
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 4,
+      "title": "Scholze, \"Liquid Tensor Experiment\", Exp. Math. 31 (2022)",
+      "id_kind": "doi",
+      "id_value": "10.1080/10586458.2021.1926016",
+      "hop_limit": 1,
+      "note": "seed exception (CS field)",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W3173777491",
+      "field": "Computer Science",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 5,
+      "title": "Commelin, Abstraction boundaries and spec-driven development in pure mathematics, 2023",
+      "id_kind": "arxiv",
+      "id_value": "2309.14870",
+      "hop_limit": 2,
+      "note": "seed exception (CS field)",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W4391839082",
+      "field": "Computer Science",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 6,
+      "title": "Asgeirsson, Categorical Foundations of Formalized Condensed Mathematics, JSL 2024",
+      "id_kind": "arxiv",
+      "id_value": "2309.07252",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W4412210893",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 7,
+      "title": "Barwick-Haine, Pyknotic objects I, 2019",
+      "id_kind": "arxiv",
+      "id_value": "1904.09966",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2937074727",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 8,
+      "title": "Mann, A p-adic 6-functor formalism in rigid-analytic geometry, 2022",
+      "id_kind": "arxiv",
+      "id_value": "2206.02022",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W4281706059",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 9,
+      "title": "Heyer-Mann, 6-Functor Formalisms and Smooth Representations, 2024",
+      "id_kind": "arxiv",
+      "id_value": "2410.13038",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W4403579066",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 10,
+      "title": "Johnstone, On a topological topos, Proc. LMS 38 (1979)",
+      "id_kind": "doi",
+      "id_value": "10.1112/plms/s3-38.2.237",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2045614673",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 11,
+      "title": "Lurie, Ultracategories, 2018 notes",
+      "id_kind": "title",
+      "id_value": "Ultracategories",
+      "hop_limit": 2,
+      "note": "no id (IAS pdf)",
+      "status": "unresolved",
+      "openalex_id": null,
+      "field": null,
+      "is_seed": true
+    },
+    {
+      "domain": "math",
+      "seed_n": 12,
+      "title": "Clausen-Scholze, Analytic Stacks, 2023/24 course",
+      "id_kind": "title",
+      "id_value": "Analytic Stacks",
+      "hop_limit": 2,
+      "note": "no id (video course)",
+      "status": "unresolved",
+      "openalex_id": null,
+      "field": null,
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 1,
+      "title": "Chamseddine-Connes, \"The spectral action principle\", CMP 186 (1997)",
+      "id_kind": "arxiv",
+      "id_value": "hep-th/9606001",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2148984222",
+      "field": "Physics and Astronomy",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 2,
+      "title": "Chamseddine-Connes-van Suijlekom, \"Entropy and the spectral action\", CMP 2019",
+      "id_kind": "arxiv",
+      "id_value": "1809.02944",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2890203879",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 3,
+      "title": "Connes, \"Noncommutative geometry and reality\", JMP 36 (1995)",
+      "id_kind": "doi",
+      "id_value": "10.1063/1.531241",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2161471984",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 4,
+      "title": "Bar, \"The Dirac operator on space forms of positive curvature\", J. Math. Soc. Japan 48 (1996)",
+      "id_kind": "doi",
+      "id_value": "10.2969/jmsj/04810069",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W1982134436",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 5,
+      "title": "Camporesi-Higuchi, \"Eigenfunctions of the Dirac operator on spheres and real hyperbolic spaces\", JGP 20 (1996)",
+      "id_kind": "arxiv",
+      "id_value": "gr-qc/9505009",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W2080238236",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 6,
+      "title": "Trautman, \"The Dirac operator on hypersurfaces\", Acta Phys. Polon. B 26 (1995)",
+      "id_kind": "arxiv",
+      "id_value": "hep-th/9810018",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W1630303706",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 7,
+      "title": "Harvey-Lawson, \"Calibrated geometries\", Acta Math. 148 (1982)",
+      "id_kind": "doi",
+      "id_value": "10.1007/BF02392726",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W3187477437",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 8,
+      "title": "Hitchin, \"The geometry of three-forms in six and seven dimensions\", JDG 55 (2000)",
+      "id_kind": "arxiv",
+      "id_value": "math/0010054",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W1641073798",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 9,
+      "title": "Bryant, Some remarks on G2-structures, Gokova 2005",
+      "id_kind": "arxiv",
+      "id_value": "math/0305124",
+      "hop_limit": 2,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W1665497193",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 10,
+      "title": "Baez, \"The Octonions\", Bull. AMS 39 (2002)",
+      "id_kind": "arxiv",
+      "id_value": "math/0105155",
+      "hop_limit": 1,
+      "note": "",
+      "status": "resolved",
+      "openalex_id": "https://openalex.org/W4235693166",
+      "field": "Mathematics",
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 11,
+      "title": "Lawson-Michelsohn, Spin Geometry, 1989",
+      "id_kind": "isbn",
+      "id_value": "9780691085425",
+      "hop_limit": 2,
+      "note": "book, no DOI/arXiv",
+      "status": "unresolved",
+      "openalex_id": null,
+      "field": null,
+      "is_seed": true
+    },
+    {
+      "domain": "physics",
+      "seed_n": 12,
+      "title": "Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025",
+      "id_kind": "unverified",
+      "id_value": "",
+      "hop_limit": 1,
+      "note": "id unverified per oppenheimer",
+      "status": "unresolved",
+      "openalex_id": null,
+      "field": null,
+      "is_seed": true
+    }
+  ],
+  "candidates_total_raw_fanout": 14447,
+  "guard_pool_size": 799,
+  "methods_note_guard_scope": "Domain-guard metadata fetch ran only on the top-400/domain link-score pool (799 of 14447 raw fan-out candidates) to keep the API-call count tractable within the box-safety wall-clock budget; the remaining 13648 low-score candidates were never guard-checked or fetched. Q4's excluded-fraction-per-hop figure below is therefore computed over the guard pool only, not the full raw fan-out. Disclosed deviation from FROZEN-v1 (sha f31c62fc...8fb17) \u00a72.3a's literal 'every other field excluded' scope; flagged to the director rather than silently narrowed.",
+  "in_domain": 670,
+  "out_of_domain": [
+    {
+      "openalex_id": "https://openalex.org/W4390779675",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4388946565",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4391839001",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4414892953",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7170191748",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7116442350",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4386841450",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4415993167",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3215285253",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4412543539",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4293071393",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4398776588",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4398767253",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4412543521",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4398767267",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4381852477",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390733116",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4402690721",
+      "hops": 1,
+      "reason": "field=Social Sciences"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4406667682",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4411187686",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4400242554",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3197040007",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3128644037",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4281491203",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7163636099",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4384918479",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4280576063",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390996662",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4391076026",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4401084824",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7169540673",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7215034986",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7223211720",
+      "hops": 1,
+      "reason": "field=Psychology"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7223935201",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2041181261",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4417266722",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7202288238",
+      "hops": 1,
+      "reason": "field=Health Professions"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1464569014",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1825294361",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2981188613",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W6815778477",
+      "hops": 1,
+      "reason": "no-openalex-topic"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4400684181",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7133209524",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7151079671",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7133534856",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7168143533",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7146974650",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7167921757",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7204866772",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7163999319",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7220451322",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W7221180607",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2128057448",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2164688709",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2987877727",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2011086847",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2154231274",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W569543113",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1982209843",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4285719527",
+      "hops": 2,
+      "reason": "no-openalex-topic"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2767684089",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4391839087",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W84711077",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1498393124",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1544057780",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1784055113",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2014364142",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2025970201",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2088962847",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2124126159",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2581223864",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2734797515",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2786270130",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2964511421",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2994908035",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2996313870",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2998679550",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2998895922",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3092006580",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3094781589",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3122350614",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3170036692",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3175560211",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3211410589",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4220921940",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4293812868",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4306873603",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4318143220",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4378575611",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390603408",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4393870877",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4410837081",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W6966304203",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4402210673",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2949151551",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2189582351",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W123915678",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2949083576",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4281862103",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2153577968",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2341132922",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2112947637",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1994877909",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2186250550",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1987500045",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1986005496",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2115279969",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2936803030",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W4384159952",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W90327622",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2142922307",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2071604874",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2716410263",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2743557796",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1966356433",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2123189304",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2553465979",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1643316864",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2137868378",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3888705",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W92896842",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W613166357",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1486558830",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1534850143",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1552077729",
+      "hops": 2,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W3013347551",
+      "hops": 1,
+      "reason": "field=Engineering"
+    },
+    {
+      "openalex_id": "https://openalex.org/W2948325429",
+      "hops": 1,
+      "reason": "field=Computer Science"
+    },
+    {
+      "openalex_id": "https://openalex.org/W26281687",
+      "hops": 1,
+      "reason": "field=Arts and Humanities"
+    },
+    {
+      "openalex_id": "https://openalex.org/W1975326395",
+      "hops": 1,
+      "reason": "field=Materials Science"
+    }
+  ],
+  "selected_count_pre_dedup": 100,
+  "dedup_merges": [],
+  "selected_final": [
+    {
+      "openalex_id": "https://openalex.org/W3173777491",
+      "domain": "math",
+      "score": 1003.0,
+      "title": "Liquid Tensor Experiment",
+      "year": 2021,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7160450264",
+      "domain": "math",
+      "score": 1002.0,
+      "title": "Lectures on Condensed Mathematics",
+      "year": 2026,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2937074727",
+      "domain": "math",
+      "score": 1001.0,
+      "title": "Pyknotic objects, I. Basic notions",
+      "year": 2019,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4281706059",
+      "domain": "math",
+      "score": 1001.0,
+      "title": "A $p$-Adic 6-Functor Formalism in Rigid-Analytic Geometry",
+      "year": 2022,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4391839082",
+      "domain": "math",
+      "score": 1001.0,
+      "title": "Abstraction boundaries and spec driven development in pure mathematics",
+      "year": 2024,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4412210893",
+      "domain": "math",
+      "score": 1001.0,
+      "title": "Towards Solid Abelian Groups: A Formal Proof of N\u00f6beling\u2019s Theorem",
+      "year": 2023,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7160385925",
+      "domain": "math",
+      "score": 1000.5,
+      "title": "Lectures on Analytic Geometry",
+      "year": 2026,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2045614673",
+      "domain": "math",
+      "score": 1000.0,
+      "title": "On a Topological Topos",
+      "year": 1979,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4403579066",
+      "domain": "math",
+      "score": 1000.0,
+      "title": "6-Functor Formalisms and Smooth Representations",
+      "year": 2024,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4405949452",
+      "domain": "math",
+      "score": 3.5,
+      "title": "CATEGORICAL FOUNDATIONS OF FORMALIZED CONDENSED MATHEMATICS",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1501965422",
+      "domain": "math",
+      "score": 3.0,
+      "title": "Enhanced six operations and base change theorem for higher Artin stacks",
+      "year": 2012,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3164541593",
+      "domain": "math",
+      "score": 3.0,
+      "title": "Pseudocoherent and Perfect Complexes and Vector Bundles on Analytic Adic Spaces",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4415961200",
+      "domain": "math",
+      "score": 3.0,
+      "title": "Infinitary combinatorics in condensed mathematics and strong homology",
+      "year": 2025,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4417030997",
+      "domain": "math",
+      "score": 3.0,
+      "title": "Condensed Group Cohomology",
+      "year": 2025,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7134934189",
+      "domain": "math",
+      "score": 3.0,
+      "title": "Fractured Structures in Condensed Mathematics",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1547584114",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Projective topological spaces",
+      "year": 1958,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3146298757",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Yoneda's lemma for internal higher categories",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3202994947",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Quasi-Measurable Spaces: A Convenient Foundation of Probability Theory",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390977661",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Faithfully Flat Descent of Quasi-Coherent Complexes on Rigid Analytic Varieties via Condensed Mathematics",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4417474213",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Condensed mathematics through compactological spaces",
+      "year": 2025,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4388963784",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Fppf-descent for condensed animated rings",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7161004857",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Weil-Moore anima",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7162107386",
+      "domain": "math",
+      "score": 2.5,
+      "title": "A condensed proof of the pro-\u00e9tale and \u00e9tale exodromy theorems",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7168273025",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Reconstruction of Formal Schemes from Categories of Nuclear Modules",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7208731890",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Generalized Telescope Conjecture",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7217982225",
+      "domain": "math",
+      "score": 2.5,
+      "title": "A Non-Commutative Approach to Rigid Analytic Geometry",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W7223805202",
+      "domain": "math",
+      "score": 2.5,
+      "title": "Homological and homotopical epimorphisms in monoidal $\\infty$-categories",
+      "year": 2026,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4252421805",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Quasi-topologies",
+      "year": 1963,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1548110689",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Topological Vector Spaces and Algebras",
+      "year": 1971,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2091343122",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Basically bounded functors and flat sheaves",
+      "year": 1975,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1936971149",
+      "domain": "math",
+      "score": 2.0,
+      "title": "A model for the homotopy theory of homotopy theory",
+      "year": 2000,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2084051193",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Quasi-categories and Kan complexes",
+      "year": 2002,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2099665514",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Differential cohomology in a cohesive infinity-topos",
+      "year": 2013,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1820708574",
+      "domain": "math",
+      "score": 2.0,
+      "title": "A user's guide to co/cartesian fibrations",
+      "year": 2015,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1663788542",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Nilpotence and descent in equivariant stable homotopy theory",
+      "year": 2016,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2287868302",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Relative p-adic Hodge theory, II: Imperfect period rings",
+      "year": 2016,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2759111404",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Etale cohomology of diamonds",
+      "year": 2017,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4394665976",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Exodromy",
+      "year": 2018,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3134337821",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Geometrization of the local Langlands correspondence",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3162009980",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Animated Condensed Sets and Their Homotopy Groups",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3215018100",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Limits and colimits in internal higher category theory",
+      "year": 2021,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3113975734",
+      "domain": "math",
+      "score": 2.0,
+      "title": "The pro-\u00e9tale topos as a category of pyknotic presheaves",
+      "year": 2022,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4315705960",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Poincar\u00e9 Duality in abstract 6-functor formalisms",
+      "year": 2023,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4318908857",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Commuting Cohesions",
+      "year": 2023,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4388514896",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Gaitsgory's central functor and the Arkhipov-Bezrukavnikov equivalence in mixed characteristic",
+      "year": 2023,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390690021",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Stone duality between condensed mathematics and algebraic geometry",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4390962404",
+      "domain": "math",
+      "score": 2.0,
+      "title": "The analytic de Rham stack in rigid geometry",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4399320509",
+      "domain": "math",
+      "score": 2.0,
+      "title": "Colimits and cocompletions in internal higher category theory",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4402954787",
+      "domain": "math",
+      "score": 2.0,
+      "title": "(Semi)topological $K$-theory via solidification",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4403663100",
+      "domain": "math",
+      "score": 2.0,
+      "title": "A six-functor formalism for quasi-coherent sheaves and stratifications on rigid-analytic varieties",
+      "year": 2024,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W3187477437",
+      "domain": "physics",
+      "score": 1001.5,
+      "title": "Calibrated geometries",
+      "year": 1982,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2080238236",
+      "domain": "physics",
+      "score": 1001.0,
+      "title": "On the eigenfunctions of the Dirac operator on spheres and real hyperbolic spaces",
+      "year": 1996,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2148984222",
+      "domain": "physics",
+      "score": 1001.0,
+      "title": "The Spectral Action Principle",
+      "year": 1997,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1641073798",
+      "domain": "physics",
+      "score": 1000.5,
+      "title": "The geometry of three-forms in six and seven dimensions",
+      "year": 2000,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1982134436",
+      "domain": "physics",
+      "score": 1000.5,
+      "title": "The Dirac operator on space forms of positive curvature",
+      "year": 1996,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2161471984",
+      "domain": "physics",
+      "score": 1000.5,
+      "title": "Noncommutative geometry and reality",
+      "year": 1995,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1630303706",
+      "domain": "physics",
+      "score": 1000.0,
+      "title": "The Dirac operator on hypersurfaces",
+      "year": 1998,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1665497193",
+      "domain": "physics",
+      "score": 1000.0,
+      "title": "Some remarks on G_2-structures",
+      "year": 2003,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2890203879",
+      "domain": "physics",
+      "score": 1000.0,
+      "title": "Entropy and the Spectral Action",
+      "year": 2019,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4235693166",
+      "domain": "physics",
+      "score": 1000.0,
+      "title": "The octonions",
+      "year": 2001,
+      "is_seed": true,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2050952244",
+      "domain": "physics",
+      "score": 3.0,
+      "title": "Real Killing spinors and holonomy",
+      "year": 1993,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1941650215",
+      "domain": "physics",
+      "score": 3.0,
+      "title": "Compact Manifolds with Special Holonomy",
+      "year": 2000,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2952076428",
+      "domain": "physics",
+      "score": 3.0,
+      "title": "Lectures on generalized complex geometry for physicists",
+      "year": 2010,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2953112346",
+      "domain": "physics",
+      "score": 3.0,
+      "title": "New invariants ofG2\u2013structures",
+      "year": 2015,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2089465567",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Foundations of Differential Geometry",
+      "year": 1963,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1991877400",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Vector Cross Products on Manifolds",
+      "year": 1969,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1565930783",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Introduction to Lie Algebras and Representation Theory",
+      "year": 1972,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2078033670",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Metrics with Exceptional Holonomy",
+      "year": 1987,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1592686709",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Riemannian geometry and holonomy groups",
+      "year": 1990,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W649989581",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Spinors and Calibrations",
+      "year": 1990,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1552551180",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Compact Riemannian 7-manifolds with holonomy $G\\sb 2$. II",
+      "year": 1996,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2086216948",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Gravity coupled with matter and the foundation of non-commutative geometry",
+      "year": 1996,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1582143549",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "An Introduction to Noncommutative Spaces and their Geometries",
+      "year": 1997,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1971010458",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Classification of finite spectral triples",
+      "year": 1998,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1983894121",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Differential Geometry, Lie Groups, and Symmetric Spaces",
+      "year": 2001,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2148017112",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Lectures on Graded Differential Algebras and Noncommutative Geometry",
+      "year": 2001,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2001941072",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Eight-Dimensional Quantum Hall Effect and \u201cOctonions\u201d",
+      "year": 2003,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2044511821",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Noncommutative geometry and the standard model with neutrino mixing",
+      "year": 2006,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2015765968",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Gravity and the standard model with neutrino mixing",
+      "year": 2007,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2123061623",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Lorentzian version of the noncommutative geometry of the standard model of particle physics",
+      "year": 2007,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1990159247",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "FLOWS OF G2-STRUCTURES, I",
+      "year": 2008,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1573443250",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Spaces of constant curvature",
+      "year": 2010,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2018785023",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "All homogeneous N = 2 M-theory truncations with supersymmetric AdS4 vacua",
+      "year": 2012,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2039057917",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Short-time behaviour of a modified Laplacian coflow of G2 -structures",
+      "year": 2013,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2245733333",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Supersymmetric Field Theories",
+      "year": 2014,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1836597677",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "G 2 -manifolds and associative submanifolds via semi-Fano 3 -folds",
+      "year": 2015,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2611455212",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "The Infinitesimal Moduli Space of Heterotic G 2 Systems",
+      "year": 2017,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2974600453",
+      "domain": "physics",
+      "score": 2.5,
+      "title": "Introduction to $$\\mathrm {G}_2$$ Geometry",
+      "year": 2020,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2320438804",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Invariant Affine Connections on Homogeneous Spaces",
+      "year": 1954,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W278105626",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "The Algebraic Theory of Spinors",
+      "year": 1954,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W218489606",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Sur les groupes d'holonomie homog\u00e8nes de vari\u00e9t\u00e9s \u00e0 connexion affine et des vari\u00e9t\u00e9s riemanniennes",
+      "year": 1955,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2043727508",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Construction and Properties of Some 6-Dimensional Almost Complex Manifolds",
+      "year": 1958,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2125498553",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "On the Transitivity of Holonomy Systems",
+      "year": 1962,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2046756975",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Vector cross products",
+      "year": 1967,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1982073424",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Der erste Eigenwert des Dirac\u2010Operators einer kompakten, Riemannschen Mannigfaltigkeit nichtnegativer Skalarkr\u00fcmmung",
+      "year": 1980,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2053170335",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Gravitation, gauge theories and differential geometry",
+      "year": 1980,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W4255043459",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Differential Geometry",
+      "year": 1980,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2074684047",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Riemannian manifolds with structure groupG 2",
+      "year": 1982,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W2027025011",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Pseudo holomorphic curves in symplectic manifolds",
+      "year": 1985,
+      "is_seed": false,
+      "bridge": false
+    },
+    {
+      "openalex_id": "https://openalex.org/W1967197430",
+      "domain": "physics",
+      "score": 2.0,
+      "title": "Kaluza-Klein supergravity",
+      "year": 1986,
+      "is_seed": false,
+      "bridge": false
+    }
+  ]
+}
