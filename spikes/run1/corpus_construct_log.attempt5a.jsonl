@@ -1,0 +1,138 @@
+{"kind": "start", "ts": 1794353223.2803457}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 1, "status": "resolved", "field": "Mathematics", "ts": 1794353223.4469788}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794353224.575067}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353225.646577}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353227.7251072}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353231.818117}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353239.9295058}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353256.0710144}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353288.2251828}
+{"kind": "giving_up_after_retries", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "url": "https://api.openalex.org/works?filter=title.search%3AClausen-Scholze%2C%20Condensed%20Mathematics%20and%20Complex%20Geometry%2C%202022&per_page=5&mailto=contact%40helpfulengineering.org", "ts": 1794353348.325605}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 3, "status": "unresolved", "field": null, "ts": 1794353348.3256886}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 4, "status": "resolved", "field": "Computer Science", "ts": 1794353348.4714465}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 5, "status": "resolved", "field": "Computer Science", "ts": 1794353349.606119}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794353350.7328813}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794353351.8627}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794353352.9810324}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794353354.1088243}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794353355.2265158}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353356.3163097}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353358.3954027}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353362.483279}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353370.5959654}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353386.758498}
+{"kind": "retry", "what": "title-search:Lurie, Ultracategories, 2018 notes", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353418.9440556}
+{"kind": "giving_up_after_retries", "what": "title-search:Lurie, Ultracategories, 2018 notes", "url": "https://api.openalex.org/works?filter=title.search%3ALurie%2C%20Ultracategories%2C%202018%20notes&per_page=5&mailto=contact%40helpfulengineering.org", "ts": 1794353479.0444353}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794353479.044516}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353479.1493812}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353481.2378552}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353485.3180926}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353493.4195945}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353509.5533593}
+{"kind": "retry", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353541.66475}
+{"kind": "giving_up_after_retries", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "url": "https://api.openalex.org/works?filter=title.search%3AClausen-Scholze%2C%20Analytic%20Stacks%2C%202023/24%20course&per_page=5&mailto=contact%40helpfulengineering.org", "ts": 1794353601.7408912}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794353601.7409742}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 1, "status": "resolved", "field": "Physics and Astronomy", "ts": 1794353601.900347}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794353603.029244}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 3, "status": "resolved", "field": "Mathematics", "ts": 1794353604.1544993}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 4, "status": "resolved", "field": "Mathematics", "ts": 1794353605.2779315}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 5, "status": "resolved", "field": "Mathematics", "ts": 1794353606.4328833}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794353607.5391905}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794353608.6695092}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794353609.7930646}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794353610.9500191}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794353612.106901}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353613.1633377}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353615.2480323}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353619.3139975}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353627.415642}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353643.572513}
+{"kind": "retry", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353675.7322392}
+{"kind": "giving_up_after_retries", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "url": "https://api.openalex.org/works?filter=title.search%3ALawson-Michelsohn%2C%20Spin%20Geometry%2C%201989&per_page=5&mailto=contact%40helpfulengineering.org", "ts": 1794353735.8282912}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794353735.8283746}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353735.9030704}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353737.9757266}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353742.0481532}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353750.1525505}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353766.3171399}
+{"kind": "retry", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353798.4413896}
+{"kind": "giving_up_after_retries", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "url": "https://api.openalex.org/works?filter=title.search%3ACapoferri%2C%20Global%20and%20microlocal%20aspects%20of%20Dirac%20operators%2C%20Math.%20Nachr.%202025&per_page=5&mailto=contact%40helpfulengineering.org", "ts": 1794353858.5203507}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794353858.5204341}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353859.763689}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353861.852847}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353865.9310288}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353874.0499191}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794353890.2233927}
+{"kind": "retry", "what": "cites:W7160450264", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794353922.3762949}
+{"kind": "giving_up_after_retries", "what": "cites:W7160450264", "url": "https://api.openalex.org/works?filter=cites:W7160450264&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794353982.451022}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794353983.6644742}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794353985.747758}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794353989.840922}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794353997.9552646}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354014.073161}
+{"kind": "retry", "what": "cites:W7160385925", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354046.2474725}
+{"kind": "giving_up_after_retries", "what": "cites:W7160385925", "url": "https://api.openalex.org/works?filter=cites:W7160385925&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354106.3194933}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354107.5159357}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354109.592682}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354113.6787312}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354121.7945223}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354137.9181075}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354170.164938}
+{"kind": "giving_up_after_retries", "what": "cites:W3173777491", "url": "https://api.openalex.org/works?filter=cites:W3173777491&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354230.1895504}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354231.4353933}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354233.5161257}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354237.6158295}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354245.685409}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354261.8170478}
+{"kind": "retry", "what": "cites:W4391839082", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354294.103908}
+{"kind": "giving_up_after_retries", "what": "cites:W4391839082", "url": "https://api.openalex.org/works?filter=cites:W4391839082&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354354.2037637}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354355.4641078}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354357.5407066}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354361.6183062}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354369.700988}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354385.853455}
+{"kind": "retry", "what": "cites:W1979173504", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354418.0241785}
+{"kind": "giving_up_after_retries", "what": "cites:W1979173504", "url": "https://api.openalex.org/works?filter=cites:W1979173504&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354478.1076224}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354479.3481958}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354481.426107}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354485.507756}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354493.569231}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354509.7339864}
+{"kind": "retry", "what": "cites:W1522382323", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354541.8878374}
+{"kind": "giving_up_after_retries", "what": "cites:W1522382323", "url": "https://api.openalex.org/works?filter=cites:W1522382323&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354601.988423}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354603.2164586}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354605.275859}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354609.3649404}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354617.4543998}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354633.6137207}
+{"kind": "retry", "what": "cites:W2981188613", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354665.817733}
+{"kind": "giving_up_after_retries", "what": "cites:W2981188613", "url": "https://api.openalex.org/works?filter=cites:W2981188613&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354725.900052}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354727.1280763}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354729.2000546}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354733.2925289}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354741.3681278}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354757.4976249}
+{"kind": "retry", "what": "cites:W3173777491", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354789.687029}
+{"kind": "giving_up_after_retries", "what": "cites:W3173777491", "url": "https://api.openalex.org/works?filter=cites:W3173777491&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354849.7839394}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354850.9906824}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354853.0636673}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354857.153661}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354865.243742}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794354881.3849382}
+{"kind": "retry", "what": "cites:W2937074727", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794354913.5705495}
+{"kind": "giving_up_after_retries", "what": "cites:W2937074727", "url": "https://api.openalex.org/works?filter=cites:W2937074727&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794354973.6537285}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794354974.8990333}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794354976.9793577}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794354981.0754766}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794354989.1611578}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794355005.330996}
+{"kind": "retry", "what": "cites:W1464569014", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794355037.5061424}
+{"kind": "giving_up_after_retries", "what": "cites:W1464569014", "url": "https://api.openalex.org/works?filter=cites:W1464569014&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794355097.571679}
+{"kind": "http_error", "what": "work:W6815778477", "url": "https://api.openalex.org/works/W6815778477?mailto=contact%40helpfulengineering.org", "code": 404, "ts": 1794355097.7404842}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794355098.814879}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794355100.9128597}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794355105.0044866}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794355113.1056952}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794355129.248123}
+{"kind": "retry", "what": "cites:W6815778477", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794355161.4310105}
+{"kind": "giving_up_after_retries", "what": "cites:W6815778477", "url": "https://api.openalex.org/works?filter=cites:W6815778477&sort=cited_by_count:desc&per_page=50&mailto=contact%40helpfulengineering.org", "ts": 1794355221.5314608}

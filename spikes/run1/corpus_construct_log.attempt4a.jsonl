@@ -1,0 +1,147 @@
+{"kind": "start", "ts": 1794351755.3498192}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 1, "status": "resolved", "field": "Mathematics", "ts": 1794351755.5240912}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794351756.658153}
+{"kind": "http_error", "what": "title-search:Clausen-Scholze, Condensed Mathematics and Complex Geometry, 2022", "url": "https://api.openalex.org/works?filter=title.search%3AClausen-Scholze%2C%20Condensed%20Mathematics%20and%20Complex%20Geometry%2C%202022&per_page=5", "code": 429, "ts": 1794351757.729064}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 3, "status": "unresolved", "field": null, "ts": 1794351757.729301}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 4, "status": "resolved", "field": "Computer Science", "ts": 1794351758.8286543}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 5, "status": "resolved", "field": "Computer Science", "ts": 1794351759.9466636}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794351761.0809205}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794351762.1884172}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794351763.3104815}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794351764.4347749}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794351765.584697}
+{"kind": "http_error", "what": "title-search:Lurie, Ultracategories, 2018 notes", "url": "https://api.openalex.org/works?filter=title.search%3ALurie%2C%20Ultracategories%2C%202018%20notes&per_page=5", "code": 429, "ts": 1794351766.6548667}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794351766.6550732}
+{"kind": "http_error", "what": "title-search:Clausen-Scholze, Analytic Stacks, 2023/24 course", "url": "https://api.openalex.org/works?filter=title.search%3AClausen-Scholze%2C%20Analytic%20Stacks%2C%202023/24%20course&per_page=5", "code": 429, "ts": 1794351767.7335649}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794351767.733777}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 1, "status": "resolved", "field": "Physics and Astronomy", "ts": 1794351768.8723652}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794351770.009953}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 3, "status": "resolved", "field": "Mathematics", "ts": 1794351771.1260657}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 4, "status": "resolved", "field": "Mathematics", "ts": 1794351772.2561219}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 5, "status": "resolved", "field": "Mathematics", "ts": 1794351773.39389}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794351774.5372825}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794351775.6837585}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794351776.7909737}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794351778.0151668}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794351779.1546612}
+{"kind": "http_error", "what": "title-search:Lawson-Michelsohn, Spin Geometry, 1989", "url": "https://api.openalex.org/works?filter=title.search%3ALawson-Michelsohn%2C%20Spin%20Geometry%2C%201989&per_page=5", "code": 429, "ts": 1794351780.2260234}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794351780.2262554}
+{"kind": "http_error", "what": "title-search:Capoferri, Global and microlocal aspects of Dirac operators, Math. Nachr. 2025", "url": "https://api.openalex.org/works?filter=title.search%3ACapoferri%2C%20Global%20and%20microlocal%20aspects%20of%20Dirac%20operators%2C%20Math.%20Nachr.%202025&per_page=5", "code": 429, "ts": 1794351781.2977562}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794351781.297967}
+{"kind": "http_error", "what": "cites:W7160450264", "url": "https://api.openalex.org/works?filter=cites:W7160450264&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351783.4909053}
+{"kind": "http_error", "what": "cites:W7160385925", "url": "https://api.openalex.org/works?filter=cites:W7160385925&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351785.68928}
+{"kind": "http_error", "what": "cites:W3173777491", "url": "https://api.openalex.org/works?filter=cites:W3173777491&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351787.8789425}
+{"kind": "http_error", "what": "cites:W4391839082", "url": "https://api.openalex.org/works?filter=cites:W4391839082&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351790.081496}
+{"kind": "http_error", "what": "cites:W1979173504", "url": "https://api.openalex.org/works?filter=cites:W1979173504&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351792.2710612}
+{"kind": "http_error", "what": "cites:W1825294361", "url": "https://api.openalex.org/works?filter=cites:W1825294361&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351794.4883533}
+{"kind": "http_error", "what": "cites:W1464569014", "url": "https://api.openalex.org/works?filter=cites:W1464569014&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351796.659719}
+{"kind": "http_error", "what": "cites:W1522382323", "url": "https://api.openalex.org/works?filter=cites:W1522382323&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351798.8665571}
+{"kind": "http_error", "what": "cites:W2937074727", "url": "https://api.openalex.org/works?filter=cites:W2937074727&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351801.0582876}
+{"kind": "http_error", "what": "cites:W2981188613", "url": "https://api.openalex.org/works?filter=cites:W2981188613&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351803.3540525}
+{"kind": "http_error", "what": "work:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794351804.488918}
+{"kind": "http_error", "what": "cites:W6815778477", "url": "https://api.openalex.org/works?filter=cites:W6815778477&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351805.5608487}
+{"kind": "http_error", "what": "cites:W3173777491", "url": "https://api.openalex.org/works?filter=cites:W3173777491&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351807.7782161}
+{"kind": "http_error", "what": "cites:W4405949452", "url": "https://api.openalex.org/works?filter=cites:W4405949452&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351810.009647}
+{"kind": "http_error", "what": "cites:W2937074727", "url": "https://api.openalex.org/works?filter=cites:W2937074727&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351812.1965637}
+{"kind": "http_error", "what": "cites:W4281706059", "url": "https://api.openalex.org/works?filter=cites:W4281706059&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351814.366014}
+{"kind": "http_error", "what": "cites:W1501965422", "url": "https://api.openalex.org/works?filter=cites:W1501965422&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351816.5369282}
+{"kind": "http_error", "what": "cites:W3134337821", "url": "https://api.openalex.org/works?filter=cites:W3134337821&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351818.737983}
+{"kind": "http_error", "what": "cites:W3210088788", "url": "https://api.openalex.org/works?filter=cites:W3210088788&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351820.989771}
+{"kind": "http_error", "what": "cites:W3164541593", "url": "https://api.openalex.org/works?filter=cites:W3164541593&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351823.154737}
+{"kind": "http_error", "what": "cites:W2998732670", "url": "https://api.openalex.org/works?filter=cites:W2998732670&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351825.406651}
+{"kind": "http_error", "what": "cites:W2287868302", "url": "https://api.openalex.org/works?filter=cites:W2287868302&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351827.596019}
+{"kind": "http_error", "what": "cites:W4405523833", "url": "https://api.openalex.org/works?filter=cites:W4405523833&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351829.9057646}
+{"kind": "http_error", "what": "cites:W4403579066", "url": "https://api.openalex.org/works?filter=cites:W4403579066&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351832.1246088}
+{"kind": "http_error", "what": "cites:W2045614673", "url": "https://api.openalex.org/works?filter=cites:W2045614673&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351834.3098123}
+{"kind": "http_error", "what": "cites:W2148984222", "url": "https://api.openalex.org/works?filter=cites:W2148984222&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351836.4976895}
+{"kind": "http_error", "what": "cites:W2890203879", "url": "https://api.openalex.org/works?filter=cites:W2890203879&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351838.7025566}
+{"kind": "http_error", "what": "cites:W2161471984", "url": "https://api.openalex.org/works?filter=cites:W2161471984&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351840.8917673}
+{"kind": "http_error", "what": "cites:W1982134436", "url": "https://api.openalex.org/works?filter=cites:W1982134436&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351843.0927322}
+{"kind": "http_error", "what": "cites:W2080238236", "url": "https://api.openalex.org/works?filter=cites:W2080238236&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351845.3368034}
+{"kind": "http_error", "what": "cites:W1630303706", "url": "https://api.openalex.org/works?filter=cites:W1630303706&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351847.5558846}
+{"kind": "http_error", "what": "cites:W3016922053", "url": "https://api.openalex.org/works?filter=cites:W3016922053&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351849.7296352}
+{"kind": "http_error", "what": "cites:W638971553", "url": "https://api.openalex.org/works?filter=cites:W638971553&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351851.9049249}
+{"kind": "http_error", "what": "cites:W1608407908", "url": "https://api.openalex.org/works?filter=cites:W1608407908&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351854.1244335}
+{"kind": "http_error", "what": "cites:W564927596", "url": "https://api.openalex.org/works?filter=cites:W564927596&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351856.321128}
+{"kind": "http_error", "what": "cites:W2504216418", "url": "https://api.openalex.org/works?filter=cites:W2504216418&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351858.5235028}
+{"kind": "http_error", "what": "cites:W278105626", "url": "https://api.openalex.org/works?filter=cites:W278105626&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351860.7127993}
+{"kind": "http_error", "what": "cites:W3187477437", "url": "https://api.openalex.org/works?filter=cites:W3187477437&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351862.9206777}
+{"kind": "http_error", "what": "cites:W2045922191", "url": "https://api.openalex.org/works?filter=cites:W2045922191&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351871.7251523}
+{"kind": "http_error", "what": "cites:W218489606", "url": "https://api.openalex.org/works?filter=cites:W218489606&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351873.9054136}
+{"kind": "http_error", "what": "cites:W2017512885", "url": "https://api.openalex.org/works?filter=cites:W2017512885&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351876.0765314}
+{"kind": "http_error", "what": "cites:W2330575810", "url": "https://api.openalex.org/works?filter=cites:W2330575810&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351878.3030267}
+{"kind": "http_error", "what": "cites:W2327327855", "url": "https://api.openalex.org/works?filter=cites:W2327327855&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351880.5037699}
+{"kind": "http_error", "what": "cites:W26281687", "url": "https://api.openalex.org/works?filter=cites:W26281687&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351882.710255}
+{"kind": "http_error", "what": "cites:W1975326395", "url": "https://api.openalex.org/works?filter=cites:W1975326395&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351884.8884823}
+{"kind": "http_error", "what": "cites:W2325568921", "url": "https://api.openalex.org/works?filter=cites:W2325568921&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351887.0641744}
+{"kind": "http_error", "what": "cites:W4239244086", "url": "https://api.openalex.org/works?filter=cites:W4239244086&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351889.297824}
+{"kind": "http_error", "what": "cites:W4249265028", "url": "https://api.openalex.org/works?filter=cites:W4249265028&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351891.4848013}
+{"kind": "http_error", "what": "cites:W2028258142", "url": "https://api.openalex.org/works?filter=cites:W2028258142&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351893.685864}
+{"kind": "http_error", "what": "cites:W4255043459", "url": "https://api.openalex.org/works?filter=cites:W4255043459&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351895.867123}
+{"kind": "http_error", "what": "cites:W2125498553", "url": "https://api.openalex.org/works?filter=cites:W2125498553&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351898.0363045}
+{"kind": "http_error", "what": "cites:W2065720528", "url": "https://api.openalex.org/works?filter=cites:W2065720528&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351900.2510192}
+{"kind": "http_error", "what": "cites:W1593314664", "url": "https://api.openalex.org/works?filter=cites:W1593314664&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351902.469985}
+{"kind": "http_error", "what": "cites:W2092367790", "url": "https://api.openalex.org/works?filter=cites:W2092367790&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351904.6489837}
+{"kind": "http_error", "what": "cites:W2043727508", "url": "https://api.openalex.org/works?filter=cites:W2043727508&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351906.8174746}
+{"kind": "http_error", "what": "cites:W2045980671", "url": "https://api.openalex.org/works?filter=cites:W2045980671&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351909.0081239}
+{"kind": "http_error", "what": "cites:W2330098160", "url": "https://api.openalex.org/works?filter=cites:W2330098160&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351911.2112472}
+{"kind": "http_error", "what": "cites:W1983894121", "url": "https://api.openalex.org/works?filter=cites:W1983894121&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351913.3915796}
+{"kind": "http_error", "what": "cites:W2041570151", "url": "https://api.openalex.org/works?filter=cites:W2041570151&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351915.5501137}
+{"kind": "http_error", "what": "cites:W1588337609", "url": "https://api.openalex.org/works?filter=cites:W1588337609&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351917.7435887}
+{"kind": "http_error", "what": "cites:W1988485298", "url": "https://api.openalex.org/works?filter=cites:W1988485298&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351919.9840233}
+{"kind": "http_error", "what": "cites:W2046756975", "url": "https://api.openalex.org/works?filter=cites:W2046756975&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351922.202576}
+{"kind": "http_error", "what": "cites:W3013347551", "url": "https://api.openalex.org/works?filter=cites:W3013347551&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351924.4009366}
+{"kind": "http_error", "what": "cites:W2003426991", "url": "https://api.openalex.org/works?filter=cites:W2003426991&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351926.5445192}
+{"kind": "http_error", "what": "cites:W2069316975", "url": "https://api.openalex.org/works?filter=cites:W2069316975&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351928.7678363}
+{"kind": "http_error", "what": "cites:W1513885689", "url": "https://api.openalex.org/works?filter=cites:W1513885689&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351930.9190185}
+{"kind": "http_error", "what": "cites:W2492835446", "url": "https://api.openalex.org/works?filter=cites:W2492835446&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351933.13764}
+{"kind": "http_error", "what": "cites:W2074934256", "url": "https://api.openalex.org/works?filter=cites:W2074934256&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351935.312644}
+{"kind": "http_error", "what": "cites:W584181183", "url": "https://api.openalex.org/works?filter=cites:W584181183&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351937.4909198}
+{"kind": "http_error", "what": "cites:W2226300879", "url": "https://api.openalex.org/works?filter=cites:W2226300879&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351939.6680489}
+{"kind": "http_error", "what": "cites:W2087083900", "url": "https://api.openalex.org/works?filter=cites:W2087083900&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351941.8572288}
+{"kind": "http_error", "what": "cites:W1582751384", "url": "https://api.openalex.org/works?filter=cites:W1582751384&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351944.078338}
+{"kind": "http_error", "what": "cites:W1991877400", "url": "https://api.openalex.org/works?filter=cites:W1991877400&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351946.2800565}
+{"kind": "http_error", "what": "cites:W2044600860", "url": "https://api.openalex.org/works?filter=cites:W2044600860&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351948.4706495}
+{"kind": "http_error", "what": "cites:W2082750015", "url": "https://api.openalex.org/works?filter=cites:W2082750015&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351950.6361382}
+{"kind": "http_error", "what": "cites:W4292159986", "url": "https://api.openalex.org/works?filter=cites:W4292159986&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351952.8108237}
+{"kind": "http_error", "what": "cites:W1641073798", "url": "https://api.openalex.org/works?filter=cites:W1641073798&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351955.0186765}
+{"kind": "http_error", "what": "cites:W2074891698", "url": "https://api.openalex.org/works?filter=cites:W2074891698&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351957.2107873}
+{"kind": "http_error", "what": "cites:W2593782054", "url": "https://api.openalex.org/works?filter=cites:W2593782054&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351959.3817275}
+{"kind": "http_error", "what": "cites:W1552551180", "url": "https://api.openalex.org/works?filter=cites:W1552551180&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351961.5786798}
+{"kind": "http_error", "what": "cites:W1592686709", "url": "https://api.openalex.org/works?filter=cites:W1592686709&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351963.759329}
+{"kind": "http_error", "what": "cites:W2025291128", "url": "https://api.openalex.org/works?filter=cites:W2025291128&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351965.9675107}
+{"kind": "http_error", "what": "cites:W2054258491", "url": "https://api.openalex.org/works?filter=cites:W2054258491&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351968.153739}
+{"kind": "http_error", "what": "cites:W2333930057", "url": "https://api.openalex.org/works?filter=cites:W2333930057&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351970.331498}
+{"kind": "http_error", "what": "cites:W1984804105", "url": "https://api.openalex.org/works?filter=cites:W1984804105&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351972.5189753}
+{"kind": "http_error", "what": "cites:W2001503041", "url": "https://api.openalex.org/works?filter=cites:W2001503041&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351974.6769733}
+{"kind": "http_error", "what": "cites:W62510570", "url": "https://api.openalex.org/works?filter=cites:W62510570&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351976.8698542}
+{"kind": "http_error", "what": "cites:W3211121755", "url": "https://api.openalex.org/works?filter=cites:W3211121755&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351979.069679}
+{"kind": "http_error", "what": "cites:W1665497193", "url": "https://api.openalex.org/works?filter=cites:W1665497193&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351981.2579463}
+{"kind": "http_error", "what": "cites:W2047077033", "url": "https://api.openalex.org/works?filter=cites:W2047077033&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351983.462274}
+{"kind": "http_error", "what": "cites:W3187477437", "url": "https://api.openalex.org/works?filter=cites:W3187477437&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351985.6776204}
+{"kind": "http_error", "what": "cites:W2004356212", "url": "https://api.openalex.org/works?filter=cites:W2004356212&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351987.8969812}
+{"kind": "http_error", "what": "cites:W1592686709", "url": "https://api.openalex.org/works?filter=cites:W1592686709&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351990.0631855}
+{"kind": "http_error", "what": "cites:W3043060850", "url": "https://api.openalex.org/works?filter=cites:W3043060850&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351992.2683134}
+{"kind": "http_error", "what": "cites:W2149890214", "url": "https://api.openalex.org/works?filter=cites:W2149890214&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351994.4483666}
+{"kind": "http_error", "what": "cites:W2039351056", "url": "https://api.openalex.org/works?filter=cites:W2039351056&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351996.6520028}
+{"kind": "http_error", "what": "cites:W2074684047", "url": "https://api.openalex.org/works?filter=cites:W2074684047&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794351998.8663988}
+{"kind": "http_error", "what": "cites:W2011393592", "url": "https://api.openalex.org/works?filter=cites:W2011393592&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352001.051426}
+{"kind": "http_error", "what": "cites:W1941650215", "url": "https://api.openalex.org/works?filter=cites:W1941650215&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352003.2250211}
+{"kind": "http_error", "what": "cites:W649989581", "url": "https://api.openalex.org/works?filter=cites:W649989581&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352005.4398935}
+{"kind": "http_error", "what": "cites:W1991877400", "url": "https://api.openalex.org/works?filter=cites:W1991877400&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352007.6487281}
+{"kind": "http_error", "what": "cites:W2078033670", "url": "https://api.openalex.org/works?filter=cites:W2078033670&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352009.8499}
+{"kind": "http_error", "what": "cites:W1565930783", "url": "https://api.openalex.org/works?filter=cites:W1565930783&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352012.0171614}
+{"kind": "http_error", "what": "cites:W1529308618", "url": "https://api.openalex.org/works?filter=cites:W1529308618&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352014.1905808}
+{"kind": "http_error", "what": "cites:W4235693166", "url": "https://api.openalex.org/works?filter=cites:W4235693166&sort=cited_by_count:desc&per_page=50", "code": 429, "ts": 1794352016.4247613}
+{"kind": "fanout_done", "n_candidates": 1180, "ts": 1794352016.4252439}
+{"kind": "guard_pool_selected", "n_candidates_total": 1180, "n_guard_pool": 794, "ts": 1794352016.4261076}
+{"kind": "http_error", "what": "guard:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794352055.8722336}
+{"kind": "http_error", "what": "guard:W4285719527", "url": "https://api.openalex.org/works/W4285719527", "code": 404, "ts": 1794352165.1753182}
+{"kind": "http_error", "what": "guard:W6636275850", "url": "https://api.openalex.org/works/W6636275850", "code": 404, "ts": 1794352166.28737}
+{"kind": "http_error", "what": "guard:W6633544273", "url": "https://api.openalex.org/works/W6633544273", "code": 404, "ts": 1794352194.3040817}
+{"kind": "http_error", "what": "guard:W6820510384", "url": "https://api.openalex.org/works/W6820510384", "code": 404, "ts": 1794352593.3297052}
+{"kind": "http_error", "what": "guard:W6607228584", "url": "https://api.openalex.org/works/W6607228584", "code": 404, "ts": 1794352714.4603815}
+{"kind": "http_error", "what": "guard:W6721357447", "url": "https://api.openalex.org/works/W6721357447", "code": 404, "ts": 1794352884.7206025}
+{"kind": "domain_guard_done", "in_domain": 668, "out_of_domain": 126, "ts": 1794352886.9744132}
+{"kind": "selection_done", "selected": 100, "bridge": 0, "ts": 1794352886.975674}
+{"kind": "done", "final_count": 100, "ts": 1794352887.0052545}

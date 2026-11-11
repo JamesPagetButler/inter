@@ -1,0 +1,35 @@
+{"kind": "start", "ts": 1794347841.185899}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 1, "status": "resolved", "field": "Mathematics", "ts": 1794347841.4129128}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794347842.5634797}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 3, "status": "unresolved", "field": null, "ts": 1794347843.707679}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 4, "status": "resolved", "field": "Computer Science", "ts": 1794347844.8385088}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 5, "status": "resolved", "field": "Computer Science", "ts": 1794347846.0098357}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794347847.1958718}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794347848.3360004}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794347849.4781814}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794347850.667066}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794347851.8244598}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794347853.007937}
+{"kind": "seed_resolved", "domain": "math", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794347854.1437361}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 1, "status": "resolved", "field": "Physics and Astronomy", "ts": 1794347855.285663}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 2, "status": "resolved", "field": "Mathematics", "ts": 1794347856.4396136}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 3, "status": "resolved", "field": "Mathematics", "ts": 1794347857.587463}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 4, "status": "resolved", "field": "Mathematics", "ts": 1794347858.7133083}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 5, "status": "resolved", "field": "Mathematics", "ts": 1794347859.9123735}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 6, "status": "resolved", "field": "Mathematics", "ts": 1794347861.1058934}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 7, "status": "resolved", "field": "Mathematics", "ts": 1794347862.301311}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 8, "status": "resolved", "field": "Mathematics", "ts": 1794347863.4604688}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 9, "status": "resolved", "field": "Mathematics", "ts": 1794347864.6582503}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 10, "status": "resolved", "field": "Mathematics", "ts": 1794347865.807542}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 11, "status": "unresolved", "field": null, "ts": 1794347866.9359381}
+{"kind": "seed_resolved", "domain": "physics", "seed_n": 12, "status": "unresolved", "field": null, "ts": 1794347868.0999677}
+{"kind": "http_error", "what": "work:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794347884.250801}
+{"kind": "fetch_error", "what": "work:W2056960827", "url": "https://api.openalex.org/works/W2056960827", "error": "IncompleteRead(2464 bytes read, 8872 more expected)", "ts": 1794348258.1461554}
+{"kind": "fetch_error", "what": "cites:W1981140531", "url": "https://api.openalex.org/works?filter=cites:W1981140531&per_page=50", "error": "The read operation timed out", "ts": 1794348288.7815373}
+{"kind": "fanout_done", "n_candidates": 14447, "ts": 1794349087.1009078}
+{"kind": "guard_pool_selected", "n_candidates_total": 14447, "n_guard_pool": 799, "ts": 1794349087.1145024}
+{"kind": "http_error", "what": "guard:W6815778477", "url": "https://api.openalex.org/works/W6815778477", "code": 404, "ts": 1794349353.0930448}
+{"kind": "http_error", "what": "guard:W4285719527", "url": "https://api.openalex.org/works/W4285719527", "code": 404, "ts": 1794349377.2517276}
+{"kind": "domain_guard_done", "in_domain": 670, "out_of_domain": 129, "ts": 1794349985.7232969}
+{"kind": "selection_done", "selected": 100, "bridge": 0, "ts": 1794349985.7248073}
+{"kind": "done", "final_count": 100, "ts": 1794349985.7549386}
