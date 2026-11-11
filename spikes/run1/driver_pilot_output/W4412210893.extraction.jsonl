@@ -1,0 +1,20 @@
+{"subject": "Nöbeling's theorem (Theorem 18)", "relation": "specialises", "object": "bounded maps from any set to the integers form a free abelian group (Nöbeling, Satz 1 of [14])", "modality": "cited", "locator": "Section 1"}
+{"subject": "Nöbeling's original result (Satz 1 of [14])", "relation": "generalises", "object": "Nöbeling's theorem (Theorem 18): C(S,Z) is free for profinite S", "modality": "cited", "locator": "Section 1"}
+{"subject": "Theorem 10 (Cantor's intersection theorem for directed families)", "relation": "generalises", "object": "Cantor's intersection theorem for decreasing nested sequences of nonempty compact closed subsets", "modality": "stated", "locator": "Remark 11"}
+{"subject": "Theorem 10 (Cantor's intersection theorem for directed families)", "relation": "uses-technique", "object": "the standard proof of the decreasing nested sequence case of Cantor's intersection theorem, slightly modified", "modality": "stated", "locator": "Remark 11"}
+{"subject": "profinite space", "relation": "equivalent-to", "object": "cofiltered limit of finite discrete spaces", "modality": "stated", "locator": "Theorem 42"}
+{"subject": "filtered poset", "relation": "equivalent-to", "object": "nonempty directed poset", "modality": "stated", "locator": "Remark 6"}
+{"subject": "solid condensed abelian group", "relation": "defines", "object": "condensed abelian group A such that every morphism Z[S] → A factors uniquely through Z[S]^ for profinite S", "modality": "stated", "locator": "Definition 1"}
+{"subject": "Z[S]^", "relation": "defines", "object": "limit over i of Z[S_i] for profinite S = lim S_i", "modality": "stated", "locator": "Definition 1"}
+{"subject": "directed family", "relation": "defines", "object": "I-indexed family (x_i) in X such that for all i,j there is k with r(x_i,x_k) and r(x_j,x_k)", "modality": "stated", "locator": "Definition 2"}
+{"subject": "filtered category", "relation": "defines", "object": "nonempty category with cospan-completion and equalising morphism conditions", "modality": "stated", "locator": "Definition 5"}
+{"subject": "profinite space", "relation": "defines", "object": "totally disconnected compact Hausdorff space", "modality": "stated", "locator": "Definition 12"}
+{"subject": "Remark 17", "relation": "depends-on", "object": "Lemma 16 (continuous maps from cofiltered limits to discrete spaces factor through a component)", "modality": "stated", "locator": "Remark 17"}
+{"subject": "Notation 30 predicate Q", "relation": "defines", "object": "predicate on ordinals μ ≤ I stating that E(S) is linearly independent in C(S,Z) for closed S with coordinates bounded below μ", "modality": "stated", "locator": "Notation 30"}
+{"subject": "S'", "relation": "defines", "object": "S_0 ∩ π_μ(S_1), where S_0 and S_1 are the slices of S with x_μ = 0 and x_μ = 1", "modality": "stated", "locator": "Construction 35"}
+{"subject": "g", "relation": "defines", "object": "g = g_1^* − g_0^*: C(S,Z) → C(S',Z), with g_0 the inclusion and g_1 the map setting the μ-th coordinate to 1", "modality": "stated", "locator": "Construction 36"}
+{"subject": "Nöbeling's theorem", "relation": "depends-on", "object": "solid abelian groups theory: without it no nonzero examples of solid abelian groups can be given", "modality": "stated", "locator": "Abstract"}
+{"subject": "the proof of Nöbeling's theorem in this paper", "relation": "uses-technique", "object": "induction over ordinals", "modality": "stated", "locator": "Section 1"}
+{"subject": "the proof of Nöbeling's theorem in this paper", "relation": "uses-technique", "object": "the well-ordering principle", "modality": "stated", "locator": "Section 1"}
+{"subject": "proofs of the result in [7, 16]", "relation": "uses-technique", "object": "the argument presented in this paper", "modality": "cited", "locator": "Section 1"}
+{"subject": "Lemma 24 (P is well-ordered)", "relation": "uses-technique", "object": "the inductive datatype WellFounded", "modality": "stated", "locator": "Remark 25"}

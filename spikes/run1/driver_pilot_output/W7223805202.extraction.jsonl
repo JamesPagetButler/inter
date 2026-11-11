@@ -1,0 +1,32 @@
+{"subject":"Theorem 3.8(1)","relation":"proves","object":"every homological epimorphism is homotopical","modality":"stated","locator":"Theorem 3.8(1)"}
+{"subject":"Theorem 3.8(2)","relation":"proves","object":"under additivity and separate preservation of finite coproducts, f is homotopical if and only if f is homological","modality":"stated","locator":"Theorem 3.8(2)"}
+{"subject":"Theorem 3.8","relation":"generalises","object":"Chuang and Lazarev, unbounded dg-algebras result [14, Theorem 4.4]","modality":"stated","locator":"Abstract"}
+{"subject":"Chuang and Lazarev [14, Theorem 4.4]","relation":"proves","object":"homotopical and homological epimorphisms agree for unbounded dg-algebras","modality":"cited","locator":"Introduction"}
+{"subject":"Section 3 proof of Theorem 3.8","relation":"uses-technique","object":"Silver's argument for ordinary rings [32]","modality":"cited","locator":"Introduction (Section 3 overview)"}
+{"subject":"Definition 3.1","relation":"defines","object":"homotopical epimorphism (B*_A B to B is an equivalence)","modality":"stated","locator":"Definition 3.1"}
+{"subject":"Definition 3.1","relation":"defines","object":"homological epimorphism (B tensor_A B to B is an equivalence)","modality":"stated","locator":"Definition 3.1"}
+{"subject":"Lemma 3.2","relation":"proves","object":"equivalence of homotopical epimorphism with (-1)-truncatedness of restriction maps and with contractibility of extension spaces","modality":"stated","locator":"Lemma 3.2"}
+{"subject":"Proposition 3.3","relation":"proves","object":"full faithfulness of restriction of scalars functors is equivalent to f being a homological epimorphism","modality":"stated","locator":"Proposition 3.3"}
+{"subject":"Lemma 3.4","relation":"proves","object":"restriction of scalars along a homological epimorphism is lax monoidal with equivalence U_f(M) tensor_A U_f(N) to U_f(M tensor_B N)","modality":"stated","locator":"Lemma 3.4"}
+{"subject":"Lemma 3.6","relation":"proves","object":"Der_A(B,M) is contractible for homotopical f","modality":"stated","locator":"Lemma 3.6"}
+{"subject":"Lemma 3.7","relation":"proves","object":"if the derivation delta is nullhomotopic then the multiplication mu_{B/A} is an equivalence","modality":"stated","locator":"Lemma 3.7"}
+{"subject":"Corollary 3.9","relation":"proves","object":"a homological epimorphism induces a morphism of composition monoids Z(A) to Z(B)","modality":"stated","locator":"Corollary 3.9"}
+{"subject":"Corollary 3.10","relation":"proves","object":"a homological epimorphism induces a morphism of E_2-algebras underline Z(A) to underline Z(B)","modality":"stated","locator":"Corollary 3.10"}
+{"subject":"Corollary 3.11","relation":"proves","object":"a homological epimorphism admits a commutative refinement of B such that f lifts to a morphism of commutative algebras","modality":"stated","locator":"Corollary 3.11"}
+{"subject":"Corollary 3.11","relation":"generalises","object":"Silver's theorem that an epimorphism from a commutative ring is onto a commutative ring [32, Corollary 1.2]","modality":"stated","locator":"Remark 3.12"}
+{"subject":"Remark 3.13","relation":"equivalent-to","object":"enriched center underline Z(A) is the Hochschild cochain object underline HH^bullet(A)","modality":"stated","locator":"Remark 3.13"}
+{"subject":"Example 4.3","relation":"specialises","object":"Theorem 3.8 for simplicial abelian groups with derived tensor product","modality":"stated","locator":"Example 4.3"}
+{"subject":"Corollary 4.1","relation":"proves","object":"the equivalence of homotopical, homological, and vanishing of the associative cotangent complex L^nc_{B/A}","modality":"stated","locator":"Corollary 4.1"}
+{"subject":"Remark 4.2","relation":"counterexample-to","object":"the claim that vanishing of the commutative cotangent complex implies f is a homotopical epimorphism (k to k x k)","modality":"stated","locator":"Remark 4.2"}
+{"subject":"Remark 4.4","relation":"counterexample-to","object":"the equivalence of homological and homotopical epimorphisms for associative algebras in spaces with cartesian product (G to star)","modality":"stated","locator":"Remark 4.4"}
+{"subject":"Remark 4.5","relation":"proves","object":"central coinvariant localizations T[s^{-1}] are homotopical epimorphisms of associative algebras in C","modality":"stated","locator":"Remark 4.5"}
+{"subject":"Proposition 4.6","relation":"proves","object":"for each A there is only a set of equivalence classes of homotopical epimorphisms A to B","modality":"stated","locator":"Proposition 4.6"}
+{"subject":"Proposition 2.12","relation":"proves","object":"Alg(_A Mod_A) is equivalent to Alg(C)_{A/}","modality":"stated","locator":"Proposition 2.12"}
+{"subject":"Proposition 2.19","relation":"proves","object":"Phi_A identifies Alg(Mod_A) with the infinity-category of A-algebras equipped with central structures","modality":"stated","locator":"Proposition 2.19"}
+{"subject":"Example 2.16","relation":"counterexample-to","object":"uniqueness of central structures on a fixed morphism f: A to B","modality":"stated","locator":"Example 2.16"}
+{"subject":"Lemma 2.5","relation":"proves","object":"the induced functor Alg(C) to Alg(D) is fully faithful under fully faithful F with lax monoidal structure maps equivalences","modality":"stated","locator":"Lemma 2.5"}
+{"subject":"Lemma A.1","relation":"proves","object":"an additive functor whose functor on maximal subgroupoids is fully faithful is itself fully faithful","modality":"stated","locator":"Lemma A.1"}
+{"subject":"Proposition A.2","relation":"proves","object":"every homotopical epimorphism is homological under the closedness (right adjoint) hypothesis","modality":"stated","locator":"Proposition A.2"}
+{"subject":"Definition 2.13","relation":"defines","object":"center space Z(B) = Map_{_B Mod_B}(B,B)","modality":"stated","locator":"Definition 2.13"}
+{"subject":"Lemma 2.17","relation":"defines","object":"evaluation at the unit e_B: underline Z(B) to B","modality":"stated","locator":"Lemma 2.17"}
+{"subject":"Proposition 2.18","relation":"proves","object":"the space of central structures on f is the homotopy fiber of Map_{Alg_{E_2}}(A, underline Z(B)) to Map_{Alg}(A,B) along e_B","modality":"stated","locator":"Proposition 2.18"}
