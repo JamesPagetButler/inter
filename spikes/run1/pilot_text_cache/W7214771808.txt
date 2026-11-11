@@ -1,0 +1,4 @@
+# Gros Topoi as Partially Lax Limits of Petit Topoi
+
+Abstract:
+We prove that the sheaf $\infty$-topos associated to a geometric site in the sense of Lurie can be written as a partially lax limit of smaller sheaf $\infty$-topoi. This is thus a formalization of Lurie's vision for fractured $\infty$-topoi to axiomatize the relation between gros and petit topoi. As a consequence, we realize the $\infty$-topos of $κ$-small condensed anima as a partially lax limit of sheaf $\infty$-topoi over extremally disconnected spaces, marked at the open embeddings. Moreover, we deduce a gros version of the étale exodromy theorem.

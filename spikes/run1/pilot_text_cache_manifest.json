@@ -1,0 +1,29 @@
+[
+  {
+    "openalex_id": "https://openalex.org/W4412210893",
+    "work_id": "W4412210893",
+    "title": "Towards Solid Abelian Groups: A Formal Proof of N\u00f6beling\u2019s Theorem",
+    "doi": "https://doi.org/10.4230/lipics.itp.2024.6",
+    "status": "abstract-only",
+    "cache_path": "pilot_text_cache/W4412210893.txt",
+    "text_sha256": "4ce81000247cfc0f51570ecbd2497c0316fa464d8df42a2ba20835a7db9406b5"
+  },
+  {
+    "openalex_id": "https://openalex.org/W7214771808",
+    "work_id": "W7214771808",
+    "title": "Gros Topoi as Partially Lax Limits of Petit Topoi",
+    "doi": "https://doi.org/10.48550/arxiv.2609.35119",
+    "status": "abstract-only",
+    "cache_path": "pilot_text_cache/W7214771808.txt",
+    "text_sha256": "3b56de39d7b132f26fe0ce4ae1e8fe691fd329599ffa7fa9b1ebc5b6a02c70ba"
+  },
+  {
+    "openalex_id": "https://openalex.org/W1501965422",
+    "work_id": "W1501965422",
+    "title": "Enhanced six operations and base change theorem for higher Artin stacks",
+    "doi": "https://doi.org/10.48550/arxiv.1211.5948",
+    "status": "abstract-only",
+    "cache_path": "pilot_text_cache/W1501965422.txt",
+    "text_sha256": "fbe75d93fb536a912c2b3e3c010734cafb4a1b89b00b5a41acd91449223c9eb4"
+  }
+]
