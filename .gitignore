@@ -4,3 +4,8 @@
 # seat (backward-compat). Written exclusively by `launch-federation.sh refresh`.
 federation-terminals/personas.local.conf
 federation-terminals/personas.local.conf.bak
+
+# contextus-seed-corpus §2.5 arXiv text cache (builder/cxs4-fetcher): raw
+# fetched paper text (abstract+intro+statements), never committed — only
+# the no-text manifest/log beside it are safe to commit.
+spikes/run1/text_cache/

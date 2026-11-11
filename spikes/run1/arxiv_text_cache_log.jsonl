@@ -1,0 +1,197 @@
+{"kind": "start", "n_papers": 99, "ts": 1794424257.4420874}
+{"kind": "paper_start", "index": 0, "openalex_id": "https://openalex.org/W3173777491", "ts": 1794424257.44218}
+{"kind": "http_ok", "what": "openalex:W3173777491", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424257.6189396}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3173777491", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424257.6192355}
+{"kind": "paper_start", "index": 1, "openalex_id": "https://openalex.org/W7160450264", "ts": 1794424257.619347}
+{"kind": "http_ok", "what": "openalex:W7160450264", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424261.74214}
+{"kind": "http_ok", "what": "ar5iv:2605.03658", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424262.008013}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7160450264", "status": "ok", "arxiv_id": "2605.03658", "n_statements": 109, "sha256": "ab551ec8239c98baa0ddb4e41349d7c8828b98076a0ae46c660fb39cfab65af6", "ts": 1794424262.1025453}
+{"kind": "paper_start", "index": 2, "openalex_id": "https://openalex.org/W4281706059", "ts": 1794424262.103287}
+{"kind": "http_ok", "what": "openalex:W4281706059", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424265.8674927}
+{"kind": "http_ok", "what": "ar5iv:2206.02022", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424266.1106033}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4281706059", "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": "2206.02022", "ts": 1794424266.1107514}
+{"kind": "paper_start", "index": 3, "openalex_id": "https://openalex.org/W4391839082", "ts": 1794424266.1108701}
+{"kind": "http_ok", "what": "openalex:W4391839082", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424270.016531}
+{"kind": "http_ok", "what": "ar5iv:2309.14870", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424270.2761497}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4391839082", "status": "ok", "arxiv_id": "2309.14870", "n_statements": 1, "sha256": "08b974fc523731252d905b4d33735470790f2e636ca186f6b7a2033feb13a235", "ts": 1794424270.2781866}
+{"kind": "paper_start", "index": 4, "openalex_id": "https://openalex.org/W4405949452", "ts": 1794424270.2783232}
+{"kind": "http_ok", "what": "openalex:W4405949452", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424274.1828823}
+{"kind": "http_ok", "what": "ar5iv:2407.12840", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424274.623978}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4405949452", "status": "ok", "arxiv_id": "2407.12840", "n_statements": 68, "sha256": "45e4915d6405622b2c934549a094ea407a48f2667dcbe0b6e6a0b89ace969b8e", "ts": 1794424274.6402924}
+{"kind": "paper_start", "index": 5, "openalex_id": "https://openalex.org/W2937074727", "ts": 1794424274.6404202}
+{"kind": "http_ok", "what": "openalex:W2937074727", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424278.2842546}
+{"kind": "http_ok", "what": "ar5iv:1904.09966", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424278.872485}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2937074727", "status": "ok", "arxiv_id": "1904.09966", "n_statements": 146, "sha256": "769c179dc743652ca4911772f077da17b18e6ccd1ddd910027d58dc6a1d2b7fa", "ts": 1794424278.908003}
+{"kind": "paper_start", "index": 6, "openalex_id": "https://openalex.org/W7160385925", "ts": 1794424278.908127}
+{"kind": "http_ok", "what": "openalex:W7160385925", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424282.472511}
+{"kind": "http_ok", "what": "ar5iv:2605.03655", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424283.2765942}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7160385925", "status": "ok", "arxiv_id": "2605.03655", "n_statements": 172, "sha256": "aa250e99999400389cae06be1a9a7f0c6d149b133ccb664f19a6f7e9afcfa4d7", "ts": 1794424283.4186623}
+{"kind": "paper_start", "index": 7, "openalex_id": "https://openalex.org/W2045614673", "ts": 1794424283.4197974}
+{"kind": "http_ok", "what": "openalex:W2045614673", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424286.5816925}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2045614673", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424286.5820153}
+{"kind": "paper_start", "index": 8, "openalex_id": "https://openalex.org/W4403579066", "ts": 1794424286.5821216}
+{"kind": "http_ok", "what": "openalex:W4403579066", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424290.709034}
+{"kind": "http_ok", "what": "ar5iv:2410.13038", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424290.9019346}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4403579066", "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": "2410.13038", "ts": 1794424290.9020855}
+{"kind": "paper_start", "index": 9, "openalex_id": "https://openalex.org/W4412210893", "ts": 1794424290.9022381}
+{"kind": "http_ok", "what": "openalex:W4412210893", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424294.8984914}
+{"kind": "http_ok", "what": "ar5iv:2309.07252", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424295.1758683}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4412210893", "status": "ok", "arxiv_id": "2309.07252", "n_statements": 42, "sha256": "632831b90af1f23dea66137a529b91438628a4bdb768fbcdb6e83c9181216a83", "ts": 1794424295.1831427}
+{"kind": "paper_start", "index": 10, "openalex_id": "https://openalex.org/W7214771808", "ts": 1794424295.18326}
+{"kind": "http_ok", "what": "openalex:W7214771808", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424299.0305672}
+{"kind": "http_ok", "what": "ar5iv:2609.35119", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424299.4703116}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7214771808", "status": "ok", "arxiv_id": "2609.35119", "n_statements": 38, "sha256": "99667d990701090b95f00b86da9be955ffed80f59309834ce50881d0dafe09d5", "ts": 1794424299.48661}
+{"kind": "paper_start", "index": 11, "openalex_id": "https://openalex.org/W1501965422", "ts": 1794424299.4867432}
+{"kind": "http_ok", "what": "openalex:W1501965422", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424303.164746}
+{"kind": "http_ok", "what": "ar5iv:1211.5948", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424304.3239715}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1501965422", "status": "ok", "arxiv_id": "1211.5948", "n_statements": 359, "sha256": "2c0a1d2c24caff29fdd46473c81b0bc062c4f1f2249320672fdd0eae9c0aeffe", "ts": 1794424304.5158858}
+{"kind": "paper_start", "index": 12, "openalex_id": "https://openalex.org/W3164541593", "ts": 1794424304.518739}
+{"kind": "http_ok", "what": "openalex:W3164541593", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424307.3333244}
+{"kind": "http_ok", "what": "ar5iv:2105.12591", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424308.6876519}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3164541593", "status": "ok", "arxiv_id": "2105.12591", "n_statements": 141, "sha256": "91681df89a916133290c777f756d1e3d217e49295201e8fff2dbdd95201b3692", "ts": 1794424308.7274113}
+{"kind": "paper_start", "index": 13, "openalex_id": "https://openalex.org/W4415961200", "ts": 1794424308.727556}
+{"kind": "http_ok", "what": "openalex:W4415961200", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424311.477298}
+{"kind": "http_ok", "what": "ar5iv:2412.19605", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424313.1138108}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4415961200", "status": "ok", "arxiv_id": "2412.19605", "n_statements": 58, "sha256": "cc7b396f2bc1016720890fd54f65a4616c4c4e22071c1f16f4109466220b2ba7", "ts": 1794424313.1359367}
+{"kind": "paper_start", "index": 14, "openalex_id": "https://openalex.org/W4417030997", "ts": 1794424313.1360629}
+{"kind": "http_ok", "what": "openalex:W4417030997", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424315.6046119}
+{"kind": "http_ok", "what": "ar5iv:2512.03648", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424317.9275792}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4417030997", "status": "ok", "arxiv_id": "2512.03648", "n_statements": 500, "sha256": "757334d6b1b8f8786433477be65cf110b0037d8c3ff10673ef434faca1cdc1ab", "ts": 1794424318.1602504}
+{"kind": "paper_start", "index": 15, "openalex_id": "https://openalex.org/W7134934189", "ts": 1794424318.16339}
+{"kind": "http_ok", "what": "openalex:W7134934189", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424319.7318625}
+{"kind": "http_ok", "what": "ar5iv:2603.09618", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424322.241469}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7134934189", "status": "ok", "arxiv_id": "2603.09618", "n_statements": 62, "sha256": "9e8c380ed99e52a3e5a2222be20d9dc6a400af0793fa70465e3884b8273d8eed", "ts": 1794424322.2566154}
+{"kind": "paper_start", "index": 16, "openalex_id": "https://openalex.org/W1547584114", "ts": 1794424322.2567282}
+{"kind": "http_ok", "what": "openalex:W1547584114", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424323.8381789}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1547584114", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424323.8385384}
+{"kind": "paper_start", "index": 17, "openalex_id": "https://openalex.org/W3146298757", "ts": 1794424323.8386414}
+{"kind": "http_ok", "what": "openalex:W3146298757", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424327.9719877}
+{"kind": "http_ok", "what": "ar5iv:2103.17141", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424328.4282308}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3146298757", "status": "ok", "arxiv_id": "2103.17141", "n_statements": 188, "sha256": "c49a845ed8aade61e8a7d4409b3c85090ce7f96cb6836ed2ebe35ec341bcf228", "ts": 1794424328.4915128}
+{"kind": "paper_start", "index": 18, "openalex_id": "https://openalex.org/W3202994947", "ts": 1794424328.4916627}
+{"kind": "http_ok", "what": "openalex:W3202994947", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424332.1368403}
+{"kind": "http_ok", "what": "ar5iv:2109.11631", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424333.2045057}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3202994947", "status": "ok", "arxiv_id": "2109.11631", "n_statements": 176, "sha256": "8ee44facd9b602ed7d4e814282f3d78dab20f5ee4c88ef38ab0253dddddef1d7", "ts": 1794424333.331313}
+{"kind": "paper_start", "index": 19, "openalex_id": "https://openalex.org/W4318908857", "ts": 1794424333.3314939}
+{"kind": "http_ok", "what": "openalex:W4318908857", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424336.2644546}
+{"kind": "http_ok", "what": "ar5iv:2301.13780", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424337.4854126}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4318908857", "status": "ok", "arxiv_id": "2301.13780", "n_statements": 10, "sha256": "e30a833d7bc994a6471cf8a7c9aeaeb18275a302ccadf4651410ae1ea4122516", "ts": 1794424337.4925272}
+{"kind": "paper_start", "index": 20, "openalex_id": "https://openalex.org/W4417474213", "ts": 1794424337.4926353}
+{"kind": "http_ok", "what": "openalex:W4417474213", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424340.4034438}
+{"kind": "http_ok", "what": "ar5iv:2512.14612", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424341.7981725}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4417474213", "status": "ok", "arxiv_id": "2512.14612", "n_statements": 52, "sha256": "f5bca05ab02429256921f1f7455486fd39a94f791938e5d03985d4dd2ca96f82", "ts": 1794424341.8190103}
+{"kind": "paper_start", "index": 21, "openalex_id": "https://openalex.org/W4388963784", "ts": 1794424341.819129}
+{"kind": "http_ok", "what": "openalex:W4388963784", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424344.5696204}
+{"kind": "http_ok", "what": "ar5iv:2311.13408", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424346.192541}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4388963784", "status": "ok", "arxiv_id": "2311.13408", "n_statements": 75, "sha256": "7e7a25f447134d18a3642c21ef910165a1f9aab920ef3e3d2c2d2f1643c94b19", "ts": 1794424346.2153318}
+{"kind": "paper_start", "index": 22, "openalex_id": "https://openalex.org/W7161004857", "ts": 1794424346.2154531}
+{"kind": "http_ok", "what": "openalex:W7161004857", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424348.6968024}
+{"kind": "http_ok", "what": "ar5iv:2605.11950", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424350.6144462}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7161004857", "status": "ok", "arxiv_id": "2605.11950", "n_statements": 155, "sha256": "c0e3684995cecdb6ffb33a1c55fed7793ed3e570f7419439ba93ae12762565b8", "ts": 1794424350.688116}
+{"kind": "paper_start", "index": 23, "openalex_id": "https://openalex.org/W7162107386", "ts": 1794424350.688281}
+{"kind": "http_ok", "what": "openalex:W7162107386", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424352.8078396}
+{"kind": "http_ok", "what": "ar5iv:2605.22499", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424354.9935353}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7162107386", "status": "ok", "arxiv_id": "2605.22499", "n_statements": 143, "sha256": "87a0eed1005463132c6cc91d667b9cefe576e69b03526e10ec0adc1d25b8f4be", "ts": 1794424355.0429635}
+{"kind": "paper_start", "index": 24, "openalex_id": "https://openalex.org/W7168273025", "ts": 1794424355.0431104}
+{"kind": "http_ok", "what": "openalex:W7168273025", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424356.9808028}
+{"kind": "http_ok", "what": "ar5iv:2607.10184", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424359.2900405}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7168273025", "status": "ok", "arxiv_id": "2607.10184", "n_statements": 40, "sha256": "8b969182310d7a0926ad08c5fd38c4f906c5db40d6b3938d6c3c3ecea96dd7cd", "ts": 1794424359.3020768}
+{"kind": "paper_start", "index": 25, "openalex_id": "https://openalex.org/W7203703918", "ts": 1794424359.3021865}
+{"kind": "http_ok", "what": "openalex:W7203703918", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424361.1030536}
+{"kind": "http_ok", "what": "ar5iv:2608.15744", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424363.769865}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7203703918", "status": "ok", "arxiv_id": "2608.15744", "n_statements": 193, "sha256": "8f339a859f41bd689d813d59165bb32f5e0bdf98cf0a990892af8b295800a04c", "ts": 1794424363.8191907}
+{"kind": "paper_start", "index": 26, "openalex_id": "https://openalex.org/W7208731890", "ts": 1794424363.819347}
+{"kind": "http_ok", "what": "openalex:W7208731890", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424365.2187526}
+{"kind": "http_ok", "what": "ar5iv:2609.03375", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424368.39505}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7208731890", "status": "ok", "arxiv_id": "2609.03375", "n_statements": 320, "sha256": "32534443cb5839424f262c897d8b4fbea4433eade4ae812c18dd4651a0530c3a", "ts": 1794424368.4886413}
+{"kind": "paper_start", "index": 27, "openalex_id": "https://openalex.org/W7213497312", "ts": 1794424368.4888277}
+{"kind": "http_ok", "what": "openalex:W7213497312", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424369.3764682}
+{"kind": "http_ok", "what": "ar5iv:2609.18162", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424372.7179546}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7213497312", "status": "ok", "arxiv_id": "2609.18162", "n_statements": 37, "sha256": "ad1e9caae37f3d58b1b5b6f24116453b5a7a2a611cef891e6ed8f90f4cf6af63", "ts": 1794424372.7301328}
+{"kind": "paper_start", "index": 28, "openalex_id": "https://openalex.org/W7217982225", "ts": 1794424372.730245}
+{"kind": "http_ok", "what": "openalex:W7217982225", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424373.5103526}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7217982225", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424373.5107698}
+{"kind": "paper_start", "index": 29, "openalex_id": "https://openalex.org/W7223805202", "ts": 1794424373.510874}
+{"kind": "http_ok", "what": "openalex:W7223805202", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424377.6342304}
+{"kind": "http_ok", "what": "ar5iv:2610.34592", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424377.9740632}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7223805202", "status": "ok", "arxiv_id": "2610.34592", "n_statements": 42, "sha256": "440ebacb7d33c38a909596dfb1f084c130db757d1673371b98b54c5775b758ea", "ts": 1794424377.987304}
+{"kind": "paper_start", "index": 30, "openalex_id": "https://openalex.org/W4252421805", "ts": 1794424377.9874294}
+{"kind": "http_ok", "what": "openalex:W4252421805", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424381.8259487}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4252421805", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424381.826191}
+{"kind": "paper_start", "index": 31, "openalex_id": "https://openalex.org/W1548110689", "ts": 1794424381.8263128}
+{"kind": "http_ok", "what": "openalex:W1548110689", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424385.9651935}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1548110689", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424385.965482}
+{"kind": "paper_start", "index": 32, "openalex_id": "https://openalex.org/W2091343122", "ts": 1794424385.965584}
+{"kind": "http_ok", "what": "openalex:W2091343122", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424390.1215968}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2091343122", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424390.1219118}
+{"kind": "paper_start", "index": 33, "openalex_id": "https://openalex.org/W1936971149", "ts": 1794424390.1220126}
+{"kind": "http_ok", "what": "openalex:W1936971149", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424394.3048024}
+{"kind": "http_ok", "what": "ar5iv:math/9811037", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424394.6678646}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1936971149", "status": "ok", "arxiv_id": "math/9811037", "n_statements": 56, "sha256": "9f5446a4fa9952c610fd2bcf7316edbc5ab98f27f771d7335042ac9ece2027fc", "ts": 1794424394.6852636}
+{"kind": "paper_start", "index": 34, "openalex_id": "https://openalex.org/W2084051193", "ts": 1794424394.6854022}
+{"kind": "http_ok", "what": "openalex:W2084051193", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424398.4527657}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2084051193", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424398.453029}
+{"kind": "paper_start", "index": 35, "openalex_id": "https://openalex.org/W2099665514", "ts": 1794424398.4531395}
+{"kind": "http_ok", "what": "openalex:W2099665514", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424402.5736368}
+{"kind": "http_ok", "what": "ar5iv:1310.7930", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424402.744695}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2099665514", "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": "1310.7930", "ts": 1794424402.7448375}
+{"kind": "paper_start", "index": 36, "openalex_id": "https://openalex.org/W1820708574", "ts": 1794424402.744967}
+{"kind": "http_ok", "what": "openalex:W1820708574", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424406.7639794}
+{"kind": "http_ok", "what": "ar5iv:1510.02402", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424407.0790985}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1820708574", "status": "ok", "arxiv_id": "1510.02402", "n_statements": 13, "sha256": "7358edbacc70325e4884d3f8123f1392bcbba08329028e00838bbcc4f4ccb3c9", "ts": 1794424407.0939908}
+{"kind": "paper_start", "index": 37, "openalex_id": "https://openalex.org/W1663788542", "ts": 1794424407.0941248}
+{"kind": "http_ok", "what": "openalex:W1663788542", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424410.9176617}
+{"kind": "http_ok", "what": "ar5iv:1507.06869", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424411.561688}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1663788542", "status": "ok", "arxiv_id": "1507.06869", "n_statements": 195, "sha256": "9bea5bbeb68bcb1f7672581231f1e404ae2bffc1c6ab5a16d0afcb38f9b3ee76", "ts": 1794424411.6280882}
+{"kind": "paper_start", "index": 38, "openalex_id": "https://openalex.org/W2287868302", "ts": 1794424411.6283243}
+{"kind": "http_ok", "what": "openalex:W2287868302", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424415.0639796}
+{"kind": "http_ok", "what": "ar5iv:1602.06899", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424416.0966427}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2287868302", "status": "ok", "arxiv_id": "1602.06899", "n_statements": 605, "sha256": "1bfeda9bd2416c66f815268c59df349c64d533b79497703db29d8ac122f41b4a", "ts": 1794424416.2562568}
+{"kind": "paper_start", "index": 39, "openalex_id": "https://openalex.org/W2759111404", "ts": 1794424416.2581272}
+{"kind": "http_ok", "what": "openalex:W2759111404", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424419.2388616}
+{"kind": "http_ok", "what": "ar5iv:1709.07343", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424420.7234921}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2759111404", "status": "ok", "arxiv_id": "1709.07343", "n_statements": 349, "sha256": "066f0db0fe64264ed813aeb60ede8f46a3bb951858abb6fa2133974d4eaa3f3c", "ts": 1794424420.8452535}
+{"kind": "paper_start", "index": 40, "openalex_id": "https://openalex.org/W4394665976", "ts": 1794424420.8454385}
+{"kind": "http_ok", "what": "openalex:W4394665976", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424423.3603368}
+{"kind": "http_ok", "what": "ar5iv:1807.03281", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424425.330422}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4394665976", "status": "ok", "arxiv_id": "1807.03281", "n_statements": 759, "sha256": "af80c933c49adfcce89db2fad49576e7e60e6d1b50a92bb801192c487befcdfa", "ts": 1794424425.559609}
+{"kind": "paper_start", "index": 41, "openalex_id": "https://openalex.org/W3134337821", "ts": 1794424425.5621238}
+{"kind": "http_ok", "what": "openalex:W3134337821", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424427.5035517}
+{"kind": "http_ok", "what": "ar5iv:2102.13459", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424429.5058036}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3134337821", "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": "2102.13459", "ts": 1794424429.5059829}
+{"kind": "paper_start", "index": 42, "openalex_id": "https://openalex.org/W3162009980", "ts": 1794424429.5061536}
+{"kind": "http_ok", "what": "openalex:W3162009980", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424431.667381}
+{"kind": "http_ok", "what": "ar5iv:2105.07888", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424433.9094143}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3162009980", "status": "ok", "arxiv_id": "2105.07888", "n_statements": 150, "sha256": "9f752dedc06a1d417fc106de821631df6dbf431ce73473bff65baa03674ca6bc", "ts": 1794424433.9463644}
+{"kind": "paper_start", "index": 43, "openalex_id": "https://openalex.org/W3113975734", "ts": 1794424433.9465132}
+{"kind": "http_ok", "what": "openalex:W3113975734", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424435.8205926}
+{"kind": "http_ok", "what": "ar5iv:2012.10502", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424438.247701}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3113975734", "status": "ok", "arxiv_id": "2012.10502", "n_statements": 74, "sha256": "5ec4d95c2a9bbf4d022e423544b9e0f2ee426ba611e1f57c6f32de50e80f6dc5", "ts": 1794424438.2734969}
+{"kind": "paper_start", "index": 44, "openalex_id": "https://openalex.org/W4315705960", "ts": 1794424438.2736259}
+{"kind": "http_ok", "what": "openalex:W4315705960", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424439.9427724}
+{"kind": "http_ok", "what": "ar5iv:2301.03821", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424442.71816}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4315705960", "status": "ok", "arxiv_id": "2301.03821", "n_statements": 153, "sha256": "0729b49658af6015302e42832ab7ba88f09f1b492691d658dcc97e1757037183", "ts": 1794424442.77075}
+{"kind": "paper_start", "index": 45, "openalex_id": "https://openalex.org/W4388514896", "ts": 1794424442.7708957}
+{"kind": "http_ok", "what": "openalex:W4388514896", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424444.1247613}
+{"kind": "http_ok", "what": "ar5iv:2311.04043", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424447.144083}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4388514896", "status": "ok", "arxiv_id": "2311.04043", "n_statements": 119, "sha256": "a753611cb486b767cc024a8a033fe48ed31101f5fb3bf83e5487b5193839c76e", "ts": 1794424447.1820776}
+{"kind": "paper_start", "index": 46, "openalex_id": "https://openalex.org/W4390690021", "ts": 1794424447.182231}
+{"kind": "http_ok", "what": "openalex:W4390690021", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424448.2406704}
+{"kind": "http_ok", "what": "ar5iv:2401.02568", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424451.4757738}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4390690021", "status": "ok", "arxiv_id": "2401.02568", "n_statements": 117, "sha256": "5f9f698763ed141aa27039ec12ed133d2420a5870765d3bf40c8afb8bfb3eeef", "ts": 1794424451.5010834}
+{"kind": "paper_start", "index": 47, "openalex_id": "https://openalex.org/W4390962404", "ts": 1794424451.501243}
+{"kind": "http_ok", "what": "openalex:W4390962404", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424452.3568606}
+{"kind": "http_ok", "what": "ar5iv:2401.07738", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424456.0191505}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4390962404", "status": "ok", "arxiv_id": "2401.07738", "n_statements": 296, "sha256": "0f149e239d612309f4be8c81e3a68401a1bb2f63bc61ca6308da1326d16ac979", "ts": 1794424456.1279795}
+{"kind": "paper_start", "index": 48, "openalex_id": "https://openalex.org/W4390977661", "ts": 1794424456.1281674}
+{"kind": "http_ok", "what": "openalex:W4390977661", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424456.512221}
+{"kind": "http_ok", "what": "ar5iv:2206.14795", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424460.4148319}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4390977661", "status": "ok", "arxiv_id": "2206.14795", "n_statements": 107, "sha256": "e0c3ae4091560620d81975a4f6c351fcace6f938fdb3133a24e80ef638190687", "ts": 1794424460.4437566}
+{"kind": "paper_start", "index": 49, "openalex_id": "https://openalex.org/W4399320509", "ts": 1794424460.443898}
+{"kind": "http_ok", "what": "openalex:W4399320509", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424460.6024153}
+{"kind": "http_ok", "what": "ar5iv:2111.14495", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794424464.998972}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4399320509", "status": "ok", "arxiv_id": "2111.14495", "n_statements": 288, "sha256": "6c53e7c44136d5f3f3953386409cf8e6397434ff7946b954892af9322ec36f28", "ts": 1794424465.0877073}
+{"kind": "paper_start", "index": 50, "openalex_id": "https://openalex.org/W3187477437", "ts": 1794424465.0878832}
+{"kind": "http_ok", "what": "openalex:W3187477437", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794424465.203364}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3187477437", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794424465.2036293}
+{"kind": "paper_start", "index": 51, "openalex_id": "https://openalex.org/W2080238236", "ts": 1794424465.203735}
