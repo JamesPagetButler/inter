@@ -74,7 +74,7 @@ Reference for any Python work in this workspace. Load at session start or `@`-im
 - Depend on `dict` insertion order for *correctness* (it's stable since 3.7, but if order matters semantically, use `OrderedDict` or sort explicitly)
 - Use `assert` for runtime validation that must hold in production (asserts are stripped under `-O`)
 - Call blocking I/O from inside an `async def` without `asyncio.to_thread` or equivalent
-- Commit API keys to source. They live in `~/.claude/settings.json` env block or per-project `.env` files (gitignored).
+- Commit API keys to source. They live in your local secrets/settings config or per-project `.env` files (gitignored).
 
 ## Verification
 After any non-trivial change, observe all of the following pass:
@@ -85,7 +85,7 @@ After any non-trivial change, observe all of the following pass:
 5. `uv lock --check` (or `uv sync` produces no `pyproject.toml` / `uv.lock` diff)
 
 ## Workspace tooling note
-MCP servers (`~/.claude/mcp-servers/*`) use `fastmcp` over the `mcp` SDK. Each server has its own venv at `<server-dir>/venv/`. Don't share venvs across servers — they have divergent dep pins.
+Local MCP servers use `fastmcp` over the `mcp` SDK. Each server has its own venv at `<server-dir>/venv/`. Don't share venvs across servers — they have divergent dep pins.
 
 ## References
 - [PEP 8](https://peps.python.org/pep-0008/) — style baseline (mostly enforced by ruff)

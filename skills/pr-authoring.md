@@ -89,7 +89,7 @@ Hyphens, not underscores or camelCase. Lowercase. Issue-prefix preferred when ap
 - **Avoid** mixing unrelated changes (e.g. don't combine a docs change with a behavior fix).
 
 ## Git hygiene before the PR
-- **Don't force push to main.** Per Git Safety Protocol. The only acceptable force push is to a feature branch you own, after a clean rebase, when no one else is reviewing. Never to a shared branch. (For agents, any force-push is additionally confirm-first per CLAUDE.md standing authorizations — see ledger CONFLICT.)
+- **Every force-push is confirm-first (~/Documents/CLAUDE.md), regardless of repo ownership.** Never force-push to main or to a shared branch. Secondary guidance: a force-push to a feature branch you own, after a clean rebase, when no one else is reviewing, is the only shape worth asking for.
 - **Don't skip hooks.** `--no-verify` is forbidden by default. If a hook fails, fix the underlying issue, re-stage, re-commit. Pre-commit hooks exist for a reason; bypassing them creates the failure mode we're trying to prevent (CTH PR #40). Hook set: `skills/ci-workflows.md` § pre-commit hooks.
 
 ## Design-doc PRs

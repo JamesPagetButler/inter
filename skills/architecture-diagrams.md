@@ -143,7 +143,7 @@ Color conventions used across workspace diagrams:
 | `#fee` (pale red) | External system / data source |
 | `#fff` (white) | Boundary / container grouping |
 
-These are accessibility-safe (high contrast with black text) and consistent across all workspace docs. (Roadmap diagrams reuse the same hex values with different meanings — ledger CONFLICT C7; `skills/roadmap-authoring.md`.)
+These are accessibility-safe (high contrast with black text). Per-document legends are required: the same hex values carry different meanings in other docs (ruling C7, inter#202; roadmap diagrams: `skills/roadmap-authoring.md`).
 
 ### System boundaries
 Every container or system boundary must be **visually explicit**:

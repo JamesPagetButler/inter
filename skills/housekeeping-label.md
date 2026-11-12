@@ -44,7 +44,7 @@ The most common failure mode is **using `housekeeping` to defer work that should
 - Bulk-labeling a batch of issues `housekeeping` to clear the sprint board → red flag. Each classification must pass the three-criteria test individually.
 
 ## The pre-sprint gate
-A new sprint cannot open while housekeeping work is outstanding → gate: `housekeeping-before-sprint` (CLAUDE.md). The close-out audit that feeds it is a qbp-architecture duty (ledger, persona-local). Note ledger CONFLICT C3: the source allows "cleared **or explicitly deferred by beekeeper** with named reasoning"; the CLAUDE.md gate text says "resolved".
+A new sprint cannot open while housekeeping work is outstanding → gate: `housekeeping-before-sprint` (CLAUDE.md). The close-out audit that feeds it is a qbp-architecture duty (ledger, persona-local). Ruling C3 (inter#202): the CLAUDE.md gate wins — housekeeping must be **resolved**; the source doc's "or explicitly deferred by beekeeper" is not carried.
 
 ## Wisdom anchors
 `w-honest-negatives` (honest classification) · `w-gate-driven` — see `inter/wisdoms/_federation.md`. Gate: `housekeeping-before-sprint`.

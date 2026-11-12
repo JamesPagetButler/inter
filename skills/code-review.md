@@ -48,16 +48,17 @@ Apply the Gate 2 checklist. Answer: **is the implementation good?**
 Gate 2 verdict:
 - **APPROVE** — all six categories pass. State which tools were run.
 - **APPROVE-WITH-CONCERN** — minor issues that don't block merge; each concern filed as a separate issue and linked.
-- **REQUEST-CHANGES** — one or more blocking issues; each listed with file+line reference and what would resolve it.
+- **CHANGES REQUESTED** — one or more blocking issues; each listed with file+line reference and what would resolve it.
 
 ### Sign-off conventions
-- **Approve** = Gate 1 PASS + Gate 2 APPROVE. Reviewer asserts this on the record.
-- **Request changes** = at least one gate has a blocking failure. Comment names the gate, the specific item, and what would resolve it.
+Sign-off is the §I4 comment (github-best-practices §7.2.1), not a GitHub Approve. Verdict vocabulary: APPROVE / APPROVE-WITH-CONCERN / CHANGES REQUESTED / DEFER.
+- **APPROVE** = Gate 1 PASS + Gate 2 APPROVE. Reviewer asserts this on the record.
+- **CHANGES REQUESTED** = at least one gate has a blocking failure. Comment names the gate, the specific item, and what would resolve it.
 - **Comment** = open questions that don't block. Use sparingly.
 
 **Never** Approve "with a small follow-up" unless the follow-up is filed as a separate issue and linked in the PR.
 
-Under the federation's shared GitHub identity these verdicts are posted as signed PR comments quoting the head SHA, not as GitHub review states (`skills/cross-repo-coordination.md` § shared-identity review constraint; ledger CONFLICT C5).
+Under the federation's shared GitHub identity these verdicts are posted as signed PR comments quoting the head SHA, not as GitHub review states (`skills/cross-repo-coordination.md` § shared-identity review constraint; ruling C5, inter#202).
 
 ## Gate 1 checklist — spec-compliance
 *Answer: did we build what was specified?*
@@ -96,14 +97,14 @@ Missing test coverage is **never an acceptable trade-off** for "we'll add tests 
 | Anti-pattern | What to do |
 |---|---|
 | "LGTM" with no checklist evidence | Comment requesting evidence per the Gate 1 + Gate 2 checklists; do not Approve |
-| "Tests are in a follow-up PR" | Request changes; merge the test into this PR or file separate issue + link |
+| "Tests are in a follow-up PR" | Request changes; tests ship with the code. A written deferral under the `pr-merge-completeness` hard gate (~/Documents/CLAUDE.md) needs a linked tracking issue PLUS explicit beekeeper acknowledgement in the PR thread; a follow-up issue alone does not satisfy the gate |
 | "This is just a refactor, no tests needed" | Refactor must either (a) demonstrate existing tests cover the change, or (b) include new tests for new boundaries |
 | "Gate 2 while Gate 1 is FAIL" | Stop. Gate 1 must PASS first. |
 | Architecture decision baked into a PR without a design doc | Block with Request changes; require a design doc / ADR first — this is a Gate 1 FAIL (S4) |
 | Comment-thread arguing whether the design is right | Comment "this re-litigates DECISION-X (link); discuss there or escalate" — don't burn cycles on settled work |
 | God-diff PRs (>500 lines net change, >10 files) | Request split unless the change is structurally one thing (e.g., generated code, codebase rename) |
 
-(The "tests in a follow-up" and "just a refactor" rows also appear in the CLAUDE.md rationalization-prevention table → gate `pr-merge-completeness`.)
+(The "tests in a follow-up" and "just a refactor" rows also appear in the CLAUDE.md rationalization-prevention table → gate `pr-merge-completeness`. Both rows are consistent with "Tests block the merge" above: the CLAUDE.md table says a follow-up issue does not satisfy the gate.)
 
 ## Sign-off provenance
 Per Systema progressive-hardening + Wyrd's soundness pattern: when the reviewer's name is on an Approve, the review becomes part of the provenance chain for that code. If the code later causes a vigilance backflow signal (defect found in production), the review is one of the audit anchors. Approve responsibly — your name attaches to the outcome.
@@ -141,7 +142,7 @@ Steps:
 
 Do NOT evaluate code quality — that is Gate 2. Focus only on: did the implementation match what was specified?
 
-Posting authorization: see CLAUDE.md "Federation-mode standing authorizations" — verdicts on JamesPagetButler/* repos are pre-authorized as §I4 review content.
+Posting authority: see ~/Documents/CLAUDE.md 'Federation-mode standing authorizations' (not restated here); disagreement or escalation goes to the beekeeper first.
 ```
 
 ## Sub-agent prompt — Gate 2 (code-quality reviewer)
@@ -159,9 +160,9 @@ Steps:
 5. Return Gate 2 verdict:
    - APPROVE: all six categories pass. Include: "Reviewed with [tools run]" for the provenance trail.
    - APPROVE-WITH-CONCERN: minor issues; list each with a suggested follow-up issue title.
-   - REQUEST-CHANGES: one or more blocking issues; list each with file+line reference and resolution path.
+   - CHANGES REQUESTED: one or more blocking issues; list each with file+line reference and resolution path.
 
-Posting authorization: see CLAUDE.md "Federation-mode standing authorizations" — APPROVE/APPROVE-WITH-CONCERN/REQUEST-CHANGES verdicts on JamesPagetButler/* repos are pre-authorized.
+Posting authority: see ~/Documents/CLAUDE.md 'Federation-mode standing authorizations' (not restated here); disagreement or escalation goes to the beekeeper first.
 ```
 
 (The prompts' "§5 checklist" means the Gate 2 checklist above. Repo references in prompts should be filled repo-qualified: `skills/repo-qualified-references.md`.)

@@ -15,7 +15,7 @@ Reference for any Go work in this workspace. Load at session start or `@`-import
 
 ## Stack & versions
 - Go 1.23+ (use `go.mod` `go` directive to pin)
-- Module path uses full repo URL; `GOPRIVATE` set for any private orgs (`GOPRIVATE=github.com/JamesPagetButler/*` — private modules need this set in shell or `~/.netrc` for module fetch)
+- Module path uses full repo URL; `GOPRIVATE` set for any private orgs (`GOPRIVATE=github.com/JamesPagetButler/*` — private modules need this set, plus your private-module auth config, for module fetch)
 - Tooling: `gofmt`, `go vet`, `staticcheck`, `golangci-lint`, `goimports`
 - Testing: stdlib `testing`; `testify` only when assertion ergonomics genuinely matter
 - Concurrency primitives: stdlib `sync`, `context`, `golang.org/x/sync/errgroup`
@@ -34,7 +34,7 @@ Reference for any Go work in this workspace. Load at session start or `@`-import
 - Accept interfaces, return concrete types. Define interfaces at the consumer, not the producer.
 - Errors: wrap with `fmt.Errorf("doing X: %w", err)`. Use `errors.Is` / `errors.As` to inspect. Never compare error strings.
 - Sentinel errors are package-level `var Err... = errors.New(...)`.
-- One return path. Prefer guard clauses + early return over nested `if/else`. *(See ledger CONFLICT C9 — the two halves of this line pull in opposite directions; the early-return half is the operative rule.)*
+- Prefer guard clauses + early return over nested `if/else` (ruling C9, inter#202: idiomatic Go; no "one return path" rule).
 - No naked returns in functions longer than ~10 lines.
 - Receivers: pointer receivers when the method mutates or the struct is large; otherwise value receivers. Be consistent across all methods of a type.
 - Package names: short, lowercase, no underscores, no plurals. `user` not `users`, `usermgr`, or `UserManager`.

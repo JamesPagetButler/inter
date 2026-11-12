@@ -24,7 +24,7 @@ When work spans multiple repos (typical for federation features — e.g. ScoutQu
 Merge order: substrate → BMA-side → scoring (gated on substrate merge).
 ```
 
-Each seat pushes code only to its own repo (CLAUDE.md seat roster); a cross-repo feature is therefore one PR per owning seat.
+Each seat pushes code only to its own repo (CLAUDE.md seat roster); a cross-repo feature is therefore one PR per owning seat. Exception: a seat may also push to a repo it holds an active beekeeper-granted interim write-grant on (~/Documents/CLAUDE.md).
 
 ## §I4 review surfaces
 Per ADR-003 §I4 (qbp-compute-unit/architecture/): design docs for substantial substrate or interface changes ARE the review surface. Open as a PR in the relevant repo (typically the repo that owns the substrate). Named reviewers from the federation roster. Reader-list format: `skills/pr-authoring.md` § the §I4 reader-list.

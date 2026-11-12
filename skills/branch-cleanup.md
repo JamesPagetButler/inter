@@ -20,7 +20,7 @@ refined: 2026-10-22 (inter#61 transcription)
 - Avoids the GitHub default of "branch disappears on merge" which can disorient manual git workflows
 
 ## The setting
-**`delete_branch_on_merge` stays `false`** on all federation repos (state recorded at the time on `bma-systema`, `qbp-compute-unit`, `wyrd`, `Contextus`, `confluent-trust`, `QBP`). Cleanup happens explicitly at release boundaries, not on each PR merge.
+**`delete_branch_on_merge` is `false`** on `bma-systema`, `qbp-compute-unit`, `wyrd`, `Contextus` and `confluent-trust`; **`QBP` is `true`** (observed live 2026-11-11 — re-run the check below, the values drift). Where it is `false`, cleanup happens explicitly at release boundaries, not on each PR merge.
 
 Verify the setting:
 
@@ -29,7 +29,7 @@ for repo in bma-systema qbp-compute-unit wyrd Contextus confluent-trust QBP; do
   echo "=== $repo ==="
   gh api "repos/JamesPagetButler/$repo" --jq '.delete_branch_on_merge'
 done
-# Expected: all six output "false"
+# Expected (as observed 2026-11-11): false for the first five, true for QBP
 ```
 
 ## Cleanup procedure at each release

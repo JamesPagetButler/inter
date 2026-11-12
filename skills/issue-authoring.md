@@ -175,7 +175,7 @@ Why it matters:
 - If the issue says "test would prove the fix" and the PR doesn't include it, the PR is incomplete by definition
 
 ## §I4 reader-list discipline
-`§I4` in this doc's usage means **Issue-class 4 reviewer discipline** — the formalized reader-list a workshop-level artifact requires (see ledger CONFLICT C4 on the competing ADR-003 §I4 expansion).
+`§I4` means **the named-reviewer review of record** (the ADR-003 §I4 lineage; ruling C4, inter#202). The reader-list below is the formalized list of named reviewers a workshop-level artifact requires.
 
 ### Reader-list structure
 - **Named persons or personas** — never role-classes without names. "Wyrd-implementor" names a specific persona; "someone from Wyrd" does not.
