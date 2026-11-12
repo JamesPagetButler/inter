@@ -558,3 +558,160 @@
 {"kind": "http_ok", "what": "openalex:W2074684047", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794427913.8499362}
 {"kind": "paper_status", "openalex_id": "https://openalex.org/W2074684047", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794427913.8502464}
 {"kind": "done", "n_ok": 51, "n_unavailable": 48, "n_total": 99, "ts": 1794427913.850376}
+{"kind": "http_ok", "what": "openalex:W2148984222", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442351.5325968}
+{"kind": "http_ok", "what": "ar5iv:hep-th/9606001", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794442351.7476647}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2148984222", "status": "ok", "arxiv_id": "hep-th/9606001", "n_statements": 107, "sha256": "71ea01324c540673a465ab30592f9e1ff675a1e4ba7b2a4f5203b76afa732bc5", "ts": 1794442351.7693884}
+{"kind": "http_ok", "what": "openalex:W3173777491", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442381.367915}
+{"kind": "fetch_error", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Liquid+Tensor+Experiment%22+AND+au%3A%22Peter+Scholze%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 0, "ts": 1794442411.8903897}
+{"kind": "retry", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794442445.2182975}
+{"kind": "retry", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794442449.5655494}
+{"kind": "retry", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794442457.8965304}
+{"kind": "fetch_error", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Liquid+Tensor+Experiment%22+AND+au%3A%22Peter+Scholze%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 4, "ts": 1794442504.210378}
+{"kind": "http_ok", "what": "arxiv-search:Liquid Tensor Experiment", "host": "export.arxiv.org", "status": 200, "retry_count": 5, "ts": 1794442536.4617863}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W3173777491", "has_arxiv": false, "has_oa": false, "ts": 1794442536.4620094}
+{"kind": "http_ok", "what": "openalex:W4281706059", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442536.6449084}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W4281706059", "has_arxiv": true, "has_oa": true, "ts": 1794442536.6451986}
+{"kind": "http_ok", "what": "openalex:W2045614673", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442540.7637768}
+{"kind": "http_ok", "what": "arxiv-search:On a Topological Topos", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794442553.6234}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2045614673", "has_arxiv": false, "has_oa": false, "ts": 1794442553.6235662}
+{"kind": "http_ok", "what": "openalex:W4403579066", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442553.7865582}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W4403579066", "has_arxiv": true, "has_oa": true, "ts": 1794442553.7869925}
+{"kind": "http_ok", "what": "openalex:W1547584114", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442557.9356413}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794442573.8143597}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794442603.9639237}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794442618.4379423}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794442626.7501843}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 4, "backoff": 32.0, "ts": 1794442658.2669451}
+{"kind": "retry", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "code": 429, "attempt": 5, "backoff": 60.0, "ts": 1794442690.6191864}
+{"kind": "giving_up_after_retries", "what": "arxiv-search:Projective topological spaces", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Projective+topological+spaces%22+AND+au%3A%22Andrew+M.+Gleason%22&start=0&max_results=3", "retry_count": 6, "ts": 1794442750.714595}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1547584114", "has_arxiv": false, "has_oa": true, "ts": 1794442750.714704}
+{"kind": "http_ok", "what": "openalex:W7217982225", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442750.9081297}
+{"kind": "retry", "what": "arxiv-search:A Non-Commutative Approach to Rigid Analytic Geometry", "host": "export.arxiv.org", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794442751.2006}
+{"kind": "retry", "what": "arxiv-search:A Non-Commutative Approach to Rigid Analytic Geometry", "host": "export.arxiv.org", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794442770.968918}
+{"kind": "http_ok", "what": "arxiv-search:A Non-Commutative Approach to Rigid Analytic Geometry", "host": "export.arxiv.org", "status": 200, "retry_count": 2, "ts": 1794442788.5370467}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W7217982225", "has_arxiv": false, "has_oa": true, "ts": 1794442788.5372362}
+{"kind": "http_ok", "what": "openalex:W4252421805", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442788.7010338}
+{"kind": "fetch_error", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Quasi-topologies%22+AND+au%3A%22E.+H.+Spanier%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 0, "ts": 1794442822.7974393}
+{"kind": "fetch_error", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Quasi-topologies%22+AND+au%3A%22E.+H.+Spanier%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 1, "ts": 1794442857.064293}
+{"kind": "retry", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "code": 429, "attempt": 2, "backoff": 8.0, "ts": 1794442869.5910897}
+{"kind": "retry", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "code": 429, "attempt": 3, "backoff": 16.0, "ts": 1794442893.1098113}
+{"kind": "fetch_error", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Quasi-topologies%22+AND+au%3A%22E.+H.+Spanier%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 4, "ts": 1794442939.4268527}
+{"kind": "http_ok", "what": "arxiv-search:Quasi-topologies", "host": "export.arxiv.org", "status": 200, "retry_count": 5, "ts": 1794442987.0310557}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W4252421805", "has_arxiv": false, "has_oa": false, "ts": 1794442987.0312498}
+{"kind": "http_ok", "what": "openalex:W1548110689", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794442987.277632}
+{"kind": "retry", "what": "arxiv-search:Topological Vector Spaces and Algebras", "host": "export.arxiv.org", "code": 429, "attempt": 0, "backoff": 2.0, "ts": 1794442991.3554363}
+{"kind": "retry", "what": "arxiv-search:Topological Vector Spaces and Algebras", "host": "export.arxiv.org", "code": 429, "attempt": 1, "backoff": 4.0, "ts": 1794442995.6339068}
+{"kind": "fetch_error", "what": "arxiv-search:Topological Vector Spaces and Algebras", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Topological+Vector+Spaces+and+Algebras%22+AND+au%3A%22Lucien+Waelbroeck%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 2, "ts": 1794443029.8885784}
+{"kind": "fetch_error", "what": "arxiv-search:Topological Vector Spaces and Algebras", "host": "export.arxiv.org", "url": "http://export.arxiv.org/api/query?search_query=ti%3A%22Topological+Vector+Spaces+and+Algebras%22+AND+au%3A%22Lucien+Waelbroeck%22&start=0&max_results=3", "error": "The read operation timed out", "attempt": 3, "ts": 1794443068.182164}
+{"kind": "http_ok", "what": "arxiv-search:Topological Vector Spaces and Algebras", "host": "export.arxiv.org", "status": 200, "retry_count": 4, "ts": 1794443111.1722996}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1548110689", "has_arxiv": false, "has_oa": false, "ts": 1794443111.1724672}
+{"kind": "http_ok", "what": "openalex:W2091343122", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443111.3489087}
+{"kind": "http_ok", "what": "arxiv-search:Basically bounded functors and flat sheaves", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443124.8467495}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2091343122", "has_arxiv": false, "has_oa": true, "ts": 1794443124.8469162}
+{"kind": "http_ok", "what": "openalex:W2084051193", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443125.008469}
+{"kind": "http_ok", "what": "arxiv-search:Quasi-categories and Kan complexes", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443137.3135386}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2084051193", "has_arxiv": false, "has_oa": true, "ts": 1794443137.3137152}
+{"kind": "http_ok", "what": "openalex:W2099665514", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443137.4873106}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2099665514", "has_arxiv": true, "has_oa": true, "ts": 1794443137.4876537}
+{"kind": "http_ok", "what": "openalex:W3134337821", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443141.6637745}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W3134337821", "has_arxiv": true, "has_oa": true, "ts": 1794443141.6641085}
+{"kind": "http_ok", "what": "openalex:W3187477437", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443145.8292847}
+{"kind": "http_ok", "what": "arxiv-search:Calibrated geometries", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443157.5143118}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W3187477437", "has_arxiv": false, "has_oa": true, "ts": 1794443157.5148406}
+{"kind": "http_ok", "what": "openalex:W2080238236", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443157.7015467}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2080238236", "has_arxiv": true, "has_oa": true, "ts": 1794443157.701895}
+{"kind": "http_ok", "what": "openalex:W2148984222", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443161.8549755}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2148984222", "has_arxiv": true, "has_oa": true, "ts": 1794443161.8552861}
+{"kind": "http_ok", "what": "openalex:W1982134436", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443165.9791665}
+{"kind": "http_ok", "what": "arxiv-search:The Dirac operator on space forms of positive curvature", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443175.4284842}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1982134436", "has_arxiv": false, "has_oa": false, "ts": 1794443175.428677}
+{"kind": "http_ok", "what": "openalex:W2161471984", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443175.5701072}
+{"kind": "http_ok", "what": "arxiv-search:Noncommutative geometry and reality", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443191.3194284}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2161471984", "has_arxiv": false, "has_oa": false, "ts": 1794443191.3196032}
+{"kind": "http_ok", "what": "openalex:W2050952244", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443191.4728847}
+{"kind": "http_ok", "what": "arxiv-search:Real Killing spinors and holonomy", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443196.9783163}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2050952244", "has_arxiv": false, "has_oa": false, "ts": 1794443196.9784896}
+{"kind": "http_ok", "what": "openalex:W1941650215", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443197.1272893}
+{"kind": "http_ok", "what": "arxiv-search:Compact Manifolds with Special Holonomy", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443203.8276727}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1941650215", "has_arxiv": false, "has_oa": false, "ts": 1794443203.8278418}
+{"kind": "http_ok", "what": "openalex:W2089465567", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443203.9444804}
+{"kind": "http_ok", "what": "arxiv-search:Foundations of Differential Geometry", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443209.6546273}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2089465567", "has_arxiv": false, "has_oa": false, "ts": 1794443209.6547976}
+{"kind": "http_ok", "what": "openalex:W1991877400", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443209.7722414}
+{"kind": "http_ok", "what": "arxiv-search:Vector Cross Products on Manifolds", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443214.2850144}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1991877400", "has_arxiv": false, "has_oa": true, "ts": 1794443214.2852259}
+{"kind": "http_ok", "what": "openalex:W1565930783", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443214.4325235}
+{"kind": "http_ok", "what": "arxiv-search:Introduction to Lie Algebras and Representation Theory", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443219.916482}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1565930783", "has_arxiv": false, "has_oa": false, "ts": 1794443219.9166558}
+{"kind": "http_ok", "what": "openalex:W2078033670", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443220.0048733}
+{"kind": "http_ok", "what": "arxiv-search:Metrics with Exceptional Holonomy", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443224.7500713}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2078033670", "has_arxiv": false, "has_oa": false, "ts": 1794443224.7502632}
+{"kind": "http_ok", "what": "openalex:W1592686709", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443224.890335}
+{"kind": "http_ok", "what": "arxiv-search:Riemannian geometry and holonomy groups", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443230.1889186}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1592686709", "has_arxiv": false, "has_oa": false, "ts": 1794443230.1890936}
+{"kind": "http_ok", "what": "openalex:W649989581", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443230.286667}
+{"kind": "http_ok", "what": "arxiv-search:Spinors and Calibrations", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443235.1106656}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W649989581", "has_arxiv": false, "has_oa": false, "ts": 1794443235.1108572}
+{"kind": "http_ok", "what": "openalex:W1552551180", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443235.2657013}
+{"kind": "http_ok", "what": "arxiv-search:Compact Riemannian 7-manifolds with holonomy $G\\sb 2$. II", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443245.5784369}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1552551180", "has_arxiv": false, "has_oa": true, "ts": 1794443245.5786283}
+{"kind": "http_ok", "what": "openalex:W2086216948", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443245.7364755}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2086216948", "has_arxiv": true, "has_oa": true, "ts": 1794443245.7368143}
+{"kind": "http_ok", "what": "openalex:W3104633719", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443249.8761957}
+{"kind": "http_ok", "what": "arxiv-search:CLASSIFICATION OF FINITE SPECTRAL TRIPLES", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443250.471334}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W3104633719", "has_arxiv": false, "has_oa": false, "ts": 1794443250.471501}
+{"kind": "http_ok", "what": "openalex:W1582143549", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443253.9829822}
+{"kind": "http_ok", "what": "arxiv-search:An Introduction to Noncommutative Spaces and their Geometrie", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443256.6816125}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1582143549", "has_arxiv": false, "has_oa": false, "ts": 1794443256.681882}
+{"kind": "http_ok", "what": "openalex:W2952047698", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443258.149831}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2952047698", "has_arxiv": true, "has_oa": true, "ts": 1794443258.1502533}
+{"kind": "http_ok", "what": "openalex:W1983894121", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443262.3087976}
+{"kind": "http_ok", "what": "arxiv-search:Differential Geometry, Lie Groups, and Symmetric Spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443263.2046914}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1983894121", "has_arxiv": false, "has_oa": false, "ts": 1794443263.2048879}
+{"kind": "http_ok", "what": "openalex:W3105516501", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443266.4673498}
+{"kind": "http_ok", "what": "arxiv-search:Noncommutative Finite-Dimensional Manifolds -- I. SPHERICAL ", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443272.2499025}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W3105516501", "has_arxiv": false, "has_oa": false, "ts": 1794443272.2501655}
+{"kind": "http_ok", "what": "openalex:W2001941072", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443272.3756616}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2001941072", "has_arxiv": true, "has_oa": true, "ts": 1794443272.3760676}
+{"kind": "http_ok", "what": "openalex:W2092910198", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443276.5005405}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2092910198", "has_arxiv": true, "has_oa": true, "ts": 1794443276.500877}
+{"kind": "http_ok", "what": "openalex:W2018489113", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443280.661528}
+{"kind": "http_ok", "what": "arxiv-search:Connections and the Dirac operator on spinor bundles", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443281.2565455}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2018489113", "has_arxiv": false, "has_oa": true, "ts": 1794443281.256729}
+{"kind": "http_ok", "what": "openalex:W2123061623", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443284.7780547}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2123061623", "has_arxiv": true, "has_oa": true, "ts": 1794443284.7784111}
+{"kind": "http_ok", "what": "openalex:W1573443250", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443288.9187558}
+{"kind": "http_ok", "what": "arxiv-search:Spaces of constant curvature", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443289.3433974}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1573443250", "has_arxiv": false, "has_oa": false, "ts": 1794443289.343566}
+{"kind": "http_ok", "what": "openalex:W2018785023", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443293.101439}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2018785023", "has_arxiv": true, "has_oa": true, "ts": 1794443293.101821}
+{"kind": "http_ok", "what": "openalex:W2114197053", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443297.243096}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2114197053", "has_arxiv": true, "has_oa": true, "ts": 1794443297.2435524}
+{"kind": "http_ok", "what": "openalex:W2245733333", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443301.3610618}
+{"kind": "http_ok", "what": "arxiv-search:Supersymmetric Field Theories", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443301.832931}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2245733333", "has_arxiv": false, "has_oa": false, "ts": 1794443301.833155}
+{"kind": "http_ok", "what": "openalex:W2320438804", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443305.5109708}
+{"kind": "http_ok", "what": "arxiv-search:Invariant Affine Connections on Homogeneous Spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443306.1779811}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2320438804", "has_arxiv": false, "has_oa": true, "ts": 1794443306.1781678}
+{"kind": "http_ok", "what": "openalex:W218489606", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443309.6344788}
+{"kind": "http_ok", "what": "arxiv-search:Sur les groupes d'holonomie homog\u00e8nes de vari\u00e9t\u00e9s \u00e0 connexio", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443310.5241055}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W218489606", "has_arxiv": false, "has_oa": true, "ts": 1794443310.524307}
+{"kind": "http_ok", "what": "openalex:W2043727508", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443313.762406}
+{"kind": "http_ok", "what": "arxiv-search:Construction and Properties of Some 6-Dimensional Almost Com", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443314.8443768}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2043727508", "has_arxiv": false, "has_oa": true, "ts": 1794443314.8445504}
+{"kind": "http_ok", "what": "openalex:W2125498553", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443317.9196246}
+{"kind": "http_ok", "what": "arxiv-search:On the Transitivity of Holonomy Systems", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443319.1666555}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2125498553", "has_arxiv": false, "has_oa": false, "ts": 1794443319.1668262}
+{"kind": "http_ok", "what": "openalex:W2046756975", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443322.0272732}
+{"kind": "http_ok", "what": "arxiv-search:Vector cross products", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443323.627254}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2046756975", "has_arxiv": false, "has_oa": true, "ts": 1794443323.6274192}
+{"kind": "http_ok", "what": "openalex:W1982073424", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443326.1701913}
+{"kind": "http_ok", "what": "arxiv-search:Der erste Eigenwert des Dirac\u2010Operators einer kompakten, Rie", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443327.991356}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W1982073424", "has_arxiv": false, "has_oa": false, "ts": 1794443327.9915285}
+{"kind": "http_ok", "what": "openalex:W4255043459", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443330.326035}
+{"kind": "http_ok", "what": "arxiv-search:Differential Geometry", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443332.5827427}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W4255043459", "has_arxiv": false, "has_oa": false, "ts": 1794443332.582906}
+{"kind": "http_ok", "what": "openalex:W2074684047", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794443334.4377446}
+{"kind": "http_ok", "what": "arxiv-search:Riemannian manifolds with structure groupG 2", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794443336.930316}
+{"kind": "dry_run_paper", "openalex_id": "https://openalex.org/W2074684047", "has_arxiv": false, "has_oa": true, "ts": 1794443336.9305031}
+{"kind": "dry_run_done", "n_checked": 48, "recoverable_via_arxiv_search": 13, "recoverable_via_oa_location": 26, "overlap": 13, "n_not_ok_in_manifest": 48, "ts": 1794443336.9305236}
