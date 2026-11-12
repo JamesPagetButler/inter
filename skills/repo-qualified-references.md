@@ -32,6 +32,7 @@ Every reference to a PR or issue — in PR bodies, review comments, sessionbridg
 Codified 2026-09-27 (beekeeper-directed) after an ambiguous `bma#297` reference during a live merge pass; a recurrence is a `process-breakdowns.md`-class event.
 
 ## Older issue-authoring form
+> **SUPERSEDED** by rulings C1/C2 (inter#202): kept for provenance only. Do not use the handle form below; use `<repo>#N` per the rule above.
 The issue-authoring doc (2026-05-15) mandates, for all cross-issue and cross-PR references:
 
 ```
