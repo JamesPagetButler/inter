@@ -179,11 +179,23 @@ def run_one_call(claude_bin, prompt_text, model, input_text, timeout_s):
 
 
 def run_stage_call(claude_bin, paper_id, stage, model, prompt_text,
-                    input_text, timeout_s=DEFAULT_TIMEOUT_S):
+                    input_text, timeout_s=DEFAULT_TIMEOUT_S,
+                    capture_result_text=False):
     """Run one paper/stage call with the retry + decline policy. Returns
     the telemetry record (dict) ready to append as JSONL. Never raises for
     an ordinary subprocess failure; a programmer error in argument
-    construction still raises."""
+    construction still raises.
+
+    capture_result_text (default False, back-compat no-op for existing
+    callers): when True, stashes the call's raw result text under
+    rec["_result_text"] (leading underscore — never append this record to
+    a telemetry JSONL as-is; pop the key first). This exists for callers
+    that need to chain one stage's output into the next stage's input
+    (e.g. rolling_runner.py feeding restatement output into extraction)
+    without duplicating this function's subprocess/retry/decline logic.
+    Spike discipline (never log full result text) is preserved: the key
+    is only ever present in the in-memory dict returned to the caller,
+    never written to disk by this module."""
     # Fail closed, per call, right before building the subprocess argv:
     # re-verify the prompt text hashes to the frozen value for this stage.
     # (Entry points also check this once up front before any dispatch;
@@ -293,11 +305,17 @@ def run_stage_call(claude_bin, paper_id, stage, model, prompt_text,
             result_text if isinstance(result_text, str) else "")
         if declined:
             rec["declined"] = True
+            if capture_result_text:
+                rec["_result_text"] = (
+                    result_text if isinstance(result_text, str) else None)
             # Spike rule §2a: a decline halts at this paper. No retry, no
             # model reroute.
             return rec
 
         # success
+        if capture_result_text:
+            rec["_result_text"] = (
+                result_text if isinstance(result_text, str) else None)
         return rec
 
     # Should not fall through, but guard anyway.
