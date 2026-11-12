@@ -17,13 +17,16 @@ not declined). A failed/declined/timed-out attempt is NOT marked done, so
 a later invocation retries exactly that stage, never the whole paper and
 never a stage that already succeeded.
 
-Budget gate: before starting any NEW work on a paper (whether that is its
-first stage or, on a resumed run, its second), this module shells out to
+Budget gate: before EACH stage call (restatement and extraction checked
+separately, each with its own <stage,model>), this module shells out to
 --gate-cmd (default: estimator_gate_stub.py, a TEMPORARY stand-in for
 Nidavellir#110/#111's real `estimator check` CLI -- see that file's
 docstring). Exit 0 = proceed; exit 3 = pause cleanly (commit and stop,
 not an error); anything else = halt-and-alert (exit 4), after still
-committing whatever already finished.
+committing whatever already finished. Stage-exact per the director's
+ruling (spike-seed-corpus-s4#72): restatement's output is committed
+before extraction starts, so a pause between stages loses no work, and a
+smaller gated unit gives a tighter overrun bound.
 
 Zero real LLM calls are made by this module itself -- it only ever calls
 whatever --claude-bin headless_driver.run_stage_call() is pointed at.
@@ -120,26 +123,49 @@ def read_stage_output(output_dir, paper_id, stage):
         return f.read()
 
 
-def run_gate(gate_cmd, grant_id, model):
-    """Run the budget-estimator gate before starting new work on a paper.
-
-    Always passes stage="restatement" in --next, per spec: this call
-    answers "can we afford to (continue) work on this paper", named by
-    the paper's first stage, not "can we afford this one specific stage
-    we happen to be resuming at". Returns the gate's exit code, or -1 if
-    the gate command itself could not even be executed (missing file,
-    not executable, etc.) -- callers must treat -1 as a halt, same as
-    exit 1/2, never as proceed or pause.
+def run_gate(gate_cmd, grant_id, stage, model):
+    """Run the budget-estimator gate before one specific stage call,
+    passing that stage's own name in --next (stage-exact, per the
+    director's seq 72 ruling on spike-seed-corpus-s4 -- a smaller gated
+    unit gives a tighter overrun bound, and restatement's output is
+    already committed before extraction starts, so nothing is lost by
+    gating them separately). Returns the gate's exit code, or -1 if the
+    gate command itself could not even be executed (missing file, not
+    executable, etc.) -- callers must treat -1 as a halt, same as exit
+    1/2, never as proceed or pause.
     """
     try:
         proc = subprocess.run(
-            [gate_cmd, "--grant", grant_id, "--next", "restatement,%s" % model],
+            [gate_cmd, "--grant", grant_id, "--next", "%s,%s" % (stage, model)],
         )
         return proc.returncode
     except OSError as e:
         print("GATE ERROR (could not execute --gate-cmd %r): %s" %
               (gate_cmd, e), file=sys.stderr)
         return -1
+
+
+def check_gate(args, stage, paper_id, commit_paths):
+    """Run the gate for one specific (paper, stage) about to start.
+    Returns None to proceed, or an exit code the caller should commit
+    finished work and return immediately (pause or halt)."""
+    gate_rc = run_gate(args.gate_cmd, args.grant_id, stage, args.model)
+    if gate_rc == GATE_EXIT_PAUSE:
+        print("GATE PAUSE (exit 3) before %s/%s -- stopping cleanly, "
+              "committing finished work. This is a normal, expected "
+              "stop, not an error." % (paper_id, stage))
+        git_commit_paths(args.repo_dir, commit_paths,
+                          "rolling: gate pause before %s/%s" %
+                          (paper_id, stage))
+        return EXIT_OK
+    if gate_rc != GATE_EXIT_PROCEED:
+        print("GATE ERROR (exit %s) -- halting, not pausing." % gate_rc,
+              file=sys.stderr)
+        git_commit_paths(args.repo_dir, commit_paths,
+                          "rolling: gate error (exit %s) before %s/%s "
+                          "-- halt" % (gate_rc, paper_id, stage))
+        return EXIT_GATE_HALT
+    return None
 
 
 def git_commit_paths(repo_dir, paths, message):
@@ -247,27 +273,14 @@ def main(argv=None):
         if args.max_papers is not None and papers_attempted >= args.max_papers:
             break
 
-        # --- budget gate: "before starting EACH paper (not each stage)" ---
-        gate_rc = run_gate(args.gate_cmd, args.grant_id, args.model)
-        if gate_rc == GATE_EXIT_PAUSE:
-            print("GATE PAUSE (exit 3) before paper %s -- stopping "
-                  "cleanly, committing finished work. This is a normal, "
-                  "expected stop, not an error." % paper_id)
-            git_commit_paths(args.repo_dir, commit_paths,
-                              "rolling: gate pause before %s" % paper_id)
-            return EXIT_OK
-        if gate_rc != GATE_EXIT_PROCEED:
-            print("GATE ERROR (exit %s) -- halting, not pausing." % gate_rc,
-                  file=sys.stderr)
-            git_commit_paths(args.repo_dir, commit_paths,
-                              "rolling: gate error (exit %s) before %s "
-                              "-- halt" % (gate_rc, paper_id))
-            return EXIT_GATE_HALT
-
         papers_attempted += 1
 
         # --- restatement ---
         if not restatement_done:
+            gate_result = check_gate(args, "restatement", paper_id,
+                                      commit_paths)
+            if gate_result is not None:
+                return gate_result
             cache_path = os.path.join(args.text_cache_dir,
                                        "%s.txt" % row["sha256"])
             input_text = _load_text(cache_path)
@@ -296,6 +309,10 @@ def main(argv=None):
 
         # --- extraction ---
         if not extraction_done:
+            gate_result = check_gate(args, "extraction", paper_id,
+                                      commit_paths)
+            if gate_result is not None:
+                return gate_result
             rec, text, ok = call_stage(args, paper_id, "extraction",
                                         extraction_prompt, restatement_text)
             if ok:
