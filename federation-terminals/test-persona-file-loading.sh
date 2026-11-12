@@ -139,11 +139,12 @@ echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for th
 # edda-implementor are EXCLUDED too (inter#228 batch 2): their rows now wire
 # personas/<seat>.md, so their onboard intentionally diverges from the generic boot.
 # qbp-cu-implementor joined batch 2 later (persona v1, wired) and is excluded too.
-NON_NOTARY_SEATS="contextus-impl hutchins"
+# contextus-impl is excluded too (inter#228 batch 3, persona v1 wired).
+NON_NOTARY_SEATS="hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for the 2 seats without a persona_file (incl. hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, deming, edda-implementor, qbp-cu-implementor, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for the 1 seat without a persona_file (hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, deming, edda-implementor, qbp-cu-implementor, contextus-impl, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
 
 echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
 HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
@@ -780,9 +781,13 @@ ELAPSED_ON="$(run_stagger_launch 3)"
   || check 1 "STAGGER_SECONDS=3 (nonzero): the real cmd_launch loop actually waits before the 2nd pane (got ${ELAPSED_ON}s, want >=3s)"
 
 ELAPSED_OFF="$(run_stagger_launch 0)"
-[ "$ELAPSED_OFF" -lt 3 ] \
-  && check 0 "STAGGER_SECONDS=0 disables the inter-launch wait (elapsed ${ELAPSED_OFF}s < 3s)" \
-  || check 1 "STAGGER_SECONDS=0 disables the inter-launch wait (got ${ELAPSED_OFF}s, want <3s)"
+# Relative, not absolute: under host load the no-wait launch itself can take
+# >=3 wall-seconds (second-granularity clock), which made an absolute "<3s"
+# check flaky. A disabled stagger must be at least 2s faster than the 3s
+# stagger run above; that still kills a "stagger ignored" mutant (both ~equal).
+[ $(( ELAPSED_OFF + 2 )) -le "$ELAPSED_ON" ] \
+  && check 0 "STAGGER_SECONDS=0 disables the inter-launch wait (elapsed ${ELAPSED_OFF}s vs ${ELAPSED_ON}s with stagger 3)" \
+  || check 1 "STAGGER_SECONDS=0 disables the inter-launch wait (got ${ELAPSED_OFF}s vs ${ELAPSED_ON}s with stagger 3, want >=2s faster)"
 STAGGER_TEST_SESSION=""
 
 echo
