@@ -40,6 +40,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 
 RUN_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT = os.path.join(RUN_DIR, "corpus_construct_output.json")
@@ -276,12 +277,14 @@ def parse_theorem_blocks(doc):
     return out
 
 
-def find_introduction(doc):
+def find_section_matching(doc, heading_pattern, fallback_first=True):
     """Top-level <section> blocks only (nesting-depth 0), in document
-    order; pick the first whose heading matches /introduction/i, else fall
-    back to the first top-level section at all (= the first section after
-    the abstract, since the abstract always precedes the body in ar5iv's
-    output). Returns the plain-text content, or "" if no section found."""
+    order; pick the first whose heading matches heading_pattern (a regex
+    string), else -- if fallback_first -- fall back to the first top-level
+    section at all (= the first section after the abstract, since the
+    abstract always precedes the body in ar5iv's output); if not
+    fallback_first, return "" when nothing matches. Returns the plain-text
+    content of the chosen section, or "" if no section found at all."""
     depth = 0
     top_starts = []
     for m in re.finditer(r"<section\b|</section\s*>", doc, re.IGNORECASE):
@@ -294,22 +297,97 @@ def find_introduction(doc):
     if not top_starts:
         return ""
     top_starts.append(len(doc))  # sentinel end
-    intro_idx = None
+    found_idx = None
     for i in range(len(top_starts) - 1):
         start, end = top_starts[i], top_starts[i + 1]
         window = doc[start:min(end, start + 4000)]
         hm = SECTION_TITLE_RE.search(window)
         heading_text = strip_tags(hm.group(1)) if hm else ""
-        if re.search(r"introduction", heading_text, re.IGNORECASE):
-            intro_idx = i
+        if re.search(heading_pattern, heading_text, re.IGNORECASE):
+            found_idx = i
             break
-    if intro_idx is None:
-        intro_idx = 0  # fallback: first section after the abstract
-    start, end = top_starts[intro_idx], top_starts[intro_idx + 1]
+    if found_idx is None:
+        if not fallback_first:
+            return ""
+        found_idx = 0  # fallback: first section after the abstract
+    start, end = top_starts[found_idx], top_starts[found_idx + 1]
     return strip_tags(doc[start:end])
 
 
-def build_cached_text(abstract, intro, statements):
+def find_introduction(doc):
+    """Thin wrapper over find_section_matching: first /introduction/i
+    heading, else the first section at all (original behaviour)."""
+    return find_section_matching(doc, r"introduction", fallback_first=True)
+
+
+def find_results_discussion(doc):
+    """Physics-paper supplementary context (task part 1): the first
+    top-level section matching /results?|discussion|conclusion/i. Unlike
+    find_introduction, this does NOT fall back to the first section --
+    absence of a matching heading means "" (no supplementary context),
+    since an arbitrary unrelated section is not a useful substitute."""
+    return find_section_matching(doc, r"results?|discussion|conclusion", fallback_first=False)
+
+
+# ---------------------------------------------------------------------------
+# Physics-aware numbered-equation scanning (task part 1).
+#
+# ar5iv/LaTeXML renders a numbered display equation as a <table
+# class="ltx_equation ltx_eqn_table"> whose rows carry the math itself plus
+# (for a numbered equation) a trailing cell
+# <span class="ltx_tag ltx_tag_equation ...">(<math>...N...</math>)</span>
+# holding the visible "(N)" -- confirmed against real ar5iv HTML
+# (hep-th/9606001) rather than guessed. Physics papers lean on these far
+# more than on formal theorem/definition/proposition/lemma/conjecture
+# environments, which is the root cause of the parser's physics-paper
+# blind spot documented in the task brief.
+# ---------------------------------------------------------------------------
+
+EQN_TABLE_OPEN_RE = re.compile(r'<table\b([^>]*)class="([^"]*)"([^>]*)>', re.IGNORECASE)
+EQN_NUM_SPAN_RE = re.compile(r'<span\b[^>]*class="[^"]*\bltx_tag_equation\b[^"]*"[^>]*>(.*?)</span>', re.IGNORECASE | re.DOTALL)
+
+
+def _clean_eqn_number(text):
+    t = text.strip()
+    t = re.sub(r"\(\s*", "(", t)
+    t = re.sub(r"\s*\)", ")", t)
+    return t
+
+
+def parse_equation_blocks(doc):
+    """Returns a list of {label, text} for every numbered-equation
+    environment (<table class="...ltx_equation...">). Label is "Eq. (N)"
+    using the visible equation number (from the ltx_tag_equation span) when
+    present, else "Eq. (<positional index>)" as a fallback for unnumbered
+    or unparsed-number equations."""
+    out = []
+    counter = 0
+    for m in EQN_TABLE_OPEN_RE.finditer(doc):
+        classes = m.group(2)
+        if "ltx_equation" not in classes:
+            continue
+        open_end = m.end()
+        close_start = find_matching_close(doc, open_end, "table")
+        inner = doc[open_end:close_start]
+        counter += 1
+        nm = EQN_NUM_SPAN_RE.search(inner)
+        label = None
+        body = inner
+        if nm:
+            num_text = _clean_eqn_number(strip_tags(nm.group(1)))
+            if num_text:
+                label = f"Eq. {num_text}" if num_text.startswith("(") else f"Eq. ({num_text})"
+            body = inner[:nm.start()] + inner[nm.end():]
+        if label is None:
+            label = f"Eq. ({counter})"
+        text = strip_tags(body)
+        if not text:
+            continue
+        out.append({"label": label, "text": text})
+    return out
+
+
+def build_cached_text(abstract, intro, statements, supplementary=None):
     parts = []
     if abstract:
         parts.append(abstract)
@@ -318,10 +396,153 @@ def build_cached_text(abstract, intro, statements):
     for s in statements:
         label = s["label"] or "Statement"
         parts.append(f"{label}: {s['text']}")
+    if supplementary:
+        parts.append(f"Results/Discussion: {supplementary}")
     text = "\n\n".join(p for p in parts if p)
     if len(text) > MAX_CHARS:
         text = text[:MAX_CHARS]
     return text
+
+
+# ---------------------------------------------------------------------------
+# arXiv title/author search fallback (task part 2) -- used only when
+# extract_arxiv_id() finds nothing in the OpenAlex record. Public arXiv API,
+# no key, stdlib ElementTree Atom parsing.
+# ---------------------------------------------------------------------------
+
+ARXIV_API_BASE = "http://export.arxiv.org/api/query"
+ATOM_NS = {"atom": "http://www.w3.org/2005/Atom"}
+ARXIV_ABS_ID_RE = re.compile(r"arxiv\.org/abs/([a-zA-Z.\-]*\d[\d./]*)", re.IGNORECASE)
+
+
+def _normalize_title(t):
+    return re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
+
+
+def _title_similarity(a, b):
+    """Simple containment/token-overlap check -- deliberately not
+    overengineered per the task ("don't overthink it")."""
+    na, nb = _normalize_title(a), _normalize_title(b)
+    if not na or not nb:
+        return 0.0
+    if na in nb or nb in na:
+        return 1.0
+    ta, tb = set(na.split()), set(nb.split())
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / len(ta | tb)
+
+
+def search_arxiv_by_title_author(title, author_name):
+    """Query the public arXiv API by title (+ first author if available).
+    Returns an arXiv id string if the top result's title looks like a
+    real match, else None. Any failure (network, XML parse) fails soft to
+    None -- this is a best-effort fallback, not a hard dependency."""
+    if not title:
+        return None
+    q_parts = [f'ti:"{title}"']
+    if author_name:
+        q_parts.append(f'au:"{author_name}"')
+    query = " AND ".join(q_parts)
+    qs = urllib.parse.urlencode({"search_query": query, "start": 0, "max_results": 3})
+    url = f"{ARXIV_API_BASE}?{qs}"
+    body = polite_get(url, f"arxiv-search:{title[:60]}", is_json=False)
+    if not body:
+        return None
+    try:
+        root = ET.fromstring(body)
+    except ET.ParseError:
+        return None
+    for entry in root.findall("atom:entry", ATOM_NS):
+        title_el = entry.find("atom:title", ATOM_NS)
+        entry_title = (title_el.text or "") if title_el is not None else ""
+        if _title_similarity(title, entry_title) < 0.5:
+            continue
+        id_el = entry.find("atom:id", ATOM_NS)
+        if id_el is None or not id_el.text:
+            continue
+        m = ARXIV_ABS_ID_RE.search(id_el.text)
+        if not m:
+            continue
+        arxiv_id = re.sub(r"v\d+$", "", m.group(1))
+        return arxiv_id
+    return None
+
+
+# ---------------------------------------------------------------------------
+# OpenAlex open-access location fallback (task part 3) -- tried only if (2)
+# still found nothing, or ar5iv fetch/parse on an id from (1)/(2) failed.
+# Generic plain-text pattern scan over arbitrary publisher HTML (weaker
+# heuristic by design -- see task note on what it's meant to measure).
+# ---------------------------------------------------------------------------
+
+BLOCK_TAG_CLOSE_RE = re.compile(r"</(p|div|li|h[1-6]|tr|section|article)\b[^>]*>", re.IGNORECASE)
+BR_TAG_RE = re.compile(r"<br\s*/?>", re.IGNORECASE)
+GENERIC_LABEL_RE = re.compile(r"\b(Theorem|Lemma|Proposition|Definition|Conjecture)\s+(\d+(?:\.\d+)*)\b", re.IGNORECASE)
+GENERIC_EQ_RE = re.compile(r"\b(?:Eq\.?|Equation)\s*\(?\s*(\d+(?:\.\d+)*)\s*\)?", re.IGNORECASE)
+
+
+def html_to_lines(body):
+    """Crude line-preserving tag stripper: turn block-level closing tags
+    and <br> into newlines first (so the generic scanner below can work
+    line-by-line), THEN strip remaining tags. Works harmlessly on plain
+    text too (no tags to replace)."""
+    text = BLOCK_TAG_CLOSE_RE.sub("\n", body)
+    text = BR_TAG_RE.sub("\n", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    lines = [re.sub(r"\s+", " ", l).strip() for l in text.split("\n")]
+    return [l for l in lines if l]
+
+
+def scan_generic_statements_from_body(body, max_items=30):
+    """Weaker, non-LaTeXML-specific heuristic (task part 3): scan plain
+    lines for "Theorem N" / "Definition N" / "Lemma N" / "Proposition N" /
+    "Conjecture N" or "Eq./Equation (N)". Returns {label, text} dicts."""
+    out = []
+    for line in html_to_lines(body):
+        m = GENERIC_LABEL_RE.search(line)
+        if m:
+            out.append({"label": f"{m.group(1).capitalize()} {m.group(2)}", "text": line[:600]})
+        elif len(line) < 300 and GENERIC_EQ_RE.search(line):
+            m2 = GENERIC_EQ_RE.search(line)
+            out.append({"label": f"Eq. ({m2.group(1)})", "text": line[:600]})
+        if len(out) >= max_items:
+            break
+    return out
+
+
+def oa_location_candidates(work):
+    """Returns a list of candidate URLs to try for the OA fallback:
+    open_access.oa_url first, then any is_oa=true location's pdf_url/
+    landing_page_url. .pdf URLs are skipped for the real fetch+parse path
+    (no stdlib PDF parser -- out of scope), but still count as "oa exists"
+    for the dry-run-coverage presence check."""
+    candidates = []
+    oa = work.get("open_access") or {}
+    oa_url = oa.get("oa_url")
+    if oa_url and oa_url not in candidates:
+        candidates.append(oa_url)
+    for loc in (work.get("locations") or []):
+        if not loc or not loc.get("is_oa"):
+            continue
+        for key in ("pdf_url", "landing_page_url"):
+            u = loc.get(key)
+            if u and u not in candidates:
+                candidates.append(u)
+    return candidates
+
+
+def fetch_oa_fallback_text(work):
+    """Fetch the first non-PDF OA candidate URL, politely. Returns
+    (url, body) or (None, None)."""
+    for url in oa_location_candidates(work):
+        if url.lower().endswith(".pdf"):
+            continue
+        body = polite_get(url, f"oa-fallback:{_host(url)}", is_json=False)
+        if body:
+            return url, body
+    return None, None
 
 
 def fetch_openalex_work(openalex_id, work_id):
@@ -332,6 +553,18 @@ def fetch_openalex_work(openalex_id, work_id):
 def fetch_ar5iv(arxiv_id):
     url = f"https://ar5iv.labs.arxiv.org/html/{arxiv_id}"
     return polite_get(url, f"ar5iv:{arxiv_id}", is_json=False)
+
+
+def _write_cache(result, text, source):
+    sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    cache_path = os.path.join(CACHE_DIR, f"{sha}.txt")
+    with open(cache_path, "w") as f:
+        f.write(text)
+    result["status"] = "ok"
+    result["sha256"] = sha
+    result["approx_tokens"] = len(text) // 4
+    result["source"] = source
+    result["fetch_ts"] = time.time()
 
 
 def process_paper(paper):
@@ -345,6 +578,7 @@ def process_paper(paper):
         "approx_tokens": None,
         "n_statements_found": 0,
         "fetch_ts": time.time(),
+        "source": None,
     }
 
     work = None
@@ -360,53 +594,131 @@ def process_paper(paper):
 
     abstract = invert_abstract(work.get("abstract_inverted_index"))
     arxiv_id = extract_arxiv_id(work)
-    result["arxiv_id"] = arxiv_id
 
     if not arxiv_id:
+        # Part 2 fallback: public arXiv API title/author search.
+        title = work.get("title")
+        authorships = work.get("authorships") or []
+        first_author = (authorships[0].get("author") or {}).get("display_name") if authorships else None
+        arxiv_id = search_arxiv_by_title_author(title, first_author)
+        if arxiv_id:
+            log_event({"kind": "arxiv_search_hit", "openalex_id": oaid, "arxiv_id": arxiv_id})
+    result["arxiv_id"] = arxiv_id
+
+    if arxiv_id:
+        html_body = None
+        for attempt in range(MAX_PAPER_ATTEMPTS):
+            html_body = fetch_ar5iv(arxiv_id)
+            if html_body is not None:
+                break
+            log_event({"kind": "paper_attempt_failed", "openalex_id": oaid, "what": "ar5iv-fetch", "arxiv_id": arxiv_id, "attempt": attempt})
+        if html_body is None:
+            log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "ar5iv-fetch-failed", "arxiv_id": arxiv_id})
+        else:
+            try:
+                intro = find_introduction(html_body)
+                supplementary = find_results_discussion(html_body)
+                statements = parse_theorem_blocks(html_body) + parse_equation_blocks(html_body)
+            except Exception as e:
+                log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": f"parse-error:{e}", "arxiv_id": arxiv_id})
+                statements, intro, supplementary = [], "", ""
+            result["n_statements_found"] = len(statements)
+            if statements:
+                text = build_cached_text(abstract, intro, statements, supplementary)
+                _write_cache(result, text, "ar5iv")
+                log_event({"kind": "paper_status", "openalex_id": oaid, "status": "ok", "arxiv_id": arxiv_id, "n_statements": len(statements), "sha256": result["sha256"]})
+                return result
+            log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": arxiv_id})
+    else:
         log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "no-arxiv-id"})
-        result["fetch_ts"] = time.time()
-        return result
 
-    html_body = None
-    for attempt in range(MAX_PAPER_ATTEMPTS):
-        html_body = fetch_ar5iv(arxiv_id)
-        if html_body is not None:
-            break
-        log_event({"kind": "paper_attempt_failed", "openalex_id": oaid, "what": "ar5iv-fetch", "arxiv_id": arxiv_id, "attempt": attempt})
-    if html_body is None:
-        log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "ar5iv-fetch-failed", "arxiv_id": arxiv_id})
-        result["fetch_ts"] = time.time()
-        return result
+    # Part 3 fallback: OpenAlex OA location, generic plain-text scan.
+    oa_url, oa_body = fetch_oa_fallback_text(work)
+    if oa_body:
+        generic_statements = scan_generic_statements_from_body(oa_body)
+        result["n_statements_found"] = len(generic_statements)
+        if generic_statements:
+            text = build_cached_text(abstract, "", generic_statements)
+            _write_cache(result, text, f"oa:{oa_url}")
+            log_event({"kind": "paper_status", "openalex_id": oaid, "status": "ok", "reason": "oa-fallback", "oa_url": oa_url, "n_statements": len(generic_statements), "sha256": result["sha256"]})
+            return result
+        log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "oa-fallback-no-statements", "oa_url": oa_url})
+    else:
+        log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed"})
 
-    try:
-        intro = find_introduction(html_body)
-        statements = parse_theorem_blocks(html_body)
-    except Exception as e:
-        log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": f"parse-error:{e}", "arxiv_id": arxiv_id})
-        result["fetch_ts"] = time.time()
-        return result
-
-    result["n_statements_found"] = len(statements)
-    if not statements:
-        log_event({"kind": "paper_status", "openalex_id": oaid, "status": "text-unavailable", "reason": "no-statements-parsed", "arxiv_id": arxiv_id})
-        result["fetch_ts"] = time.time()
-        return result
-
-    text = build_cached_text(abstract, intro, statements)
-    sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
-    cache_path = os.path.join(CACHE_DIR, f"{sha}.txt")
-    with open(cache_path, "w") as f:
-        f.write(text)
-
-    result["status"] = "ok"
-    result["sha256"] = sha
-    result["approx_tokens"] = len(text) // 4
     result["fetch_ts"] = time.time()
-    log_event({"kind": "paper_status", "openalex_id": oaid, "status": "ok", "arxiv_id": arxiv_id, "n_statements": len(statements), "sha256": sha})
     return result
 
 
+# ---------------------------------------------------------------------------
+# --dry-run-coverage (task part 4): for papers NOT currently status "ok" in
+# the committed manifest, use ONLY metadata lookups (OpenAlex re-fetch,
+# arXiv title/author search, OA-location presence check) to estimate how
+# many are recoverable -- never the full ar5iv/OA fetch+parse. Read-only
+# against MANIFEST; does not touch the committed file.
+# ---------------------------------------------------------------------------
+
+def dry_run_coverage():
+    with open(MANIFEST) as f:
+        manifest = [json.loads(l) for l in f if l.strip()]
+    not_ok = [r for r in manifest if r.get("status") != "ok"]
+
+    with open(INPUT) as f:
+        data = json.load(f)
+    papers_by_id = {p["openalex_id"]: p for p in data["selected_final"]}
+
+    n_checked = 0
+    rec_arxiv = 0
+    rec_oa = 0
+    overlap = 0
+    for rec in not_ok:
+        oaid = rec["openalex_id"]
+        work_id = oaid.rstrip("/").rsplit("/", 1)[-1]
+        work = None
+        for attempt in range(MAX_PAPER_ATTEMPTS):
+            work = fetch_openalex_work(oaid, work_id)
+            if work is not None:
+                break
+        if work is None:
+            log_event({"kind": "dry_run_openalex_failed", "openalex_id": oaid})
+            continue
+        n_checked += 1
+
+        arxiv_id = extract_arxiv_id(work)
+        if not arxiv_id:
+            title = work.get("title")
+            authorships = work.get("authorships") or []
+            first_author = (authorships[0].get("author") or {}).get("display_name") if authorships else None
+            arxiv_id = search_arxiv_by_title_author(title, first_author)
+        has_arxiv = arxiv_id is not None
+
+        has_oa = len(oa_location_candidates(work)) > 0
+
+        if has_arxiv:
+            rec_arxiv += 1
+        if has_oa:
+            rec_oa += 1
+        if has_arxiv and has_oa:
+            overlap += 1
+
+        log_event({"kind": "dry_run_paper", "openalex_id": oaid, "has_arxiv": has_arxiv, "has_oa": has_oa})
+
+    report = {
+        "n_checked": n_checked,
+        "recoverable_via_arxiv_search": rec_arxiv,
+        "recoverable_via_oa_location": rec_oa,
+        "overlap": overlap,
+    }
+    log_event({"kind": "dry_run_done", **report, "n_not_ok_in_manifest": len(not_ok)})
+    print(json.dumps(report, indent=2))
+    return report
+
+
 def main():
+    if "--dry-run-coverage" in sys.argv:
+        dry_run_coverage()
+        return
+
     with open(INPUT) as f:
         data = json.load(f)
     papers = data["selected_final"]
