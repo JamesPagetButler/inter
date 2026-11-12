@@ -153,6 +153,7 @@ The federation spans ~15 repos, so a **bare `#292` is ambiguous** — the reader
 - **In chat / sessionbridge / terminal / dashboards** (no auto-linking) → the federation handle **`repo-<name>-<type>-#<num>`**, e.g. `repo-bma-systema-pr-#292`, `repo-qbp-pr-#424` (beekeeper directive 2026-05-14 — the beekeeper reads from terminal context where repo scope isn't visible). Naming the repo in words is equally fine: "PR #292 **on bma-systema**".
 - **Never** a bare `#N` in any context that doesn't already name the repo — including a thread already scoped to one repo (the reader may not see that scope).
 - **Cross-repo `Closes`:** GitHub only auto-closes **same-repo** references. To close an issue in another repo, use `Closes owner/repo#N` for the link, but it **won't auto-close** — close it by hand on merge. (Example: `JamesPagetButler/bma-systema#292` implements `JamesPagetButler/inter#112`; the issue is closed manually.)
+- **Closing keywords are lexical, not semantic (C18).** GitHub treats any `close/closes/closed/fix/fixes/fixed/resolve/resolves/resolved` followed by an issue ref as an instruction, whatever the sentence means. "Does not close #703" **closed** QBP#703 when QBP#708 merged, and a closed PR ignores later pushes, so its re-merge never reached CI. Use a closing keyword **only** for an intended close, written as `Closes owner/repo#N` on its own line, one per issue. Never put a closing verb next to a reference you are *not* closing; write "see #N", "refs #N" or "#N stays open". The R4 readiness check scans PR bodies for closing references before handing a PR to the beekeeper.
 
 Rationale: repo-qualification is the difference between a reference someone follows in one click and one they have to interrogate. Codified 2026-09-17 (unifying the 2026-05-14 chat-handle directive with the GitHub auto-linking form) after a bare `#292` needed a "which repo?" round-trip.
 
@@ -234,7 +235,7 @@ if: hashFiles('**/*.go') != ''
 
 so CI stays an honest green rather than a structural red. Remove the guard once the repo has Go source, so a missing tree can't skip CI silently.
 
-Origin: qbp-systema#3 review (2026-05-21); codified per inter#35. Adoption audit (2026-10-17, Go workflows): `cancel-in-progress` present in wyrd `ci-go.yml`, bma-systema `ci-go.yml`, edda `ci-go.yml`; **missing** in confluent-trust `ci.yml`, all qbp-compute-unit Go workflows, qbp-systema `ci-go.yml` (regressed since #3), and wyrd `ci-compute-manifest.yml`. contextus has no Go CI.
+Origin: qbp-systema#3 review (2026-05-21); codified per inter#35. Adoption audit (2026-11-02, default branches, closing inter#35): `cancel-in-progress` present in every workflow of wyrd, edda, qbp-compute-unit and qbp-systema. confluent-trust `ci.yml` and bma-systema `ci.yml` use the PR-only form (`cancel-in-progress: ${{ github.event_name == 'pull_request' }}`), so every main commit still gets a completed run; prefer that form where main-branch history matters. contextus gains it with its first Go CI (contextus#48).
 
 ### 4.3 Pre-commit hooks
 
@@ -270,13 +271,13 @@ Per ADR-003 §I4 in qbp-compute-unit, design-doc PRs ARE the §I4 review surface
 
 When PR B depends on PR A:
 - Open PR B against the branch of PR A (not main), so the diff is review-able as B's specific changes.
-- After PR A merges, rebase PR B onto main.
+- **Merge order is fixed by the forging doc's stacked-PR protocol** (`best-practices/forging-spikes-strikes-executable-specs.md` §2, C4/C17/C23): retarget B to `main` **before** A merges, then merge A, then merge `main` into B with a normal push so CI runs, then merge B. That protocol is canonical. The mitigation list below is consistent with it except where noted.
 - **Beekeeper override (per Decision Log #7) does NOT extend transitively** to stacked PRs (per Q6=B in addendum-18-walk meeting). Each PR in the stack needs its own substance review.
 
 **Squash-merge hazard.** Squash-merging the base PR does **not** carry the stacked PR's commits to `main`. If PR B was opened against PR A's branch and PR A is squash-merged, B's base is now a stale branch: merging B lands it in that branch, not `main`, yet GitHub can still show B as "merged". This has happened twice: contextus#21 (2026-05-22, recovered by cherry-pick) and QBP#702 stacked on QBP#701 (2026-10-15, landed in `qbp/692-pa-reconcile-real-ledger` and was re-landed to master by a byte-identical PR; C17 in the forging process notes, draft inter#154). Mitigations, in order of preference:
 
 1. **Don't stack** when the file-conflict surface allows it: open each PR off `main`.
-2. **If you stack, retarget before merging the top PR.** After the base PR merges, rebase B onto `main` and change B's base to `main` (`gh pr edit <B> --base main`), *then* review and merge B. Never merge a PR whose base is not the default branch.
+2. **If you stack, retarget B to `main` *before* the base PR merges** (`gh pr edit <B> --base main`). Retargeting only *after* the base merges is too late if the base is merged with `--delete-branch`: GitHub then auto-closes B and can't reopen it (C23, inter#249 → #253). Then merge `main` into B with a normal push so CI runs, and review and merge B. Never merge a PR whose base is not the default branch.
 3. **Merge bottom-up (base first).** Never merge the top of a stack while its base PR is open.
 4. **Post-merge verification:** after merging any PR in a stack, confirm the expected change is on `main`, e.g. `git fetch && git log origin/main --oneline -5` and `git diff <expected-sha> origin/main -- <paths>`, not just the PR's "merged" badge.
 
@@ -338,6 +339,13 @@ Constitutional documents are: anything under `governance/`, `BMA-Governance-Docu
 **Why verbal isn't enough:** Constitutional documents have provenance chains. A future audit of "when was this rule changed and by whom" reads PR history, not chat logs. Direct pushes are invisible to the provenance chain and cannot be audited.
 
 **Demonstrated failure mode:** bma-systema#219 (2026-06-01) — governance document pushed directly to main on verbal "commit and push" instruction. Remediated by force-push reversal + branch + PR in the same session; classified systemic in process-breakdowns.md.
+
+### 5.7 Git command chains fail closed (C14)
+
+Multi-step git work must **stop at the first failure**. A failed `git worktree add` followed by `; git add -A && git commit` once committed straight into the shared inter checkout (caught before push, 2026-10-08), and it recurred once.
+- Chain every step with `&&`, or end each line with `|| exit 1`. **Never `;`** between steps that depend on each other. Don't rely on `set -e` alone; it doesn't stop every chain.
+- **Never `git add -A` or `git add .`.** Stage named paths only.
+- **Assert where you are before you commit:** check the working directory and that `git rev-parse --abbrev-ref HEAD` is the branch you expect, inside your own worktree (`worktree-isolation` hard gate).
 
 ---
 

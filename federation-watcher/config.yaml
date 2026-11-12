@@ -28,6 +28,42 @@ watch_mentions:
   - qbp-architecture
   - beekeeper
 
+# Canonical seat registry (inter#271 item 3 — roster-only wake files).
+# A wake FILE is written only for a handle resolved here OR in
+# watch_mentions above (the two are reconciled, not either-or — see
+# resolve_roster() in watcher.py). Every other @token gets one log line
+# and no file. Same file the heartbeat sweep below already reads; listed
+# here too so the roster check works even with heartbeat.enabled: false.
+personas_conf: ~/Documents/inter/federation-terminals/personas.conf
+
+# Alias map (inter#271 B1, foreman review 2026-11-01). Some senders still
+# address a seat by an older/shorthand handle that was never itself a
+# launched seat — the live wake dir had real, actively-used traffic under
+# these names (bragi: 211 wakes, latest seq 4238; bma: 28 wakes) landing in
+# a file nobody reads. route_wake() resolves an alias to its seat and
+# writes ONE wake file for the seat (never the alias's own file), keeping
+# the HIGHEST role among all mentions in the message if both the alias and
+# the seat are named. Add an entry here instead of teaching senders a new
+# handle.
+aliases:
+  bragi: edda-implementor        # edda-implementor's current persona name
+  edda: edda-implementor         # older alias, pre-dates the bragi rename
+  bma: bma-implementor
+  cth: cth-implementor
+  contextus: contextus-impl
+  notary: notary-implementor     # rare (last seq 1358); found in the 2026-11-01 live quarantine dry-run
+  oppenheimer: qbp-oppenheimer   # rare (last seq 1353)
+  wyrd: wyrd-implementor         # rare (last seq 916)
+  qbp-cu: qbp-cu-implementor     # rare (last seq 796)
+
+# Non-seat consumers that legitimately get a wake file: not a personas.conf
+# seat, no Monitor/liveness check of their own, but a real reader exists.
+# Document each entry with its reader so this list stays auditable.
+extra_recipients:
+  - antigravity   # read by ops/watcher/bridge-waker (Nidavellir; reboot
+                  # install list, inter#271 B1) — not running today, but a
+                  # legitimate consumer, not junk
+
 # Sessionbridge channels to monitor.
 # "auto" = discover all *.jsonl files in the channels state directory
 # that have no spaces and don't start with '#'.

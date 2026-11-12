@@ -66,6 +66,15 @@ cp "$TMPDIR/old-onboard-prompt-personafile.tmpl" "$TMPDIR/oldft/onboard-prompt-p
 cp "$TMPDIR/old-personas.conf" "$TMPDIR/oldft/personas.conf"
 [ -f "$TMPDIR/deming-boot.tmpl" ] && cp "$TMPDIR/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 chmod +x "$TMPDIR/oldft/launch-federation.sh" "$TMPDIR/oldft/onboard-federation.sh"
+# inter#262 changed the onboarding TEMPLATES on purpose (seat wisdoms + RESUME handoff,
+# stale poll line removed). The old-vs-new equivalence checks below exist to prove the
+# SCRIPTS render identically (inter#142), so the old tree renders with the NEW templates:
+# any remaining difference is a script difference. The template change itself is asserted
+# directly in the inter#262 block below.
+cp "$HERE/onboard-prompt.tmpl" "$TMPDIR/oldft/onboard-prompt.tmpl"
+cp "$HERE/onboard-prompt.tmpl" "$TMPDIR/old-onboard-prompt.tmpl"
+cp "$HERE/onboard-prompt-personafile.tmpl" "$TMPDIR/oldft/onboard-prompt-personafile.tmpl"
+[ -f "$HERE/deming-boot.tmpl" ] && cp "$HERE/deming-boot.tmpl" "$TMPDIR/oldft/deming-boot.tmpl"
 
 # Originally (pre-#145 D1) origin/main pinned qbp-oppenheimer inline
 # (cc9bae42...); the reissue moved that pin to the gitignored overlay and
@@ -98,10 +107,19 @@ NEW_LIST="$(FED_TERMINALS_LOCAL_CONF="$AC5_OVERLAY" "$HERE/launch-federation.sh"
 # still missing hutchins from FED_HANDLES) structurally cannot see. That row
 # is EXPECTED to diverge — it's the fix, not a regression — and is verified
 # directly by the dedicated content-sniff test below instead.
-OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -v '^hutchins ')"
-NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -v '^hutchins ')"
+# deming-triage and nugent are EXCLUDED too (inter#261): deming-triage is a NEW
+# roster row (OLD has no such seat) and nugent is newly in FED_HANDLES, so —
+# like hutchins — its content-sniff can legitimately resolve a session OLD
+# cannot. Both are intended changes, not regressions.
+# inter#262: a row whose OLD resolution is a QUARANTINED session id is excluded as well;
+# NEW deliberately never resolves to it (environment-dependent, so derived, not hard-coded).
+# studybuddy is a NEW roster row (inter#266), excluded like deming-triage.
+QUAR_ROWS="$(printf '%s\n' "$OLD_LIST" | grep -E '4f3fa045-30ee-4ee3-8fcd-0eadf0d92d68' | awk '{print $1}' | paste -sd'|' -)"
+QUAR_RE="^(hutchins|deming-triage|nugent|studybuddy${QUAR_ROWS:+|$QUAR_ROWS}) "
+OLD_LIST_CMP="$(printf '%s\n' "$OLD_LIST" | grep -vE "$QUAR_RE")"
+NEW_LIST_CMP="$(printf '%s\n' "$NEW_LIST" | grep -vE "$QUAR_RE")"
 checkeq "$(printf '%s' "$NEW_LIST_CMP" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_LIST_CMP" | md5sum | awk '{print $1}')" \
-  "launch-federation.sh list output byte-identical old vs new (12 of 13 seats, incl. notary's new 4th column, via structure+overlay; hutchins row excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
+  "launch-federation.sh list output byte-identical old vs new (all seats except hutchins/deming-triage/nugent, incl. notary's 4th column, via structure+overlay; those rows excluded here — its intentional divergence is covered by the dedicated content-sniff test below)"
 
 echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for the 11 seats without a persona_file =="
 
@@ -110,11 +128,23 @@ echo "== AC5 (part 2/2): onboard-federation.sh --dry-run output unchanged for th
 # from the generic boot. Before that file reaches origin/main its dry-run
 # fails loud by design (AC2, no silent fallback). Its wiring is asserted by
 # the dedicated herschel check below instead.
-NON_NOTARY_SEATS="qbp-architecture qbp-implementor qbp-oppenheimer qbp-cu-implementor cth-implementor wyrd-implementor bma-implementor contextus-impl edda-implementor deming hutchins"
+# qbp-architecture and qbp-oppenheimer are EXCLUDED as well (inter#254/#255):
+# their rows now carry persona_file columns, so — like notary and herschel —
+# their onboard intentionally diverges from the generic boot. Their absence
+# here was the pre-existing failure on main.
+# deming is EXCLUDED too (inter#228): its row now wires personas/deming.md and
+# deming-boot.tmpl step (3.5) reads that persona, so its onboard intentionally
+# diverges. That wiring is asserted by the dedicated deming-boot check below.
+# qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor and
+# edda-implementor are EXCLUDED too (inter#228 batch 2): their rows now wire
+# personas/<seat>.md, so their onboard intentionally diverges from the generic boot.
+# qbp-cu-implementor joined batch 2 later (persona v1, wired) and is excluded too.
+# contextus-impl is excluded too (inter#228 batch 3, persona v1 wired).
+NON_NOTARY_SEATS="hutchins"
 NEW_DRY_ALL_BUT_NOTARY="$("$HERE/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 OLD_DRY_SUBSET="$("$TMPDIR/oldft/onboard-federation.sh" --dry-run $NON_NOTARY_SEATS 2>&1)"
 checkeq "$(printf '%s' "$NEW_DRY_ALL_BUT_NOTARY" | md5sum | awk '{print $1}')" "$(printf '%s' "$OLD_DRY_SUBSET" | md5sum | awk '{print $1}')" \
-  "onboard-federation.sh --dry-run byte-identical old vs new for all 11 seats without a persona_file (incl. hutchins; notary + herschel excluded)"
+  "onboard-federation.sh --dry-run byte-identical old vs new for the 1 seat without a persona_file (hutchins; notary, herschel, qbp-architecture, qbp-oppenheimer, deming, edda-implementor, qbp-cu-implementor, contextus-impl, qbp-implementor, cth-implementor, wyrd-implementor, bma-implementor excluded)"
 
 echo "== inter#160: herschel row wires persona_file personas/herschel.md, and that file carries an executable §0 =="
 HERSCHEL_PFILE="$(awk -F'|' '/^herschel[[:space:]]/ { gsub(/^[ \t]+|[ \t]+$/, "", $4); print $4 }' "$HERE/personas.conf")"
@@ -166,6 +196,34 @@ for p in qbp-architecture:/home/prime/Documents/inter \
   fi
 done
 check "$all_ident" "all 12 non-notary personas (incl. hutchins): full rendered prompt byte-identical old vs new"
+
+echo "== inter#262: every fresh onboard names the seat's own wisdoms and RESUME handoff =="
+miss=0
+for p in qbp-implementor:/home/prime/Documents/QBP-implementor cth-implementor:/home/prime/Documents/CTH \
+         contextus-impl:/home/prime/Documents/Contextus hutchins:/home/prime/Documents/Craft; do
+  handle="${p%%:*}"; wd="${p##*:}"
+  out="$("$TMPDIR/render_new.sh" "$handle" "$wd" "")"
+  printf '%s' "$out" | grep -qF "wisdoms/$handle.md" || { echo "    ✗ $handle: no wisdoms/$handle.md"; miss=1; }
+  printf '%s' "$out" | grep -qF "$wd/RESUME.md" || { echo "    ✗ $handle: no $wd/RESUME.md"; miss=1; }
+  printf '%s' "$out" | grep -q 'seq=707' && { echo "    ✗ $handle: stale poll line still present"; miss=1; }
+done
+check "$miss" "generic onboard: names wisdoms/<seat>.md and <workdir>/RESUME.md; stale seq=707 poll line gone"
+pf_out="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
+printf '%s' "$pf_out" | grep -qF "wisdoms/notary-implementor.md" && printf '%s' "$pf_out" | grep -qF "/home/prime/Documents/notary/RESUME.md"
+check $? "persona-file onboard: names the seat's wisdoms and RESUME handoff"
+grep -qF '{{WORKDIR}}/RESUME.md' "$HERE/deming-boot.tmpl" \
+  && grep -qF 'git -C ~/Documents/Nidavellir show origin/main:wisdoms/deming.md' "$HERE/deming-boot.tmpl" \
+  && [ "$(grep -o '(3.5)' "$HERE/deming-boot.tmpl" | wc -l)" -eq 1 ] \
+  && awk '{ a=index($0,"(3.5)"); b=index($0,"THEN — YOUR FIRST JOB"); exit !(a>0 && b>a) }' "$HERE/deming-boot.tmpl"
+check $? "deming-boot.tmpl: step (3.5) before the first-job sweep reads deming's wisdoms from Nidavellir origin/main and its RESUME handoff (deming §I4 on #263)"
+grep -qF 'git -C ~/Documents/inter show origin/main:personas/deming.md' "$HERE/deming-boot.tmpl" \
+  && awk -F'|' '$1 ~ /^deming[[:space:]]+$/ { gsub(/[[:space:]]|#.*/, "", $4); exit !($4 == "personas/deming.md") }' "$HERE/personas.conf"
+check $? "deming-boot.tmpl step (3.5) reads deming's persona from inter origin/main, and personas.conf wires personas/deming.md (inter#228; deming-boot overrides the persona-file template, so the boot must load it itself)"
+grep -qF 'wake-wait.sh deming-escalate' "$HERE/deming-boot.tmpl" \
+  && grep -qF 'state/deming-escalate.waiter.pid' "$HERE/deming-boot.tmpl"
+check $? "deming-boot.tmpl step (3) arms the deming-escalate waiter too and checks its pidfile (deming v1.1 note on inter#278; persona §0 step 4 arms both)"
+grep -qF 'show origin/main:wisdoms/{{HANDLE}}.md' "$HERE/onboard-prompt.tmpl"
+check $? "generic onboard reads the seat's wisdoms from the committed blob, not the working tree"
 
 NOTARY_NEW="$("$TMPDIR/render_new.sh" notary-implementor /home/prime/Documents/notary "$REAL_PATH")"
 case "$NOTARY_NEW" in
@@ -394,7 +452,12 @@ P_PERSONA=(resumed-no-pfile resumed-with-pfile pinned-no-transcript fresh-alread
 P_WORKDIR=("$HAS_SESSION_WD" "$HAS_SESSION_WD" "$NO_SESSION_WD" "$HAS_SESSION_WD")
 P_SID=("$HAS_SESSION_SID" "$HAS_SESSION_SID" "$NO_SESSION_SID" "")
 P_PFILE=("" "$REAL_PATH" "$REAL_PATH" "$REAL_PATH")
+# inter#262: this truth table tests RESUME mechanics, so it runs under the legacy
+# resume-by-default policy. The fresh default and its exceptions/guards are covered
+# by test-launch-policy.sh.
+ORIG_LAUNCH_POLICY="$LAUNCH_POLICY"; LAUNCH_POLICY=auto
 build_launch_plan >/tmp/m2.$$ 2>&1
+LAUNCH_POLICY="$ORIG_LAUNCH_POLICY"
 
 in_array() { local needle="$1"; shift; local x; for x in "$@"; do [ "$x" = "$needle" ] && return 0; done; return 1; }
 
@@ -718,9 +781,13 @@ ELAPSED_ON="$(run_stagger_launch 3)"
   || check 1 "STAGGER_SECONDS=3 (nonzero): the real cmd_launch loop actually waits before the 2nd pane (got ${ELAPSED_ON}s, want >=3s)"
 
 ELAPSED_OFF="$(run_stagger_launch 0)"
-[ "$ELAPSED_OFF" -lt 3 ] \
-  && check 0 "STAGGER_SECONDS=0 disables the inter-launch wait (elapsed ${ELAPSED_OFF}s < 3s)" \
-  || check 1 "STAGGER_SECONDS=0 disables the inter-launch wait (got ${ELAPSED_OFF}s, want <3s)"
+# Relative, not absolute: under host load the no-wait launch itself can take
+# >=3 wall-seconds (second-granularity clock), which made an absolute "<3s"
+# check flaky. A disabled stagger must be at least 2s faster than the 3s
+# stagger run above; that still kills a "stagger ignored" mutant (both ~equal).
+[ $(( ELAPSED_OFF + 2 )) -le "$ELAPSED_ON" ] \
+  && check 0 "STAGGER_SECONDS=0 disables the inter-launch wait (elapsed ${ELAPSED_OFF}s vs ${ELAPSED_ON}s with stagger 3)" \
+  || check 1 "STAGGER_SECONDS=0 disables the inter-launch wait (got ${ELAPSED_OFF}s vs ${ELAPSED_ON}s with stagger 3, want >=2s faster)"
 STAGGER_TEST_SESSION=""
 
 echo

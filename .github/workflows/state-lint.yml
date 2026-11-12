@@ -1,0 +1,45 @@
+name: seat-state lint (inter#232)
+
+# Runs the check_state.py unit tests, then lints the schema's own example (extracted from
+# best-practices/seat-state.md) in --strict mode so the documented example can never drift from the
+# lint. Live state files are local to each seat (they may point into private repos), so they are
+# linted on-box, not here.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - best-practices/seat-state.md
+      - scripts/check_state.py
+      - scripts/test_check_state.py
+      - .github/workflows/state-lint.yml
+  pull_request:
+    paths:
+      - best-practices/seat-state.md
+      - scripts/check_state.py
+      - scripts/test_check_state.py
+      - .github/workflows/state-lint.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: state-lint-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: state lint (tests + schema example)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: |
+          pip install -q pytest==8.3.3 pyyaml==6.0.2
+          python -m pytest -q scripts/test_check_state.py
+      - name: Schema example is lint-clean (--strict)
+        run: python scripts/check_state.py --strict best-practices/seat-state.md

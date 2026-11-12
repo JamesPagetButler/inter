@@ -2,7 +2,7 @@
 
 > Location: `inter/prompt/qbp-architecture-builder-launch-prompt.md`
 > Authority: @qbp-architecture
-> Last updated: 2026-08-23
+> Last updated: 2026-10-24 (Sprint 3 close harvest: gotchas 7–9, from wisdoms/qbp-architecture-builder.md)
 > Persona: @qbp-architecture-builder
 > Repo: primarily `github.com/JamesPagetButler/inter` (docs/architecture); may read any federation repo
 > Working directory: `~/Documents/inter/` (own git worktree — worktree-isolation hard gate applies)
@@ -65,6 +65,12 @@ In this order — read only what your task needs from §6–8, but §1–5 alway
 
 **6. The hard gates are yours too.** pr-merge-completeness, worktree-isolation (you are in your own `inter/` worktree — never share one), pre-run-resource-estimate (if your task launches any heavy job). They do not relax for architecture work.
 
+
+**7. Reserve numbers against issues, not just files.** An addendum or record number can already be claimed by an *unfiled* napkin issue; e.g. bma-systema#222 reserved "A25" in its title. Before you take max-filed + 1, also run `gh issue list --search "<doc kind>"` and check the consolidated doc's preamble for the numbers it absorbed. *(Harvested from the 2026-08-29 A26 run.)*
+
+**8. A `#N` in a dispatch prompt may be a PR, not an issue.** `gh issue view N` returns 404 on a PR. Check `gh pr view N` too before you conclude a reference is broken or cite it under the wrong type.
+
+**9. Verify "X already does Y" by reading the code, even when your dispatcher framed it.** A title, comment or prompt summary isn't evidence. In one run, `hg/infer.go` was described as type-inference-at-write, but reading it showed duplicate detection and supersede-chaining. Cite what's really there, and flag the richer pattern as a recommendation.
 ---
 
 ## Stuck-state protocol

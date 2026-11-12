@@ -1,0 +1,50 @@
+name: persona gate (inter#228)
+
+# Report-mode seat-rebuild gate: runs the check_personas.py unit tests, then prints the per-seat
+# persona/wisdoms matrix. Report mode exits 0 so outstanding seats don't turn every inter PR red;
+# the rebuild gate itself runs `check_personas.py --strict` against origin/main.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - personas/**
+      - wisdoms/**
+      - prompt/**
+      - federation-terminals/personas.conf
+      - scripts/check_personas.py
+      - scripts/test_check_personas.py
+      - .github/workflows/persona-gate.yml
+  pull_request:
+    paths:
+      - personas/**
+      - wisdoms/**
+      - prompt/**
+      - federation-terminals/personas.conf
+      - scripts/check_personas.py
+      - scripts/test_check_personas.py
+      - .github/workflows/persona-gate.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: persona-gate-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  gate:
+    name: persona gate (tests + report)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: |
+          pip install -q pytest==8.3.3
+          python -m pytest -q scripts/test_check_personas.py
+      - name: Per-seat matrix (report mode)
+        run: python scripts/check_personas.py | tee -a "$GITHUB_STEP_SUMMARY"

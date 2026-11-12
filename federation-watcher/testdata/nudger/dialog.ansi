@@ -1,0 +1,12 @@
+[38;5;246m⏺[39m Bash(rm -rf build/)
+
+[38;5;174m Bash command[39m
+
+   rm -rf build/
+   Remove the build directory
+
+ Do you want to proceed?
+ [38;5;153m❯ 1. Yes[39m
+   2. Yes, and don't ask again for rm commands in /home/prime/Documents/Craft
+   3. No, and tell Claude what to do differently [2m(esc)[0m
+

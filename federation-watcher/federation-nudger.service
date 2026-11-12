@@ -1,0 +1,25 @@
+# federation-nudger — systemd --user unit (inter#75). NOT installed by the PR.
+#
+# Ships in DRY-RUN: it logs what it would nudge/escalate and touches nothing.
+# Switching ExecStart to --enforce on the live box is the BEEKEEPER's go, and
+# only after a dry-run soak. See NUDGER.md.
+#
+# Manual install (when directed):
+#   cp federation-nudger.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now federation-nudger.service
+[Unit]
+Description=Federation wake nudger (inter#75) - nudges an idle seat whose wake-waiter is dead [dry-run]
+After=default.target federation-watcher.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Documents/inter/federation-watcher
+ExecStart=/usr/bin/python3 %h/Documents/inter/federation-watcher/nudger.py --dry-run
+Restart=always
+RestartSec=10
+StandardOutput=append:%h/.federation-watcher/nudger.log
+StandardError=append:%h/.federation-watcher/nudger.log
+
+[Install]
+WantedBy=default.target

@@ -4,3 +4,5 @@
 # seat (backward-compat). Written exclusively by `launch-federation.sh refresh`.
 federation-terminals/personas.local.conf
 federation-terminals/personas.local.conf.bak
+# inter#262: named resume exceptions for the next relaunch — LIVE state (workspace-order §5), never committed.
+federation-terminals/resume-exceptions.conf
