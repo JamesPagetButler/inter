@@ -173,9 +173,45 @@ When a conversation hits a point it can't immediately answer, it does **not** st
 5. **What was already tried** — *which* §9 strategies were actually run and came up empty (not skipped), and what each yielded.
 6. **Best partial answer + its bound** — a BOTE/bounded best-effort answer with its uncertainty (Z±w), so even the impasse advances understanding.
 
-Failing any of 1–6 without justification means the "impasse" is a **decision to stop, not a characterization of a genuine limit** — the conversation is still open. Because the §3 completeness gate is the *other* exit, a conversation ends exactly one of two ways: **converged** (all five gate-conditions met) or **impassed** (all six impasse-conditions met). There is no third "we ran out of steam" exit — that state is an open conversation.
+Failing any of 1–6 without justification means the "impasse" is a **decision to stop, not a characterization of a genuine limit** — the conversation is still open. Because the §3 completeness gate is the *other* exit, a conversation ends exactly one of two ways: **converged** (all five gate-conditions met) or **impassed** (all six impasse-conditions met). There is no third "we ran out of steam" exit — that state is an open conversation. *(§10b refines this into a **four-bucket** exit — adding **forced** and **withdrawn** alongside converged and impassed — and fixes the decision boundary: what the beekeeper rules versus what a conversation derives or leaves open.)*
 
 **Anti-unilateral guard.** An Impasse Record on a substantive question should be **confirmed by a second, ideally heterogeneous, party** (per §7: a homogeneous pair can echo itself into a false "we're stuck" as easily as a false "we agree"). One agent may *draft* the impasse; it isn't *earned* until a second party checks that conditions 1–6 actually hold and couldn't itself break the impasse with a §9 strategy the first party skipped. An Impasse Record is a **valuable federation artifact** — it names an open problem and exactly what would close it, so it can seed a research task, an experiment, or a CHT anchor rather than vanishing as "we couldn't."
+
+---
+
+## 10b. The four-bucket exit and the decision boundary
+
+*(Beekeeper-directed, 2026-09-11, from the ruling: "we work from axioms, the fewer the better, anchored to experimentally proven facts; we change an axiom only when we have proven we must." Added after the AXIOM-2 arc drifted into asking the beekeeper to* choose *physics the axioms under-determine — the P2/P2′ request — which he rightly rejected. Companion process-doc: `inter/decision-boundary.md`; enforcement mechanisms tracked in QBP#654.)*
+
+**Every conversation output lands in exactly one of four buckets.** This generalises §3 (converged) / §10 (impassed) and makes the "is this the beekeeper's to decide?" question explicit:
+
+| # | Bucket | What it is | Maps to | Ledger reflection |
+|---|---|---|---|---|
+| 1 | **Proved** | derived from the axioms, or a theorem; a real result | §3 completeness gate met | a root with a forcing `PROOF`/`MEAS` anchor, or a `derived_from` chain to roots |
+| 2 | **Forced** | determined by a *prior ruling or an existing ledger rule* — not a fresh choice | new | `decision_state: ruled`, or a chain to a ruled/proved root |
+| 3 | **Open — with a kill** | genuinely undetermined by the axioms + evidence; an Impasse Record (§10) carrying a **kill condition** (the precise datum/experiment/proof that would settle it) | §10 Impasse Record | `decision_state: open` + `kill_condition` |
+| 4 | **Wrong — and withdrawn** | a claim refuted and retracted, *named* | §7 retraction pattern, now a first-class exit | `superseded_statement` / removed, or `retired` (axiom-level), with provenance |
+
+(Data-side names, one map: the ledger enforces the same four as **PROVED / FORCED / OPEN / RETIRED** — bucket 1 ↔ forcing `PROOF`/`MEAS` anchor, 2 ↔ `decision_state: ruled` + cite, 3 ↔ `decision_state: open` + `kill_condition`, 4 ↔ `retired` — the root gate / chain-to-root / schema of QBP#654/QBP#658.)
+
+**Grounded is not forced.** A chain that terminates at an `inputs[]` record (an instrument or free-input leaf) is *grounded* — it resolves — not *forced*: it counts as bucket 1/2 only as far as its inputs are themselves forced. A free input's evidential weight stays with its own tag (beekeeper ruling on QBP#805: `MEAS-alpha → INST-f0` resolves, but INST-f0 is a SELECTED free input, QBP#479).
+
+**One Impasse Record per open *question*, not per root.** A root with N independent open questions carries N kill entries (a list), each naming *its own* precise missing piece + discharge route — because §10's "precise missing piece" is singular *per record*; bundling two questions into one kill fails the precision test (you cannot state a single "obtain X → settled"). A single open question is a one-element list. (First applied: AXIOM-1's two-question kill_condition — Q1 process, Q2 selection-clause scope — QBP#659.)
+
+**Discharge is optional; the kill is required.** Each open question must name its **kill** (the falsifier whose acquisition settles it); a **discharge** (a derivation that would close it the *other* way) is stated *only where one exists*. Its absence is a finding, not a gap: a question whose only closure is a *constitutional change on a fired kill* — e.g. an axiom-under-determined clause *range*, which is a constitutional statement, not a theorem — is **falsifiable but not verifiable-by-stipulation**. Offering a stipulation as a discharge is bucket-2 laundering (§8): a choice dressed as a derivation. (First applied: AXIOM-1 Q2, QBP#659 — "DISCHARGE: none by derivation; the range changes only if the kill fires.")
+
+**The kill must be a genuine falsifier, not the claim's own negation.** For a root/postulate, the kill names an *external* event — an observation or a proof — whose acquisition forces the change; "prove this false" names no precise missing piece and is vacuous. A root whose *only* kill is its own negation is an **adopted postulate without an independent falsifier** — record it as exactly that ("a structural claim with a collapse condition, not a falsifiable one"), never dressed as a falsifiable open root. A kill that *cannot fire today* (its falsifier is real but not yet reachable) stays a valid, honest bucket-3 — recorded OPEN-not-a-pass and tracked as burn-down in the shrink-only register (QBP#658). (First distinguished: v0.7 ruling bundle — META-2's physical falsifier and POST-boundary-encoding's real arm vs POST-hosting's self-negation, QBP#652.)
+
+**Declare the quantifier; a ∀-claim is not closed by an ∃-proof.** A negative/kill claim must state whether it is **specific** ("this construction fails" — ∃) or **general** ("all constructions fail" — ∀). Proving a specific instance dead is **evidence** toward the general, never **closure** of it: the general stays OPEN (bucket 3), with the specific cited as evidence. Two failure modes this blocks: a *napkin* result treated as a proof (bucket-1 without a citable proof — §8), and a *specific* result treated as a *general* kill. (First caught: the condensed-sets kill — an argued/numerical result on *"the specific locale-forcing path"* was allowed to stand for the general *"condensed sets can't be the basis"*; QBP#660, and QBP#661 is the general theorem that would actually earn it.)
+
+**The decision boundary — the load-bearing rule.** *The beekeeper rules scope, priority and process — never a physical truth.* Two consequences the §7-confirmer enforces:
+
+- **A bucket-3 (open) result is never phrased as a request.** An open question reaches the beekeeper as an **Impasse Record with its kill condition**, not as "please choose." Handing the beekeeper an axiom-under-determined choice — the P2/P2′ mistake — *is* the failure: it asks him to decide physics that only an experiment or a proof can decide.
+- **A decidable result is derived, not ruled.** Before any PR requests a beekeeper ruling it must first answer *"is this decidable from the axioms?"* — if yes it belongs in bucket 1/2 (derive it); if the honest answer is "open" it belongs in bucket 3 (an Impasse Record). **The confirmer rejects a ruling-request that is decidable-or-honestly-open.** A beekeeper decision is legitimate only for a genuine scope / priority / process choice.
+
+**Bucket-2 guard — forced ≠ chosen.** A "forced" claim carries the same laundering risk §8 warns of: *agreement* that something is forced is not *proof* that it is. **A bucket-2 result must cite the specific prior ruling or ledger rule that forces it**, verifiable — never a choice dressed as "forced." Absent a citable forcer it is bucket 3 (open), not bucket 2.
+
+**One invariant, two faces.** The ledger's root discipline — a root is *forced* (carries a forcing `PROOF`/`MEAS` anchor) or *killed-and-open* (carries a `kill_condition` + `decision_state: open`) — and this four-bucket exit are the **data side and the process side of one rule**: *physics is settled by axioms + experiment, or left open with a kill; the beekeeper decides only scope, priority and process.* They share one vocabulary — a ledger root-with-forcing-anchor is a bucket-1/2 settled item; a schema `kill_condition + decision_state: open` is a bucket-3 Impasse Record — so the ledger CI (root gate / chain-to-root / schema) and this MO enforce **one invariant, not five bolt-ons** (QBP#654).
 
 ---
 
@@ -196,3 +232,5 @@ The generative move is the *limit-hit*: the conversation reasons in Edda until i
 ---
 
 *Ratified as a federation standing practice, 2026-09-04. A one-line pointer in `~/Documents/CLAUDE.md` (owned by @oppenheimer per beekeeper direction) makes every seat re-ground to it at session start.*
+
+*Rev. 3 (2026-09-11, beekeeper-directed) — §10b four-bucket exit + the decision boundary, and the companion `inter/decision-boundary.md`; enforcement mechanisms in QBP#654. **Ratified by the beekeeper by merging this revision** (inter#296); the merge commit is the ratification record.*
