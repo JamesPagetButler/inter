@@ -26,16 +26,18 @@ Merge order: substrate → BMA-side → scoring (gated on substrate merge).
 
 Each seat pushes code only to its own repo (CLAUDE.md seat roster); a cross-repo feature is therefore one PR per owning seat. Exception: a seat may also push to a repo it holds an active beekeeper-granted interim write-grant on (~/Documents/CLAUDE.md).
 
+For a thread that crosses repos (a weft crossing), follow `guides/working-under-the-warp.md` §B: one PR per repo, each gated in its own warp; dependencies merge first; consumers pin to the merge commit; the thread's owner is a named reviewer on every PR.
+
 ## §I4 review surfaces
 Per ADR-003 §I4 (qbp-compute-unit/architecture/): design docs for substantial substrate or interface changes ARE the review surface. Open as a PR in the relevant repo (typically the repo that owns the substrate). Named reviewers from the federation roster. Reader-list format: `skills/pr-authoring.md` § the §I4 reader-list.
 
-## Shared-identity review constraint
-Every federation persona resolves to **one GitHub identity** (`JamesPagetButler`). Consequences:
-1. **Formal GitHub reviews are structurally impossible.** `gh pr review --approve` fails with "cannot approve your own pull request" for every seat. A PR showing **"0 approving reviews" is expected** and is not evidence of a missing review.
-2. **The review of record is the §I4 verdict**, posted as a PR comment (`gh pr comment`, signed with the seat name, quoting the head SHA reviewed) and mirrored on the sessionbridge channel. The beekeeper's merge gate reads those comments (`pr-merge-completeness`: every named reviewer signed off in writing).
-3. **Branch protection: "Require approvals" stays at 0** (`skills/github-branch-protection.md`). A non-zero setting is permanently unsatisfiable and blocks every merge. Required *status checks* remain the mechanical gate.
+## Shared-identity review constraint, and signed verdicts
+Every federation persona still resolves to **one GitHub identity**. So:
+1. **Formal GitHub reviews remain impossible.** `gh pr review --approve` fails with "cannot approve your own pull request" for every seat, and "0 approving reviews" on a PR is expected. Branch protection's "Require approvals" stays at 0 (`skills/github-branch-protection.md`).
+2. **The review of record is the §I4 verdict, and with the warp it can be signed.** A seat posts its verdict as a PR comment, naming the head SHA it reviewed. With `seat-gate sign`, that comment carries a **signed verdict block** (APPROVE / CHANGES_REQUESTED / CARRY / DEFER / AUTHORED) bound to the repo, the PR and the exact head commit, and signed with the seat's own key. A signature proves which seat reviewed, even though GitHub sees one account. Mirror the verdict on the sessionbridge channel as before. The merge gate (`pr-merge-completeness`) reads those verdict comments: every named reviewer signed off in writing.
+3. **The mechanical gate is the `seat-gate` status check.** It checks that every named reviewer approved at the current head (or carried an approval forward), that the author, the reviewers and the merger are different seats, and that every acceptance-criterion CI job is green at that head. **Until the beekeeper makes it a required check**, it runs in report mode and the merger reads it as evidence. See `guides/working-under-the-warp.md`, "What's live today".
 
-Surfaced by @cth-implementor on the QBP#485 co-sign (seq 443, 2026-06-01); codified per inter#48. If the federation moves to per-seat GitHub identities (e.g. GitHub Apps), revisit this section and the branch-protection approval count together.
+Surfaced by `@cth-implementor` on the QBP#485 co-sign (seq 443, 2026-06-01); codified per inter#48. Signed verdicts per the warp (inter#242; Nidavellir#50 L1–L3). If the federation moves to per-seat GitHub identities, revisit points 1 and 3 together.
 
 ## sessionbridge coordination
 Cross-instance design discussion happens on the sessionbridge MCP channels (Crawl-phase only). Notable channels:
