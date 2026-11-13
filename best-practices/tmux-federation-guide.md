@@ -102,7 +102,8 @@ mean the session is ready for input — it may be at a trust/permission prompt o
   reliable. Tiled panes are for *human* at-a-glance monitoring, not for scripted capture.
   **Recommended hybrid:** drive against per-persona windows; keep an optional tiled
   "dashboard" window of read-only `pipe-pane` mirrors for the human. `launch-federation.sh`
-  supports `LAYOUT=windows` for exactly this.
+  defaults to `LAYOUT=windows` for exactly this; `LAYOUT=panes` is opt-in and leaves every seat
+  invisible to fed-sweep, which finds seats by window name.
 
 ## 3. Sending input — `send-keys`
 
@@ -264,7 +265,7 @@ reliable programmatic `Escape`.
 cd ~/Documents/inter/federation-terminals && ./launch-federation.sh   # build + attach
 ./launch-federation.sh list       # preview persona→session mapping, build nothing
 ./launch-federation.sh kill       # tear down
-LAYOUT=windows ./launch-federation.sh   # one full-size window per persona (best for driving)
+LAYOUT=panes ./launch-federation.sh     # opt-in tiled view; fed-sweep can NOT see seats in this layout
 ```
 
 **Post-launch health sweep** (do this every cold-boot — the "✓ built" line hides trust
