@@ -1,10 +1,10 @@
-# Vetting & audit reports (@thompson)
+# Vetting & audit reports (@thompson-alpha)
 
-Report outputs of the callable security agent (`architecture-records/2026-10-17-thompson-callable-agent-RECORD.md`; methodology in `prompt/thompson-security-agent-launch-prompt.md`).
+Report outputs of the callable security agent. **The persona has moved to a private location (2026-11-12), and new reports are no longer filed here**; they stay local and uncommitted. This folder keeps the existing reports and serves as a format reference only.
 
-## Where each report lives
-- **vet** reports on *public third-party tools* live here, as `<tool>-<YYYY-MM-DD>.md`. inter is **public**, so they are readable by anyone, and that is intended.
-- **audit** reports on the federation's *own* host, credentials or network do **not** live here. They go to **Nidavellir `ops/`** (private). Never commit host security posture to inter.
+## Where reports lived (history)
+- Until 2026-11-12, **vet** reports on public third-party tools were filed here as `<tool>-<YYYY-MM-DD>.md`, for example archify and gitleaks. They stay here as history.
+- Since 2026-11-12, **no new reports are filed here.** All reports stay local and uncommitted. Host security posture was never committed to inter, and that stays true.
 
 ## Template: vet mode
 ```markdown
