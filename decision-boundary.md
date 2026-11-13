@@ -20,7 +20,9 @@ Every conversation output — and every claim a PR asks the federation to accept
 | 1 | **Proved** | derived from the axioms, or a theorem | a root with a forcing `PROOF`/`MEAS` anchor, or a `derived_from` chain to roots |
 | 2 | **Forced** | fixed by a *prior ruling or an existing ledger rule* — not a fresh choice | `decision_state: ruled`, or a chain to a ruled/proved root |
 | 3 | **Open — with a kill** | undetermined by axioms + evidence; stated with the precise datum/experiment/proof that would settle it | `decision_state: open` + `kill_condition` |
-| 4 | **Wrong — and withdrawn** | refuted and retracted, named | `superseded_statement` / removed, with provenance |
+| 4 | **Wrong — and withdrawn** | refuted and retracted, named | `superseded_statement` / removed, or `retired` (axiom-level), with provenance |
+
+**Grounded is not forced.** A chain that terminates at an `inputs[]` record (an instrument or free-input leaf) is *grounded* — it resolves — not *forced*: it counts as bucket 1/2 only as far as its inputs are themselves forced. A free input's evidential weight stays with its own tag (beekeeper ruling on QBP#805: `MEAS-alpha → INST-f0` resolves, but INST-f0 is a SELECTED free input, QBP#479).
 
 Only buckets 1, 2 and 4 are *settled*. Bucket 3 is *open* — a valuable artifact (it names the open problem and exactly what would close it), but not a decision.
 
