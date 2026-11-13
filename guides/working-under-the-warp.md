@@ -6,7 +6,7 @@ maintained-by: deming (content) · qbp-architecture (inter lane, public-safety r
 primary-user: every seat
 applies-to: how in-sprint work moves from "I opened a PR" to "it merged", inside one warp and across warps
 provenance: Nidavellir#120 (warp L9), Nidavellir#50 (the warp epic), inter#242 (design), inter#194 (the Sprint 4 weave)
-status: DRAFT for inter, 2026-11-13
+status: released to inter 2026-11-13 (warp L9)
 ---
 
 # Working under the warp
