@@ -197,7 +197,7 @@ send_resume_reanchor() {  # $1=persona $2=workdir $3=persona_file
 }
 
 # path -> claude project-history slug  (/home/prime/Documents -> -home-prime-Documents)
-slug_of() { printf '%s' "$1" | sed 's#/#-#g'; }
+slug_of() { printf '%s' "$1" | sed 's#[^A-Za-z0-9]#-#g'; }  # Claude Code maps every non-alphanumeric (incl. '.') to '-'
 
 ROSTER="$HOME/.federation-watcher/session-roster.tsv"
 
@@ -219,7 +219,7 @@ roster_sid() {
 
 # Known federation persona handles — the content-sniff dominance check ranks
 # against these. Keep in sync with the persona rows below.
-FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming-triage|deming|hutchins|nugent'
+FED_HANDLES='qbp-architecture|qbp-implementor|qbp-oppenheimer|qbp-cu-implementor|cth-implementor|wyrd-implementor|bma-implementor|contextus-impl|herschel|notary-implementor|edda-implementor|deming-triage|deming|hutchins|nugent|cartan|harlequin'
 
 # Per-seat model routing (deming/Nidavellir, inter#130 model×eval + CLAUDE.md
 # delegation policy — ops/model-routing/README.md has the provenance). Keyed
