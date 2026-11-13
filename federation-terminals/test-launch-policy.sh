@@ -155,6 +155,23 @@ run_suite() {  # $1 = launcher path; prints PASS/FAIL lines; returns #failures
     [ "${P_FLAGS[0]:-}" = "deferred,no-onboard" ] && [ -z "${P_PFILE[0]:-}" ] && [ -z "${P_FLAGS[1]:-}" ] \
       && ok "T14 flags parsed; pfile stays empty; a 3-column row has no flags" || bad "T14 parse (flags0=${P_FLAGS[0]:-} pfile0=${P_PFILE[0]:-} flags1=${P_FLAGS[1]:-})"
 
+    echo "== T15 a workdir with a dot resolves to Claude Code's project dir (every non-alphanumeric -> '-') =="
+    FED_HANDLES='seat-dot|other'
+    WD_DOT="$TMPDIR/.wt-seat-dot"; mkdir -p "$WD_DOT"
+    PDIR_DOT="$PROJECTS/$(printf '%s' "$WD_DOT" | tr -c 'A-Za-z0-9' '-')"; mkdir -p "$PDIR_DOT"
+    printf '%s\n' '"seat-dot" "seat-dot"' > "$PDIR_DOT/dot00000-0000-0000-0000-000000000001.jsonl"
+    got="$(discover_sid seat-dot "$WD_DOT")"
+    [ "$got" = "dot00000-0000-0000-0000-000000000001" ] && ok "T15 dot-path workdir resumes its own transcript" \
+      || bad "T15 dot-path workdir (got '${got}', pdir $PDIR_DOT)"
+
+    echo "== T16 default layout is one window per seat (fed-sweep finds seats by window name) =="
+    got="$(env -u LAYOUT bash -c 'source "$1" >/dev/null 2>&1; printf "%s" "$LAYOUT"' _ "$launcher")"
+    [ "$got" = "windows" ] && ok "T16 default LAYOUT=windows" || bad "T16 default LAYOUT (got '${got}')"
+    out="$(LAYOUT=panes; layout_warning)"
+    printf '%s' "$out" | grep -q 'fed-sweep' && ok "T16 LAYOUT=panes warns that fed-sweep sees no seats" || bad "T16 panes warning missing"
+    out="$(LAYOUT=windows; layout_warning)"
+    [ -z "$out" ] && ok "T16 no warning for LAYOUT=windows" || bad "T16 spurious warning for windows"
+
     echo "== T11 an invalid LAUNCH_POLICY is refused loudly =="
     if LAUNCH_POLICY=sometimes bash "$launcher" plan >/dev/null 2>&1; then bad "T11 invalid policy accepted"
     else ok "T11 invalid LAUNCH_POLICY exits non-zero"; fi
@@ -173,6 +190,9 @@ declare -A MUTANTS=(
   [no-refusal-guard]='s/grep -aqE .*"refusal".*"\$1"/false/'
   [reasonless-allowed]='s/^      continue$/      :/'
   [no-defer]='s/if \[ "\$LAUNCH_PHASE" = "main" \] \&\& has_flag "\$flags" deferred; then/if false; then/'
+  [slug-slash-only]='s/\[\^A-Za-z0-9\]/\//'
+  [layout-default-panes]='s/LAYOUT="\$\{LAYOUT:-windows\}"/LAYOUT="${LAYOUT:-panes}"/'
+  [no-layout-warning]='s/^  \[ "\$LAYOUT" = "panes" \] \|\| return 0$/  return 0/'
   [no-onboard-ignored]='s/has_flag "\$flags" no-onboard \|\| FRESH\+=/FRESH+=/'
 )
 echo ""
