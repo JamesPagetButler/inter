@@ -17,7 +17,9 @@
 #     ./launch-federation.sh help
 #
 # Env:
-#     LAYOUT=windows               # one tmux window per persona instead of tiled panes (default: panes)
+#     LAYOUT=windows               # one tmux window per persona (DEFAULT). LAYOUT=panes tiles every seat
+#                                  # into one window, and fed-sweep (which finds seats by window name) then
+#                                  # sees none of them. panes is for human viewing only (warp L8 finding).
 #     FED_TMUX_SESSION=fed         # tmux session name (default: fed)
 #     FED_TERMINALS_CONF=/path     # override config location (structure)
 #     FED_TERMINALS_LOCAL_CONF=/path  # override overlay location (ephemeral pins, inter#142
@@ -69,7 +71,7 @@ CLAUDE_BIN="$(command -v claude || echo "$HOME/.local/bin/claude")"
 WATCHER_DIR="$HOME/Documents/inter/federation-watcher"
 INTER_REPO="${INTER_REPO_DIR:-$(cd "$HERE/.." && pwd)}"
 SESSION="${FED_TMUX_SESSION:-fed}"
-LAYOUT="${LAYOUT:-panes}"          # panes | windows
+LAYOUT="${LAYOUT:-windows}"        # windows | panes (panes leaves seats invisible to fed-sweep; see layout_warning)
 REANCHOR="${REANCHOR:-1}"          # send resume re-anchor to persona-file-bound resumed panes
 READY_TIMEOUT="${READY_TIMEOUT:-75}"
 FETCH_TIMEOUT="${FETCH_TIMEOUT:-10}"
@@ -658,12 +660,20 @@ cmd_start_deferred() {
   echo "✓ started $started deferred seat(s)."
 }
 
+# warp L8 finding (Nidavellir#54): fed-sweep identifies seats by tmux WINDOW name. The panes
+# layout puts every seat in one window called 'federation', so the dead-seat detector sees none.
+layout_warning() {
+  [ "$LAYOUT" = "panes" ] || return 0
+  echo "⚠  LAYOUT=panes: every seat shares one tmux window, so fed-sweep (which finds seats by window name) will see NO seats. Use the default LAYOUT=windows for a monitored federation."
+}
+
 cmd_plan() {
   ensure_origin_main_fresh >/dev/null 2>&1 || echo "⚠  origin/main fetch failed — persona/wisdoms columns may be stale"
   load_conf
   [ "${#P_PERSONA[@]}" -gt 0 ] || die "no personas in $CONF"
   build_launch_plan
   print_launch_summary
+  layout_warning
 }
 
 cmd_launch() {
@@ -679,6 +689,7 @@ cmd_launch() {
 
   build_launch_plan
   print_launch_summary
+  layout_warning
 
   local i first=1 ndeferred=0
   for i in "${!P_PERSONA[@]}"; do
