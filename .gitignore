@@ -6,3 +6,7 @@ federation-terminals/personas.local.conf
 federation-terminals/personas.local.conf.bak
 # inter#262: named resume exceptions for the next relaunch — LIVE state (workspace-order §5), never committed.
 federation-terminals/resume-exceptions.conf
+
+# Local-only exchange folder for seated-Thompson (BETA) review requests. Never
+# committed: this repo is public and the queue can carry host details.
+thompson-queue/
