@@ -1,0 +1,26 @@
+{"subject": "Cmp", "relation": "generalises", "object": "CGWH", "modality": "stated", "locator": "Theorem [ThmAdjCGWHCmp], Section 1"}
+{"subject": "CGWH", "relation": "specialises", "object": "Cmp", "modality": "stated", "locator": "Theorem [ThmAdjCGWHCmp]; CGWH is a reflective subcategory of Cmp"}
+{"subject": "Cmp_kappa", "relation": "equivalent-to", "object": "qsCond_kappa", "modality": "stated", "locator": "Theorem [thmcmpcondqs], Section 1"}
+{"subject": "Cond_kappa", "relation": "equivalent-to", "object": "ex/reg-completion of Cmp_kappa", "modality": "stated", "locator": "Theorem [thmcmpregex], Section 1"}
+{"subject": "Cond", "relation": "equivalent-to", "object": "ex/reg-completion of Cmp", "modality": "stated", "locator": "Theorem [thmcmpregex], Section 1"}
+{"subject": "Cmp", "relation": "equivalent-to", "object": "Ind_emb(CHaus)", "modality": "stated", "locator": "Proposition 2.24, Section 2"}
+{"subject": "Cmp_kappa", "relation": "equivalent-to", "object": "Ind_emb(CHaus_kappa)", "modality": "stated", "locator": "Proposition 2.24, Section 2"}
+{"subject": "Compactology (Buchwalter's definition)", "relation": "defines", "object": "compactological set", "modality": "stated", "locator": "Definition 2.1, Section 2"}
+{"subject": "final topology tau of compactological set", "relation": "defines", "object": "topology of a compactological set", "modality": "stated", "locator": "Proposition 2.4, Remark 2.5, Section 2"}
+{"subject": "Cmp", "relation": "defines", "object": "category of compactological sets", "modality": "stated", "locator": "Definition 2.9, Section 2"}
+{"subject": "kappa-compactological set", "relation": "defines", "object": "compactological set with all K in C kappa-small", "modality": "stated", "locator": "Definition 2.14, Section 2"}
+{"subject": "Proposition 2.11 characterisation of compactologies by plain sets", "relation": "proves", "object": "compactology determined by collection C of plain subsets", "modality": "stated", "locator": "Proposition 2.11, Section 2"}
+{"subject": "Lemma 2.2", "relation": "proves", "object": "C stable under finite unions and finite intersections", "modality": "stated", "locator": "Lemma 2.2, Section 2"}
+{"subject": "Cmp", "relation": "proves", "object": "Cmp is complete and cocomplete", "modality": "stated", "locator": "Corollary 2.18, Section 2"}
+{"subject": "CHaus_kappa embedding into Cmp_kappa", "relation": "proves", "object": "finitely cocontinuous", "modality": "stated", "locator": "Proposition 2.21, Section 2"}
+{"subject": "Cmp as colimit of compact spaces", "relation": "proves", "object": "(X,C) isomorphic to colim over K in C of iota(K,tau_K)", "modality": "stated", "locator": "Proposition 2.22, Section 2"}
+{"subject": "Cond_kappa", "relation": "defines", "object": "kappa-condensed sets as functors CHaus_kappa^op to Set satisfying finite-product and epimorphism sheaf conditions", "modality": "stated", "locator": "Definition 3.1, Section 3"}
+{"subject": "Cond", "relation": "defines", "object": "colimit over totally ordered diagram of Cond_kappa", "modality": "stated", "locator": "Remark 3.2, Section 3"}
+{"subject": "Cmp", "relation": "uses-technique", "object": "Buchwalter's definition of compactology", "modality": "stated", "locator": "Section 2 introduction, Definition 2.1"}
+{"subject": "Waelbroeck compactology", "relation": "defines", "object": "compactology as bornology with compact-covered subsystem", "modality": "cited", "locator": "Remark 2.3(1), Section 2"}
+{"subject": "Waelbroeck compactology", "relation": "equivalent-to", "object": "Buchwalter compactology", "modality": "stated", "locator": "Remark 2.3(2), Section 2"}
+{"subject": "Example 2.6 compactological set on uncountable metric space", "relation": "counterexample-to", "object": "uniqueness of compactology given only the metric topology", "modality": "stated", "locator": "Example 2.6 and Remark 2.10(1), Section 2"}
+{"subject": "Example 2.7 chord compactology", "relation": "counterexample-to", "object": "final topology equals the metric topology on each compact piece", "modality": "stated", "locator": "Example 2.7, Section 2"}
+{"subject": "Cmp", "relation": "uses-technique", "object": "Kelley- or k-ification", "modality": "stated", "locator": "Remark 2.10(2), Section 2"}
+{"subject": "Cmp", "relation": "depends-on", "object": "Barr-exact category extension", "modality": "stated", "locator": "Section 1 bullets; Theorem [thmcmpregex]"}
+{"subject": "Cond_kappa", "relation": "depends-on", "object": "Hanson question", "modality": "stated", "locator": "Theorem [thmcmpregex], Section 1 (resolves a question of Hanson)"}
