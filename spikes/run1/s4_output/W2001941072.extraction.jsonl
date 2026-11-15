@@ -1,0 +1,21 @@
+{"subject": "constructed model of particles in eight-dimensional space under an SO(8) gauge field", "relation": "generalises", "object": "quantum Hall effect", "modality": "stated", "locator": "Abstract and introduction, bullet 1"}
+{"subject": "constructed model of particles in eight-dimensional space under an SO(8) gauge field", "relation": "depends-on", "object": "octonions", "modality": "stated", "locator": "Abstract and introduction, bullet 2"}
+{"subject": "first liquid (spinor SO(8) quantum numbers)", "relation": "defines", "object": "20-dimensional configuration manifold with internal SO(7) holonomy", "modality": "stated", "locator": "Abstract and introduction, bullets 3-4"}
+{"subject": "second liquid (vector SO(8) quantum numbers)", "relation": "defines", "object": "14-dimensional configuration manifold with internal G2 holonomy", "modality": "stated", "locator": "Abstract and introduction, bullets 3 and 5"}
+{"subject": "x_a", "relation": "defines", "object": "bilinear Psi^T Gamma^a Psi with normalisation Psi^T Psi = 1", "modality": "stated", "locator": "Eq. (1)"}
+{"subject": "Gamma^i", "relation": "defines", "object": "16x16 block matrices built from lambda^i, i=1..7", "modality": "stated", "locator": "Eq. (2)"}
+{"subject": "Gamma^8", "relation": "defines", "object": "off-diagonal block matrix with identity blocks", "modality": "stated", "locator": "Eq. (3)"}
+{"subject": "Gamma^9", "relation": "defines", "object": "diagonal block matrix diag(1, -1)", "modality": "stated", "locator": "Eq. (3)"}
+{"subject": "Psi_1..Psi_8", "relation": "defines", "object": "sqrt((R+X_9)/2R) times u_1..u_8", "modality": "stated", "locator": "Eq. (4)"}
+{"subject": "Psi_9..Psi_16", "relation": "defines", "object": "(X_8 - X_i lambda^i) times u_1..u_8 divided by sqrt(2R(R+X_9))", "modality": "stated", "locator": "Eq. (2) (second occurrence as printed)"}
+{"subject": "A_mu", "relation": "defines", "object": "-(1/(2R(R+X_9))) Sigma^{mu nu} X_nu, with A_9 = 0", "modality": "stated", "locator": "Eq. (3) (second occurrence as printed)"}
+{"subject": "Hamiltonian H", "relation": "defines", "object": "hbar^2/(2MR^2) sum_{a<b} Lambda_ab^2", "modality": "stated", "locator": "Eq. (4) (second occurrence as printed)"}
+{"subject": "L_ab", "relation": "defines", "object": "L_mu nu = L^(0)_mu nu + i Sigma_mu nu and L_mu 9 = L^(0)_mu 9 - i R A_mu", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "L_ab", "relation": "defines", "object": "commutation relation [L_ab, L_cd] = i[delta_ac L_bd + delta_bd L_ac - delta_bc L_ad - delta_ad L_bc]", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "Phi", "relation": "defines", "object": "sum over alpha_1..alpha_I of f times Psi_alpha_1 ... Psi_alpha_I", "modality": "stated", "locator": "Eq. (6)"}
+{"subject": "coefficients f", "relation": "defines", "object": "constraints Gamma^a_{alpha beta} f_{alpha beta gamma...} = 0 and f_{alpha alpha beta...} = 0", "modality": "stated", "locator": "Eq. (7)"}
+{"subject": "X_a dot", "relation": "defines", "object": "equation of motion (R^4/I^2) (dV/dX_b) F_ab", "modality": "stated", "locator": "Eq. (8)"}
+{"subject": "[X_a, X_b]", "relation": "defines", "object": "(R^4/I^2) F_ab", "modality": "stated", "locator": "Eq. (9)"}
+{"subject": "G^±_{alpha beta mu nu}", "relation": "defines", "object": "3/8 (delta delta - delta delta) ± (1/8) Omega_{alpha beta mu nu}", "modality": "stated", "locator": "Eq. (10)"}
+{"subject": "Phi", "relation": "defines", "object": "condition Omega_{mu nu alpha beta} L_mu nu L_alpha beta Phi = 0", "modality": "stated", "locator": "Eq. (11)"}
+{"subject": "Phi_1..Phi_8", "relation": "defines", "object": "complex combinations Psi_i + i Psi_{i+4} and Psi_9..Psi_16 combinations as printed", "modality": "stated", "locator": "Eq. (12)"}
