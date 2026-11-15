@@ -1,0 +1,23 @@
+{"subject": "spectral action principle", "relation": "defines", "object": "S = Tr(f(D/Λ)) as the bosonic action (Eq. 1)", "modality": "stated", "locator": "Section 1, Eq. (1)"}
+{"subject": "Yang-Mills action YM(A)", "relation": "depends-on", "object": "coefficient of Λ^0 in the spectral action for D_A", "modality": "stated", "locator": "Section 1"}
+{"subject": "spectral action S", "relation": "depends-on", "object": "first moments ∫f(u)u^{k-1}du and Taylor expansion of f at 0", "modality": "stated", "locator": "Section 1"}
+{"subject": "Aut(A)", "relation": "defines", "object": "exact sequence 1 → Inn(A) → Aut(A) → Out(A) → 1", "modality": "stated", "locator": "Section 1"}
+{"subject": "symmetry group U of gravity plus matter Lagrangian", "relation": "defines", "object": "exact sequence 1 → G → U → Diff(M) → 1", "modality": "stated", "locator": "Section 1"}
+{"subject": "inner fluctuations A", "relation": "defines", "object": "A = Σ_j a_j [D, b_j], A = A*", "modality": "stated", "locator": "Section 1"}
+{"subject": "Chamseddine-Connes standard model spectral action result", "relation": "proves", "object": "standard model coupled with gravity from inner fluctuations of M × F", "modality": "cited", "locator": "Section 1, main result of [1], [2]"}
+{"subject": "KO-dimension of M × F", "relation": "defines", "object": "10 ~ 2 modulo 8", "modality": "stated", "locator": "Section 1"}
+{"subject": "Definition 2.1 odd bimodule", "relation": "defines", "object": "M odd iff Ad(s) = -1 for s = (1,-1,-1,1)", "modality": "stated", "locator": "Definition 2.1"}
+{"subject": "M_F", "relation": "defines", "object": "direct sum of all inequivalent irreducible odd A_LR-bimodules, of dimension 32", "modality": "stated", "locator": "Proposition 2.2"}
+{"subject": "real representation (A_F, H_F, J_F, γ_F)", "relation": "defines", "object": "restriction of M_F ⊗ C^3 to A_F", "modality": "stated", "locator": "Definition 2.3"}
+{"subject": "SU(A_F)", "relation": "defines", "object": "{u ∈ U(A_F) : Det(u) = 1}", "modality": "stated", "locator": "Definition 2.4"}
+{"subject": "SU(A_F)", "relation": "equivalent-to", "object": "U(1) × SU(2) × SU(3) up to an abelian finite group", "modality": "stated", "locator": "Proposition 2.5(1)"}
+{"subject": "Dirac operator on finite geometry F", "relation": "defines", "object": "self-adjoint D commuting with J_F, anticommuting with γ_F, satisfying order one condition", "modality": "stated", "locator": "Definition 2.6"}
+{"subject": "Dirac operators D(M)", "relation": "equivalent-to", "object": "all Dirac operators on F, parametrised by three by three matrices M_e, M_ν, M_d, M_u, M_R", "modality": "stated", "locator": "Theorem 2.7(1)-(2)"}
+{"subject": "antisymmetric bilinear form A_D", "relation": "defines", "object": "A_D(ξ', ξ) = <Jξ', Dξ> on H^+", "modality": "stated", "locator": "Proposition 3.1, Eq. (14)"}
+{"subject": "A_D", "relation": "proves", "object": "gauge invariance A_D(ξ',ξ) = A_{D_u}(Ad(u)ξ', Ad(u)ξ)", "modality": "stated", "locator": "Proposition 3.1, Eq. (15)"}
+{"subject": "Theorem 3.2 action functional", "relation": "proves", "object": "full standard model minimally coupled with Einstein gravity, S = Tr(f(D_A/Λ)) + (1/2)<Jξ, D_Aξ>", "modality": "stated", "locator": "Theorem 3.2(3)"}
+{"subject": "unimodular inner fluctuations", "relation": "proves", "object": "parameterised exactly by the gauge bosons of the standard model including the Higgs doublet", "modality": "stated", "locator": "Theorem 3.2(2)"}
+{"subject": "KO-dimension of F", "relation": "defines", "object": "6 modulo 8", "modality": "stated", "locator": "Section 1 and Theorem 3.2"}
+{"subject": "real structure of KO-dimension n", "relation": "defines", "object": "antilinear isometry J with J^2 = ε, JD = ε'DJ, Jγ = ε''γJ, signs given by table", "modality": "stated", "locator": "Definition 7.2, Eq. (43)"}
+{"subject": "spectral triple", "relation": "defines", "object": "(A, H, D) with involutive unital algebra A, self-adjoint D with compact resolvent and bounded commutators [D,a]", "modality": "stated", "locator": "Definition 7.1"}
+{"subject": "order one condition", "relation": "defines", "object": "[[D,a], b^0] = 0 for all a, b in A", "modality": "stated", "locator": "Appendix 7, Eq. (46)"}
