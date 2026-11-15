@@ -1,0 +1,23 @@
+{"subject":"Theorem 1.2","relation":"proves","object":"existence of a condensed anima X_Q with pi_0 = point, pi_1 = W_Q, compact Hausdorff pi_n for n>1, and H^i(X_K;R/Z)=0 for i>1","modality":"stated","locator":"Theorem 1.2"}
+{"subject":"Weil group W_K","relation":"defines","object":"pullback of W_Q along the inclusion G_K -> G_Q","modality":"cited","locator":"Section 1, Introduction (Weil groups)"}
+{"subject":"Weil-Moore anima","relation":"defines","object":"anima with fundamental group the Weil group and nontrivial higher homotopy groups","modality":"stated","locator":"Abstract"}
+{"subject":"W_C","relation":"equivalent-to","object":"C^times","modality":"stated","locator":"Section 1, Weil groups at archimedean places"}
+{"subject":"H^2(BW_K;Q/Z(1))","relation":"equivalent-to","object":"kernel of the sum map from the direct sum of Q/Z over all places of K to Q/Z","modality":"cited","locator":"Section 1, Weil groups at archimedean places (Deligne [15])"}
+{"subject":"invariant map Br(F_nu)","relation":"equivalent-to","object":"Q/Z at nonarchimedean places","modality":"stated","locator":"Section 1, Brauer groups"}
+{"subject":"H^1(BW_K;R/Z)","relation":"equivalent-to","object":"Pontryagin dual (A_K^* / K^*)^vee","modality":"stated","locator":"Section 1, Motivation for property 4"}
+{"subject":"R Gamma(BG_{K,S};M)^vee","relation":"equivalent-to","object":"R tilde Gamma_c(G_{F,S}; M^vee(1)[3])","modality":"stated","locator":"Section 1, Introduction (Poitou-Tate duality)"}
+{"subject":"Tate's theorem [59]","relation":"proves","object":"vanishing of higher cohomology of X_K for function fields over finite fields and nonarchimedean local fields, so X_K = BW_K","modality":"cited","locator":"Remark 1.3"}
+{"subject":"S^n","relation":"uses-technique","object":"Postnikov tower built from Eilenberg-MacLane spaces (Serre [56])","modality":"cited","locator":"Remark 1.4"}
+{"subject":"X_Q","relation":"uses-technique","object":"Postnikov-tower construction starting from BW_Q = K(W_Q,1)","modality":"stated","locator":"Remark 1.4"}
+{"subject":"anima","relation":"uses-technique","object":"Beilinson's convention that points of an anima move within their connected components","modality":"cited","locator":"Remark 1.1"}
+{"subject":"natural element of K_1(R)/K_1(Z)","relation":"equivalent-to","object":"leading coefficient of zeta_F at s=0, up to sign (Lichtenbaum [39])","modality":"cited","locator":"Section 1, Tour of applications, item 1"}
+{"subject":"Kato's zeta isomorphism zeta_M","relation":"conjectures","object":"canonical isomorphism det_Lambda R Gamma_c(Spec(Z[1/S])_et; M) ~ Lambda (Kato [33])","modality":"cited","locator":"Section 1, Tour of applications, item 2"}
+{"subject":"R Gamma_c(Spec(Z[1/S])_et; M)","relation":"equivalent-to","object":"R Gamma_c(X_{Q,S}; M)","modality":"stated","locator":"Section 1, Tour of applications, item 2"}
+{"subject":"Euler characteristic of R Gamma_c(Spec(Z[1/S])_et; M)","relation":"depends-on","object":"Tate's global Euler characteristic formula","modality":"stated","locator":"Section 1, Tour of applications, item 2"}
+{"subject":"categorical local Langlands at archimedean places","relation":"conjectures","object":"Betti geometric Langlands for P^1_C at complex places","modality":"stated","locator":"Section 1, Langlands with mod p or p-adic coefficients"}
+{"subject":"|Tw_R|","relation":"equivalent-to","object":"RP^2","modality":"stated","locator":"Section 1, Betti geometric Langlands for real curves"}
+{"subject":"Whittaker issue for mod p categorical local Langlands","relation":"uses-technique","object":"restriction to adjoint groups (Emerton-Gee-Hellmann [16])","modality":"cited","locator":"Section 1, Betti geometric Langlands for real curves (third technical point)"}
+{"subject":"X_Q","relation":"conjectures","object":"X_Q is the condensed homotopy type underlying the space of closed points of a global analogue of the Fargues-Fontaine curve","modality":"cited","locator":"Remark 1.5"}
+{"subject":"BW_{Q_p}","relation":"equivalent-to","object":"homotopy type of Div^1, the space of closed points of the Fargues-Fontaine curve","modality":"cited","locator":"Remark 1.5"}
+{"subject":"(BG)_c(K)","relation":"equivalent-to","object":"disjoint union over xi in ker^1(K,G) of G^xi(K)\\G(A_K)","modality":"stated","locator":"Section 1, Global setting"}
+{"subject":"(BG)_c(K)","relation":"equivalent-to","object":"standard adelic quotient G(K)\\G(A_K), when G satisfies the Hasse principle","modality":"stated","locator":"Section 1, Global setting"}
