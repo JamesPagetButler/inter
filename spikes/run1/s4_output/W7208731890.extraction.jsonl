@@ -1,0 +1,41 @@
+{"subject":"smashing frame of V","relation":"defines","object":"cIdem(V), the poset of coidempotent objects","modality":"stated","locator":"Definition 1.3"}
+{"subject":"image of cIdem(Pr^at_V) in cIdem(Pr^dbl_V)","relation":"equivalent-to","object":"V-atomically generated smashing ideals of V","modality":"stated","locator":"Proposition 1.4 (Proposition 4.1)"}
+{"subject":"atomic smashing ideal","relation":"defines","object":"smashing ideal generated as a V-submodule by V-atomic objects","modality":"stated","locator":"Definition 1.5"}
+{"subject":"atomic smashing frame cIdem_f(V)","relation":"defines","object":"subposet of cIdem(V) of coidempotents whose associated smashing ideal is atomic","modality":"stated","locator":"Definition 1.5"}
+{"subject":"cIdem_f(V)","relation":"equivalent-to","object":"cIdem(Pr^at_V)","modality":"stated","locator":"Definition 1.5 (displayed commutative square)"}
+{"subject":"atomic smashing ideal of W","relation":"equivalent-to","object":"smashing ideal of W that is V-atomically generated when regarded as a V-module","modality":"stated","locator":"Proposition 1.6 (Corollary 4.20)"}
+{"subject":"atomic smashing ideal of C (C compactly generated and locally rigid over Sp)","relation":"equivalent-to","object":"compactly generated smashing ideal","modality":"stated","locator":"Example 1.7(1)"}
+{"subject":"Theorem A(1)","relation":"proves","object":"cIdem_f(V) is a coherent frame when the unit of V is compact","modality":"stated","locator":"Theorem A(1) (Theorem 4.26)"}
+{"subject":"Theorem A(2)","relation":"proves","object":"cIdem_f(V) is a locally coherent frame when compact dualizable objects generate V as a localizing ideal","modality":"stated","locator":"Theorem A(2) (Theorem 4.32)"}
+{"subject":"telescope conjecture for V","relation":"defines","object":"canonical inclusion cIdem_f(V) into cIdem(V) is an equivalence","modality":"stated","locator":"Definition 1.8"}
+{"subject":"Theorem B","relation":"proves","object":"telescope conjecture for V holds whenever it holds for each V_i, for an atomic Hopf, atomic smashing-open, or finite atomic smashing-closed covering (latter with V compactly-rigidly generated and stable)","modality":"stated","locator":"Theorem B (Theorems 4.43, 4.46, 5.21)"}
+{"subject":"Theorem B","relation":"proves","object":"the condition on each V_i is necessary for the telescope conjecture in the smashing-open and finite smashing-closed cases","modality":"stated","locator":"Theorem B (Theorems 4.43, 4.46, 5.21)"}
+{"subject":"cIdem(I)","relation":"equivalent-to","object":"cIdem(C)_{<=I}","modality":"stated","locator":"Theorem C(1) (Theorem 5.7)"}
+{"subject":"cIdem(C/I)","relation":"equivalent-to","object":"cIdem(C)_{>=I}","modality":"stated","locator":"Theorem C(1) (Theorem 5.7)"}
+{"subject":"cIdem(C)","relation":"equivalent-to","object":"Artin gluing of cIdem(I) and cIdem(C/I) along phi_I","modality":"stated","locator":"Theorem C(1) (Theorem 5.7)"}
+{"subject":"Theorem C(2)","relation":"proves","object":"Theorem C(1) holds with atomic smashing frames when C is stable, compactly-rigidly generated and I is atomic","modality":"stated","locator":"Theorem C(2) (Theorem 5.17)"}
+{"subject":"Corollary 1.9","relation":"proves","object":"cIdem(C) is spatial if and only if cIdem(I) and cIdem(C/I) are both spatial","modality":"stated","locator":"Corollary 1.9 (Corollary 5.12)"}
+{"subject":"Theorem D","relation":"proves","object":"Z(cIdem(C)) is contained in cIdem_f(C)","modality":"stated","locator":"Theorem D (Theorem 5.15)"}
+{"subject":"Idem_f(Sp) and Idem(Sp)","relation":"equivalent-to","object":"products over primes p of Idem_f(Sp_(p)) and Idem(Sp_(p))","modality":"stated","locator":"Theorem E(1) (Theorem 6.6)"}
+{"subject":"Idem(Sp_(p))","relation":"proves","object":"frame embedding into the product over n of Idem(Sp_T(n))","modality":"stated","locator":"Theorem E(2) (Theorem 6.14)"}
+{"subject":"Idem_f(Sp_(p))","relation":"equivalent-to","object":"limit over n of Idem_f(L_n Sp)","modality":"stated","locator":"Corollary 1.10 (Corollary 6.9)"}
+{"subject":"telescope inclusion Idem_f(Sp_(p)) into Idem(Sp_(p))","relation":"proves","object":"admits a natural frame retraction over Idem(Sp_Q)","modality":"stated","locator":"Corollary 1.10 (Corollary 6.9)"}
+{"subject":"global telescope inclusion Idem_f(Sp) into Idem(Sp)","relation":"proves","object":"admits a natural frame retraction","modality":"stated","locator":"Corollary 1.10 (Corollary 6.9)"}
+{"subject":"Theorem F","relation":"equivalent-to","object":"Idem(Sp) is spatial if and only if Idem(Sp_T(n)) is spatial for every prime p and height n>=0","modality":"stated","locator":"Theorem F (Corollary 6.15)"}
+{"subject":"smashing field","relation":"defines","object":"symmetric monoidal category C with cIdem(C) = {empty, 1}","modality":"stated","locator":"Definition 1.11"}
+{"subject":"Neeman's telescope theorem","relation":"proves","object":"D(k) is a smashing field for k a field","modality":"cited","locator":"Example 4.53 (table)"}
+{"subject":"D(Z)_{p-cpl}","relation":"proves","object":"is a smashing field","modality":"stated","locator":"Example 4.53 (table)"}
+{"subject":"S and S_{<=n} for n>=-1","relation":"proves","object":"are smashing fields","modality":"stated","locator":"Theorem 4.54 (table, Example 4.53)"}
+{"subject":"Sp_{K(n)}","relation":"proves","object":"is a smashing field","modality":"cited","locator":"Example 4.53 (table, citing [30, Theorem 7.5])"}
+{"subject":"Theorem G","relation":"proves","object":"cIdem_f(X) = {empty, *} for a presentably Cartesian symmetric monoidal nontrivial X","modality":"stated","locator":"Theorem G (Theorem 4.54)"}
+{"subject":"telescope conjecture for X","relation":"equivalent-to","object":"X is a smashing field","modality":"stated","locator":"Theorem G (Theorem 4.54)"}
+{"subject":"smashing frame of a left-complete presentably symmetric monoidal prestable C","relation":"equivalent-to","object":"smashing frame of Idl(C^heart)","modality":"cited","locator":"Additive and prestable settings (cites [37, Theorem D])"}
+{"subject":"Theorem H","relation":"proves","object":"the telescope conjecture holds for a projectively rigid Sp_{>=0}-algebra C if and only if it holds for its heart C^heart","modality":"stated","locator":"Theorem H (Theorem 7.14)"}
+{"subject":"Serre smashing frame cIdem_s(C)","relation":"defines","object":"subset of cIdem(C) consisting of Serre smashing ideals","modality":"stated","locator":"Serre smashing frame paragraph"}
+{"subject":"Theorem 8.25","relation":"proves","object":"cIdem_s(C) is a subframe of cIdem(C)","modality":"stated","locator":"Serre smashing frame paragraph (Theorem 8.25)"}
+{"subject":"Theorem I","relation":"proves","object":"cIdem_s(C) is spatial and Spec(cIdem_s(C)) is quasi-compact, for projectively rigid Sp_{>=0}-algebra C","modality":"stated","locator":"Theorem I (Corollary 8.41)"}
+{"subject":"flat telescope conjecture","relation":"defines","object":"canonical inclusion cIdem_s(C) into cIdem(C) is an isomorphism","modality":"stated","locator":"Serre smashing frame paragraph"}
+{"subject":"Theorem J","relation":"proves","object":"every atomic smashing ideal of Mod_R^cn is a Serre smashing ideal, for connective E_infinity-ring R","modality":"stated","locator":"Theorem J (Theorems 7.20, 8.42)"}
+{"subject":"pure ideals of pi_0 R","relation":"generalises","object":"Pierce ideals of pi_0 R","modality":"stated","locator":"Theorem J (Theorems 7.20, 8.42)"}
+{"subject":"idempotent ideals of pi_0 R","relation":"generalises","object":"pure ideals of pi_0 R","modality":"stated","locator":"Theorem J (Theorems 7.20, 8.42)"}
+{"subject":"aMod_(R,I)(Sp_{>=0}) for idempotent I","relation":"equivalent-to","object":"compact projectively generated, if and only if I is a Pierce ideal","modality":"stated","locator":"Theorem J (Theorems 7.20, 8.42)"}
