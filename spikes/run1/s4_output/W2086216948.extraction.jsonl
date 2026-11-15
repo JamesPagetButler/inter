@@ -1,0 +1,39 @@
+{"subject": "chi", "relation": "defines", "object": "character of A, a multiplicative linear functional A -> C", "modality": "stated", "locator": "Eq. (4)"}
+{"subject": "chi_x", "relation": "defines", "object": "evaluation at x, chi_x(f) = f(x)", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "f*", "relation": "defines", "object": "involution f -> f*, with f*(x) = conjugate of f(x)", "modality": "stated", "locator": "Eq. (6)-(7)"}
+{"subject": "d(x,y)", "relation": "defines", "object": "Inf of the integral of ds along paths from x to y", "modality": "stated", "locator": "Eq. (2)"}
+{"subject": "d(x,y)", "relation": "equivalent-to", "object": "Sup of |f(x)-f(y)| over f in A with ||[f,ds^{-1}]|| <= 1", "modality": "stated", "locator": "Eq. (10)"}
+{"subject": "d(x,y)", "relation": "equivalent-to", "object": "Sup of |a(x)-a(y)| over a in A with ||[D,a]|| <= 1", "modality": "stated", "locator": "Eq. (40)"}
+{"subject": "D", "relation": "defines", "object": "Dirac operator (1/sqrt(-1)) gamma^mu nabla_mu, with ds = D^{-1}", "modality": "stated", "locator": "Eq. (12)"}
+{"subject": "||[D,f]||", "relation": "equivalent-to", "object": "Sup over x in M of ||nabla f||", "modality": "stated", "locator": "Eq. (13)"}
+{"subject": "gamma", "relation": "defines", "object": "grading operator with gamma = gamma*, gamma^2 = 1, gamma D = -D gamma", "modality": "stated", "locator": "Eq. (22)"}
+{"subject": "c", "relation": "defines", "object": "Hochschild chain sum_j a_j^0 tensor a_j^1 tensor ... tensor a_j^n", "modality": "stated", "locator": "Eq. (23)"}
+{"subject": "b", "relation": "defines", "object": "Hochschild boundary map on a^0 tensor ... tensor a^n", "modality": "stated", "locator": "Eq. (24)"}
+{"subject": "pi", "relation": "defines", "object": "map a^0 tensor a^1 tensor ... tensor a^n -> a^0 [D,a^1] ... [D,a^n]", "modality": "stated", "locator": "Eq. (26)"}
+{"subject": "gamma", "relation": "defines", "object": "sum_j a_0^j [D,a_1^j] ... [D,a_n^j]", "modality": "stated", "locator": "Eq. (43)"}
+{"subject": "U", "relation": "defines", "object": "u J u J^{-1}", "modality": "stated", "locator": "Eq. (64)"}
+{"subject": "U", "relation": "defines", "object": "unitary u in A with [D,U] = U", "modality": "stated", "locator": "Eq. (27)"}
+{"subject": "A", "relation": "defines", "object": "subalgebra of smooth elements of A'' lying in the intersection of Dom delta^m", "modality": "stated", "locator": "Eq. (32)"}
+{"subject": "Spectrum A", "relation": "equivalent-to", "object": "Spectrum of the algebra script A", "modality": "stated", "locator": "Eq. (33)"}
+{"subject": "pi_n(GL_infinity(A))", "relation": "equivalent-to", "object": "K_{n+1}(A)", "modality": "stated", "locator": "Eq. (34)"}
+{"subject": "m", "relation": "defines", "object": "multiplication map A tensor A -> A, m(x tensor y) = xy", "modality": "stated", "locator": "Eq. (35)"}
+{"subject": "pairing <e,f>", "relation": "defines", "object": "<Ind D, m_*(e tensor f)>", "modality": "stated", "locator": "Eq. (37)"}
+{"subject": "cap mu map K_*(A) -> K^*(A)", "relation": "defines", "object": "intersection with mu", "modality": "stated", "locator": "Eq. (49)"}
+{"subject": "pairing <e,f>", "relation": "defines", "object": "<Index D, e tensor f^0>", "modality": "stated", "locator": "Eq. (50)"}
+{"subject": "J M J^{-1}", "relation": "defines", "object": "commutant M'", "modality": "stated", "locator": "Eq. (45)-(46)"}
+{"subject": "tau", "relation": "defines", "object": "map x tensor y^0 -> y* tensor x^{*0}", "modality": "stated", "locator": "Eq. (48)"}
+{"subject": "J", "relation": "defines", "object": "C tensor *", "modality": "stated", "locator": "Eq. (58)"}
+{"subject": "Int M", "relation": "equivalent-to", "object": "C^infinity(M, SU(k))", "modality": "stated", "locator": "Eq. (67)"}
+{"subject": "alpha_u", "relation": "defines", "object": "automorphism x -> u x u*", "modality": "stated", "locator": "Eq. (61)"}
+{"subject": "D tilde", "relation": "defines", "object": "D + A + J A J^{-1}", "modality": "stated", "locator": "Eq. (63)"}
+{"subject": "A", "relation": "defines", "object": "sum_i a_i [D,b_i] with a_i, b_i in A", "modality": "stated", "locator": "Eq. (66)"}
+{"subject": "d(phi,psi)", "relation": "defines", "object": "Sup of |phi(a)-psi(a)| over a in A with ||[D tilde,a]|| <= 1", "modality": "stated", "locator": "Eq. (69)"}
+{"subject": "d(phi,psi)", "relation": "equivalent-to", "object": "Inf over paths gamma from phi to psi of the integral from 0 to 1 of ||pi_*(gamma dot)|| dt", "modality": "stated", "locator": "Eq. (70)"}
+{"subject": "A_theta", "relation": "defines", "object": "set of sums sum a_{nm} U^n V^m with a in S(Z^2), where U, V satisfy VU = lambda UV, lambda = exp(2 pi i theta)", "modality": "stated", "locator": "Eq. (71)-(72)"}
+{"subject": "tau_0", "relation": "defines", "object": "a -> a_{00} on A_theta", "modality": "stated", "locator": "Eq. (73)"}
+{"subject": "D", "relation": "defines", "object": "2x2 block operator built from delta_1 + tau delta_2", "modality": "stated", "locator": "Eq. (75)"}
+{"subject": "c", "relation": "defines", "object": "(2 i pi)^{-2} (tau - tau bar)^{-1} (V^{-1}U^{-1} tensor U tensor V - U^{-1}V^{-1} tensor V tensor U)", "modality": "stated", "locator": "Eq. (78)"}
+{"subject": "integral of ds^2", "relation": "equivalent-to", "object": "<phi, c>", "modality": "stated", "locator": "Eq. (79)"}
+{"subject": "<mu, beta>", "relation": "equivalent-to", "object": "Rank K_0 - Rank K_1", "modality": "stated", "locator": "Eq. (83)"}
+{"subject": "I", "relation": "defines", "object": "Trace(phi(ds/l_p)) + <D psi, psi>", "modality": "stated", "locator": "Eq. (114)"}
+{"subject": "e", "relation": "defines", "object": "self-adjoint idempotent e = e*, e^2 = e", "modality": "stated", "locator": "Eq. (29)"}
