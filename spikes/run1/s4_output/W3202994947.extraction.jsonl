@@ -1,0 +1,13 @@
+{"subject": "quasi-measurable spaces", "relation": "defines", "object": "Definition 2.5 (quasi-measurable space with respect to (Ω,Ω^Ω))", "modality": "stated", "locator": "Definition 2.5"}
+{"subject": "quasi-measurable maps", "relation": "defines", "object": "Definition 2.8 (quasi-measurable maps)", "modality": "stated", "locator": "Definition 2.8"}
+{"subject": "QMS", "relation": "defines", "object": "category of all quasi-measurable spaces with quasi-measurable maps", "modality": "stated", "locator": "Notation 2.11(1)"}
+{"subject": "QBS", "relation": "defines", "object": "category of quasi-Borel spaces (patchable quasi-measurable spaces over the Borel real line)", "modality": "stated", "locator": "Notation 2.11(2)"}
+{"subject": "QUS", "relation": "defines", "object": "category of quasi-universal (measurable) spaces over the universally measurable σ-algebra on ℝ", "modality": "stated", "locator": "Notation 2.11(3)"}
+{"subject": "B(X^Ω)", "relation": "defines", "object": "σ-algebra induced by functions X^Ω", "modality": "stated", "locator": "Notation 2.12"}
+{"subject": "F(B_X)", "relation": "defines", "object": "functions induced by a σ-algebra B_X", "modality": "stated", "locator": "Notation 2.13"}
+{"subject": "Theorem 2.16 adjunction", "relation": "proves", "object": "B: QMS → Meas is left adjoint to F: Meas → QMS", "modality": "stated", "locator": "Theorem 2.16"}
+{"subject": "Lemma 2.14", "relation": "proves", "object": "B_X ⊆ B(F(B_X)) ⊆ B(X^Ω) and X^Ω ⊆ F(B(X^Ω)) ⊆ F(B_X)", "modality": "stated", "locator": "Lemma 2.14"}
+{"subject": "Remark 2.15", "relation": "proves", "object": "B(Ω^Ω) = B_Ω", "modality": "stated", "locator": "Remark 2.15"}
+{"subject": "QMS", "relation": "depends-on", "object": "sample space (Ω, Ω^Ω, B_Ω)", "modality": "stated", "locator": "Notation 2.2"}
+{"subject": "quasi-universal spaces (QUS)", "relation": "specialises", "object": "quasi-measurable spaces (QMS)", "modality": "stated", "locator": "Notation 2.11(3)"}
+{"subject": "quasi-Borel spaces (QBS)", "relation": "specialises", "object": "quasi-measurable spaces (QMS)", "modality": "stated", "locator": "Notation 2.11(2)"}
