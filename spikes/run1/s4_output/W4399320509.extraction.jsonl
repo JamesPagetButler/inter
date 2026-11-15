@@ -1,0 +1,34 @@
+{"subject": "Theorem 7.1.1", "relation": "proves", "object": "h_! induces an equivalence Fun^cc_B(C,E) ≃ Fun_B(PSh_B(C),E) for small C and cocomplete large E", "modality": "stated", "locator": "Theorem 7.1.1"}
+{"subject": "Theorem 7.1.1", "relation": "proves", "object": "the Yoneda embedding h: C → PSh_B(C) exhibits the B-category of presheaves on C as the free cocompletion of C", "modality": "stated", "locator": "Theorem 7.1.1"}
+{"subject": "Theorem 6.3.5", "relation": "proves", "object": "f^*: Fun_B(D,E) → Fun_B(C,E) has a left adjoint f_!", "modality": "stated", "locator": "Theorem 6.3.5"}
+{"subject": "Theorem 6.3.5", "relation": "proves", "object": "f_! is fully faithful whenever f is fully faithful", "modality": "stated", "locator": "Theorem 6.3.5"}
+{"subject": "Theorem 7.1.1", "relation": "depends-on", "object": "Theorem 6.3.5", "modality": "stated", "locator": "Theorem 7.1.1"}
+{"subject": "Remark 2.10.2", "relation": "depends-on", "object": "Theorem 7.1.1", "modality": "stated", "locator": "Remark 2.10.2"}
+{"subject": "Yoneda lemma for internal categories", "relation": "proves", "object": "a fully faithful functor h: C → Fun_B(C^op, Ω) with Map(h(-),-) equivalent to the evaluation functor", "modality": "cited", "locator": "Introduction, Yoneda lemma for internal categories [Mar21]"}
+{"subject": "Definition 2.6.1", "relation": "defines", "object": "B-category as a simplicial object internally local with respect to I^2 → Δ^2 and E^1 → 1", "modality": "cited", "locator": "Definition 2.6.1 ([Mar21, Definitions 3.1.5 and 3.2.1])"}
+{"subject": "Definition 2.6.1", "relation": "defines", "object": "B-groupoid as a simplicial object internally local with respect to Δ^1 → Δ^0", "modality": "cited", "locator": "Definition 2.6.1 ([Mar21, Definitions 3.1.5 and 3.2.1])"}
+{"subject": "Remark 2.6.2", "relation": "equivalent-to", "object": "B-category defined by the Segal-type equivalences C_n → C_1 ×_{C_0} ... ×_{C_0} C_1 and C_0 → (C_0×C_0) ×_{C_1×C_1} C_3", "modality": "cited", "locator": "Remark 2.6.2 ([Mar21, Proposition 3.2.7])"}
+{"subject": "Remark 2.6.3", "relation": "equivalent-to", "object": "the walking equivalence model E^1 and the model J give the same notion of B-category", "modality": "cited", "locator": "Remark 2.6.3"}
+{"subject": "Proposition 2.6.4", "relation": "proves", "object": "Cat(B) is presentable and an exponential ideal in B_Δ, hence cartesian closed", "modality": "cited", "locator": "Proposition 2.6.4 ([Mar21, Propositions 3.2.9, 3.2.10, 3.2.11])"}
+{"subject": "Proposition 2.6.5", "relation": "proves", "object": "a simplicial object is a B-groupoid if and only if it is constant", "modality": "cited", "locator": "Proposition 2.6.5 ([Mar21, after Corollary 3.2.12])"}
+{"subject": "Proposition 2.6.5", "relation": "defines", "object": "groupoidification C^gpd ≃ colim over Δ^op of C and core C^≃ ≃ C_0", "modality": "cited", "locator": "Proposition 2.6.5 ([Mar21, after Corollary 3.2.12])"}
+{"subject": "Definition 2.6.6", "relation": "defines", "object": "opposite B-category C^op", "modality": "stated", "locator": "Definition 2.6.6"}
+{"subject": "Remark 2.6.7", "relation": "depends-on", "object": "Proposition 2.6.5", "modality": "stated", "locator": "Remark 2.6.7"}
+{"subject": "Remark 2.6.8", "relation": "proves", "object": "postcomposition induces an adjunction f^* ⊣ f_*: Cat(A) ⇄ Cat(B) for a geometric morphism f_*", "modality": "cited", "locator": "Remark 2.6.8 ([Mar21, § 3.3])"}
+{"subject": "Remark 2.6.9", "relation": "equivalent-to", "object": "id_{Cat(B)} ≃ ((-)^{Δ•})^≃", "modality": "cited", "locator": "Remark 2.6.9 ([Mar21, Proposition 3.1.2])"}
+{"subject": "Proposition 2.7.1", "relation": "proves", "object": "natural equivalence Cat(B) ≃ Shv_{Cat∞}(B) sending C to Fun_B(ι(-),C)", "modality": "cited", "locator": "Proposition 2.7.1 ([Mar21, Proposition 3.5.1 and Remark 3.5.6])"}
+{"subject": "Remark 2.7.2", "relation": "equivalent-to", "object": "C^≃(-) ≃ C(-)^≃ and C^op(-) ≃ C(-)^op as sheaves", "modality": "stated", "locator": "Remark 2.7.2"}
+{"subject": "Remark 2.7.4", "relation": "proves", "object": "the equivalence Cat(B) ≃ Shv_{Cat∞}(B) is natural in B, with C(1) ≃ Γ_B(C)", "modality": "cited", "locator": "Remark 2.7.4 ([Mar21, § 3.5])"}
+{"subject": "Remark 2.7.5", "relation": "proves", "object": "the equivalence between B-categories and sheaves of ∞-categories respects universe enlargement", "modality": "cited", "locator": "Remark 2.7.5 ([Mar21, Proposition 3.5.1])"}
+{"subject": "Definition 2.8.1", "relation": "defines", "object": "mapping B/A-groupoid Map_C(c,d) as a pullback over C_0 × C_0", "modality": "stated", "locator": "Definition 2.8.1"}
+{"subject": "Remark 2.8.2", "relation": "equivalent-to", "object": "Map_C(c,d) as the pullback of (d_1,d_0): C^{Δ^1} → C×C along (c,d)", "modality": "cited", "locator": "Remark 2.8.2 ([Mar21, § 3.6])"}
+{"subject": "Remark 2.8.5", "relation": "depends-on", "object": "Remark 2.6.8", "modality": "stated", "locator": "Remark 2.8.5"}
+{"subject": "Remark 2.8.6", "relation": "defines", "object": "tautological object τ: C_0 → C, given by the counit of ι ⊣ (-)_0", "modality": "stated", "locator": "Remark 2.8.6"}
+{"subject": "Definition 2.8.7", "relation": "defines", "object": "equivalence of morphisms f: c → d in C", "modality": "stated", "locator": "Definition 2.8.7"}
+{"subject": "Proposition 2.8.8", "relation": "proves", "object": "a map A → C^{Δ^1} is an equivalence if it factors through s_0: C → C^{Δ^1}", "modality": "cited", "locator": "Proposition 2.8.8 ([Mar21, Corollary 3.6.3])"}
+{"subject": "Proposition 2.9.1", "relation": "equivalent-to", "object": "fully faithfulness of a functor f of B-categories, characterised by pullback square, mapping-object equivalence, and fibrewise fully faithfulness", "modality": "cited", "locator": "Proposition 2.9.1 ([Mar21, Propositions 3.8.6 and 3.8.7])"}
+{"subject": "Proposition 2.9.2", "relation": "equivalent-to", "object": "essential surjectivity of f: C → D with f_0 being a cover in B", "modality": "cited", "locator": "Proposition 2.9.2 ([Mar21, Corollary 3.8.12])"}
+{"subject": "Proposition 2.9.3", "relation": "proves", "object": "equivalence of posets Sub^full(D) ≃ Sub(D_0) via core B-groupoids", "modality": "cited", "locator": "Proposition 2.9.3 ([Mar21, Proposition 3.9.3])"}
+{"subject": "Proposition 2.10.1", "relation": "proves", "object": "Map_Ω(g,h) ≃ internal hom hom_{B/A}(G,H) in B/A", "modality": "cited", "locator": "Proposition 2.10.1 ([Mar21, Proposition 3.7.3])"}
+{"subject": "Proposition 2.10.3", "relation": "proves", "object": "equivalence between the poset of local classes in B and Sub^full(Ω)", "modality": "cited", "locator": "Proposition 2.10.3 ([Mar21, Proposition 3.9.12])"}
+{"subject": "Example 2.10.4", "relation": "equivalent-to", "object": "the subuniverse of Ω_{B̂} determined by small maps is identified with Ω_B", "modality": "cited", "locator": "Example 2.10.4 (see [Mar21, § 4.5])"}
