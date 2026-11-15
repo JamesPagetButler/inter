@@ -1,0 +1,21 @@
+{"subject":"Theorem 3.3","relation":"proves","object":"JL-p-cartesian edge: if f presents a p-cartesian morphism in the model-independent sense, then the edge f is JL-p-cartesian","modality":"stated","locator":"Theorem 3.3"}
+{"subject":"Corollary 3.4","relation":"proves","object":"if p is a cartesian fibration then p is a JL-cartesian fibration","modality":"stated","locator":"Corollary 3.4"}
+{"subject":"Theorem 3.3","relation":"uses-technique","object":"model-categorical manipulations in s\\mathcal{S}\\textup{et}_{\\textup{Joyal}}","modality":"stated","locator":"Section 0, footnote 1"}
+{"subject":"JL-p-cartesian edge","relation":"defines","object":"edge f with E_{/f} to E_{/f(1)} times B_{/p(f(1))} B_{/p(f)} in (W cap F)_Joyal","modality":"stated","locator":"Definition 3.2"}
+{"subject":"JL-cartesian fibration","relation":"defines","object":"every vertex of hom(Delta^1,B) times_{ev_1,B,f} E admits a JL-cartesian lift","modality":"stated","locator":"Definition 3.2"}
+{"subject":"f-cocartesian morphism","relation":"defines","object":"morphism inducing a pullback square in Cat_infty on slice categories E_{e_2/} to E_{e_1/}","modality":"stated","locator":"Definition 2.1(1)"}
+{"subject":"f-cartesian morphism","relation":"defines","object":"morphism inducing a pullback square in Cat_infty on slice categories E_{/e_1} to E_{/e_2}","modality":"stated","locator":"Definition 2.1(2)"}
+{"subject":"cocartesian fibration","relation":"defines","object":"functor f such that every object of Fun([1],B) times_{s,B,f} E admits an f-cocartesian lift","modality":"stated","locator":"Definition 2.1(1)"}
+{"subject":"cartesian fibration","relation":"defines","object":"functor f such that every object of Fun([1],B) times_{t,B,f} E admits an f-cartesian lift","modality":"stated","locator":"Definition 2.1(2)"}
+{"subject":"f-cocartesian morphism","relation":"proves","object":"hom-space pullback square with hom_E(e_2,e) over hom_E(e_1,e) and hom_B(f(e_2),f(e)) over hom_B(f(e_1),f(e))","modality":"cited","locator":"Remark 2.2"}
+{"subject":"left fibration","relation":"defines","object":"cocartesian fibration whose fibers are all infinity-groupoids","modality":"stated","locator":"Remark 2.3"}
+{"subject":"right fibration","relation":"defines","object":"cartesian fibration whose fibers are all infinity-groupoids","modality":"stated","locator":"Remark 2.3"}
+{"subject":"covariant Grothendieck construction","relation":"equivalent-to","object":"Fun(B,Cat_infty) equivalent to coCFib(B)","modality":"stated","locator":"Remark 2.3"}
+{"subject":"forgetful functor Vect Bdl to Mfld","relation":"specialises","object":"cartesian fibration (Definition 2.1(2))","modality":"stated","locator":"Example 1.5"}
+{"subject":"forgetful functor Top to Set","relation":"specialises","object":"cartesian fibration (Definition 2.1(2))","modality":"stated","locator":"Example 1.6"}
+{"subject":"symmetric monoidal functor","relation":"equivalent-to","object":"morphism of cocartesian fibrations over Fin_* preserving cocartesian morphisms","modality":"stated","locator":"Example 1.2"}
+{"subject":"symmetric monoidal category","relation":"equivalent-to","object":"cocartesian fibration over Fin_*","modality":"stated","locator":"Example 1.2"}
+{"subject":"inert morphism in Fin_*","relation":"defines","object":"morphism T_+ to U_+ with |alpha^{-1}(u)|=1 for all u in U","modality":"stated","locator":"Remark 1.3"}
+{"subject":"lax symmetric monoidal functor","relation":"defines","object":"morphism of cocartesian fibrations over Fin_* that sends p-inert morphisms to q-inert morphisms","modality":"stated","locator":"Remark 1.3"}
+{"subject":"infinity-operad theory [Lur14, Chapter 2]","relation":"depends-on","object":"observations of Example 1.2 and Remark 1.3","modality":"cited","locator":"Remark 1.4"}
+{"subject":"model categories presenting the infinity-category of infinity-categories","relation":"equivalent-to","object":"Quillen equivalences","modality":"cited","locator":"Section 0, Alternate models (c)"}
