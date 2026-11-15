@@ -306,7 +306,10 @@ def fan_out(seed_rec, hop_limit):
     return list(out.values())
 
 
-def main():
+def build_corpus():
+    """Pure refactor of the former main() body (A1 §3 walk-down needs the
+    full ranked candidate lists + guard state back, not just the written
+    JSON's top-50/domain) -- no logic change from the pre-A1 version."""
     log_event({"kind": "start"})
     seed_recs = []
     for s in SEEDS:
@@ -394,11 +397,14 @@ def main():
             guarded[wid] = {"status": "admitted", "field": rec["field"], "title": None, "year": None}
 
     admitted_by_domain = {"math": [], "physics": []}
+    ranked_ids_by_domain = {}
+    cursor_by_domain = {}
     for dom in ("math", "physics"):
         ranked_ids = sorted(
             (wid for wid, c in candidates.items() if dom in c["score_by_domain"]),
             key=lambda wid: -candidates[wid]["score_by_domain"][dom],
         )
+        ranked_ids_by_domain[dom] = ranked_ids
         cursor = 0
         while len(admitted_by_domain[dom]) < 50 and cursor < len(ranked_ids):
             batch = ranked_ids[cursor:cursor + BATCH]
@@ -413,6 +419,7 @@ def main():
                 "kind": "guard_batch_done", "domain": dom, "cursor": cursor,
                 "admitted_so_far": len(admitted_by_domain[dom]),
             })
+        cursor_by_domain[dom] = cursor
     # Global, not per-domain-summed: a bridge candidate guarded via one
     # domain's loop must not also count as "not reached" in the other
     # domain's tail (per-domain remainder arithmetic double-counts those).
@@ -531,22 +538,46 @@ def main():
             for wid, info in final_selected.items()
         ],
     }
+    log_event({"kind": "done", "final_count": len(final_selected)})
+    return {
+        "seed_recs": seed_recs,
+        "candidates": candidates,
+        "guarded": guarded,
+        "guard_one": guard_one,
+        "fetch_failed": fetch_failed,
+        "s2_fallback_count": s2_fallback_count,
+        "ranked_ids_by_domain": ranked_ids_by_domain,
+        "cursor_by_domain": cursor_by_domain,
+        "admitted_by_domain": admitted_by_domain,
+        "not_guard_checked_count": not_guard_checked_count,
+        "out_of_domain": out_of_domain,
+        "in_domain": in_domain,
+        "selected": selected,
+        "bridge_flagged": bridge_flagged,
+        "merged_log": merged_log,
+        "final_selected": final_selected,
+        "result": result,
+    }
+
+
+def main():
+    state = build_corpus()
+    result = state["result"]
     with open(OUT, "w") as f:
         json.dump(result, f, indent=2)
-    log_event({"kind": "done", "final_count": len(final_selected)})
     print(json.dumps({
-        "seeds_resolved": sum(1 for r in seed_recs if r["status"] == "resolved"),
-        "seeds_unresolved": sum(1 for r in seed_recs if r["status"] != "resolved"),
-        "candidates_total": len(candidates),
-        "in_domain": len(in_domain),
-        "out_of_domain": len(out_of_domain),
-        "selected_pre_dedup": len(selected),
-        "dedup_merges": len(merged_log),
-        "final_count": len(final_selected),
-        "guard_checked_count": len(guarded),
-        "not_guard_checked_count": not_guard_checked_count[0],
-        "fetch_failed_count": len(fetch_failed),
-        "s2_fallback_attempts": s2_fallback_count[0],
+        "seeds_resolved": sum(1 for r in state["seed_recs"] if r["status"] == "resolved"),
+        "seeds_unresolved": sum(1 for r in state["seed_recs"] if r["status"] != "resolved"),
+        "candidates_total": len(state["candidates"]),
+        "in_domain": len(state["in_domain"]),
+        "out_of_domain": len(state["out_of_domain"]),
+        "selected_pre_dedup": len(state["selected"]),
+        "dedup_merges": len(state["merged_log"]),
+        "final_count": len(state["final_selected"]),
+        "guard_checked_count": len(state["guarded"]),
+        "not_guard_checked_count": state["not_guard_checked_count"][0],
+        "fetch_failed_count": len(state["fetch_failed"]),
+        "s2_fallback_attempts": state["s2_fallback_count"][0],
     }, indent=2))
 
 
