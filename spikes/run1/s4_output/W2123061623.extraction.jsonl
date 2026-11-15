@@ -1,0 +1,21 @@
+{"subject":"Lorentzian noncommutative geometry of the standard model","relation":"depends-on","object":"Connes' internal space geometry (Commun. Math. Phys. 182, 155–176 (1996))","modality":"stated","locator":"Abstract"}
+{"subject":"modified internal space geometry with signature 6 (mod 8)","relation":"proves","object":"elimination of fermion doubling in the Lorentzian case","modality":"stated","locator":"Abstract"}
+{"subject":"fermionic part of the Connes–Chamseddine spectral action","relation":"proves","object":"admits an extension with right-handed neutrinos and the seesaw mass terms","modality":"stated","locator":"Abstract"}
+{"subject":"real spectral triple","relation":"defines","object":"(H, A, D, γ, J): Hilbert space, algebra, self-adjoint Dirac operator, chirality, real structure","modality":"cited","locator":"Section 1, Real spectral triple paragraph"}
+{"subject":"real spectral triple axioms for even signature σ","relation":"defines","object":"J²=ε and Jγ=ε''γJ with signs given by the table","modality":"stated","locator":"Section 1, Eq. (3)"}
+{"subject":"signature σ mod 8","relation":"equivalent-to","object":"dimension of the spectral triple, for Euclidean geometries","modality":"stated","locator":"Section 1, Real spectral triple paragraph"}
+{"subject":"Euclidean standard model","relation":"defines","object":"product of the space-time real spectral triple and the finite internal real spectral triple","modality":"cited","locator":"Section 1, Product structure paragraph"}
+{"subject":"total fermion space H","relation":"defines","object":"H_M ⊗ H_F","modality":"stated","locator":"Section 1, Eq. (4)"}
+{"subject":"particle quadrupling","relation":"depends-on","object":"H = H_M ⊗ H_F","modality":"stated","locator":"Section 1, Quadrupling paragraph"}
+{"subject":"consistency of the reduction conditions Jφ=φ and γφ=φ","relation":"depends-on","object":"J²=1 and Jγ=γJ (Eqs. (7), (8))","modality":"stated","locator":"Section 1, Attempted reduction paragraph"}
+{"subject":"J²=1 and Jγ=γJ","relation":"depends-on","object":"total signature zero","modality":"stated","locator":"Section 1, Attempted reduction paragraph"}
+{"subject":"algebra A","relation":"defines","object":"A_M ⊗ A_F","modality":"stated","locator":"Section 1, Eq. (20)"}
+{"subject":"chirality γ and real structure J on H","relation":"defines","object":"γ = γ_M ⊗ γ_F and J = J_M ⊗ J_F","modality":"stated","locator":"Section 1, Eqs. (21), (22)"}
+{"subject":"Dirac operator D on H","relation":"defines","object":"D = D_M ⊗ 1 + γ_M ⊗ D_F","modality":"stated","locator":"Section 1, Eq. (23)"}
+{"subject":"chirality γ in the Lorentzian model","relation":"defines","object":"γ* = γ and γ² = −1","modality":"stated","locator":"Section 1, Eq. (25)"}
+{"subject":"internal space with signature 6 (mod 8)","relation":"defines","object":"J² = 1 and Jγ + γJ = 0","modality":"stated","locator":"Section 1, Eqs. (36), (37)"}
+{"subject":"internal Dirac operator D_F","relation":"defines","object":"the 4×4 block matrix with entries M, G, H and their adjoints","modality":"stated","locator":"Section 1, Eq. (46)"}
+{"subject":"Ψ-space expansion of (Ψ, DΨ)","relation":"equivalent-to","object":"sum of (ψ_R, D_M ψ_R), (ψ̄_R, D_M ψ̄_R), (ψ_L, D_M ψ_L), (ψ̄_L, D_M ψ̄_L) plus Yukawa-type mass cross terms in M","modality":"stated","locator":"Eq. (1) (second occurrence)"}
+{"subject":"(1/2)(Ψ, DΨ)","relation":"equivalent-to","object":"(ψ_R, D_M ψ_R) + (ψ_L, D_M ψ_L) − iM(ψ_L, ψ_R) + iM̄(ψ_R, ψ_L)","modality":"stated","locator":"Eq. (53)"}
+{"subject":"right-handed neutrino sector","relation":"uses-technique","object":"seesaw mechanism for neutrino mass generation","modality":"stated","locator":"Section 1, Purpose paragraph"}
+{"subject":"Majorana-type term for right-handed neutrinos","relation":"equivalent-to","object":"−i H̄(ψ̄_R, ψ_R) + iH(ψ_R, ψ̄_R)","modality":"stated","locator":"Eq. (55)"}
