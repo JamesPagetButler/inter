@@ -1,0 +1,35 @@
+{"subject":"Stone duality for condensed sets (F_2-version)","relation":"proves","object":"adjunction Cond ⇄ Shv^fpqc_{F_2} whose left adjoint preserves finite limits and is fully faithful","modality":"stated","locator":"Theorem A"}
+{"subject":"Stone duality for condensed sets (k-version)","relation":"proves","object":"adjunction Cond ⇄ Shv^fpqc_k with fully faithful left adjoint f^* commuting with finite limits, for a field k","modality":"stated","locator":"Theorem 2.6"}
+{"subject":"Stone duality (Theorem 1.2)","relation":"proves","object":"equivalence CAlg_k^Stone ≃ ProFin^op for a ring k whose only idempotents are 0,1","modality":"stated","locator":"Theorem 1.2"}
+{"subject":"Stone k-algebras","relation":"defines","object":"CAlg_k^Stone, the full subcategory of commutative k-algebras generated under filtered colimits by k^S for finite sets S","modality":"stated","locator":"Definition 1.1"}
+{"subject":"pearl A°","relation":"defines","object":"image of A under the right adjoint CAlg_k → CAlg_k^Stone of the forgetful functor","modality":"stated","locator":"Definition 1.7"}
+{"subject":"pearl of a k-algebra over a field","relation":"depends-on","object":"Corollary 1.13: A° = C(|Spec(A)|, k)","modality":"stated","locator":"Corollary 1.13"}
+{"subject":"Proposition 1.12","relation":"proves","object":"|Spec(A°)| ≃ π_0(|Spec(A)|) for a k-algebra A over a field k","modality":"stated","locator":"Proposition 1.12"}
+{"subject":"Stone k-algebras (k absolutely flat)","relation":"proves","object":"Proposition 1.5: any Stone k-algebra over absolutely flat k is absolutely flat","modality":"stated","locator":"Proposition 1.5"}
+{"subject":"Proposition 1.20","relation":"proves","object":"isomorphism of sites (ProFin, τ_eff) ≃ ((CAlg_k^Stone)^op, τ_fpqc) for a field k","modality":"stated","locator":"Proposition 1.20"}
+{"subject":"Stone F_p-algebras","relation":"equivalent-to","object":"p-Boolean algebras","modality":"stated","locator":"Proposition 1.26"}
+{"subject":"Corollary 1.24","relation":"proves","object":"site ((CAlg_k^Stone)^op, τ_fpqc) equals the pro-étale site of Spec(k) iff k is separably closed","modality":"stated","locator":"Corollary 1.24"}
+{"subject":"Proposition 1.22","relation":"proves","object":"CAlg_k^Stone ⊆ CAlg_k^wét is the identity iff k is separably closed","modality":"stated","locator":"Proposition 1.22"}
+{"subject":"Example 1.14","relation":"counterexample-to","object":"claim that any Stone-type or totally disconnected spectrum forces A to be Stone: L^° = k for a field extension L/k","modality":"stated","locator":"Example 1.14"}
+{"subject":"Example 1.15","relation":"counterexample-to","object":"bijectivity of L°⊗_k L° → (L⊗_k L)° for non-trivial finite Galois L/k","modality":"stated","locator":"Example 1.15"}
+{"subject":"Lemma 1.16","relation":"equivalent-to","object":"faithful flatness of a map of Stone k-algebras is equivalent to surjectivity of the induced map on spectra","modality":"stated","locator":"Lemma 1.16"}
+{"subject":"Proposition 2.10","relation":"defines","object":"enhanced k-points of an fpqc sheaf X as the condensed set S ↦ X(C(S,k))","modality":"stated","locator":"Proposition 2.10"}
+{"subject":"Definition 2.9","relation":"defines","object":"pétra space X^pét_k := f^*(X) and Stone core X^Stone := f^*f_*(X)","modality":"stated","locator":"Definition 2.9"}
+{"subject":"Proposition 2.17","relation":"proves","object":"X ≃ enhanced k-points of the pétra space of X, for any condensed set X","modality":"stated","locator":"Proposition 2.17"}
+{"subject":"Corollary 2.18","relation":"proves","object":"natural bijection X(*) ≃ X^pét_k(k)","modality":"stated","locator":"Corollary 2.18"}
+{"subject":"Proposition 2.24","relation":"proves","object":"Stone core of an fpqc sheaf X is the fpqc sheafification of A ↦ X(A°)","modality":"stated","locator":"Proposition 2.24"}
+{"subject":"Proposition 2.26","relation":"proves","object":"canonical isomorphisms X^Stone ≃ (X_dR)^Stone ≃ (X^Stone)_dR","modality":"stated","locator":"Proposition 2.26"}
+{"subject":"Proposition 2.27","relation":"proves","object":"Spec(A)^Stone = Spec(Q(A)) when U admits a left adjoint Q","modality":"stated","locator":"Proposition 2.27"}
+{"subject":"Remark 2.30","relation":"defines","object":"for k=F_p, Q(A)=A/(a−a^p : a∈A), with Spec(Q(A)) the Frobenius fixed-point locus","modality":"stated","locator":"Remark 2.30"}
+{"subject":"Proposition 3.2","relation":"proves","object":"Γ(X^pét; O) ≃ Hom_Cond(X,k) for a condensed set X","modality":"stated","locator":"Proposition 3.2"}
+{"subject":"Proposition 3.3","relation":"proves","object":"inclusion ProFin → Cond admits a left adjoint π̂_0: Cond → ProFin","modality":"stated","locator":"Proposition 3.3"}
+{"subject":"Remark 3.5","relation":"specialises","object":"π̂_0(S) = βS for discrete S, the Stone–Čech compactification, via |Spec(P(S))|","modality":"stated","locator":"Remark 3.5"}
+{"subject":"Proposition 3.6","relation":"proves","object":"for a finite field k, the affinization of X^pét_k is the pétra space of π̂_0(X)","modality":"stated","locator":"Proposition 3.6"}
+{"subject":"Definition 3.8","relation":"defines","object":"geometric space and ind-geometric space in Shv^fpqc_k","modality":"stated","locator":"Definition 3.8"}
+{"subject":"Theorem 3.11","relation":"proves","object":"profinite X gives affine pétra space; compact Hausdorff X gives geometric pétra space","modality":"stated","locator":"Theorem 3.11"}
+{"subject":"Theorem 3.11 (finite field case)","relation":"proves","object":"for finite k, X quasi-separated iff pétra space is ind-geometric","modality":"stated","locator":"Theorem 3.11(3)"}
+{"subject":"Lemma 3.12","relation":"equivalent-to","object":"continuous map of compact Hausdorff spaces is injective iff induced map of pétra spaces over finite k is a closed immersion","modality":"stated","locator":"Lemma 3.12"}
+{"subject":"Proposition 3.16","relation":"proves","object":"pétra space is an algebraic space locally of finite presentation iff X is discrete","modality":"stated","locator":"Proposition 3.16"}
+{"subject":"Remark 3.13","relation":"depends-on","object":"CGWH spaces are quasi-separated as condensed sets [CS19, Theorem 2.16], so their pétra spaces over finite fields are ind-geometric","modality":"cited","locator":"Remark 3.13"}
+{"subject":"Proposition 1.9","relation":"proves","object":"universal map A° → A is injective for absolutely flat k","modality":"stated","locator":"Proposition 1.9"}
+{"subject":"Remark 3.15","relation":"generalises","object":"ind-geometric spaces of Definition 3.8 fall within geometric spaces in the convention of [Sim96], [TV08], [Ste23]","modality":"cited","locator":"Remark 3.15"}
