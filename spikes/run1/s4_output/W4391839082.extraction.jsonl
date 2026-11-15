@@ -1,0 +1,3 @@
+{"subject":"abstraction boundaries","relation":"uses-technique","object":"interactive theorem prover","modality":"stated","locator":"Introduction"}
+{"subject":"mathematicians' abstraction (lemmas, propositions, definitions, abstraction boundaries)","relation":"uses-technique","object":"breaking proofs into lemmas and propositions","modality":"stated","locator":"Introduction"}
+{"subject":"Theorem A (Clausen–Scholze)","relation":"proves","object":"Ext^i_{Cond(Ab)}(M_{p'}(S), V) = 0 for all i >= 1, for 0 < p' < p <= 1, S profinite, V a p-Banach space","modality":"cited","locator":"Theorem A"}
