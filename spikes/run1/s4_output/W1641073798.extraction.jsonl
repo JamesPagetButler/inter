@@ -1,0 +1,40 @@
+{"subject":"lambda(Omega)","relation":"defines","object":"(1/6) tr K_Omega^2 in (Lambda^6 V^*)^2","modality":"stated","locator":"Definition 1"}
+{"subject":"lambda(Omega) != 0","relation":"equivalent-to","object":"Omega = alpha + beta with alpha, beta decomposable and alpha wedge beta != 0","modality":"stated","locator":"Proposition 1"}
+{"subject":"lambda(Omega) > 0","relation":"equivalent-to","object":"Omega = alpha + beta with alpha, beta real decomposable 3-forms and alpha wedge beta != 0","modality":"stated","locator":"Proposition 2"}
+{"subject":"lambda(Omega) < 0","relation":"equivalent-to","object":"Omega = alpha + conj(alpha) with alpha a complex decomposable 3-form and alpha wedge conj(alpha) != 0","modality":"stated","locator":"Proposition 2"}
+{"subject":"Omega-hat","relation":"defines","object":"transformation Omega -> Omega-hat on 3-forms with lambda(Omega) != 0, via the decomposition in Proposition 2","modality":"stated","locator":"Definition 2"}
+{"subject":"moment map for SL(W) acting on Lambda^3 W^*","relation":"equivalent-to","object":"K_Omega","modality":"stated","locator":"Proposition 3"}
+{"subject":"X_phi(Omega)","relation":"equivalent-to","object":"-Omega-hat","modality":"stated","locator":"Proposition 4"}
+{"subject":"J = DX_phi","relation":"defines","object":"integrable complex structure on U, with J^2 = -1","modality":"stated","locator":"Proposition 5"}
+{"subject":"J","relation":"equivalent-to","object":"i on Lambda^{3,0} plus Lambda^{2,1}, and -i on Lambda^{1,2} plus Lambda^{0,3}","modality":"stated","locator":"Proposition 6"}
+{"subject":"special Kahler manifold","relation":"defines","object":"complex manifold with Kahler metric g and flat torsion-free connection D with D omega = 0 and d_D J = 0","modality":"stated","locator":"Definition 3"}
+{"subject":"U in Lambda^3 W^*","relation":"proves","object":"SL(W)-invariant special pseudo-Kahler structure of Hermitian signature (1,9)","modality":"stated","locator":"Proposition 7"}
+{"subject":"self-dual 3-form Omega","relation":"proves","object":"lambda(Omega) >= 0","modality":"stated","locator":"Proposition 8"}
+{"subject":"self-dual Omega with lambda(Omega) > 0","relation":"proves","object":"Omega = alpha + *alpha with alpha decomposable","modality":"stated","locator":"Proposition 8"}
+{"subject":"Omega self-dual","relation":"proves","object":"Omega-hat is anti-self-dual","modality":"stated","locator":"Proposition 9"}
+{"subject":"Lambda_+ and Lambda_- (self-dual and anti-self-dual 3-forms)","relation":"proves","object":"Lagrangian subspaces of Lambda^3 W^*","modality":"stated","locator":"Proposition 10"}
+{"subject":"map Omega -> Omega-hat from Lambda_+ to Lambda_- = Lambda_+^*","relation":"equivalent-to","object":"derivative of -phi restricted to Lambda_+","modality":"stated","locator":"Proposition 11"}
+{"subject":"Omega-hat for self-dual Omega represented by A in Sym^2 S^*","relation":"equivalent-to","object":"sqrt(det A) A^{-1} in Sym^2 S","modality":"stated","locator":"Proposition 12"}
+{"subject":"Omega-hat for anti-self-dual Omega represented by B in Sym^2 S","relation":"equivalent-to","object":"-sqrt(det A) A^{-1} in Sym^2 S","modality":"stated","locator":"Proposition 12"}
+{"subject":"real part Omega of a non-vanishing holomorphic 3-form on a compact complex 3-manifold with trivial canonical bundle","relation":"proves","object":"Omega is a critical point of Phi restricted to the cohomology class [Omega]","modality":"stated","locator":"Theorem 13"}
+{"subject":"critical point Omega of Phi on a cohomology class of an oriented closed 6-manifold with lambda(Omega) < 0 everywhere","relation":"proves","object":"complex manifold structure on M with Omega the real part of a non-vanishing holomorphic 3-form","modality":"stated","locator":"Theorem 13"}
+{"subject":"Hessian of Phi at Omega","relation":"depends-on","object":"the del-delbar-lemma on compact complex 3-manifold M","modality":"stated","locator":"Proposition 14"}
+{"subject":"d psi tangent to the Diff(M)-orbit of Omega","relation":"equivalent-to","object":"d J d psi = 0","modality":"stated","locator":"Lemma 15"}
+{"subject":"real form gamma in L^2_{k+1}(Lambda^{1,1}) with (d^* d gamma)^{2,0} = 0","relation":"proves","object":"d gamma = rho + partial^* sigma + dbar^* sigma-bar, with rho real in L^2_k(Lambda^3), d^* rho = 0, and sigma in L^2_{k+1}(Lambda^{2,2})","modality":"stated","locator":"Lemma 16"}
+{"subject":"U in H^3(M,R)","relation":"proves","object":"special pseudo-Kahler manifold of Hermitian signature (1, h^{2,1}-1)","modality":"stated","locator":"Proposition 17"}
+{"subject":"phi(Omega)","relation":"defines","object":"real number with phi(Omega) epsilon = det K_Omega^{1/9}, for positive Omega and fixed epsilon in Lambda^7 W^*","modality":"stated","locator":"Definition 4"}
+{"subject":"derivative of phi","relation":"proves","object":"d phi(Omega-dot) epsilon = (7/18) * Omega wedge Omega-dot, with * the Hodge star of g_Omega","modality":"stated","locator":"Proposition 18"}
+{"subject":"closed 7-manifold M with metric of holonomy G_2 and defining 3-form Omega","relation":"proves","object":"Omega is a critical point of Phi restricted to [Omega]","modality":"stated","locator":"Theorem 19"}
+{"subject":"critical point Omega of Phi on a cohomology class of a closed oriented 7-manifold with Omega everywhere positive","relation":"proves","object":"metric with holonomy G_2 defined by Omega","modality":"stated","locator":"Theorem 19"}
+{"subject":"derivative of Theta(Omega) = *Omega","relation":"proves","object":"D Theta(Omega-dot) = (4/3) *pi_1(Omega-dot) + *pi_7(Omega-dot) - *pi_27(Omega-dot)","modality":"stated","locator":"Lemma 20"}
+{"subject":"Proposition 21 (Hessian of Phi at a closed 3-form Omega defining a G_2-structure)","relation":"proves","object":"Hessian of Phi at Omega is non-degenerate transverse to the action of Diff(M)","modality":"stated","locator":"Proposition 21"}
+{"subject":"Hessian of Phi([Omega]) on local moduli space U in H^3(M,R) of an irreducible G_2-manifold","relation":"proves","object":"metric on U of signature (1, b_3 - 1)","modality":"stated","locator":"Proposition 22"}
+{"subject":"GL(W) action on Lambda^3 W^*","relation":"proves","object":"open orbit in Lambda^3 W^* for dim W = 6 or 7","modality":"stated","locator":"Introduction"}
+{"subject":"stabilizer of a point in the open orbit for dim W = 6","relation":"equivalent-to","object":"SL(3,C)","modality":"stated","locator":"Introduction"}
+{"subject":"stabilizer of a point in the open orbit for dim W = 7","relation":"equivalent-to","object":"G_2","modality":"stated","locator":"Introduction"}
+{"subject":"3-form Omega on M","relation":"defines","object":"reduction of the structure group of M to SL(3,C) or G_2","modality":"stated","locator":"Introduction"}
+{"subject":"Phi","relation":"defines","object":"integral of a volume form defined algebraically by a 3-form","modality":"stated","locator":"Introduction"}
+{"subject":"[7]","relation":"proves","object":"analogue of the del-delbar-lemma for G_2-manifolds","modality":"cited","locator":"Introduction"}
+{"subject":"moduli space of complex structures together with holomorphic 3-forms on a 6-manifold","relation":"proves","object":"open set in H^3(M,R)","modality":"stated","locator":"Introduction"}
+{"subject":"complex structure on the moduli space of complex structures with holomorphic 3-forms","relation":"proves","object":"special pseudo-Kahler structure","modality":"stated","locator":"Introduction"}
+{"subject":"moduli space of G_2-structures","relation":"proves","object":"open set in H^3(M,R) with indefinite metric of Hessian type","modality":"stated","locator":"Introduction"}
