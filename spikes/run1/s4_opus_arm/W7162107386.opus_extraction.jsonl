@@ -1,0 +1,19 @@
+{"subject": "Theorem 0 (Barwick–Glasman–Haine)", "relation": "proves", "object": "exodromy correspondence Sh_cons(X_ét, S) ≃ Fun^cts(Gal(X), S_π) for a qcqs scheme X", "modality": "cited", "locator": "Theorem 0 (Barwick–Glasman–Haine)"}
+{"subject": "Theorem 0 (Wolf)", "relation": "proves", "object": "exodromy correspondence Sh^hyp(X_proét, S) ≃ Fun^cts(Gal(X), Cond(S)) for a qcqs scheme X", "modality": "cited", "locator": "Theorem 0 (Wolf)"}
+{"subject": "Theorem 1", "relation": "proves", "object": "pro-étale exodromy correspondence Sh^hyp(X_proét, E) ≃ Fun^cts(Gal(X), Cond(E)) for a scheme X and an ∞-category E with small limits", "modality": "stated", "locator": "Theorem 1"}
+{"subject": "Theorem 1", "relation": "generalises", "object": "Theorem 0 (Wolf)", "modality": "stated", "locator": "Theorem 1; Theorem 3 (no qcqs hypotheses in Theorems 1, 2, 3)"}
+{"subject": "Theorem 2", "relation": "proves", "object": "étale exodromy correspondence Sh^post(X_ét, E) ≃ Fun^cts(Gal(X), E) for a scheme X and a compactly assembled presentable ∞-category E", "modality": "stated", "locator": "Theorem 2"}
+{"subject": "Theorem 2", "relation": "depends-on", "object": "Theorem 1", "modality": "stated", "locator": "Theorem 2"}
+{"subject": "Theorem 2", "relation": "specialises", "object": "Theorem 1", "modality": "stated", "locator": "Theorem 2"}
+{"subject": "Theorem 3", "relation": "proves", "object": "constructible étale exodromy correspondence Sh_cons(X_ét, S) ≃ Fun^cts(Gal(X), S_cons) for a scheme X", "modality": "stated", "locator": "Theorem 3"}
+{"subject": "Theorem 3", "relation": "depends-on", "object": "Theorem 2", "modality": "stated", "locator": "Theorem 3"}
+{"subject": "Theorem 3", "relation": "specialises", "object": "Theorem 2", "modality": "stated", "locator": "Theorem 3"}
+{"subject": "Theorem 3", "relation": "generalises", "object": "Theorem 0 (Barwick–Glasman–Haine)", "modality": "stated", "locator": "Theorem 3"}
+{"subject": "Theorem 4", "relation": "proves", "object": "the functor Gal: Sch → Cond(Cat_∞) is a pro-étale hypercosheaf", "modality": "stated", "locator": "Theorem 4"}
+{"subject": "Stone_{/X}^{loc coh}", "relation": "defines", "object": "Grothendieck construction of Gal(X): ProFin^op → Cat, fibred over ProFin", "modality": "stated", "locator": "Theorem 5"}
+{"subject": "Stone_{/X}^{loc coh}", "relation": "equivalent-to", "object": "category of w-strictly local schemes that are limits of affine schemes in Et_{/X}", "modality": "stated", "locator": "Theorem 5"}
+{"subject": "Lemma 1.1.9", "relation": "proves", "object": "size(π_0(X)) ≤ size(X) for a qcqs scheme X, with π_0(X) the profinite set of connected components", "modality": "stated", "locator": "Lemma 1.1.9"}
+{"subject": "Lemma 1.2.3", "relation": "proves", "object": "an acyclic scheme W is affine", "modality": "stated", "locator": "Lemma 1.2.3(a)"}
+{"subject": "Lemma 1.2.3", "relation": "proves", "object": "every intersection of clopen subschemes of an acyclic scheme W is acyclic", "modality": "stated", "locator": "Lemma 1.2.3(b)"}
+{"subject": "Lemma 1.2.3", "relation": "proves", "object": "every connected component of an acyclic scheme W is the spectrum of a strictly Henselian local ring with a unique closed point whose residue field is separably algebraically closed", "modality": "stated", "locator": "Lemma 1.2.3(c)"}
+{"subject": "Lemma 1.2.3", "relation": "proves", "object": "for an acyclic scheme W, the composite W^cl → W → π_0(W) is a homeomorphism", "modality": "stated", "locator": "Lemma 1.2.3(d)"}

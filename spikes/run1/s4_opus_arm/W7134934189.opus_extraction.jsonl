@@ -1,0 +1,26 @@
+{"subject": "Theorem A (3.7)", "relation": "proves", "object": "the left Kan extension of the restriction functor Cond^open(An) -> Cond(An) induces a fractured ∞-topos structure on Cond(An), as an equivalence onto a subcategory whose inclusion is a fractured structure", "modality": "stated", "locator": "Theorem A (3.7)"}
+{"subject": "Theorem 3.7", "relation": "proves", "object": "the functor Cond^open(An) -> Cond(An) induces an equivalence onto a fractured subcategory", "modality": "stated", "locator": "Theorem 3.7"}
+{"subject": "Cond^open(An)_{/ ̌_open S}", "relation": "equivalent-to", "object": "Shv(S), for every S in ExtrDisc", "modality": "stated", "locator": "Theorem B (3.11)"}
+{"subject": "Proposition 3.11", "relation": "proves", "object": "chained equivalences give η_S: Shv(S) ≃ Cond^open(An)_{/ ̌_open(S)}", "modality": "stated", "locator": "Proposition 3.11"}
+{"subject": "Theorem C (3.14)", "relation": "proves", "object": "the points Cond(An) -> An, F ↦ colim_{U ⊆ S clopen, s ∈ U} F(U), indexed by S in ExtrDisc and s in S, are jointly conservative", "modality": "stated", "locator": "Theorem C (3.14)"}
+{"subject": "Theorem D (4.13)", "relation": "proves", "object": "ExtrDisc does not admit all fibers", "modality": "stated", "locator": "Theorem D (4.13)"}
+{"subject": "fiber of βπ_1: β(N×N) -> βN over p ∈ βN \\ N", "relation": "counterexample-to", "object": "ExtrDisc admits all fibers", "modality": "stated", "locator": "Theorem D (4.13)"}
+{"subject": "fracture subcategory", "relation": "defines", "object": "a subcategory j_!: X^corp -> X of an ∞-topos that is closed under equivalences, admits pullbacks preserved by j_!, where j_! has a conservative, small-colimit-preserving right adjoint j^*, and where the counit-induced squares are pullbacks", "modality": "stated", "locator": "Definition 2.1"}
+{"subject": "fractured ∞-topos", "relation": "defines", "object": "a pair X^corp -> X where X^corp is a fracture subcategory of X", "modality": "stated", "locator": "Definition 2.1"}
+{"subject": "corporeal", "relation": "defines", "object": "objects of X^corp in a fractured ∞-topos", "modality": "stated", "locator": "Definition 2.1"}
+{"subject": "Lemma 2.4", "relation": "proves", "object": "for a fractured ∞-topos, (j_!, j^*) is monadic, (j^*, j_*) is comonadic, and j^* creates all limits and colimits", "modality": "stated", "locator": "Lemma 2.4"}
+{"subject": "Theorem 2.7", "relation": "proves", "object": "for a geometric site (C, C^ad, τ), precomposition with j induces an adjunction j_! ⊣ j^* between Shv_{τ^ad}(C^ad) and Shv_τ(C), and j_! is an equivalence onto a fracture subcategory of Shv_τ(C)", "modality": "stated", "locator": "Theorem 2.7"}
+{"subject": "Proposition 2.8", "relation": "proves", "object": "if {x_i} are jointly conservative points of X^corp, then {j_* ∘ x_i} are jointly conservative points of X", "modality": "stated", "locator": "Proposition 2.8"}
+{"subject": "Corollary 2.10", "relation": "proves", "object": "a fractured ∞-topos X^corp -> X whose X^corp has enough points has hypercomplete X", "modality": "stated", "locator": "Corollary 2.10"}
+{"subject": "Cond(An)", "relation": "defines", "object": "Shv_An(ExtrDisc_κ)", "modality": "stated", "locator": "Definition 2.11"}
+{"subject": "ExtrDisc", "relation": "proves", "object": "does not have binary products of infinite extremally disconnected spaces", "modality": "stated", "locator": "Remark 2.12"}
+{"subject": "Remark 2.12", "relation": "proves", "object": "every convergent sequence in an extremally disconnected space is eventually constant", "modality": "stated", "locator": "Remark 2.12"}
+{"subject": "Remark 2.12", "relation": "proves", "object": "every extremally disconnected space is a retract of the Stone–Čech compactification of a discrete space", "modality": "stated", "locator": "Remark 2.12"}
+{"subject": "condensed anima", "relation": "equivalent-to", "object": "finite-product-preserving functor ExtrDisc^op -> An", "modality": "stated", "locator": "Lemma 2.14"}
+{"subject": "Corollary 3.8", "relation": "proves", "object": "Cond(An) is (co)monadic over Cond^open(An), and j^* creates all (co)limits", "modality": "stated", "locator": "Corollary 3.8"}
+{"subject": "Lemma 3.13", "relation": "proves", "object": "Shv(S) is hypercomplete for S in ProFin", "modality": "stated", "locator": "Lemma 3.13"}
+{"subject": "Corollary 3.15", "relation": "proves", "object": "the ∞-topos Cond(An) = Shv_An(ExtrDisc) is hypercomplete", "modality": "stated", "locator": "Corollary 3.15"}
+{"subject": "Corollary 3.16", "relation": "proves", "object": "for S in ExtrDisc, the shapes of Shv(S) and Cond(An)_{/ ̌S} coincide and equal the underlying homotopy type of S", "modality": "stated", "locator": "Corollary 3.16"}
+{"subject": "Corollary 3.18", "relation": "proves", "object": "condensed cohomology and sheaf cohomology over Z agree for extremally disconnected spaces", "modality": "stated", "locator": "Corollary 3.18"}
+{"subject": "Corollary 3.20", "relation": "proves", "object": "extremally disconnected spaces are compact in Cond(An)", "modality": "stated", "locator": "Corollary 3.20"}
+{"subject": "Remark 4.1", "relation": "proves", "object": "every truncated sheaf on ProFin, and likewise on CHaus, is hypercomplete", "modality": "cited", "locator": "Remark 4.1 ([32, Lemma 6.5.2.9])"}
