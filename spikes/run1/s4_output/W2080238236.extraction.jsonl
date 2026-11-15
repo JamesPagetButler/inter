@@ -1,0 +1,35 @@
+{"subject":"S^N","relation":"defines","object":"Spin(N+1)/Spin(N)","modality":"stated","locator":"Introduction"}
+{"subject":"H^N","relation":"defines","object":"Spin(N,1)/Spin(N)","modality":"stated","locator":"Introduction"}
+{"subject":"eigenfunctions of the Laplacian for transverse-traceless totally-symmetric tensor fields","relation":"proves","object":"eigenfunctions of the Laplacian for transverse-traceless totally-symmetric tensor fields","modality":"cited","locator":"Introduction"}
+{"subject":"eigenfunctions of the Laplacian for totally-antisymmetric tensor fields (p-forms)","relation":"proves","object":"eigenfunctions of the Laplacian for totally-antisymmetric tensor fields (p-forms)","modality":"cited","locator":"Introduction"}
+{"subject":"Dirac equation","relation":"defines","object":"not\\!\\nabla\\psi = i\\lambda\\psi","modality":"stated","locator":"Eq. (3.14)"}
+{"subject":"Dirac operator on S^N in warped-product form","relation":"proves","object":"not\\!\\nabla\\psi=(\\partial_\\theta+\\rho\\cot\\theta)\\Gamma^N\\psi+\\frac{1}{\\sin\\theta}\\tilde{\\not\\nabla}\\psi","modality":"stated","locator":"Eq. (3.56)"}
+{"subject":"not\\!\\nabla^2 on S^N","relation":"proves","object":"not\\!\\nabla^2\\psi=(\\partial_\\theta+\\rho\\cot\\theta)^2\\psi+\\frac{1}{\\sin^2\\theta}\\tilde{\\not\\nabla}^2\\psi-\\frac{\\cos\\theta}{\\sin^2\\theta}\\Gamma^N\\tilde{\\not\\nabla}\\psi","modality":"stated","locator":"Eq. (3.58)"}
+{"subject":"Gamma^N and tilde-not-nabla","relation":"proves","object":"Gamma^N tilde-not-nabla + tilde-not-nabla Gamma^N = 0","modality":"stated","locator":"Eq. (3.57)"}
+{"subject":"k","relation":"defines","object":"k = l + rho, l = 0,1,...","modality":"stated","locator":"Eq. (3.61)"}
+{"subject":"Dirac eigenvalue on S^N","relation":"proves","object":"lambda_{n,N}^2 = (n + N/2)^2","modality":"stated","locator":"Eq. (3.28)"}
+{"subject":"psi^{(s)}_{±nlm}","relation":"proves","object":"not\\!\\nabla psi^{(s)}_{±nlm} = ±i(n+N/2) psi^{(s)}_{±nlm}","modality":"stated","locator":"Eq. (3.40)"}
+{"subject":"phi_{nl}(theta)","relation":"proves","object":"phi_{nl}(theta) = (cos(theta/2))^{l+1}(sin(theta/2))^l P^{(N/2+l-1,N/2+l)}_{n-l}(cos theta)","modality":"stated","locator":"Eq. (3.27)"}
+{"subject":"D operator (Laplacian-type form)","relation":"equivalent-to","object":"second-order form of D in theta with Jacobi-type potential","modality":"stated","locator":"Eq. (3.23)"}
+{"subject":"psi_{nl}(theta)","relation":"equivalent-to","object":"(-1)^{n-l} phi_{nl}(pi - theta)","modality":"stated","locator":"Eq. (3.29)"}
+{"subject":"separated radial equations for phi_{nl} and psi_{nl}","relation":"proves","object":"first-order coupled system for phi_{nl} and psi_{nl}","modality":"stated","locator":"Eq. (3.31)"}
+{"subject":"normalisation constant |c_N(nl)|^{-2}","relation":"equivalent-to","object":"integral of sin^{N-1} theta times (phi_{nl}^2 + psi_{nl}^2)","modality":"stated","locator":"Eq. (3.43)"}
+{"subject":"normalisation constant |c_N(nl)|^{-2}","relation":"proves","object":"|c_N(nl)|^{-2} = 2^{N-2}|Gamma(N/2+n)|^2 / ((n-l)! (N+n+l-1)!)","modality":"stated","locator":"Eq. (3.44)"}
+{"subject":"psi^{(s)}_{nlm} orthonormality on S^N","relation":"proves","object":"delta_{nn'} delta_{ll'} delta_{mm'} delta_{ss'}","modality":"stated","locator":"Eq. (3.41)"}
+{"subject":"D_N(n) (degeneracy, first form)","relation":"proves","object":"D_N(n) = 2^{N/2}(N+n-1)!/(n!(N-1)!)","modality":"stated","locator":"Eq. (3.54)"}
+{"subject":"D_N(n) (degeneracy, second form)","relation":"proves","object":"D_N(n) = 2^{(N-1)/2}(N+n-1)!/(n!(N-1)!)","modality":"stated","locator":"Eq. (3.68)"}
+{"subject":"analytic continuation theta -> iy, n -> -i lambda - N/2","relation":"uses-technique","object":"hyperbolic eigenfunctions phi_{lambda l}(y), psi_{lambda l}(y) on H^N","modality":"stated","locator":"Eq. (3.69)"}
+{"subject":"phi_{lambda l}(y)","relation":"defines","object":"hypergeometric expression for H^N radial eigenfunction phi_{lambda l}","modality":"stated","locator":"Eq. (3.70)"}
+{"subject":"c_l(lambda)","relation":"defines","object":"c_l(lambda) = 2^{N-2}/sqrt(pi) * Gamma(N/2+l) Gamma(1/2+i lambda)/Gamma(N/2+l+i lambda)","modality":"stated","locator":"Eq. (3.76)"}
+{"subject":"mu(lambda)","relation":"equivalent-to","object":"|c_0(lambda)|^{-2}","modality":"stated","locator":"Eq. (3.79)"}
+{"subject":"mu(lambda)","relation":"proves","object":"explicit product formula for mu(lambda) for N odd and N even","modality":"stated","locator":"Eq. (3.80)"}
+{"subject":"continuous orthonormality on H^N","relation":"proves","object":"delta(lambda - lambda') delta_{ll'} delta_{mm'} delta_{ss'}","modality":"stated","locator":"Eq. (4.22)"}
+{"subject":"heat kernel K on S^N","relation":"proves","object":"spectral sum K = sum |c_N|^2 [phi phi chi chi + psi psi chi chi] e^{-t(n+N/2)^2}","modality":"stated","locator":"Eq. (4.5)"}
+{"subject":"heat kernel K(x,x',t) on S^N","relation":"proves","object":"K(x,x',t) = U(x,x') f_N(d(x,x'),t)","modality":"stated","locator":"Eq. (4.15)"}
+{"subject":"f_N(theta,t)","relation":"proves","object":"f_N(theta,t) = (1/Omega_N) sum_n d_n phi_n(theta) e^{-t(n+N/2)^2}","modality":"stated","locator":"Eq. (4.12)"}
+{"subject":"heat kernel on H^N","relation":"proves","object":"hat f_N(y,t) = 2^{N-3}Gamma(N/2)/pi^{N/2+1} integral phi_lambda(y) e^{-t lambda^2} mu(lambda) dlambda","modality":"stated","locator":"Eq. (4.26)"}
+{"subject":"Casimir relation for homogeneous-space eigenvalues","relation":"proves","object":"-omega_lambda = C_2(tau) - C_2(lambda)","modality":"stated","locator":"Eq. (5.6)"}
+{"subject":"heat kernel K(x,y,t) on U/K","relation":"proves","object":"K(x,y,t) = (1/d_tau) sum_lambda d_lambda phi_lambda(x,y) e^{-t omega_lambda}","modality":"stated","locator":"Eq. (5.16)"}
+{"subject":"trace of heat kernel","relation":"proves","object":"Tr[K(x_0,x,t)U(x,x_0)] = (1/d_tau) sum_lambda d_lambda phi^lambda_tau(sigma(x)) e^{-t omega_lambda}","modality":"stated","locator":"Eq. (5.23)"}
+{"subject":"Peter-Weyl-type expansion of spinor fields on U/K","relation":"uses-technique","object":"sum over irreducible representations lambda of U with Fourier coefficients","modality":"stated","locator":"Eq. (5.3)"}
+{"subject":"integration formula on U/K","relation":"uses-technique","object":"Haar-measure decomposition int_{U/K} f dx = c int_{K/M} int_{Q_0} f(...) J^2(h) dh dk_M","modality":"stated","locator":"Eq. (5.26)"}
