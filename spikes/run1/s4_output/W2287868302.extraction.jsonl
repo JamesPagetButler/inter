@@ -1,0 +1,30 @@
+{"subject": "m-pseudocoherent R-module", "relation": "defines", "object": "R-module admitting a projective resolution with P_i finitely generated for all i ≤ m", "modality": "stated", "locator": "Definition 1.1.1"}
+{"subject": "pseudocoherent", "relation": "defines", "object": "∞-pseudocoherent", "modality": "stated", "locator": "Definition 1.1.1"}
+{"subject": "m-fpd R-module", "relation": "defines", "object": "R-module with a finite projective resolution with P_i = 0 for all i > m", "modality": "stated", "locator": "Definition 1.1.1"}
+{"subject": "fpd R-module", "relation": "equivalent-to", "object": "singleton complex 0 → M → 0 is perfect in the derived category", "modality": "stated", "locator": "Remark 1.1.2"}
+{"subject": "tensor product of m-pseudocoherent modules", "relation": "proves", "object": "m-pseudocoherent", "modality": "stated", "locator": "Remark 1.1.3"}
+{"subject": "tensor product of m-fpd and n-fpd modules", "relation": "proves", "object": "(m+n)-fpd", "modality": "stated", "locator": "Remark 1.1.3"}
+{"subject": "R/fR for a non-zero-divisor f", "relation": "proves", "object": "R/fR is 1-fpd", "modality": "stated", "locator": "Remark 1.1.6"}
+{"subject": "M/fM for m-pseudocoherent M", "relation": "proves", "object": "m-pseudocoherent", "modality": "stated", "locator": "Remark 1.1.6"}
+{"subject": "M[f] for m-pseudocoherent M", "relation": "proves", "object": "(m-2)-pseudocoherent", "modality": "stated", "locator": "Remark 1.1.6"}
+{"subject": "Lemma 1.1.5", "relation": "proves", "object": "two-out-of-three property for pseudocoherent and fpd modules in a short exact sequence", "modality": "stated", "locator": "Lemma 1.1.5"}
+{"subject": "Lemma 1.1.7", "relation": "proves", "object": "stabilization of a sequence of surjections of pseudocoherent modules when the f-torsion-free quotients and mod-f quotients stabilize", "modality": "stated", "locator": "Lemma 1.1.7"}
+{"subject": "coherent ring", "relation": "equivalent-to", "object": "pseudocoherent R-modules form an abelian category", "modality": "stated", "locator": "Remark 1.1.8"}
+{"subject": "every pseudocoherent R-module is m-fpd", "relation": "depends-on", "object": "R regular of finite dimension m", "modality": "cited", "locator": "Remark 1.1.8"}
+{"subject": "direct limit of coherent rings with flat transition maps", "relation": "proves", "object": "coherent ring", "modality": "cited", "locator": "Remark 1.1.9"}
+{"subject": "R complete and separated with respect to non-zero-divisor f with R/fR noetherian", "relation": "proves", "object": "R is noetherian", "modality": "stated", "locator": "Remark 1.1.10"}
+{"subject": "Prüfer domain", "relation": "proves", "object": "R is coherent", "modality": "stated", "locator": "Remark 1.1.11"}
+{"subject": "finitely generated torsion-free module over a Prüfer domain", "relation": "proves", "object": "finitely generated torsion-free module is projective", "modality": "cited", "locator": "Remark 1.1.11"}
+{"subject": "base extension along flat S", "relation": "proves", "object": "m-pseudocoherent and m-fpd modules are taken to m-pseudocoherent and m-fpd S-modules", "modality": "stated", "locator": "Remark 1.1.13"}
+{"subject": "base extension of m-pseudocoherent modules for m ≤ 1", "relation": "proves", "object": "m-pseudocoherent over S", "modality": "stated", "locator": "Remark 1.1.13"}
+{"subject": "Example 1.1.14 (K[x,y], S = R/(xy))", "relation": "counterexample-to", "object": "base extension of fpd modules is fpd over S when S is fpd over R", "modality": "stated", "locator": "Example 1.1.14"}
+{"subject": "flatness of S over R", "relation": "equivalent-to", "object": "Tor_1^R(P,S) = 0 for every 1-pseudocoherent P", "modality": "stated", "locator": "Remark 1.1.15"}
+{"subject": "metrizable topological abelian group", "relation": "defines", "object": "Hausdorff topological abelian group with a countable fundamental system of open neighbourhoods of 0", "modality": "stated", "locator": "Definition 1.2.1"}
+{"subject": "natural topology on a finitely generated R-module", "relation": "defines", "object": "quotient topology induced by a surjection R^n → M", "modality": "stated", "locator": "Definition 1.2.2"}
+{"subject": "finitely generated R-module M with natural topology, Hausdorff", "relation": "proves", "object": "kernel K is closed and M is complete", "modality": "stated", "locator": "Remark 1.2.3"}
+{"subject": "Cherbonnier–Colmez descent", "relation": "proves", "object": "(φ,Γ)-modules over W^†(F) descend uniquely to o_E^†", "modality": "cited", "locator": "§0.3"}
+{"subject": "field of norms construction", "relation": "uses-technique", "object": "Fontaine–Wintenberger field of norms applied to K_∞", "modality": "cited", "locator": "§0.1"}
+{"subject": "pro-étale topology on adic spaces over Q_p", "relation": "uses-technique", "object": "Scholze's pro-étale site with sheaves of perfect period rings", "modality": "cited", "locator": "§0.2"}
+{"subject": "pseudocoherent R-modules", "relation": "defines", "object": "modules admitting infinite projective resolutions by finitely generated projective modules", "modality": "cited", "locator": "§0.5"}
+{"subject": "pseudocoherent Ô-modules on the pro-étale site of a rigid analytic space", "relation": "proves", "object": "category is abelian, satisfies ACC, and is stable under Hom, tensor product and pullback", "modality": "stated", "locator": "§0.6"}
+{"subject": "pseudocoherent (φ,Γ)-modules", "relation": "proves", "object": "same stability properties as pseudocoherent Ô-modules", "modality": "stated", "locator": "§8.10"}
