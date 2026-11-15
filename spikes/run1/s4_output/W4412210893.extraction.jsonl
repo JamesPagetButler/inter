@@ -1,0 +1,38 @@
+{"subject":"bounded maps from any set to the integers form a free abelian group (original statement [14, Satz 1])","relation":"generalises","object":"Nöbeling's theorem (Theorem 18)","modality":"cited","locator":"Section 1"}
+{"subject":"Nöbeling's theorem (Theorem 18)","relation":"uses-technique","object":"condensed mathematics ([16, Theorem 5.4])","modality":"cited","locator":"Section 1"}
+{"subject":"theory of solid abelian groups","relation":"depends-on","object":"Nöbeling's theorem","modality":"stated","locator":"Abstract"}
+{"subject":"solid condensed abelian group","relation":"defines","object":"condensed abelian group A such that every morphism Z[S]→A factors uniquely through Z[S]^■","modality":"stated","locator":"Definition 1"}
+{"subject":"Z[S]^■","relation":"defines","object":"lim_i Z[S_i] for S = lim_i S_i a profinite space","modality":"stated","locator":"Definition 1"}
+{"subject":"directed I-indexed family","relation":"defines","object":"family in which any i,j have k with r(x_i,x_k) and r(x_j,x_k)","modality":"stated","locator":"Definition 2"}
+{"subject":"Lemma 3","relation":"proves","object":"a monotone map on a poset with joins is directed","modality":"stated","locator":"Lemma 3"}
+{"subject":"union of two sets","relation":"specialises","object":"join operation","modality":"stated","locator":"Remark 4"}
+{"subject":"filtered category","relation":"defines","object":"nonempty category with conditions (2) and (3) of Definition 5","modality":"stated","locator":"Definition 5"}
+{"subject":"filtered poset","relation":"equivalent-to","object":"nonempty directed poset","modality":"stated","locator":"Remark 6"}
+{"subject":"Remark 7","relation":"proves","object":"the poset of finite subsets of a given set is filtered","modality":"stated","locator":"Remark 7"}
+{"subject":"Lemma 8","relation":"proves","object":"union of a directed family of linearly independent subsets is linearly independent","modality":"stated","locator":"Lemma 8"}
+{"subject":"profinite space","relation":"defines","object":"totally disconnected compact Hausdorff space","modality":"stated","locator":"Definition 12"}
+{"subject":"Lemma 14","relation":"proves","object":"every profinite space is totally separated","modality":"stated","locator":"Lemma 14"}
+{"subject":"profinite space","relation":"equivalent-to","object":"cofiltered limit of finite discrete spaces","modality":"stated","locator":"Theorem 42"}
+{"subject":"Lemma 16","relation":"proves","object":"continuous maps from a cofiltered limit of profinite spaces to a discrete space factor through a component","modality":"stated","locator":"Lemma 16"}
+{"subject":"Remark 17","relation":"depends-on","object":"Lemma 16","modality":"stated","locator":"Remark 17"}
+{"subject":"Theorem 10 (Cantor's intersection theorem)","relation":"generalises","object":"Cantor's intersection theorem for decreasing nested sequences of nonempty compact closed sets","modality":"stated","locator":"Remark 11"}
+{"subject":"Theorem 10 (Cantor's intersection theorem)","relation":"uses-technique","object":"standard proof of the nested-sequence case of Cantor's intersection theorem","modality":"stated","locator":"Remark 11"}
+{"subject":"Lemma 19","relation":"proves","object":"C(S,Z) is a free abelian group for S a closed subset of the product of {0,1} over I","modality":"stated","locator":"Lemma 19"}
+{"subject":"ev_S(p)","relation":"defines","object":"function on S equal to 1 if all i in p have x_i=1 and 0 otherwise","modality":"stated","locator":"Lemma 20"}
+{"subject":"Lemma 21","relation":"proves","object":"pi_J^*(ev_{S_J}(p)) = ev_S(p) when all i in p lie in J","modality":"stated","locator":"Lemma 21"}
+{"subject":"Lemma 23","relation":"proves","object":"E(S_{μ'}) is contained in E(S_μ) whenever μ' < μ","modality":"stated","locator":"Lemma 23"}
+{"subject":"Lemma 24","relation":"proves","object":"the set P is well-ordered","modality":"stated","locator":"Lemma 24"}
+{"subject":"Lemma 26","relation":"proves","object":"if ev_S(P) spans C(S,Z) then ev_S(E(S)) spans C(S,Z)","modality":"stated","locator":"Lemma 26"}
+{"subject":"Lemma 27","relation":"proves","object":"S is homeomorphic to the limit of the functor F sending J to S_J","modality":"stated","locator":"Lemma 27"}
+{"subject":"Lemma 28","relation":"proves","object":"ev_{S_J}(E(S_J)) spans C(S_J,Z) for finite J","modality":"stated","locator":"Lemma 28"}
+{"subject":"Lemma 31","relation":"proves","object":"the base case Q(0) of the induction holds","modality":"stated","locator":"Lemma 31"}
+{"subject":"predicate Q","relation":"defines","object":"for all closed S in the product of {0,1} over I bounded by μ, E(S) is linearly independent in C(S,Z)","modality":"stated","locator":"Notation 30"}
+{"subject":"Lemma 32","relation":"proves","object":"pi_{μ'}^*(ev_{S_{μ'}}({q in P | q<p})) = ev_{S_μ}({q in P | q<p}) for μ'<μ","modality":"stated","locator":"Lemma 32"}
+{"subject":"Lemma 33","relation":"proves","object":"E(S_μ) is the union of E(S_{μ'}) over μ'<μ","modality":"stated","locator":"Lemma 33"}
+{"subject":"Lemma 34","relation":"proves","object":"ev_{S_μ}(E(S_μ)) is the union of pi_{μ'}^*(ev_{S_{μ'}}(E(S_{μ'}))) over μ'<μ","modality":"stated","locator":"Lemma 34"}
+{"subject":"S'","relation":"defines","object":"S_0 intersected with the projection of S_1 onto the coordinates other than μ","modality":"stated","locator":"Construction 35"}
+{"subject":"g","relation":"defines","object":"g_1^* - g_0^*: C(S,Z) → C(S',Z), where g_0 is inclusion and g_1 swaps coordinate μ to 1","modality":"stated","locator":"Construction 36"}
+{"subject":"top row of diagram (1)","relation":"proves","object":"the top row is exact","modality":"stated","locator":"Lemma 37"}
+{"subject":"Lemma 38","relation":"proves","object":"if p in P starts with μ then g(ev_S(p)) = ev_{S'}(p^t)","modality":"stated","locator":"Lemma 38"}
+{"subject":"Lemma 40","relation":"proves","object":"if p in E(S) and μ in p then p^t lies in E(S')","modality":"stated","locator":"Lemma 40"}
+{"subject":"Lemma 41","relation":"proves","object":"E(S) is the disjoint union of E(S_μ) and E'(S) = {p in E(S) | μ in p}","modality":"stated","locator":"Lemma 41"}
