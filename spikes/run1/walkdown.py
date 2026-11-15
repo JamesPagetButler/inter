@@ -92,10 +92,35 @@ def last_paper_status_reason(oaid):
 
 
 def main():
+    a2_continue = "--a2-continue" in sys.argv  # qbp-architecture seq 156/160:
+    # signatory-agreed continuation past a drift-only mismatch, held for the
+    # beekeeper's written approval -- this flag is the gate; default is the
+    # unmodified A1 §3.1 stop-on-mismatch behavior.
+
     with open(EXISTING_OUT) as f:
         existing = json.load(f)
     existing_selected = existing["selected_final"]
     domain_of_existing = {c["openalex_id"]: c["domain"] for c in existing_selected}
+
+    # A2 point 2 (qbp-architecture seq 160): exclude both sides of every
+    # committed dedup pair, not just the kept (committed-99) side.
+    excluded_dedup_ids = set()
+    for m in existing.get("dedup_merges", []):
+        excluded_dedup_ids.add(m["kept"])
+        excluded_dedup_ids.add(m["dropped"])
+
+    # Skip ids already tried in a prior attempt of this walk-down phase
+    # (contextus-spike seq 159/160) -- read back from walkdown_log.jsonl,
+    # since the fan-out/reproduce phase itself has no checkpoint.
+    already_attempted_ids = set()
+    if os.path.exists(WALKDOWN_LOG):
+        with open(WALKDOWN_LOG) as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                ev = json.loads(line)
+                if ev.get("kind") == "candidate_tried":
+                    already_attempted_ids.add(ev["openalex_id"])
 
     with open(MANIFEST) as f:
         manifest = [json.loads(l) for l in f if l.strip()]
@@ -150,10 +175,14 @@ def main():
 
     if not match:
         log_wd({"kind": "REPRODUCE_MISMATCH", "old_count": len(old_tuples), "new_count": len(new_tuples)})
-        print(json.dumps({"reproduce": "MISMATCH", "diff": diff}, indent=2))
-        sys.exit(2)
-    log_wd({"kind": "reproduce_ok", "n": len(old_tuples)})
-    print(f"REPRODUCE: exact match, {len(old_tuples)} papers", file=sys.stderr, flush=True)
+        if not a2_continue:
+            print(json.dumps({"reproduce": "MISMATCH", "diff": diff}, indent=2))
+            sys.exit(2)
+        log_wd({"kind": "A2_CONTINUE_PAST_MISMATCH", "diff": diff})
+        print(f"REPRODUCE: MISMATCH, continuing under beekeeper-approved A2 ({len(diff['old_only'])} swapped)", file=sys.stderr, flush=True)
+    else:
+        log_wd({"kind": "reproduce_ok", "n": len(old_tuples)})
+        print(f"REPRODUCE: exact match, {len(old_tuples)} papers", file=sys.stderr, flush=True)
 
     zero_statement_found = []
     tried = {"math": 0, "physics": 0}
@@ -170,6 +199,10 @@ def main():
                 for wid in batch:
                     if wid in domain_of_existing:
                         continue  # already tried as part of the original 99/100
+                    if wid in excluded_dedup_ids:
+                        continue  # A2 point 2: either side of a committed dedup pair
+                    if wid in already_attempted_ids:
+                        continue  # already tried in a prior attempt of this phase
                     if accessible_count[dom] >= TARGET_PER_DOMAIN:
                         break
                     tried[dom] += 1
