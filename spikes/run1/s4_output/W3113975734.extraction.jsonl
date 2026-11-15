@@ -1,0 +1,27 @@
+{"subject": "X_proet^hyp", "relation": "equivalent-to", "object": "Fun^cts(Gal(X), Pyk(S))", "modality": "stated", "locator": "Corollary 1.2"}
+{"subject": "X^pyk", "relation": "equivalent-to", "object": "Fun^cts(Pi-hat^S_(∞,1)(X), Pyk(S))", "modality": "stated", "locator": "Theorem 1.1"}
+{"subject": "Fun^cts(Gal(X), S_π^disc)", "relation": "equivalent-to", "object": "X_et^constr", "modality": "cited", "locator": "Introduction, Main results and background (exodromy equivalence, [1, Corollary 0.5.2, Corollary 13.6.3])"}
+{"subject": "Fun^cts(Pi-hat^S_(∞,1)(X), S_π^disc)", "relation": "equivalent-to", "object": "X^{S-constr}", "modality": "cited", "locator": "Introduction, Main results and background (Barwick–Glasman–Haine, [1, Theorem 0.4.7 and Definition 9.4.7])"}
+{"subject": "Corollary 4.18", "relation": "generalises", "object": "[3, Corollary 6.1.5]", "modality": "stated", "locator": "Introduction, Main results and background"}
+{"subject": "local weak contractibility of the pro-étale topos", "relation": "depends-on", "object": "main result of Section 5", "modality": "stated", "locator": "Introduction, Main results and background"}
+{"subject": "X^pyk", "relation": "defines", "object": "Sh^hyp_eff(Pro(X^coh_<∞))", "modality": "stated", "locator": "Definition 2.10"}
+{"subject": "pyknotification", "relation": "equivalent-to", "object": "solidification", "modality": "cited", "locator": "Remark 2.11"}
+{"subject": "X_et^pyk", "relation": "equivalent-to", "object": "X_proet^hyp", "modality": "cited", "locator": "Example 2.13"}
+{"subject": "S^pyk", "relation": "equivalent-to", "object": "Pyk(S)", "modality": "stated", "locator": "Example 2.12"}
+{"subject": "X_et^coh_<∞", "relation": "equivalent-to", "object": "X_et^constr", "modality": "stated", "locator": "Example 2.3"}
+{"subject": "Proposition 2.6", "relation": "proves", "object": "factorization system (S_L, S_R) on an ∞-pretopos X_0 with S_L the effective epimorphisms and S_R the (-1)-truncated morphisms", "modality": "stated", "locator": "Proposition 2.6"}
+{"subject": "Proposition 2.7(i)", "relation": "proves", "object": "factorization system on Pro(X_0) by effective epimorphisms and (-1)-truncated morphisms", "modality": "stated", "locator": "Proposition 2.7"}
+{"subject": "Lemma 2.8", "relation": "proves", "object": "universality of finite coproducts in Pro(X_0)", "modality": "stated", "locator": "Lemma 2.8"}
+{"subject": "Corollary 2.9", "relation": "defines", "object": "effective epimorphism topology on Pro(X_0)", "modality": "stated", "locator": "Corollary 2.9"}
+{"subject": "∞-pretopos", "relation": "defines", "object": "conditions (i)-(iii) on finite limits, universal disjoint finite coproducts, and effective groupoid objects with universal geometric realizations", "modality": "cited", "locator": "Recollection 2.2"}
+{"subject": "Definition 3.1", "relation": "defines", "object": "Pyk(C) = Fun^×(Proj^op, C)", "modality": "stated", "locator": "Definition 3.1"}
+{"subject": "Pyk(S)", "relation": "defines", "object": "Fun^×(Proj^op, S_δ1)", "modality": "stated", "locator": "Conventions"}
+{"subject": "Definition 3.2", "relation": "defines", "object": "small pyknotic ∞-category", "modality": "stated", "locator": "Definition 3.2"}
+{"subject": "Definition 3.6", "relation": "defines", "object": "Lfib^cts(C) as the full subcategory of Pyk(Cat_∞)_{/C} spanned by left fibrations", "modality": "stated", "locator": "Definition 3.6"}
+{"subject": "maximal subgroupoid of Fun^cts(C, D)", "relation": "equivalent-to", "object": "map_{Pyk(Cat_∞)}(C, D)", "modality": "cited", "locator": "Recollection 3.3"}
+{"subject": "Fun^cts(C, Pyk(S))", "relation": "equivalent-to", "object": "Lfib^cts(C)", "modality": "stated", "locator": "Theorem 3.11"}
+{"subject": "Pyk(S)_{/F}", "relation": "equivalent-to", "object": "Fun^cts(F, Pyk(S))", "modality": "stated", "locator": "Corollary 3.20"}
+{"subject": "Un restricted to Fun(C, S)", "relation": "equivalent-to", "object": "Lfib(C)", "modality": "cited", "locator": "Recollection 3.9"}
+{"subject": "colim over Tw(C) of F(-) × C_{-/}", "relation": "equivalent-to", "object": "Un(F)", "modality": "stated", "locator": "Theorem 3.13"}
+{"subject": "Proposition 3.32", "relation": "proves", "object": "fully faithful embedding Pro(X^{S-constr}) into Fun^cts(Pi-hat^S_(∞,1)(X), Pyk(S))", "modality": "stated", "locator": "Technical outline, Section 4"}
+{"subject": "Section 4", "relation": "proves", "object": "Theorem 1.1", "modality": "stated", "locator": "Technical outline"}
