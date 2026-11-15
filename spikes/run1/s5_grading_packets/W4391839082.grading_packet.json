@@ -1,0 +1,48 @@
+{
+  "paper_id": "W4391839082",
+  "domain": "math",
+  "text_cache_sha256": "08b974fc523731252d905b4d33735470790f2e636ca186f6b7a2033feb13a235",
+  "text": "In this article we discuss how abstraction boundaries can help tame complexity in mathematical research with the help of an interactive theorem prover. While many of the ideas we present here have been used implicitly by mathematicians for some time, we argue that the use of an interactive theorem prover introduces additional qualitative benefits in the implementation of these ideas.\n\n1. Introduction Modern research in pure mathematics has a clear tendency toward increasing complexity. New striking mathematical results may involve complex proof techniques, deep mastery of a subfield within mathematics, or nontrivial input from several areas of mathematics. All of these play a role in increasing the inherent complexity of a piece of modern mathematics. In many respects, such increasing complexity is an indication of progress in pure mathematics. However, with such complexity comes a significant increase in cognitive load for both readers and authors. It is now routine to see significant new papers in pure mathematics with one hundred pages or more. Similarly, the refereeing process of a complex mathematical result regularly takes multiple years. This state of affairs is clearly not sustainable. Mathematicians have long been using the concept of abstraction in order to tame such complexities. For example, they often break down proofs into more manageable steps, such as lemmas, propositions, etc. They also frequently introduce definitions that capture a curated selection of properties satisfied by the objects they wish to study. More generally, it is often helpful to create “abstractions boundaries”, which separate the use of a mathematical object from its actual implementation. Staying within the boundaries of a given abstraction can help reduce cognitive load to some extent, but inherent complexities may nevertheless remain. In this article we discuss how the use of abstraction boundaries, in conjunction with an interactive theorem prover (ITP), can facilitate complex interdisciplinary mathematical collaboration. We argue that the implementation of these ideas within an ITP can have significant qualitative benefits in further reducing cognitive load for both authors and readers. The application of this methodology was a key ingredient in the success of the liquid tensor experiment (LTE), and we use examples from this project to illustrate our primary points. Here is a brief outline of the paper. In §2, we review some aspects of condensed mathematics and LTE, focusing primarily on the topics which are relevant for this paper. In §3, we give a more precise description of what we mean by an abstraction boundary along with a discussion on sources of complexity within mathematics. In §4, we highlight some of the qualitative benefits offered by the use of abstraction boundaries alongside an ITP, while illustrating spec driven development with several examples related to LTE. The issue of aligning formal and informal mathematics using abductive reasoning is addressed in §5. Finally, we summarize and conclude our discussion in §6. Acknowledgements We would like to warmly thank all of the contributors to the liquid tensor experiment for the amazing collaboration and excellent discussions. We thank the Lean community at large for providing the technological and social environments which made this work possible. Many thanks to the referees of this article and the editors of this volume for their comments which helped improve this paper in various ways. Finally, we would like to thank A. Venkatesh for proposing such an exciting topic for his Fields Medal Symposium.\n\nTheorem A (Clausen–Scholze): Let 0 < p ′ < p ≤ 1 0<p^{\\prime}<p\\leq 1 be real numbers and let S S be a profinite set. Let V V be a p p -Banach space, considered as a condensed abelian group. Write ℳ p ′ ​ ( S ) \\mathcal{M}_{p^{\\prime}}(S) for the space of real-valued p ′ p^{\\prime} -measures on S S , also considered as a condensed abelian group. Then Ext Cond ⁡ ( Ab ) i ⁡ ( ℳ p ′ ​ ( S ) , V ) = 0 \\operatorname{Ext}^{i}_{\\operatorname{Cond}(\\mathrm{Ab})}(\\mathcal{M}_{p^{\\prime}}(S),V)=0 for all i ≥ 1 i\\geq 1 .",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "abstraction boundaries",
+      "relation": "uses-technique",
+      "object": "interactive theorem prover",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 2,
+      "subject": "Theorem A (Clausen–Scholze)",
+      "relation": "proves",
+      "object": "Ext^i_{Cond(Ab)}(M_{p'}(S), V) = 0 for all i >= 1, for 0 < p' < p <= 1, S a profinite set, V a p-Banach space considered as a condensed abelian group",
+      "modality": "cited",
+      "locator": "Theorem A"
+    },
+    {
+      "n": 3,
+      "subject": "mathematicians' abstraction (lemmas, propositions, definitions, abstraction boundaries)",
+      "relation": "uses-technique",
+      "object": "breaking proofs into lemmas and propositions",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 4,
+      "subject": "Theorem A (Clausen–Scholze)",
+      "relation": "proves",
+      "object": "Ext^i_{Cond(Ab)}(M_{p'}(S), V) = 0 for all i >= 1, for 0 < p' < p <= 1, S profinite, V a p-Banach space",
+      "modality": "cited",
+      "locator": "Theorem A"
+    },
+    {
+      "n": 5,
+      "subject": "M_{p'}(S)",
+      "relation": "defines",
+      "object": "space of real-valued p'-measures on the profinite set S, considered as a condensed abelian group",
+      "modality": "stated",
+      "locator": "Theorem A"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "paper_id": "W2086216948",
+  "domain": "physics",
+  "text_cache_sha256": "e2c47d775c79b67ed3a3a8c494f2433f1a47035027ef06c6ade302b635df3272",
+  "text": "Eq. (1): d ​ s 2 = g μ ​ ν ​ d ​ x μ ​ d ​ x ν ds^{2}=g_{\\mu\\nu}\\,dx^{\\mu}\\,dx^{\\nu}\n\nEq. (2): d ⁡ ( x , y ) = Inf ∫ x y 𝑑 s . d(x,y)=\\mathop{\\rm Inf}\\nolimits\\int_{x}^{y}ds\\,.\n\nEq. (3): [ [ f , d ​ s − 1 ] , g ] = 0 ∀ f , g ∈ 𝒜 . \\left[[f,ds^{-1}],g\\right]=0\\qquad\\forall\\,f,g\\in{\\cal A}\\,.\n\nEq. (4): χ : 𝒜 → ℂ ; χ ( a + b ) = χ ( a ) + χ ( b ) , χ ( a b ) = χ ( a ) χ ( b ) ∀ a , b ∈ 𝒜 , \\hfil\\displaystyle\\chi:{\\cal A}\\rightarrow{{\\tenbb C}}\\ ;\\ \\chi(a+b)=\\chi(a)+\\chi(b)\\ ,\\ \\chi(ab)=\\chi(a)\\,\\chi(b)\\quad\\forall\\,a,b\\in{\\cal A}\\ , ( 4 ) (4) χ ⁡ ( λ ​ a ) = λ ​ χ ​ ( a ) ∀ λ ∈ ℂ , ∀ a ∈ 𝒜 . \\hfil\\displaystyle\\chi(\\lambda a)=\\lambda\\,\\chi(a)\\quad\\forall\\,\\lambda\\in{{\\tenbb C}}\\ ,\\ \\forall\\,a\\in{\\cal A}\\,.\n\nEq. (5): χ x ​ ( f ) = f ⁡ ( x ) ∀ f ∈ 𝒜 . \\chi_{x}(f)=f(x)\\qquad\\forall\\,f\\in{\\cal A}\\,.\n\nEq. (6): f → f ∗ f\\rightarrow f^{*}\n\nEq. (7): f ∗ ​ ( x ) = f ⁡ ( x ) ¯ ∀ x ∈ M . f^{*}(x)=\\overline{f(x)}\\qquad\\forall\\,x\\in M\\,.\n\nEq. (8): d ​ s ∗ = d ​ s ds^{*}=ds\n\nEq. (9): π ⁡ ( a ∗ ) = π ​ ( a ) ∗ ∀ a ∈ ( 𝒜 , d ​ s ) . \\pi(a^{*})=\\pi(a)^{*}\\qquad\\forall\\,a\\in({\\cal A},ds)\\,.\n\nEq. (10): d ⁡ ( x , y ) = Sup { | f ⁡ ( x ) − f ⁡ ( y ) | ; f ∈ 𝒜 , ‖ [ f , d ​ s − 1 ] ‖ ≤ 1 } d(x,y)=\\mathop{\\rm Sup}\\nolimits\\left\\{|f(x)-f(y)|\\ ;\\ f\\in{\\cal A}\\ ,\\ \\|[f,ds^{-1}]\\|\\leq 1\\right\\}\n\nEq. (11): ( f ​ ξ ) ​ ( x ) = f ⁡ ( x ) ​ ξ ​ ( x ) ∀ f ∈ 𝒜 = C ∞ ​ ( M ) , ∀ ξ ∈ ℋ = L 2 ​ ( M , S ) (f\\,\\xi)(x)=f(x)\\,\\xi(x)\\qquad\\forall\\,f\\in{\\cal A}=C^{\\infty}(M)\\ ,\\ \\forall\\,\\xi\\in{\\cal H}=L^{2}(M,S)\n\nEq. (12): d ​ s = D − 1 , D = 1 − 1 ​ γ μ ​ ∇ μ ds=D^{-1}\\ ,\\ D={1\\over\\sqrt{-1}}\\,\\gamma^{\\mu}\\,\\nabla_{\\mu}\n\nEq. (13): ‖ [ D , f ] ‖ = Sup x ∈ M ‖ ∇ f ‖ . \\|[D,f]\\|=\\ \\mathrel{\\mathop{\\kern 0.0pt\\mathop{\\rm Sup}\\nolimits}\\limits_{x\\in M}}\\|\\nabla f\\|\\,.\n\nEq. (14): Trace ​ ( φ ​ ( d ​ s ℓ p ) ) \\hbox{Trace}\\,\\left(\\varphi\\left({ds\\over\\ell_{p}}\\right)\\right)\n\nEq. (15): 1 → ℤ / 2 → Spin ( 4 ) → S ​ O ​ ( 4 ) → 1 . 1\\rightarrow{{\\tenbb Z}}/2\\rightarrow\\mathop{\\rm Spin}\\nolimits(4)\\rightarrow SO(4)\\rightarrow 1\\,.\n\nEq. (16): α ⁡ ( f ) ​ ( x ) = f ⁡ ( φ − 1 ​ ( x ) ) ∀ x ∈ M , f ∈ C ∞ ​ ( M ) . \\alpha(f)\\,(x)=f(\\varphi^{-1}(x))\\qquad\\forall\\,x\\in M\\ ,\\ f\\in C^{\\infty}(M)\\,.\n\nEq. (17): α u ​ ( f ) = u ​ f ​ u ∗ ∀ f ∈ 𝒜 \\alpha_{u}(f)=u\\,f\\,u^{*}\\qquad\\forall\\,f\\in{\\cal A}\n\nEq. (18): 𝒰 = { u ∈ 𝒜 ; u u ∗ = u ∗ u = 1 } . {\\cal U}=\\{u\\in{\\cal A}\\ ;\\ u\\,u^{*}=u^{*}\\,u=1\\}\\,.\n\nEq. (19): ξ → u ​ J ​ u ​ J − 1 ​ ξ = u ​ ξ ​ u ∗ . \\xi\\rightarrow u\\,J\\,u\\,J^{-1}\\,\\xi=u\\,\\xi\\,u^{*}\\,.\n\nEq. (20): Classical Quantum Complex variable Operator in Hilbert space Real variable Selfadjoint operator, ​ T = T ∗ Infinitesimal variable Compact operator Infinitesimal of order ​ α μ n ​ ( T ) = 0 ​ ( n − α ) Integral ∫ − T = log divergence of the trace of T \\matrix{\\hbox{\\bf Classical}&\\hbox{\\bf Quantum}\\cr\\cr\\hbox{Complex variable}&\\hbox{Operator in Hilbert space}\\cr\\hbox{Real variable}&\\hbox{Selfadjoint operator,}\\ T=T^{*}\\cr\\hbox{Infinitesimal variable}&\\hbox{Compact operator}\\cr\\hbox{Infinitesimal of order}\\ \\alpha&\\mu_{n}(T)=0(n^{-\\alpha})\\cr\\hbox{Integral}&\\int\\!\\!\\!\\!\\!-\\,T=\\log\\ \\hbox{divergence of the trace of}\\ T\\cr}\n\nEq. (21): ∀ ε there exists a finite dimensional subspace E of ℋ \\hfil\\displaystyle\\forall\\,\\varepsilon\\ \\hbox{there exists a finite dimensional subspace}\\ E\\ \\hbox{of}\\ {\\cal H} ( 19 ) (19) such that ​ ‖ T / E ⟂ ‖ < ε where ​ E ⟂ ​ is the orthogonal of ​ E . \\hfil\\displaystyle\\hbox{such that}\\ \\|T/E^{\\perp}\\|<\\varepsilon\\quad\\hbox{where}\\ E^{\\perp}\\ \\hbox{is the orthogonal of}\\ E\\,.\n\nEq. (22): γ = γ ∗ , γ 2 = 1 , γ ​ D = − D ​ γ . \\gamma=\\gamma^{*}\\ ,\\ \\gamma^{2}=1\\ ,\\ \\gamma D=-D\\gamma\\,.\n\nEq. (23): c = ∑ j a j 0 ⊗ a j 1 ⊗ a j 2 ​ … ⊗ a j n c=\\sum_{j}a_{j}^{0}\\otimes a_{j}^{1}\\otimes a_{j}^{2}\\ldots\\otimes a_{j}^{n}\n\nEq. (24): b ⁡ ( a 0 ⊗ a 1 ⊗ … ⊗ a n ) = a 0 ​ a 1 ⊗ a 2 ⊗ … ⊗ a n − a 0 ⊗ a 1 ​ a 2 ⊗ … ⊗ a n \\hfil\\displaystyle b(a^{0}\\otimes a^{1}\\otimes\\ldots\\otimes a^{n})=a^{0}a^{1}\\otimes a^{2}\\otimes\\ldots\\otimes a^{n}-a^{0}\\otimes a^{1}a^{2}\\otimes\\ldots\\otimes a^{n} + … + ( − 1 ) k ​ a 0 ⊗ … ⊗ a k ​ a k + 1 ⊗ … ⊗ a n + … + ( − 1 ) n ​ a n ​ a 0 ⊗ … ⊗ a n − 1 . \\hfil\\displaystyle+\\ldots+(-1)^{k}a^{0}\\otimes\\ldots\\otimes a^{k}a^{k+1}\\otimes\\ldots\\otimes a^{n}+\\ldots+(-1)^{n}a^{n}a^{0}\\otimes\\ldots\\otimes a^{n-1}\\,.\n\nEq. (25): c = ∑ ε ⁡ ( σ ) ​ a 0 ⊗ a σ ⁡ ( 1 ) ⊗ a σ ⁡ ( 2 ) ⊗ … ⊗ a σ ⁡ ( n ) c=\\sum\\varepsilon(\\sigma)\\,a^{0}\\otimes a^{\\sigma(1)}\\otimes a^{\\sigma(2)}\\otimes\\ldots\\otimes a^{\\sigma(n)}\n\nEq. (26): π ⁡ ( a 0 ⊗ a 1 ⊗ … ⊗ a n ) = a 0 ​ [ D , a 1 ] ​ … ​ [ D , a n ] . \\pi(a^{0}\\otimes a^{1}\\otimes\\ldots\\otimes a^{n})=a^{0}[D,a^{1}]\\ldots[D,a^{n}]\\,.\n\nEq. (27): [ D , U ] = U . [D,U]=U\\,.\n\nEq. (28): ⟨ a ​ ξ , η ⟩ = f ​ a ​ ( ξ , η ) ​ d ​ s n ∀ a ∈ 𝒜 , ∀ ξ , η ∈ ℋ ∞ . \\langle a\\,\\xi,\\eta\\rangle=f\\,a(\\xi,\\eta)\\,ds^{n}\\qquad\\forall\\,a\\in{\\cal A}\\ ,\\ \\forall\\,\\xi,\\eta\\in{\\cal H}_{\\infty}\\,.\n\nEq. (29): e = e ∗ , e 2 = e e=e^{*}\\ ,\\ e^{2}=e\n\nEq. (30): ( a ​ ξ ) j = a ​ ξ j ∀ j = 1 , … , n . (a\\,\\xi)_{j}=a\\,\\xi_{j}\\qquad\\forall\\,j=1,\\ldots,n\\,.\n\nEq. (31): ( ξ , η ) = Σ ​ ξ i ​ η i ∗ . (\\xi,\\eta)=\\Sigma\\,\\xi_{i}\\,\\eta_{i}^{*}\\,.\n\nEq. (32): 𝒜 = { T ∈ 𝒜 ′′ ; T ∈ ∩ m > 0 Dom δ m } . {\\cal A}=\\{T\\in{\\cal A}^{\\prime\\prime}\\ ;\\ T\\in\\,\\mathrel{\\mathop{\\kern 0.0pt\\cap}\\limits_{m>0}}\\,\\mathop{\\rm Dom}\\nolimits\\delta^{m}\\}\\,.\n\nEq. (33): Spectrum ​ A = Spectrum ​ 𝒜 . \\hbox{Spectrum}\\,A=\\hbox{Spectrum}\\,{\\cal A}\\,.\n\nEq. (34): π n ​ ( G ​ L ∞ ​ ( 𝒜 ) ) ≅ K n + 1 ​ ( 𝒜 ) \\pi_{n}(GL_{\\infty}({\\cal A}))\\cong K_{n+1}({\\cal A})\n\nEq. (35): 𝒜 ⊗ 𝒜 ⟶ m 𝒜 , m ( x ⊗ y ) = x y ∀ x , y ∈ 𝒜 {\\cal A}\\otimes{\\cal A}\\mathrel{\\mathop{\\kern 0.0pt\\longrightarrow}\\limits^{m}}{\\cal A}\\ ,\\ m(x\\otimes y)=xy\\qquad\\forall\\,x,y\\in{\\cal A}\n\nEq. (36): K ∗ ​ ( 𝒜 ) × K ∗ ​ ( 𝒜 ) → ℤ , K_{*}({\\cal A})\\times K_{*}({\\cal A})\\rightarrow{{\\tenbb Z}}\\,,\n\nEq. (37): ( e , f ) → ⟨ Ind D , m ∗ ​ ( e ⊗ f ) ⟩ . (e,f)\\rightarrow\\langle\\mathop{\\rm Ind}\\nolimits D\\ ,\\ m_{*}(e\\otimes f)\\rangle\\,.\n\nEq. (38): K ∗ ​ ( 𝒜 ) ⟶ ∩ μ K ∗ ​ ( 𝒜 ) K_{*}({\\cal A})\\mathrel{\\mathop{\\kern 0.0pt\\longrightarrow}\\limits^{\\cap\\mu}}K^{*}({\\cal A})\n\nEq. (39): n = n= 0 0 1 1 2 2 3 3 4 4 5 5 6 6 7 7 ε \\varepsilon 1 1 1 1 − 1 -1 − 1 -1 − 1 -1 − 1 -1 1 1 1 1 ε ′ \\varepsilon^{\\prime} 1 1 − 1 -1 1 1 1 1 1 1 − 1 -1 1 1 1 1 ε ′′ \\varepsilon^{\\prime\\prime} 1 1 − 1 -1 1 1 − 1 -1\n\nEq. (40): d ⁡ ( x , y ) = Sup { | a ⁡ ( x ) − a ⁡ ( y ) | ; a ∈ 𝒜 , ‖ [ D , a ] ‖ ≤ 1 } . d(x,y)=\\mathop{\\rm Sup}\\nolimits\\,\\{|a(x)-a(y)|\\ ;\\ a\\in{\\cal A}\\ ,\\ \\|[D,a]\\|\\leq 1\\}\\,.\n\nEq. (41): − c n ∫ R g d n x , c n = ( n − 2 ) / 12 × ( 4 π ) − n / 2 Γ ( n 2 + 1 ) − 1 2 [ n / 2 ] . -c_{n}\\int R\\,\\sqrt{g}\\,d^{n}x\\quad,\\quad c_{n}=(n-2)/12\\times(4\\pi)^{-n/2}\\,\\Gamma\\left({n\\over 2}+1\\right)^{-1}\\,2^{[n/2]}\\,.\n\nEq. (42): Σ ​ a 0 j ​ [ D , a 1 j ] ​ … ​ [ D , a n j ] = 1 . \\Sigma\\,a_{0}^{j}[D,a_{1}^{j}]\\ldots[D,a_{n}^{j}]=1\\,.\n\nEq. (43): γ = Σ ​ a 0 j ​ [ D , a 1 j ] ​ … ​ [ D , a u j ] . \\gamma=\\Sigma\\,a_{0}^{j}[D,a_{1}^{j}]\\ldots[D,a_{u}^{j}]\\,.\n\nEq. (44): ℓ p − 2 ∫ − d s 2 \\ell_{p}^{-2}\\,{\\textstyle\\int\\!\\!\\!\\!\\!-}\\,ds^{2}\n\nEq. (45): J ​ M ​ J − 1 = M ′ J\\,M\\,J^{-1}=M^{\\prime}\n\nEq. (46): a ∈ M → J ​ a ∗ ​ J − 1 ∈ M ′ . a\\in M\\rightarrow J\\,a^{*}\\,J^{-1}\\in M^{\\prime}\\,.\n\nEq. (47): ( a ⊗ b 0 ) ​ ξ = a ​ J ​ b ∗ ​ J − 1 ​ ξ ∀ a , b ∈ 𝒜 . (a\\otimes b^{0})\\,\\xi=a\\,J\\,b^{*}\\,J^{-1}\\,\\xi\\qquad\\forall\\,a,b\\in{\\cal A}\\,.\n\nEq. (48): τ ⁡ ( x ⊗ y 0 ) = y ∗ ⊗ x ∗ 0 ∀ x , y ∈ 𝒜 \\tau(x\\otimes y^{0})=y^{*}\\otimes x^{*0}\\qquad\\forall\\,x,y\\in{\\cal A}\n\nEq. (49): K ∗ ​ ( 𝒜 ) ⟶ ∩ μ K ∗ ​ ( 𝒜 ) . K_{*}({\\cal A})\\mathrel{\\mathop{\\kern 0.0pt\\longrightarrow}\\limits^{\\cap\\mu}}K^{*}({\\cal A})\\,.\n\nEq. (50): ⟨ e , f ⟩ = ⟨ Index ​ D , e ⊗ f 0 ⟩ . \\langle e,f\\rangle=\\langle\\hbox{Index}\\ D\\ ,\\ e\\otimes f^{0}\\rangle\\,.\n\nEq. (2 ′): [ [ D , a ] , b 0 ] = 0 ∀ a , b ∈ 𝒜 . [[D,a],b^{0}]=0\\qquad\\forall\\,a,b\\in{\\cal A}\\,.\n\nEq. (52): [ [ D , b 0 ] , a ] = 0 ∀ a , b ∈ 𝒜 . [[D,b^{0}],a]=0\\qquad\\forall\\,a,b\\in{\\cal A}\\,.\n\nEq. (53): a ⁡ ( b ⊗ c 0 ) ​ d = a ​ b ​ d ⊗ c 0 ∀ a , b , c , d ∈ 𝒜 . a(b\\otimes c^{0})\\,d=a\\,b\\,d\\otimes c^{0}\\qquad\\forall\\,a,b,c,d\\in{\\cal A}\\,.\n\nEq. (54): ( a ​ ξ ) i ​ j = a i ​ ξ i ​ j ∀ a ∈ 𝒜 , ξ ∈ ℋ . (a\\,\\xi)_{ij}=a_{i}\\,\\xi_{ij}\\qquad\\forall\\,a\\in{\\cal A}\\ ,\\ \\xi\\in{\\cal H}\\,.\n\nEq. (55): ( γ ​ ξ ) i ​ j = γ i ​ j ​ ξ i ​ j γ i ​ j = Sign q i ​ j (\\gamma\\,\\xi)_{ij}=\\gamma_{ij}\\,\\xi_{ij}\\qquad\\gamma_{ij}=\\mathop{\\rm Sign}\\nolimits\\,q_{ij}\n\nEq. (56): ( J ​ ξ ) i ​ j = ξ ¯ j ​ i . (J\\,\\xi)_{ij}=\\overline{\\xi}_{ji}\\,.\n\nEq. (57): ( a ​ ξ ) ​ ( x ) = a ⁡ ( x ) ​ ξ ​ ( x ) ∀ x ∈ M . (a\\,\\xi)(x)=a(x)\\,\\xi(x)\\qquad\\forall\\,x\\in M\\,.\n\nEq. (58): J = C ⊗ ∗ J=C\\otimes*\n\nEq. (59): [ a , b 0 ] = 0 ∀ a , b ∈ 𝒜 , b 0 = J ​ b ∗ ​ J − 1 . [a,b^{0}]=0\\qquad\\forall\\,a,b\\in{\\cal A}\\ ,\\ b^{0}=J\\,b^{*}\\,J^{-1}\\,.\n\nEq. (60): Int M ⊂ Aut M \\mathop{\\rm Int}\\nolimits M\\subset\\mathop{\\rm Aut}\\nolimits M\n\nEq. (61): α u ​ ( x ) = u ​ x ​ u ∗ ∀ x ∈ 𝒜 , \\alpha_{u}(x)=u\\,x\\,u^{*}\\qquad\\forall\\,x\\in{\\cal A}\\,,\n\nEq. (62): 𝒰 = { u ∈ 𝒜 ; u u ∗ = u ∗ u = 1 } . {\\cal U}=\\{u\\in{\\cal A}\\ ;\\ u\\,u^{*}=u^{*}\\,u=1\\}\\,.\n\nEq. (63): D ~ = D + A + J ​ A ​ J − 1 \\widetilde{D}=D+A+J\\,A\\,J^{-1}\n\nEq. (64): U = u ​ J ​ u ​ J − 1 . U=u\\,J\\,u\\,J^{-1}\\,.\n\nEq. (65): D ~ = D + A + J ​ A ​ J − 1 \\widetilde{D}=D+A+J\\,A\\,J^{-1}\n\nEq. (66): A = Σ ​ a i ​ [ D , b i ] a i , b i ∈ 𝒜 . A=\\Sigma\\,a_{i}\\,[D,b_{i}]\\qquad a_{i},b_{i}\\in{\\cal A}\\,.\n\nEq. (67): Int M = C ∞ ​ ( M , S ​ U ​ ( k ) ) \\mathop{\\rm Int}\\nolimits M=C^{\\infty}(M,SU(k))\n\nEq. (68): φ ⁡ ( a ) = ⟨ a ⁡ ( x ) ​ ξ , ξ ⟩ , ψ ⁡ ( a ) = ⟨ a ⁡ ( y ) ​ η , η ⟩ ∀ a ∈ 𝒜 . \\varphi(a)=\\langle a(x)\\,\\xi,\\xi\\rangle\\ ,\\ \\psi(a)=\\langle a(y)\\,\\eta,\\eta\\rangle\\qquad\\forall\\,a\\in{\\cal A}\\,.\n\nEq. (69): d ⁡ ( φ , ψ ) = Sup { | φ ⁡ ( a ) − ψ ⁡ ( a ) | ; a ∈ 𝒜 , ‖ [ D ~ , a ] ‖ ≤ 1 } . d(\\varphi,\\psi)=\\mathop{\\rm Sup}\\nolimits\\,\\{|\\varphi(a)-\\psi(a)|\\ ;\\ a\\in{\\cal A}\\ ,\\ \\|[\\widetilde{D},a]\\|\\leq 1\\}\\,.\n\nEq. (70): d ⁡ ( φ , ψ ) = Inf ∫ 0 1 ‖ π ∗ ​ ( γ ˙ ​ ( t ) ) ‖ ​ 𝑑 t , γ ⁡ ( 0 ) = φ , γ ⁡ ( 1 ) = ψ d(\\varphi,\\psi)=\\mathop{\\rm Inf}\\nolimits\\int_{0}^{1}\\|\\pi_{*}(\\dot{\\gamma}(t))\\|\\,dt\\ ,\\ \\gamma(0)=\\varphi\\ ,\\ \\gamma(1)=\\psi\n\nEq. (71): 𝒜 θ = { Σ a n ​ m U n V m ; a = ( a n , m ) ∈ 𝒮 ( ℤ 2 ) } {\\cal A}_{\\theta}=\\{\\Sigma\\,a_{nm}\\,U^{n}\\,V^{m}\\ ;\\ a=(a_{n,m})\\in{\\cal S}({{\\tenbb Z}}^{2})\\}\n\nEq. (72): U ∗ = U − 1 , V ∗ = V − 1 , V ​ U = λ ​ U ​ V ​ with ​ λ = exp ⁡ ( 2 ​ π ​ i ​ θ ) U^{*}=U^{-1}\\ ,\\ V^{*}=V^{-1}\\ ,\\ V\\,U=\\lambda\\,U\\,V\\ \\hbox{with}\\ \\lambda=\\exp(2\\pi i\\theta)\n\nEq. (73): τ 0 ​ ( a ) = a 00 ∀ a ∈ 𝒜 θ . \\tau_{0}(a)=a_{00}\\qquad\\forall\\,a\\in{\\cal A}_{\\theta}\\,.\n\nEq. (74): a → [ λ ⁡ ( a ) 0 0 λ ⁡ ( a ) ] , λ ( a ) b = a b ∀ a , b ∈ 𝒜 θ . a\\rightarrow\\left[\\matrix{\\lambda(a)&0\\cr 0&\\lambda(a)\\cr}\\right]\\ ,\\ \\lambda(a)\\,b=a\\,b\\qquad\\forall\\,a,b\\in{\\cal A}_{\\theta}\\,.\n\nEq. (75): D = [ 0 δ 1 + τ ​ δ 2 − δ 1 − τ ¯ ​ δ 2 0 ] D=\\left[\\matrix{0&\\delta_{1}+\\tau\\,\\delta_{2}\\cr-\\delta_{1}-\\overline{\\tau}\\,\\delta_{2}&0\\cr}\\right]\n\nEq. (76): δ 1 ​ ( U ) = 2 ​ π ​ i ​ U , δ 1 ​ ( V ) = 0 ; δ 2 ​ ( U ) = 0 , δ 2 ​ ( V ) = 2 ​ π ​ i ​ V . \\delta_{1}(U)=2\\pi i\\,U\\ ,\\ \\delta_{1}(V)=0\\ ;\\ \\delta_{2}(U)=0\\ ,\\ \\delta_{2}(V)=2\\pi i\\,V\\,.\n\nEq. (77): J 0 ​ a = a ∗ ∀ a ∈ L 2 ​ ( 𝒜 θ , τ 0 ) . J_{0}\\,a=a^{*}\\qquad\\forall\\,a\\in L^{2}({\\cal A}_{\\theta},\\tau_{0})\\,.\n\nEq. (78): c = ( 2 ​ i ​ π ) − 2 ​ ( τ − τ ¯ ) − 1 ​ ( V − 1 ​ U − 1 ⊗ U ⊗ V − U − 1 ​ V − 1 ⊗ V ⊗ U ) . c=(2i\\pi)^{-2}\\,(\\tau-\\overline{\\tau})^{-1}\\,(V^{-1}\\,U^{-1}\\otimes U\\otimes V-U^{-1}\\,V^{-1}\\otimes V\\otimes U)\\,.\n\nEq. (79): ∫ − d s 2 = ⟨ φ , c ⟩ {\\textstyle\\int\\!\\!\\!\\!\\!-}\\,ds^{2}=\\langle\\varphi,c\\rangle\n\nEq. (80): [ 0 − 1 0 0 1 0 0 0 0 0 0 − 1 0 0 1 0 ] . \\left[\\matrix{0&-1&0&0\\cr 1&0&0&0\\cr 0&0&0&-1\\cr 0&0&1&0\\cr}\\right]\\,.\n\nEq. (81): β = e 0 0 ⊗ e 1 − e 1 0 ⊗ e 0 + u 0 ⊗ v − v 0 ⊗ u \\beta=e_{0}^{0}\\otimes e_{1}-e_{1}^{0}\\otimes e_{0}+u^{0}\\otimes v-v^{0}\\otimes u\n\nEq. (82): μ ⊗ 𝒜 θ 0 β = id 𝒜 θ β ⊗ 𝒜 θ μ = id 𝒜 θ 0 . \\mu\\otimes_{{\\cal A}_{\\theta}^{0}}\\,\\beta=\\mathop{\\rm id}\\nolimits_{{\\cal A}_{\\theta}}\\qquad\\beta\\otimes_{{\\cal A}_{\\theta}}\\,\\mu=\\mathop{\\rm id}\\nolimits_{{\\cal A}_{\\theta}^{0}}\\,.\n\nEq. (83): ⟨ μ , β ⟩ = Rank K 0 − Rank K 1 \\langle\\mu,\\beta\\rangle=\\mathop{\\rm Rank}\\nolimits K_{0}-\\mathop{\\rm Rank}\\nolimits K_{1}\n\nEq. (84): σ ⁡ ( U ) = U a ​ V b , σ ⁡ ( V ) = U c ​ V d \\sigma(U)=U^{a}\\,V^{b}\\ ,\\ \\sigma(V)=U^{c}\\,V^{d}\n\nEq. (85): ( ξ ​ U ) ​ ( s ) = ξ ⁡ ( s + θ ) ∀ ξ ∈ 𝒮 ⁡ ( ℝ ) , ∀ s ∈ ℝ (\\xi\\,U)(s)=\\xi(s+\\theta)\\qquad\\forall\\,\\xi\\in{\\cal S}({{\\tenbb R}})\\ ,\\ \\forall\\,s\\in{{\\tenbb R}}\n\nEq. (86): ( ξ ​ V ) ​ ( s ) = e 2 ​ π ​ i ​ s ​ ξ ​ ( s ) ∀ ξ ∈ 𝒮 ⁡ ( ℝ ) , ∀ s ∈ ℝ . (\\xi\\,V)(s)=e^{2\\pi is}\\,\\xi(s)\\qquad\\forall\\,\\xi\\in{\\cal S}({{\\tenbb R}})\\ ,\\ \\forall\\,s\\in{{\\tenbb R}}\\,.\n\nEq. (87): ∇ : ℰ → ℰ ⊗ 𝒜 Ω D 1 \\nabla:{\\cal E}\\rightarrow{\\cal E}\\otimes_{{\\cal A}}\\Omega_{D}^{1}\n\nEq. (88): Ω D 1 = { Σ ​ a i ​ [ D , b i ] ; a i , b i ∈ 𝒜 } ⊂ ℒ ⁡ ( ℋ ) \\Omega_{D}^{1}=\\{\\Sigma\\,a_{i}\\,[D,b_{i}]\\ ;\\ a_{i},b_{i}\\in{\\cal A}\\}\\subset{\\cal L}({\\cal H})\n\nEq. (89): a ​ ξ ¯ = ( ξ ​ a ∗ ) − ∀ ξ ∈ ℰ , a ∈ 𝒜 . a\\,\\overline{\\xi}=(\\xi\\,a^{*})^{-}\\qquad\\forall\\,\\xi\\in{\\cal E}\\ ,\\ a\\in{\\cal A}\\,.\n\nEq. (90): D ~ ​ ( ξ ⊗ η ⊗ ζ ¯ ) = ( ∇ ξ ) ​ η ⊗ ζ ¯ + ξ ⊗ D ​ η ⊗ ζ ¯ + ξ ⊗ η ⁡ ( ∇ ζ ¯ ) \\widetilde{D}(\\xi\\otimes\\eta\\otimes\\overline{\\zeta})=(\\nabla\\,\\xi)\\,\\eta\\otimes\\overline{\\zeta}+\\xi\\otimes D\\,\\eta\\otimes\\overline{\\zeta}+\\xi\\otimes\\eta(\\overline{\\nabla\\,\\zeta})\n\nEq. (91): J ~ ​ ( ξ ⊗ η ⊗ ζ ¯ ) = ζ ⊗ J ​ η ⊗ ξ ¯ . \\widetilde{J}\\,(\\xi\\otimes\\eta\\otimes\\overline{\\zeta})=\\zeta\\otimes J\\,\\eta\\otimes\\overline{\\xi}\\,.\n\nEq. (92): b ⁡ ( ξ ⊗ η ⊗ ζ ¯ ) = ( b ​ ξ ) ⊗ η ⊗ ζ ¯ . b\\,(\\xi\\otimes\\eta\\otimes\\overline{\\zeta})=(b\\,\\xi)\\otimes\\eta\\otimes\\overline{\\zeta}\\,.\n\nEq. (93): ω = [ 0 λ ⁡ ( a ) λ ⁡ ( b ) 0 ] \\omega=\\left[\\matrix{0&\\lambda(a)\\cr\\lambda(b)&0\\cr}\\right]\n\nEq. (94): ( ∇ 1 ξ ) ​ ( s ) = 2 ​ π ​ i θ ​ s ​ ξ ​ ( s ) ( ∇ 2 ξ ) ​ ( s ) = ξ ′ ​ ( s ) . \\eqalign{(\\nabla_{1}\\,\\xi)(s)=&\\ {2\\pi i\\over\\theta}\\,s\\,\\xi(s)\\cr(\\nabla_{2}\\,\\xi)(s)=&\\ \\xi^{\\prime}(s)\\,.\\cr}\n\nEq. (95): u R u L d R d L \\matrix{u_{R}&u_{L}\\cr d_{R}&d_{L}\\cr}\n\nEq. (96): ν L e R e L . \\matrix{&\\nu_{L}\\cr e_{R}&e_{L}\\cr}\\,.\n\nEq. (97): J F ​ ( Σ ​ λ i ​ f i + Σ ​ μ j ​ f ¯ j ) = Σ ​ μ ¯ j ​ f j + Σ ​ λ ¯ i ​ f ¯ i J_{F}(\\Sigma\\,\\lambda_{i}\\,f_{i}+\\Sigma\\,\\mu_{j}\\,\\overline{f}_{j})=\\Sigma\\,\\overline{\\mu}_{j}\\,f_{j}+\\Sigma\\,\\overline{\\lambda}_{i}\\,\\overline{f}_{i}\n\nEq. (98): a ​ u R = λ ​ u R a ​ u L = α ​ u L − β ¯ ​ d L a ​ d R = λ ¯ ​ d R a ​ d L = β ​ u L + α ¯ ​ d L . \\matrix{a\\,u_{R}=\\lambda\\,u_{R}&\\qquad a\\,u_{L}=\\alpha\\,u_{L}-\\overline{\\beta}\\,d_{L}\\cr\\cr a\\,d_{R}=\\overline{\\lambda}\\,d_{R}&\\qquad a\\,d_{L}=\\beta\\,u_{L}+\\overline{\\alpha}\\,d_{L}\\,.\\cr}\n\nEq. (99): a ​ f ¯ = λ ​ f ¯ if f is a lepton a ​ f ¯ = m ​ f ¯ if f is a quark . \\matrix{a\\,\\overline{f}=\\lambda\\,\\overline{f}&\\hbox{if}\\ f\\ \\hbox{is a lepton}\\cr\\cr a\\,\\overline{f}=m\\,\\overline{f}&\\hbox{if}\\ f\\ \\hbox{is a quark}\\,.\\cr}\n\nEq. (100): Y = Y q ⊗ 1 3 ⊕ Y f Y=Y_{q}\\otimes 1_{3}\\oplus Y_{f}\n\nEq. (101): Y q = [ 0 0 M u 0 0 0 0 M d M u ∗ 0 0 0 0 M d ∗ 0 0 ] , Y f = [ 0 0 M e 0 0 0 M e ∗ 0 0 ] . Y_{q}=\\left[\\matrix{0&0&M_{u}&0\\cr 0&0&0&M_{d}\\cr M_{u}^{*}&0&0&0\\cr 0&M_{d}^{*}&0&0\\cr}\\right]\\ ,\\ Y_{f}=\\left[\\matrix{0&0&M_{e}\\cr 0&0&0\\cr M_{e}^{*}&0&0\\cr}\\right]\\,.\n\nEq. (102): γ ( f R ) = f R , γ ( f L ) = − f L ( f particle or antiparticle ) . \\gamma(f_{R})=f_{R}\\ ,\\ \\gamma(f_{L})=-f_{L}\\qquad(f\\ \\hbox{particle or antiparticle})\\,.\n\nEq. (103): Q = 2 ​ N ​ [ − 1 1 − 1 1 0 1 − 1 1 0 ] . Q=2N\\ \\left[\\matrix{-1&1&-1\\cr 1&0&1\\cr-1&1&0\\cr}\\right]\\,.\n\nEq. (104): Q − 1 = ( 2 ​ N ) − 1 ​ [ 1 1 − 1 1 1 0 − 1 0 1 ] Q^{-1}=(2N)^{-1}\\ \\left[\\matrix{1&1&-1\\cr 1&1&0\\cr-1&0&1\\cr}\\right]\n\nEq. (105): 𝒜 = 𝒜 1 ⊗ 𝒜 2 , ℋ = ℋ 1 ⊗ ℋ 2 , D = D 1 ⊗ 1 + γ 1 ⊗ D 2 . {\\cal A}={\\cal A}_{1}\\otimes{\\cal A}_{2}\\ ,\\ {\\cal H}={\\cal H}_{1}\\otimes{\\cal H}_{2}\\ ,\\ D=D_{1}\\otimes 1+\\gamma_{1}\\otimes D_{2}\\,.\n\nEq. (106): [ 0 X X ′ 0 ] , X = [ M u ​ φ 1 M u ​ φ 2 − M d ​ φ ¯ 2 M d ​ φ ¯ 1 ] , X ′ = [ M u ∗ ​ φ 1 ′ M d ∗ ​ φ 2 ′ − M u ∗ ​ φ ¯ 2 ′ M d ∗ ​ φ ¯ 1 ′ ] \\left[\\matrix{0&X\\cr X^{\\prime}&0\\cr}\\right]\\ ,\\ X=\\left[\\matrix{M_{u}\\,\\varphi_{1}&M_{u}\\,\\varphi_{2}\\cr-M_{d}\\,\\overline{\\varphi}_{2}&M_{d}\\,\\overline{\\varphi}_{1}\\cr}\\right]\\ ,\\ X^{\\prime}=\\left[\\matrix{M_{u}^{*}\\,\\varphi^{\\prime}_{1}&M_{d}^{*}\\,\\varphi^{\\prime}_{2}\\cr-M_{u}^{*}\\,\\overline{\\varphi}^{\\prime}_{2}&M_{d}^{*}\\,\\overline{\\varphi}^{\\prime}_{1}\\cr}\\right]\n\nEq. (107): φ 1 ′ = Σ ​ α i ​ ( λ i ′ − α i ′ ) + β i ​ β ¯ i ′ , φ 2 ′ = Σ ⁡ ( − α i ​ β i ′ + β i ​ ( λ ¯ i ′ − α ¯ i ′ ) ) . \\varphi^{\\prime}_{1}=\\Sigma\\,\\alpha_{i}(\\lambda^{\\prime}_{i}-\\alpha^{\\prime}_{i})+\\beta_{i}\\,\\overline{\\beta}^{\\prime}_{i}\\ ,\\ \\varphi^{\\prime}_{2}=\\Sigma\\,(-\\alpha_{i}\\,\\beta^{\\prime}_{i}+\\beta_{i}(\\overline{\\lambda}^{\\prime}_{i}-\\overline{\\alpha}^{\\prime}_{i}))\\,.\n\nEq. (108): [ 0 − M d ​ φ ¯ 2 M d ​ φ ¯ 1 M d ∗ ​ φ 2 ′ 0 0 M d ∗ ​ φ ¯ 1 ′ 0 0 ] \\left[\\matrix{0&-M_{d}\\,\\overline{\\varphi}_{2}&M_{d}\\,\\overline{\\varphi}_{1}\\cr M_{d}^{*}\\,\\varphi^{\\prime}_{2}&0&0\\cr M_{d}^{*}\\,\\overline{\\varphi}^{\\prime}_{1}&0&0\\cr}\\right]\n\nEq. (109): A ( 1 , 0 ) = Σ a i [ ( ∂ / M ⊗ 1 ) , a i ′ ] . A^{(1,0)}=\\Sigma\\,a_{i}[({\\partial\\!\\!\\!/}_{M}\\otimes 1),a^{\\prime}_{i}]\\,.\n\nEq. (110): [ Λ + V 0 0 0 0 − Λ + V 0 0 0 0 Q 11 + V Q 12 0 0 Q 21 Q 22 + V ] \\left[\\matrix{\\Lambda+V&0&0&0\\cr 0&-\\Lambda+V&0&0\\cr 0&0&Q_{11}+V&Q_{12}\\cr 0&0&Q_{21}&Q_{22}+V\\cr}\\right]\n\nEq. (111): [ − 2 ​ Λ 0 0 0 Q 11 − Λ Q 12 0 Q 21 Q 22 − Λ ] \\left[\\matrix{-2\\Lambda&0&0\\cr 0&Q_{11}-\\Lambda&Q_{12}\\cr 0&Q_{21}&Q_{22}-\\Lambda\\cr}\\right]\n\nEq. (112): u R d R u L d L ⁡ [ 4 3 ​ Λ + V ′ 0 0 0 0 − 2 3 ​ Λ + V ′ 0 0 0 0 Q 11 + 1 3 ​ Λ + V ′ Q 12 0 0 Q 21 Q 22 + 1 3 ​ Λ + V ′ ] \\matrix{u_{R}\\cr d_{R}\\cr u_{L}\\cr d_{L}\\cr}\\ \\left[\\matrix{{4\\over 3}\\,\\Lambda+V^{\\prime}&0&0&0\\cr 0&-{2\\over 3}\\,\\Lambda+V^{\\prime}&0&0\\cr 0&0&Q_{11}+{1\\over 3}\\,\\Lambda+V^{\\prime}&Q_{12}\\cr 0&0&Q_{21}&Q_{22}+{1\\over 3}\\,\\Lambda+V^{\\prime}\\cr}\\right]\n\nEq. (113): e R ν L e L ⁡ [ − 2 ​ Λ 0 0 0 Q 11 − Λ Q 12 0 Q 21 Q 22 − Λ ] . \\matrix{e_{R}\\cr\\nu_{L}\\cr e_{L}\\cr}\\ \\left[\\matrix{-2\\Lambda&0&0\\cr 0&Q_{11}-\\Lambda&Q_{12}\\cr 0&Q_{21}&Q_{22}-\\Lambda\\cr}\\right]\\,.\n\nEq. (114): I = Trace ​ ( φ ⁡ ( d ​ s / ℓ p ) ) + ⟨ D ​ ψ , ψ ⟩ I=\\hbox{Trace}\\,(\\varphi(ds/\\ell_{p}))+\\langle D\\,\\psi,\\psi\\rangle\n\nEq. (115): 1 → H → S ​ U ​ ( 2 ) q → S ​ U ​ ( 2 ) → 1 1\\rightarrow H\\rightarrow SU(2)_{q}\\rightarrow SU(2)\\rightarrow 1",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "A",
+      "relation": "defines",
+      "object": "Σ a_i[D,b_i], a_i,b_i∈A",
+      "modality": "stated",
+      "locator": "Eq. (66)"
+    },
+    {
+      "n": 2,
+      "subject": "⟨μ,β⟩",
+      "relation": "equivalent-to",
+      "object": "Rank K_0 − Rank K_1",
+      "modality": "stated",
+      "locator": "Eq. (83)"
+    },
+    {
+      "n": 3,
+      "subject": "integral of ds^2",
+      "relation": "equivalent-to",
+      "object": "<phi, c>",
+      "modality": "stated",
+      "locator": "Eq. (79)"
+    },
+    {
+      "n": 4,
+      "subject": "J",
+      "relation": "defines",
+      "object": "C tensor *",
+      "modality": "stated",
+      "locator": "Eq. (58)"
+    },
+    {
+      "n": 5,
+      "subject": "I",
+      "relation": "defines",
+      "object": "Trace(φ(ds/ℓ_p)) + ⟨Dψ,ψ⟩",
+      "modality": "stated",
+      "locator": "Eq. (114)"
+    },
+    {
+      "n": 6,
+      "subject": "D̃(ξ⊗η⊗ζ̄)",
+      "relation": "defines",
+      "object": "(∇ξ)η⊗ζ̄ + ξ⊗Dη⊗ζ̄ + ξ⊗η(∇ζ‾)",
+      "modality": "stated",
+      "locator": "Eq. (90)"
+    },
+    {
+      "n": 7,
+      "subject": "⟨e,f⟩",
+      "relation": "equivalent-to",
+      "object": "⟨Index D, e⊗f^0⟩",
+      "modality": "stated",
+      "locator": "Eq. (50)"
+    },
+    {
+      "n": 8,
+      "subject": "d(phi,psi)",
+      "relation": "defines",
+      "object": "Sup of |phi(a)-psi(a)| over a in A with ||[D tilde,a]|| <= 1",
+      "modality": "stated",
+      "locator": "Eq. (69)"
+    },
+    {
+      "n": 9,
+      "subject": "D",
+      "relation": "defines",
+      "object": "2x2 block operator built from delta_1 + tau delta_2",
+      "modality": "stated",
+      "locator": "Eq. (75)"
+    },
+    {
+      "n": 10,
+      "subject": "Q",
+      "relation": "defines",
+      "object": "2N [[-1,1,-1],[1,0,1],[-1,1,0]]",
+      "modality": "stated",
+      "locator": "Eq. (103)"
+    },
+    {
+      "n": 11,
+      "subject": "A_θ",
+      "relation": "defines",
+      "object": "{Σ a_{nm} U^n V^m ; a=(a_{n,m})∈S(Z^2)}",
+      "modality": "stated",
+      "locator": "Eq. (71)"
+    },
+    {
+      "n": 12,
+      "subject": "pairing <e,f>",
+      "relation": "defines",
+      "object": "<Ind D, m_*(e tensor f)>",
+      "modality": "stated",
+      "locator": "Eq. (37)"
+    },
+    {
+      "n": 13,
+      "subject": "cap mu map K_*(A) -> K^*(A)",
+      "relation": "defines",
+      "object": "intersection with mu",
+      "modality": "stated",
+      "locator": "Eq. (49)"
+    },
+    {
+      "n": 14,
+      "subject": "||[D,f]||",
+      "relation": "equivalent-to",
+      "object": "Sup over x in M of ||nabla f||",
+      "modality": "stated",
+      "locator": "Eq. (13)"
+    },
+    {
+      "n": 15,
+      "subject": "d(phi,psi)",
+      "relation": "equivalent-to",
+      "object": "Inf over paths gamma from phi to psi of the integral from 0 to 1 of ||pi_*(gamma dot)|| dt",
+      "modality": "stated",
+      "locator": "Eq. (70)"
+    },
+    {
+      "n": 16,
+      "subject": "c",
+      "relation": "defines",
+      "object": "Hochschild chain sum_j a_j^0 tensor a_j^1 tensor ... tensor a_j^n",
+      "modality": "stated",
+      "locator": "Eq. (23)"
+    },
+    {
+      "n": 17,
+      "subject": "Y",
+      "relation": "defines",
+      "object": "Y_q ⊗ 1_3 ⊕ Y_f",
+      "modality": "stated",
+      "locator": "Eq. (100)"
+    },
+    {
+      "n": 18,
+      "subject": "D",
+      "relation": "defines",
+      "object": "Dirac operator (1/sqrt(-1)) gamma^mu nabla_mu, with ds = D^{-1}",
+      "modality": "stated",
+      "locator": "Eq. (12)"
+    },
+    {
+      "n": 19,
+      "subject": "π_n(GL_∞(A))",
+      "relation": "equivalent-to",
+      "object": "K_{n+1}(A)",
+      "modality": "stated",
+      "locator": "Eq. (34)"
+    },
+    {
+      "n": 20,
+      "subject": "d(x,y)",
+      "relation": "defines",
+      "object": "Sup{|f(x)-f(y)| ; f∈A, ‖[f,ds^{-1}]‖≤1}",
+      "modality": "stated",
+      "locator": "Eq. (10)"
+    }
+  ]
+}

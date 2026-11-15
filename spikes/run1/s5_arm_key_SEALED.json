@@ -1,0 +1,2930 @@
+{
+  "seed": 250125,
+  "generator": "numpy.random.default_rng (PCG64)",
+  "order": [
+    "W1820708574",
+    "W3113975734",
+    "W3134337821",
+    "W3162009980",
+    "W4391839082",
+    "W7134934189",
+    "W7160450264",
+    "W7162107386",
+    "W7208731890",
+    "W7223805202",
+    "W1641073798",
+    "W1665497193",
+    "W1836597677",
+    "W2001941072",
+    "W2015765968",
+    "W2018785023",
+    "W2086216948",
+    "W2114197053",
+    "W2148017112",
+    "W2890203879"
+  ],
+  "papers": {
+    "W1820708574": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 21,
+          "kept": 10,
+          "dropped_original_indices": [
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            14,
+            16,
+            20
+          ]
+        },
+        "comparison": {
+          "total": 28,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            3,
+            5,
+            6,
+            8,
+            11,
+            12,
+            13,
+            14,
+            15,
+            17,
+            18,
+            20,
+            21,
+            23,
+            25,
+            27
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 11
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 10
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 7
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 26
+        }
+      ]
+    },
+    "W3113975734": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 27,
+          "kept": 10,
+          "dropped_original_indices": [
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            14,
+            15,
+            16,
+            18,
+            19,
+            21,
+            23,
+            25,
+            26
+          ]
+        },
+        "comparison": {
+          "total": 26,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            3,
+            4,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            20
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 25
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 20
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 23
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 22
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 24
+        }
+      ]
+    },
+    "W3134337821": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 0,
+          "kept": 0,
+          "dropped_original_indices": []
+        },
+        "comparison": {
+          "total": 7,
+          "kept": 7,
+          "dropped_original_indices": []
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 3
+        }
+      ]
+    },
+    "W3162009980": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 41,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            12,
+            14,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            26,
+            27,
+            28,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        },
+        "comparison": {
+          "total": 27,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16,
+            17,
+            24,
+            25
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 18
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 16
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 29
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 14
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 26
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 23
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 11
+        }
+      ]
+    },
+    "W4391839082": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 3,
+          "kept": 3,
+          "dropped_original_indices": []
+        },
+        "comparison": {
+          "total": 2,
+          "kept": 2,
+          "dropped_original_indices": []
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 2
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 1
+        }
+      ]
+    },
+    "W7134934189": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 28,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            15,
+            17,
+            19,
+            20,
+            21,
+            22,
+            24,
+            27
+          ]
+        },
+        "comparison": {
+          "total": 26,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            7,
+            8,
+            10,
+            11,
+            12,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            23,
+            24,
+            25
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 16
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 14
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 26
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 13,
+          "arm": "primary",
+          "original_index": 23
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 3
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 14
+        }
+      ]
+    },
+    "W7160450264": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 26,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            9,
+            10,
+            13,
+            15,
+            16,
+            18,
+            20,
+            22,
+            24,
+            25
+          ]
+        },
+        "comparison": {
+          "total": 21,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            13,
+            14,
+            17,
+            18
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 11
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 3
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 15
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 21
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 10
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 23
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 14
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 5
+        }
+      ]
+    },
+    "W7162107386": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 20,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            11,
+            12,
+            13,
+            15,
+            16,
+            17,
+            19
+          ]
+        },
+        "comparison": {
+          "total": 19,
+          "kept": 10,
+          "dropped_original_indices": [
+            2,
+            3,
+            4,
+            6,
+            7,
+            9,
+            11,
+            14,
+            15
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 14
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 18
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 6
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 13
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 5
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 10
+        }
+      ]
+    },
+    "W7208731890": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 41,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            8,
+            9,
+            11,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            26,
+            27,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            39
+          ]
+        },
+        "comparison": {
+          "total": 36,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            13,
+            15,
+            17,
+            18,
+            19,
+            20,
+            22,
+            23,
+            24,
+            26,
+            27,
+            28,
+            29,
+            30,
+            32,
+            33,
+            35
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 29
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 25
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 38
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 34
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 31
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 10
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 40
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 14
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 28
+        }
+      ]
+    },
+    "W7223805202": {
+      "domain": "math",
+      "cap_disclosure": {
+        "primary": {
+          "total": 27,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            12,
+            13,
+            17,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26
+          ]
+        },
+        "comparison": {
+          "total": 32,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            3,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16,
+            18,
+            22,
+            23,
+            24,
+            26,
+            27,
+            28,
+            29,
+            30
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 25
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 11
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 14
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 13,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 31
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 16
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 21
+        }
+      ]
+    },
+    "W1641073798": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 40,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            25,
+            26,
+            27,
+            29,
+            30,
+            33,
+            35,
+            36,
+            38,
+            39
+          ]
+        },
+        "comparison": {
+          "total": 28,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            11,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            24,
+            25,
+            27
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 23
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 37
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 23
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 31
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 15
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 32
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 10
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 28
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 13
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 24
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 26
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 34
+        }
+      ]
+    },
+    "W1665497193": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 32,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            19,
+            20,
+            21,
+            23,
+            24,
+            25,
+            26,
+            29,
+            31
+          ]
+        },
+        "comparison": {
+          "total": 20,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            5,
+            8,
+            10,
+            13,
+            14,
+            15,
+            16,
+            19
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 18
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 2
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 6
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 3
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 13,
+          "arm": "primary",
+          "original_index": 22
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 30
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 7
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 28
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 27
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 12
+        }
+      ]
+    },
+    "W1836597677": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 24,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            23
+          ]
+        },
+        "comparison": {
+          "total": 29,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            12,
+            13,
+            14,
+            16,
+            18,
+            19,
+            23,
+            25,
+            26,
+            27,
+            28
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 22
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 2
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 22
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 21
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 15
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 20
+        }
+      ]
+    },
+    "W2001941072": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 21,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            6,
+            10,
+            11,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20
+          ]
+        },
+        "comparison": {
+          "total": 17,
+          "kept": 10,
+          "dropped_original_indices": [
+            4,
+            5,
+            8,
+            9,
+            10,
+            13,
+            14
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 3
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 2
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 7
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 13,
+          "arm": "primary",
+          "original_index": 5
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 15
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 0
+        }
+      ]
+    },
+    "W2015765968": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 40,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            17,
+            19,
+            20,
+            21,
+            22,
+            24,
+            25,
+            28,
+            29,
+            30,
+            31,
+            32,
+            34,
+            37,
+            39
+          ]
+        },
+        "comparison": {
+          "total": 26,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            13,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            22,
+            23
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 26
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 16
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 36
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 38
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 33
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 10
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 23
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 18
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 27
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 25
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 35
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 7
+        }
+      ]
+    },
+    "W2018785023": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 30,
+          "kept": 10,
+          "dropped_original_indices": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            8,
+            9,
+            11,
+            12,
+            13,
+            15,
+            16,
+            17,
+            18,
+            20,
+            21,
+            22,
+            23,
+            24,
+            27
+          ]
+        },
+        "comparison": {
+          "total": 39,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            22,
+            24,
+            25,
+            26,
+            27,
+            29,
+            30,
+            31,
+            32,
+            33,
+            35,
+            37,
+            38
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 3,
+          "arm": "comparison",
+          "original_index": 15
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 7
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 28
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 14
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 29
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 34
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 23
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 17,
+          "arm": "primary",
+          "original_index": 10
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 28
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 36
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 26
+        }
+      ]
+    },
+    "W2086216948": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 39,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            21,
+            22,
+            23,
+            25,
+            26,
+            27,
+            28,
+            31,
+            32,
+            34,
+            36,
+            37,
+            38
+          ]
+        },
+        "comparison": {
+          "total": 25,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            3,
+            5,
+            6,
+            7,
+            9,
+            10,
+            13,
+            14,
+            15,
+            16,
+            19,
+            22,
+            23
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 35
+        },
+        {
+          "n": 4,
+          "arm": "primary",
+          "original_index": 24
+        },
+        {
+          "n": 5,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 18
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 29
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 33
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 11,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 13,
+          "arm": "primary",
+          "original_index": 20
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 30
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 18,
+          "arm": "primary",
+          "original_index": 6
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 20,
+          "arm": "comparison",
+          "original_index": 1
+        }
+      ]
+    },
+    "W2114197053": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 31,
+          "kept": 10,
+          "dropped_original_indices": [
+            1,
+            4,
+            5,
+            7,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            26,
+            27,
+            28,
+            29,
+            30
+          ]
+        },
+        "comparison": {
+          "total": 34,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            2,
+            3,
+            5,
+            7,
+            8,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29,
+            30,
+            32,
+            33
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 6
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 2
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 3
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 24
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 23
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 10,
+          "arm": "comparison",
+          "original_index": 20
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 8
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 0
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 24
+        },
+        {
+          "n": 16,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 12
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 27
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 31
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 12
+        }
+      ]
+    },
+    "W2148017112": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 28,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            21,
+            23,
+            25,
+            26
+          ]
+        },
+        "comparison": {
+          "total": 29,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            12,
+            14,
+            15,
+            18,
+            19,
+            20,
+            22,
+            23,
+            24,
+            27
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "comparison",
+          "original_index": 21
+        },
+        {
+          "n": 2,
+          "arm": "primary",
+          "original_index": 7
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 24
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 4
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 6
+        },
+        {
+          "n": 6,
+          "arm": "comparison",
+          "original_index": 26
+        },
+        {
+          "n": 7,
+          "arm": "primary",
+          "original_index": 17
+        },
+        {
+          "n": 8,
+          "arm": "comparison",
+          "original_index": 9
+        },
+        {
+          "n": 9,
+          "arm": "comparison",
+          "original_index": 16
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 27
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 19
+        },
+        {
+          "n": 12,
+          "arm": "primary",
+          "original_index": 18
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 13
+        },
+        {
+          "n": 14,
+          "arm": "comparison",
+          "original_index": 17
+        },
+        {
+          "n": 15,
+          "arm": "primary",
+          "original_index": 22
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 28
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 25
+        },
+        {
+          "n": 19,
+          "arm": "primary",
+          "original_index": 20
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 5
+        }
+      ]
+    },
+    "W2890203879": {
+      "domain": "physics",
+      "cap_disclosure": {
+        "primary": {
+          "total": 27,
+          "kept": 10,
+          "dropped_original_indices": [
+            0,
+            3,
+            6,
+            7,
+            8,
+            10,
+            11,
+            14,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            26
+          ]
+        },
+        "comparison": {
+          "total": 21,
+          "kept": 10,
+          "dropped_original_indices": [
+            4,
+            9,
+            10,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            20
+          ]
+        }
+      },
+      "claims": [
+        {
+          "n": 1,
+          "arm": "primary",
+          "original_index": 4
+        },
+        {
+          "n": 2,
+          "arm": "comparison",
+          "original_index": 19
+        },
+        {
+          "n": 3,
+          "arm": "primary",
+          "original_index": 13
+        },
+        {
+          "n": 4,
+          "arm": "comparison",
+          "original_index": 8
+        },
+        {
+          "n": 5,
+          "arm": "primary",
+          "original_index": 25
+        },
+        {
+          "n": 6,
+          "arm": "primary",
+          "original_index": 12
+        },
+        {
+          "n": 7,
+          "arm": "comparison",
+          "original_index": 5
+        },
+        {
+          "n": 8,
+          "arm": "primary",
+          "original_index": 16
+        },
+        {
+          "n": 9,
+          "arm": "primary",
+          "original_index": 9
+        },
+        {
+          "n": 10,
+          "arm": "primary",
+          "original_index": 5
+        },
+        {
+          "n": 11,
+          "arm": "primary",
+          "original_index": 1
+        },
+        {
+          "n": 12,
+          "arm": "comparison",
+          "original_index": 6
+        },
+        {
+          "n": 13,
+          "arm": "comparison",
+          "original_index": 7
+        },
+        {
+          "n": 14,
+          "arm": "primary",
+          "original_index": 15
+        },
+        {
+          "n": 15,
+          "arm": "comparison",
+          "original_index": 1
+        },
+        {
+          "n": 16,
+          "arm": "comparison",
+          "original_index": 11
+        },
+        {
+          "n": 17,
+          "arm": "comparison",
+          "original_index": 2
+        },
+        {
+          "n": 18,
+          "arm": "comparison",
+          "original_index": 0
+        },
+        {
+          "n": 19,
+          "arm": "comparison",
+          "original_index": 3
+        },
+        {
+          "n": 20,
+          "arm": "primary",
+          "original_index": 2
+        }
+      ]
+    }
+  }
+}

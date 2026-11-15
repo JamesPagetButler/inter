@@ -1,0 +1,64 @@
+{
+  "paper_id": "W3134337821",
+  "domain": "math",
+  "text_cache_sha256": "71a8f92101b24ec9bc7d70ed862aa9f236a8d96874b695d87584961e7252a228",
+  "text": "Following the idea of [Far16], we develop the foundations of the geometric Langlands program on the Fargues--Fontaine curve. In particular, we define a category of $\\ell$-adic sheaves on the stack $\\mathrm{Bun}_G$ of $G$-bundles on the Fargues--Fontaine curve, prove a geometric Satake equivalence over the Fargues--Fontaine curve, and study the stack of $L$-parameters. As applications, we prove finiteness results for the cohomology of local Shimura varieties and general moduli spaces of local shtukas, and define $L$-parameters associated with irreducible smooth representations of $G(E)$, a map from the spectral Bernstein center to the Bernstein center, and the spectral action of the category of perfect complexes on the stack of $L$-parameters on the category of $\\ell$-adic sheaves on $\\mathrm{Bun}_G$.\n\nEq. (4): �m����A�\u0019�c����\u0002S�,DE_����84�� �I� �g\u0012L�8�h�Eq4;\u0019�{�1��4��\u0007\n\nEq. (4): xڭ[Iw�8���Э��J0\u0016\u0012$�O�z�� ە����@K��6E��8ۙ���\u0013�\u00007 �(���\u0002\u0001\u0010\u0000c�\"\u0010�Ռ��^��{u�A����!\u0017�����>��h���Eq4�[ξxo.�\\_�zv����?O�R\u0005��T�N���|��R���\u0007_�\"\u0016kX\u0016֛KΙ�\u0005�5\u0016 Z�ˇ\u0013\u0019{gB�1Yb�e.C x��d�b�}8���曤��XR��N8k�$/�\u0005���3�u�A���\"T��\u0001,O R�Ų>��Bze���k�)u\u0014���$�^Zр�\u000e\u0007��[ڽ�@���@�\n\nEq. (2): ��\u000f W �b3f\u001b7�O�N\u001a6�p\u0001��i �b�̞H* ���\u0003\u000fݥ��\u0011ú\u0018��0,�a1 ��^�٫]eq2�u1���T�ٛ�k+��\u0010.v�=�w\u0017\u0018�ȵJ�c�\u0017C�X\b\\0{��G��1L�a]�ه\u0006��",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "geometric Satake equivalence over the Fargues–Fontaine curve",
+      "relation": "proves",
+      "object": "geometric Satake equivalence over the Fargues–Fontaine curve",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 2,
+      "subject": "map from the spectral Bernstein center to the Bernstein center",
+      "relation": "defines",
+      "object": "map from the spectral Bernstein center to the Bernstein center",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 3,
+      "subject": "finiteness results for the cohomology of local Shimura varieties",
+      "relation": "proves",
+      "object": "finiteness of the cohomology of local Shimura varieties",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 4,
+      "subject": "category of $\\ell$-adic sheaves on $\\mathrm{Bun}_G$",
+      "relation": "defines",
+      "object": "$\\ell$-adic sheaves on the stack $\\mathrm{Bun}_G$ of $G$-bundles on the Fargues–Fontaine curve",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 5,
+      "subject": "spectral action",
+      "relation": "defines",
+      "object": "action of the category of perfect complexes on the stack of $L$-parameters on the category of $\\ell$-adic sheaves on $\\mathrm{Bun}_G$",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 6,
+      "subject": "$L$-parameters associated with irreducible smooth representations of $G(E)$",
+      "relation": "defines",
+      "object": "$L$-parameter attached to an irreducible smooth representation of $G(E)$",
+      "modality": "stated",
+      "locator": "Abstract"
+    },
+    {
+      "n": 7,
+      "subject": "finiteness results for the cohomology of general moduli spaces of local shtukas",
+      "relation": "proves",
+      "object": "finiteness of the cohomology of general moduli spaces of local shtukas",
+      "modality": "stated",
+      "locator": "Abstract"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "paper_id": "W1641073798",
+  "domain": "physics",
+  "text_cache_sha256": "40d312cfbb41ace223405be6e1f54345fc20058f51f8f49a566b08fa0850319a",
+  "text": "We study the special algebraic properties of alternating 3-forms in 6 and 7 dimensions and introduce a diffeomorphism-invariant functional on the space of differential 3-forms on a closed manifold M in these dimensions. Restricting the functional to closed forms in a fixed cohomology class, we find that a critical point which is generic in a suitable sense defines in the 6-dimensional case a complex threefold with trivial canonical bundle and in 7 dimensions a Riemannian manifold with holonomy G2. This approach gives a direct method of finding a local moduli space, with its special geometry, for these structures.\n\n1 Introduction This paper arose from the author’s interest in the geometry of 3 3 -forms on a manifold. Exterior differential forms of degree 2 2 are much studied, in particular a symplectic manifold is defined by a closed non-degenerate 2 2 -form. Our starting point here is the fact that in dimensions 6 6 and 7 7 the notion of non-degeneracy for three-forms makes sense too. By this we mean that if W W is a real vector space of dimension 6 6 or 7 7 , then the group G ​ L ​ ( W ) GL(W) has an open orbit, a fact that has been known for nearly a century [ 12 ] . The orbits we are particularly interested in have stabilizer conjugate to S ​ L ​ ( 3 , 𝐂 ) SL(3,\\mathbf{C}) when dim W = 6 \\dim W=6 , and the exceptional Lie group G 2 G_{2} when dim W = 7 \\dim W=7 . In this way a single 3 3 -form Ω \\Omega on a manifold M M defines a reduction of the structure group of M M to one of these groups. When we look closely at the mechanism for this reduction, there appears naturally a volume form algebraically defined by any 3 3 -form. Integrating this form gives a diffeomorphism-invariant functional Φ \\Phi on the space of 3 3 -forms, and this is our main object of study. Following the analogy with Hodge theory, we restrict this functional to closed forms on M M in a given de Rham cohomology class and look for critical points. What we find is that if the critical point Ω \\Omega is a 3 3 -form which lies in the open orbit everywhere, then the reduction of structure group is integrable in the sense that for dim M = 6 \\dim M=6 we obtain a complex threefold with trivial canonical bundle, and for dim M = 7 \\dim M=7 a Riemannian manifold with holonomy in G 2 G_{2} . These geometrical structures are therefore simply critical points of the invariant functionals. Because the functional is diffeomorphism-invariant, every critical point lies on an orbit of critical points and so Φ \\Phi is never a Morse function. However, we show that formally it is a Morse-Bott function – its Hessian is non-degenerate transverse to the orbits of Diff ( M ) \\mathop{\\rm Diff}\\nolimits(M) . In the 6 6 -dimensional case this requires the assumption that the complex threefold satisfies the ∂ ∂ ¯ \\partial\\bar{\\partial} -lemma, and in the G 2 G_{2} case we need an analogue of this lemma, which is essentially contained in [ 7 ] . This nondegeneracy can be used, together with a standard use of the Banach space implicit function theorem, to give a direct and easy proof that the moduli space of complex structures together with holomorphic 3 3 -forms on a 6 6 -manifold is locally an open set in H 3 ​ ( M , 𝐑 ) H^{3}(M,\\mathbf{R}) . In particular we see that the moduli space of complex structures is unobstructed. The novelty of our approach is that the flat structure on this moduli space is apparent from the very beginning, and the complex structure is defined in a secondary manner. This is the opposite point of view from the conventional use of Kodaira-Spencer theory as in the work of Tian and Todorov [ 14 ] , [ 15 ] . For us the complex structure on the moduli space carries with it the natural special pseudo-Kähler structure whose existence is an important ingredient in mirror symmetry [ 2 ] . We carry out the same process for G 2 G_{2} -manifolds and show that the moduli space is isomorphic to an open set in H 3 ​ ( M , 𝐑 ) H^{3}(M,\\mathbf{R}) with an indefinite metric of Hessian type, completing a line of thought due to Joyce [ 7 ] . The structure of the paper is as follows. In Section 2 we consider the linear algebra of the vector space Λ 3 ​ W ∗ \\Lambda^{3}W^{*} where W W is 6 6 -dimensional. The essential point is that over the complex numbers, a generic 3 3 -form is the sum of two decomposable ones. In Section 3, we see this algebra from the point of view of symplectic geometry, regarding Λ 3 ​ W ∗ \\Lambda^{3}W^{*} as a symplectic vector space under the action of S ​ L ​ ( W ) SL(W) . This viewpoint is extremely useful for studying the variational problem. Section 4 is a detour into the realm of self-duality. With an inner product of signature ( 5 , 1 ) (5,1) on W W , we can define self-dual and anti-self-dual 3 3 -forms, and some of the linear algebra assumes a much more concrete form. Moreover, we see a setting here for the equation of motion for a self-interacting self-dual tensor, a nonlinear equation of some current interest to physicists. In Section 5 we introduce the invariant functional on 3 3 -forms on a 6 6 -manifold, and relate the critical points to integrable complex structures. In Section 6 we prove Morse-Bott nondegeneracy formally, and then use a Sobolev space model to prove rigorously that an open set in H 3 ​ ( M , 𝐑 ) H^{3}(M,\\mathbf{R}) is a local moduli space. Section 7 is concerned with carrying out the parallel programme for G 2 G_{2} -manifolds. The author wishes to thank Robert Bryant for explaining the algebra behind S ​ L ​ ( 3 , 𝐂 ) SL(3,\\mathbf{C}) and G 2 G_{2} and Patrick Baier for useful discussions.\n\nDefinition 1: Define λ ⁡ ( Ω ) ∈ ( Λ 6 ​ V ∗ ) 2 \\lambda(\\Omega)\\in(\\Lambda^{6}V^{*})^{2} by λ ⁡ ( Ω ) = 1 6 ​ tr K Ω 2 \\lambda(\\Omega)=\\frac{1}{6}\\mathop{\\rm tr}\\nolimits K_{\\Omega}^{2}\n\nProposition 1: For Ω ∈ Λ 3 ​ V ∗ \\Omega\\in\\Lambda^{3}V^{*} , λ ⁡ ( Ω ) ≠ 0 \\lambda(\\Omega)\\neq 0 if and only if Ω = α + β \\Omega=\\alpha+\\beta where α , β \\alpha,\\beta are decomposable and α ∧ β ≠ 0 \\alpha\\wedge\\beta\\neq 0 . The 3 3 -forms α , β \\alpha,\\beta are unique up to ordering.\n\nProposition 2: Suppose that λ ⁡ ( Ω ) ≠ 0 \\lambda(\\Omega)\\neq 0 for Ω ∈ Λ 3 ​ W ∗ \\Omega\\in\\Lambda^{3}W^{*} . Then • λ ⁡ ( Ω ) > 0 \\lambda(\\Omega)>0 if and only if Ω = α + β \\Omega=\\alpha+\\beta where α , β \\alpha,\\beta are real decomposable 3 3 -forms and α ∧ β ≠ 0 \\alpha\\wedge\\beta\\neq 0 • λ ⁡ ( Ω ) < 0 \\lambda(\\Omega)<0 if and only if Ω = α + α ¯ \\Omega=\\alpha+\\bar{\\alpha} where α ∈ Λ 3 ​ ( W ∗ ⊗ 𝐂 ) \\alpha\\in\\Lambda^{3}(W^{*}\\otimes\\mathbf{C}) is a complex decomposable 3 3 -form and α ∧ α ¯ ≠ 0 \\alpha\\wedge\\bar{\\alpha}\\neq 0\n\nDefinition 2: Let W W be oriented and Ω ∈ Λ 3 ​ W ∗ \\Omega\\in\\Lambda^{3}W^{*} be such that λ ⁡ ( Ω ) ≠ 0 \\lambda(\\Omega)\\neq 0 . Then, writing Ω \\Omega in terms of decomposables ordered by the orientation, we define Ω ^ ∈ Λ 3 ​ W ∗ \\hat{\\Omega}\\in\\Lambda^{3}W^{*} by • if λ ⁡ ( Ω ) > 0 \\lambda(\\Omega)>0 , and Ω = α + β \\Omega=\\alpha+\\beta then Ω ^ = α − β \\hat{\\Omega}=\\alpha-\\beta • if λ ⁡ ( Ω ) < 0 \\lambda(\\Omega)<0 , and Ω = α + α ¯ \\Omega=\\alpha+\\bar{\\alpha} then Ω ^ = i ⁡ ( α ¯ − α ) \\hat{\\Omega}=i(\\bar{\\alpha}-\\alpha) .\n\nProposition 3: The moment map for S ​ L ​ ( W ) SL(W) acting on Λ 3 ​ W ∗ \\Lambda^{3}W^{*} is given by μ ⁡ ( Ω ) = K Ω . \\mu(\\Omega)=K_{\\Omega}.\n\nProposition 4: Let Ω ↦ Ω ^ \\Omega\\mapsto\\hat{\\Omega} be the transformation of Definition 2, then X ϕ ​ ( Ω ) = − Ω ^ . X_{\\phi}(\\Omega)=-\\hat{\\Omega}.\n\nProposition 5: The derivative J = D ​ X ϕ ∈ End ( Λ 3 ​ W ∗ ) J=DX_{\\phi}\\in\\mathop{\\rm End}\\nolimits(\\Lambda^{3}W^{*}) of X ϕ : U → Λ 3 ​ W ∗ X_{\\phi}:U\\rightarrow\\Lambda^{3}W^{*} at Ω \\Omega satisfies J 2 = − 1 J^{2}=-1 and defines an integrable complex structure on U U .\n\nProposition 6: The complex structure J = i J=i on Λ 3 , 0 ⊕ Λ 2 , 1 \\Lambda^{3,0}\\oplus\\Lambda^{2,1} and − i -i on Λ 1 , 2 ⊕ Λ 0 , 3 \\Lambda^{1,2}\\oplus\\Lambda^{0,3} .\n\nDefinition 3: A special Kähler manifold is a complex manifold M M with complex structure J ∈ Ω 1 ​ ( T ) J\\in\\Omega^{1}(T) such that • there is a Kähler metric g g with Kähler form ω \\omega • a flat torsion-free connection D D such that • D ​ ω = 0 D\\omega=0 and • d D ​ J = 0 ∈ Ω 2 ​ ( M , T ) d_{D}J=0\\in\\Omega^{2}(M,T)\n\nProposition 7: The open set U ⊂ Λ 3 ​ W ∗ U\\subset\\Lambda^{3}W^{*} has an S ​ L ​ ( W ) SL(W) -invariant special pseudo-Kähler structure of Hermitian signature ( 1 , 9 ) (1,9) and X ϕ X_{\\phi} is an infinitesimal isometry of the metric.\n\nProposition 8: Let Ω ∈ Λ 3 ​ W ∗ \\Omega\\in\\Lambda^{3}W^{*} be self-dual then λ ⁡ ( Ω ) ≥ 0 \\lambda(\\Omega)\\geq 0 and if λ ⁡ ( Ω ) > 0 \\lambda(\\Omega)>0 then Ω = α + ∗ α \\Omega=\\alpha+\\ast\\alpha where α ∈ Λ 3 ​ W ∗ \\alpha\\in\\Lambda^{3}W^{*} is decomposable.\n\nProposition 9: If Ω \\Omega is self-dual Ω ^ \\hat{\\Omega} is anti-self-dual.\n\nProposition 10: The subspaces Λ + , Λ − ⊂ Λ 3 ​ W ∗ \\Lambda_{+},\\Lambda_{-}\\subset\\Lambda^{3}W^{*} of self-dual and anti-self-dual 3 3 -forms are Lagrangian.\n\nProposition 11: The map Ω ↦ Ω ^ \\Omega\\mapsto\\hat{\\Omega} from Λ + \\Lambda_{+} to Λ − ≅ Λ + ∗ \\Lambda_{-}\\cong\\Lambda_{+}^{*} is the derivative of − ϕ -\\phi restricted to Λ + \\Lambda_{+} .\n\nProposition 12: • If A ∈ S ​ y ​ m 2 ​ S ∗ A\\in Sym^{2}S^{*} represents a self-dual 3 3 -form Ω \\Omega then Ω ^ = det A ​ A − 1 ∈ S ​ y ​ m 2 ​ S . \\hat{\\Omega}=\\sqrt{\\det A}A^{-1}\\in Sym^{2}S. • If B ∈ S ​ y ​ m 2 ​ S B\\in Sym^{2}S represents an anti-self-dual 3 3 -form Ω \\Omega then Ω ^ = − det A ​ A − 1 ∈ S ​ y ​ m 2 ​ S . \\hat{\\Omega}=-\\sqrt{\\det A}A^{-1}\\in Sym^{2}S.\n\nTheorem 13: Let M M be a compact complex 3 3 -manifold with trivial canonical bundle and Ω \\Omega the real part of a non-vanishing holomorphic 3 3 -form. Then Ω \\Omega is a critical point of the functional Φ \\Phi restricted to the cohomology class [ Ω ] ∈ H 3 ​ ( M , 𝐑 ) [\\Omega]\\in H^{3}(M,\\mathbf{R}) . Conversely, if Ω \\Omega is a critical point on a cohomology class of an oriented closed 6 6 -manifold M M and λ ⁡ ( Ω ) < 0 \\lambda(\\Omega)<0 everywhere, then Ω \\Omega defines on M M the structure of a complex manifold such that Ω \\Omega is the real part of a non-vanishing holomorphic 3 3 -form.\n\nProposition 14: Let M M be a compact complex 3 3 -manifold with non-vanishing holomorphic 3 3 -form Ω + i ​ Ω ^ \\Omega+i\\hat{\\Omega} . Suppose M M satisfies the ∂ ∂ ¯ \\partial\\bar{\\partial} -lemma, then the Hessian of Φ \\Phi is nondegenerate transverse to the action of Diff ( M ) \\mathop{\\rm Diff}\\nolimits(M) at Ω \\Omega .\n\nLemma 15: Let M M be a compact complex 3 3 -manifold with non-vanishing holomorphic 3 3 -form which satisfies the ∂ ∂ ¯ \\partial\\bar{\\partial} -lemma, then d ​ ψ d\\psi is tangent to the Diff ( M ) \\mathop{\\rm Diff}\\nolimits(M) orbit of Ω \\Omega if and only if d ​ J ​ d ​ ψ = 0 dJd\\psi=0 .\n\nLemma 16: If γ ∈ L k + 1 2 ​ ( Λ 1 , 1 ) \\gamma\\in L_{k+1}^{2}(\\Lambda^{1,1}) is a real form which satisfies ( d ∗ ​ d ​ γ ) 2 , 0 = 0 (d^{*}d\\gamma)^{2,0}=0 , then there exist a real form ρ ∈ L k 2 ​ ( Λ 3 ) \\rho\\in L_{k}^{2}(\\Lambda^{3}) with d ∗ ​ ρ = 0 d^{*}\\rho=0 and a complex form σ ∈ L k + 1 2 ​ ( Λ 2 , 2 ) \\sigma\\in L_{k+1}^{2}(\\Lambda^{2,2}) such that d ​ γ = ρ + ∂ ∗ σ + ∂ ¯ ∗ ​ σ ¯ . d\\gamma=\\rho+\\partial^{*}\\sigma+\\bar{\\partial}^{*}\\bar{\\sigma}.\n\nProposition 17: The open set U ⊂ H 3 ​ ( M , 𝐑 ) U\\subset H^{3}(M,\\mathbf{R}) has the structure of a special pseudo-Kähler manifold of Hermitian signature ( 1 , h 2 , 1 − 1 ) (1,h^{2,1}-1) .\n\nDefinition 4: Fix a basis vector ϵ ∈ Λ 7 ​ W ∗ \\epsilon\\in\\Lambda^{7}W^{*} , and for a positive form Ω \\Omega define ϕ ⁡ ( Ω ) ∈ 𝐑 \\phi(\\Omega)\\in\\mathbf{R} by ϕ ⁡ ( Ω ) ​ ϵ = det K Ω 1 / 9 \\phi(\\Omega)\\epsilon=\\det K_{\\Omega}^{1/9}\n\nProposition 18: The derivative of ϕ \\phi is given by: d ​ ϕ ​ ( Ω ˙ ) ​ ϵ = 7 18 ∗ Ω ∧ Ω ˙ d\\phi(\\dot{\\Omega})\\epsilon=\\frac{7}{18}\\ast\\Omega\\wedge\\dot{\\Omega} where ∗ : Λ 3 ​ W ∗ → Λ 4 ​ W ∗ \\ast:\\Lambda^{3}W^{*}\\rightarrow\\Lambda^{4}W^{*} is the Hodge star operator of the metric g Ω g_{\\Omega} .\n\nTheorem 19: Let M M be a closed 7 7 -manifold with a metric with holonomy G 2 G_{2} , with defining 3 3 -form Ω \\Omega . Then Ω \\Omega is a critical point of the functional Φ \\Phi restricted to the cohomology class [ Ω ] ∈ H 3 ​ ( M , 𝐑 ) [\\Omega]\\in H^{3}(M,\\mathbf{R}) . Conversely, if Ω \\Omega is a critical point on a cohomology class of a closed oriented 7 7 -manifold M M such that Ω \\Omega is everywhere positive, then Ω \\Omega defines on M M a metric with holonomy G 2 G_{2} .\n\nLemma 20: The derivative of the map Θ ( Ω ) = ∗ Ω \\Theta(\\Omega)=\\ast\\Omega at Ω \\Omega is D Θ ( Ω ˙ ) = 4 3 ∗ π 1 ( Ω ˙ ) + ∗ π 7 ( Ω ˙ ) − ∗ π 27 ( Ω ˙ ) . D\\Theta(\\dot{\\Omega})=\\frac{4}{3}{\\ast\\pi_{1}(\\dot{\\Omega})}+{\\ast\\pi_{7}(\\dot{\\Omega})}-{\\ast\\pi_{27}(\\dot{\\Omega})}.\n\nProposition 21: Let M M be a compact 7 7 -manifold with a closed 3 3 -form Ω \\Omega which defines a G 2 G_{2} -structure. Then the Hessian of the functional Φ \\Phi at Ω \\Omega is nondegenerate transverse to the action of Diff ( M ) \\mathop{\\rm Diff}\\nolimits(M) at Ω \\Omega .\n\nProposition 22: Let M M be an irreducible G 2 G_{2} -manifold, and U ⊂ H 3 ​ ( M , 𝐑 ) U\\subset H^{3}(M,\\mathbf{R}) a local moduli space. Then the Hessian of the function Φ ⁡ ( [ Ω ] ) \\Phi([\\Omega]) defines a metric on U U of signature ( 1 , b 3 − 1 ) (1,b_{3}-1) .",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "Proposition 7",
+      "relation": "proves",
+      "object": "U ⊂ Λ^3 W* has an SL(W)-invariant special pseudo-Kähler structure of Hermitian signature (1,9)",
+      "modality": "stated",
+      "locator": "Proposition 7"
+    },
+    {
+      "n": 2,
+      "subject": "U in H^3(M,R)",
+      "relation": "proves",
+      "object": "special pseudo-Kahler manifold of Hermitian signature (1, h^{2,1}-1)",
+      "modality": "stated",
+      "locator": "Proposition 17"
+    },
+    {
+      "n": 3,
+      "subject": "moduli space of complex structures together with holomorphic 3-forms on a 6-manifold",
+      "relation": "proves",
+      "object": "open set in H^3(M,R)",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 4,
+      "subject": "Definition 4",
+      "relation": "defines",
+      "object": "φ(Ω) ε = det K_Ω^{1/9} for a positive form Ω and fixed ε ∈ Λ^7 W*",
+      "modality": "stated",
+      "locator": "Definition 4"
+    },
+    {
+      "n": 5,
+      "subject": "Definition 1",
+      "relation": "defines",
+      "object": "λ(Ω) = (1/6) tr K_Ω^2 ∈ (Λ^6 V*)^2",
+      "modality": "stated",
+      "locator": "Definition 1"
+    },
+    {
+      "n": 6,
+      "subject": "GL(W) action on Lambda^3 W^*",
+      "relation": "proves",
+      "object": "open orbit in Lambda^3 W^* for dim W = 6 or 7",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 7,
+      "subject": "stabilizer of a point in the open orbit of Λ^3 W* (dim W = 6)",
+      "relation": "equivalent-to",
+      "object": "SL(3,C) (up to conjugacy)",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 8,
+      "subject": "Proposition 2",
+      "relation": "proves",
+      "object": "λ(Ω) > 0 iff Ω = α + β with α, β real decomposable and α∧β ≠ 0",
+      "modality": "stated",
+      "locator": "Proposition 2"
+    },
+    {
+      "n": 9,
+      "subject": "Proposition 17",
+      "relation": "proves",
+      "object": "U ⊂ H^3(M,R) has the structure of a special pseudo-Kähler manifold of Hermitian signature (1, h^{2,1} - 1)",
+      "modality": "stated",
+      "locator": "Proposition 17"
+    },
+    {
+      "n": 10,
+      "subject": "Proposition 8",
+      "relation": "proves",
+      "object": "if Ω is self-dual and λ(Ω) > 0 then Ω = α + *α for decomposable α",
+      "modality": "stated",
+      "locator": "Proposition 8"
+    },
+    {
+      "n": 11,
+      "subject": "lambda(Omega) < 0",
+      "relation": "equivalent-to",
+      "object": "Omega = alpha + conj(alpha) with alpha a complex decomposable 3-form and alpha wedge conj(alpha) != 0",
+      "modality": "stated",
+      "locator": "Proposition 2"
+    },
+    {
+      "n": 12,
+      "subject": "stabilizer of a point in the open orbit for dim W = 6",
+      "relation": "equivalent-to",
+      "object": "SL(3,C)",
+      "modality": "stated",
+      "locator": "Introduction"
+    },
+    {
+      "n": 13,
+      "subject": "Proposition 3",
+      "relation": "proves",
+      "object": "moment map for SL(W) acting on Λ^3 W* is μ(Ω) = K_Ω",
+      "modality": "stated",
+      "locator": "Proposition 3"
+    },
+    {
+      "n": 14,
+      "subject": "derivative of Theta(Omega) = *Omega",
+      "relation": "proves",
+      "object": "D Theta(Omega-dot) = (4/3) *pi_1(Omega-dot) + *pi_7(Omega-dot) - *pi_27(Omega-dot)",
+      "modality": "stated",
+      "locator": "Lemma 20"
+    },
+    {
+      "n": 15,
+      "subject": "J",
+      "relation": "equivalent-to",
+      "object": "i on Lambda^{3,0} plus Lambda^{2,1}, and -i on Lambda^{1,2} plus Lambda^{0,3}",
+      "modality": "stated",
+      "locator": "Proposition 6"
+    },
+    {
+      "n": 16,
+      "subject": "Omega self-dual",
+      "relation": "proves",
+      "object": "Omega-hat is anti-self-dual",
+      "modality": "stated",
+      "locator": "Proposition 9"
+    },
+    {
+      "n": 17,
+      "subject": "Proposition 7",
+      "relation": "proves",
+      "object": "X_φ is an infinitesimal isometry of the metric on U",
+      "modality": "stated",
+      "locator": "Proposition 7"
+    },
+    {
+      "n": 18,
+      "subject": "phi(Omega)",
+      "relation": "defines",
+      "object": "real number with phi(Omega) epsilon = det K_Omega^{1/9}, for positive Omega and fixed epsilon in Lambda^7 W^*",
+      "modality": "stated",
+      "locator": "Definition 4"
+    },
+    {
+      "n": 19,
+      "subject": "Proposition 21",
+      "relation": "proves",
+      "object": "Hessian of Φ at a closed G_2-structure 3-form Ω on a compact 7-manifold is non-degenerate transverse to the action of Diff(M)",
+      "modality": "stated",
+      "locator": "Proposition 21"
+    },
+    {
+      "n": 20,
+      "subject": "3-form Omega on M",
+      "relation": "defines",
+      "object": "reduction of the structure group of M to SL(3,C) or G_2",
+      "modality": "stated",
+      "locator": "Introduction"
+    }
+  ]
+}
