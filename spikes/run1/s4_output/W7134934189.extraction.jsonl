@@ -1,0 +1,28 @@
+{"subject":"Fractured ∞-topos structure on Cond(An)","relation":"proves","object":"Cond^open(An) induces a fractured ∞-topos structure on Cond(An)","modality":"stated","locator":"Theorem A (3.7)"}
+{"subject":"Cond^open(An) → Cond(An)","relation":"proves","object":"Left Kan extension of restriction induces an equivalence onto a fractured subcategory","modality":"stated","locator":"Theorem A (3.7)"}
+{"subject":"Cond(An)_{/h_open S} for S in ExtrDisc","relation":"proves","object":"equivalence Cond^open(An)_{/h_open S} ≃ Shv(S)","modality":"stated","locator":"Theorem B (3.11)"}
+{"subject":"Points {Cond(An) → An, F ↦ colim_{U clopen, s∈U} F(U)}_{S,s}","relation":"proves","object":"the collection is jointly conservative","modality":"stated","locator":"Theorem C (3.14)"}
+{"subject":"ExtrDisc","relation":"proves","object":"ExtrDisc does not admit all fibers","modality":"stated","locator":"Theorem D (4.13)"}
+{"subject":"Fiber of βπ1 over p ∈ βN \\ N","relation":"counterexample-to","object":"ExtrDisc admitting all fibers","modality":"stated","locator":"Theorem D (4.13)"}
+{"subject":"Cond(An)","relation":"defines","object":"Shv_An(ExtrDisc_κ)","modality":"stated","locator":"Definition 2.11"}
+{"subject":"Cond^open(An)","relation":"defines","object":"Shv(ExtrDisc^open)","modality":"stated","locator":"Definition 3.1"}
+{"subject":"Fracture subcategory","relation":"defines","object":"fractured ∞-topos X^corp → X","modality":"stated","locator":"Definition 2.1"}
+{"subject":"Admissibility structure and geometric site","relation":"defines","object":"geometric site (C, C^ad, τ)","modality":"stated","locator":"Definition 2.6"}
+{"subject":"Fractured ∞-topos","relation":"depends-on","object":"Lemma 2.4: (j_!, j^*) monadic and (j^*, j_*) comonadic","modality":"stated","locator":"Lemma 2.4"}
+{"subject":"Corollary 2.10 (hypercompleteness)","relation":"depends-on","object":"Proposition 2.8 (jointly conservative points transfer via j_*)","modality":"stated","locator":"Corollary 2.10"}
+{"subject":"Theorem 2.7","relation":"depends-on","object":"Theorem 20.6.3.4 of Lurie's Spectral Algebraic Geometry (fracture from geometric sites)","modality":"cited","locator":"Theorem 2.7"}
+{"subject":"Theorem 2.7 (fracture from geometric site)","relation":"uses-technique","object":"precomposition with j inducing adjunction j_! ⊣ j^*","modality":"stated","locator":"Theorem 2.7"}
+{"subject":"Proposition 2.8","relation":"proves","object":"j_* ∘ x_i jointly conservative points in X when x_i are in X^corp","modality":"cited","locator":"Proposition 2.8"}
+{"subject":"Corollary 3.8","relation":"proves","object":"Cond(An) is (co)monadic over Cond^open(An), j^* creates (co)limits","modality":"stated","locator":"Corollary 3.8"}
+{"subject":"Corollary 3.4","relation":"depends-on","object":"Remark 3.5: clopen subspaces of extremally disconnected spaces are extremally disconnected","modality":"stated","locator":"Corollary 3.4"}
+{"subject":"Corollary 3.4","relation":"depends-on","object":"Lemma 3.3 (limits in ExtrDisc computed in CHaus when they exist)","modality":"stated","locator":"Corollary 3.4"}
+{"subject":"Theorem 3.7","relation":"depends-on","object":"Corollary 3.4 (pullbacks of open embeddings are open embeddings)","modality":"stated","locator":"Theorem 3.7"}
+{"subject":"Proposition 3.11","relation":"uses-technique","object":"composite equivalence Shv(Open_S) ≃ Shv(Clopen_S, τ^fin) ≃ Shv(ExtrDisc^open_{/S}) ≃ Cond^open_{/h_open S}","modality":"stated","locator":"Proposition 3.11"}
+{"subject":"Theorem 3.14","relation":"depends-on","object":"Corollary 3.15 (hypercompleteness of Cond(An))","modality":"stated","locator":"Corollary 3.15"}
+{"subject":"Corollary 3.18 (condensed and sheaf cohomology agree for ExtrDisc)","relation":"generalises","object":"Remark 3.19 (agreement known for CHaus and locally compact Hausdorff spaces)","modality":"stated","locator":"Remark 3.19"}
+{"subject":"Remark 3.17","relation":"cited","object":"shape of Cond(An)_{/h X} agrees with Shv(X) for paracompact compactly generated X","modality":"cited","locator":"Remark 3.17"}
+{"subject":"Remark 2.12","relation":"cited","object":"Binary products of infinite extremally disconnected spaces do not exist in ExtrDisc","modality":"cited","locator":"Remark 2.12"}
+{"subject":"Remark 2.13","relation":"cited","object":"Extremally disconnected spaces are projective in CHaus (Gleason)","modality":"cited","locator":"Remark 2.13"}
+{"subject":"Lemma 2.14","relation":"cited","object":"A functor ExtrDisc^op → An is a condensed anima iff it preserves finite products","modality":"cited","locator":"Lemma 2.14"}
+{"subject":"Remark 3.2","relation":"proves","object":"topology on ExtrDisc^open is not subcanonical","modality":"stated","locator":"Remark 3.2"}
+{"subject":"Lemma 4.2","relation":"defines","object":"wide subcategories CHaus^inj, CHaus^open, ProFin^inj, ProFin^open","modality":"stated","locator":"Lemma 4.2"}
