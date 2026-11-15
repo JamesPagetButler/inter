@@ -1,0 +1,44 @@
+{"subject":"Tr chi(D/Lambda)","relation":"equivalent-to","object":"I_E + I_G + I_GH + I_H + I_C up to 0(Lambda^-infinity)","modality":"stated","locator":"Eq. (1.26)"}
+{"subject":"Connes distance d(x,y)","relation":"defines","object":"Sup{|a(x)-a(y)| : a in A, ||[D,a]|| <= 1}","modality":"stated","locator":"Eq. (1.5)"}
+{"subject":"gamma (grading)","relation":"defines","object":"gamma=gamma*, gamma^2=1, gamma a = a gamma for all a in A, gamma D = -D gamma","modality":"stated","locator":"Eq. (1.6)"}
+{"subject":"J (real structure)","relation":"defines","object":"J^2=eps, JD=eps' DJ, J gamma=eps'' gamma J with eps, eps', eps'' in {-1,1}","modality":"stated","locator":"Eq. (1.7)"}
+{"subject":"alpha_phi(f)","relation":"defines","object":"f composed with phi^-1 for f in C^infty(M)=A","modality":"stated","locator":"Eq. (1.10)"}
+{"subject":"A","relation":"defines","object":"C^infty(M) tensor A_F","modality":"stated","locator":"Eq. (1.16)"}
+{"subject":"A_F","relation":"defines","object":"C ⊕ H ⊕ M_3(C)","modality":"stated","locator":"Eq. (1.17)"}
+{"subject":"H (Hilbert space)","relation":"defines","object":"L^2(M,S) tensor H_F with D = slash-del_M tensor 1 + gamma_5 tensor D_F","modality":"stated","locator":"Eq. (1.19)"}
+{"subject":"D_F","relation":"defines","object":"[[Y,0],[0,Ybar]]","modality":"stated","locator":"Eq. (1.21)"}
+{"subject":"order-one condition [[D,a],b^0]=0","relation":"defines","object":"condition for all a,b in A","modality":"stated","locator":"Eq. (1.22)"}
+{"subject":"fluctuated Dirac operator D","relation":"defines","object":"D0 + A + JAJ^-1 with A = sum_i a_i [D0,b_i], A self-adjoint","modality":"stated","locator":"Eq. (1.23)"}
+{"subject":"P = D^2","relation":"defines","object":"-(g^{mu nu} d_mu d_nu + A^mu d_mu + B)","modality":"stated","locator":"Eq. (2.7)"}
+{"subject":"curvature of [d+omega, d+omega]","relation":"equivalent-to","object":"R_{mu nu rho sigma}(g) via vierbein contraction","modality":"stated","locator":"Eq. (2.9)"}
+{"subject":"gamma^{mu nu} R_{mu nu}^{ab} gamma_{ab}","relation":"equivalent-to","object":"-2R","modality":"stated","locator":"Eq. (2.10)"}
+{"subject":"Tr(P^-s)","relation":"equivalent-to","object":"(1/Gamma(s)) integral of t^(s-1) Tr e^(-tP) dt, Re(s) >= 0","modality":"stated","locator":"Eq. (2.12)"}
+{"subject":"Tr e^(-tP)","relation":"equivalent-to","object":"asymptotic sum over n of t^((n-m)/d) integral of a_n(x,P) dv(x)","modality":"stated","locator":"Eq. (2.13)"}
+{"subject":"Tr chi(P)","relation":"equivalent-to","object":"sum over n of f_n a_n(P)","modality":"stated","locator":"Eq. (2.14)"}
+{"subject":"moments f_0, f_2, f_{2(n+2)} of chi","relation":"defines","object":"integrals of chi(u) u du, chi(u) du, and (-1)^n chi^(n)(0)","modality":"stated","locator":"Eq. (2.15)"}
+{"subject":"heat kernel coefficients a_0, a_2, a_4 (x,P)","relation":"defines","object":"(4 pi)^(-m/2) times traces of R, E, Omega expressions","modality":"stated","locator":"Eq. (2.16)"}
+{"subject":"a_4(P) for gravity plus Yang-Mills","relation":"uses-technique","object":"heat kernel expansion Tr chi(P) ~ sum f_n a_n(P)","modality":"stated","locator":"Eq. (2.20)"}
+{"subject":"R*R*","relation":"equivalent-to","object":"Riem^2 - 4 Ric^2 + R^2","modality":"stated","locator":"Eq. (2.21)"}
+{"subject":"Weyl tensor C_{mu nu rho sigma}","relation":"defines","object":"R_{mu nu rho sigma} minus trace terms built from g and R_{mu nu}, plus (1/6)(g g - g g) R","modality":"stated","locator":"Eq. (2.22)"}
+{"subject":"Riem^2 R_{mu nu rho sigma} R^{mu nu rho sigma}","relation":"equivalent-to","object":"C^2 + 2 Ric^2 - R^2/3","modality":"stated","locator":"Eq. (2.23)"}
+{"subject":"a_4(p) rewritten in Weyl and R*R* form","relation":"equivalent-to","object":"N/(48 pi^2) integral of [-3/20 C^2 + (1/120)(11 R*R* + 12 R_;mu^mu) + (g^2/N) F^2]","modality":"stated","locator":"Eq. (2.24)"}
+{"subject":"chi_E","relation":"defines","object":"(1/(32 pi^2)) integral of sqrt(g) R*R* d^4x","modality":"stated","locator":"Eq. (2.25)"}
+{"subject":"I_b expansion coefficients","relation":"depends-on","object":"moments f_0, f_2, f_4 of chi","modality":"stated","locator":"Eq. (2.26)"}
+{"subject":"f_4 g_0^2/(12 pi^2)","relation":"equivalent-to","object":"1","modality":"stated","locator":"Eq. (2.27)"}
+{"subject":"I_b (gravity-Yang-Mills spectral action)","relation":"equivalent-to","object":"integral of sqrt(g)[R/(2 kappa0^2) + e0 + a0 C^2 + c0 R*R* + d0 R_;mu^mu + F^2/4]","modality":"stated","locator":"Eq. (2.28)"}
+{"subject":"a_0 (Yang-Mills coefficient)","relation":"defines","object":"-3N/(80 g_0^2)","modality":"stated","locator":"Eq. (2.29)"}
+{"subject":"Dirac operator on product geometry D","relation":"defines","object":"D1 tensor 1 + gamma_5 tensor D2","modality":"stated","locator":"Eq. (3.1)"}
+{"subject":"Higgs-gauge spectral action I","relation":"equivalent-to","object":"integral of sqrt(g)[(3m0^2 f2)/(4 pi^2) (5/4 R - 2 y^2 H*H) + f4/(4 pi^2) (...)]","modality":"stated","locator":"Eq. (3.16)"}
+{"subject":"y^2","relation":"defines","object":"Tr(|k0^d|^2 + |k0^u|^2 + (1/3)|k0^e|^2)","modality":"stated","locator":"Eq. (3.17)"}
+{"subject":"z^2","relation":"defines","object":"Tr((|k0^d|^2 + |k0^u|^2)^2 + (1/3)|k0^e|^4)","modality":"stated","locator":"Eq. (3.17)"}
+{"subject":"gauge couplings g_03, g_02, g_01 at cutoff","relation":"equivalent-to","object":"g_03^2 = g_02^2 = (5/3) g_01^2","modality":"stated","locator":"Eq. (3.18)"}
+{"subject":"lambda_0","relation":"equivalent-to","object":"(4/3) g_03^2 z^2 / y^4","modality":"stated","locator":"Eq. (3.21)"}
+{"subject":"m0^2","relation":"depends-on","object":"m^2 with Lambda^2/m^2 correction terms in g_2, g_1, lambda, k_t","modality":"stated","locator":"Eq. (3.22)"}
+{"subject":"e0","relation":"equivalent-to","object":"e + Lambda^4/(32 pi^2)(62) + ...","modality":"stated","locator":"Eq. (3.23)"}
+{"subject":"dg_1/dt","relation":"equivalent-to","object":"(1/(16 pi^2))(41/6) g_1^3","modality":"stated","locator":"Eq. (3.24)"}
+{"subject":"alpha_1^-1(M_Z)","relation":"equivalent-to","object":"alpha_1^-1(Lambda) + (41/(12 pi)) ln(Lambda/M_Z)","modality":"stated","locator":"Eq. (3.25)"}
+{"subject":"alpha_3(Lambda)","relation":"equivalent-to","object":"alpha_2(Lambda) = (5/3) alpha_1(Lambda)","modality":"stated","locator":"Eq. (3.26)"}
+{"subject":"sin^2 theta_w","relation":"equivalent-to","object":"(3/8)[1 - (109/(18 pi)) alpha_em ln(Lambda/M_Z)]","modality":"stated","locator":"Eq. (3.27)"}
+{"subject":"lambda(Lambda)","relation":"equivalent-to","object":"(16 pi/3) alpha_3(Lambda)","modality":"stated","locator":"Eq. (3.31)"}
+{"subject":"d lambda/dt","relation":"equivalent-to","object":"4 lambda gamma + (1/(8 pi^2))(12 lambda^2 + B)","modality":"stated","locator":"Eq. (3.32)"}
+{"subject":"m_H (Higgs mass)","relation":"equivalent-to","object":"160 < m_H < 200 GeV","modality":"stated","locator":"Eq. (3.34)"}
