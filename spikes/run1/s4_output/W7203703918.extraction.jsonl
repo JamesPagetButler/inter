@@ -1,0 +1,28 @@
+{"subject": "six-functor formalism F-Gauge_Δ^□(_)", "relation": "defines", "object": "six-functor formalism on p-adic formal schemes", "modality": "stated", "locator": "Theorem A"}
+{"subject": "Theorem A (A)", "relation": "proves", "object": "morphisms locally of finite type are !-able", "modality": "stated", "locator": "Theorem A (A)"}
+{"subject": "Theorem A (B)", "relation": "proves", "object": "étale morphisms are cohomologically étale", "modality": "stated", "locator": "Theorem A (B)"}
+{"subject": "Theorem A (C)", "relation": "proves", "object": "finite compositions of closed immersions and proper morphisms are weakly cohomologically proper", "modality": "stated", "locator": "Theorem A (C)"}
+{"subject": "Theorem A (D)", "relation": "proves", "object": "F-Gauge_Δ^□(_)^* and F-Gauge_Δ^□(_)^! are étale sheaves", "modality": "stated", "locator": "Theorem A (D)"}
+{"subject": "Theorem A (E)", "relation": "proves", "object": "the Tate twist O_{X^syn}(-1) is ⊗-invertible", "modality": "stated", "locator": "Theorem A (E)"}
+{"subject": "Theorem A (F)", "relation": "proves", "object": "any smooth morphism is cohomologically smooth", "modality": "stated", "locator": "Theorem A (F)"}
+{"subject": "Theorem A (F)", "relation": "proves", "object": "f^!O_{S^syn} ≃ O_{X^syn}{d}[-2d] for smooth f of relative dimension d", "modality": "stated", "locator": "Theorem A (F)"}
+{"subject": "Theorem A (G)", "relation": "proves", "object": "dualizable F-Gauges identify with Perf((_)^syn)", "modality": "stated", "locator": "Theorem A (G)"}
+{"subject": "Theorem A (G)", "relation": "equivalent-to", "object": "R Γ^BMS_syn(_, Z_p(n)) ≃ Hom(O, O{n})", "modality": "stated", "locator": "Theorem A (G)"}
+{"subject": "perfect F-Gauges", "relation": "defines", "object": "perfect F-Gauges", "modality": "cited", "locator": "Theorem A (G)"}
+{"subject": "Corollary after Theorem A", "relation": "proves", "object": "f_* O_{X^syn} ≃ (f_! O_{X^syn}{d}[-2d])^∨", "modality": "stated", "locator": "Corollary (after Theorem A)"}
+{"subject": "Theorem B", "relation": "defines", "object": "six-functor formalism X ↦ D(X_η^{ét,□}) on p-adic formal schemes over Z_p^cyc", "modality": "stated", "locator": "Theorem B"}
+{"subject": "Theorem B", "relation": "proves", "object": "dualizable objects identify with D^b_lisse((_)_η, Z_p)", "modality": "stated", "locator": "Theorem B"}
+{"subject": "Theorem C", "relation": "depends-on", "object": "additive orientation", "modality": "stated", "locator": "Theorem C"}
+{"subject": "Theorem C", "relation": "proves", "object": "smooth morphisms are cohomologically smooth with f^!(1_S) ≃ 1_X(d)", "modality": "stated", "locator": "Theorem C"}
+{"subject": "Definition 1.1.2", "relation": "defines", "object": "six-functor formalism on a geometric setup", "modality": "stated", "locator": "Definition 1.1.2"}
+{"subject": "Definition 1.1.6(c)", "relation": "defines", "object": "cohomologically smooth morphism", "modality": "stated", "locator": "Definition 1.1.6(c)"}
+{"subject": "Definition 1.1.9", "relation": "defines", "object": "smooth cover, descendable cover, proper descendable cover", "modality": "stated", "locator": "Definition 1.1.9"}
+{"subject": "Remark 1.1.10", "relation": "proves", "object": "D^* and D^! descend along smooth covers, descendable covers and proper descendable covers", "modality": "cited", "locator": "Remark 1.1.10"}
+{"subject": "Remark 1.1.12", "relation": "proves", "object": "f is weakly cohomologically proper if f is co-smooth and its diagonal is weakly cohomologically proper", "modality": "stated", "locator": "Remark 1.1.12"}
+{"subject": "Definition 1.2.4", "relation": "defines", "object": "Tate twist 1_B(1)", "modality": "stated", "locator": "Definition 1.2.4"}
+{"subject": "Definition 1.2.10", "relation": "defines", "object": "additive orientation", "modality": "stated", "locator": "Definition 1.2.10"}
+{"subject": "Remark 1.2.11", "relation": "depends-on", "object": "projective bundle formula holds over any object of C given an additive orientation", "modality": "stated", "locator": "Remark 1.2.11"}
+{"subject": "Definition 1.3.7", "relation": "defines", "object": "trace-cycle theory on a morphism f", "modality": "stated", "locator": "Definition 1.3.7"}
+{"subject": "Remark 1.3.8", "relation": "equivalent-to", "object": "trace-cycle theory unit and counit of the adjunction 1_X ⊣ ω_f in K_S", "modality": "stated", "locator": "Remark 1.3.8"}
+{"subject": "Theorem 1.3.9 (Zavyalov)", "relation": "proves", "object": "f is cohomologically smooth if and only if it admits a trace-cycle theory", "modality": "cited", "locator": "Theorem 1.3.9"}
+{"subject": "Proposition 1.4.7", "relation": "proves", "object": "canonical isomorphism 1_S(-n) ≃ C^*(Th_S(F))", "modality": "stated", "locator": "Proposition 1.4.7"}
