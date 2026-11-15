@@ -1,0 +1,27 @@
+{"subject":"Theorem 3.4","relation":"proves","object":"von Neumann entropy of psi_beta equals the spectral action Tr(h(beta D))","modality":"stated","locator":"Theorem 3.4"}
+{"subject":"Theorem 3.4","relation":"depends-on","object":"Proposition 2.3 (type I state from trace-class exp(-beta|D|))","modality":"stated","locator":"Theorem 3.4"}
+{"subject":"h(x)","relation":"defines","object":"h(x) = E(e^{-x})","modality":"stated","locator":"Theorem 3.4"}
+{"subject":"E(x)","relation":"defines","object":"entropy of partition of unit interval with ratio x: log(x+1) - x log(x)/(x+1)","modality":"stated","locator":"Lemma 3.1"}
+{"subject":"Corollary 3.2","relation":"proves","object":"E(x) = E(1/x) for x > 0","modality":"stated","locator":"Corollary 3.2"}
+{"subject":"Lemma 3.3","relation":"proves","object":"S(phi) = Tr(E(T)) for the state associated to the exterior algebra element of positive trace-class T","modality":"stated","locator":"Lemma 3.3, eq. (6)"}
+{"subject":"Definition 2.1","relation":"defines","object":"KMS condition at inverse temperature beta for a state on a C*-dynamical system","modality":"stated","locator":"Definition 2.1, eq. (1)-(2)"}
+{"subject":"Proposition 2.2","relation":"proves","object":"existence and uniqueness of the KMS_beta state psi_beta on (Cliff_C(H_R), sigma_t)","modality":"stated","locator":"Proposition 2.2"}
+{"subject":"Proposition 2.3","relation":"proves","object":"psi_beta is of type I and is given by fermionic second quantization for I = i sign D when exp(-beta|D|) is trace class","modality":"stated","locator":"Proposition 2.3"}
+{"subject":"Lemma 2.4","relation":"proves","object":"the representation gamma_I of Cliff_C(V) on the Fock space is irreducible","modality":"stated","locator":"Lemma 2.4"}
+{"subject":"Proposition 2.6(i)","relation":"proves","object":"sigma_t is implemented by W(t) = exterior exp(it|D|) in the Fock representation","modality":"stated","locator":"Proposition 2.6(i), eq. (4)"}
+{"subject":"Proposition 2.6(ii)","relation":"proves","object":"psi_beta(A) = (1/Z) Tr(exterior exp(-beta|D|) gamma_I(A))","modality":"stated","locator":"Proposition 2.6(ii), eq. (5)"}
+{"subject":"Remark 2.5","relation":"proves","object":"an orthogonal automorphism of Cliff_C(V) is unitarily implementable on the Fock space iff T+ITI is Hilbert-Schmidt","modality":"cited","locator":"Remark 2.5"}
+{"subject":"spectral action principle","relation":"defines","object":"spectral action Tr(chi(D^2/Lambda^2)) of a spectral triple","modality":"cited","locator":"Section 1"}
+{"subject":"entropy of a spectral triple S(A,H,D)","relation":"defines","object":"additive functional obtained from fermionic second quantization and the KMS state","modality":"stated","locator":"Section 1"}
+{"subject":"Lemma 4.1","relation":"proves","object":"h(x) is an even positive function of x in R","modality":"stated","locator":"Lemma 4.1"}
+{"subject":"Lemma 4.1","relation":"proves","object":"h'(x) = -x / (4 cosh^2(x/2))","modality":"stated","locator":"Lemma 4.1"}
+{"subject":"Lemma 4.2","relation":"proves","object":"sum over Z of ((2 pi n + pi)^2 - x)/((2 pi n + pi)^2 + x)^2 equals 1/(4 cosh^2(sqrt(x)/2)) for x >= 0","modality":"stated","locator":"Lemma 4.2"}
+{"subject":"Lemma 4.3","relation":"defines","object":"g(t) = (-1/(4 sqrt(pi) t^{3/2})) sum over Z of (-1)^n n^2 q^{n^2}, with q = exp(-1/(4t))","modality":"stated","locator":"Lemma 4.3, eq. (9)"}
+{"subject":"Proposition 4.4","relation":"proves","object":"h(x) = integral from 0 to infinity of exp(-t x^2) g~(t) dt","modality":"stated","locator":"Proposition 4.4, eq. (10)"}
+{"subject":"Lemma 4.5(i)","relation":"proves","object":"2 integral_0^infinity h(x) x dx = 9 zeta(3)/2 and 2 integral_0^infinity h(x) x^3 dx = 225 zeta(5)/4","modality":"stated","locator":"Lemma 4.5(i), eq. (11)"}
+{"subject":"Lemma 4.5(ii)","relation":"proves","object":"integral_0^infinity h(x) x^alpha dx = (1 - 2^{-alpha-1})/(alpha+1) Gamma(alpha+3) zeta(alpha+2)","modality":"stated","locator":"Lemma 4.5(ii), eq. (12)"}
+{"subject":"Lemma 4.5(ii)","relation":"generalises","object":"Lemma 4.5(i)","modality":"stated","locator":"Lemma 4.5(ii)"}
+{"subject":"Lemma 4.6","relation":"defines","object":"gamma(a) = (1 - 2^{-2a})/a * pi^{-a} * xi(2a), the coefficient of t^a in the heat expansion","modality":"stated","locator":"Lemma 4.6"}
+{"subject":"c(d)","relation":"equivalent-to","object":"Riemann xi function at -d times an elementary expression","modality":"stated","locator":"Abstract"}
+{"subject":"c(4)","relation":"equivalent-to","object":"a rational multiple of zeta(5)","modality":"stated","locator":"Abstract"}
+{"subject":"c(2)","relation":"equivalent-to","object":"a rational multiple of zeta(3)","modality":"stated","locator":"Abstract"}
