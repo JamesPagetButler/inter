@@ -58,7 +58,12 @@ EXIT_GATE_HALT = 4             # gate exit 1/2 (or anything not 0/3): halt
 
 def _load_text(path):
     with open(path, "r") as f:
-        return f.read()
+        # strip NUL bytes: never valid text content, but can appear as a
+        # byte-level artifact in parsed source text and crash the
+        # subprocess argv build (ValueError: embedded null byte). Driver
+        # robustness fix, not a text-acquisition change -- no other bytes
+        # touched.
+        return f.read().replace("\x00", "")
 
 
 def paper_id_from_openalex(openalex_id):
