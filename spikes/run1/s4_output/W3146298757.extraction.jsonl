@@ -1,0 +1,40 @@
+{"subject": "Cat(B)", "relation": "defines", "object": "B-category: simplicial object satisfying the Segal conditions and univalence", "modality": "stated", "locator": "Definition 3.2.4"}
+{"subject": "Cat(B)", "relation": "equivalent-to", "object": "Shv_{Cat_∞}(B), Cat_∞-valued sheaves on B", "modality": "stated", "locator": "Section 1, Main results"}
+{"subject": "internal universe Omega", "relation": "defines", "object": "sheaf sending A in B to the slice B_{/A}", "modality": "stated", "locator": "Section 1, Main results"}
+{"subject": "[C, Omega]", "relation": "equivalent-to", "object": "LFib_C", "modality": "stated", "locator": "Theorem 4.5.1"}
+{"subject": "LFib_C", "relation": "defines", "object": "large B-category whose objects are left fibrations over C", "modality": "stated", "locator": "Section 1, Main result 1"}
+{"subject": "Yoneda embedding h", "relation": "defines", "object": "transpose of the mapping bifunctor Map_C(-,-)", "modality": "stated", "locator": "Section 1, Main result 2"}
+{"subject": "ev", "relation": "defines", "object": "counit of the adjunction C^op x - ⊣ [C^op, -]", "modality": "stated", "locator": "Section 1, Main result 2"}
+{"subject": "Theorem 4.7.8", "relation": "proves", "object": "commutativity of the diagram relating ev, h x id and Map_{[C^op,Omega]}(-,-)", "modality": "stated", "locator": "Theorem 4.7.8"}
+{"subject": "Theorem 4.7.8", "relation": "proves", "object": "the Yoneda embedding h is fully faithful", "modality": "stated", "locator": "Section 1, Main result 2"}
+{"subject": "internal Yoneda lemma", "relation": "depends-on", "object": "internal Grothendieck construction", "modality": "stated", "locator": "Section 1, Related work"}
+{"subject": "internal Yoneda lemma", "relation": "depends-on", "object": "Riehl and Shulman [RS17] synthetic Yoneda lemma", "modality": "cited", "locator": "Section 1, Related work"}
+{"subject": "parametrised ∞-categories of Barwick et al. [BDG+16]", "relation": "specialises", "object": "categories in an arbitrary ∞-topos", "modality": "cited", "locator": "Section 1, Related work"}
+{"subject": "parametrised ∞-categories of Barwick et al. [BDG+16]", "relation": "equivalent-to", "object": "categories in presheaf ∞-topoi", "modality": "cited", "locator": "Section 1, Related work"}
+{"subject": "factorisation system", "relation": "defines", "object": "pair (L, R) of classes of maps with factorisations and mutual orthogonality", "modality": "stated", "locator": "Definition 2.5.1"}
+{"subject": "intersection L ∩ R", "relation": "equivalent-to", "object": "class of equivalences in C", "modality": "stated", "locator": "Proposition 2.5.2(1)"}
+{"subject": "[Lur09a, Proposition 5.5.5.7]", "relation": "proves", "object": "existence of a factorisation system with R = S^⊥ and L = ⊥R for a small set S in a presentable ∞-category", "modality": "cited", "locator": "Proposition 2.5.4"}
+{"subject": "saturated class of maps", "relation": "defines", "object": "class satisfying the conditions of Definition 2.5.5", "modality": "stated", "locator": "Definition 2.5.5"}
+{"subject": "L (left class of the factorisation system attached to S)", "relation": "equivalent-to", "object": "smallest saturated class of maps containing S", "modality": "stated", "locator": "Proposition 2.5.6"}
+{"subject": "[ABFJ20, Proposition 3.2.9]", "relation": "proves", "object": "existence of a factorisation system with R = S^Vdash and L = ^Vdash R = ^⊥R in a presentable cartesian closed ∞-category", "modality": "cited", "locator": "Proposition 2.5.7"}
+{"subject": "L (left class of the factorisation system attached to S)", "relation": "equivalent-to", "object": "smallest saturated class containing {c x f | c in C, f in S}", "modality": "stated", "locator": "Proposition 2.5.8"}
+{"subject": "monomorphism", "relation": "defines", "object": "map internally right orthogonal to the codiagonal 1 ⊔ 1 → 1", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "strong epimorphism", "relation": "defines", "object": "map internally left orthogonal to every monomorphism", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "strong epimorphisms", "relation": "equivalent-to", "object": "covers (effective epimorphisms) in an ∞-topos", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "B-groupoid", "relation": "defines", "object": "simplicial object satisfying the equivalent conditions of Proposition 3.1.4", "modality": "stated", "locator": "Definition 3.1.5"}
+{"subject": "composite B_Δ → PSh_{B_Δ}(Δ) → B_Δ of evaluation at 0 with the powers Δ^•", "relation": "equivalent-to", "object": "identity functor on B_Δ", "modality": "stated", "locator": "Proposition 3.1.2"}
+{"subject": "C in the essential image of the diagonal functor from B", "relation": "equivalent-to", "object": "C internally local with respect to s^0: Δ^1 → Δ^0", "modality": "stated", "locator": "Proposition 3.1.4"}
+{"subject": "walking equivalence E^1", "relation": "defines", "object": "pushout of Δ^3 along the maps d^{0,2} and d^{1,3} with the degeneracies s^0 ⊔ s^0", "modality": "stated", "locator": "Definition 3.2.1"}
+{"subject": "colimits defining I^n and E^1", "relation": "equivalent-to", "object": "ordinary 1-categorical pushouts of simplicial sets", "modality": "stated", "locator": "Remark 3.2.3"}
+{"subject": "Remark 3.2.3 (computation of colimits defining I^n and E^1)", "relation": "uses-technique", "object": "left properness of the Quillen model structure on simplicial sets", "modality": "stated", "locator": "Remark 3.2.3"}
+{"subject": "B-category", "relation": "defines", "object": "simplicial object internally local with respect to I^2 → Δ^2 and E^1 → Δ^0", "modality": "stated", "locator": "Definition 3.2.4"}
+{"subject": "saturated class generated by S (Lemma 3.2.5)", "relation": "equivalent-to", "object": "saturated class generated by T (Lemma 3.2.5)", "modality": "stated", "locator": "Lemma 3.2.5"}
+{"subject": "saturated class generated by S (Lemma 3.2.5)", "relation": "equivalent-to", "object": "saturated class generated by U (Lemma 3.2.5)", "modality": "stated", "locator": "Lemma 3.2.5"}
+{"subject": "Lemma 3.2.6", "relation": "proves", "object": "a strongly saturated class containing E^1 ⊗ A → A and I^n ⊗ A → Δ^n ⊗ A contains E^1 ⊗ C → C for all C in B_Δ", "modality": "stated", "locator": "Lemma 3.2.6"}
+{"subject": "B-category", "relation": "equivalent-to", "object": "simplicial object satisfying the Segal-type pullback conditions on C_n and C_0", "modality": "stated", "locator": "Proposition 3.2.7"}
+{"subject": "C-category for an ∞-category C with finite limits", "relation": "defines", "object": "simplicial object in C satisfying the second condition of Proposition 3.2.7", "modality": "stated", "locator": "Remark 3.2.8"}
+{"subject": "S-category", "relation": "equivalent-to", "object": "complete Segal space", "modality": "stated", "locator": "Example 3.2.15"}
+{"subject": "Cat(S)", "relation": "equivalent-to", "object": "Cat_∞", "modality": "cited", "locator": "Example 3.2.15"}
+{"subject": "Lemma 3.3.1", "relation": "proves", "object": "a functor F: C → D between ∞-categories with finite limits induces a functor Cat(C) → Cat(D)", "modality": "stated", "locator": "Lemma 3.3.1"}
+{"subject": "B_{/A}-hat (universe enlargement of the slice B_{/A})", "relation": "equivalent-to", "object": "B-hat_{/A} (slice of the universe enlargement of B)", "modality": "stated", "locator": "Lemma 2.4.2"}
+{"subject": "B_{/-}-hat (sheaf A ↦ universe enlargement of B_{/A})", "relation": "equivalent-to", "object": "B-hat_{/-} (sheaf A ↦ slice of the universe enlargement of B)", "modality": "stated", "locator": "Proposition 2.4.3"}
