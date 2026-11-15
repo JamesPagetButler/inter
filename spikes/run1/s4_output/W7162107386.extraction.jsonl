@@ -1,0 +1,20 @@
+{"subject":"pro-étale exodromy correspondence","relation":"proves","object":"Sh^hyp(X_proét, E) ≃ Fun^cts(Gal(X), Cond(E)) for any scheme X and ∞-category E with small limits","modality":"stated","locator":"Theorem 1, Subsection 3.1"}
+{"subject":"étale exodromy correspondence for Postnikov complete sheaves","relation":"proves","object":"Sh^post(X_ét, E) ≃ Fun^cts(Gal(X), E_underline) for compactly assembled presentable E","modality":"stated","locator":"Theorem 2, Subsection 3.2"}
+{"subject":"constructible étale exodromy correspondence","relation":"proves","object":"Sh_cons(X_ét, S) ≃ Fun^cts(Gal(X), S_underline_cons) for any scheme X","modality":"stated","locator":"Theorem 3, Subsection 3.3"}
+{"subject":"Theorem 3 (constructible étale exodromy correspondence)","relation":"generalises","object":"Theorem 0 (Barwick–Glasman–Haine), which assumes X is qcqs","modality":"stated","locator":"Theorem 3, Subsection 3.3"}
+{"subject":"Theorem 1 (pro-étale exodromy correspondence)","relation":"generalises","object":"Theorem 0 (Wolf), which assumes X is qcqs","modality":"stated","locator":"Theorem 1, Subsection 3.1"}
+{"subject":"Theorem 0 (Barwick–Glasman–Haine) étale exodromy for qcqs schemes","relation":"proves","object":"étale exodromy correspondence for constructible sheaves on qcqs schemes","modality":"cited","locator":"Theorem 0 (Barwick–Glasman–Haine), Introduction, Background"}
+{"subject":"Theorem 0 (Wolf) pro-étale exodromy for qcqs schemes","relation":"proves","object":"Sh^hyp(X_proét, S) ≃ Fun^cts(Gal(X), Cond(S)) for qcqs X","modality":"cited","locator":"Theorem 0 (Wolf), Introduction, Background"}
+{"subject":"Gal: Sch → Cond(Cat_∞)","relation":"proves","object":"pro-étale hypercosheaf property","modality":"stated","locator":"Theorem 4, Subsection 4.1"}
+{"subject":"Stone_{/X}^{loc coh} (Grothendieck construction of Gal(X))","relation":"equivalent-to","object":"AffPro Et^{wsl}_{/X}, the category of w-strictly local schemes that are limits of affine schemes in Et_{/X}","modality":"stated","locator":"Theorem 5"}
+{"subject":"size(X) for a scheme X","relation":"defines","object":"supremum of ℵ_0 and |O_X(U)| over all affine opens U ⊆ X","modality":"stated","locator":"Definition 1.1.7"}
+{"subject":"size(X) for a profinite set X","relation":"defines","object":"supremum of ℵ_0 and |C(X, F_2)|","modality":"stated","locator":"Definition 1.1.6"}
+{"subject":"X ∈ ProFin_κ","relation":"equivalent-to","object":"|C(X, F_2)| < κ","modality":"stated","locator":"Lemma 1.1.4, condition (a) ⇔ (b)"}
+{"subject":"X ∈ ProFin_κ","relation":"equivalent-to","object":"X ≅ lim X_i for a directed set I with |I| < κ and a diagram I^op → Fin","modality":"stated","locator":"Lemma 1.1.4, condition (a) ⇔ (c)"}
+{"subject":"size(π_0(X)) for a qcqs scheme X","relation":"proves","object":"size(π_0(X)) ≤ size(X)","modality":"stated","locator":"Lemma 1.1.9"}
+{"subject":"main theorems (κ-small scheme X)","relation":"depends-on","object":"κ uncountable, since κ > size(X) ≥ ℵ_0","modality":"stated","locator":"Remark 1.1.10"}
+{"subject":"acyclic scheme","relation":"defines","object":"quasi-compact scheme W such that every étale surjection U ↠ W has a section","modality":"stated","locator":"Definition 1.2.1"}
+{"subject":"w-strictly local scheme","relation":"defines","object":"acyclic scheme W whose set of closed points W^cl ⊆ W is closed","modality":"stated","locator":"Definition 1.2.1"}
+{"subject":"Lemma 1.2.3","relation":"proves","object":"every acyclic scheme is affine","modality":"stated","locator":"Lemma 1.2.3(a)"}
+{"subject":"Lemma 1.2.3","relation":"proves","object":"every intersection of clopen subschemes of an acyclic scheme is acyclic","modality":"stated","locator":"Lemma 1.2.3(b)"}
+{"subject":"Lemma 1.2.3","relation":"proves","object":"every connected component of an acyclic scheme is the spectrum of a strictly Henselian local ring","modality":"stated","locator":"Lemma 1.2.3(c)"}
