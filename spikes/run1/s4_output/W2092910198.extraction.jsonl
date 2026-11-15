@@ -1,0 +1,34 @@
+{"subject":"MSSM","relation":"proves","object":"unification condition alpha1(M_GUT)=alpha2(M_GUT)=alpha3(M_GUT)","modality":"cited","locator":"Abstract and Introduction, Eq. (1.3)"}
+{"subject":"M-theory on K3-fibered G2-manifolds","relation":"equivalent-to","object":"heterotic string theory on T^3-fibered Calabi-Yau threefolds","modality":"stated","locator":"Abstract and Introduction"}
+{"subject":"Omega","relation":"defines","object":"Cayley four-form written in the orthonormal frame basis","modality":"stated","locator":"Eq. (2.9)"}
+{"subject":"Phi","relation":"defines","object":"G2 three-form (1/3!) psi_ijk dx^i dx^j dx^k","modality":"stated","locator":"Eq. (2.6)"}
+{"subject":"g_ij","relation":"defines","object":"det(B)^(-1/9) B_ij with B built from Phi","modality":"stated","locator":"Eq. (2.17)"}
+{"subject":"Vol(S)","relation":"equivalent-to","object":"integral over S of Psi","modality":"stated","locator":"Eq. (2.20)"}
+{"subject":"Vol(S) <= Vol(S')","relation":"uses-technique","object":"calibration form Psi with bound Psi restricted to T_xS at most vol(T_xS)","modality":"stated","locator":"Eq. (27)"}
+{"subject":"b^2(X)","relation":"depends-on","object":"b^2_Gamma(T^7)+12","modality":"stated","locator":"Eq. (36)"}
+{"subject":"b^3(X)","relation":"depends-on","object":"b^3_Gamma(T^7)+36","modality":"stated","locator":"Eq. (36)"}
+{"subject":"X","relation":"equivalent-to","object":"(G/H) x R^(k+1)","modality":"stated","locator":"Eq. (3.35)"}
+{"subject":"smoothness of X","relation":"depends-on","object":"H/K = S^k","modality":"stated","locator":"Eq. (43)"}
+{"subject":"Hamilton equations dx_i/dt = dH/dp_i, dp_i/dt = -dH/dx_i","relation":"equivalent-to","object":"special holonomy metric on (t1,t2) x (G/K)","modality":"stated","locator":"Eq. (3.37)"}
+{"subject":"Y = SU(2) x SU(2)","relation":"equivalent-to","object":"S^3 x S^3","modality":"stated","locator":"Eq. (3.39)"}
+{"subject":"X","relation":"equivalent-to","object":"S^3 x R^4","modality":"stated","locator":"Eq. (49)"}
+{"subject":"pairing <rho,sigma>","relation":"equivalent-to","object":"(-1)^k times the integral over Y of beta wedge d gamma","modality":"stated","locator":"Eq. (3.44)"}
+{"subject":"H","relation":"defines","object":"2V(sigma) - V(rho)","modality":"stated","locator":"Eq. (3.45)"}
+{"subject":"Phi","relation":"defines","object":"dt wedge omega + rho","modality":"stated","locator":"Eq. (3.48)"}
+{"subject":"ds^2","relation":"defines","object":"metric built from dr and the forms sigma_a, Sigma_a","modality":"stated","locator":"Eq. (3.49)"}
+{"subject":"sigma","relation":"defines","object":"p^(2/5) times the sum of sigma_i Sigma_i sigma_j Sigma_j terms","modality":"stated","locator":"Eq. (3.41)"}
+{"subject":"rho","relation":"defines","object":"sigma_1 sigma_2 sigma_3 - Sigma_1 Sigma_2 Sigma_3 + x times the sum of d(sigma_a Sigma_a)","modality":"stated","locator":"Eq. (3.40)"}
+{"subject":"Y","relation":"defines","object":"G/K","modality":"stated","locator":"Eq. (3.32)"}
+{"subject":"G, H, K","relation":"defines","object":"subgroup chain G contains H contains K","modality":"stated","locator":"Eq. (3.34)"}
+{"subject":"Delta_L h = 0","relation":"equivalent-to","object":"Delta omega = 0","modality":"stated","locator":"Eq. (4.61)"}
+{"subject":"M(K3)","relation":"defines","object":"R^+ x SO(3,19)/(SO(3) x SO(19))","modality":"stated","locator":"Eq. (5.71)"}
+{"subject":"X/U(1)","relation":"equivalent-to","object":"R^6","modality":"stated","locator":"Eq. (5.122)"}
+{"subject":"X","relation":"equivalent-to","object":"CP^2 x R^3","modality":"stated","locator":"Eq. (5.124)"}
+{"subject":"b_k(L)","relation":"equivalent-to","object":"b_(k+2)(X) for k>0, and b_0(L)=b_2(X)+1","modality":"stated","locator":"Eq. (5.123)"}
+{"subject":"X/U(1)","relation":"equivalent-to","object":"R^7","modality":"stated","locator":"Eq. (5.128)"}
+{"subject":"D-term D1","relation":"defines","object":"|a_1|^2+|b_1|^2-|a_2|^2-|b_2|^2","modality":"stated","locator":"Eq. (5.106)"}
+{"subject":"S","relation":"defines","object":"{D=0}/U(1)","modality":"stated","locator":"Eq. (5.108)"}
+{"subject":"tau","relation":"defines","object":"theta/(2 pi) + i 4 pi/g^2","modality":"stated","locator":"Eq. (8.181)"}
+{"subject":"W","relation":"defines","object":"Y + e^(2 pi i tau)/Y","modality":"stated","locator":"Eq. (8.203)"}
+{"subject":"alpha^2","relation":"depends-on","object":"parity of k (equal to 1 for k=2p, equal to beta for k=2p+1)","modality":"stated","locator":"Eq. (8.210)-(8.211)"}
+{"subject":"H_1(M,Z)","relation":"equivalent-to","object":"pi_1(M) / [pi_1(M), pi_1(M)]","modality":"stated","locator":"Eq. (8.205)"}
