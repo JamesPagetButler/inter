@@ -1,0 +1,31 @@
+{"subject":"Phase Φ of the partition function","relation":"defines","object":"Eq. (1.1): Φ = exp[2πi(½η̄_E8 + ¼η̄_RS)]","modality":"cited","locator":"Section 1 (Phase of the partition function), Eq. (1.1)"}
+{"subject":"reduced eta invariant η̄_V","relation":"defines","object":"½(η_V + dim Ker D_V) = ½(η_V + h_V)","modality":"stated","locator":"Section 1 (Phase of the partition function)"}
+{"subject":"I_top","relation":"equivalent-to","object":"sum of the index of a Dirac operator coupled to an E_8 bundle and a Rarita–Schwinger operator","modality":"cited","locator":"Section 1 (Topological part of the M-theory action)"}
+{"subject":"E_8 gauge theory partition function on Y^11 (in a limit)","relation":"equivalent-to","object":"K-theoretic partition function of the Ramond–Ramond fields in type IIA","modality":"cited","locator":"Section 1 (Dimensional reduction)"}
+{"subject":"phase of the partition function","relation":"depends-on","object":"choice of Spin structure","modality":"stated","locator":"Section 2"}
+{"subject":"number of zero modes of the Dirac operators","relation":"depends-on","object":"phase of the partition function","modality":"stated","locator":"Section 2.7"}
+{"subject":"full partition function including metric moduli","relation":"conjectures","object":"contributions from the different Spin structures","modality":"stated","locator":"Section 2 (Main points, item 1)"}
+{"subject":"set of Spin structures on M","relation":"defines","object":"a torsor over H^1(M; Z_2)","modality":"stated","locator":"Section 1 (Spin structures)"}
+{"subject":"Spin structures σ_1 and σ_2 on Y^11","relation":"depends-on","object":"w_2(X^10) = 0 and e = 0 mod 2","modality":"stated","locator":"Section 1 (Spin vs. Spin^c and ten vs. eleven dimensions), item 3"}
+{"subject":"Spin or Spin^c nature of the ten-dimensional quotient","relation":"depends-on","object":"parity (even or odd type) of the circle action on the eleven-dimensional Spin manifold","modality":"stated","locator":"Section 2.5"}
+{"subject":"quantization condition of the C-field in the Spin^c case","relation":"generalises","object":"shifted quantization condition of the C-field in the Spin case [165]","modality":"stated","locator":"Section 3.7"}
+{"subject":"α-invariant","relation":"depends-on","object":"Spin structure","modality":"stated","locator":"Section 5.2"}
+{"subject":"Â-genus","relation":"generalises","object":"mod 2 index of the Dirac operator in dimensions 2 and 10","modality":"stated","locator":"Section 5.2"}
+{"subject":"total spaces of HP^2 bundles","relation":"proves","object":"each cobordism class of ker α, including the non-simply connected case","modality":"stated","locator":"Section 5.2"}
+{"subject":"mod 2 index analysis of the α-invariant","relation":"uses-technique","object":"Clifford-linear Dirac operator [107]","modality":"stated","locator":"Section 5.2"}
+{"subject":"adiabatic limit of the eta invariant","relation":"equivalent-to","object":"Bismut–Cheeger eta forms","modality":"stated","locator":"Section 7.3"}
+{"subject":"eta forms","relation":"defines","object":"gerbes and Deligne cohomology classes on the base","modality":"stated","locator":"Section 7.4"}
+{"subject":"B-field","relation":"defines","object":"harmonic representative of the Spin^c structure in the adiabatic limit","modality":"stated","locator":"Section 7.1"}
+{"subject":"Kaluza–Klein modes of the circle reduction","relation":"equivalent-to","object":"Adams operations on the line bundle","modality":"stated","locator":"Section 7.4"}
+{"subject":"dilaton","relation":"defines","object":"volume of the circle fibre","modality":"stated","locator":"Sections 2.4–2.6, 7.2, 7.3"}
+{"subject":"dilatino supersymmetry transformation in the families case","relation":"equivalent-to","object":"difference between the Bismut and Quillen superconnections","modality":"stated","locator":"Section 7.2"}
+{"subject":"∇_v Ψ − L_v Ψ","relation":"equivalent-to","object":"¼ e^{2φ} γ(dω) Ψ","modality":"stated","locator":"Eq. (2.32)"}
+{"subject":"Ψ ∈ Im(Q_k)","relation":"equivalent-to","object":"L_v Ψ = ikΨ","modality":"stated","locator":"Eq. (2.35)"}
+{"subject":"D̃^φ","relation":"defines","object":"e^{-φ} D_v + D_h + e^{φ} D_0","modality":"stated","locator":"Eq. (2.38)"}
+{"subject":"Π_k","relation":"defines","object":"map SY^11 → SX^10 ⊗ L^{-k}, (y,[π*A,σ_X]) ↦ (π(y), [A,σ_X] ⊗ [y,1]^{-k})","modality":"stated","locator":"Eq. (2.33)"}
+{"subject":"L^2(SY^11)","relation":"defines","object":"⊕_{k ∈ Z+½} V_k","modality":"stated","locator":"Eq. (2.39)"}
+{"subject":"F_11^Spin","relation":"defines","object":"F_11^{Spin,ev} ⊕ F_11^{Spin,odd}","modality":"stated","locator":"Eq. (2.27)"}
+{"subject":"Spin(Σ_g)","relation":"defines","object":"{Σ_{i=1}^{2g} x_i r_2(ξ_i) + r_2(z) | x_i ∈ Z_2}","modality":"stated","locator":"Eq. (2.7)"}
+{"subject":"L^{2k-1}","relation":"defines","object":"S^{2k-1}/Z_n","modality":"stated","locator":"Eq. (2.17)"}
+{"subject":"L(n; a)","relation":"defines","object":"S^{2k-1}/ρ(Z_n)","modality":"stated","locator":"Eq. (2.20)"}
+{"subject":"standard model gauge group in heterotic vacua on a Calabi–Yau manifold M","relation":"depends-on","object":"nontrivial fundamental group π_1(M) ≠ 1","modality":"cited","locator":"Section 1 (Reality check 1)"}
