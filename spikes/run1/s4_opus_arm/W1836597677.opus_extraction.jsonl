@@ -1,0 +1,29 @@
+{"subject": "G2-manifold", "relation": "specialises", "object": "Ricci-flat Riemannian manifold", "modality": "stated", "locator": "Section 1"}
+{"subject": "twisted connected sum construction of this paper", "relation": "generalises", "object": "Kovalev's twisted connected sum construction", "modality": "stated", "locator": "Section 1"}
+{"subject": "Kovalev's twisted connected sum", "relation": "depends-on", "object": "pair of exponentially ACyl Calabi–Yau 3-folds V_+ and V_- with ends R^+ x S^1 x S_± for K3 surfaces S_±", "modality": "cited", "locator": "Section 1"}
+{"subject": "Kovalev's twisted connected sum", "relation": "uses-technique", "object": "hyper-Kähler rotation r: S_+ -> S_-", "modality": "cited", "locator": "Section 1"}
+{"subject": "hyper-Kähler rotation r: S_+ -> S_-", "relation": "defines", "object": "map satisfying r*I_- = J_+, r*J_- = I_+, hence r*K_- = -K_+", "modality": "cited", "locator": "Section 1"}
+{"subject": "holonomy of M_r equal to the full G2", "relation": "depends-on", "object": "finite fundamental group of M_r", "modality": "stated", "locator": "Section 1"}
+{"subject": "G2-holonomy metric on M_r", "relation": "uses-technique", "object": "Joyce–Kovalev perturbation theory applied to a closed G2-structure with small torsion", "modality": "cited", "locator": "Section 1"}
+{"subject": "Kovalev's argument for hyper-Kähler rotations between Fano-type ACyl 3-folds", "relation": "depends-on", "object": "Lemma 6.47 of Kovalev", "modality": "cited", "locator": "Section 1"}
+{"subject": "semi-Fano 3-fold", "relation": "defines", "object": "weak Fano 3-fold whose anticanonical morphism contracts no divisor to a point", "modality": "stated", "locator": "Section 1"}
+{"subject": "semi-Fano 3-fold", "relation": "specialises", "object": "weak Fano 3-fold", "modality": "stated", "locator": "Section 1"}
+{"subject": "construction of compact G2-manifolds in this paper", "relation": "uses-technique", "object": "asymptotically cylindrical Calabi–Yau 3-folds built from semi-Fano 3-folds", "modality": "stated", "locator": "Section 1"}
+{"subject": "construction of compact G2-manifolds in this paper", "relation": "proves", "object": "at least 50 million matching pairs producing 2-connected G2-manifolds, using ACyl Calabi–Yau 3-folds from Fano or semi-Fano 3-folds of rank at most two or toric semi-Fano 3-folds", "modality": "stated", "locator": "Section 1"}
+{"subject": "rigid associative 3-folds diffeomorphic to S^1 x S^2 in the constructed G2-manifolds", "relation": "depends-on", "object": "rigid holomorphic curves not meeting anticanonical divisors", "modality": "stated", "locator": "Section 1"}
+{"subject": "determination of the diffeomorphism type of the constructed 7-manifolds", "relation": "uses-technique", "object": "classification of 2-connected 7-manifolds by Wall and Wilkens", "modality": "stated", "locator": "Section 1"}
+{"subject": "constructed G2-manifolds", "relation": "proves", "object": "first compact G2-manifolds whose diffeomorphism type is known", "modality": "stated", "locator": "Section 1"}
+{"subject": "simplest matching of rank-one Fano 3-folds", "relation": "proves", "object": "2-connected G2-manifolds with torsion-free cohomology, with 46 different values of b^3 and at least 82 different smooth 7-manifolds distinguished by p_1", "modality": "stated", "locator": "Section 7"}
+{"subject": "other matchings of rank-one Fano 3-folds", "relation": "proves", "object": "at least 41 other topological types with nontrivial torsion in H^3", "modality": "stated", "locator": "Section 7"}
+{"subject": "Proposition 2.4", "relation": "proves", "object": "G2 is a compact 2-connected Lie group of dimension 14", "modality": "stated", "locator": "Proposition 2.4(i)"}
+{"subject": "Proposition 2.4", "relation": "proves", "object": "the stabiliser in G2 of a non-zero vector in R^7 is isomorphic to SU(3)", "modality": "stated", "locator": "Proposition 2.4(ii)"}
+{"subject": "Proposition 2.4", "relation": "proves", "object": "G2 acts transitively on the unit sphere S^6 in R^7", "modality": "stated", "locator": "Proposition 2.4(iii)"}
+{"subject": "Proposition 2.4", "relation": "proves", "object": "the GL(7,R)-orbit of φ_0 is open in Λ^3(R^7)*", "modality": "stated", "locator": "Proposition 2.4(iv)"}
+{"subject": "Lemma 2.8", "relation": "proves", "object": "||u x v||^2 = ||u||^2 ||v||^2 - g_0(u,v)^2", "modality": "stated", "locator": "Lemma 2.8, Eq. (2.9a)"}
+{"subject": "Lemma 2.8", "relation": "proves", "object": "u x (v x w) + (u x v) x w = 2 g_0(u,w) v - g_0(u,v) w - g_0(w,v) u", "modality": "stated", "locator": "Lemma 2.8, Eq. (2.9b)"}
+{"subject": "Lemma 2.8", "relation": "proves", "object": "φ_0(u,v,w)^2 + (1/4)|χ_0(u,v,w)|^2 = |u ∧ v ∧ w|^2", "modality": "stated", "locator": "Lemma 2.8, Eq. (2.9c)"}
+{"subject": "Theorem 4.9", "relation": "proves", "object": "integral cohomology groups of the constructed manifolds and their simple connectivity under the paper's assumptions", "modality": "stated", "locator": "Theorem 4.9"}
+{"subject": "Theorem 5.3", "relation": "proves", "object": "persistence of a closed infinitesimally rigid associative 3-fold under small deformations", "modality": "stated", "locator": "Theorem 5.3"}
+{"subject": "Theorem 5.4", "relation": "generalises", "object": "Theorem 5.3", "modality": "stated", "locator": "Theorem 5.4"}
+{"subject": "rigidity of S^1 x C as an associative 3-fold", "relation": "equivalent-to", "object": "rigidity of C as a holomorphic curve", "modality": "stated", "locator": "Lemma 5.11"}
+{"subject": "Proposition 5.15", "relation": "proves", "object": "each closed rigid holomorphic curve C can be perturbed to a compact rigid associative S^1 x C for all sufficiently long necks", "modality": "stated", "locator": "Proposition 5.15"}

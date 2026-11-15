@@ -8,3 +8,8 @@
 {"paper_id": "W7162107386", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 25055, "batch": 2, "ts": "2026-11-15T03:04:53Z"}
 {"paper_id": "W7208731890", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 28209, "batch": 2, "ts": "2026-11-15T03:04:53Z"}
 {"paper_id": "W7223805202", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 25284, "batch": 2, "ts": "2026-11-15T03:04:53Z"}
+{"paper_id": "W1641073798", "domain": "physics", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 27848, "batch": 3, "ts": "2026-11-15T03:08:23Z"}
+{"paper_id": "W1665497193", "domain": "physics", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 23944, "batch": 3, "ts": "2026-11-15T03:08:23Z"}
+{"paper_id": "W1836597677", "domain": "physics", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 28408, "batch": 3, "ts": "2026-11-15T03:08:23Z"}
+{"paper_id": "W2001941072", "domain": "physics", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 22968, "batch": 3, "ts": "2026-11-15T03:08:23Z"}
+{"paper_id": "W2015765968", "domain": "physics", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 25047, "batch": 3, "ts": "2026-11-15T03:08:23Z"}

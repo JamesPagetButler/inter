@@ -1,0 +1,28 @@
+{"subject": "GL(W) acting on Λ^3 W* (dim W = 6 or 7)", "relation": "proves", "object": "GL(W) has an open orbit on Λ^3 W*", "modality": "stated", "locator": "Introduction"}
+{"subject": "stabilizer of a point in the open orbit of Λ^3 W* (dim W = 6)", "relation": "equivalent-to", "object": "SL(3,C) (up to conjugacy)", "modality": "stated", "locator": "Introduction"}
+{"subject": "stabilizer of a point in the open orbit of Λ^3 W* (dim W = 7)", "relation": "equivalent-to", "object": "G_2 (up to conjugacy)", "modality": "stated", "locator": "Introduction"}
+{"subject": "Morse–Bott property of Φ (6-dimensional case)", "relation": "depends-on", "object": "∂∂̄-lemma for the complex threefold", "modality": "stated", "locator": "Introduction"}
+{"subject": "moduli space of complex structures with holomorphic 3-forms on a 6-manifold", "relation": "equivalent-to", "object": "open set in H^3(M,R) (locally)", "modality": "stated", "locator": "Introduction"}
+{"subject": "moduli space of G_2-manifolds", "relation": "equivalent-to", "object": "open set in H^3(M,R) with indefinite metric of Hessian type", "modality": "stated", "locator": "Introduction"}
+{"subject": "Definition 1", "relation": "defines", "object": "λ(Ω) = (1/6) tr K_Ω^2 ∈ (Λ^6 V*)^2", "modality": "stated", "locator": "Definition 1"}
+{"subject": "Proposition 1", "relation": "proves", "object": "λ(Ω) ≠ 0 iff Ω = α + β with α, β decomposable and α∧β ≠ 0, unique up to ordering", "modality": "stated", "locator": "Proposition 1"}
+{"subject": "Proposition 2", "relation": "proves", "object": "λ(Ω) > 0 iff Ω = α + β with α, β real decomposable and α∧β ≠ 0", "modality": "stated", "locator": "Proposition 2"}
+{"subject": "Proposition 2", "relation": "proves", "object": "λ(Ω) < 0 iff Ω = α + ᾱ with α complex decomposable and α∧ᾱ ≠ 0", "modality": "stated", "locator": "Proposition 2"}
+{"subject": "Proposition 3", "relation": "proves", "object": "moment map for SL(W) acting on Λ^3 W* is μ(Ω) = K_Ω", "modality": "stated", "locator": "Proposition 3"}
+{"subject": "Proposition 5", "relation": "proves", "object": "J = DX_φ satisfies J^2 = -1 and defines an integrable complex structure on U", "modality": "stated", "locator": "Proposition 5"}
+{"subject": "Proposition 7", "relation": "proves", "object": "U ⊂ Λ^3 W* has an SL(W)-invariant special pseudo-Kähler structure of Hermitian signature (1,9)", "modality": "stated", "locator": "Proposition 7"}
+{"subject": "Proposition 7", "relation": "proves", "object": "X_φ is an infinitesimal isometry of the metric on U", "modality": "stated", "locator": "Proposition 7"}
+{"subject": "Proposition 8", "relation": "proves", "object": "if Ω is self-dual then λ(Ω) ≥ 0", "modality": "stated", "locator": "Proposition 8"}
+{"subject": "Proposition 8", "relation": "proves", "object": "if Ω is self-dual and λ(Ω) > 0 then Ω = α + *α for decomposable α", "modality": "stated", "locator": "Proposition 8"}
+{"subject": "Proposition 9", "relation": "proves", "object": "if Ω is self-dual then Ω̂ is anti-self-dual", "modality": "stated", "locator": "Proposition 9"}
+{"subject": "Proposition 10", "relation": "proves", "object": "the subspaces Λ_+ and Λ_- of self-dual and anti-self-dual 3-forms are Lagrangian", "modality": "stated", "locator": "Proposition 10"}
+{"subject": "Theorem 13", "relation": "proves", "object": "the real part Ω of a non-vanishing holomorphic 3-form on a compact complex 3-manifold with trivial canonical bundle is a critical point of Φ restricted to [Ω] ∈ H^3(M,R)", "modality": "stated", "locator": "Theorem 13"}
+{"subject": "Theorem 13", "relation": "proves", "object": "a critical point Ω of Φ on a cohomology class of an oriented closed 6-manifold with λ(Ω) < 0 everywhere defines a complex structure with Ω the real part of a non-vanishing holomorphic 3-form", "modality": "stated", "locator": "Theorem 13"}
+{"subject": "Proposition 14", "relation": "proves", "object": "Hessian of Φ is non-degenerate transverse to the action of Diff(M) at Ω (complex 3-manifold case)", "modality": "stated", "locator": "Proposition 14"}
+{"subject": "Proposition 14", "relation": "depends-on", "object": "∂∂̄-lemma", "modality": "stated", "locator": "Proposition 14"}
+{"subject": "Proposition 17", "relation": "proves", "object": "U ⊂ H^3(M,R) has the structure of a special pseudo-Kähler manifold of Hermitian signature (1, h^{2,1} - 1)", "modality": "stated", "locator": "Proposition 17"}
+{"subject": "Definition 4", "relation": "defines", "object": "φ(Ω) ε = det K_Ω^{1/9} for a positive form Ω and fixed ε ∈ Λ^7 W*", "modality": "stated", "locator": "Definition 4"}
+{"subject": "Theorem 19", "relation": "proves", "object": "the defining 3-form Ω of a holonomy G_2 metric on a closed 7-manifold is a critical point of Φ restricted to [Ω] ∈ H^3(M,R)", "modality": "stated", "locator": "Theorem 19"}
+{"subject": "Theorem 19", "relation": "proves", "object": "an everywhere positive critical point Ω of Φ on a cohomology class of a closed oriented 7-manifold defines a metric with holonomy G_2", "modality": "stated", "locator": "Theorem 19"}
+{"subject": "Proposition 21", "relation": "proves", "object": "Hessian of Φ at a closed G_2-structure 3-form Ω on a compact 7-manifold is non-degenerate transverse to the action of Diff(M)", "modality": "stated", "locator": "Proposition 21"}
+{"subject": "Proposition 22", "relation": "proves", "object": "Hessian of Φ([Ω]) defines a metric of signature (1, b_3 - 1) on a local moduli space U ⊂ H^3(M,R) of an irreducible G_2-manifold", "modality": "stated", "locator": "Proposition 22"}

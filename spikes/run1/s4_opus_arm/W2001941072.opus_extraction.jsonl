@@ -1,0 +1,17 @@
+{"subject": "eight-dimensional generalization of the quantum Hall effect", "relation": "generalises", "object": "quantum Hall effect", "modality": "stated", "locator": "Abstract and introduction"}
+{"subject": "eight-dimensional generalization of the quantum Hall effect", "relation": "depends-on", "object": "SO(8) gauge field", "modality": "stated", "locator": "Abstract and introduction"}
+{"subject": "eight-dimensional generalization of the quantum Hall effect", "relation": "uses-technique", "object": "octonions", "modality": "stated", "locator": "Abstract and introduction"}
+{"subject": "two liquids with distinct configuration spaces", "relation": "depends-on", "object": "spinor or vector SO(8) quantum numbers of the particles", "modality": "stated", "locator": "Abstract and introduction"}
+{"subject": "x_a", "relation": "depends-on", "object": "Psi_alpha and Gamma^a", "modality": "stated", "locator": "Eq. (1)"}
+{"subject": "Gamma^i", "relation": "depends-on", "object": "lambda^i", "modality": "stated", "locator": "Eq. (2)"}
+{"subject": "(Psi_9,...,Psi_16)", "relation": "depends-on", "object": "(X_8 - X_i lambda^i)(u_1,...,u_8)", "modality": "stated", "locator": "Eq. (2), second occurrence"}
+{"subject": "A_mu", "relation": "depends-on", "object": "Sigma^{mu nu} X_nu", "modality": "stated", "locator": "Eq. (3), second occurrence"}
+{"subject": "Hamiltonian H", "relation": "depends-on", "object": "Lambda_ab", "modality": "stated", "locator": "Eq. (4), second occurrence"}
+{"subject": "L_mu nu", "relation": "depends-on", "object": "Sigma_mu nu", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "L_mu 9", "relation": "depends-on", "object": "A_mu", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "Phi", "relation": "depends-on", "object": "f_{alpha_1...alpha_I} and products of Psi_alpha", "modality": "stated", "locator": "Eq. (6)"}
+{"subject": "dot X_a", "relation": "depends-on", "object": "F_ab and partial V / partial X_b", "modality": "stated", "locator": "Eq. (8)"}
+{"subject": "[X_a, X_b]", "relation": "depends-on", "object": "F_ab", "modality": "stated", "locator": "Eq. (9)"}
+{"subject": "G^pm_{alpha beta mu nu}", "relation": "depends-on", "object": "Omega_{alpha beta mu nu}", "modality": "stated", "locator": "Eq. (10)"}
+{"subject": "Omega_{mu nu alpha beta} L_{mu nu} L_{alpha beta} Phi = 0", "relation": "depends-on", "object": "Omega_{mu nu alpha beta}", "modality": "stated", "locator": "Eq. (11)"}
+{"subject": "Phi_1,...,Phi_8", "relation": "depends-on", "object": "Psi_1,...,Psi_16", "modality": "stated", "locator": "Eq. (12)"}
