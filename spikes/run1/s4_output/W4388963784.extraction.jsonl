@@ -1,0 +1,23 @@
+{"subject": "animated affinoid algebras", "relation": "defines", "object": "animated affinoid K-algebra (Definition 0.1)", "modality": "stated", "locator": "Definition 0.1, Section 0.1"}
+{"subject": "Theorem 0.2 (fppf descent for discrete animated rings)", "relation": "cited", "object": "[Lur18, Mat16]", "modality": "cited", "locator": "Theorem 0.2, Section 0.2"}
+{"subject": "Theorem 0.3 (fppf descent for discrete rings, solid)", "relation": "cited", "object": "[Man22b] and [Mik22]", "modality": "cited", "locator": "Theorem 0.3, Section 0.2"}
+{"subject": "Theorem 0.5", "relation": "generalises", "object": "Theorem 0.3", "modality": "stated", "locator": "Theorem 0.5, Section 0.2"}
+{"subject": "Theorem 0.5", "relation": "uses-technique", "object": "compact object N_{B/A} with -⊗B_■ ≃ RHom_A(N_{B/A}, -)", "modality": "stated", "locator": "Theorem 0.4, Section 0.2"}
+{"subject": "Theorem 0.4", "relation": "defines", "object": "compact object N_{B/A} in D(A_■)", "modality": "stated", "locator": "Theorem 0.4, Section 0.2"}
+{"subject": "Theorem 0.4", "relation": "generalises", "object": "[Mik22] compact object N_{B/A} construction", "modality": "stated", "locator": "Theorem 0.4, Section 0.2"}
+{"subject": "Theorem 0.5", "relation": "depends-on", "object": "uniform boundedness of {N_{B/A}^{⊗n}} (Theorem 4.14)", "modality": "stated", "locator": "Section 0.2, proof of Theorem 0.5"}
+{"subject": "uniform boundedness of {N_{π_0B/π_0A}^{⊗n}}", "relation": "depends-on", "object": "[Mik22, Proposition 2.20]", "modality": "cited", "locator": "Section 0.2, proof of Theorem 0.5"}
+{"subject": "A_■ → B_■ descendability", "relation": "uses-technique", "object": "descendability in the sense of [Man22b]", "modality": "stated", "locator": "Section 0.2, proof of Theorem 0.5"}
+{"subject": "Theorem 0.6", "relation": "generalises", "object": "Theorem 0.5", "modality": "stated", "locator": "Theorem 0.6, Section 0.2"}
+{"subject": "Theorem 0.6", "relation": "proves", "object": "fppf descent equivalence for faithfully flat morphisms of animated affinoid K-algebras", "modality": "stated", "locator": "Theorem 0.6, Section 0.2"}
+{"subject": "Lemma 4.12", "relation": "proves", "object": "N_{B/A} represents M ↦ Map_A(A, M ⊗^L B_■)", "modality": "stated", "locator": "Section 0.2, citing Lemma 4.12"}
+{"subject": "Definition 1.1 (condensed objects)", "relation": "cited", "object": "[Man22b, Definition 2.1.1]", "modality": "cited", "locator": "Definition 1.1, Section 1"}
+{"subject": "Corollary 1.13", "relation": "cited", "object": "[Man22b, Lemma 2.9.12]", "modality": "cited", "locator": "Corollary 1.13, Section 1"}
+{"subject": "Lemma 1.8", "relation": "cited", "object": "[Man22b, Proposition 2.3.4]", "modality": "cited", "locator": "Lemma 1.8, Section 1"}
+{"subject": "Proposition 1.12", "relation": "generalises", "object": "[Man22b, Lemma 2.9.12] setting for animated rings", "modality": "stated", "locator": "Remark 1.14, Section 1"}
+{"subject": "Proposition 2.5", "relation": "proves", "object": "filtered colimits of Banach objects are (A,A_0)_■-complete and nuclear", "modality": "stated", "locator": "Proposition 2.5, Section 2"}
+{"subject": "Proposition 2.6", "relation": "proves", "object": "nuclear objects of D((A,A_0)_■) are filtered colimits of Banach objects of D(A)", "modality": "stated", "locator": "Proposition 2.6, Section 2"}
+{"subject": "Corollary 2.7", "relation": "proves", "object": "nuclearity of M is independent of the choice of subring A_0 of π_0(A)_disc", "modality": "stated", "locator": "Corollary 2.7, Section 2"}
+{"subject": "Corollary 2.8", "relation": "proves", "object": "nuclear objects of (A,A_0)_■ lie in D(A)_κ for strong limit κ with cf(κ)>ω", "modality": "stated", "locator": "Corollary 2.8, Section 2"}
+{"subject": "Proposition 2.10", "relation": "proves", "object": "M in D((A,A_0)_■) is nuclear iff each H^i(M) is nuclear", "modality": "stated", "locator": "Proposition 2.10, Section 2"}
+{"subject": "Definition 2.11 (animated affinoid K-algebra)", "relation": "equivalent-to", "object": "Definition 0.1 (animated affinoid K-algebra)", "modality": "stated", "locator": "Definition 2.11, Section 2"}
