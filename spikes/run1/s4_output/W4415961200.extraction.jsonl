@@ -1,0 +1,44 @@
+{"subject":"Theorem A","relation":"proves","object":"the natural embedding of Pro(D(Ab)) into D(Cond(Ab)) is not full","modality":"stated","locator":"Theorem A"}
+{"subject":"Theorem B","relation":"proves","object":"RHom in D^{>=0}(Cond(Ab)) from prod_omega bigoplus_omega Z to bigoplus_mu Z is concentrated in degree zero for all cardinals mu","modality":"stated","locator":"Theorem B, statement 1"}
+{"subject":"Theorem B","relation":"proves","object":"Ext^n_{Cond(Ab)}(lim M_i, H) = colim Ext^n_{Cond(Ab)}(M_i, H) for inverse sequences of countable abelian groups with surjective transition maps","modality":"stated","locator":"Theorem B, statement 2"}
+{"subject":"Theorem B","relation":"proves","object":"Ext^i of a separable solid Q_p-Banach space X into Q_p vanishes for all i>0","modality":"stated","locator":"Theorem B, statement 3"}
+{"subject":"Theorem B","relation":"depends-on","object":"lim^n A[H]=0 for all n>0 and all abelian groups H","modality":"stated","locator":"Theorem B"}
+{"subject":"Theorem C","relation":"proves","object":"overline H_{n-1}(coprod_omega Y^n) is not isomorphic to bigoplus_omega overline H_{n-1}(Y^n)","modality":"stated","locator":"Theorem C"}
+{"subject":"Theorem D","relation":"proves","object":"for every field K and S in ED, the constant sheaf K on S has injective dimension at most one","modality":"stated","locator":"Theorem D, item 1"}
+{"subject":"Theorem D","relation":"proves","object":"the constant sheaf K on S x T has infinite injective dimension when S and T are Cech-Stone compactifications of discrete sets of cardinality at least aleph_omega","modality":"stated","locator":"Theorem D, item 2"}
+{"subject":"Theorem D","relation":"proves","object":"there exist compact projective condensed anima S and T whose product is not compact","modality":"stated","locator":"Theorem D, item 3"}
+{"subject":"Proposition 2.5","relation":"proves","object":"lim^n A_{I,J}[H]=0 for all free abelian groups H, sets I and J, and n>0","modality":"stated","locator":"Proposition 2.5"}
+{"subject":"Proposition 2.5","relation":"depends-on","object":"the natural map Pro(D^{>=0}(Ab))^b -> D^{>=0}(Cond(Ab)) is fully faithful","modality":"stated","locator":"Proposition 2.5"}
+{"subject":"Theorem 2.2","relation":"proves","object":"Cond(Ab) is a complete and cocomplete abelian category","modality":"stated","locator":"Theorem 2.2"}
+{"subject":"Definition 2.4","relation":"defines","object":"the inverse system A_{I,J} with terms A_f = bigoplus_{X(f)} Z","modality":"stated","locator":"Definition 2.4"}
+{"subject":"Lemma 2.7","relation":"proves","object":"lim^n B_{kappa,lambda}=0 for n>0","modality":"stated","locator":"Lemma 2.7"}
+{"subject":"Remark 2.6","relation":"defines","object":"inverse systems B_{kappa,lambda} and (B/A)_{kappa,lambda}","modality":"stated","locator":"Remark 2.6"}
+{"subject":"Definition 2.8","relation":"defines","object":"coherent and trivial families of functions Phi indexed by ([lambda]^{<omega})^kappa","modality":"stated","locator":"Definition 2.8"}
+{"subject":"Lemma 2.9","relation":"equivalent-to","object":"lim^n A_{kappa,lambda}=0 for all n>0 (for n>0)","modality":"stated","locator":"Lemma 2.9"}
+{"subject":"Lemma 2.9","relation":"equivalent-to","object":"every n-coherent family of functions indexed by ([lambda]^{<omega})^kappa is trivial","modality":"stated","locator":"Lemma 2.9"}
+{"subject":"Theorem 2.10","relation":"proves","object":"lim^n A_{kappa,lambda}=0 for all n>0 when kappa or lambda is finite","modality":"stated","locator":"Theorem 2.10, item 1"}
+{"subject":"Theorem 2.10","relation":"proves","object":"it is consistent with ZFC that lim^n A_{aleph_0,aleph_0}=0 for all n>0","modality":"stated","locator":"Theorem 2.10, item 2"}
+{"subject":"Theorem 2.10","relation":"proves","object":"it is consistent with ZFC that lim^n A_{aleph_0,aleph_0} is nonzero for n>0","modality":"stated","locator":"Theorem 2.10, item 3"}
+{"subject":"Theorem 2.10","relation":"proves","object":"lim^n A_{kappa,lambda} is a subgroup of lim^n A_{mu,nu} whenever mu>=kappa and nu>=lambda","modality":"stated","locator":"Theorem 2.10, item 4"}
+{"subject":"Theorem 2.10","relation":"proves","object":"lim^1 A_{aleph_0,aleph_1} is nonzero","modality":"stated","locator":"Theorem 2.10, item 5"}
+{"subject":"Corollary 2.11","relation":"proves","object":"the functor of equation (3) is not full","modality":"stated","locator":"Corollary 2.11"}
+{"subject":"Corollary 2.11","relation":"depends-on","object":"Theorem 2.10","modality":"stated","locator":"Corollary 2.11"}
+{"subject":"Theorem 2.13","relation":"equivalent-to","object":"lim^n A_{aleph_0,lambda}[bigoplus_mu Z]=0 for all n>0","modality":"stated","locator":"Theorem 2.13, items 1 and 2"}
+{"subject":"Theorem 2.13","relation":"equivalent-to","object":"RHom in D^{>=0}(Cond(Ab)) from prod_omega bigoplus_lambda Z to bigoplus_mu Z is concentrated in degree zero","modality":"stated","locator":"Theorem 2.13, items 1 and 2"}
+{"subject":"Theorem 2.14","relation":"depends-on","object":"lim^n A_{aleph_0,aleph_0}[H]=0 for all n>0 and all abelian groups H","modality":"stated","locator":"Theorem 2.14"}
+{"subject":"Theorem 2.14","relation":"proves","object":"RHom-underline((bigoplus_omega Z_p)^_p[1/p], Q_p) = (prod_omega Z_p)[1/p] for all primes p","modality":"stated","locator":"Theorem 2.14"}
+{"subject":"Theorem 2.15 (Goblot 1970)","relation":"proves","object":"lim^n X=0 for all n>k+1 when the cofinality of the index set I is at most aleph_k","modality":"cited","locator":"Theorem 2.15"}
+{"subject":"Lemma 2.18","relation":"equivalent-to","object":"R^n lim X[I,J,H] is nonzero iff the associated n-coherent families are all trivial","modality":"stated","locator":"Lemma 2.18"}
+{"subject":"Example 2.19","relation":"proves","object":"R^n lim X[I,J,H] is isomorphic to the sheaf cohomology H^n(lambda; H) for all n>0","modality":"stated","locator":"Example 2.19"}
+{"subject":"Theorem 2.20","relation":"proves","object":"lim^{n+1} A_{aleph_n, aleph_{n+1}}[bigoplus_{omega_{n+1}} Z] is nonzero, given a stationary subset of S^{aleph_{n+1}}_{aleph_n} in the approachability ideal I[aleph_{n+1}]","modality":"stated","locator":"Theorem 2.20"}
+{"subject":"Corollary 2.22","relation":"proves","object":"lim^{n+1} A_{aleph_n, aleph_{n+1}} is nonzero for all n<omega, under V=L","modality":"stated","locator":"Corollary 2.22"}
+{"subject":"Corollary 2.22","relation":"depends-on","object":"Theorem 2.20","modality":"stated","locator":"Corollary 2.22"}
+{"subject":"Lemma 3.2","relation":"proves","object":"the space Y^{n,lambda} = lim Y^{n,lambda} is homeomorphic to the one-point compactification of the disjoint union of lambda copies of B^n","modality":"stated","locator":"Lemma 3.2"}
+{"subject":"Theorem 3.3","relation":"proves","object":"the strong homology groups of Y^{n,lambda} are 0 for q not in {0,n}, prod_lambda Z for q=n, and Z for q=0","modality":"stated","locator":"Theorem 3.3"}
+{"subject":"Theorem 3.3","relation":"proves","object":"if strong homology is additive then lim^s A_{kappa,lambda}=0 for all s, kappa, lambda > 0","modality":"stated","locator":"Theorem 3.3"}
+{"subject":"Corollary 3.4","relation":"proves","object":"there exists a non-metrizable ZFC counterexample to the additivity of strong homology","modality":"stated","locator":"Corollary 3.4"}
+{"subject":"Corollary 3.5","relation":"proves","object":"the functor lim^n: Pro(Ab) -> Ab is not additive for n=1 or n=2","modality":"stated","locator":"Corollary 3.5"}
+{"subject":"Proposition 4.1","relation":"proves","object":"the product of two infinite extremally disconnected spaces is not extremally disconnected","modality":"stated","locator":"Proposition 4.1"}
+{"subject":"Proposition 4.2","relation":"proves","object":"Z[beta X] tensor Z[beta Y] = Z[beta X x beta Y] is not projective for infinite sets X and Y","modality":"cited","locator":"Proposition 4.2"}
+{"subject":"Theorem 4.3","relation":"proves","object":"for any field K and ED space S, the constant sheaf K on S has injective dimension at most one, and is zero if K is finite","modality":"stated","locator":"Theorem 4.3"}
+{"subject":"Theorem 4.4","relation":"proves","object":"products of compact projective condensed anima are not, in general, compact","modality":"stated","locator":"Theorem 4.4"}
