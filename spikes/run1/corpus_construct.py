@@ -58,9 +58,11 @@ def polite_get(url, what):
             time.sleep(wait)
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         try:
+            call_start = time.time()
             with urllib.request.urlopen(req, timeout=20) as resp:
                 body = resp.read()
                 _last_call[0] = time.time()
+                log_event({"kind": "http_ok", "what": what, "status": resp.status, "call_s": round(_last_call[0] - call_start, 2), "attempt": attempt})
                 return json.loads(body)
         except urllib.error.HTTPError as e:
             _last_call[0] = time.time()
