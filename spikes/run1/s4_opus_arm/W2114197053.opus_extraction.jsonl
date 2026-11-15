@@ -1,0 +1,34 @@
+{"subject": "M-theory", "relation": "uses-technique", "object": "Atiyah–Patodi–Singer index theorem for manifolds with boundary", "modality": "stated", "locator": "Main points: Index theorems"}
+{"subject": "topological part I_top of the M-theory action", "relation": "equivalent-to", "object": "sum of the index of a Dirac operator coupled to an E_8 bundle and a Rarita–Schwinger operator", "modality": "cited", "locator": "Main points: Topological part of the M-theory action"}
+{"subject": "phase Φ of the M-theory partition function", "relation": "equivalent-to", "object": "exp[2πi((1/2)η̄_{E_8} + (1/4)η̄_{RS})] = exp[2πi((1/4)(h_{E_8}+η_{E_8}) + (1/8)(h_{RS}+η_{RS}))]", "modality": "stated", "locator": "Eq. (1.1)"}
+{"subject": "reduced eta invariant η̄_V", "relation": "defines", "object": "(1/2)(η_V + dim Ker D_V) for the Dirac operator D_V coupled to V", "modality": "stated", "locator": "Eq. (1.1)"}
+{"subject": "phase Φ of the M-theory partition function", "relation": "depends-on", "object": "reduced eta invariants of Dirac operators coupled to the E_8 bundle and the Rarita–Schwinger bundle RS = TY^11 − 3O", "modality": "stated", "locator": "Eq. (1.1)"}
+{"subject": "eta invariants on Y^11 = X^10 × S^1", "relation": "depends-on", "object": "pairing of nonzero eigenvalues (λ,−λ) under the orientation-reversing symmetry of X^10", "modality": "stated", "locator": "Main points: Symmetry under Y^11 = X^10 × S^1"}
+{"subject": "Spin structure on an n-manifold M", "relation": "defines", "object": "Spin(n) principal bundle P_Spin(M) with two-fold covering ρ: Spin(n)→SO(n) making the specified diagram commute", "modality": "stated", "locator": "Eq. (1.2)"}
+{"subject": "set of Spin structures on M", "relation": "equivalent-to", "object": "torsor over H^1(M;Z_2)", "modality": "stated", "locator": "Main points: Spin structures"}
+{"subject": "Spin structure σ_1 on Y^11", "relation": "depends-on", "object": "Spin structure on X^10 when w_2(X^10)=0", "modality": "stated", "locator": "Main points: Spin vs. Spin^c across dimensions"}
+{"subject": "Spin structure σ_2 on Y^11", "relation": "depends-on", "object": "Spin structure on TX^10⊕L when w_2(X^10)=e mod 2", "modality": "stated", "locator": "Main points: Spin vs. Spin^c across dimensions"}
+{"subject": "σ_1 and σ_2 on Y^11", "relation": "proves", "object": "σ_1 and σ_2 are different Spin structures when w_2(X^10)=0 and e=0 mod 2, σ_1 restricting to the nontrivial Spin structure on the fibre S^1 and σ_2's restriction extending over D^2", "modality": "stated", "locator": "Main points: Spin vs. Spin^c across dimensions"}
+{"subject": "heterotic vacua on a Calabi–Yau manifold M", "relation": "depends-on", "object": "π_1(M)≠1 to produce the standard model gauge group via Wilson lines", "modality": "stated", "locator": "Main points: Reality check 1"}
+{"subject": "torus-fibred Calabi–Yau threefolds with π_1(M)=Z_2", "relation": "proves", "object": "admit stable holomorphic bundles with structure group SU(5)", "modality": "stated", "locator": "Main points: Reality check 1"}
+{"subject": "torus-fibred Calabi–Yau threefolds with π_1(M)=Z_2×Z_2", "relation": "proves", "object": "admit stable holomorphic bundles with structure group SU(4)", "modality": "stated", "locator": "Main points: Reality check 1"}
+{"subject": "mod 2 index in dimensions 2 and 10", "relation": "specialises", "object": "Â-genus", "modality": "stated", "locator": "Main points: Curvature"}
+{"subject": "α-invariant", "relation": "depends-on", "object": "Spin structure", "modality": "stated", "locator": "Main points: Curvature"}
+{"subject": "Gromov–Lawson–Rosenberg conjecture", "relation": "conjectures", "object": "relation between vanishing of the α-invariant and positive scalar curvature metrics", "modality": "cited", "locator": "Main points: Curvature"}
+{"subject": "Quillen and Bismut superconnections", "relation": "equivalent-to", "object": "representation of the K-theory pushforward from bundles on the fibre to K-theory elements on the base", "modality": "stated", "locator": "Main points: Families case"}
+{"subject": "adiabatic limit of the eta invariant", "relation": "equivalent-to", "object": "Bismut–Cheeger eta forms", "modality": "stated", "locator": "Main points: Families case"}
+{"subject": "Kaluza–Klein modes of the reduction", "relation": "equivalent-to", "object": "Adams operations on the line bundle, raising brane charge by k units for the k-th mode", "modality": "stated", "locator": "Main points: Consequences for the fields"}
+{"subject": "dilaton", "relation": "defines", "object": "volume of the circle fibre", "modality": "stated", "locator": "Main points: Consequences for the fields"}
+{"subject": "P^1_{Spin(N)}(SO(n)) and P^2_{Spin(N)}(SO(n))", "relation": "defines", "object": "SO(n)×Spin(N) and (Spin(n)×Spin(N))/Z_2", "modality": "stated", "locator": "Eq. (2.3)"}
+{"subject": "H^1(U(Σ_g);Z_2)", "relation": "depends-on", "object": "short exact sequence 0 → H^1(Σ_g;Z_2) → H^1(U(Σ_g);Z_2) → H^1(S^1;Z_2) → 0", "modality": "stated", "locator": "Eq. (2.6)"}
+{"subject": "Spin(n+1) → SO(n+1) → S^n", "relation": "defines", "object": "fibration sequence", "modality": "stated", "locator": "Eq. (2.8)"}
+{"subject": "total Stiefel–Whitney class w(KP^n)", "relation": "equivalent-to", "object": "(1+x)^{n+1}", "modality": "stated", "locator": "Eq. (2.9)"}
+{"subject": "π_1(RP^{2k+1})", "relation": "equivalent-to", "object": "Z_2 for k odd, Z_2×Z_2 for k even", "modality": "stated", "locator": "Eq. (2.10)"}
+{"subject": "H^i(M^n;Z)", "relation": "equivalent-to", "object": "Z for i=0 or n; H^i(Γ;Z) for 0<i<n; 0 otherwise", "modality": "stated", "locator": "Eq. (2.14)"}
+{"subject": "group presentation a^2=b^2=c^3=1, ab=ba, cac^{-1}=b, cbc^{-1}=ab", "relation": "defines", "object": "group relations", "modality": "stated", "locator": "Eq. (2.18)"}
+{"subject": "spinor equation ∇_X ψ = α X·ψ", "relation": "defines", "object": "condition for all X∈Γ(TM)", "modality": "stated", "locator": "Eq. (2.23)"}
+{"subject": "F_11^Spin", "relation": "equivalent-to", "object": "F_11^{Spin,ev} ⊕ F_11^{Spin,odd}", "modality": "stated", "locator": "Eq. (2.27)"}
+{"subject": "∇_v Ψ − L_v Ψ", "relation": "equivalent-to", "object": "(1/4)e^{2φ} γ(dω)Ψ", "modality": "stated", "locator": "Eq. (2.32)"}
+{"subject": "Im(Q_k)", "relation": "equivalent-to", "object": "spinors Ψ with L_v Ψ = ikΨ", "modality": "stated", "locator": "Eq. (2.35)"}
+{"subject": "Dirac operator D̃^φ", "relation": "equivalent-to", "object": "Σ_{i=0}^{10} γ(e_i)∇_{e_i} = e^{-φ}D_v + D_h + e^φ D_0", "modality": "stated", "locator": "Eq. (2.38)"}
+{"subject": "L^2(SY^11)", "relation": "equivalent-to", "object": "⊕_{k∈Z+1/2} V_k", "modality": "stated", "locator": "Eq. (2.39)"}

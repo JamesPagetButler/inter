@@ -1,0 +1,39 @@
+{"subject":"classification of 4D N=2 gauged supergravities from left-invariant consistent truncation of 11D supergravity on M_7=G/H with supersymmetric AdS_4 vacua","relation":"proves","object":"list of internal manifolds in Table 1","modality":"stated","locator":"Section 1, Table 1"}
+{"subject":"classification of 4D N=2 gauged supergravities from left-invariant consistent truncation of 11D supergravity on M_7=G/H with supersymmetric AdS_4 vacua","relation":"uses-technique","object":"left-invariant (LI) consistent truncation","modality":"stated","locator":"Section 1"}
+{"subject":"consistency of left-invariant truncation","relation":"depends-on","object":"G-neutral modes cannot source G-charged fields","modality":"stated","locator":"Section 1"}
+{"subject":"N=2 truncated supergravity on G/H","relation":"depends-on","object":"left-invariant SU(3)-structure on the coset","modality":"stated","locator":"Section 1"}
+{"subject":"most general supersymmetric M-theory background containing AdS_4 with homogeneous internal space","relation":"proves","object":"background is of Freund–Rubin type","modality":"stated","locator":"Appendix A"}
+{"subject":"homogeneous supersymmetric AdS_4×M_7 Freund–Rubin solutions","relation":"proves","object":"classification of homogeneous supersymmetric AdS_4×M_7 Freund–Rubin solutions","modality":"cited","locator":"Section 1, refs [36,37]"}
+{"subject":"homogeneous supersymmetric AdS_4×M_7 Freund–Rubin solutions admitting a left-invariant SU(3)-structure","relation":"equivalent-to","object":"V_{5,2}, N(k,l), S^7=SU(4)/SU(3), S^7=Sp(2)/Sp(1), M^{110}, Q^{111}","modality":"stated","locator":"Section 1, Table 1"}
+{"subject":"N(1,1)=SU(3)/U(1)","relation":"specialises","object":"Aloff–Wallach spaces N(k,l)","modality":"stated","locator":"Table 1"}
+{"subject":"N(1,-1)=SU(3)/U(1)","relation":"specialises","object":"Aloff–Wallach spaces N(k,l)","modality":"stated","locator":"Table 1"}
+{"subject":"completeness of LI consistent truncations of 11D supergravity on homogeneous 7D manifolds with supersymmetric AdS_4 vacua","relation":"proves","object":"truncations of this paper together with [5,13] exhaust all such truncations up to subtruncation","modality":"stated","locator":"Section 1"}
+{"subject":"completeness of LI consistent truncations of 11D supergravity on homogeneous 7D manifolds with supersymmetric AdS_4 vacua","relation":"depends-on","object":"left-invariance","modality":"stated","locator":"Section 1"}
+{"subject":"truncated 4D theory","relation":"specialises","object":"N=2 supergravity coupled to vector and hypermultiplets","modality":"stated","locator":"Section 1"}
+{"subject":"electric and magnetic gaugings of the truncated theory","relation":"depends-on","object":"intrinsic torsion of the SU(3)-structure","modality":"stated","locator":"Section 1"}
+{"subject":"electric and magnetic gaugings of the truncated theory","relation":"depends-on","object":"four-form flux","modality":"stated","locator":"Section 1"}
+{"subject":"preservation of N=2 supersymmetry","relation":"depends-on","object":"SE_7 structure","modality":"stated","locator":"Section 1"}
+{"subject":"spontaneous breaking N=2→N=1","relation":"depends-on","object":"U(1)-invariant weak G_2 structure","modality":"stated","locator":"Section 1"}
+{"subject":"first six cosets of Table 1","relation":"equivalent-to","object":"list of homogeneous SE_7 spaces","modality":"stated","locator":"Section 1, Table 1"}
+{"subject":"last four cosets of Table 1","relation":"defines","object":"cosets admitting weak G_2 type SU(3)-structure","modality":"stated","locator":"Section 1, Table 1"}
+{"subject":"gauge group of the truncated theories","relation":"proves","object":"gauge group is abelian with only hyperscalars charged","modality":"stated","locator":"Section 1"}
+{"subject":"N(1,-1) truncation","relation":"counterexample-to","object":"only hyperscalars carry charges","modality":"stated","locator":"Section 1"}
+{"subject":"S^7=SU(4)/SU(3) truncation","relation":"defines","object":"n_V=1, n_H=1, VM s.m. SU(1,1)/U(1), F=-(X^1)^3/X^0, HM s.m. SU(2,1)/S(U(2)×U(1))","modality":"stated","locator":"Table 2"}
+{"subject":"M^{110} truncation","relation":"defines","object":"n_V=2, n_H=1, VM s.m. (SU(1,1)/U(1))^2, F=-(X^1)^2X^2/X^0, HM s.m. SU(2,1)/S(U(2)×U(1))","modality":"stated","locator":"Table 2"}
+{"subject":"Q^{111} truncation","relation":"defines","object":"n_V=3, n_H=1, VM s.m. (SU(1,1)/U(1))^3, F=-X^1X^2X^3/X^0, HM s.m. SU(2,1)/S(U(2)×U(1))","modality":"stated","locator":"Table 2"}
+{"subject":"V_{5,2} truncation","relation":"defines","object":"n_V=1, n_H=2, VM s.m. SU(1,1)/U(1), HM s.m. G_{2(2)}/SO(4), G=-(Z^1)^3/(3√3 Z^0)","modality":"stated","locator":"Table 2"}
+{"subject":"S^7=Sp(2)/Sp(1) truncation","relation":"defines","object":"n_V=2, n_H=2, VM s.m. (SU(1,1)/U(1))^2, HM s.m. SO(4,2)/(SO(4)×SO(2)), G=((Z^0)^2-(Z^1)^2)/(2i)","modality":"stated","locator":"Table 2"}
+{"subject":"N(1,1) truncation","relation":"defines","object":"n_V=3, n_H=2, VM s.m. (SU(1,1)/U(1))^3, HM s.m. SO(4,2)/(SO(4)×SO(2))","modality":"stated","locator":"Table 2"}
+{"subject":"N(k,l) truncation","relation":"defines","object":"n_V=3, n_H=1, VM s.m. (SU(1,1)/U(1))^3, HM s.m. SU(2,1)/S(U(2)×U(1))","modality":"stated","locator":"Table 2"}
+{"subject":"N(1,-1) truncation","relation":"defines","object":"n_V=5, n_H=1, VM s.m. SU(1,1)/U(1)×SO(4,2)/(SO(4)×SO(2)), F=X^3[-X^1X^2+(X^4)^2+(X^5)^2]/X^0","modality":"stated","locator":"Table 2"}
+{"subject":"SU(3)-structure (J, Ω)","relation":"defines","object":"ι_X J = ι_X Ω = 0, Ω∧J=0, Ω∧Ω̄≠0, J∧J∧J≠0","modality":"stated","locator":"Eq. (2.1)"}
+{"subject":"dη, dJ, dΩ","relation":"defines","object":"dη=2J, dJ=0, dΩ=4i η∧Ω","modality":"stated","locator":"Eq. (2.4)"}
+{"subject":"e^{-K}","relation":"equivalent-to","object":"(4/3)K_{ijk}v^iv^jv^k=8K","modality":"stated","locator":"Eq. (2.30)"}
+{"subject":"prepotential F","relation":"defines","object":"F=-(1/6)K_{ijk}X^iX^jX^k/X^0","modality":"stated","locator":"Eq. (2.31)"}
+{"subject":"11D supergravity action S_11","relation":"defines","object":"(1/2κ_11^2)∫(R*1 - (1/2)G_4∧*G_4 - (1/6)A_3∧G_4∧G_4)","modality":"stated","locator":"Eq. (3.1)"}
+{"subject":"4D action S","relation":"defines","object":"(1/κ_4^2)∫[(1/2)R_4*1 + L_kin + L_top - V*1]","modality":"stated","locator":"Eq. (3.11)"}
+{"subject":"4D dilaton φ","relation":"defines","object":"e^{2φ}=e^{3V}K^{-1}","modality":"stated","locator":"Eq. (3.20)"}
+{"subject":"scalar potential V","relation":"defines","object":"scalar potential of the truncated theory","modality":"stated","locator":"Eq. (3.21)"}
+{"subject":"momentum maps P_I","relation":"defines","object":"iP_I = k_I^j ∂_j K = -k̄_I^j̄ ∂_j̄ K","modality":"stated","locator":"Eq. (4.9)"}
+{"subject":"Killing vectors k_0, k_i","relation":"defines","object":"[k_0,k_i]=q_i^j k_j; [k_i,k_j]=-q_{[i}^k K_{j]kl} k̃^l","modality":"stated","locator":"Eq. (4.20)"}
+{"subject":"Kähler potential K","relation":"defines","object":"K = -log[i(t̄^3-t^3)((t^1-t̄^1)(t^2-t̄^2)-(t^4-t̄^4)^2-(t^5-t̄^5)^2)]","modality":"stated","locator":"Eq. (5.2)"}

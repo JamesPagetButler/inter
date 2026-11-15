@@ -1,0 +1,25 @@
+{"subject": "ds^2", "relation": "defines", "object": "g_μν dx^μ dx^ν", "modality": "stated", "locator": "Eq. (1)"}
+{"subject": "d(x,y)", "relation": "defines", "object": "Sup{|f(x)-f(y)| ; f∈A, ‖[f,ds^{-1}]‖≤1}", "modality": "stated", "locator": "Eq. (10)"}
+{"subject": "ds", "relation": "defines", "object": "D^{-1}", "modality": "stated", "locator": "Eq. (12)"}
+{"subject": "D", "relation": "defines", "object": "(1/√-1) γ^μ ∇_μ", "modality": "stated", "locator": "Eq. (12)"}
+{"subject": "π_n(GL_∞(A))", "relation": "equivalent-to", "object": "K_{n+1}(A)", "modality": "stated", "locator": "Eq. (34)"}
+{"subject": "d(x,y)", "relation": "defines", "object": "Sup{|a(x)-a(y)| ; a∈A, ‖[D,a]‖≤1}", "modality": "stated", "locator": "Eq. (40)"}
+{"subject": "c_n", "relation": "defines", "object": "(n-2)/12 × (4π)^{-n/2} Γ(n/2+1)^{-1} 2^{[n/2]}", "modality": "stated", "locator": "Eq. (41)"}
+{"subject": "J M J^{-1}", "relation": "equivalent-to", "object": "M'", "modality": "stated", "locator": "Eq. (45)"}
+{"subject": "⟨e,f⟩", "relation": "equivalent-to", "object": "⟨Index D, e⊗f^0⟩", "modality": "stated", "locator": "Eq. (50)"}
+{"subject": "J", "relation": "defines", "object": "C ⊗ *", "modality": "stated", "locator": "Eq. (58)"}
+{"subject": "D̃", "relation": "defines", "object": "D + A + J A J^{-1}", "modality": "stated", "locator": "Eq. (63), Eq. (65)"}
+{"subject": "A", "relation": "defines", "object": "Σ a_i[D,b_i], a_i,b_i∈A", "modality": "stated", "locator": "Eq. (66)"}
+{"subject": "A_θ", "relation": "defines", "object": "{Σ a_{nm} U^n V^m ; a=(a_{n,m})∈S(Z^2)}", "modality": "stated", "locator": "Eq. (71)"}
+{"subject": "λ", "relation": "defines", "object": "exp(2πiθ)", "modality": "stated", "locator": "Eq. (72)"}
+{"subject": "D", "relation": "defines", "object": "[[0, δ_1+τδ_2],[-δ_1-τ̄δ_2, 0]]", "modality": "stated", "locator": "Eq. (75)"}
+{"subject": "c", "relation": "defines", "object": "(2iπ)^{-2}(τ-τ̄)^{-1}(V^{-1}U^{-1}⊗U⊗V - U^{-1}V^{-1}⊗V⊗U)", "modality": "stated", "locator": "Eq. (78)"}
+{"subject": "∫−ds^2", "relation": "equivalent-to", "object": "⟨φ,c⟩", "modality": "stated", "locator": "Eq. (79)"}
+{"subject": "⟨μ,β⟩", "relation": "equivalent-to", "object": "Rank K_0 − Rank K_1", "modality": "stated", "locator": "Eq. (83)"}
+{"subject": "D̃(ξ⊗η⊗ζ̄)", "relation": "defines", "object": "(∇ξ)η⊗ζ̄ + ξ⊗Dη⊗ζ̄ + ξ⊗η(∇ζ‾)", "modality": "stated", "locator": "Eq. (90)"}
+{"subject": "J_F", "relation": "defines", "object": "J_F(Σλ_i f_i + Σμ_j f̄_j) = Σμ̄_j f_j + Σλ̄_i f̄_i", "modality": "stated", "locator": "Eq. (97)"}
+{"subject": "Y", "relation": "defines", "object": "Y_q ⊗ 1_3 ⊕ Y_f", "modality": "stated", "locator": "Eq. (100)"}
+{"subject": "Q", "relation": "defines", "object": "2N [[-1,1,-1],[1,0,1],[-1,1,0]]", "modality": "stated", "locator": "Eq. (103)"}
+{"subject": "D", "relation": "defines", "object": "D_1⊗1 + γ_1⊗D_2 (for A = A_1⊗A_2, H = H_1⊗H_2)", "modality": "stated", "locator": "Eq. (105)"}
+{"subject": "A^{(1,0)}", "relation": "defines", "object": "Σ a_i[(∂̸_M⊗1), a_i']", "modality": "stated", "locator": "Eq. (109)"}
+{"subject": "I", "relation": "defines", "object": "Trace(φ(ds/ℓ_p)) + ⟨Dψ,ψ⟩", "modality": "stated", "locator": "Eq. (114)"}
