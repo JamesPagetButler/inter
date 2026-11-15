@@ -1,0 +1,29 @@
+{"subject":"base change theorem in derived categories (torsion coefficients)","relation":"proves","object":"f^* ∘ p_! ≃ q_! ∘ g^* for Cartesian diagrams of □-coprime Artin stacks","modality":"stated","locator":"Corollary 0.1.2"}
+{"subject":"Künneth formula","relation":"proves","object":"f_!(q_1^* − ⊗ q_2^*−) ≃ (p_1^* f_{1!}−) ⊗ (p_2^* f_{2!}−)","modality":"stated","locator":"Theorem 0.1.1 (Theorem 6.2.1)"}
+{"subject":"projection formula","relation":"proves","object":"f_!(−⊗ f^*−) ≃ (f_!−) ⊗ −","modality":"stated","locator":"Corollary 0.1.3"}
+{"subject":"trace map","relation":"proves","object":"functorial trace map Tr_f: τ^{≥0} f_! Λ_Y⟨d⟩ → Λ_X for flat f locally of finite presentation","modality":"stated","locator":"Theorem 0.1.4 (1) (Theorem 6.2.9)"}
+{"subject":"Poincaré duality","relation":"proves","object":"f^*⟨dim f⟩ ≃ f^! for smooth f","modality":"stated","locator":"Theorem 0.1.4 (2) (Theorem 6.2.9)"}
+{"subject":"smooth base change","relation":"proves","object":"p^* f_* → g_* q^* is a natural isomorphism for Cartesian diagrams with p smooth","modality":"stated","locator":"Corollary 0.1.5 (Corollary 6.2.10)"}
+{"subject":"descent spectral sequence for f_*","relation":"proves","object":"convergent spectral sequence H^q(f_{p*} y_p^* K) ⇒ H^{p+q} f_* K for K in D^{≥0}","modality":"stated","locator":"Theorem 0.1.6 (1) (Corollary 6.2.14)"}
+{"subject":"descent spectral sequence for f_!","relation":"proves","object":"convergent spectral sequence H^q(f_{-p!} y_{-p}^! K) ⇒ H^{p+q} f_! K for K in D^{≤0}","modality":"stated","locator":"Theorem 0.1.6 (2) (Corollary 6.2.14)"}
+{"subject":"restriction of six operations to constructible complexes","relation":"proves","object":"f^*, f^!, ⊗, Hom and f_*, f_! preserve the constructible subcategories","modality":"stated","locator":"§0.1, Constructible sheaves (Propositions 6.4.4 and 6.4.5)"}
+{"subject":"six operations for constructible complexes","relation":"generalises","object":"Laszlo–Olsson operations on usual derived categories","modality":"stated","locator":"§0.1, Constructible sheaves"}
+{"subject":"base change in derived categories for Laszlo–Olsson operations","relation":"proves","object":"base change in derived categories, left open in Laszlo–Olsson [47]","modality":"stated","locator":"§0.1, Constructible sheaves"}
+{"subject":"theory of six operations in this article","relation":"generalises","object":"previous theories of Laszlo and Olsson","modality":"stated","locator":"Abstract"}
+{"subject":"theory of six operations in this article","relation":"generalises","object":"theories for higher Artin stacks applied beyond Deligne–Mumford stacks","modality":"stated","locator":"Abstract"}
+{"subject":"perverse t-structures on higher Artin stacks","relation":"generalises","object":"Gabber's perverse t-structures on schemes","modality":"stated","locator":"Abstract"}
+{"subject":"categorical gluing result","relation":"generalises","object":"Deligne's gluing theory used in the extraordinary pushforward in étale cohomology of schemes","modality":"stated","locator":"Abstract"}
+{"subject":"base change in derived categories for the adic formalism","relation":"proves","object":"base change at the level of derived categories, previously known only for sheaves","modality":"stated","locator":"§0.3"}
+{"subject":"base change for sheaves in adic setting","relation":"proves","object":"base change on the level of sheaves","modality":"cited","locator":"§0.3"}
+{"subject":"D(X,λ)_a","relation":"defines","object":"limit over N(Ξ)^op of the ∞-categories D(X,Λ(ξ))","modality":"stated","locator":"§0.3, Ringed diagrams"}
+{"subject":"f^{!a}","relation":"defines","object":"R_Y ∘ f^!","modality":"stated","locator":"§0.3, Ringed diagrams"}
+{"subject":"m-adic formalism","relation":"proves","object":"adic complexes are stable under the six operations","modality":"stated","locator":"§7.6"}
+{"subject":"constructible adic formalism","relation":"equivalent-to","object":"Laszlo–Olsson formalism under their assumptions","modality":"stated","locator":"§7.7"}
+{"subject":"enhancement of D(X,Λ)","relation":"defines","object":"limit of the cosimplicial diagram of D(X_{n,ét},Λ) in an ∞-category of presentable stable ∞-categories","modality":"stated","locator":"§0.2"}
+{"subject":"six operations construction via stable ∞-categories","relation":"uses-technique","object":"∞-categorical descent","modality":"stated","locator":"Introduction"}
+{"subject":"enhancement of derived categories","relation":"uses-technique","object":"stable ∞-categories (Lurie)","modality":"stated","locator":"Introduction"}
+{"subject":"naive descent for derived categories","relation":"counterexample-to","object":"classifying stack BG_m over an algebraically closed field","modality":"stated","locator":"§0.2"}
+{"subject":"algebraic space","relation":"defines","object":"sheaf in the big fppf site with representable diagonal admitting an étale surjection from a scheme","modality":"stated","locator":"§0.1, Definitions"}
+{"subject":"Artin stack","relation":"defines","object":"algebraic stack with representable diagonal by algebraic spaces and a smooth surjection from a scheme","modality":"stated","locator":"§0.1, Definitions"}
+{"subject":"□-coprime Artin stack","relation":"defines","object":"Artin stack admitting a morphism to Spec Z[□^{-1}]","modality":"stated","locator":"§0.1, Definitions"}
+{"subject":"Deligne–Mumford stacks in étale cohomology","relation":"defines","object":"D(X,Λ) as unbounded derived category of étale sheaves","modality":"stated","locator":"§0.1, Definitions"}
