@@ -120,3 +120,4 @@
 {"paper_id": "W2114197053", "stage": "extraction", "done": true, "ts": "2026-11-15T01:50:16Z"}
 {"paper_id": "W1836597677", "stage": "restatement", "done": true, "ts": "2026-11-15T01:50:50Z"}
 {"paper_id": "W1836597677", "stage": "extraction", "done": true, "ts": "2026-11-15T01:50:59Z"}
+{"arm": "opus-comparison", "batch": 1, "papers": ["W1820708574","W3113975734","W3134337821","W3162009980","W4391839082"], "tokens_actual": 123347, "ts": "2026-11-15T03:00:50Z"}

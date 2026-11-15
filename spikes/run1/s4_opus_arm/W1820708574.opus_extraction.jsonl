@@ -1,0 +1,28 @@
+{"subject": "Theorem 3.3", "relation": "proves", "object": "if a map Δ^1 → E presents a p-cartesian morphism [1] → 𝓔, where E → B is a fibration between fibrant objects in sSet_Joyal presenting 𝓔 → 𝓑 in Cat_∞, then the edge f in E_1 is JL-p-cartesian", "modality": "stated", "locator": "Theorem 3.3"}
+{"subject": "Corollary 3.4", "relation": "proves", "object": "if p is a cartesian fibration, then the presenting map p is a JL-cartesian fibration", "modality": "stated", "locator": "Corollary 3.4"}
+{"subject": "Corollary 3.4", "relation": "depends-on", "object": "Theorem 3.3", "modality": "stated", "locator": "Corollary 3.4"}
+{"subject": "Definition 2.1", "relation": "defines", "object": "f-cocartesian morphism", "modality": "stated", "locator": "Definition 2.1(1)"}
+{"subject": "Definition 2.1", "relation": "defines", "object": "cocartesian fibration", "modality": "stated", "locator": "Definition 2.1(1)"}
+{"subject": "Definition 2.1", "relation": "defines", "object": "f-cartesian morphism", "modality": "stated", "locator": "Definition 2.1(2)"}
+{"subject": "Definition 2.1", "relation": "defines", "object": "cartesian fibration", "modality": "stated", "locator": "Definition 2.1(2)"}
+{"subject": "Remark 2.3", "relation": "defines", "object": "left fibration", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "Remark 2.3", "relation": "defines", "object": "right fibration", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "left fibration", "relation": "specialises", "object": "cocartesian fibration", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "right fibration", "relation": "specialises", "object": "cartesian fibration", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "Fun(𝓑, Cat_∞)", "relation": "equivalent-to", "object": "coCFib(𝓑) via the covariant Grothendieck construction", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "Fun(𝓑, 𝓢)", "relation": "equivalent-to", "object": "LFib(𝓑)", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "Fun(𝓑^op, Cat_∞)", "relation": "equivalent-to", "object": "CFib(𝓑) via the contravariant Grothendieck construction", "modality": "stated", "locator": "Remark 2.3"}
+{"subject": "Definition 3.2", "relation": "defines", "object": "JL-p-cartesian edge", "modality": "stated", "locator": "Definition 3.2"}
+{"subject": "Definition 3.2", "relation": "defines", "object": "JL-cartesian fibration", "modality": "cited", "locator": "Definition 3.2 (following [Lur09, Definition 2.4.2.1])"}
+{"subject": "monoidal category (𝓒, ⊗)", "relation": "equivalent-to", "object": "bar construction functor Δ^op → Cat, viewed as a monoid object in (Cat, ×)", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "symmetric monoidal category", "relation": "equivalent-to", "object": "cocartesian fibration 𝓒^⊗ → Fin_*", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "symmetric monoidal category", "relation": "equivalent-to", "object": "functor Fin_* → Cat", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "symmetric monoidal functor", "relation": "equivalent-to", "object": "morphism of cocartesian fibrations over Fin_*", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "identity functor Fin_* → Fin_*", "relation": "specialises", "object": "cocartesian fibration", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "commutative algebra object in (𝓒, ⊗)", "relation": "equivalent-to", "object": "lax symmetric monoidal functor pt_Cat → (𝓒, ⊗)", "modality": "stated", "locator": "Example 1.2"}
+{"subject": "Remark 1.3", "relation": "defines", "object": "inert morphism in Fin_*", "modality": "stated", "locator": "Remark 1.3"}
+{"subject": "Remark 1.3", "relation": "defines", "object": "p-inert morphism", "modality": "stated", "locator": "Remark 1.3"}
+{"subject": "lax symmetric monoidal functor", "relation": "equivalent-to", "object": "commutative triangle that preserves inert morphisms", "modality": "stated", "locator": "Remark 1.3"}
+{"subject": "theory of ∞-operads", "relation": "depends-on", "object": "observations of Example 1.2 and Remark 1.3", "modality": "cited", "locator": "Remark 1.4 ([Lur14, Chapter 2])"}
+{"subject": "forgetful functor VectBdl → Mfld", "relation": "specialises", "object": "cartesian fibration", "modality": "stated", "locator": "Example 1.5"}
+{"subject": "forgetful functor Top → Set", "relation": "specialises", "object": "cartesian fibration", "modality": "stated", "locator": "Example 1.6"}

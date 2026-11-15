@@ -1,0 +1,5 @@
+{"paper_id": "W1820708574", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 27995, "batch": 1, "ts": "2026-11-15T03:00:50Z"}
+{"paper_id": "W3113975734", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 25724, "batch": 1, "ts": "2026-11-15T03:00:50Z"}
+{"paper_id": "W3134337821", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 22060, "batch": 1, "ts": "2026-11-15T03:00:50Z"}
+{"paper_id": "W3162009980", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 27280, "batch": 1, "ts": "2026-11-15T03:00:50Z"}
+{"paper_id": "W4391839082", "domain": "math", "stage": "extraction", "model": "opus-comparison-arm", "actual_tokens": 20288, "batch": 1, "ts": "2026-11-15T03:00:50Z"}

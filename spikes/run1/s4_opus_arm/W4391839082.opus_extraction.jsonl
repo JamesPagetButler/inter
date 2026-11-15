@@ -1,0 +1,2 @@
+{"subject": "Theorem A (Clausen–Scholze)", "relation": "proves", "object": "Ext^i_{Cond(Ab)}(M_{p'}(S), V) = 0 for all i >= 1, for 0 < p' < p <= 1, S a profinite set, V a p-Banach space considered as a condensed abelian group", "modality": "cited", "locator": "Theorem A"}
+{"subject": "M_{p'}(S)", "relation": "defines", "object": "space of real-valued p'-measures on the profinite set S, considered as a condensed abelian group", "modality": "stated", "locator": "Theorem A"}
