@@ -1,0 +1,47 @@
+{"subject":"simplicial closed model category structure on sS (complete Segal space model category structure)","relation":"defines","object":"Theorem 7.2 model structure with fibrant objects the complete Segal spaces","modality":"stated","locator":"Theorem 7.2"}
+{"subject":"Segal space model category structure","relation":"defines","object":"simplicial closed model category structure on sS with fibrant objects the Segal spaces","modality":"stated","locator":"Theorem 7.1"}
+{"subject":"Theorem 7.2","relation":"proves","object":"existence of a simplicial closed model structure on sS whose fibrant objects are the complete Segal spaces","modality":"stated","locator":"Theorem 7.2"}
+{"subject":"Corollary 7.3","relation":"depends-on","object":"Theorem 7.2","modality":"stated","locator":"Corollary 7.3"}
+{"subject":"Proposition 7.6","relation":"proves","object":"a map of complete Segal spaces is a Dwyer-Kan equivalence iff it is a Reedy weak equivalence","modality":"stated","locator":"Proposition 7.6"}
+{"subject":"Dwyer-Kan equivalence between Segal spaces","relation":"equivalent-to","object":"weak equivalence in the complete Segal space model category structure","modality":"stated","locator":"Theorem 7.7"}
+{"subject":"Remark 7.8","relation":"depends-on","object":"Theorem 7.7","modality":"stated","locator":"Remark 7.8"}
+{"subject":"homotopy category of complete Segal spaces","relation":"equivalent-to","object":"formal inversion of Dwyer-Kan equivalences in the homotopy category of Segal spaces","modality":"stated","locator":"Corollary 7.9"}
+{"subject":"Theorem 3.7","relation":"equivalent-to","object":"N(C x D) isomorphic to NC x ND and N(D^C) isomorphic to (ND)^{NC}","modality":"stated","locator":"Theorem 3.7"}
+{"subject":"Theorem 3.7","relation":"proves","object":"N: Cat -> sS is a full embedding of categories","modality":"stated","locator":"Theorem 3.7"}
+{"subject":"functor f: C -> D is an equivalence of categories","relation":"equivalent-to","object":"Nf is a weak equivalence of simplicial spaces","modality":"stated","locator":"Theorem 3.7"}
+{"subject":"Proposition 3.2","relation":"equivalent-to","object":"nerve of [n] is Delta[n]","modality":"stated","locator":"Proposition 3.2"}
+{"subject":"nerve of a groupoid","relation":"proves","object":"nerve of a groupoid is a Kan complex","modality":"stated","locator":"Proposition 3.2"}
+{"subject":"Lemma 3.9","relation":"proves","object":"NC is a Reedy fibrant simplicial space for any category C","modality":"stated","locator":"Lemma 3.9"}
+{"subject":"Proposition 3.11","relation":"equivalent-to","object":"N(D^C, we(D^C)) isomorphic to N(D,W)^{NC}","modality":"stated","locator":"Proposition 3.11"}
+{"subject":"Lemma 3.12","relation":"equivalent-to","object":"N of the subcategory of functors [n] -> C factoring through W isomorphic to (NC)^{Delta[n]}","modality":"stated","locator":"Lemma 3.12"}
+{"subject":"Proposition 5.4","relation":"proves","object":"associativity and unit laws for composition of points of the mapping space up to homotopy","modality":"stated","locator":"Proposition 5.4"}
+{"subject":"Remark 5.6","relation":"conjectures","object":"L(W) is equivalent to ho W for a Segal space W, where L is a left adjoint to N","modality":"stated","locator":"Remark 5.6"}
+{"subject":"ho NC","relation":"depends-on","object":"Remark 5.2","modality":"stated","locator":"Remark 5.6"}
+{"subject":"Lemma 5.8","relation":"proves","object":"a vertex joined by a path to a homotopy equivalence is itself a homotopy equivalence","modality":"stated","locator":"Lemma 5.8"}
+{"subject":"Proposition 6.1","relation":"proves","object":"the classifying diagram NC of a small category C is a complete Segal space","modality":"stated","locator":"Proposition 6.1"}
+{"subject":"Theorem 6.2","relation":"proves","object":"Map(E,W) -> W_hoequiv is a weak equivalence for a Segal space W","modality":"stated","locator":"Theorem 6.2"}
+{"subject":"complete Segal space","relation":"equivalent-to","object":"the map W_0 -> Map(E,W) induced by E -> F(0) is a weak equivalence","modality":"stated","locator":"Proposition 6.4"}
+{"subject":"Corollary 6.5","relation":"depends-on","object":"complete Segal space","modality":"stated","locator":"Corollary 6.5"}
+{"subject":"ho W is a groupoid","relation":"equivalent-to","object":"W is Reedy weakly equivalent to a constant simplicial space","modality":"stated","locator":"Corollary 6.6"}
+{"subject":"Theorem 8.3","relation":"proves","object":"N^f(M,W) is a complete Segal space for a simplicial closed model category M","modality":"stated","locator":"Theorem 8.3"}
+{"subject":"Remark 8.4","relation":"conjectures","object":"generalisation of Theorem 8.3 to arbitrary closed model categories","modality":"stated","locator":"Remark 8.4"}
+{"subject":"Remark 8.5","relation":"depends-on","object":"Proposition 6.1","modality":"stated","locator":"Remark 8.5"}
+{"subject":"Proposition 8.7","relation":"equivalent-to","object":"classifying complex of haut X is weakly equivalent to sclass X","modality":"cited","locator":"Proposition 8.7"}
+{"subject":"Remark 8.8","relation":"equivalent-to","object":"space of paths from X to Y in class(M) is weakly equivalent to hoequiv(X,Y)","modality":"stated","locator":"Remark 8.8"}
+{"subject":"Theorem 8.11","relation":"proves","object":"the map f of (8.10) is a Reedy weak equivalence when M = S^J","modality":"stated","locator":"Theorem 8.11"}
+{"subject":"Corollary 8.12","relation":"depends-on","object":"Theorem 8.11","modality":"stated","locator":"Corollary 8.12"}
+{"subject":"Remark 8.13","relation":"conjectures","object":"Theorems 8.11 and 8.12 hold for reasonable model categories M","modality":"stated","locator":"Remark 8.13"}
+{"subject":"Theorem 8.14","relation":"proves","object":"the natural map class(S^I) -> holim class(S^[k])^f is a weak equivalence","modality":"cited","locator":"Theorem 8.14"}
+{"subject":"Lemma 8.15","relation":"proves","object":"the natural map Map(discnerve I, W) -> holim W_k is a weak equivalence for Reedy fibrant W","modality":"stated","locator":"Lemma 8.15"}
+{"subject":"Proposition 9.1","relation":"defines","object":"f-local model category structure on sS for an inclusion f: A -> B","modality":"stated","locator":"Proposition 9.1"}
+{"subject":"Proposition 9.2","relation":"depends-on","object":"hypothesis that W^{F(1)} is f-local for each f-local W","modality":"stated","locator":"Proposition 9.2"}
+{"subject":"Lemma 10.1","relation":"proves","object":"inclusions G(n) -> G -> F(n) are weak equivalences for a cover G of F(n)","modality":"stated","locator":"Lemma 10.1"}
+{"subject":"dot F(n) minus d^i F(n-1)","relation":"counterexample-to","object":"the claim that subobjects weakly equivalent to F(n) must be covers","modality":"stated","locator":"Remark 10.2"}
+{"subject":"Proposition 11.1","relation":"proves","object":"Map(E^(n), W) -> W_hoequiv is a weak equivalence for n >= 3 and a Segal space W","modality":"stated","locator":"Proposition 11.1"}
+{"subject":"Proposition 11.4","relation":"equivalent-to","object":"f ~ g in map(x,y) iff f_* and g_* are homotopic for all w","modality":"stated","locator":"Proposition 11.4"}
+{"subject":"Corollary 11.5","relation":"depends-on","object":"homotopy equivalence in the sense of (5.5)","modality":"stated","locator":"Corollary 11.5"}
+{"subject":"Proposition 13.4","relation":"equivalent-to","object":"categorical equivalence between complete Segal spaces is a simplicial homotopy equivalence, equivalent to a Reedy weak equivalence","modality":"stated","locator":"Proposition 13.4"}
+{"subject":"Proposition 13.6","relation":"proves","object":"a categorical equivalence between Segal spaces is a weak equivalence in the complete Segal space model structure","modality":"stated","locator":"Proposition 13.6"}
+{"subject":"Proposition 13.8","relation":"proves","object":"a categorical equivalence of Segal spaces is a Dwyer-Kan equivalence","modality":"stated","locator":"Proposition 13.8"}
+{"subject":"Lemma 14.3","relation":"proves","object":"a categorical equivalence U -> V of Segal spaces induces a Reedy weak equivalence of completions","modality":"stated","locator":"Lemma 14.3"}
+{"subject":"completion of a Segal space (Remark 14.1)","relation":"generalises","object":"the classifying space construction","modality":"stated","locator":"Remark 14.1"}
