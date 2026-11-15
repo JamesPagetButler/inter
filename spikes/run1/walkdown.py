@@ -38,6 +38,9 @@ EXISTING_OUT = os.path.join(RUN_DIR, "corpus_construct_output.json")
 MANIFEST = os.path.join(RUN_DIR, "text_cache_manifest.jsonl")
 WALKDOWN_LOG = os.path.join(RUN_DIR, "walkdown_log.jsonl")
 WALKDOWN_STATE = os.path.join(RUN_DIR, "walkdown_state.json")
+REPRODUCED_RANKED = os.path.join(RUN_DIR, "reproduced_ranked_candidates.json")
+REPRODUCED_SELECTED = os.path.join(RUN_DIR, "reproduced_selected_final.json")
+REPRODUCE_DIFF = os.path.join(RUN_DIR, "reproduce_diff.json")
 
 TARGET_PER_DOMAIN = 50
 BATCH = 150
@@ -107,11 +110,47 @@ def main():
     state = cc.build_corpus()
     new_selected = state["result"]["selected_final"]
 
+    # qbp-architecture seq 145 / qbp-oppenheimer seq 147: write the full
+    # reproduced ranked candidate list per domain (with scores), the
+    # reproduced selected_final, and the diff -- to disk, BEFORE the
+    # stop-on-mismatch check, so a mismatch can be decided from evidence
+    # without a re-fetch. Logging only, no rule change.
+    ranked_with_scores = {
+        dom: [
+            {
+                "openalex_id": wid,
+                "score": state["candidates"][wid]["score_by_domain"].get(dom),
+                "hops_min": state["candidates"][wid].get("hops_min"),
+                "is_seed": state["candidates"][wid].get("is_seed", False),
+            }
+            for wid in state["ranked_ids_by_domain"][dom]
+        ]
+        for dom in ("math", "physics")
+    }
+    with open(REPRODUCED_RANKED, "w") as f:
+        json.dump(ranked_with_scores, f, indent=2)
+    with open(REPRODUCED_SELECTED, "w") as f:
+        json.dump(new_selected, f, indent=2)
+
     old_tuples = [(c["openalex_id"], c["domain"]) for c in existing_selected]
     new_tuples = [(c["openalex_id"], c["domain"]) for c in new_selected]
-    if old_tuples != new_tuples:
+    match = old_tuples == new_tuples
+    diff = {
+        "match": match,
+        "old_count": len(old_tuples),
+        "new_count": len(new_tuples),
+        "old_only": [t for t in old_tuples if t not in set(new_tuples)],
+        "new_only": [t for t in new_tuples if t not in set(old_tuples)],
+        "first_order_divergence_index": next(
+            (i for i, (a, b) in enumerate(zip(old_tuples, new_tuples)) if a != b), None
+        ) if not match else None,
+    }
+    with open(REPRODUCE_DIFF, "w") as f:
+        json.dump(diff, f, indent=2)
+
+    if not match:
         log_wd({"kind": "REPRODUCE_MISMATCH", "old_count": len(old_tuples), "new_count": len(new_tuples)})
-        print(json.dumps({"reproduce": "MISMATCH", "old": old_tuples, "new": new_tuples}, indent=2))
+        print(json.dumps({"reproduce": "MISMATCH", "diff": diff}, indent=2))
         sys.exit(2)
     log_wd({"kind": "reproduce_ok", "n": len(old_tuples)})
     print(f"REPRODUCE: exact match, {len(old_tuples)} papers", file=sys.stderr, flush=True)
