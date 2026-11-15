@@ -1,0 +1,31 @@
+{"subject": "Theorem 2.1 (Fernández-Gray)", "relation": "cited", "object": "torsion-free G2-structure iff dφ=0 and d*φφ=dψ=0", "modality": "cited", "locator": "Theorem 2.1"}
+{"subject": "Remark 2.2", "relation": "depends-on", "object": "Theorem 2.1", "modality": "stated", "locator": "Remark 2.2"}
+{"subject": "Remark 2.5", "relation": "cited", "object": "eigenvalues of β↦*(φ∧β) in the other orientation convention", "modality": "cited", "locator": "Remark 2.5"}
+{"subject": "Remark 2.21", "relation": "equivalent-to", "object": "dψ=4τ1∧ψ+τ2∧φ", "modality": "cited", "locator": "Remark 2.21"}
+{"subject": "Definition 2.19", "relation": "defines", "object": "four torsion forms τ0, τ1, τ2, τ3", "modality": "stated", "locator": "Definition 2.19"}
+{"subject": "Remark 2.20", "relation": "defines", "object": "scalar, vector, Lie algebra and symmetric traceless torsion names for τ0–τ3", "modality": "stated", "locator": "Remark 2.20"}
+{"subject": "Remark 2.22", "relation": "defines", "object": "Lee form θ=-12τ1", "modality": "cited", "locator": "Remark 2.22"}
+{"subject": "Theorem 2.23", "relation": "proves", "object": "same one-form τ1 appears in both dφ and dψ expressions in (2.22)", "modality": "stated", "locator": "Theorem 2.23"}
+{"subject": "Lemma 2.24", "relation": "proves", "object": "∇φ lies in Ω^1_7 ⊗ Ω^3_7", "modality": "stated", "locator": "Lemma 2.24"}
+{"subject": "Remark 2.25", "relation": "cited", "object": "Fernández–Gray symmetry argument for ∇φ∈Ω^1_7⊗Ω^3_7", "modality": "cited", "locator": "Remark 2.25"}
+{"subject": "Definition 2.26", "relation": "defines", "object": "full torsion tensor T_lm via ∇_lφ_abc = T_lm g^mn ψ_nabc", "modality": "stated", "locator": "Definition 2.26"}
+{"subject": "Theorem 2.27", "relation": "proves", "object": "T_lm = (τ0/4)g_lm - (τ3)_lm + (τ1)_lm - (1/2)(τ2)_lm", "modality": "stated", "locator": "Theorem 2.27"}
+{"subject": "Corollary 2.28", "relation": "specialises", "object": "Theorem 2.1 (φ parallel iff closed and co-closed)", "modality": "stated", "locator": "Corollary 2.28"}
+{"subject": "Remark 2.29", "relation": "depends-on", "object": "Theorem 2.27 and Lemma A.13 giving ∇ψ formula (2.28)", "modality": "stated", "locator": "Remark 2.29"}
+{"subject": "Lemma 2.30", "relation": "proves", "object": "T_lm = (1/24)(∇_lφ_abc)ψ_mijk g^ia g^jb g^kc", "modality": "stated", "locator": "Lemma 2.30"}
+{"subject": "Proposition 2.31", "relation": "proves", "object": "expressions for τ0, τ3, τ1, τ2 in terms of S and C parts of T", "modality": "stated", "locator": "Proposition 2.31"}
+{"subject": "Theorem 2.32", "relation": "proves", "object": "transformation laws of torsion forms under φ̃ = f^3 φ", "modality": "stated", "locator": "Theorem 2.32"}
+{"subject": "Proposition 2.6", "relation": "defines", "object": "characterisations of Ω^2_7 and Ω^2_14 via eigen-equations", "modality": "stated", "locator": "Proposition 2.6"}
+{"subject": "Corollary 2.10", "relation": "proves", "object": "Ω^2_14 is a Lie algebra under matrix commutator", "modality": "stated", "locator": "Corollary 2.10"}
+{"subject": "Remark 2.11", "relation": "equivalent-to", "object": "Ω^2_14 ≅ g_2", "modality": "stated", "locator": "Remark 2.11"}
+{"subject": "Proposition 2.14", "relation": "proves", "object": "formula for *η for η = i(h) in terms of h", "modality": "stated", "locator": "Proposition 2.14"}
+{"subject": "Proposition 2.15", "relation": "proves", "object": "inner product identity i(f)∧*i(h) = g(i(f),i(h)) vol", "modality": "stated", "locator": "Proposition 2.15"}
+{"subject": "Corollary 2.16", "relation": "proves", "object": "i: S^2(T) → Ω^3 is injective with image Ω^3_1 ⊕ Ω^3_27", "modality": "stated", "locator": "Corollary 2.16"}
+{"subject": "Proposition 2.17", "relation": "proves", "object": "j: Ω^3 → S^2(T) is an isomorphism on Ω^3_1 ⊕ Ω^3_27 with explicit formula", "modality": "stated", "locator": "Proposition 2.17"}
+{"subject": "Theorem 3.1", "relation": "proves", "object": "evolution ∂_t B_ij = Tr_g(h)B_ij + h^l_i B_lj + h^l_j B_il", "modality": "stated", "locator": "Theorem 3.1"}
+{"subject": "Corollary 3.2", "relation": "proves", "object": "∂_t g_ij = 2h_ij", "modality": "stated", "locator": "Corollary 3.2"}
+{"subject": "Corollary 3.3", "relation": "proves", "object": "∂_t g^ij = -2h^ij and ∂_t vol = Tr_g(h) vol", "modality": "stated", "locator": "Corollary 3.3"}
+{"subject": "Proposition 3.4", "relation": "proves", "object": "evolution ∂_t Γ^k_ij = g^kl(∇_i h_jl + ∇_j h_il - ∇_l h_ij)", "modality": "stated", "locator": "Proposition 3.4"}
+{"subject": "Theorem 3.5", "relation": "proves", "object": "evolution of ψ_ijkl under the flow (3.1)", "modality": "stated", "locator": "Theorem 3.5"}
+{"subject": "Remark 3.6", "relation": "cited", "object": "∂_t ψ = (4/3)(*η1) + *η7 - *η27 under decomposition of ∂_t φ", "modality": "cited", "locator": "Remark 3.6"}
+{"subject": "Remark 3.6", "relation": "uses-technique", "object": "Hodge star identities (1.4) and Proposition 2.14 to express *η", "modality": "stated", "locator": "Remark 3.6"}
