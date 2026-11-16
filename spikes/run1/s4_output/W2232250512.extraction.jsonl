@@ -1,0 +1,28 @@
+{"subject": "Theorem 2.5", "relation": "proves", "object": "every twistor spinor with torsion phi in ker(P^s) satisfies nabla^{s,E}_X(phi ⊕ D^s(phi)) = 0, and conversely", "modality": "stated", "locator": "Theorem 2.5"}
+{"subject": "Lemma 2.4", "relation": "defines", "object": "covariant derivative nabla^{s,E} on E = Sigma ⊕ Sigma", "modality": "stated", "locator": "Lemma 2.4"}
+{"subject": "Corollary 2.6(a)", "relation": "proves", "object": "dim_C ker(P^s) <= 2^{[n/2]+1}", "modality": "stated", "locator": "Corollary 2.6(a)"}
+{"subject": "Corollary 2.6(b)", "relation": "proves", "object": "a TsT phi with phi and D^s(phi) vanishing at some point p is identically zero", "modality": "stated", "locator": "Corollary 2.6(b)"}
+{"subject": "Proposition 2.7", "relation": "proves", "object": "zeros of a nonzero TsT in ker(P^s) are isolated", "modality": "stated", "locator": "Proposition 2.7"}
+{"subject": "Lemma 2.2", "relation": "depends-on", "object": "Lemma 2.1", "modality": "stated", "locator": "Lemma 2.2"}
+{"subject": "Corollary 2.3", "relation": "cited", "object": "[17, Lem. 1.14]", "modality": "cited", "locator": "Corollary 2.3"}
+{"subject": "Theorem 3.1", "relation": "cited", "object": "[31, Cor. 3.2], [11, Thm. 1.1], [3, p. 306]", "modality": "cited", "locator": "Theorem 3.1"}
+{"subject": "Proposition 3.2", "relation": "proves", "object": "a nontrivial nabla^c-parallel spinor with T·phi_0 = gamma phi_0 is a real Killing spinor iff gamma^2 = 4n Scal^g / (9(n-1))", "modality": "stated", "locator": "Proposition 3.2"}
+{"subject": "Example 3.3", "relation": "specialises", "object": "Proposition 3.2 applied to strict nearly Kähler 6-manifolds, with gamma = ±2||T||", "modality": "stated", "locator": "Example 3.3"}
+{"subject": "Lemma 3.4", "relation": "proves", "object": "(X ∧ T)·phi_0 ≠ 0 for at least one vector field X when phi_0 satisfies (3.1) and n > 3", "modality": "stated", "locator": "Lemma 3.4"}
+{"subject": "Lemma 3.5", "relation": "proves", "object": "a real Killing spinor in K(M^n,g)_{3gamma/4n} is characteristic iff it lies in Sigma_gamma", "modality": "stated", "locator": "Lemma 3.5"}
+{"subject": "Theorem 3.6", "relation": "proves", "object": "coincidence of ker(nabla^c), ker(D^c), and the direct sum over gamma of Gamma(Sigma_gamma) ∩ K(M^n,g)_{3gamma/4n}", "modality": "stated", "locator": "Theorem 3.6"}
+{"subject": "Theorem 3.7", "relation": "proves", "object": "equivalence of (a) Sigma_gamma ∩ ker(P^s), (b) K^s(M,g)_zeta with zeta = 3(1-4s)gamma/4n, and (c) K(M,g)_kappa with kappa = 3gamma/4n, for nabla^c-parallel phi", "modality": "stated", "locator": "Theorem 3.7"}
+{"subject": "Corollary 3.8", "relation": "proves", "object": "(X ∧ T)·phi = ((n-3)gamma/n) X·phi for nabla^c-parallel phi satisfying conditions of Theorem 3.7", "modality": "stated", "locator": "Corollary 3.8"}
+{"subject": "Lemma 3.9", "relation": "proves", "object": "characterisation of characteristic KsT and TsT in terms of Sigma_gamma and D^s-eigenspinors", "modality": "stated", "locator": "Lemma 3.9"}
+{"subject": "Corollary 3.10", "relation": "proves", "object": "coincidence of ker(nabla^c) with direct sums over gamma of Gamma(Sigma_gamma) ∩ K(M,g) and related spinor classes", "modality": "stated", "locator": "Corollary 3.10"}
+{"subject": "Theorem 4.1", "relation": "proves", "object": "on 6-dimensional nearly Kähler manifolds, TsT, KsT, Riemannian Killing spinors and nabla^c-parallel spinors coincide", "modality": "stated", "locator": "Theorem 4.1"}
+{"subject": "Theorem 4.2", "relation": "proves", "object": "on nearly parallel G_2-manifolds, TsT, KsT, Riemannian Killing spinors and nabla^c-parallel spinors coincide", "modality": "stated", "locator": "Theorem 4.2"}
+{"subject": "Proposition 5.1", "relation": "proves", "object": "Ric^s(X)·phi = c(s,n,gamma) X·phi and Scal^s phi = c'(s,n,gamma) phi for nabla^c-parallel phi in Sigma_gamma ∩ ker(P^s)", "modality": "stated", "locator": "Proposition 5.1"}
+{"subject": "Proposition 5.1(a)", "relation": "proves", "object": "(M^n,g) is a compact Einstein manifold with constant positive scalar curvature 9(n-1)gamma^2/(4n)", "modality": "stated", "locator": "Proposition 5.1(a)"}
+{"subject": "Proposition 5.1(b)", "relation": "proves", "object": "(M^n,g,T) is a strict nabla^c-Einstein manifold with parallel torsion for n > 3", "modality": "stated", "locator": "Proposition 5.1(b)"}
+{"subject": "Proposition 5.1(c)", "relation": "proves", "object": "(M^n,g,T) is nabla^s-Einstein for any s in R \\ {0,1/4}", "modality": "stated", "locator": "Proposition 5.1(c)"}
+{"subject": "Example 5.2", "relation": "specialises", "object": "Proposition 5.1 applied to nearly Kähler 6-manifolds", "modality": "stated", "locator": "Example 5.2"}
+{"subject": "Example 5.3", "relation": "specialises", "object": "Proposition 5.1 applied to nearly parallel G_2-manifolds", "modality": "stated", "locator": "Example 5.3"}
+{"subject": "Lemma 5.4", "relation": "proves", "object": "T^ε(X,Y)·phi = -(X·Y - Y·X)·phi for all vector fields X,Y and spinors phi", "modality": "stated", "locator": "Lemma 5.4"}
+{"subject": "Theorem 5.5", "relation": "proves", "object": "one-to-one correspondence between ε-Killing spinors on (S^3, g_can, T^ε) and Killing spinors with torsion for nabla^{ε,s}, s ≠ 0,1/4, with Killing number (1-4s)/2", "modality": "stated", "locator": "Theorem 5.5"}
+{"subject": "Theorem 5.6", "relation": "proves", "object": "for n=3, M^3 is isometric to S^3; for n=6, M^6 is isometric to a strict nearly Kähler manifold; for n=7, M^7 is isometric to a nearly parallel G_2-manifold", "modality": "stated", "locator": "Theorem 5.6"}
