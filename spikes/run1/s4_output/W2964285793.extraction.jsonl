@@ -1,0 +1,20 @@
+{"subject": "Rarita–Schwinger operator", "relation": "uses-technique", "object": "Dirac operator", "modality": "stated", "locator": "Introduction; Remark 2"}
+{"subject": "generalized (higher spin) Dirac operators D_λ", "relation": "defines", "object": "D_λ:Γ(V_λ)→Γ(V_λ)", "modality": "stated", "locator": "Definition 1"}
+{"subject": "twisted Dirac operator D^T_{λ'}", "relation": "depends-on", "object": "S_{1/2}⊗V_{λ'} decomposition V_λ⊕W", "modality": "stated", "locator": "Definition 1, Eq. (9)"}
+{"subject": "Theorem 1 block form of D_T", "relation": "cited", "object": "Wa", "modality": "cited", "locator": "Theorem 1"}
+{"subject": "eigenvalues of Dirac operator on sphere S_n", "relation": "proves", "object": "μ_l=±(n/2+l), l=0,1,2,…", "modality": "cited", "locator": "Lemma 1, Eq. (36)"}
+{"subject": "eigenvalues of higher spin Dirac operators on S_n", "relation": "proves", "object": "μ^1_l and μ^2_l spectra with multiplicities", "modality": "stated", "locator": "Theorem 2, Eqs. (38)–(41)"}
+{"subject": "Rarita–Schwinger equation solutions", "relation": "equivalent-to", "object": "μ(ψ)=0 and D_Tψ=ι(φ) for some spinor φ", "modality": "stated", "locator": "Remark 2, Eq. (52)"}
+{"subject": "k-homogeneous solutions of Rarita–Schwinger equation", "relation": "proves", "object": "unique decomposition ψ=ψ_1+ψ_2+ψ_3 with pieces in M^1, M^2, M^3", "modality": "stated", "locator": "Theorem 3, Eqs. (60)–(63)"}
+{"subject": "Lemma 2", "relation": "proves", "object": "D^3(L(ψ))=0 for ψ∈P_k(1)", "modality": "stated", "locator": "Lemma 2, Eq. (56)"}
+{"subject": "Lemma 3", "relation": "proves", "object": "Ξ(ψ_0) is a k-homogeneous solution of the Rarita–Schwinger equation", "modality": "stated", "locator": "Lemma 3"}
+{"subject": "unique decomposition of polynomial solutions", "relation": "depends-on", "object": "restriction to the unit sphere determines solutions", "modality": "cited", "locator": "Remark 3"}
+{"subject": "Atiyah–Singer index theorem for twisted Dirac operator", "relation": "proves", "object": "ind D_W=(2πi)^{-n}∫_M Â(M)ch(W)", "modality": "cited", "locator": "Theorem 4, Eq. (71)"}
+{"subject": "index of classical Dirac operator D^+_{1/2}", "relation": "depends-on", "object": "Atiyah–Singer index theorem", "modality": "cited", "locator": "Remark 6, Eq. (75)"}
+{"subject": "index of twisted Dirac operator D^+_T on T^*_C⊗S^+", "relation": "proves", "object": "Ind D^+_T=∫_M Ch(T^*_C(M))Â(M)", "modality": "stated", "locator": "Corollary 1, Eqs. (79)–(81)"}
+{"subject": "index of higher spin Dirac operator D_j", "relation": "proves", "object": "ind D_j=(2πi)^{-n}∫_M(Ch(Λ^{j-1})−Ch(Λ^j))Â(M)", "modality": "stated", "locator": "Theorem 5, Eq. (99)"}
+{"subject": "index of D_{3/2}", "relation": "proves", "object": "Ind D_{3/2}=−19·Ind D_{1/2} in dimension 4", "modality": "stated", "locator": "Eqs. (85)–(89)"}
+{"subject": "index of D_{3/2} in dimension 8", "relation": "proves", "object": "Ind D_{3/2}=249·Ind D_{1/2}−(21/144)(2πi)^{-4}∫_M p_1(M)^2", "modality": "stated", "locator": "Eqs. (90)–(93)"}
+{"subject": "Ch(S^±)·Ch(Λ^j T^*_C(M)) decomposition", "relation": "uses-technique", "object": "representation-theoretic decomposition of S^±⊗Λ^jT^*_C", "modality": "stated", "locator": "Eqs. (94)–(97)"}
+{"subject": "Ch(V_j^+)−Ch(V_j^-)", "relation": "depends-on", "object": "Ch(Λ^j T^*_C)+Ch(Λ^{j-1}T^*_C) times Ch(S^+)−Ch(S^-)", "modality": "stated", "locator": "Eq. (98)"}
+{"subject": "Chern character and Â-genus expansions", "relation": "uses-technique", "object": "characteristic class expansions with Pontryagin classes", "modality": "cited", "locator": "Eqs. (69)–(73)"}
