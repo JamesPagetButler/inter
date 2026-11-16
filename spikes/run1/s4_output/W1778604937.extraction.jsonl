@@ -1,0 +1,23 @@
+{"subject": "Theorem 0.1", "relation": "proves", "object": "the natural map (0.9) g: δ*_k N(C)^cart_{E1,E2,E3,...,Ek} → δ*_{k-1} N(C)^cart_{E0,E3,...,Ek} is a categorical equivalence", "modality": "stated", "locator": "Theorem 0.1 (Special case of Theorem 5.4)"}
+{"subject": "Corollary 0.2", "relation": "proves", "object": "the natural map g: δ*_2 N(C)^cart_{E1,E2} → N(C) is a categorical equivalence", "modality": "stated", "locator": "Corollary 0.2"}
+{"subject": "Corollary 0.2", "relation": "specialises", "object": "Theorem 0.1", "modality": "stated", "locator": "Corollary 0.2 (taking k=2 and E0=Ar(C) in Theorem 0.1)"}
+{"subject": "Corollary 0.3", "relation": "proves", "object": "the natural map δ*_2 N(Sch')^cart_{P,J} → N(Sch') is a categorical equivalence", "modality": "stated", "locator": "Corollary 0.3"}
+{"subject": "Corollary 0.3", "relation": "specialises", "object": "Corollary 0.2", "modality": "stated", "locator": "Corollary 0.3 proof (follows immediately from Corollary 0.2 applied to C=Sch', E1=P, E2=J)"}
+{"subject": "Corollary 0.4", "relation": "proves", "object": "the natural map δ*_2 N(Sch'')^cart_{P,I} → N(Sch'') is a categorical equivalence", "modality": "stated", "locator": "Corollary 0.4"}
+{"subject": "Corollary 0.4", "relation": "uses-technique", "object": "Theorem 0.1 applied to the upper and left arrows of a commutative diagram, together with Corollary 0.2 for the right arrow", "modality": "stated", "locator": "Proof of Corollary 0.4"}
+{"subject": "Corollary 0.2", "relation": "depends-on", "object": "admissibility of E1 and E2 (Definition 3.18)", "modality": "stated", "locator": "Corollary 0.2 and Definition 3.18"}
+{"subject": "Theorem 0.1", "relation": "depends-on", "object": "admissibility of E1 and E2 (Definition 3.18)", "modality": "stated", "locator": "Theorem 0.1, condition (1)"}
+{"subject": "Definition 3.18", "relation": "defines", "object": "admissible subset E of Ar(C)", "modality": "stated", "locator": "Definition 3.18"}
+{"subject": "δ*_k N(C)^cart_{E1,...,Ek}", "relation": "defines", "object": "simplicial set whose n-simplices are functors [n]^k → C with arrows in direction i lying in E_i and squares in direction (i,j) Cartesian", "modality": "stated", "locator": "Introduction, General framework"}
+{"subject": "Definition 1.7", "relation": "defines", "object": "categorical equivalence of simplicial sets", "modality": "stated", "locator": "Definition 1.7"}
+{"subject": "Deligne's gluing theory", "relation": "generalises", "object": "gluing of pseudofunctors to (2,1)-category Cat_1 used in the construction of the extraordinary pushforward", "modality": "cited", "locator": "Introduction, Extraordinary pushforward and Deligne's gluing"}
+{"subject": "Theorem 0.1 (Special case of Theorem 5.4)", "relation": "generalises", "object": "Deligne's gluing theory", "modality": "stated", "locator": "Abstract"}
+{"subject": "g'' (remembering the diagonal map)", "relation": "generalises", "object": "Deligne's result, Proposition 3.3.2 of [6]", "modality": "stated", "locator": "Introduction, Proof strategy for Corollary 0.2"}
+{"subject": "Corollary 0.4", "relation": "generalises", "object": "Corollary 0.2", "modality": "stated", "locator": "Corollary 0.4 (the subset I of local isomorphisms replaces J, where Corollary 0.2 cannot be applied directly)"}
+{"subject": "δ*_{2,{2}} C^cart_{E1,E2}", "relation": "equivalent-to", "object": "the ∞-category of correspondences introduced in [9]", "modality": "cited", "locator": "Introduction, Example 4.30"}
+{"subject": "Lemma 1.9", "relation": "equivalent-to", "object": "categorical equivalence of simplicial sets (Definition 1.7)", "modality": "stated", "locator": "Lemma 1.9"}
+{"subject": "Remark 1.8", "relation": "equivalent-to", "object": "categorical equivalence of ∞-categories is equivalent to existence of a functor g with natural equivalences g∘f ≃ id and f∘g ≃ id", "modality": "stated", "locator": "Remark 1.8"}
+{"subject": "Lemma 2.4", "relation": "proves", "object": "Γ_Φ(R) is a connected component of Γ(R)", "modality": "stated", "locator": "Lemma 2.4(1)"}
+{"subject": "Lemma 2.4", "relation": "proves", "object": "Γ_Φ(R) = Γ_Φ'(R) for homotopic morphisms Φ, Φ': N → R", "modality": "stated", "locator": "Lemma 2.4(2)"}
+{"subject": "Lemma 2.5", "relation": "cited", "object": "[12] Lemma 3.1.3", "modality": "cited", "locator": "Lemma 2.5"}
+{"subject": "Corollary 0.4", "relation": "proves", "object": "Corollary 0.4 still holds with I replaced by the subset E of étale morphisms", "modality": "stated", "locator": "Corollary 0.4 (remark following statement)"}
