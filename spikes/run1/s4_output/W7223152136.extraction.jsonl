@@ -1,0 +1,27 @@
+{"subject": "rational analytic prismatization X^Δ", "relation": "defines", "object": "realization of the δ-stack X_Δ", "modality": "stated", "locator": "Definition 1.6(4)"}
+{"subject": "rational perfect analytic prismatization X^{Div^1 tilde}", "relation": "defines", "object": "lim over φ of X^Δ", "modality": "stated", "locator": "Definition 1.6(5)"}
+{"subject": "p-adic twistor stack X^{Div^1}", "relation": "defines", "object": "X^{Div^1 tilde} / φ^Z", "modality": "stated", "locator": "Definition 1.6(6)"}
+{"subject": "analytic Hodge–Tate stack X^HT", "relation": "defines", "object": "X^Δ ×_{A^1/G_m} BG_m", "modality": "stated", "locator": "Definition 1.8"}
+{"subject": "perfectoidization functor (-)^◇", "relation": "uses-technique", "object": "left and right adjoints exist", "modality": "stated", "locator": "Remark 1.1"}
+{"subject": "Theorem 1.15 (equivalence on perfect complexes)", "relation": "proves", "object": "α_X^* : Perf(X^{Div^1}) ≃ Perf(FF_{X^◇}) for smooth partially proper rigid X over GSpec(Q_p)", "modality": "stated", "locator": "Theorem 1.15"}
+{"subject": "Theorem 1.15", "relation": "generalises", "object": "statement for the Hodge–Tate stack X^HT and for the completion of X^◇", "modality": "stated", "locator": "Theorem 1.15"}
+{"subject": "Theorem 1.19 (comparison of Y/G^cont and Y^la/G^la)", "relation": "proves", "object": "fully faithful pullback Mod_{h_*O} D(|Y|_Betti/G^la) → D(Y/G^cont)", "modality": "stated", "locator": "Theorem 1.19(1)"}
+{"subject": "Theorem 1.19(3)", "relation": "proves", "object": "equivalence Mod_{O^la}(D(|Y|_Betti/G^la))^dual ≃ Perf(Y/G^cont) under locally strong decompletion", "modality": "stated", "locator": "Theorem 1.19(3)"}
+{"subject": "Theorem 1.19(2)", "relation": "proves", "object": "isomorphism Mod_{R^la}(D(BG^la)) ≃ Mod_{O^la}(D(|Y|_Betti/G^la)) for classically decompleted affinoid Y", "modality": "stated", "locator": "Theorem 1.19(2)"}
+{"subject": "Proposition 1.12(1)", "relation": "proves", "object": "β_X is an isomorphism after base change to Div^1 minus Q_p^HT", "modality": "stated", "locator": "Proposition 1.12(1)"}
+{"subject": "Proposition 1.12(2)", "relation": "proves", "object": "π_X realises X^HT as a gerbe over X × Q_p^HT banded by T^†_{X/Q_p}{1} for smooth partially proper X", "modality": "stated", "locator": "Proposition 1.12(2)"}
+{"subject": "Proposition 1.4", "relation": "proves", "object": "existence of an initial object (T^♭, X_T) in Spc^δ_{T/-} for nilperfectoid T", "modality": "stated", "locator": "Proposition 1.4"}
+{"subject": "Remark 1.9 cyclotomic prism X_cyc", "relation": "defines", "object": "morphism X_cyc → Q_p^Δ factoring through Div~^1", "modality": "stated", "locator": "Remark 1.9"}
+{"subject": "Remark 1.11 isomorphism", "relation": "proves", "object": "Div~^1 ≅ X_cyc / Z_p^{×,la} for X = GSpec(Q_p)", "modality": "stated", "locator": "Remark 1.11"}
+{"subject": "Remark 1.11 isomorphism", "relation": "proves", "object": "Div^1 ≅ X_cyc / Q_p^{×,la}", "modality": "stated", "locator": "Remark 1.11"}
+{"subject": "Remark 1.11", "relation": "proves", "object": "Q_p^HT ≅ GSpec(Q_p(μ_{p^∞})) / Z_p^{×,la}", "modality": "stated", "locator": "Remark 1.11"}
+{"subject": "Remark 1.5 Witt vector description of X_T", "relation": "proves", "object": "X_T is the Gelfand stack of maps W'(A^{≤1}) → B^{≤1} factoring through D^×_FF", "modality": "stated", "locator": "Remark 1.5"}
+{"subject": "Remark 1.5 with Q_p coefficients", "relation": "uses-technique", "object": "isomorphism W(Nil^†(A)) ≅ ∏_{n∈N} Nil^†(A)", "modality": "stated", "locator": "Remark 1.5"}
+{"subject": "Remark 1.2 Frobenius-quotient of X^Δ over Hodge–Tate locus", "relation": "depends-on", "object": "Hyodo–Kato stack of X on the locus (1,∞)", "modality": "stated", "locator": "Section 1.2 observations"}
+{"subject": "Theorem 1.15 for Hodge–Tate case", "relation": "depends-on", "object": "vanishing of higher locally analytic vectors (Sen theory axioms)", "modality": "stated", "locator": "Section 1.2, discussion after Theorem 1.19"}
+{"subject": "Remark 1.18 decompletion for (φ,Γ)-modules over Robba ring", "relation": "specialises", "object": "Theorem 1.15 for X = GSpec(K), K finite over Q_p", "modality": "stated", "locator": "Remark 1.18"}
+{"subject": "Remark 1.16", "relation": "equivalent-to", "object": "Theorem 1.15 as a non-abelian p-adic Hodge theory statement", "modality": "stated", "locator": "Remark 1.16"}
+{"subject": "Remark 1.17", "relation": "depends-on", "object": "relative Hodge–Tate stack gerbe for overconvergent Breuil–Kisin twisted tangent bundle, giving canonical Higgs field on v-vector bundles", "modality": "stated", "locator": "Remark 1.17"}
+{"subject": "Remark 1.14 archimedean twistor stack X^tw", "relation": "generalises", "object": "archimedean analogue developed in [Sch24]", "modality": "cited", "locator": "Remark 1.14"}
+{"subject": "Remark 1.1 perfectoidization and analytic de Rham functor", "relation": "depends-on", "object": "analytic de Rham stack functor studied in [RC24] and [ABLB+25]", "modality": "cited", "locator": "Remark 1.1"}
+{"subject": "Remark 1.13 Hodge–Tate stack and overconvergent neighbourhood", "relation": "depends-on", "object": "Faltings extension of X", "modality": "stated", "locator": "Remark 1.13"}
