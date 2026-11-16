@@ -1,0 +1,30 @@
+{"subject": "Theorem 4.5.1", "relation": "proves", "object": "canonical equivalence [C,Ω] ≃ LFib_C, natural in C (internal Grothendieck construction)", "modality": "stated", "locator": "Theorem 4.5.1"}
+{"subject": "Theorem 4.7.8", "relation": "proves", "object": "commutative diagram relating ev: C^op × [C^op,Ω] → Ω, h × id, and Map_{[C^op,Ω]}(-,-) (internal Yoneda lemma)", "modality": "stated", "locator": "Theorem 4.7.8"}
+{"subject": "Theorem 4.7.8", "relation": "proves", "object": "the Yoneda embedding h: C → [C^op,Ω] is fully faithful", "modality": "stated", "locator": "Theorem 4.7.8"}
+{"subject": "internal Yoneda lemma", "relation": "uses-technique", "object": "internal Grothendieck construction", "modality": "stated", "locator": "Section 1"}
+{"subject": "Yoneda embedding h", "relation": "defines", "object": "transpose of the mapping bifunctor Map_C(-,-): C^op × C → Ω", "modality": "stated", "locator": "Section 1"}
+{"subject": "LFib_C", "relation": "defines", "object": "large B-category whose objects are left fibrations over C", "modality": "stated", "locator": "Section 1"}
+{"subject": "Cat(B)", "relation": "equivalent-to", "object": "Shv_{Cat_∞}(B)", "modality": "stated", "locator": "Section 1"}
+{"subject": "internal universe Ω", "relation": "defines", "object": "large B-category given by the sheaf B_{/-} sending A to B_{/A}", "modality": "stated", "locator": "Section 1"}
+{"subject": "Cat(B)", "relation": "defines", "object": "full subcategory of simplicial objects in B satisfying the Segal condition and univalence", "modality": "cited", "locator": "Section 1"}
+{"subject": "functor B-category [C,D]", "relation": "depends-on", "object": "cartesian closedness of Cat(B)", "modality": "stated", "locator": "Section 1"}
+{"subject": "parametrised ∞-categories", "relation": "specialises", "object": "categories in an arbitrary ∞-topos", "modality": "stated", "locator": "Section 1"}
+{"subject": "parametrised ∞-categories", "relation": "equivalent-to", "object": "categories in presheaf ∞-topoi", "modality": "stated", "locator": "Section 1"}
+{"subject": "Definition 2.5.1", "relation": "defines", "object": "factorisation system (L,R) on an ∞-category", "modality": "stated", "locator": "Definition 2.5.1"}
+{"subject": "Proposition 2.5.2", "relation": "proves", "object": "L ∩ R is precisely the collection of equivalences", "modality": "stated", "locator": "Proposition 2.5.2(1)"}
+{"subject": "Proposition 2.5.2", "relation": "proves", "object": "if g ∈ L then fg ∈ L iff f ∈ L; dually for R", "modality": "stated", "locator": "Proposition 2.5.2(2)"}
+{"subject": "Proposition 2.5.2", "relation": "proves", "object": "R is stable under pullbacks and L under pushouts", "modality": "stated", "locator": "Proposition 2.5.2(3)"}
+{"subject": "Proposition 2.5.2", "relation": "proves", "object": "L and R are stable under retracts", "modality": "stated", "locator": "Proposition 2.5.2(4)"}
+{"subject": "Proposition 2.5.2", "relation": "proves", "object": "R is stable under limits in Fun(Δ^1,C), L under colimits", "modality": "stated", "locator": "Proposition 2.5.2(5)"}
+{"subject": "Proposition 2.5.4", "relation": "proves", "object": "for presentable C and small set S there is a factorisation system with R = S^⊥, L = ^⊥R", "modality": "stated", "locator": "Proposition 2.5.4"}
+{"subject": "Proposition 2.5.6", "relation": "proves", "object": "L is the smallest saturated class of maps containing S", "modality": "stated", "locator": "Proposition 2.5.6"}
+{"subject": "monomorphism", "relation": "defines", "object": "map internally right orthogonal to the codiagonal 1 ⊔ 1 → 1", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "monomorphism", "relation": "equivalent-to", "object": "map whose diagonal is an equivalence", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "strong epimorphism", "relation": "defines", "object": "map internally left orthogonal to every monomorphism", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "strong epimorphism", "relation": "equivalent-to", "object": "cover (effective epimorphism) in an ∞-topos", "modality": "stated", "locator": "Example 2.5.9"}
+{"subject": "Definition 3.2.4", "relation": "defines", "object": "B-category: object of B_Δ internally local w.r.t. I^2 ↪ Δ^2 (Segal) and E^1 → Δ^0 (univalence)", "modality": "stated", "locator": "Definition 3.2.4"}
+{"subject": "Proposition 3.2.7", "relation": "proves", "object": "C is a B-category iff the Segal maps C_n → C_1 ×_{C_0} ... ×_{C_0} C_1 (n ≥ 2) and C_0 → (C_0 × C_0) ×_{C_1 × C_1} C_3 are equivalences", "modality": "stated", "locator": "Proposition 3.2.7"}
+{"subject": "Proposition 3.2.9", "relation": "proves", "object": "Cat(B) is an accessible localisation of B_Δ, hence presentable", "modality": "stated", "locator": "Proposition 3.2.9"}
+{"subject": "Proposition 3.2.11", "relation": "proves", "object": "Cat(B) ↪ B_Δ is an exponential ideal, hence Cat(B) is cartesian closed", "modality": "stated", "locator": "Proposition 3.2.11"}
+{"subject": "B-category", "relation": "generalises", "object": "complete Segal space (S-category)", "modality": "stated", "locator": "Example 3.2.15"}
+{"subject": "∞-category of complete Segal spaces", "relation": "equivalent-to", "object": "Cat_∞", "modality": "cited", "locator": "Example 3.2.15"}

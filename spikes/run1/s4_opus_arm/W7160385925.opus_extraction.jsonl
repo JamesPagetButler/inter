@@ -1,0 +1,28 @@
+{"subject": "condensed set", "relation": "defines", "object": "sheaf on the pro-étale site of the point, i.e. a functor X: ProFin^op -> Sets with X(empty)=*, X(S_1 ⊔ S_2) -> X(S_1) x X(S_2) bijective, and the sheaf condition for surjections S' -> S", "modality": "stated", "locator": "Definition 0.1.1"}
+{"subject": "functor T ↦ underline{T} from topological spaces to condensed sets", "relation": "proves", "object": "has a left adjoint sending X to its underlying set X(*) with the quotient topology from the disjoint union of S over a in X(S)", "modality": "stated", "locator": "Proposition 0.1.2(1)"}
+{"subject": "functor T ↦ underline{T} restricted to compactly generated spaces", "relation": "proves", "object": "fully faithful", "modality": "stated", "locator": "Proposition 0.1.2(2)"}
+{"subject": "compact Hausdorff spaces", "relation": "equivalent-to", "object": "quasicompact quasiseparated condensed sets", "modality": "stated", "locator": "Proposition 0.1.2(3)"}
+{"subject": "functor T ↦ underline{T} on compactly generated weak Hausdorff spaces", "relation": "proves", "object": "fully faithful functor into quasiseparated condensed sets", "modality": "stated", "locator": "Proposition 0.1.2(4)"}
+{"subject": "category of quasiseparated condensed sets", "relation": "equivalent-to", "object": "ind-compact Hausdorff spaces with closed-immersion transition maps", "modality": "stated", "locator": "Proposition 0.1.2(4)"}
+{"subject": "Lemma 0.1.3", "relation": "proves", "object": "for sequences of compact Hausdorff spaces with closed immersions, the natural map from union of X_n x Y_n to (union X_n) x (union Y_n) is a homeomorphism", "modality": "stated", "locator": "Lemma 0.1.3"}
+{"subject": "condensed abelian groups", "relation": "proves", "object": "form an abelian category", "modality": "stated", "locator": "Section 0.1"}
+{"subject": "short exact sequence 0 -> underline{(R, discrete)} -> underline{(R, natural)} -> Q -> 0 of condensed abelian groups", "relation": "proves", "object": "exactness of the sequence induced by (R, discrete) -> (R, natural topology)", "modality": "stated", "locator": "Section 0.1"}
+{"subject": "short exact sequence 0 -> underline{(R, discrete)} -> underline{(R, natural)} -> Q -> 0 of condensed abelian groups", "relation": "depends-on", "object": "H^1(S, M) = 0 for profinite S and discrete abelian groups M", "modality": "stated", "locator": "Section 0.1"}
+{"subject": "Z[S] for a profinite set S", "relation": "proves", "object": "natural isomorphism Z[S] ≅ union over n of lim_i Z[S_i]_{<=n}, a subobject of lim_i Z[S_i]", "modality": "stated", "locator": "Proposition 0.2.1"}
+{"subject": "Z[S]", "relation": "proves", "object": "countable union of profinite sets Z[S]_{<=n}", "modality": "stated", "locator": "Proposition 0.2.1"}
+{"subject": "Z[S]", "relation": "proves", "object": "quasiseparated and comes from a compactly generated weak Hausdorff space Z[S]_top", "modality": "stated", "locator": "Remark 0.2.2"}
+{"subject": "Remark 0.2.2", "relation": "depends-on", "object": "Proposition 0.1.2(4)", "modality": "stated", "locator": "Remark 0.2.2"}
+{"subject": "Remark 0.2.2", "relation": "depends-on", "object": "Lemma 0.1.3", "modality": "stated", "locator": "Remark 0.2.2"}
+{"subject": "Z[S]", "relation": "proves", "object": "comes from the free topological abelian group on S (addition on Z[S]_top is continuous)", "modality": "stated", "locator": "Remark 0.2.2"}
+{"subject": "Z[S]^square", "relation": "defines", "object": "lim_i Z[S_i]", "modality": "stated", "locator": "Definition 0.2.4"}
+{"subject": "solid condensed abelian group", "relation": "defines", "object": "condensed abelian group M such that every map f: S -> M from a profinite set extends uniquely to a map Z[S]^square -> M", "modality": "stated", "locator": "Definition 0.2.4"}
+{"subject": "Solid (category of solid abelian groups)", "relation": "proves", "object": "closed under all limits, colimits and extensions in Cond(Ab)", "modality": "stated", "locator": "Theorem 0.2.5(1)"}
+{"subject": "inclusion Solid -> Cond(Ab)", "relation": "proves", "object": "admits a left adjoint M ↦ M^square (solidification) commuting with all colimits and taking Z[S] to Z[S]^square", "modality": "stated", "locator": "Theorem 0.2.5(2)"}
+{"subject": "Solid", "relation": "proves", "object": "admits compact projective generators, exactly the condensed abelian groups of the form prod_I Z", "modality": "stated", "locator": "Theorem 0.2.5(3)"}
+{"subject": "Solid", "relation": "proves", "object": "unique symmetric monoidal tensor product ⊗^square making M ↦ M^square symmetric monoidal", "modality": "stated", "locator": "Theorem 0.2.5(4)"}
+{"subject": "discrete F_p-module F_p", "relation": "proves", "object": "solid", "modality": "stated", "locator": "Proposition 0.2.6"}
+{"subject": "profinite F_p-vector space prod_I F_p", "relation": "proves", "object": "solid for any set I", "modality": "stated", "locator": "Corollary 0.2.7"}
+{"subject": "Corollary 0.2.7", "relation": "generalises", "object": "Proposition 0.2.6", "modality": "stated", "locator": "Corollary 0.2.7"}
+{"subject": "class of profinite F_p-vector spaces", "relation": "proves", "object": "abelian subcategory of Cond(F_p) stable under all limits, cokernels and extensions", "modality": "stated", "locator": "Proposition 0.2.8"}
+{"subject": "solid condensed F_p-module", "relation": "equivalent-to", "object": "filtered colimit of profinite F_p-vector spaces", "modality": "stated", "locator": "Theorem 0.2.9"}
+{"subject": "solid condensed F_p-modules", "relation": "proves", "object": "form an abelian category stable under all limits and colimits", "modality": "stated", "locator": "Theorem 0.2.9"}

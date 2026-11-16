@@ -1,0 +1,32 @@
+{"subject": "derived Tate adic spaces", "relation": "uses-technique", "object": "theory of analytic stacks of Clausen and Scholze", "modality": "stated", "locator": "Abstract"}
+{"subject": "analytic de Rham stack in rigid geometry", "relation": "depends-on", "object": "derived Tate adic spaces", "modality": "stated", "locator": "Abstract"}
+{"subject": "analytic D-modules", "relation": "generalises", "object": "wideparen D-modules of Ardakov and Wadsley", "modality": "stated", "locator": "Abstract"}
+{"subject": "six-functor formalism and Poincaré duality for analytic D-modules", "relation": "generalises", "object": "previous work of Bode", "modality": "stated", "locator": "Abstract"}
+{"subject": "Simpson", "relation": "defines", "object": "stack X_dR^alg with X_dR^alg(R)=X(R^red) for a smooth variety X over K", "modality": "cited", "locator": "Section 1"}
+{"subject": "quasi-coherent sheaves on X_dR^alg", "relation": "equivalent-to", "object": "D-modules over X", "modality": "cited", "locator": "Section 1"}
+{"subject": "Gaitsgory and Rozenblyum", "relation": "uses-technique", "object": "de Rham stack", "modality": "cited", "locator": "Section 1"}
+{"subject": "wideparen D_X", "relation": "proves", "object": "wideparen D_X is a Fréchet–Stein algebra", "modality": "cited", "locator": "Section 1"}
+{"subject": "Bode", "relation": "proves", "object": "six-functor formalism for wideparen D_X-modules", "modality": "cited", "locator": "Section 1"}
+{"subject": "topological rings and modules in this work", "relation": "uses-technique", "object": "condensed mathematics of Clausen and Scholze", "modality": "stated", "locator": "Section 1"}
+{"subject": "six-functor formalism for analytic stacks with descent", "relation": "uses-technique", "object": "abstract six-functor formalisms and D-stacks of Mann and Scholze", "modality": "stated", "locator": "Section 1"}
+{"subject": "Theorem 1.0.1", "relation": "proves", "object": "AffRing^b_R is a full subcategory of AnRing_R that contains the 1-category of Tate Huber pairs over R fully faithfully and is stable under small colimits in AnRing_R", "modality": "stated", "locator": "Theorem 1.0.1"}
+{"subject": "AffRing^b_R", "relation": "defines", "object": "category of bounded affinoid rings", "modality": "stated", "locator": "Theorem 1.0.1"}
+{"subject": "Theorem 1.0.3", "relation": "proves", "object": "a morphism of solid finite presentation of derived Tate adic spaces is formally smooth (resp. étale) iff it is solid smooth (resp. étale)", "modality": "stated", "locator": "Theorem 1.0.3"}
+{"subject": "formally smooth (resp. étale) morphism of solid finite presentation", "relation": "equivalent-to", "object": "solid smooth (resp. étale) morphism", "modality": "stated", "locator": "Theorem 1.0.3"}
+{"subject": "Theorem 1.0.4", "relation": "proves", "object": "a morphism locally of solid finite presentation admits !-functors in the six-functor formalism of solid quasi-coherent sheaves", "modality": "stated", "locator": "Theorem 1.0.4"}
+{"subject": "Theorem 1.0.4", "relation": "proves", "object": "solid smooth (resp. étale) morphisms are cohomologically smooth (resp. étale) for the six-functor formalism", "modality": "stated", "locator": "Theorem 1.0.4"}
+{"subject": "Theorem 1.0.4", "relation": "proves", "object": "natural identification f^!1_Y = Omega^d_{X/Y}[d]", "modality": "stated", "locator": "Theorem 1.0.4"}
+{"subject": "Theorem 1.0.7", "relation": "proves", "object": "f: V(F)^an -> X is cohomologically smooth with f^!1_X = f^* wedge^d F^vee[d] and f_!f^!1_X = Sym^dagger_X(F)", "modality": "stated", "locator": "Theorem 1.0.7"}
+{"subject": "Theorem 1.0.8 (analytic Cartier duality)", "relation": "proves", "object": "a bilinear morphism F: V(F)^dagger x (X/V(F^vee)^an) -> BG_m such that F^*(O(1)) is an isomorphism V(F)^dagger -> X/V(F^vee)^an in the category of Fourier–Mukai kernels for solid quasi-coherent sheaves", "modality": "stated", "locator": "Theorem 1.0.8"}
+{"subject": "V(F)^dagger", "relation": "equivalent-to", "object": "X/V(F^vee)^an in the category of Fourier–Mukai kernels for the six-functor formalism of solid quasi-coherent sheaves", "modality": "stated", "locator": "Theorem 1.0.8"}
+{"subject": "Corollary 1.0.9", "relation": "proves", "object": "natural equivalences of stable infinity-categories given by Fourier–Mukai transforms FM_1 and FM_2", "modality": "stated", "locator": "Corollary 1.0.9"}
+{"subject": "Mod_square(V(F)^dagger)", "relation": "equivalent-to", "object": "Mod_square(X/V(F^vee)^an)", "modality": "stated", "locator": "Corollary 1.0.9"}
+{"subject": "Theorem 1.0.12 (Kashiwara equivalence)", "relation": "proves", "object": "equivalence of analytic de Rham stacks X_dR = Y^{dagger/X}_dR for a Zariski closed immersion X -> Y of derived Tate adic spaces", "modality": "stated", "locator": "Theorem 1.0.12, item 4"}
+{"subject": "X_dR", "relation": "equivalent-to", "object": "Y^{dagger/X}_dR", "modality": "stated", "locator": "Theorem 1.0.12, item 4"}
+{"subject": "analytic D-modules on Y supported on X", "relation": "equivalent-to", "object": "analytic D-modules on X", "modality": "stated", "locator": "Theorem 1.0.12, item 4"}
+{"subject": "Theorem 1.0.12, item 8", "relation": "proves", "object": "for f solid smooth, DR(X/Y) = f^alg_{dR,Y,*}1 = f_{dR,Y,*}1 and DR(X/Y) promotes to a filtered object (Hodge filtration) with gr^i DR(X/Y) = Omega^i_{X/Y}", "modality": "stated", "locator": "Theorem 1.0.12, item 8"}
+{"subject": "Hodge filtration on DR(X/Y)", "relation": "generalises", "object": "Hodge filtration for smooth maps of rigid spaces", "modality": "stated", "locator": "Theorem 1.0.12, item 8"}
+{"subject": "Proposition 1.0.14", "relation": "proves", "object": "natural equivalences G^la_dR = G^sm and (*/G^la)_dR = */G^sm for a p-adic Lie group G", "modality": "stated", "locator": "Proposition 1.0.14"}
+{"subject": "G^la_dR", "relation": "equivalent-to", "object": "G^sm", "modality": "stated", "locator": "Proposition 1.0.14"}
+{"subject": "(*/G^la)_dR", "relation": "equivalent-to", "object": "*/G^sm", "modality": "stated", "locator": "Proposition 1.0.14"}
+{"subject": "Theorem 1.0.17", "relation": "proves", "object": "g: X/(G^la/H^dagger) -> Y is cohomologically smooth with underlying G^la-equivariant invertible sheaf Omega^d_{X/Y}[d] tensor wedge^g Lie G[g] tensor wedge^e l_{H^dagger/X}[-e]", "modality": "stated", "locator": "Theorem 1.0.17"}
