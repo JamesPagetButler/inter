@@ -1,0 +1,22 @@
+{"subject": "intrinsic cohomology theory of the orbifold embedding (First main result)", "relation": "proves", "object": "proper globally equivariant differential generalized cohomology", "modality": "stated", "locator": "Abstract, First main result"}
+{"subject": "intrinsic cohomology theory of the orbifold embedding (First main result)", "relation": "generalises", "object": "traditional orbifold cohomology", "modality": "stated", "locator": "Abstract, First main result"}
+{"subject": "intrinsic cohomology theory of the orbifold embedding (First main result)", "relation": "generalises", "object": "Chen-Ruan cohomology", "modality": "stated", "locator": "Abstract, First main result"}
+{"subject": "intrinsic cohomology theory of the orbifold embedding (First main result)", "relation": "generalises", "object": "orbifold K-theory", "modality": "stated", "locator": "Abstract, First main result"}
+{"subject": "J-twisted orbifold Cohomotopy theories", "relation": "conjectures", "object": "proper orbifold cohomology theory that controls non-perturbative string theory", "modality": "stated", "locator": "Abstract, Example (according to Hypothesis H)"}
+{"subject": "traditional orbifold cohomology H^•_trad(X, A)", "relation": "defines", "object": "H^•_sing(Borel space of X, A)", "modality": "stated", "locator": "Eq. (1), §1.1"}
+{"subject": "H^•_trad(X, Q)", "relation": "equivalent-to", "object": "H^•_sing(coarse quotient space |X|, Q)", "modality": "cited", "locator": "Eq. (2), §1.1 (ALR07, Prop. 2.12; Sa56, Thm. 1)"}
+{"subject": "Chen-Ruan cohomology H^•_CR(X)", "relation": "equivalent-to", "object": "H^•_trad(Maps(S^1, X), C)", "modality": "cited", "locator": "Eq. (3), §1.1 (Cl14)"}
+{"subject": "Chen-Ruan cohomology of global quotient orbifolds", "relation": "equivalent-to", "object": "Bredon cohomology H^•_G(X, A_CR)", "modality": "cited", "locator": "Eq. (5), §1.1 (Mo02, Ho90)"}
+{"subject": "coefficient system A_CR", "relation": "defines", "object": "G/H ↦ ClassFunctions(H, C)", "modality": "stated", "locator": "Eq. (4), §1.1"}
+{"subject": "orbifold K-theory K^•(X)", "relation": "defines", "object": "equivariant K-theory K^•_G(X) of a global quotient presentation", "modality": "cited", "locator": "Eq. (6), §1.1 (AR01)"}
+{"subject": "right-hand side of Eq. (6)", "relation": "proves", "object": "independence of the choice of global quotient presentation", "modality": "cited", "locator": "§1.1, Orbifold K-theory paragraph (PS10, Prop. 4.1)"}
+{"subject": "Orbifolds as étale stacks proposal", "relation": "uses-technique", "object": "Deligne-Mumford stacks", "modality": "cited", "locator": "§1.1, Orbifolds as étale stacks (DM69)"}
+{"subject": "proper equivariant ordinary cohomology", "relation": "equivalent-to", "object": "Bredon cohomology", "modality": "cited", "locator": "§1.1, Examples of proper equivariant theories"}
+{"subject": "equivariant K-theory", "relation": "specialises", "object": "proper equivariant cohomology theory", "modality": "cited", "locator": "§1.1, Examples of proper equivariant theories (AS04, A3.2; FHT07, A.5; DL98)"}
+{"subject": "orbifold cohomology (PS10 suggestion)", "relation": "conjectures", "object": "orbifold cohomology should capture proper equivariant cohomology", "modality": "cited", "locator": "§1.1, Global equivariant homotopy theory (PS10)"}
+{"subject": "Charts (Eq. 7 list of local model categories)", "relation": "defines", "object": "chart categories CartesianSpaces, JetsOfCartesianSpaces, SuperCartesianSpaces, Singularities, SingularCharts", "modality": "stated", "locator": "Eq. (7), §1.1(a)"}
+{"subject": "probes X(Σ) of a space X", "relation": "defines", "object": "collection of geometric maps Σ → X", "modality": "stated", "locator": "Eq. (8), §1.1(a)"}
+{"subject": "GeneralizedSpaces", "relation": "defines", "object": "Sheaves(Charts)", "modality": "stated", "locator": "Eq. (11), §1.1(a)"}
+{"subject": "Yoneda embedding y(Σ)", "relation": "defines", "object": "Charts(Σ', Σ)", "modality": "stated", "locator": "Eq. (12), §1.1(a)"}
+{"subject": "Eq. (13) natural equivalence X(Σ) ≃ GeneralizedSpaces(y(Σ), X)", "relation": "equivalent-to", "object": "Yoneda lemma", "modality": "cited", "locator": "Eq. (13), §1.1(a) (Prop. 2.38)"}
+{"subject": "shape of a topological space", "relation": "equivalent-to", "object": "homotopy type of well-behaved topological spaces", "modality": "cited", "locator": "Footnote 2, §1.1 (Lu09a 7.1.6; Wa17 4.6)"}

@@ -147,3 +147,5 @@
 {"paper_id": "W7223152136", "stage": "token_overrun_disclosure", "done": false, "tokens": 63818, "disclose_line": 58000, "note": "batch 1, pre-dates haiku_budget_gate.py; within tolerance per spike-seed-corpus-s4 seq 176", "ts": "2026-11-16T07:16:50Z"}
 {"paper_id": "W3157137676", "stage": "token_overrun_disclosure", "done": false, "tokens": 63759, "disclose_line": 58000, "note": "batch 1, pre-dates haiku_budget_gate.py; within tolerance per spike-seed-corpus-s4 seq 176", "ts": "2026-11-16T07:16:50Z"}
 {"paper_id": "W7212929196", "stage": "token_overrun_disclosure", "done": false, "tokens": 67603, "disclose_line": 58000, "note": "batch 1, pre-dates haiku_budget_gate.py; within tolerance per spike-seed-corpus-s4 seq 176", "ts": "2026-11-16T07:16:50Z"}
+{"paper_id": "W3047444260", "stage": "restatement", "done": true, "ts": "2026-11-16T07:19:11Z"}
+{"paper_id": "W3047444260", "stage": "extraction", "done": true, "ts": "2026-11-16T07:19:30Z"}
