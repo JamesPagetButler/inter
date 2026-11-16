@@ -1,0 +1,168 @@
+{
+  "paper_id": "W4235693166",
+  "domain": "physics",
+  "text_cache_sha256": "cdae887c79cb93dd1a67eeb030b3651cb9a254fbc05b967d64481c1c75d94ac5",
+  "text": "The octonions are the largest of the four normed division algebras. While somewhat neglected due to their nonassociativity, they stand at the crossroads of many interesting fields of mathematics. Here we describe them and their relation to Clifford algebras and spinors, Bott periodicity, projective and Lorentzian geometry, Jordan algebras, and the exceptional Lie groups. We also touch upon their applications in quantum logic, special relativity and supersymmetry.\n\n1 Introduction There are exactly four normed division algebras: the real numbers ( ℝ {\\mathbb{R}} ), complex numbers ( ℂ {\\mathbb{C}} ), quaternions ( ℍ {\\mathbb{H}} ), and octonions ( 𝕆 {\\mathbb{O}} ). The real numbers are the dependable breadwinner of the family, the complete ordered field we all rely on. The complex numbers are a slightly flashier but still respectable younger brother: not ordered, but algebraically complete. The quaternions, being noncommutative, are the eccentric cousin who is shunned at important family gatherings. But the octonions are the crazy old uncle nobody lets out of the attic: they are nonassociative . Most mathematicians have heard the story of how Hamilton invented the quaternions. In 1835, at the age of 30, he had discovered how to treat complex numbers as pairs of real numbers. Fascinated by the relation between ℂ {\\mathbb{C}} and 2-dimensional geometry, he tried for many years to invent a bigger algebra that would play a similar role in 3-dimensional geometry. In modern language, it seems he was looking for a 3-dimensional normed division algebra. His quest built to its climax in October 1843. He later wrote to his son, “Every morning in the early part of the above-cited month, on my coming down to breakfast, your (then) little brother William Edwin, and yourself, used to ask me: ‘Well, Papa, can you multiply triplets?’ Whereto I was always obliged to reply, with a sad shake of the head: ‘No, I can only add and subtract them’.” The problem, of course, was that there exists no 3-dimensional normed division algebra. He really needed a 4-dimensional algebra. Finally, on the 16th of October, 1843, while walking with his wife along the Royal Canal to a meeting of the Royal Irish Academy in Dublin, he made his momentous discovery. “That is to say, I then and there felt the galvanic circuit of thought close ; and the sparks which fell from it were the fundamental equations between i , j , k i,j,k ; exactly such as I have used them ever since.” And in a famous act of mathematical vandalism, he carved these equations into the stone of the Brougham Bridge: i 2 = j 2 = k 2 = i ​ j ​ k = − 1 . i^{2}=j^{2}=k^{2}=ijk=-1. One reason this story is so well-known is that Hamilton spent the rest of his life obsessed with the quaternions and their applications to geometry [ 45 , 53 ] . And for a while, quaternions were fashionable. They were made a mandatory examination topic in Dublin, and in some American universities they were the only advanced mathematics taught. Much of what we now do with scalars and vectors in ℝ 3 {\\mathbb{R}}^{3} was then done using real and imaginary quaternions. A school of ‘quaternionists’ developed, which was led after Hamilton’s death by Peter Tait of Edinburgh and Benjamin Peirce of Harvard. Tait wrote 8 books on the quaternions, emphasizing their applications to physics. When Gibbs invented the modern notation for the dot product and cross product, Tait condemned it as a “hermaphrodite monstrosity”. A war of polemics ensued, with such luminaries as Heaviside weighing in on the side of vectors. Ultimately the quaternions lost, and acquired a slight taint of disgrace from which they have never fully recovered [ 27 ] . Less well-known is the discovery of the octonions by Hamilton’s friend from college, John T. Graves. It was Graves’ interest in algebra that got Hamilton thinking about complex numbers and triplets in the first place. The very day after his fateful walk, Hamilton sent an 8-page letter describing the quaternions to Graves. Graves replied on October 26th, complimenting Hamilton on the boldness of the idea, but adding “There is still something in the system which gravels me. I have not yet any clear views as to the extent to which we are at liberty arbitrarily to create imaginaries, and to endow them with supernatural properties.” And he asked: “If with your alchemy you can make three pounds of gold, why should you stop there?” Graves then set to work on some gold of his own! On December 26th, he wrote to Hamilton describing a new 8-dimensional algebra, which he called the ‘octaves’. He showed that they were a normed division algebra, and used this to express the product of two sums of eight perfect squares as another sum of eight perfect squares: the ‘eight squares theorem’ [ 52 ] . In January 1844, Graves sent three letters to Hamilton expanding on his discovery. He considered the idea of a general theory of ‘ 2 m 2^{m} -ions’, and tried to construct a 16-dimensional normed division algebra, but he “met with an unexpected hitch” and came to doubt that this was possible. Hamilton offered to publicize Graves’ discovery, but being busy with work on quaternions, he kept putting it off. In July he wrote to Graves pointing out that the octonions were nonassociative: “ A ⋅ B ​ C = A ​ B ⋅ C = A ​ B ​ C A\\cdot BC=AB\\cdot C=ABC , if A , B , C A,B,C be quaternions, but not so, generally, with your octaves.” In fact, Hamilton first invented the term ‘associative’ at about this time, so the octonions may have played a role in clarifying the importance of this concept. Meanwhile the young Arthur Cayley, fresh out of Cambridge, had been thinking about the quaternions ever since Hamilton announced their existence. He seemed to be seeking relationships between the quaternions and hyperelliptic functions. In March of 1845, he published a paper in the Philosophical Magazine entitled ‘On Jacobi’s Elliptic Functions, in Reply to the Rev. B. Bronwin; and on Quaternions’ [ 18 ] . The bulk of this paper was an attempt to rebut an article pointing out mistakes in Cayley’s work on elliptic functions. Apparently as an afterthought, he tacked on a brief description of the octonions. In fact, this paper was so full of errors that it was omitted from his collected works — except for the part about octonions [ 19 ] . Upset at being beaten to publication, Graves attached a postscript to a paper of his own which was to appear in the following issue of the same journal, saying that he had known of the octonions ever since Christmas, 1843. On June 14th, 1847, Hamilton contributed a short note to the Transactions of the Royal Irish Academy, vouching for Graves’ priority. But it was too late: the octonions became known as ‘Cayley numbers’. Still worse, Graves later found that his eight squares theorem had already been discovered by C. F. Degen in 1818 [ 28 , 30 ] . Why have the octonions languished in such obscurity compared to the quaternions? Besides their rather inglorious birth, one reason is that they lacked a tireless defender such as Hamilton. But surely the reason for this is that they lacked any clear application to geometry and physics. The unit quaternions form the group SU ⁡ ( 2 ) {\\rm SU}(2) , which is the double cover of the rotation group SO ⁡ ( 3 ) {\\rm SO}(3) . This makes them nicely suited to the study of rotations and angular momentum, particularly in the context of quantum mechanics. These days we regard this phenomenon as a special case of the theory of Clifford algebras. Most of us no longer attribute to the quaternions the cosmic significance that Hamilton claimed for them, but they fit nicely into our understanding of the scheme of things. The octonions, on the other hand, do not. Their relevance to geometry was quite obscure until 1925, when Élie Cartan described ‘triality’ — the symmetry between vectors and spinors in 8-dimensional Euclidean space [ 17 ] . Their potential relevance to physics was noticed in a 1934 paper by Jordan, von Neumann and Wigner on the foundations of quantum mechanics [ 59 ] . However, attempts by Jordan and others to apply octonionic quantum mechanics to nuclear and particle physics met with little success. Work along these lines continued quite slowly until the 1980s, when it was realized that the octonions explain some curious features of string theory [ 65 ] . The Lagrangian for the classical superstring involves a relationship between vectors and spinors in Minkowski spacetime which holds only in 3, 4, 6, and 10 dimensions. Note that these numbers are 2 more than the dimensions of ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} and 𝕆 {\\mathbb{O}} . As we shall see, this is no coincidence: briefly, the isomorphisms 𝔰 ​ 𝔩 ​ ( 2 , ℝ ) ≅ 𝔰 ​ 𝔬 ​ ( 2 , 1 ) 𝔰 ​ 𝔩 ​ ( 2 , ℂ ) ≅ 𝔰 ​ 𝔬 ​ ( 3 , 1 ) 𝔰 ​ 𝔩 ​ ( 2 , ℍ ) ≅ 𝔰 ​ 𝔬 ​ ( 5 , 1 ) 𝔰 ​ 𝔩 ​ ( 2 , 𝕆 ) ≅ 𝔰 ​ 𝔬 ​ ( 9 , 1 ) \\begin{array}[]{lcl}{\\mathfrak{sl}}(2,{\\mathbb{R}})&\\cong&{\\mathfrak{so}}(2,1)\\\\ {\\mathfrak{sl}}(2,{\\mathbb{C}})&\\cong&{\\mathfrak{so}}(3,1)\\\\ {\\mathfrak{sl}}(2,{\\mathbb{H}})&\\cong&{\\mathfrak{so}}(5,1)\\\\ {\\mathfrak{sl}}(2,{\\mathbb{O}})&\\cong&{\\mathfrak{so}}(9,1)\\end{array} allow us to treat a spinor in one of these dimensions as a pair of elements of the corresponding division algebra. It is fascinating that of these superstring Lagrangians, it is the 10-dimensional octonionic one that gives the most promising candidate for a realistic theory of fundamental physics! However, there is still no proof that the octonions are useful for understanding the real world. We can only hope that eventually this question will be settled one way or another. Besides their possible role in physics, the octonions are important because they tie together some algebraic structures that otherwise appear as isolated and inexplicable exceptions. As we shall explain, the concept of an octonionic projective space 𝕆 ​ ℙ n {\\mathbb{OP}}^{n} only makes sense for n ≤ 2 n\\leq 2 , due to the nonassociativity of 𝕆 {\\mathbb{O}} . This means that various structures associated to real, complex and quaternionic projective spaces have octonionic analogues only for n ≤ 2 n\\leq 2 . Simple Lie algebras are a nice example of this phenomenon. There are 3 infinite families of ‘classical’ simple Lie algebras, which come from the isometry groups of the projective spaces ℝ ​ ℙ n {\\mathbb{RP}}^{n} , ℂ ​ ℙ n {\\mathbb{CP}}^{n} and ℍ ​ ℙ n {\\mathbb{HP}}^{n} . There are also 5 ‘exceptional’ simple Lie algebras. These were discovered by Killing and Cartan in the late 1800s. At the time, the significance of these exceptions was shrouded in mystery: they did not arise as symmetry groups of known structures. Only later did their connection to the octonions become clear. It turns out that 4 of them come from the isometry groups of the projective planes over 𝕆 {\\mathbb{O}} , 𝕆 ⊗ ℂ {\\mathbb{O}}\\otimes{\\mathbb{C}} , 𝕆 ⊗ ℍ {\\mathbb{O}}\\otimes{\\mathbb{H}} and 𝕆 ⊗ 𝕆 {\\mathbb{O}}\\otimes{\\mathbb{O}} . The remaining one is the automorphism group of the octonions! Another good example is the classification of simple formally real Jordan algebras. Besides several infinite families of these, there is the ‘exceptional’ Jordan algebra, which consists of 3 × 3 3\\times 3 hermitian octonionic matrices. Minimal projections in this Jordan algebra correspond to points of 𝕆 ​ ℙ 2 {\\mathbb{OP}}^{2} , and the automorphism group of this algebra is the same as the isometry group of 𝕆 ​ ℙ 2 {\\mathbb{OP}}^{2} . The octonions also have fascinating connections to topology. In 1957, Raoul Bott computed the homotopy groups of the topological group O ⁡ ( ∞ ) {\\rm O}(\\infty) , which is the inductive limit of the orthogonal groups O ⁡ ( n ) {\\rm O}(n) as n → ∞ n\\to\\infty . He proved that they repeat with period 8: π i + 8 ​ ( O ⁡ ( ∞ ) ) ≅ π i ​ ( O ⁡ ( ∞ ) ) . \\pi_{i+8}({\\rm O}(\\infty))\\cong\\pi_{i}({\\rm O}(\\infty)). This is known as ‘Bott periodicity’. He also computed the first 8: π 0 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{0}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong ℤ 2 \\displaystyle{\\mathbb{Z}}_{2} π 1 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{1}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong ℤ 2 \\displaystyle{\\mathbb{Z}}_{2} π 2 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{2}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong 0 \\displaystyle 0 π 3 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{3}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong ℤ \\displaystyle{\\mathbb{Z}} π 4 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{4}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong 0 \\displaystyle 0 π 5 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{5}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong 0 \\displaystyle 0 π 6 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{6}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong 0 \\displaystyle 0 π 7 ​ ( O ​ ( ∞ ) ) \\displaystyle\\pi_{7}({\\rm O}(\\infty)) ≅ \\displaystyle\\cong ℤ \\displaystyle{\\mathbb{Z}} Note that the nonvanishing homotopy groups here occur in dimensions one less than the dimensions of ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} , and 𝕆 {\\mathbb{O}} . This is no coincidence! In a normed division algebra, left multiplication by an element of norm one defines an orthogonal transformation of the algebra, and thus an element of O ⁡ ( ∞ ) {\\rm O}(\\infty) . This gives us maps from the spheres S 0 , S 1 , S 3 S^{0},S^{1},S^{3} and S 7 S^{7} to O ⁡ ( ∞ ) {\\rm O}(\\infty) , and these maps generate the homotopy groups in those dimensions. Given this, one might naturally guess that the period-8 repetition in the homotopy groups of O ⁡ ( ∞ ) {\\rm O}(\\infty) is in some sense ‘caused’ by the octonions. As we shall see, this is true. Conversely, Bott periodicity is closely connected to the problem of how many pointwise linearly independent smooth vector fields can be found on the n n -sphere [ 56 ] . There exist n n such vector fields only when n + 1 = 1 , 2 , 4 , n+1=1,2,4, or 8 8 , and this can be used to show that division algebras over the reals can only occur in these dimensions. In what follows we shall try to explain the octonions and their role in algebra, geometry, and topology. In Section 2 we give four constructions of the octonions: first via their multiplication table, then using the Fano plane, then using the Cayley–Dickson construction and finally using Clifford algebras, spinors, and a generalized concept of ‘triality’ advocated by Frank Adams [ 2 ] . Each approach has its own merits. In Section 3 we discuss the projective lines and planes over the normed division algebras — especially 𝕆 {\\mathbb{O}} — and describe their relation to Bott periodicity, the exceptional Jordan algebra, and the Lie algebra isomorphisms listed above. Finally, in Section 4 we discuss octonionic constructions of the exceptional Lie groups, especially the ‘magic square’. 1.1 Preliminaries Before our tour begins, let us settle on some definitions. For us a vector space will always be a finite-dimensional module over the field of real numbers. An algebra A A will be a vector space that is equipped with a bilinear map m : A × A → A m\\colon A\\times A\\to A called ‘multiplication’ and a nonzero element 1 ∈ A 1\\in A called the ‘unit’ such that m ⁡ ( 1 , a ) = m ⁡ ( a , 1 ) = a m(1,a)=m(a,1)=a . As usual, we abbreviate m ⁡ ( a , b ) m(a,b) as a ​ b ab . We do not assume our algebras are associative! Given an algebra, we will freely think of real numbers as elements of this algebra via the map α ↦ α ​ 1 \\alpha\\mapsto\\alpha 1 . An algebra A A is a division algebra if given a , b ∈ A a,b\\in A with a ​ b = 0 ab=0 , then either a = 0 a=0 or b = 0 b=0 . Equivalently, A A is a division algebra if the operations of left and right multiplication by any nonzero element are invertible. A normed division algebra is an algebra A A that is also a normed vector space with ‖ a ​ b ‖ = ‖ a ‖ ​ ‖ b ‖ \\|ab\\|=\\|a\\|\\|b\\| . This implies that A A is a division algebra and that ‖ 1 ‖ = 1 \\|1\\|=1 . We should warn the reader of some subtleties. We say an algebra A A has multiplicative inverses if for any nonzero a ∈ A a\\in A there is an element a − 1 ∈ A a^{-1}\\in A with a ​ a − 1 = a − 1 ​ a = 1 aa^{-1}=a^{-1}a=1 . An associative algebra has multiplicative inverses iff it is a division algebra. However, this fails for nonassociative algebras! In Section 2.2 we shall construct algebras that have multiplicative inverses, but are not division algebras. On the other hand, we can construct a division algebra without multiplicative inverses by taking the quaternions and modifying the product slightly, setting i 2 = − 1 + ϵ ​ j i^{2}=-1+\\epsilon j for some small nonzero real number ϵ \\epsilon while leaving the rest of the multiplication table unchanged. The element i i then has both right and left inverses, but they are not equal. (We thank David Rusin for this example.) There are three levels of associativity. An algebra is power-associative if the subalgebra generated by any one element is associative. It is alternative if the subalgebra generated by any two elements is associative. Finally, if the subalgebra generated by any three elements is associative, the algebra is associative. As we shall see, the octonions are not associative, but they are alternative. How does one check a thing like this? By a theorem of Emil Artin [ 84 ] , an algebra A A is alternative iff for all a , b ∈ A a,b\\in A we have ( a ​ a ) ​ b = a ⁡ ( a ​ b ) , ( a ​ b ) ​ a = a ⁡ ( b ​ a ) , ( b ​ a ) ​ a = b ⁡ ( a ​ a ) \\displaystyle(aa)b=a(ab),\\qquad(ab)a=a(ba),\\qquad(ba)a=b(aa) (1) In fact, any two of these equations implies the remaining one, so people usually take the first and last as the definition of ‘alternative’. To see this fact, note that any algebra has a trilinear map [ ⋅ , ⋅ , ⋅ ] : A 3 → A [\\cdot,\\cdot,\\cdot]\\colon A^{3}\\to A called the associator , given by [ a , b , c ] = ( a ​ b ) ​ c − a ⁡ ( b ​ c ) . [a,b,c]=(ab)c-a(bc). The associator measures the failure of associativity just as the commutator [ a , b ] = a ​ b − b ​ a [a,b]=ab-ba measures the failure of commutativity. Now, the commutator is an alternating bilinear map, meaning that it switches sign whenever the two arguments are exchanged: [ a , b ] = − [ b , a ] [a,b]=-[b,a] or equivalently, that it vanishes when they are equal: [ a , a ] = 0 . [a,a]=0. This raises the question of whether the associator is alternating too. In fact, this holds precisely when A A is alternative! The reason is that each equation in ( 1 ) says that the associator vanishes when a certain pair of arguments are equal, or equivalently, that it changes sign when that pair of arguments is switched. Note, however, that if the associator changes sign when we switch the i i th and j j th arguments, and also when we switch the j j th and k k th arguments, it must change sign when we switch the i i th and k k th. Thus any two of equations ( 1 ) imply the third. Now we can say what is so great about ℝ , ℂ , ℍ , {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}}, and 𝕆 {\\mathbb{O}} : Theorem 1 . ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} , and 𝕆 {\\mathbb{O}} are the only normed division algebras. Theorem 2 . ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} , and 𝕆 {\\mathbb{O}} are the only alternative division algebras. The first theorem goes back to an 1898 paper by Hurwitz [ 55 ] . It was subsequently generalized in many directions, for example, to algebras over other fields. A version of the second theorem appears in an 1930 paper by Zorn [ 100 ] — the guy with the lemma. For modern proofs of both these theorems, see Schafer’s excellent book on nonassociative algebras [ 84 ] . We sketch a couple proofs of Hurwitz’s theorem in Section 2.3 . Note that we did not state that ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} and 𝕆 {\\mathbb{O}} are the only division algebras. This is not true. For example, we have already described a way to get 4-dimensional division algebras that do not have multiplicative inverses. However, we do have this fact: Theorem 3 . All division algebras have dimension 1 , 2 , 4 , 1,2,4, or 8 8 . This was independently proved by Kervaire [ 62 ] and Bott–Milnor [ 11 ] in 1958. We will say a bit about the proof in Section 3.1 . However, in what follows our main focus will not be on general results about division algebras. Instead, we concentrate on special features of the octonions. Let us begin by constructing them.\n\nTheorem 1: . ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} , and 𝕆 {\\mathbb{O}} are the only normed division algebras.\n\nTheorem 2: . ℝ , ℂ , ℍ {\\mathbb{R}},{\\mathbb{C}},{\\mathbb{H}} , and 𝕆 {\\mathbb{O}} are the only alternative division algebras.\n\nTheorem 3: . All division algebras have dimension 1 , 2 , 4 , 1,2,4, or 8 8 .\n\nProposition 1: . A ′ A^{\\prime} is never real.\n\nProposition 2: . A A is real (and thus commutative) ⇔ \\iff A ′ A^{\\prime} is commutative.\n\nProposition 3: . A A is commutative and associative ⇔ \\iff A ′ A^{\\prime} is associative.\n\nProposition 4: . A A is associative and nicely normed ⇔ \\iff A ′ A^{\\prime} is alternative and nicely normed.\n\nProposition 5: . A A is nicely normed ⇔ \\iff A ′ A^{\\prime} is nicely normed.\n\nTheorem 4: . The compact real form of the Lie algebra 𝔤 2 {\\mathfrak{g}}_{2} is given by 𝔤 2 = 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊂ 𝔰 ​ 𝔬 ​ ( Im ⁡ ( 𝕆 ) ) ⊂ 𝔰 ​ 𝔬 ​ ( 𝕆 ) {\\mathfrak{g}}_{2}={\\mathfrak{der}}({\\mathbb{O}})\\subset{\\mathfrak{so}}({\\rm Im}({\\mathbb{O}}))\\subset{\\mathfrak{so}}({\\mathbb{O}}) and we have 𝔰 ​ 𝔬 ​ ( Im ⁡ ( 𝕆 ) ) \\displaystyle{\\mathfrak{so}}({\\rm Im}({\\mathbb{O}})) = \\displaystyle= 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ ad Im ⁡ ( 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\rm ad}_{{\\rm Im}({\\mathbb{O}})} 𝔰 ​ 𝔬 ​ ( 𝕆 ) \\displaystyle{\\mathfrak{so}}({\\mathbb{O}}) = \\displaystyle= 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ L Im ⁡ ( 𝕆 ) ⊕ R Im ⁡ ( 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus L_{{\\rm Im}({\\mathbb{O}})}\\oplus R_{{\\rm Im}({\\mathbb{O}})} where the Lie brackets in 𝔰 ​ 𝔬 ​ ( Im ⁡ ( 𝕆 ) ) {\\mathfrak{so}}({\\rm Im}({\\mathbb{O}})) and 𝔰 ​ 𝔬 ​ ( 𝕆 ) {\\mathfrak{so}}({\\mathbb{O}}) are built from natural bilinear operations on the summands.\n\nTheorem 5: . The compact real form of 𝔣 4 {\\mathfrak{f}}_{4} is given by 𝔣 4 \\displaystyle{\\mathfrak{f}}_{4} ≅ \\displaystyle\\cong 𝔦 ​ 𝔰 ​ 𝔬 ​ 𝔪 ​ ( 𝕆 ​ ℙ 2 ) \\displaystyle{\\mathfrak{isom}}({\\mathbb{OP}}^{2}) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( 𝕆 ) ) \\displaystyle{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{O}})) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔞 3 ​ ( 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{sa}}_{3}({\\mathbb{O}}) ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ⊕ ℝ ) ⊕ 𝕆 2 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}}\\oplus{\\mathbb{R}})\\oplus{\\mathbb{O}}^{2} ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ) ⊕ 𝕆 3 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}})\\oplus{\\mathbb{O}}^{3} where in each case the Lie bracket is built from natural bilinear operations on the summands.\n\nTheorem 6: . The compact real form of 𝔢 6 {\\mathfrak{e}}_{6} is given by 𝔢 6 \\displaystyle{\\mathfrak{e}}_{6} ≅ \\displaystyle\\cong 𝔦 ​ 𝔰 ​ 𝔬 ​ 𝔪 ​ ( ( ℂ ⊗ 𝕆 ) ​ ℙ 2 ) \\displaystyle{\\mathfrak{isom}}(({\\mathbb{C}}\\otimes{\\mathbb{O}}){\\mathbb{P}}^{2}) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( ℂ ) ) ⊕ ( Im ⁡ ( 𝕆 ) ⊗ 𝔰 ​ 𝔥 3 ​ ( ℂ ) ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{C}}))\\oplus({\\rm Im}({\\mathbb{O}})\\!\\otimes\\!{\\mathfrak{sh}}_{3}({\\mathbb{C}})) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( 𝕆 ) ) ⊕ 𝔰 ​ 𝔥 3 ​ ( 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{O}}))\\oplus{\\mathfrak{sh}}_{3}({\\mathbb{O}}) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔞 3 ​ ( ℂ ⊗ 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{sa}}_{3}({\\mathbb{C}}\\otimes{\\mathbb{O}}) ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ⊕ ℂ ) ⊕ Im ⁡ ( ℂ ) ⊕ ( ℂ ⊗ 𝕆 ) 2 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}}\\oplus{\\mathbb{C}})\\oplus{\\rm Im}({\\mathbb{C}})\\oplus({\\mathbb{C}}\\otimes{\\mathbb{O}})^{2} ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔬 ​ ( ℂ ) ⊕ Im ⁡ ( ℂ ) ⊕ ( ℂ ⊗ 𝕆 ) 3 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}})\\oplus{\\mathfrak{so}}({\\mathbb{C}})\\oplus{\\rm Im}({\\mathbb{C}})\\oplus({\\mathbb{C}}\\otimes{\\mathbb{O}})^{3} where in each case the Lie bracket of 𝔢 6 {\\mathfrak{e}}_{6} is built from natural bilinear operations on the summands.\n\nTheorem 7: . The compact real form of 𝔢 7 {\\mathfrak{e}}_{7} is given by 𝔢 7 \\displaystyle{\\mathfrak{e}}_{7} ≅ \\displaystyle\\cong 𝔦 ​ 𝔰 ​ 𝔬 ​ 𝔪 ​ ( ( ℍ ⊗ 𝕆 ) ​ ℙ 2 ) \\displaystyle{\\mathfrak{isom}}(({\\mathbb{H}}\\otimes{\\mathbb{O}}){\\mathbb{P}}^{2}) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( 𝕆 ) ) ⊕ 𝔥 3 ​ ( 𝕆 ) 3 \\displaystyle{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{O}}))\\oplus{\\mathfrak{h}}_{3}({\\mathbb{O}})^{3} ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( ℍ ) ) ⊕ ( Im ⁡ ( 𝕆 ) ⊗ 𝔰 ​ 𝔥 3 ​ ( ℍ ) ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{H}}))\\oplus({\\rm Im}({\\mathbb{O}})\\!\\otimes\\!{\\mathfrak{sh}}_{3}({\\mathbb{H}})) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( ℍ ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( 𝕆 ) ) ⊕ ( Im ⁡ ( ℍ ) ⊗ 𝔰 ​ 𝔥 3 ​ ( 𝕆 ) ) \\displaystyle{\\mathfrak{der}}({\\mathbb{H}})\\oplus{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{O}}))\\oplus({\\rm Im}({\\mathbb{H}})\\!\\otimes\\!{\\mathfrak{sh}}_{3}({\\mathbb{O}})) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( ℍ ) ⊕ 𝔰 ​ 𝔞 3 ​ ( ℍ ⊗ 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{der}}({\\mathbb{H}})\\oplus{\\mathfrak{sa}}_{3}({\\mathbb{H}}\\otimes{\\mathbb{O}}) ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ⊕ ℍ ) ⊕ Im ⁡ ( ℍ ) ⊕ ( ℍ ⊗ 𝕆 ) 2 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}}\\oplus{\\mathbb{H}})\\oplus{\\rm Im}({\\mathbb{H}})\\oplus({\\mathbb{H}}\\otimes{\\mathbb{O}})^{2} ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔬 ​ ( ℍ ) ⊕ Im ⁡ ( ℍ ) ⊕ ( ℍ ⊗ 𝕆 ) 3 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}})\\oplus{\\mathfrak{so}}({\\mathbb{H}})\\oplus{\\rm Im}({\\mathbb{H}})\\oplus({\\mathbb{H}}\\otimes{\\mathbb{O}})^{3} where in each case the Lie bracket of 𝔢 7 {\\mathfrak{e}}_{7} is built from natural bilinear operations on the summands.\n\nTheorem 8: . The compact real form of 𝔢 8 {\\mathfrak{e}}_{8} is given by 𝔢 8 \\displaystyle{\\mathfrak{e}}_{8} ≅ \\displaystyle\\cong 𝔦 ​ 𝔰 ​ 𝔬 ​ 𝔪 ​ ( ( 𝕆 ⊗ 𝕆 ) ​ ℙ 2 ) \\displaystyle{\\mathfrak{isom}}(({\\mathbb{O}}\\otimes{\\mathbb{O}}){\\mathbb{P}}^{2}) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝔥 3 ​ ( 𝕆 ) ) ⊕ ( Im ⁡ ( 𝕆 ) ⊗ 𝔰 ​ 𝔥 3 ​ ( 𝕆 ) ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{der}}({\\mathfrak{h}}_{3}({\\mathbb{O}}))\\oplus({\\rm Im}({\\mathbb{O}})\\!\\otimes\\!{\\mathfrak{sh}}_{3}({\\mathbb{O}})) ≅ \\displaystyle\\cong 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔡 ​ 𝔢 ​ 𝔯 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔞 3 ​ ( 𝕆 ⊗ 𝕆 ) \\displaystyle{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{der}}({\\mathbb{O}})\\oplus{\\mathfrak{sa}}_{3}({\\mathbb{O}}\\otimes{\\mathbb{O}}) ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ⊕ 𝕆 ) ⊕ ( 𝕆 ⊗ 𝕆 ) 2 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}}\\oplus{\\mathbb{O}})\\oplus({\\mathbb{O}}\\otimes{\\mathbb{O}})^{2} ≅ \\displaystyle\\cong 𝔰 ​ 𝔬 ​ ( 𝕆 ) ⊕ 𝔰 ​ 𝔬 ​ ( 𝕆 ) ⊕ ( 𝕆 ⊗ 𝕆 ) 3 \\displaystyle{\\mathfrak{so}}({\\mathbb{O}})\\oplus{\\mathfrak{so}}({\\mathbb{O}})\\oplus({\\mathbb{O}}\\otimes{\\mathbb{O}})^{3} where in each case the Lie bracket on 𝔢 8 {\\mathfrak{e}}_{8} is built from natural bilinear operations on the summands.",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "Kervaire and Bott–Milnor (1958)",
+      "relation": "proves",
+      "object": "all division algebras have dimension 1, 2, 4 or 8",
+      "modality": "cited",
+      "locator": "Section 1.1, Theorem 3 (attribution to [62] and [11])"
+    },
+    {
+      "n": 2,
+      "subject": "4-dimensional division algebra with i^2=-1+εj",
+      "relation": "counterexample-to",
+      "object": "a division algebra has multiplicative inverses (for nonassociative algebras)",
+      "modality": "stated",
+      "locator": "Section 1.1"
+    },
+    {
+      "n": 3,
+      "subject": "Proposition 1",
+      "relation": "proves",
+      "object": "A' is never real",
+      "modality": "stated",
+      "locator": "Proposition 1, Section 1.1"
+    },
+    {
+      "n": 4,
+      "subject": "compact real form of e6",
+      "relation": "equivalent-to",
+      "object": "so(O) ⊕ so(C) ⊕ Im(C) ⊕ (C⊗O)^3",
+      "modality": "stated",
+      "locator": "Theorem 6"
+    },
+    {
+      "n": 5,
+      "subject": "division algebra",
+      "relation": "defines",
+      "object": "algebra A in which ab = 0 implies a = 0 or b = 0",
+      "modality": "stated",
+      "locator": "Section 1.1"
+    },
+    {
+      "n": 6,
+      "subject": "Proposition 5",
+      "relation": "equivalent-to",
+      "object": "A is nicely normed iff A' is nicely normed",
+      "modality": "stated",
+      "locator": "Proposition 5, Section 1.1"
+    },
+    {
+      "n": 7,
+      "subject": "compact real form of f4",
+      "relation": "equivalent-to",
+      "object": "isom(OP^2)",
+      "modality": "stated",
+      "locator": "Theorem 5"
+    },
+    {
+      "n": 8,
+      "subject": "alternative algebra",
+      "relation": "defines",
+      "object": "algebra whose subalgebra generated by any two elements is associative",
+      "modality": "stated",
+      "locator": "Section 1.1"
+    },
+    {
+      "n": 9,
+      "subject": "Proposition 2",
+      "relation": "equivalent-to",
+      "object": "A is real (and thus commutative) iff A' is commutative",
+      "modality": "stated",
+      "locator": "Proposition 2, Section 1.1"
+    },
+    {
+      "n": 10,
+      "subject": "4-dimensional algebra with i^2 = -1 + εj",
+      "relation": "counterexample-to",
+      "object": "the claim that every division algebra has multiplicative inverses",
+      "modality": "stated",
+      "locator": "Section 1.1"
+    },
+    {
+      "n": 11,
+      "subject": "Theorem 2",
+      "relation": "proves",
+      "object": "R, C, H and O are the only alternative division algebras",
+      "modality": "stated",
+      "locator": "Theorem 2, Section 1.1"
+    },
+    {
+      "n": 12,
+      "subject": "compact real form of f4",
+      "relation": "equivalent-to",
+      "object": "so(O) ⊕ O^3",
+      "modality": "stated",
+      "locator": "Theorem 5"
+    },
+    {
+      "n": 13,
+      "subject": "compact real form of e6",
+      "relation": "equivalent-to",
+      "object": "der(h3(O)) ⊕ sh3(O)",
+      "modality": "stated",
+      "locator": "Theorem 6"
+    },
+    {
+      "n": 14,
+      "subject": "alternative algebra",
+      "relation": "equivalent-to",
+      "object": "identities (aa)b = a(ab), (ab)a = a(ba), (ba)a = b(aa) for all a, b",
+      "modality": "cited",
+      "locator": "Section 1.1, equation (1) (Artin [84])"
+    },
+    {
+      "n": 15,
+      "subject": "Theorem 3",
+      "relation": "proves",
+      "object": "all division algebras have dimension 1, 2, 4, or 8",
+      "modality": "cited",
+      "locator": "Theorem 3"
+    },
+    {
+      "n": 16,
+      "subject": "compact real form of e8",
+      "relation": "equivalent-to",
+      "object": "so(O) ⊕ so(O) ⊕ (O⊗O)^3",
+      "modality": "stated",
+      "locator": "Theorem 8"
+    },
+    {
+      "n": 17,
+      "subject": "Proposition 3",
+      "relation": "proves",
+      "object": "A is commutative and associative iff A' is associative",
+      "modality": "stated",
+      "locator": "Proposition 3"
+    },
+    {
+      "n": 18,
+      "subject": "Theorem 1",
+      "relation": "proves",
+      "object": "R, C, H, and O are the only normed division algebras",
+      "modality": "cited",
+      "locator": "Theorem 1"
+    },
+    {
+      "n": 19,
+      "subject": "Proposition 5",
+      "relation": "proves",
+      "object": "A is nicely normed iff A' is nicely normed",
+      "modality": "stated",
+      "locator": "Proposition 5"
+    },
+    {
+      "n": 20,
+      "subject": "Zorn's theorem (1930)",
+      "relation": "proves",
+      "object": "R, C, H and O are the only alternative division algebras",
+      "modality": "cited",
+      "locator": "Section 1.1, Theorem 2 (attribution to [100])"
+    }
+  ]
+}

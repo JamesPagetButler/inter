@@ -1,0 +1,168 @@
+{
+  "paper_id": "W7168273025",
+  "domain": "math",
+  "text_cache_sha256": "8b969182310d7a0926ad08c5fd38c4f906c5db40d6b3938d6c3c3ecea96dd7cd",
+  "text": "We provide a partially functorial and constructive reconstruction procedure for formal schemes from symmetric monoidal categories of nuclear modules. More precisely, for a formal scheme $\\mathfrak{X}$, we show that the torsion subcategory $D_{\\mathrm{tors}}(\\mathfrak{X})$ can be recovered as the maximal strongly compactly generated localizing tensor ideal of Efimov's category $\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})$, and similarly for the Clausen--Scholze category $\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X})$. Combining this with the Balmer spectrum, we reconstruct $\\mathfrak{X}$ from the corresponding symmetric monoidal category of nuclear modules. Moreover, for formal schemes topologically of finite type over a field or over $\\mathbb{Z}$, the contravariant functor $\\mathfrak{X} \\mapsto \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})$ is fully faithful; in the affine case, the analogous statement holds for $\\mathfrak{X} \\mapsto \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X})$.\n\n1 Introduction The aim of this paper is to establish a reconstruction result for formal schemes from Efimov’s and Clausen–Scholze categories of nuclear modules. For a formal scheme 𝔛 \\mathfrak{X} , let Nuc Ef ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}) denote Efimov’s category of nuclear modules [ 8 ] , and let Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) denote the Clausen–Scholze category of nuclear modules in the sense of [ 13 , 1 , 2 ] . For an ∞ \\infty -category C C , we denote its homotopy category by Ho ⁡ ( C ) \\mathrm{Ho}(C) . Theorem 1.1 (Corollary 5.2 ) . Let 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} be Noetherian formal schemes. (1). If there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc Ef ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc Ef ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} . (2). If 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} are affine, and there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc CS ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc CS ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} . Moreover, we give a partially functorial and constructive reconstruction. The proof is roughly as follows. First, we recover the derived category D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) of torsion modules from the nuclear categories Nuc Ef ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}) and Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) . More precisely, D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) is recovered as a certain maximal strongly compactly generated localizing ideal. Next, we recover the formal scheme 𝔛 \\mathfrak{X} itself from D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) by using a slight modification of Balmer’s tensor triangular spectrum. We also discuss a second reconstruction method in the spirit of Liu’s functorial spectrum [ 9 ] . Instead of first extracting D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) , this method uses field-valued points of the nuclear category. It yields the following full faithfulness result. Let k k be a commutative ring. Let fin . FSch k \\mathrm{fin.FSch}_{k} be the category of formal schemes topologically of finite type over k k , and let fin . aff . FSch k \\mathrm{fin.aff.FSch}_{k} be the category of affine formal schemes topologically of finite type over k k . Let Cat st dual \\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}} be the ∞ \\infty -category of dualizable presentable stable ∞ \\infty -categories and functors which admit two successive right adjoints. Let CAlg k ​ ( Cat st dual ) \\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}}) be the ∞ \\infty -category of commutative algebra objects in Cat st dual \\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}} under D ⁡ ( k ) D(k) . Theorem 1.2 . Let k = 𝐙 k=\\mathbf{Z} or a field. The following functors are fully faithful: ( fin . FSch k ) op \\displaystyle(\\mathrm{fin.FSch}_{k})^{\\mathrm{op}} → CAlg k ​ ( Cat st dual ) : 𝔛 ↦ Nuc Ef ​ ( 𝔛 ) , \\displaystyle\\to\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}}):\\mathfrak{X}\\mapsto\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}), ( fin . aff . FSch k ) op \\displaystyle(\\mathrm{fin.aff.FSch}_{k})^{\\mathrm{op}} → CAlg k ​ ( Cat st dual ) : 𝔛 ↦ Nuc CS ​ ( 𝔛 ) . \\displaystyle\\to\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}}):\\mathfrak{X}\\mapsto\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}). We prove this in a more general form in Theorem 6.7 . In Section 2, we introduce notation and recall basic properties of triangulated categories, tensor triangulated categories, and categories associated with formal schemes. In Section 3, we prove that the maximal strongly compactly generated localizing ideals of Nuc Ef ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}) and Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) are given by the derived category of torsion modules D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) . In Section 4, we introduce a modification of Balmer’s tensor triangular spectrum and apply it to D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) . Since the unit object of D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) is not compact, we need to slightly modify the usual definition. We also prove the functoriality needed later. In Section 5, we give a partially functorial and constructive reconstruction of formal schemes. In Section 6, we give another approach to reconstruction and, as a consequence, prove the full faithfulness of the functors Nuc Ef \\mathrm{Nuc}^{\\mathrm{Ef}} and Nuc CS \\mathrm{Nuc}^{\\mathrm{CS}} . Assumptions and Notation We assume the existence of a Grothendieck universe. All rings are assumed to be commutative and unital. All formal schemes are assumed to be quasi-compact and quasi-separated and to admit a finitely generated ideal of definition locally. Unless otherwise specified, all triangulated categories are assumed to admit small coproducts and to be well generated. By an ∞ \\infty -category, we mean an ( ∞ , 1 ) (\\infty,1) -category. We regard ordinary categories and ( 2 , 1 ) (2,1) -categories as ∞ \\infty -categories in the usual way. For a functor F F , we denote its right adjoint, when it exists, by F R F^{\\mathrm{R}} .\n\nTheorem 1.1 (Corollary 5.2 ): Let 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} be Noetherian formal schemes. (1). If there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc Ef ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc Ef ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} . (2). If 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} are affine, and there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc CS ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc CS ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} .\n\nTheorem 1.2: Let k = 𝐙 k=\\mathbf{Z} or a field. The following functors are fully faithful: ( fin . FSch k ) op \\displaystyle(\\mathrm{fin.FSch}_{k})^{\\mathrm{op}} → CAlg k ​ ( Cat st dual ) : 𝔛 ↦ Nuc Ef ​ ( 𝔛 ) , \\displaystyle\\to\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}}):\\mathfrak{X}\\mapsto\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}), ( fin . aff . FSch k ) op \\displaystyle(\\mathrm{fin.aff.FSch}_{k})^{\\mathrm{op}} → CAlg k ​ ( Cat st dual ) : 𝔛 ↦ Nuc CS ​ ( 𝔛 ) . \\displaystyle\\to\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}}):\\mathfrak{X}\\mapsto\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}).\n\nDefinition 2.1: Let T T be a tt-category. A localizing ideal I I is called strongly compactly generated if it is compactly generated as a localizing subcategory.\n\nLemma 2.2: Let T T be a tt-category. There exists a unique maximal strongly compactly generated localizing ideal I I .\n\nDefinition 2.3: For a tt-category T T , we denote the maximal strongly compactly generated localizing ideal of T T by T mcg T^{\\mathrm{mcg}} .\n\nLemma 2.4: Let T T be a tt-category such that T ω ⊗ T ω ⊂ T ω T^{\\omega}\\otimes T^{\\omega}\\subset T^{\\omega} , 1 T ∈ T ω 1_{T}\\in T^{\\omega} , and T ω T^{\\omega} is rigid, that is, every object of T ω T^{\\omega} is dualizable. Then any strongly compactly generated localizing ideal of T T is a smashing ideal.\n\nDefinition 2.5 ( [ 7 , Definitions 8.5] ): Let C C be a compactly generated tt- ∞ \\infty -category. An object x ∈ C x\\in C is called nuclear if, for every compact object c ∈ C c\\in C , the natural map RHom ⁡ ( c , 1 C ) ⊗ x → RHom ⁡ ( c , x ) \\operatorname{RHom}(c,1_{C})\\otimes x\\to\\operatorname{RHom}(c,x) is an isomorphism. The full subcategory of nuclear objects in C C is denoted by Nuc ⁡ ( C ) \\mathrm{Nuc}(C) .\n\nDefinition 2.6: Let E E be a locally rigid tt- ∞ \\infty -category ( [ 3 , Definition C.1.1] ) whose unit object 1 E 1_{E} is ω 1 \\omega_{1} -compact. Define E rig = Nuc ⁡ ( Ind ⁡ ( E ω 1 ) ) E^{\\mathrm{rig}}=\\mathrm{Nuc}(\\mathrm{Ind}(E^{\\omega_{1}})) .\n\nDefinition 2.7 (see [ 8 ] ): For a formal scheme 𝔛 \\mathfrak{X} , define Nuc Ef ​ ( 𝔛 ) = D tors ​ ( 𝔛 ) rig \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})=D_{\\mathrm{tors}}(\\mathfrak{X})^{\\mathrm{rig}} .\n\nProposition 2.8: For formal schemes, the assignment 𝔛 ↦ Nuc Ef ​ ( 𝔛 ) \\mathfrak{X}\\mapsto\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}) satisfies Zariski descent in Pr st L \\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}} . Moreover, for every open subset U ⊂ 𝔛 U\\subset\\mathfrak{X} , the restriction functor Nuc Ef ​ ( 𝔛 ) → Nuc Ef ​ ( U ) \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})\\to\\mathrm{Nuc}^{\\mathrm{Ef}}(U) is a quotient functor and its kernel is a smashing ideal.\n\nDefinition 2.9 ( [ 8 , Proposition 7.5] ): For a Noetherian affine formal scheme U = Spf ⁡ ( R I ∧ ) U=\\mathrm{Spf}(R_{I}^{\\wedge}) , define Nuc CS ​ ( U ) = Nuc ⁡ ( D ⁡ ( ( Proj R I ∧ ω 1 , cpl ) op ​ - ​ Mod ) ) \\mathrm{Nuc}^{\\mathrm{CS}}(U)=\\mathrm{Nuc}(D((\\mathrm{Proj}^{\\omega_{1},\\mathrm{cpl}}_{R_{I}^{\\wedge}})^{\\mathrm{op}}\\text{-}\\mathrm{Mod})) . For a Noetherian formal scheme 𝔛 \\mathfrak{X} , define Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) by Zariski descent.\n\nLemma 3.1: Let U = Spf ⁡ ( R I ∧ ) U=\\mathrm{Spf}(R_{I}^{\\wedge}) be a Noetherian affine formal scheme, let F ∈ D I ​ - ​ tors ​ ( R I ∧ ) F\\in D_{{I}\\text{-}\\mathrm{tors}}(R_{I}^{\\wedge}) , and let x ∈ Nuc Ef ​ ( U ) x\\in\\mathrm{Nuc}^{\\mathrm{Ef}}(U) . Then ρ ⁡ ( F ) ⊗ x \\rho(F)\\otimes x lies in the essential image of D I ​ - ​ tors ​ ( R I ∧ ) D_{{I}\\text{-}\\mathrm{tors}}(R_{I}^{\\wedge}) .\n\nLemma 3.2: Let U = Spf ⁡ ( R I ∧ ) U=\\mathrm{Spf}(R_{I}^{\\wedge}) be a Noetherian affine formal scheme, and let F ∈ D ⁡ ( R I ∧ ) F\\in D(R_{I}^{\\wedge}) . Assume that, for every x ∈ Nuc CS ​ ( U ) x\\in\\mathrm{Nuc}^{\\mathrm{CS}}(U) , the object ρ ⁡ ( F ) ⊗ x \\rho(F)\\otimes x lies in the essential image of ρ \\rho . Then F ∈ D I ​ - ​ tors ​ ( R I ∧ ) F\\in D_{{I}\\text{-}\\mathrm{tors}}(R_{I}^{\\wedge}) .\n\nTheorem 3.3: Let 𝔛 \\mathfrak{X} be a Noetherian formal scheme. Then Nuc Ef ​ ( 𝔛 ) mcg ≅ D tors ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})^{\\mathrm{mcg}}\\cong D_{\\mathrm{tors}}(\\mathfrak{X}) . Moreover, D tors ​ ( 𝔛 ) D_{\\mathrm{tors}}(\\mathfrak{X}) is a strongly compactly generated localizing ideal of Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) . If there exists an affine open covering { U i } i \\{U_{i}\\}_{i} of 𝔛 \\mathfrak{X} such that each restriction functor Nuc CS ​ ( 𝔛 ) → Nuc CS ​ ( U i ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X})\\to\\mathrm{Nuc}^{\\mathrm{CS}}(U_{i}) is a quotient functor, then Nuc CS ​ ( 𝔛 ) mcg ≅ D tors ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X})^{\\mathrm{mcg}}\\cong D_{\\mathrm{tors}}(\\mathfrak{X}) .\n\nLemma 3.4: Let U = Spf ⁡ ( A I ∧ ) U=\\mathrm{Spf}(A_{I}^{\\wedge}) be a Noetherian affine formal scheme, and let A → B A\\to B be a homomorphism of rings which factors through A / I m A/I^{m} for some m ≥ 1 m\\geq 1 . Then Nuc CS ​ ( U ) ⊗ D ⁡ ( A I ∧ ) D ⁡ ( B ) ≅ Nuc Ef ​ ( U ) ⊗ D ⁡ ( A I ∧ ) D ⁡ ( B ) ≅ D ⁡ ( B ) . \\mathrm{Nuc}^{\\mathrm{CS}}(U)\\otimes_{D(A_{I}^{\\wedge})}D(B)\\cong\\mathrm{Nuc}^{\\mathrm{Ef}}(U)\\otimes_{D(A_{I}^{\\wedge})}D(B)\\cong D(B).\n\nDefinition 4.1: We say that a tt-category T T is weakly compactly generated if it is compactly generated as a localizing subcategory of itself and T ω ⊗ T ω ⊂ T ω T^{\\omega}\\otimes T^{\\omega}\\subset T^{\\omega} . If, moreover, 1 T 1_{T} is compact, then T T is called a compactly generated tt-category.\n\nDefinition 4.2: Let I ⊂ T I\\subset T be a compactly generated localizing ideal. We say that I I is prime if I ≠ T I\\neq T and a ⊗ b ∉ I a\\otimes b\\notin I for all a , b ∈ T ω ∖ I ω a,b\\in T^{\\omega}\\setminus I^{\\omega} .\n\nDefinition 4.3: For a subset U ⊂ Spc ⁡ ( T ) U\\subset\\mathrm{Spc}(T) , we set I U = ⟨ a ∈ T ω ∣ Supp ( a ) ∩ U = ∅ ⟩ , T U = Idem ( T / I U ) . I_{U}=\\langle{a\\in T^{\\omega}\\mid\\mathrm{Supp}(a)\\cap U=\\emptyset}\\rangle,\\quad T_{U}=\\mathrm{Idem}(T/I_{U}). Here Idem \\mathrm{Idem} denotes idempotent completion.\n\nDefinition 4.4: The ringed space Spec ⁡ ( T ) = ( Spc ⁡ ( T ) , 𝒪 T ) \\mathrm{Spec}(T)=(\\mathrm{Spc}(T),\\mathcal{O}_{T}) is called the Balmer spectrum of a weakly compactly generated tt-category T T .\n\nRemark 4.5: If T T is a compactly generated tt-category, then our spectrum coincides with the usual Balmer spectrum of T ω T^{\\omega} .\n\nDefinition 4.6: Let T , T ′ T,T^{\\prime} be weakly compactly generated tt-categories. A homomorphism F : T → T ′ F:T\\to T^{\\prime} of tt-categories is called cg-preserving if, for every a ∈ T ω a\\in T^{\\omega} , the localizing ideal ⟨ F ⁡ ( a ) ⟩ ⊗ \\langle{F(a)}\\rangle_{\\otimes} is weakly finitely compactly generated.\n\nProposition 4.7: Let F : T → T ′ F:T\\to T^{\\prime} be a cg-preserving homomorphism of weakly compactly generated tt-categories. Then there is a natural morphism of ringed spaces Spec ⁡ ( T ′ ) → Spec ⁡ ( T ) : Q ↦ ⟨ { a ∈ T ω ∣ F ⁡ ( a ) ∈ Q } ⟩ . \\mathrm{Spec}(T^{\\prime})\\to\\mathrm{Spec}(T):Q\\mapsto\\langle{\\{a\\in T^{\\omega}\\mid F(a)\\in Q\\}}\\rangle. Moreover, this construction defines a contravariant functor Spec : ( tt ​ - ​ Cat wcg ) op → LocSpaces . \\mathrm{Spec}:(\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{wcg}})^{\\mathrm{op}}\\to\\mathrm{LocSpaces}.\n\nProposition 4.8: Let T T be a weakly compactly generated tt-category, and let I ⊂ T I\\subset T be a weakly finitely compactly generated smashing ideal. Then I I is a weakly compactly generated tt-category, and the right adjoint ι I R : T → I \\iota_{I}^{\\mathrm{R}}:T\\to I of the inclusion is a cg-preserving homomorphism. The map Spc ⁡ ( ι I R ) : Spc ⁡ ( I ) → Spc ⁡ ( T ) \\mathrm{Spc}(\\iota_{I}^{\\mathrm{R}}):\\mathrm{Spc}(I)\\to\\mathrm{Spc}(T) is a closed embedding whose image is Supp ⁡ ( d ) \\mathrm{Supp}(d) , where d ∈ I d\\in I is a compact generator.\n\nExample 4.9 (cf. [ 5 , Proposition 3.11] ): Let T T be a weakly compactly generated tt-category, and let I ⊂ T I\\subset T be a compactly generated localizing ideal. Then the quotient T / I T/I is also a weakly compactly generated tt-category, and the quotient functor L I : T → T / I L_{I}:T\\to T/I is a cg-preserving homomorphism. The morphism Spec ⁡ ( L I ) : Spec ⁡ ( T / I ) → Spec ⁡ ( T ) \\mathrm{Spec}(L_{I}):\\mathrm{Spec}(T/I)\\to\\mathrm{Spec}(T) is an embedding whose image is Spc ⁡ ( T ) ∖ ⋃ a ∈ I ω Supp ⁡ ( a ) \\mathrm{Spc}(T)\\setminus\\bigcup_{a\\in I^{\\omega}}\\mathrm{Supp}(a) .\n\nTheorem 4.10: Let 𝔛 \\mathfrak{X} be a quasi-compact quasi-separated formal scheme. Assume that there exists an affine open cover { U i } \\{U_{i}\\} such that each U i U_{i} is isomorphic to Spf ⁡ ( R I ∧ ) \\mathrm{Spf}(R_{I}^{\\wedge}) for some ring R R and some ideal I I generated by a weakly proregular sequence (e.g., a Noetherian formal scheme). Then there is a natural isomorphism Spec ⁡ ( Ho ⁡ ( D tors ​ ( 𝔛 ) ) ) ≅ 𝔛 \\mathrm{Spec}(\\mathrm{Ho}(D_{\\mathrm{tors}}(\\mathfrak{X})))\\cong\\mathfrak{X} of ringed spaces.\n\nTheorem 5.1: The compositions of the following functors are the canonical inclusions: FSch op \\displaystyle\\mathrm{FSch}^{\\mathrm{op}} → Nuc Ef ​ tt ​ - ​ Cat ∞ mcg ​ - ​ fun ​ → Ho ​ tt ​ - ​ Cat mcg ​ - ​ fun ​ → ( − ) mcg ​ tt ​ - ​ Cat wcg ​ → Spec ​ LocSpaces op , \\displaystyle\\overset{\\mathrm{Nuc}^{\\mathrm{Ef}}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}_{\\infty}\\overset{\\mathrm{Ho}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}\\overset{(-)^{\\mathrm{mcg}}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{wcg}}\\overset{\\mathrm{Spec}}{\\to}{\\mathrm{LocSpaces}}^{\\mathrm{op}}, ( FSch qt ) op \\displaystyle(\\mathrm{FSch}^{\\mathrm{qt}})^{\\mathrm{op}} → Nuc CS ​ tt ​ - ​ Cat ∞ mcg ​ - ​ fun ​ → Ho ​ tt ​ - ​ Cat mcg ​ - ​ fun ​ → ( − ) mcg ​ tt ​ - ​ Cat wcg ​ → Spec ​ LocSpaces op . \\displaystyle\\overset{\\mathrm{Nuc}^{\\mathrm{CS}}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}_{\\infty}\\overset{\\mathrm{Ho}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}\\overset{(-)^{\\mathrm{mcg}}}{\\to}\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{wcg}}\\overset{\\mathrm{Spec}}{\\to}{\\mathrm{LocSpaces}}^{\\mathrm{op}}.\n\nCorollary 5.2: (1). Let 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} be Noetherian formal schemes. If there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc Ef ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc Ef ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} . (2). Let 𝔛 , 𝔜 ∈ FSch qt \\mathfrak{X},\\mathfrak{Y}\\in\\mathrm{FSch}^{\\mathrm{qt}} . If there is a symmetric monoidal triangulated equivalence Ho ⁡ ( Nuc CS ​ ( 𝔛 ) ) ≅ Ho ⁡ ( Nuc CS ​ ( 𝔜 ) ) \\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}))\\cong\\mathrm{Ho}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{Y})) , then 𝔛 ≅ 𝔜 \\mathfrak{X}\\cong\\mathfrak{Y} .\n\nCorollary 5.3: (1). The functor Nuc Ef : FSch op → tt ​ - ​ Cat ∞ mcg ​ - ​ fun \\mathrm{Nuc}^{\\mathrm{Ef}}:\\mathrm{FSch}^{\\mathrm{op}}\\to\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}_{\\infty} is fully faithful. (2). For any 𝔛 ∈ FSch qt \\mathfrak{X}\\in\\mathrm{FSch}^{\\mathrm{qt}} and 𝔜 ∈ FSch \\mathfrak{Y}\\in\\mathrm{FSch} , there is a natural equivalence Map tt ​ - ​ Cat ∞ mcg ​ - ​ fun ⁡ ( Nuc CS ​ ( 𝔛 ) , Nuc Ef ​ ( 𝔜 ) ) ≅ Hom ⁡ ( 𝔜 , 𝔛 ) . \\operatorname{Map}_{\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}_{\\infty}}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}),\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y}))\\cong\\operatorname{Hom}(\\mathfrak{Y},\\mathfrak{X}). (3). The functor Nuc CS : ( FSch qt ) op → tt ​ - ​ Cat ∞ mcg ​ - ​ fun \\mathrm{Nuc}^{\\mathrm{CS}}:(\\mathrm{FSch}^{\\mathrm{qt}})^{\\mathrm{op}}\\to\\mathrm{tt}\\text{-}\\mathrm{Cat}^{\\mathrm{mcg}\\text{-}\\mathrm{fun}}_{\\infty} is fully faithful.\n\nDefinition 6.1: Let k k be a ring, and let 𝔛 \\mathfrak{X} be a k k -formal scheme. We say that 𝔛 \\mathfrak{X} is nearly of < 𝔠 <\\mathfrak{c} -type if, for every point x ∈ 𝔛 x\\in\\mathfrak{X} , one has tr . deg k ​ ( κ ⁡ ( x ) ) < 𝔠 \\mathrm{tr.deg}_{k}(\\kappa(x))<\\mathfrak{c} .\n\nLemma 6.2: Let k k be 𝐙 \\mathbf{Z} , respectively a field, let R R be a k k -algebra, let I ⊂ R I\\subset R be an ideal, and let 𝔭 ⊂ R I ∧ \\mathfrak{p}\\subset R_{I}^{\\wedge} be a prime ideal. If tr . deg k ​ κ ​ ( 𝔭 ) < 𝔠 \\mathrm{tr.deg}_{k}\\kappa(\\mathfrak{p})<\\mathfrak{c} , then I ⊂ 𝔭 I\\subset\\mathfrak{p} .\n\nLemma 6.3: Let D , E ∈ CAlg ⁡ ( Pr st L ) D,E\\in\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}}) , and let I ⊂ D I\\subset D be a smashing ideal. Assume that, for x , y ∈ E x,y\\in E , x ⊗ y ≅ 0 x\\otimes y\\cong 0 implies x ≅ 0 x\\cong 0 or y ≅ 0 y\\cong 0 . Then Map CAlg ⁡ ( Pr st L ) ⁡ ( D , E ) ≅ Map CAlg ⁡ ( Pr st L ) ⁡ ( D / I , E ) ​ ∐ Map CAlg ⁡ ( Pr st L ) ⁡ ( I , E ) . \\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D,E)\\cong\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D/I,E)\\coprod\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(I,E).\n\nLemma 6.4: Let D , E D,E be as in Lemma 6.3 . Let I 1 , I 2 ⊂ D I_{1},I_{2}\\subset D be smashing ideals, let I 3 = ⟨ I 1 , I 2 ⟩ ⊗ I_{3}=\\langle{I_{1},I_{2}}\\rangle_{\\otimes} , and let e i → 1 D e_{i}\\to 1_{D} be the corresponding left idempotents for i = 1 , 2 , 3 i=1,2,3 . Assume that e 1 ⊗ e 2 ≅ 0 e_{1}\\otimes e_{2}\\cong 0 . Then the following diagram is coCartesian: Map CAlg ⁡ ( Pr st L ) ⁡ ( D / I 3 , E ) \\textstyle{\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D/I_{3},E)\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} Map CAlg ⁡ ( Pr st L ) ⁡ ( D / I 2 , E ) \\textstyle{\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D/I_{2},E)\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} Map CAlg ⁡ ( Pr st L ) ⁡ ( D / I 1 , E ) \\textstyle{\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D/I_{1},E)\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} Map CAlg ⁡ ( Pr st L ) ⁡ ( D , E ) . \\textstyle{\\operatorname{Map}_{\\mathrm{CAlg}(\\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}})}(D,E).}\n\nTheorem 6.5: Let k k be 𝐙 \\mathbf{Z} or a field, and let 𝔛 \\mathfrak{X} be a Noetherian formal scheme over k k . Then the map of sets ϕ : { x ∈ 𝔛 ∣ tr . deg k ( κ ( x ) ) < 𝔠 } → π 0 ( ( Fld k ) Nuc Ef ( 𝔛 ) / ) : x ↦ ( Nuc Ef ( 𝔛 ) → Nuc Ef ( κ ( x ) ) ≅ D ( κ ( x ) ) ) \\phi:\\{x\\in\\mathfrak{X}\\mid\\mathrm{tr.deg}_{k}(\\kappa(x))<\\mathfrak{c}\\}\\to\\pi_{0}((\\mathrm{Fld}_{k})_{\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})/}):x\\mapsto(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})\\to\\mathrm{Nuc}^{\\mathrm{Ef}}(\\kappa(x))\\cong D(\\kappa(x))) is bijective. If 𝔛 ∈ FSch k sq \\mathfrak{X}\\in\\mathrm{FSch}^{\\mathrm{sq}}_{k} , the same assertion holds for Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) .\n\nCorollary 6.6: Let k k be 𝐙 \\mathbf{Z} or a field, and let 𝔛 \\mathfrak{X} be a Noetherian formal scheme over k k . Then D tors ( 𝔛 ) ⟂ ⊂ ⋂ F ∈ ( Fld k ) Nuc Ef ( 𝔛 ) / Ker ( F ) . D_{\\mathrm{tors}}(\\mathfrak{X})^{\\perp}\\subset\\bigcap_{F\\in(\\mathrm{Fld}_{k})_{\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X})/}}\\mathrm{Ker}(F). If 𝔛 \\mathfrak{X} is nearly of < 𝔠 <\\mathfrak{c} -type over k k , then equality holds. If 𝔛 ∈ FSch k sq \\mathfrak{X}\\in\\mathrm{FSch}^{\\mathrm{sq}}_{k} , the same assertion holds for Nuc CS ​ ( 𝔛 ) \\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}) .\n\nTheorem 6.7: Let k k be 𝐙 \\mathbf{Z} or a field, and let 𝔛 , 𝔜 \\mathfrak{X},\\mathfrak{Y} be Noetherian formal schemes over k k . Assume that 𝔜 \\mathfrak{Y} is nearly of < 𝔠 <\\mathfrak{c} -type over k k . Then Map CAlg k ​ ( Cat st dual ) ⁡ ( Nuc Ef ​ ( 𝔛 ) , Nuc Ef ​ ( 𝔜 ) ) ≅ Hom ⁡ ( 𝔜 , 𝔛 ) . \\operatorname{Map}_{\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}})}(\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{X}),\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y}))\\cong\\operatorname{Hom}(\\mathfrak{Y},\\mathfrak{X}). Moreover, if 𝔛 ∈ FSch k sq \\mathfrak{X}\\in\\mathrm{FSch}^{\\mathrm{sq}}_{k} , then Map CAlg k ​ ( Cat st dual ) ⁡ ( Nuc CS ​ ( 𝔛 ) , Nuc Ef ​ ( 𝔜 ) ) ≅ Hom ⁡ ( 𝔜 , 𝔛 ) . \\operatorname{Map}_{\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}})}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}),\\mathrm{Nuc}^{\\mathrm{Ef}}(\\mathfrak{Y}))\\cong\\operatorname{Hom}(\\mathfrak{Y},\\mathfrak{X}). If 𝔛 , 𝔜 ∈ FSch k sq \\mathfrak{X},\\mathfrak{Y}\\in\\mathrm{FSch}^{\\mathrm{sq}}_{k} , then Map CAlg k ​ ( Cat st dual ) ⁡ ( Nuc CS ​ ( 𝔛 ) , Nuc CS ​ ( 𝔜 ) ) ≅ Hom ⁡ ( 𝔜 , 𝔛 ) . \\operatorname{Map}_{\\mathrm{CAlg}_{k}(\\mathrm{Cat}^{\\mathrm{dual}}_{\\mathrm{st}})}(\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{X}),\\mathrm{Nuc}^{\\mathrm{CS}}(\\mathfrak{Y}))\\cong\\operatorname{Hom}(\\mathfrak{Y},\\mathfrak{X}).\n\nLemma A.1: Let F : C → D F:C\\to D be a homomorphism of tt- ∞ \\infty -categories. Assume that F F is essentially surjective and that there exists a right idempotent γ : 1 C → f \\gamma:1_{C}\\to f in C C such that F R ​ F ​ ( x ) ≅ x ⊗ f F^{\\mathrm{R}}F(x)\\cong x\\otimes f naturally in x ∈ C x\\in C , and such that, under this equivalence, the unit map x → F R ​ F ​ ( x ) x\\to F^{\\mathrm{R}}F(x) is identified with x ⊗ γ : x → x ⊗ f x\\otimes\\gamma:x\\to x\\otimes f . Then F F is a quotient functor and its kernel is a smashing ideal.\n\nLemma A.2: Let C C be a tt- ∞ \\infty -category. Let I I be a smashing ideal in C C . Then, for any x , y ∈ C x,y\\in C , there is a natural isomorphism RHom I ⁡ ( ι I R ​ ( x ) , ι I R ​ ( y ) ) ≅ ι I R ​ RHom C ⁡ ( x , y ) \\operatorname{RHom}_{I}(\\iota_{I}^{\\mathrm{R}}(x),\\iota_{I}^{\\mathrm{R}}(y))\\cong\\iota_{I}^{\\mathrm{R}}\\operatorname{RHom}_{C}(x,y) .\n\nProposition A.3: Let C C be a small symmetric monoidal stable ∞ \\infty -category, let γ : 1 C → f \\gamma:1_{C}\\to f be a right idempotent in C C , let I = { x ∈ C ∣ x ⊗ f ≅ 0 } I=\\{x\\in C\\mid x\\otimes f\\cong 0\\} be the corresponding thick ideal, let L : C → C / I L:C\\to C/I be the quotient functor, and let Nuc ⁡ ( Ind ⁡ ( L ) ) : Nuc ⁡ ( Ind ⁡ ( C ) ) → Nuc ⁡ ( Ind ⁡ ( C / I ) ) \\mathrm{Nuc}(\\mathrm{Ind}(L)):\\mathrm{Nuc}(\\mathrm{Ind}(C))\\to\\mathrm{Nuc}(\\mathrm{Ind}(C/I)) be the induced functor. Assume that, for every x ∈ C x\\in C , the object RHom Ind ⁡ ( C op ) ⁡ ( x op , 1 ) \\operatorname{RHom}_{\\mathrm{Ind}(C^{\\mathrm{op}})}(x^{\\mathrm{op}},1) is nuclear in Ind ⁡ ( C op ) \\mathrm{Ind}(C^{\\mathrm{op}}) . Then Nuc ⁡ ( Ind ⁡ ( L ) ) \\mathrm{Nuc}(\\mathrm{Ind}(L)) is a quotient functor and its kernel is a smashing ideal. The corresponding right idempotent is ν C ​ ( f ) \\nu_{C}(f) , where ν C \\nu_{C} is the right adjoint of the inclusion Nuc ⁡ ( Ind ⁡ ( C ) ) → Ind ⁡ ( C ) \\mathrm{Nuc}(\\mathrm{Ind}(C))\\to\\mathrm{Ind}(C) .\n\nCorollary A.4: Let E E be a locally rigid symmetric monoidal stable ∞ \\infty -category with ω 1 \\omega_{1} -compact unit object 1 E 1_{E} , and let I ⊂ E I\\subset E be a smashing ideal with corresponding right idempotent γ : 1 E → f \\gamma:1_{E}\\to f . Assume that f f is ω 1 \\omega_{1} -compact. Then E rig → ( E / I ) rig E^{\\mathrm{rig}}\\to(E/I)^{\\mathrm{rig}} is a quotient functor and its kernel is a smashing ideal. The corresponding right idempotent is Λ E ​ ( γ ) \\Lambda_{E}(\\gamma) .\n\nProposition A.5: Let E E be a locally rigid symmetric monoidal stable ∞ \\infty -category with ω 1 \\omega_{1} -compact unit object 1 E 1_{E} , and let I 1 , I 2 ⊂ E I_{1},I_{2}\\subset E be smashing ideals with corresponding right idempotents γ 1 : 1 E → f 1 \\gamma_{1}:1_{E}\\to f_{1} and γ 2 : 1 E → f 2 \\gamma_{2}:1_{E}\\to f_{2} . Assume that f 1 f_{1} and f 2 f_{2} are ω 1 \\omega_{1} -compact and that I 1 ∩ I 2 = 0 I_{1}\\cap I_{2}=0 . Let I 3 = ⟨ I 1 , I 2 ⟩ ⊗ I_{3}=\\langle{I_{1},I_{2}}\\rangle_{\\otimes} . Then the following diagram is Cartesian in Pr st L \\mathrm{Pr}^{\\mathrm{L}}_{\\mathrm{st}} : E rig \\textstyle{E^{\\mathrm{rig}}\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} ( E / I 2 ) rig \\textstyle{(E/I_{2})^{\\mathrm{rig}}\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} ( E / I 1 ) rig \\textstyle{(E/I_{1})^{\\mathrm{rig}}\\ignorespaces\\ignorespaces\\ignorespaces\\ignorespaces} ( E / I 3 ) rig . \\textstyle{(E/I_{3})^{\\mathrm{rig}}.}",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "Spec(Ho(D_tors(X)))",
+      "relation": "proves",
+      "object": "natural isomorphism of ringed spaces Spec(Ho(D_tors(X))) ≅ X for quasi-compact quasi-separated formal schemes with weakly proregular affine cover",
+      "modality": "stated",
+      "locator": "Theorem 4.10"
+    },
+    {
+      "n": 2,
+      "subject": "Corollary 5.2",
+      "relation": "proves",
+      "object": "for X, Y in FSch^qt, Ho(Nuc^CS(X)) ≅ Ho(Nuc^CS(Y)) as symmetric monoidal triangulated categories implies X ≅ Y",
+      "modality": "stated",
+      "locator": "Corollary 5.2(2)"
+    },
+    {
+      "n": 3,
+      "subject": "Definition 2.5",
+      "relation": "defines",
+      "object": "nuclear object x in a compactly generated tt-∞-category C (RHom(c,1_C) ⊗ x → RHom(c,x) is an isomorphism for every compact c)",
+      "modality": "stated",
+      "locator": "Definition 2.5"
+    },
+    {
+      "n": 4,
+      "subject": "Nuc^CS: (FSch^qt)^op -> tt-Cat^{mcg-fun}_infty",
+      "relation": "proves",
+      "object": "the functor Nuc^CS is fully faithful",
+      "modality": "stated",
+      "locator": "Corollary 5.3(3)"
+    },
+    {
+      "n": 5,
+      "subject": "Proposition 4.7",
+      "relation": "defines",
+      "object": "contravariant functor Spec: (tt-Cat^wcg)^op → LocSpaces",
+      "modality": "stated",
+      "locator": "Proposition 4.7"
+    },
+    {
+      "n": 6,
+      "subject": "Theorem 1.1",
+      "relation": "equivalent-to",
+      "object": "Corollary 5.2",
+      "modality": "stated",
+      "locator": "Theorem 1.1"
+    },
+    {
+      "n": 7,
+      "subject": "Nuc(C)",
+      "relation": "defines",
+      "object": "full subcategory of nuclear objects of a compactly generated tt-infinity-category C",
+      "modality": "stated",
+      "locator": "Definition 2.5"
+    },
+    {
+      "n": 8,
+      "subject": "Proposition 4.7",
+      "relation": "proves",
+      "object": "a cg-preserving homomorphism F: T → T' of weakly compactly generated tt-categories induces a natural morphism of ringed spaces Spec(T') → Spec(T)",
+      "modality": "stated",
+      "locator": "Proposition 4.7"
+    },
+    {
+      "n": 9,
+      "subject": "Theorem 1.2 (affine case)",
+      "relation": "proves",
+      "object": "X -> Nuc^CS(X) is fully faithful on (fin.aff.FSch_k)^op for k = Z or a field",
+      "modality": "stated",
+      "locator": "Theorem 1.2"
+    },
+    {
+      "n": 10,
+      "subject": "Corollary 5.2 (reconstruction from Ho(Nuc^CS))",
+      "relation": "proves",
+      "object": "X ≅ Y from symmetric monoidal triangulated equivalence Ho(Nuc^CS(X)) ≅ Ho(Nuc^CS(Y))",
+      "modality": "stated",
+      "locator": "Corollary 5.2(2)"
+    },
+    {
+      "n": 11,
+      "subject": "Theorem 1.2",
+      "relation": "proves",
+      "object": "For k = Z or a field, the functor (fin.FSch_k)^op → CAlg_k(Cat^dual_st), X ↦ Nuc^Ef(X), is fully faithful",
+      "modality": "stated",
+      "locator": "Theorem 1.2"
+    },
+    {
+      "n": 12,
+      "subject": "Theorem 3.3",
+      "relation": "proves",
+      "object": "D_tors(X) is a strongly compactly generated localizing ideal of Nuc^CS(X)",
+      "modality": "stated",
+      "locator": "Theorem 3.3"
+    },
+    {
+      "n": 13,
+      "subject": "Proposition 2.8",
+      "relation": "proves",
+      "object": "Zariski descent of X -> Nuc^Ef(X) in Pr^L_st, and restriction to open U is a quotient functor with smashing kernel",
+      "modality": "stated",
+      "locator": "Proposition 2.8"
+    },
+    {
+      "n": 14,
+      "subject": "Definition 4.4",
+      "relation": "defines",
+      "object": "Balmer spectrum Spec(T) = (Spc(T), O_T) of a weakly compactly generated tt-category T",
+      "modality": "stated",
+      "locator": "Definition 4.4"
+    },
+    {
+      "n": 15,
+      "subject": "Theorem 6.7",
+      "relation": "proves",
+      "object": "Map_{CAlg_k(Cat^dual_st)}(Nuc^CS(X), Nuc^CS(Y)) ≅ Hom(Y, X) for X, Y in FSch^sq_k",
+      "modality": "stated",
+      "locator": "Theorem 6.7"
+    },
+    {
+      "n": 16,
+      "subject": "Lemma A.1",
+      "relation": "proves",
+      "object": "a homomorphism with a right idempotent satisfying the stated unit identification is a quotient functor with smashing kernel",
+      "modality": "stated",
+      "locator": "Lemma A.1"
+    },
+    {
+      "n": 17,
+      "subject": "Theorem 6.5",
+      "relation": "proves",
+      "object": "bijection between points x with tr.deg_k κ(x) < c and π_0 of field-valued objects under Nuc^Ef(X)",
+      "modality": "stated",
+      "locator": "Theorem 6.5"
+    },
+    {
+      "n": 18,
+      "subject": "Theorem 1.2",
+      "relation": "proves",
+      "object": "For k = Z or a field, the functor (fin.aff.FSch_k)^op → CAlg_k(Cat^dual_st), X ↦ Nuc^CS(X), is fully faithful",
+      "modality": "stated",
+      "locator": "Theorem 1.2"
+    },
+    {
+      "n": 19,
+      "subject": "Theorem 6.7 (mapping spaces)",
+      "relation": "proves",
+      "object": "Map_{CAlg_k(Cat^dual_st)}(Nuc^Ef(X), Nuc^Ef(Y)) ≅ Hom(Y, X) when Y is nearly of <c-type",
+      "modality": "stated",
+      "locator": "Theorem 6.7"
+    },
+    {
+      "n": 20,
+      "subject": "Corollary A.4",
+      "relation": "proves",
+      "object": "E^rig -> (E/I)^rig is a quotient functor with smashing kernel when f is omega_1-compact",
+      "modality": "stated",
+      "locator": "Corollary A.4"
+    }
+  ]
+}

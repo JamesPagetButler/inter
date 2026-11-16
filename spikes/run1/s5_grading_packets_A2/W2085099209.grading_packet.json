@@ -1,0 +1,168 @@
+{
+  "paper_id": "W2085099209",
+  "domain": "physics",
+  "text_cache_sha256": "85c734eb08c424ac95d628fd2d815cccf0adfb1be5a7c34299c56d9a3ab53f93",
+  "text": "Eq. (1): L e ​ f ​ f = − ∫ d 10 x g e − 2 ​ ϕ ( 4 ( α ′ ) 4 R + 1 ( α ′ ) 3 tr F 2 + … ) . L_{eff}=-\\int d^{10}x\\sqrt{g}e^{-2\\phi}\\left({4\\over(\\alpha^{\\prime})^{4}}R+{1\\over(\\alpha^{\\prime})^{3}}{\\rm tr}F^{2}+\\dots\\right).\n\nEq. (2): L e ​ f ​ f = − ∫ d 4 x g e − 2 ​ ϕ V ( 4 ( α ′ ) 4 R + 1 ( α ′ ) 3 tr F 2 + … ) . L_{eff}=-\\int d^{4}x\\sqrt{g}e^{-2\\phi}V\\left({4\\over(\\alpha^{\\prime})^{4}}R+{1\\over(\\alpha^{\\prime})^{3}}{\\rm tr}F^{2}+\\dots\\right).\n\nEq. (3): V ≥ ( α ′ ) 3 V\\geq(\\alpha^{\\prime})^{3}\n\nEq. (4): G N = e 2 ​ ϕ ​ ( α ′ ) 4 64 ​ π ​ V α G ​ U ​ T = e 2 ​ ϕ ​ ( α ′ ) 3 16 ​ π ​ V , \\eqalign{G_{N}&={e^{2\\phi}(\\alpha^{\\prime})^{4}\\over 64\\pi V}\\cr\\alpha_{GUT}&={e^{2\\phi}(\\alpha^{\\prime})^{3}\\over 16\\pi V},\\cr}\n\nEq. (5): G N = α G ​ U ​ T ​ α ′ 4 . G_{N}={\\alpha_{GUT}\\alpha^{\\prime}\\over 4}.\n\nEq. (6): V ≤ ( α ′ ) 3 α G ​ U ​ T . V\\leq{(\\alpha^{\\prime})^{3}\\over\\alpha_{GUT}}.\n\nEq. (7): G N ≥ α G ​ U ​ T 4 / 3 M G ​ U ​ T 2 , G_{N}\\geq{\\alpha_{GUT}^{4/3}\\over M_{GUT}^{2}},\n\nEq. (8): L e ​ f ​ f = − ∫ d 10 x g I ( e − 2 ​ ϕ I 4 ( α ′ ) 4 R I + e − ϕ I 1 ( α ′ ) 3 tr F 2 + … ) . L_{eff}=-\\int d^{10}x\\sqrt{g_{I}}\\left(e^{-2\\phi_{I}}{4\\over(\\alpha^{\\prime})^{4}}R_{I}+e^{-\\phi_{I}}{1\\over(\\alpha^{\\prime})^{3}}{\\rm tr}F^{2}+\\dots\\right).\n\nEq. (9): L e ​ f ​ f = − ∫ d 4 x g I V I ( 4 ​ e − 2 ​ ϕ I ( α ′ ) 4 R + e − ϕ I ( α ′ ) 3 tr F 2 + … ) L_{eff}=-\\int d^{4}x\\sqrt{g}_{I}V_{I}\\left({4e^{-2\\phi_{I}}\\over(\\alpha^{\\prime})^{4}}R+{e^{-\\phi_{I}}\\over(\\alpha^{\\prime})^{3}}{\\rm tr}F^{2}+\\dots\\right)\n\nEq. (10): G N = e 2 ​ ϕ I ​ ( α ′ ) 4 64 ​ π ​ V I α G ​ U ​ T = e ϕ I ​ ( α ′ ) 3 16 ​ π ​ V I . \\eqalign{G_{N}&={e^{2\\phi_{I}}(\\alpha^{\\prime})^{4}\\over 64\\pi V_{I}}\\cr\\alpha_{GUT}&={e^{\\phi_{I}}(\\alpha^{\\prime})^{3}\\over 16\\pi V_{I}}.\\cr}\n\nEq. (11): G N = e ϕ I ​ α G ​ U ​ T ​ α ′ 4 , G_{N}={e^{\\phi_{I}}\\alpha_{GUT}\\alpha^{\\prime}\\over 4},\n\nEq. (12): L = − 1 2 ​ κ 2 ∫ M 11 d 11 x g R − ∑ i 1 8 ​ π ​ ( 4 ​ π ​ κ 2 ) 2 / 3 ∫ M i 10 d 10 x g tr F i 2 . L=-{1\\over 2\\kappa^{2}}\\int_{M^{11}}d^{11}x\\sqrt{g}R-\\sum_{i}{1\\over 8\\pi(4\\pi\\kappa^{2})^{2/3}}\\int_{M^{10}_{i}}d^{10}x\\sqrt{g}{\\rm tr}F_{i}^{2}.\n\nEq. (13): G N = κ 2 16 ​ π 2 ​ V ​ ρ α G ​ U ​ T = ( 4 ​ π ​ κ 2 ) 2 / 3 2 ​ V . \\eqalign{G_{N}&={\\kappa^{2}\\over 16\\pi^{2}V\\rho}\\cr\\alpha_{GUT}&={(4\\pi\\kappa^{2})^{2/3}\\over 2V}.\\cr}\n\nEq. (14): G N ≥ α G ​ U ​ T 2 M G ​ U ​ T 2 . G_{N}\\geq{\\alpha_{GUT}^{2}\\over M_{GUT}^{2}}.\n\nEq. (15): G N c ​ r ​ i ​ t = α G ​ U ​ T 2 16 ​ π 2 ​ | ∫ X ω ∧ tr ​ F ∧ F − 1 2 ​ tr ​ R ∧ R 8 ​ π 2 | , G_{N}^{crit}={\\alpha_{GUT}^{2}\\over 16\\pi^{2}}\\left|\\int_{X}\\omega\\wedge{{\\rm tr}F\\wedge F-{1\\over 2}{\\rm tr}R\\wedge R\\over 8\\pi^{2}}\\right|,\n\nEq. (16): δ ​ ψ I = D I ​ η + 2 288 ​ ( Γ I ​ J ​ K ​ L ​ M − 8 ​ g I ​ J ​ Γ K ​ L ​ M ) ​ G J ​ K ​ L ​ M ​ η . \\delta\\psi_{I}=D_{I}\\eta+{\\sqrt{2}\\over 288}(\\Gamma_{IJKLM}-8g_{IJ}\\Gamma_{KLM})G^{JKLM}\\eta.\n\nEq. (17): D I ​ η + 2 288 ​ ( Γ I ​ J ​ K ​ L ​ M − 8 ​ g I ​ J ​ Γ K ​ L ​ M ) ​ G J ​ K ​ L ​ M ​ η = 0 . D_{I}\\eta+{\\sqrt{2}\\over 288}(\\Gamma_{IJKLM}-8g_{IJ}\\Gamma_{KLM})G^{JKLM}\\eta=0.\n\nEq. (18): ( d G ) 11 ​ I ​ J ​ K ​ L = − 3 ​ 2 ​ δ ​ ( x 11 ) 2 ​ π ( κ 4 ​ π ) 2 / 3 ( tr F [ I J F K L ] − 1 2 tr R [ I J R K L ] ) . (dG)_{11\\,IJKL}=-{3\\sqrt{2}\\delta(x^{11})\\over 2\\pi}\\left(\\kappa\\over 4\\pi\\right)^{2/3}\\left({\\rm tr}F_{[IJ}F_{KL]}-{1\\over 2}{\\rm tr}R_{[IJ}R_{KL]}\\right).\n\nEq. (19): D I ​ G I ​ J ​ K ​ L = 0 , D^{I}G_{IJKL}=0,\n\nEq. (20): D I ​ G J ​ K ​ L ​ M ± permutations = sources , D_{I}G_{JKLM}\\pm{\\rm permutations}={\\rm sources},\n\nEq. (21): ∑ i tr ​ F i ∧ F i − tr ​ R ∧ R 8 ​ π 2 + ∑ α [ C α ] = 0 . {\\sum_{i}{\\rm tr}F_{i}\\wedge F_{i}-{\\rm tr}R\\wedge R\\over 8\\pi^{2}}+\\sum_{\\alpha}[C_{\\alpha}]=0.\n\nEq. (22): β A = ω B ​ C ​ G A ​ B ​ C ​ 11 θ A ​ B = G A ​ B ​ C ​ D ​ ω C ​ D α = ω A ​ B ​ θ A ​ B = ω A ​ B ​ ω C ​ D ​ G A ​ B ​ C ​ D . \\eqalign{\\beta_{A}&=\\omega^{BC}G_{ABC\\,11}\\cr\\theta_{AB}&=G_{ABCD}\\omega^{CD}\\cr\\alpha&=\\omega^{AB}\\theta_{AB}=\\omega^{AB}\\omega^{CD}G_{ABCD}.\\cr}\n\nEq. (23): D a ¯ ​ G a ​ b ¯ ​ c ¯ ​ 11 + D b ¯ ​ G a ​ c ¯ ​ a ¯ ​ 11 + D c ¯ ​ G a ​ a ¯ ​ b ¯ ​ 11 = 0 . D_{\\bar{a}}G_{a\\bar{b}\\bar{c}\\,11}+D_{\\bar{b}}G_{a\\bar{c}\\bar{a}\\,11}+D_{\\bar{c}}G_{a\\bar{a}\\bar{b}\\,11}=0.\n\nEq. (24): 0 = ω a ​ a ¯ ​ D a ¯ ​ G a ​ b ¯ ​ c ¯ ​ 11 = 0 . 0=\\omega^{a\\bar{a}}D_{\\bar{a}}G_{a\\bar{b}\\bar{c}\\,11}=0.\n\nEq. (25): D a ¯ ​ β b ¯ − D b ¯ ​ β a ¯ = 0 . D_{\\bar{a}}\\beta_{\\bar{b}}-D_{\\bar{b}}\\beta_{\\bar{a}}=0.\n\nEq. (26): 0 = − i 2 ​ ( ∂ a ¯ θ b ​ b ¯ − ∂ b ¯ θ b ​ a ¯ ) + D 11 ​ G b ​ a ¯ ​ b ¯ ​ 11 . 0=-{i\\over 2}\\left(\\partial_{\\bar{a}}\\theta_{b\\bar{b}}-\\partial_{\\bar{b}}\\theta_{b\\bar{a}}\\right)+D^{11}G_{b\\bar{a}\\bar{b}\\,11}.\n\nEq. (27): 0 = − i 2 ​ D A ​ θ A ​ b ¯ + 1 4 ​ D b ¯ ​ α − i 2 ​ D 11 ​ β b ¯ . 0=-{i\\over 2}D^{A}\\theta_{A\\bar{b}}+{1\\over 4}D_{\\bar{b}}\\alpha-{i\\over 2}D_{11}\\beta_{\\bar{b}}.\n\nEq. (28): 0 = D 11 ​ β b ¯ − D b ​ θ b ​ b ¯ . 0=D_{11}\\beta_{\\bar{b}}-D^{b}\\theta_{b\\bar{b}}.\n\nEq. (29): D 11 β a ¯ = − i 4 ∂ a ¯ α . D_{11}\\beta_{\\bar{a}}=-{i\\over 4}\\partial_{\\bar{a}}\\alpha.\n\nEq. (30): D A ​ β A = 0 . D^{A}\\beta_{A}=0.\n\nEq. (31): 0 = ∂ ∂ x 11 ​ ∫ X α ​ g ​ d 6 ​ x . 0={\\partial\\over\\partial x^{11}}\\int_{X}\\alpha\\sqrt{g}d^{6}x.\n\nEq. (32): Γ X ​ Y ​ Z ​ W ​ G X ​ Y ​ Z ​ W ​ η = ( − 3 ​ α − 12 ​ i ​ β b ¯ ​ Γ b ¯ ) ​ η Γ X ​ Y ​ Z ​ G 11 ​ X ​ Y ​ Z ​ η = 3 ​ i ​ Γ b ¯ ​ β b ¯ ​ η Γ X ​ Y ​ Z ​ G a ​ X ​ Y ​ Z = ( − 3 ​ i ​ β a + 3 ​ G a ​ b ¯ ​ c ¯ ​ 11 ​ Γ b ¯ ​ c ¯ − 3 ​ i ​ θ a ​ b ¯ ​ Γ b ¯ ) ​ η Γ X ​ Y ​ Z ​ G b ¯ ​ X ​ Y ​ Z = − 3 ​ i ​ β ¯ b ¯ ​ η . \\eqalign{\\Gamma^{XYZW}G_{XYZW}\\eta&=\\left(-3\\alpha-12i\\beta_{\\bar{b}}\\Gamma^{\\bar{b}}\\right)\\,\\eta\\cr\\Gamma^{XYZ}G_{11\\,XYZ}\\,\\eta&=3i\\Gamma^{\\bar{b}}\\beta_{\\bar{b}}\\eta\\cr\\Gamma^{XYZ}G_{aXYZ}&=\\left(-3i\\beta_{a}+3G_{a\\bar{b}\\bar{c}\\,11}\\Gamma^{\\bar{b}\\bar{c}}-3i\\theta_{a\\bar{b}}\\Gamma^{\\bar{b}}\\right)\\eta\\cr\\Gamma^{XYZ}G_{\\bar{b}XYZ}&=-3i\\bar{\\beta}_{\\bar{b}}\\eta.\\cr}\n\nEq. (33): 2 ​ d ​ x I 288 ( Γ I ​ J ​ K ​ L ​ M − 8 ​ g I ​ J ​ Γ K ​ L ​ M ) ​ G J ​ K ​ L ​ M ​ η = 2 288 ​ ( d ​ x 11 ​ ( − 3 ​ α − 24 ​ i ​ β b ¯ ​ Γ b ¯ ) + d ​ x b ¯ ⋅ 12 ​ i ​ β b ¯ CLOSE + d ​ x a ​ ( 36 ​ i ​ β a + ( 36 ​ i ​ θ a ​ b ¯ − 3 ​ α ​ g a ​ b ¯ ) ​ Γ b ¯ + ( − 36 ​ G a ​ a ¯ ​ b ¯ ​ 11 − 6 ​ i ​ ( g a ​ a ¯ ​ β b ¯ − g a ​ b ¯ ​ β a ¯ ) ​ Γ a ¯ ​ b ¯ ) CLOSE OPEN + d ​ x μ ​ Γ μ ​ ( − 3 ​ α − 12 ​ i ​ β b ¯ ​ Γ b ¯ ) ) ​ η . \\eqalign{{\\sqrt{2}\\,dx^{I}\\over 288}&\\left(\\Gamma_{IJKLM}-8g_{IJ}\\Gamma_{KLM}\\right)G^{JKLM}\\eta={\\sqrt{2}\\over 288}\\left(dx^{11}\\left(-3\\alpha-24i\\beta_{\\bar{b}}\\Gamma^{\\bar{b}}\\right)+dx^{\\bar{b}}\\cdot 12i\\beta_{\\bar{b}}\\right.\\cr&\\left.+dx^{a}\\left(36i\\beta_{a}+\\left(36i\\theta_{a\\bar{b}}-3\\alpha g_{a\\bar{b}}\\right)\\Gamma^{\\bar{b}}+\\left(-36G_{a\\bar{a}\\bar{b}\\,11}-6i(g_{a\\bar{a}}\\beta_{\\bar{b}}-g_{a\\bar{b}}\\beta_{\\bar{a}}\\right)\\Gamma^{\\bar{a}\\bar{b}}\\right)\\right.\\cr&\\left.+dx^{\\mu}\\Gamma_{\\mu}\\left(-3\\alpha-12i\\beta_{\\bar{b}}\\Gamma^{\\bar{b}}\\right)\\right)\\eta.\\cr}\n\nEq. (34): d ​ s 2 = η μ ​ ν ​ d ​ x μ ​ d ​ x ν ​ ( 1 + b ) + 2 ​ ( g a ​ b ¯ + h a ​ b ¯ ) ​ d ​ x a ​ d ​ x b ¯ + ( 1 + γ ) ​ ( d ​ x 11 ) 2 + … , ds^{2}=\\eta_{\\mu\\nu}dx^{\\mu}dx^{\\nu}(1+b)+2(g_{a\\bar{b}}+h_{a\\bar{b}})dx^{a}dx^{\\bar{b}}+(1+\\gamma)(dx^{11})^{2}+\\dots,\n\nEq. (35): η ~ = e − ψ ​ η , \\tilde{\\eta}=e^{-\\psi}\\eta,\n\nEq. (36): d ​ x I ​ D I ​ η ~ = ( − d x Y ∂ Y ψ + d x μ Γ μ ( 1 4 ∂ 11 b + 1 4 ∂ a ¯ b Γ a ¯ ) − d x a ( − 1 4 ∂ 11 h a ¯ ​ a Γ a ¯ + 1 8 ( ∂ a ¯ h b ¯ ​ a − ∂ b ¯ h a ¯ ​ a ) Γ a ¯ ​ b ¯ + 1 4 g b ​ b ¯ ∂ b h a ​ b ¯ ) − d x a ¯ ( − 1 4 g a ​ b ¯ ∂ b ¯ h a ​ a ¯ ) − d ​ x 11 4 ∂ a ¯ γ Γ a ¯ ) η ~ . \\eqalign{dx^{I}D_{I}\\tilde{\\eta}=&\\left(-dx^{Y}\\partial_{Y}\\psi+dx^{\\mu}\\Gamma_{\\mu}\\left({1\\over 4}\\partial_{11}b+{1\\over 4}\\partial_{\\bar{a}}b\\Gamma^{\\bar{a}}\\right)\\right.\\cr&\\left.-dx^{a}\\left(-{1\\over 4}\\partial_{11}h_{\\bar{a}a}\\Gamma^{\\bar{a}}+{1\\over 8}\\left(\\partial_{\\bar{a}}h_{\\bar{b}a}-\\partial_{\\bar{b}}h_{\\bar{a}a}\\right)\\Gamma^{\\bar{a}\\bar{b}}+{1\\over 4}g^{b\\bar{b}}\\partial_{b}h_{a\\bar{b}}\\right)\\right.\\cr&\\left.-dx^{\\bar{a}}\\left(-{1\\over 4}g^{a\\bar{b}}\\partial_{\\bar{b}}h_{a\\bar{a}}\\right)-{dx^{11}\\over 4}\\partial_{\\bar{a}}\\gamma\\Gamma^{\\bar{a}}\\right)\\tilde{\\eta}.\\cr}\n\nEq. (37): D I ​ η ~ + 2 288 ​ ( Γ I ​ J ​ K ​ L ​ M − 8 ​ g I ​ J ​ Γ K ​ L ​ M ) ​ G J ​ K ​ L ​ M ​ η ~ = 0 D_{I}\\tilde{\\eta}+{\\sqrt{2}\\over 288}(\\Gamma_{IJKLM}-8g_{IJ}\\Gamma_{KLM})G^{JKLM}\\tilde{\\eta}=0\n\nEq. (38): ∂ a ¯ h b ​ b ¯ − ∂ b ¯ h b ​ a ¯ = − 2 ​ ( G b ​ a ¯ ​ b ¯ ​ 11 + i 6 ​ ( g b ​ a ¯ ​ β b ¯ − g b ​ b ¯ ​ β a ¯ ) ) . \\partial_{\\bar{a}}h_{b\\bar{b}}-\\partial_{\\bar{b}}h_{b\\bar{a}}=-\\sqrt{2}\\left(G_{b\\bar{a}\\bar{b}\\,11}+{i\\over 6}\\left(g_{b\\bar{a}}\\beta_{\\bar{b}}-g_{b\\bar{b}}\\beta_{\\bar{a}}\\right)\\right).\n\nEq. (39): β a ¯ = 3 ​ i 2 ​ ∂ a ¯ γ ∂ 11 h a ​ b ¯ = − 1 2 ​ ( i ​ θ a ​ b ¯ − 1 12 ​ α ​ g a ​ b ¯ ) . \\eqalign{\\beta_{\\bar{a}}&={3i\\over\\sqrt{2}}\\partial_{\\bar{a}}\\gamma\\cr\\partial_{11}h_{a\\bar{b}}&=-{1\\over\\sqrt{2}}\\left(i\\theta_{a\\bar{b}}-{1\\over 12}\\alpha g_{a\\bar{b}}\\right).\\cr}\n\nEq. (40): 0 = − d x Y ∂ Y ψ + d x a ( − 1 4 g b ​ b ¯ ∂ b h a ​ b ¯ ) + d x a ¯ ( 1 4 g a ​ b ¯ ∂ b ¯ h a ​ a ¯ ) + 2 288 ​ ( d ​ x 11 ​ ( − 3 ​ α ) + d ​ x b ¯ ⋅ 12 ​ i ​ β b ¯ + d ​ x a ⋅ 36 ​ i ​ β a ) . \\eqalign{0=&-dx^{Y}\\partial_{Y}\\psi+dx^{a}\\left(-{1\\over 4}g^{b\\bar{b}}\\partial_{b}h_{a\\bar{b}}\\right)+dx^{\\bar{a}}\\left({1\\over 4}g^{a\\bar{b}}\\partial_{\\bar{b}}h_{a\\bar{a}}\\right)\\cr&+{\\sqrt{2}\\over 288}\\left(dx^{11}(-3\\alpha)+dx^{\\bar{b}}\\cdot 12i\\beta_{\\bar{b}}+dx^{a}\\cdot 36i\\beta_{a}\\right).\\cr}\n\nEq. (41): g b ​ b ¯ ​ ∂ b h a ​ b ¯ = 2 ​ i 3 ​ β a . g^{b\\bar{b}}\\partial_{b}h_{a\\bar{b}}={\\sqrt{2}i\\over 3}\\beta_{a}.\n\nEq. (42): ∂ 11 ψ + 2 96 ​ α = 0 ∂ a ¯ ψ + 2 ​ i 24 ​ β a ¯ = 0 . \\eqalign{\\partial_{11}\\psi+{\\sqrt{2}\\over 96}\\alpha&=0\\cr\\partial_{\\bar{a}}\\psi+{\\sqrt{2}i\\over 24}\\beta_{\\bar{a}}&=0.\\cr}\n\nEq. (43): g a ​ b ¯ ​ ∂ a ∂ b ¯ Im ​ ψ = g a ​ b ¯ ​ ∂ b ¯ ∂ a ( ψ − ψ ¯ 2 ​ i ) = 1 24 ​ 2 ​ D A ​ β A = 0 . g^{a\\bar{b}}\\partial_{a}\\partial_{\\bar{b}}{\\rm Im}\\,\\psi=g^{a\\bar{b}}\\partial_{\\bar{b}}\\partial_{a}\\left({\\psi-\\bar{\\psi}\\over 2i}\\right)={1\\over 24\\sqrt{2}}D^{A}\\beta_{A}=0.\n\nEq. (44): γ = 8 ​ ψ + f ⁡ ( x 11 ) . \\gamma=8\\psi+f(x^{11}).\n\nEq. (45): ∫ X γ ​ g ​ d 6 ​ x = 0 . \\int_{X}\\gamma\\sqrt{g}d^{6}x=0.\n\nEq. (46): β a ¯ = − 6 ​ i 2 ∂ a ¯ b ∂ 11 b = 2 24 ​ α . \\eqalign{\\beta_{\\bar{a}}&=-{6i\\over\\sqrt{2}}\\partial_{\\bar{a}}b\\cr\\partial_{11}b&={\\sqrt{2}\\over 24}\\alpha.}\n\nEq. (47): b = − 4 ​ ψ b=-4\\psi\n\nEq. (48): ∂ a ¯ h b ​ b ¯ − ∂ b ¯ h b ​ a ¯ = − 2 ​ ( G b ​ a ¯ ​ b ¯ ​ 11 + i 6 ​ ( g b ​ a ¯ ​ β b ¯ − g b ​ b ¯ ​ β a ¯ ) ) g b ¯ ​ b ​ ∂ b ¯ h b ​ a ¯ = − 2 ​ i 3 ​ β a ¯ ∂ 11 h a ​ b ¯ = − 1 2 ​ ( i ​ θ a ​ b ¯ − 1 12 ​ α ​ g a ​ b ¯ ) \\eqalign{\\partial_{\\bar{a}}h_{b\\bar{b}}-\\partial_{\\bar{b}}h_{b\\bar{a}}&=-\\sqrt{2}\\left(G_{b\\bar{a}\\bar{b}\\,11}+{i\\over 6}\\left(g_{b\\bar{a}}\\beta_{\\bar{b}}-g_{b\\bar{b}}\\beta_{\\bar{a}}\\right)\\right)\\cr g^{\\bar{b}b}\\partial_{\\bar{b}}h_{b\\bar{a}}&=-{\\sqrt{2}i\\over 3}\\beta_{\\bar{a}}\\cr\\partial_{11}h_{a\\bar{b}}&=-{1\\over\\sqrt{2}}\\left(i\\theta_{a\\bar{b}}-{1\\over 12}\\alpha g_{a\\bar{b}}\\right)\\cr}\n\nEq. (49): ∂ ∂ x 11 ​ v = ∫ X 1 2 ​ g A ​ B ​ ∂ 11 h A ​ B ​ g ​ d 6 ​ x = ∫ X g a ​ b ¯ ​ ∂ 11 h a ​ b ¯ ​ g ​ d 6 ​ x . {\\partial\\over\\partial x^{11}}v=\\int_{X}{1\\over 2}g^{AB}\\partial_{11}h_{AB}\\sqrt{g}d^{6}x=\\int_{X}g^{a\\bar{b}}\\partial_{11}h_{a\\bar{b}}\\sqrt{g}d^{6}x.\n\nEq. (50): ∂ ∂ x 11 v = − 1 4 ​ 2 ∫ X α g d 6 x . {\\partial\\over\\partial x^{11}}v=-{1\\over 4\\sqrt{2}}\\int_{X}\\alpha\\sqrt{g}d^{6}x.\n\nEq. (51): G A ​ B ​ C ​ D = − 3 2 ​ π ​ 2 ( κ 4 ​ π ) 2 / 3 ( F [ A B F C D ] − 1 2 R [ A B R C D ] ) . G_{ABCD}=-{3\\over 2\\pi\\sqrt{2}}\\left({\\kappa\\over 4\\pi}\\right)^{2/3}\\left(F_{[AB}F_{CD]}-{1\\over 2}R_{[AB}R_{CD]}\\right).\n\nEq. (52): g ​ α = g ​ ω A ​ B ​ ω C ​ D ​ G A ​ B ​ C ​ D = − 2 π ​ 2 ​ ( κ 4 ​ π ) 2 / 3 ​ ω ∧ ( tr ​ F ∧ F − 1 2 ​ tr ​ R ∧ R ) . \\sqrt{g}\\alpha=\\sqrt{g}\\omega^{AB}\\omega^{CD}G_{ABCD}=-{2\\over\\pi\\sqrt{2}}\\left({\\kappa\\over 4\\pi}\\right)^{2/3}\\omega\\wedge\\left({\\rm tr}F\\wedge F-{1\\over 2}{\\rm tr}R\\wedge R\\right).\n\nEq. (53): ∂ v ∂ x 11 = 2 ​ π ​ ( κ 4 ​ π ) 2 / 3 ​ ∫ X ω ∧ tr ​ F ∧ F − 1 2 ​ tr ​ R ∧ R 8 ​ π 2 {\\partial v\\over\\partial x^{11}}=2\\pi\\left({\\kappa\\over 4\\pi}\\right)^{2/3}\\int_{X}\\omega\\wedge{{\\rm tr}F\\wedge F-{1\\over 2}{\\rm tr}R\\wedge R\\over 8\\pi^{2}}\n\nEq. (54): V ′ = v ⁡ ( π ​ ρ ) = V + 2 ​ π 2 ​ ρ ​ ( κ 4 ​ π ) 2 / 3 ​ ∫ X ω ∧ tr ​ F ∧ F − 1 2 ​ tr ​ R ∧ R 8 ​ π 2 . V^{\\prime}=v(\\pi\\rho)=V+2\\pi^{2}\\rho\\left({\\kappa\\over 4\\pi}\\right)^{2/3}\\int_{X}\\omega\\wedge{{\\rm tr}F\\wedge F-{1\\over 2}{\\rm tr}R\\wedge R\\over 8\\pi^{2}}.\n\nEq. (55): ρ c = V 2 ​ π 2 ​ ( κ 4 ​ π ) 2 / 3 ​ | ∫ X ω ∧ tr ​ F ∧ F − 1 2 ​ tr ​ R ∧ R 8 ​ π 2 | . \\rho_{c}={V\\over 2\\pi^{2}\\left({\\kappa\\over 4\\pi}\\right)^{2/3}\\left|\\int_{X}\\omega\\wedge{{\\rm tr}F\\wedge F-{1\\over 2}{\\rm tr}R\\wedge R\\over 8\\pi^{2}}\\right|}.\n\nEq. (56): G N = κ 2 / 8 ​ π ​ W G_{N}=\\kappa^{2}/8\\pi W\n\nEq. (57): 1 α G ​ U ​ T = 2 ​ V ( 4 ​ π ​ κ 2 ) 2 / 3 . {1\\over\\alpha_{GUT}}={2V\\over(4\\pi\\kappa^{2})^{2/3}}.\n\nEq. (58): 1 α ~ = 2 ​ ( V − ρ ​ ∑ a c a ​ ω a ) ( 4 ​ π ​ κ 2 ) 2 / 3 , {1\\over\\tilde{\\alpha}}={2(V-\\rho\\sum_{a}c_{a}\\omega_{a})\\over(4\\pi\\kappa^{2})^{2/3}},\n\nEq. (59): d ​ s ( 0 ) 2 = η μ ​ ν ​ d ​ x μ ​ d ​ x ν + g A ​ B ​ d ​ x A ​ d ​ x B , ds^{2}_{(0)}=\\eta_{\\mu\\nu}dx^{\\mu}dx^{\\nu}+g_{AB}dx^{A}dx^{B},\n\nEq. (60): d ​ s 2 = e b ​ η μ ​ ν ​ d ​ x μ ​ d ​ x ν + e f ​ g A ​ B ​ d ​ x A ​ d ​ x B , ds^{2}=e^{b}\\eta_{\\mu\\nu}dx^{\\mu}dx^{\\nu}+e^{f}g_{AB}dx^{A}dx^{B},\n\nEq. (61): D A ​ G A ​ B ​ C ​ D = 0 d ​ G = sources . \\eqalign{D^{A}G_{ABCD}&=0\\cr dG&={\\rm sources}.\\cr}\n\nEq. (62): G A ​ B ​ C ​ D = − ϵ ( 0 ) A ​ B ​ C ​ D ​ E ∂ E w G_{ABCD}=-\\epsilon^{(0)}_{ABCDE}\\partial^{E}w\n\nEq. (63): ∇ 0 w = sources , \\nabla_{0}w={\\rm sources},\n\nEq. (64): G A ​ B ​ C ​ D = − e − 3 f / 2 ϵ A ​ B ​ C ​ D ​ E ∂ E w G_{ABCD}=-e^{-3f/2}\\epsilon_{ABCDE}\\partial^{E}w\n\nEq. (65): d ( e − 3 f / 2 d w ) = 0 . d(e^{-3f/2}dw)=0.\n\nEq. (66): Γ A ​ B ​ C ​ D ​ E ​ η = ϵ A ​ B ​ C ​ D ​ E ​ η . \\Gamma_{ABCDE}\\eta=\\epsilon_{ABCDE}\\eta.\n\nEq. (67): 2 288 ​ d ​ x I ​ ( Γ I ​ J ​ K ​ L ​ M − 8 ​ g I ​ J ​ Γ K ​ L ​ M ) ​ G J ​ K ​ L ​ M ​ η = 2 e − 3 f / 2 288 ( − 24 d x A ∂ A w − 24 d x μ Γ μ Γ A ∂ A w + 48 d x A Γ A ​ B ∂ B w ) η . \\eqalign{{\\sqrt{2}\\over 288}dx^{I}\\left(\\Gamma_{IJKLM}-8g_{IJ}\\Gamma_{KLM}\\right)G^{JKLM}\\eta={\\sqrt{2}e^{-3f/2}\\over 288}&\\left(-24dx^{A}\\partial_{A}w-24dx^{\\mu}\\Gamma_{\\mu}\\Gamma^{A}\\partial_{A}w\\right.\\cr&\\left.+48dx^{A}\\Gamma_{AB}\\partial^{B}w\\right)\\eta.\\cr}\n\nEq. (68): d x I D I η ~ = ( − d x A ∂ A ψ − 1 8 d x μ Γ μ Γ A ∂ A b − 1 8 d x A ∂ B f Γ A ​ B ) η ~ . dx^{I}D_{I}\\tilde{\\eta}=\\left(-dx^{A}\\partial_{A}\\psi-{1\\over 8}dx^{\\mu}\\Gamma_{\\mu}\\Gamma^{A}\\partial_{A}b-{1\\over 8}dx^{A}\\partial^{B}f\\Gamma_{AB}\\right)\\tilde{\\eta}.\n\nEq. (69): − d x A ∂ A ψ − 1 8 ​ d ​ x μ ​ Γ μ ​ Γ A ​ ∂ A b − 1 8 ​ d ​ x A ​ ∂ B f ​ Γ A ​ B + 2 e − 3 f / 2 12 ( − d x A ∂ A w − d x μ Γ μ Γ A ∂ A w + 2 d x A Γ A ​ B ∂ B w ) η = 0 . \\eqalign{-dx^{A}\\partial_{A}\\psi-&{1\\over 8}dx^{\\mu}\\Gamma_{\\mu}\\Gamma^{A}\\partial_{A}b-{1\\over 8}dx^{A}\\partial^{B}f\\Gamma_{AB}\\cr&+{\\sqrt{2}e^{-3f/2}\\over 12}\\left(-dx^{A}\\partial_{A}w-dx^{\\mu}\\Gamma_{\\mu}\\Gamma^{A}\\partial_{A}w+2dx^{A}\\Gamma_{AB}\\partial^{B}w\\right)\\eta=0.\\cr}\n\nEq. (70): 1 8 ​ ∂ B f = 2 e − 3 f / 2 6 ​ ∂ B w , {1\\over 8}\\partial_{B}f={\\sqrt{2}e^{-3f/2}\\over 6}\\partial_{B}w,\n\nEq. (71): e 3 ​ f / 2 = c + 2 ​ 2 ​ w e^{3f/2}=c+2\\sqrt{2}w\n\nEq. (72): 1 8 ∂ A b = − e − 3 f / 2 2 12 ∂ A w = − 2 12 ∂ A w c + 2 ​ 2 ​ w . {1\\over 8}\\partial_{A}b=-{e^{-3f/2}\\sqrt{2}\\over 12}\\partial_{A}w=-{\\sqrt{2}\\over 12}{\\partial_{A}w\\over c+2\\sqrt{2}w}.\n\nEq. (73): b = − 1 3 ​ ln ⁡ ( c + 2 ​ 2 ​ w ) . b=-{1\\over 3}\\ln(c+2\\sqrt{2}w).\n\nEq. (74): d s 2 = ( c + 2 2 w ) − 1 / 3 η μ ​ ν d x μ d x ν + ( c + 2 2 w ) 2 / 3 g A ​ B d x A d x B . ds^{2}=(c+2\\sqrt{2}w)^{-1/3}\\eta_{\\mu\\nu}dx^{\\mu}dx^{\\nu}+(c+2\\sqrt{2}w)^{2/3}g_{AB}dx^{A}dx^{B}.\n\nEq. (75): Δ − 1 = c + 2 ​ 2 ​ w = 1 + 2 ​ 2 ​ q R 3 , \\Delta^{-1}=c+2\\sqrt{2}w=1+{2\\sqrt{2}q\\over R^{3}},\n\nEq. (76): d s 2 = Δ 1 / 3 η μ ​ ν d x μ d x ν + Δ − 2 / 3 δ A ​ B d x A d x B , ds^{2}=\\Delta^{1/3}\\eta_{\\mu\\nu}dx^{\\mu}dx^{\\nu}+\\Delta^{-2/3}\\delta_{AB}dx^{A}dx^{B},\n\nEq. (77): w = ∑ i q i | x → − x → i | 3 w=\\sum_{i}{q_{i}\\over|\\vec{x}-\\vec{x}_{i}|^{3}}\n\nEq. (78): z ⁡ ( x 11 ) = ∫ K3 w ​ g ( 0 ) ​ d 4 ​ x , z(x^{11})=\\int_{\\rm K3}w\\sqrt{g_{(0)}}d^{4}x,\n\nEq. (79): ∂ 2 z ∂ ( x 11 ) 2 = 0 {\\partial^{2}z\\over\\partial(x^{11})^{2}}=0\n\nEq. (80): ∂ z ∂ x 11 = − 6 ​ π ​ 2 ​ ( κ 4 ​ π ) 2 / 3 ​ ( k − 12 ) , {\\partial z\\over\\partial x^{11}}=-6\\pi\\sqrt{2}\\left(\\kappa\\over 4\\pi\\right)^{2/3}(k-12),\n\nEq. (81): w = π ​ ρ 0 − x 11 V 0 ​ 6 ​ π ​ 2 ​ ( κ 4 ​ π ) 2 / 3 ​ ( k − 12 ) . w={\\pi\\rho_{0}-x^{11}\\over V_{0}}6\\pi\\sqrt{2}\\left(\\kappa\\over 4\\pi\\right)^{2/3}(k-12).\n\nEq. (82): w ¯ = κ 2 / 3 V 0 3 / 4 . \\bar{w}={\\kappa^{2/3}\\over V_{0}^{3/4}}.\n\nEq. (83): V = V 0 ​ ( c + 2 ​ 2 ​ w ​ ( x 11 = 0 ) ) 4 / 3 . V=V_{0}(c+2\\sqrt{2}w(x^{11}=0))^{4/3}.\n\nEq. (84): V = ( 24 ​ π 2 ​ ( κ 4 ​ π ) 2 / 3 ​ ( k − 12 ) ) 4 / 3 ​ ( ρ 0 4 V 0 ) 1 / 3 . V=\\left(24\\pi^{2}\\left({\\kappa\\over 4\\pi}\\right)^{2/3}(k-12)\\right)^{4/3}\\left({\\rho_{0}^{4}\\over V_{0}}\\right)^{1/3}.\n\nEq. (85): ρ = 3 4 ​ ( ρ 0 4 V 0 ) 1 / 3 ​ ( 24 ​ π 2 ​ ( κ 4 ​ π ) 2 / 3 ​ ( k − 12 ) ) 1 / 3 . \\rho={3\\over 4}\\left({\\rho_{0}^{4}\\over V_{0}}\\right)^{1/3}\\left(24\\pi^{2}\\left({\\kappa\\over 4\\pi}\\right)^{2/3}(k-12)\\right)^{1/3}.\n\nEq. (86): V ρ = 32 ​ π 2 ​ ( k − 12 ) ​ ( κ 4 ​ π ) 2 / 3 . {V\\over\\rho}=32\\pi^{2}(k-12)\\left({\\kappa\\over 4\\pi}\\right)^{2/3}.",
+  "claims": [
+    {
+      "n": 1,
+      "subject": "anomaly cancellation condition",
+      "relation": "defines",
+      "object": "(sum_i tr F_i wedge F_i - tr R wedge R)/(8 pi^2) + sum_alpha [C_alpha] = 0",
+      "modality": "stated",
+      "locator": "Eq. (16)-(21)"
+    },
+    {
+      "n": 2,
+      "subject": "G_N",
+      "relation": "equivalent-to",
+      "object": "alpha_GUT alpha'/4",
+      "modality": "stated",
+      "locator": "Eq. (5)"
+    },
+    {
+      "n": 3,
+      "subject": "G-flux Bianchi identity",
+      "relation": "defines",
+      "object": "(dG)_{11 IJKL} = -(3 sqrt2 delta(x^11)/2pi)(kappa/4pi)^{2/3}(tr F_[IJ F_KL] - (1/2) tr R_[IJ R_KL])",
+      "modality": "stated",
+      "locator": "Eq. (16)-(21)"
+    },
+    {
+      "n": 4,
+      "subject": "bound G_N >= alpha_GUT^2/M_GUT^2 (Horava-Witten M-theory)",
+      "relation": "depends-on",
+      "object": "G_N = kappa^2/(16 pi^2 V rho) and alpha_GUT = (4 pi kappa^2)^{2/3}/(2V)",
+      "modality": "stated",
+      "locator": "Eq. (12)-(14)"
+    },
+    {
+      "n": 5,
+      "subject": "Delta^{-1}",
+      "relation": "defines",
+      "object": "Delta^{-1} = c + 2 sqrt2 w = 1 + 2 sqrt2 q/R^3",
+      "modality": "stated",
+      "locator": "Eq. (70)-(76)"
+    },
+    {
+      "n": 6,
+      "subject": "Horava-Witten 11-dimensional action on S^1/Z_2",
+      "relation": "defines",
+      "object": "L = -(1/2kappa^2) int_{M^11} sqrt(g) R - sum_i (1/(8 pi (4 pi kappa^2)^{2/3})) int_{M^10_i} sqrt(g) tr F_i^2",
+      "modality": "stated",
+      "locator": "Eq. (12)-(14)"
+    },
+    {
+      "n": 7,
+      "subject": "supersymmetry condition",
+      "relation": "defines",
+      "object": "vanishing gravitino variation delta psi_I = D_I eta + (sqrt2/288)(Gamma_{IJKLM} - 8 g_{IJ} Gamma_{KLM}) G^{JKLM} eta",
+      "modality": "stated",
+      "locator": "Eq. (16)-(21)"
+    },
+    {
+      "n": 8,
+      "subject": "unbroken supersymmetry condition",
+      "relation": "defines",
+      "object": "D_I eta + (sqrt(2)/288)(Gamma_{IJKLM} - 8 g_{IJ} Gamma_{KLM}) G^{JKLM} eta = 0",
+      "modality": "stated",
+      "locator": "Eq. (17)"
+    },
+    {
+      "n": 9,
+      "subject": "G_N",
+      "relation": "defines",
+      "object": "e^{2phi}(alpha')^4/(64 pi V), with alpha_GUT = e^{2phi}(alpha')^3/(16 pi V)",
+      "modality": "stated",
+      "locator": "Eq. (4)"
+    },
+    {
+      "n": 10,
+      "subject": "b",
+      "relation": "depends-on",
+      "object": "Eq. (72), integrated to b = -(1/3) ln(c + 2 sqrt 2 w)",
+      "modality": "stated",
+      "locator": "Eq. (73)"
+    },
+    {
+      "n": 11,
+      "subject": "b",
+      "relation": "depends-on",
+      "object": "Eq. (42) and Eq. (46), which together give partial_11 b = -4 partial_11 psi",
+      "modality": "stated",
+      "locator": "Eq. (47)"
+    },
+    {
+      "n": 12,
+      "subject": "V",
+      "relation": "depends-on",
+      "object": "Eq. (74) and the value of w at x^11 = 0 from Eq. (81)",
+      "modality": "stated",
+      "locator": "Eq. (83)"
+    },
+    {
+      "n": 13,
+      "subject": "volume modulus V = (24 pi^2 (kappa/4pi)^{2/3}(k-12))^{4/3}(rho_0^4/V_0)^{1/3}",
+      "relation": "depends-on",
+      "object": "linear profile dz/dx^11 = -6 pi sqrt2 (kappa/4pi)^{2/3}(k-12)",
+      "modality": "stated",
+      "locator": "Eq. (78)-(86)"
+    },
+    {
+      "n": 14,
+      "subject": "rho_c",
+      "relation": "defines",
+      "object": "V over 2 pi^2 (kappa/(4 pi))^{2/3} times the absolute value of the integral over X of omega wedge (tr F F - tr R R /2)/(8 pi^2)",
+      "modality": "stated",
+      "locator": "Eq. (55)"
+    },
+    {
+      "n": 15,
+      "subject": "warped metric ds^2 = Delta^{1/3} eta_{mu nu} dx^mu dx^nu + Delta^{-2/3} delta_AB dx^A dx^B",
+      "relation": "depends-on",
+      "object": "warp-factor solution e^{3f/2} = c + 2 sqrt2 w, b = -(1/3) ln(c + 2 sqrt2 w)",
+      "modality": "stated",
+      "locator": "Eq. (70)-(76)"
+    },
+    {
+      "n": 16,
+      "subject": "quantized self-dual G-flux on a Calabi-Yau",
+      "relation": "defines",
+      "object": "G_ABCD = -e^{-3f/2} epsilon_ABCDE partial^E w with d(e^{-3f/2} dw) = 0",
+      "modality": "stated",
+      "locator": "Eq. (61)-(65)"
+    },
+    {
+      "n": 17,
+      "subject": "gamma",
+      "relation": "defines",
+      "object": "8 psi + f(x^11)",
+      "modality": "stated",
+      "locator": "Eq. (44)"
+    },
+    {
+      "n": 18,
+      "subject": "w",
+      "relation": "defines",
+      "object": "sum over i of q_i/|x - x_i|^3",
+      "modality": "stated",
+      "locator": "Eq. (77)"
+    },
+    {
+      "n": 19,
+      "subject": "ratio V/rho = 32 pi^2 (k-12)(kappa/4pi)^{2/3}",
+      "relation": "depends-on",
+      "object": "linear profile dz/dx^11 = -6 pi sqrt2 (kappa/4pi)^{2/3}(k-12)",
+      "modality": "stated",
+      "locator": "Eq. (78)-(86)"
+    },
+    {
+      "n": 20,
+      "subject": "Delta^{-1}",
+      "relation": "defines",
+      "object": "c + 2 sqrt 2 w = 1 + 2 sqrt 2 q/R^3",
+      "modality": "stated",
+      "locator": "Eq. (75)"
+    }
+  ]
+}
