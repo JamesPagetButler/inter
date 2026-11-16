@@ -1,0 +1,25 @@
+{"subject": "matrix elements of the S^3 coordinates", "relation": "equivalent-to", "object": "fuzzy three-sphere", "modality": "stated", "locator": "Section 1, main result (iii)"}
+{"subject": "Dirac-Landau operator", "relation": "proves", "object": "SO(4)-invariance", "modality": "stated", "locator": "Section 1, main result (i)"}
+{"subject": "SO(4) Landau-level eigenstates", "relation": "proves", "object": "SO(4) covariance", "modality": "stated", "locator": "Section 1, main result (i)"}
+{"subject": "Weyl-Landau eigenvalue formulae", "relation": "generalises", "object": "known free relativistic operator formulae", "modality": "stated", "locator": "Section 1, main result (ii)"}
+{"subject": "fuzzy three-sphere geometry in the non-relativistic model", "relation": "proves", "object": "emergence in each Landau level, only in degenerate lowest-energy sub-bands", "modality": "stated", "locator": "Section 1, main result (iii)"}
+{"subject": "mass-induced interaction in the Dirac-Landau model", "relation": "proves", "object": "interaction between the two fuzzy three-spheres in each relativistic Landau level", "modality": "stated", "locator": "Section 1, main result (iii)"}
+{"subject": "Dirac-Landau operator", "relation": "proves", "object": "accommodates two fuzzy three-spheres in each Landau level", "modality": "stated", "locator": "Section 1, main result (iii)"}
+{"subject": "S^3", "relation": "equivalent-to", "object": "SU(2)_L x SU(2)_R / SU(2)_diag", "modality": "stated", "locator": "Eq. (104)"}
+{"subject": "A^{(I/2)} (SU(2) monopole gauge potential)", "relation": "defines", "object": "components A^{(I/2)}_i = -(1/(1+x_4)) epsilon_{ijk} x_j S^{(I/2)}_k", "modality": "stated", "locator": "Eq. (44)"}
+{"subject": "non-relativistic Hamiltonian H", "relation": "defines", "object": "-(1/2M) sum_mu D_mu^2", "modality": "stated", "locator": "Eq. (87)"}
+{"subject": "non-relativistic Hamiltonian H", "relation": "equivalent-to", "object": "(1/M) sum_i (L_i^2 + Lbar_i^2) - (1/2M) S^{(I/2)} squared", "modality": "stated", "locator": "Eq. (91)"}
+{"subject": "Landau-level energies E_n(s)", "relation": "proves", "object": "(1/2M)(n(n+2) + (I/2)(2n+1) + s^2)", "modality": "stated", "locator": "Eq. (92)"}
+{"subject": "sum over mu<nu of L_{mu nu} squared", "relation": "proves", "object": "(n+I/2)(n+I/2+2) + s^2", "modality": "stated", "locator": "Eq. (75)"}
+{"subject": "l_L + l_R", "relation": "proves", "object": "n + I/2", "modality": "stated", "locator": "Eq. (70)"}
+{"subject": "K^2 = (L - Lbar)^2", "relation": "equivalent-to", "object": "sum_{mu<nu} L_{mu nu}^2 - (L^diag)^2", "modality": "stated", "locator": "Eq. (83)"}
+{"subject": "Landau-level eigenstates Phi^{(n,s,I/2)}_{m_L,m_R}", "relation": "defines", "object": "Clebsch-Gordan combination of Wigner D-functions in Eq. (110)", "modality": "stated", "locator": "Eq. (110)"}
+{"subject": "Landau-level eigenstates Phi^{(n,s,I/2)}", "relation": "proves", "object": "orthonormality with respect to the S^3 measure", "modality": "stated", "locator": "Eq. (112)"}
+{"subject": "winding number nu", "relation": "proves", "object": "(1/6) I(I+1)(I+2)", "modality": "stated", "locator": "Eq. (47)"}
+{"subject": "spin connection omega_S (Schwinger form)", "relation": "equivalent-to", "object": "g^{(1/2)dagger} omega_D g^{(1/2)} - i g^{(1/2)dagger} d g^{(1/2)}", "modality": "stated", "locator": "Eq. (19)"}
+{"subject": "gauge potential A_S (Schwinger gauge)", "relation": "equivalent-to", "object": "g^{(I/2)dagger} A_D g^{(I/2)} - i g^{(I/2)dagger} d g^{(I/2)}", "modality": "stated", "locator": "Eq. (119)"}
+{"subject": "Landau model on S^3", "relation": "defines", "object": "SO(4) Landau model", "modality": "cited", "locator": "Section 1"}
+{"subject": "SO(5) Landau model", "relation": "generalises", "object": "SO(4) Landau model", "modality": "cited", "locator": "Section 1"}
+{"subject": "SO(2k+1) Landau model", "relation": "proves", "object": "realization of the geometry of the fuzzy 2k-sphere", "modality": "cited", "locator": "Section 1"}
+{"subject": "SO(3) Landau model", "relation": "proves", "object": "realization of the fuzzy two-sphere geometry", "modality": "cited", "locator": "Section 1"}
+{"subject": "odd-dimensional Nambu bracket", "relation": "specialises", "object": "one-dimension-higher even bracket", "modality": "cited", "locator": "Section 1"}
