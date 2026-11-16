@@ -1,0 +1,40 @@
+{"subject": "Theorem 1", "relation": "proves", "object": "R, C, H, and O are the only normed division algebras", "modality": "cited", "locator": "Theorem 1"}
+{"subject": "Theorem 2", "relation": "proves", "object": "R, C, H, and O are the only alternative division algebras", "modality": "cited", "locator": "Theorem 2"}
+{"subject": "Theorem 3", "relation": "proves", "object": "all division algebras have dimension 1, 2, 4, or 8", "modality": "cited", "locator": "Theorem 3"}
+{"subject": "Proposition 1", "relation": "proves", "object": "A' is never real", "modality": "stated", "locator": "Proposition 1"}
+{"subject": "Proposition 2", "relation": "proves", "object": "A is real (and thus commutative) iff A' is commutative", "modality": "stated", "locator": "Proposition 2"}
+{"subject": "Proposition 3", "relation": "proves", "object": "A is commutative and associative iff A' is associative", "modality": "stated", "locator": "Proposition 3"}
+{"subject": "Proposition 4", "relation": "proves", "object": "A is associative and nicely normed iff A' is alternative and nicely normed", "modality": "stated", "locator": "Proposition 4"}
+{"subject": "Proposition 5", "relation": "proves", "object": "A is nicely normed iff A' is nicely normed", "modality": "stated", "locator": "Proposition 5"}
+{"subject": "compact real form of g2", "relation": "equivalent-to", "object": "der(O)", "modality": "stated", "locator": "Theorem 4"}
+{"subject": "so(Im(O))", "relation": "equivalent-to", "object": "der(O) ⊕ ad_{Im(O)}", "modality": "stated", "locator": "Theorem 4"}
+{"subject": "so(O)", "relation": "equivalent-to", "object": "der(O) ⊕ L_{Im(O)} ⊕ R_{Im(O)}", "modality": "stated", "locator": "Theorem 4"}
+{"subject": "compact real form of f4", "relation": "equivalent-to", "object": "isom(OP^2)", "modality": "stated", "locator": "Theorem 5"}
+{"subject": "compact real form of f4", "relation": "equivalent-to", "object": "der(h3(O))", "modality": "stated", "locator": "Theorem 5"}
+{"subject": "compact real form of f4", "relation": "equivalent-to", "object": "so(O) ⊕ O^3", "modality": "stated", "locator": "Theorem 5"}
+{"subject": "compact real form of e6", "relation": "equivalent-to", "object": "isom((C⊗O)P^2)", "modality": "stated", "locator": "Theorem 6"}
+{"subject": "compact real form of e6", "relation": "equivalent-to", "object": "der(h3(O)) ⊕ sh3(O)", "modality": "stated", "locator": "Theorem 6"}
+{"subject": "compact real form of e6", "relation": "equivalent-to", "object": "so(O) ⊕ so(C) ⊕ Im(C) ⊕ (C⊗O)^3", "modality": "stated", "locator": "Theorem 6"}
+{"subject": "compact real form of e7", "relation": "equivalent-to", "object": "isom((H⊗O)P^2)", "modality": "stated", "locator": "Theorem 7"}
+{"subject": "compact real form of e7", "relation": "equivalent-to", "object": "der(h3(O)) ⊕ h3(O)^3", "modality": "stated", "locator": "Theorem 7"}
+{"subject": "compact real form of e7", "relation": "equivalent-to", "object": "so(O) ⊕ so(H) ⊕ Im(H) ⊕ (H⊗O)^3", "modality": "stated", "locator": "Theorem 7"}
+{"subject": "compact real form of e8", "relation": "equivalent-to", "object": "isom((O⊗O)P^2)", "modality": "stated", "locator": "Theorem 8"}
+{"subject": "compact real form of e8", "relation": "equivalent-to", "object": "der(O) ⊕ der(h3(O)) ⊕ (Im(O)⊗sh3(O))", "modality": "stated", "locator": "Theorem 8"}
+{"subject": "compact real form of e8", "relation": "equivalent-to", "object": "so(O) ⊕ so(O) ⊕ (O⊗O)^3", "modality": "stated", "locator": "Theorem 8"}
+{"subject": "division algebra", "relation": "defines", "object": "algebra A in which ab=0 implies a=0 or b=0; equivalently left and right multiplication by any nonzero element are invertible", "modality": "stated", "locator": "Section 1.1"}
+{"subject": "normed division algebra", "relation": "defines", "object": "algebra A that is a normed vector space with ||ab||=||a|| ||b||", "modality": "stated", "locator": "Section 1.1"}
+{"subject": "4-dimensional division algebra with i^2=-1+εj", "relation": "counterexample-to", "object": "a division algebra has multiplicative inverses (for nonassociative algebras)", "modality": "stated", "locator": "Section 1.1"}
+{"subject": "4-dimensional division algebras without multiplicative inverses", "relation": "counterexample-to", "object": "R, C, H and O are the only division algebras", "modality": "stated", "locator": "Section 1.1"}
+{"subject": "Artin's theorem", "relation": "proves", "object": "A is alternative iff (aa)b=a(ab), (ab)a=a(ba), (ba)a=b(aa) for all a,b; any two imply the third", "modality": "cited", "locator": "Section 1.1"}
+{"subject": "associator [a,b,c] being alternating", "relation": "equivalent-to", "object": "A is alternative", "modality": "stated", "locator": "Section 1.1"}
+{"subject": "eight squares theorem", "relation": "depends-on", "object": "8-dimensional normed division algebra described by Graves", "modality": "cited", "locator": "Section 1"}
+{"subject": "Bott periodicity", "relation": "proves", "object": "π_{i+8}(O(∞)) ≅ π_i(O(∞))", "modality": "cited", "locator": "Section 1"}
+{"subject": "sl(2,R)", "relation": "equivalent-to", "object": "so(2,1)", "modality": "stated", "locator": "Section 1"}
+{"subject": "sl(2,C)", "relation": "equivalent-to", "object": "so(3,1)", "modality": "stated", "locator": "Section 1"}
+{"subject": "sl(2,H)", "relation": "equivalent-to", "object": "so(5,1)", "modality": "stated", "locator": "Section 1"}
+{"subject": "sl(2,O)", "relation": "equivalent-to", "object": "so(9,1)", "modality": "stated", "locator": "Section 1"}
+{"subject": "unit quaternions", "relation": "equivalent-to", "object": "SU(2)", "modality": "stated", "locator": "Section 1"}
+{"subject": "restriction of real division algebras to dimensions 1, 2, 4, 8", "relation": "depends-on", "object": "existence of n pointwise linearly independent smooth vector fields on the n-sphere only when n+1=1,2,4,8", "modality": "stated", "locator": "Section 1"}
+{"subject": "exceptional simple Lie algebras", "relation": "depends-on", "object": "isometry groups of the projective planes over O, O⊗C, O⊗H, O⊗O and the automorphism group of the octonions", "modality": "stated", "locator": "Section 1"}
+{"subject": "octonionic projective space OP^n", "relation": "defines", "object": "makes sense only for n ≤ 2", "modality": "stated", "locator": "Section 1"}
+{"subject": "normed division algebra", "relation": "depends-on", "object": "division algebra with ||1||=1 (implied by ||ab||=||a|| ||b||)", "modality": "stated", "locator": "Section 1.1"}

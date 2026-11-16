@@ -1,0 +1,35 @@
+{"subject": "G_2-manifold", "relation": "defines", "object": "7-manifold M with a G_2-structure φ such that ∇φ=0 (torsion-free G_2-structure)", "modality": "stated", "locator": "Definition 2.1"}
+{"subject": "∇φ=0", "relation": "equivalent-to", "object": "Hol(g_φ) ⊆ G_2", "modality": "stated", "locator": "Theorem 2.2"}
+{"subject": "∇φ=0", "relation": "equivalent-to", "object": "dφ=dψ=0", "modality": "stated", "locator": "Theorem 2.2"}
+{"subject": "nearly Kähler 6-manifold", "relation": "defines", "object": "6-manifold (Σ,g) together with a real Killing spinor s_6", "modality": "stated", "locator": "Definition 2.7"}
+{"subject": "nearly Kähler 6-manifold", "relation": "depends-on", "object": "real Killing spinor", "modality": "stated", "locator": "Definition 2.7"}
+{"subject": "Corollary 2.11", "relation": "proves", "object": "matrix form of the Dirac operator D^t under the splitting S(Σ) ≅ Λ^0 ⊕ Λ^1 ⊕ Λ^6", "modality": "stated", "locator": "Corollary 2.11"}
+{"subject": "G_2 cone C(Σ)", "relation": "defines", "object": "(0,∞)×Σ with torsion-free G_2-structure φ_C = r^2 ω∧dr + r^3 Im Ω, Σ the link", "modality": "stated", "locator": "Definition 3.1"}
+{"subject": "G_2 cone C(Σ)", "relation": "depends-on", "object": "nearly Kähler 6-manifold", "modality": "stated", "locator": "Definition 3.1"}
+{"subject": "asymptotically conical G_2-manifold with rate μ<0", "relation": "defines", "object": "G_2-manifold whose G_2-structure outside a compact set approaches φ_C at rate O(r^{μ-j})", "modality": "stated", "locator": "Definition 3.2"}
+{"subject": "asymptotically conical G_2-manifold", "relation": "depends-on", "object": "G_2 cone C(Σ)", "modality": "stated", "locator": "Definition 3.2"}
+{"subject": "(R^7, φ_0)", "relation": "specialises", "object": "asymptotically conical G_2-manifold with any rate μ<0", "modality": "stated", "locator": "Example 3.4"}
+{"subject": "Bryant–Salamon G_2 holonomy metric on the total space of S(S^3)", "relation": "specialises", "object": "asymptotically conical G_2-manifold with link S^3×S^3 and rate -3", "modality": "cited", "locator": "Example 3.4"}
+{"subject": "Weighted Sobolev Embedding", "relation": "proves", "object": "continuous embedding L^p_{k,μ}(E) ↪ C^{l,α}_μ(E) when k-7/p ≥ l+α", "modality": "stated", "locator": "Theorem 3.9"}
+{"subject": "moduli space M(A_∞,μ)", "relation": "defines", "object": "G_2-instantons on P asymptotic to A_∞ with rate μ modulo gauge group G_μ", "modality": "stated", "locator": "Definition 4.6"}
+{"subject": "Theorem 4.10", "relation": "proves", "object": "P: L^p_{k+l,μ}(E) → L^p_{k,μ-ν}(F) is Fredholm for μ outside W_crit(P_C), and Ker P_μ = Ker P_μ' when [μ,μ'] avoids W_crit", "modality": "stated", "locator": "Theorem 4.10"}
+{"subject": "Proposition 4.12", "relation": "proves", "object": "d_A^* d_A: Ω^0_{k+2,μ}(M,Ad P) → Ω^0_{k,μ-2}(M,Ad P) is Fredholm for μ in (-5,0)", "modality": "stated", "locator": "Proposition 4.12"}
+{"subject": "Lemma 4.16", "relation": "proves", "object": "Ker(Δ)_μ = {0} on an asymptotically conical manifold for μ<0", "modality": "stated", "locator": "Lemma 4.16"}
+{"subject": "Lemma 4.20", "relation": "proves", "object": "d_A^* d_A: Ω^0_{k+2,μ} → Ω^0_{k,μ-2} is an isomorphism of topological vector spaces for -5<μ<0", "modality": "stated", "locator": "Lemma 4.20"}
+{"subject": "Slice Theorem", "relation": "proves", "object": "Ω^1_{k+1,μ-1}(M,Ad P) = Ker(d_A^*) ⊕ d_A(Ω^0_{k+2,μ}(M,Ad P)) for -5<μ<0", "modality": "stated", "locator": "Theorem 4.23"}
+{"subject": "Corollary 4.24", "relation": "proves", "object": "B_{k+1,μ} = A_{k+1,μ-1}/G_{k+2,μ} is a smooth manifold for -5<μ<0", "modality": "stated", "locator": "Corollary 4.24"}
+{"subject": "Proposition 4.29", "relation": "proves", "object": "W_crit(D_{A_C}) = {μ : μ+3 ∈ Spec D^0_{A_∞}}, discrete, unbounded and symmetric about -3", "modality": "stated", "locator": "Proposition 4.29"}
+{"subject": "critical weights of twisted Dirac operator D_A", "relation": "depends-on", "object": "spectrum of D^0_{A_∞} on the nearly Kähler link", "modality": "stated", "locator": "Proposition 4.29"}
+{"subject": "linearised nearly Kähler instanton equation on the link Σ", "relation": "equivalent-to", "object": "one-forms a satisfying D_{A_∞}(a·s) = 2 a·s", "modality": "cited", "locator": "Remark 4.30"}
+{"subject": "Theorem 4.32", "relation": "proves", "object": "ind_{μ'} D_A - ind_μ D_A = sum over ν in W∩(μ,μ') of k(ν)", "modality": "stated", "locator": "Theorem 4.32"}
+{"subject": "infinitesimal deformation space I(A,μ)", "relation": "defines", "object": "pairs (f,a) in Ω^0_{k+1,μ-1} ⊕ Ω^1_{k+1,μ-1}(M,Ad P) with D_A(f,a)=0", "modality": "stated", "locator": "Definition 4.35"}
+{"subject": "Theorem 4.38", "relation": "proves", "object": "virtual dimension of the moduli space equals dim I(A,μ) - dim O(A,μ), for μ in (R∖W)∩(-5,0)", "modality": "stated", "locator": "Theorem 4.38"}
+{"subject": "Theorem 4.38", "relation": "proves", "object": "M(A_∞,μ) is smooth if O(A,μ) = {0}", "modality": "stated", "locator": "Theorem 4.38"}
+{"subject": "Proposition 5.2", "relation": "proves", "object": "L^2(S_C(Σ)⊗E) ≅ ⊕_γ Hom(V_γ,S⊗V)_H ⊗ V_γ, with D^t_{A_can} preserving each summand", "modality": "stated", "locator": "Proposition 5.2"}
+{"subject": "Lemma 5.3", "relation": "proves", "object": "(D^{1/3}_{A_can})^2 preserves the Λ^0⊕Λ^1⊕Λ^6 splitting and acts as -ρ_L(Cas_g) + ρ_V(Cas_h) + 4", "modality": "stated", "locator": "Lemma 5.3"}
+{"subject": "Günaydin–Nicolai G_2-instanton", "relation": "specialises", "object": "G_2-instanton on the principal G_2-bundle over R^7", "modality": "cited", "locator": "Introduction"}
+{"subject": "standard G_2-instanton", "relation": "defines", "object": "the Günaydin–Nicolai G_2-instanton on R^7", "modality": "stated", "locator": "Introduction"}
+{"subject": "dimension of the space of solutions to the linearised G_2-instanton equation", "relation": "depends-on", "object": "spectrum of a twisted Dirac operator on a nearly Kähler 6-manifold", "modality": "stated", "locator": "Introduction"}
+{"subject": "Section 8", "relation": "proves", "object": "unobstructed connections in the moduli space are invariant under an action of G_2", "modality": "stated", "locator": "Section 8"}
+{"subject": "classification of G_2-invariant unobstructed connections", "relation": "uses-technique", "object": "Wang's theorem", "modality": "cited", "locator": "Section 8"}
+{"subject": "Section 8", "relation": "proves", "object": "uniqueness of unobstructed G_2-instantons on the principal G_2-bundle over R^7", "modality": "stated", "locator": "Section 8"}
