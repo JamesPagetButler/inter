@@ -1,0 +1,26 @@
+{"subject": "heat kernel K(x,x0;sigma)", "relation": "defines", "object": "heat equation (1) with initial condition (2)", "modality": "stated", "locator": "Eq. (1)-(2)"}
+{"subject": "heat trace P(sigma)", "relation": "defines", "object": "normalised integral of K(x,x;sigma) over V", "modality": "stated", "locator": "Eq. (4)"}
+{"subject": "spectral dimension d_S(sigma)", "relation": "defines", "object": "heat trace P(sigma) via -2 d log P / d log sigma", "modality": "stated", "locator": "Eq. (5)"}
+{"subject": "heat trace P(sigma) of the operator T", "relation": "equivalent-to", "object": "Tr exp(-sigma T)", "modality": "stated", "locator": "Eq. (7)"}
+{"subject": "Mellin transform of the heat trace", "relation": "equivalent-to", "object": "Gamma(s) zeta_T(s)", "modality": "stated", "locator": "Eq. (16)"}
+{"subject": "dimension spectrum Sd(T)", "relation": "defines", "object": "union of the exponents z(k,m) in the heat trace expansion", "modality": "stated", "locator": "Eq. (13)"}
+{"subject": "spectral dimension d_Sd", "relation": "defines", "object": "supremum of Re(z) over the dimension spectrum", "modality": "stated", "locator": "Eq. (14)"}
+{"subject": "dimension spectrum Sd(Delta_q^sm)", "relation": "equivalent-to", "object": "set of points pi i k/log q (k in Z) together with negative integers -n (n in N), of order 3", "modality": "stated", "locator": "Eq. (22)"}
+{"subject": "spectral dimension d_S^{q,sm}(sigma) of Delta_q^sm", "relation": "defines", "object": "ratio of expansions of P(sigma) with G, F and R_sm", "modality": "stated", "locator": "Eq. (23)"}
+{"subject": "dimension spectrum Sd(Delta_q^sp)", "relation": "equivalent-to", "object": "set of points pi i k/log q minus n (k in Z, n in N), of order 3", "modality": "stated", "locator": "Eq. (33)"}
+{"subject": "spectral dimension d_S^{q,sp}(sigma)", "relation": "equivalent-to", "object": "d_S^{q,sm}(sigma) up to O(sigma)", "modality": "stated", "locator": "Eq. (34)"}
+{"subject": "heat trace of Delta_q^sp", "relation": "equivalent-to", "object": "heat trace of Delta_q^sm up to O(sigma log^2 sigma)", "modality": "stated", "locator": "Eq. (30)"}
+{"subject": "dimension spectra of Delta^sp and Delta^sc on the classical sphere", "relation": "equivalent-to", "object": "set 1 - N of order 1", "modality": "stated", "locator": "Eq. (32)"}
+{"subject": "heat trace of Delta_q^sc", "relation": "depends-on", "object": "heat trace of Delta_{sqrt q}^sm evaluated at sigma q^{-1/2}", "modality": "stated", "locator": "Eq. (36)"}
+{"subject": "spectral dimension d_S^{q,sc}(sigma)", "relation": "equivalent-to", "object": "d_S^{sqrt q, sm}(q^{-1/2} sigma) up to O((log sigma)^-2)", "modality": "stated", "locator": "Eq. (29)"}
+{"subject": "Podleś quantum sphere spectral dimension (log-periodic oscillations)", "relation": "proves", "object": "log-periodic oscillations in d_S^{q,sm}(sigma) with amplitude decaying as q tends to 1", "modality": "stated", "locator": "Section III"}
+{"subject": "dimension spectrum of the quantum sphere Laplacians", "relation": "proves", "object": "non-real points in the dimension spectrum for every q", "modality": "stated", "locator": "Section III"}
+{"subject": "Laplacian Delta^sm eigenvalue relation on kappa-Minkowski-type operator", "relation": "defines", "object": "Podleś quantum sphere relations AB = q^2 BA and related identities", "modality": "stated", "locator": "Eq. (18)"}
+{"subject": "heat trace for kappa-Minkowski Laplacian", "relation": "defines", "object": "integral expression with weight kappa/sqrt(p0^2 + p_a p^a + kappa^2)", "modality": "stated", "locator": "Eq. (38)"}
+{"subject": "heat trace P_(3+1)(sigma) for L_cv", "relation": "equivalent-to", "object": "closed form with erf and exponential terms", "modality": "stated", "locator": "Eq. (41)"}
+{"subject": "dimension spectrum Sd_(3+1) for the kappa-Minkowski Laplacian", "relation": "equivalent-to", "object": "the set {3/2} union {(1-n)/2 : n in N}, of order 1", "modality": "stated", "locator": "Eq. (45)"}
+{"subject": "dimension spectrum Sd_(3+1) for the second kappa-Minkowski Laplacian", "relation": "equivalent-to", "object": "the set {3, 2}, of order 1", "modality": "stated", "locator": "Eq. (55)"}
+{"subject": "spectral dimension d_S^(3+1)(sigma) for the second kappa-Minkowski Laplacian", "relation": "defines", "object": "rational expression 6 - 4 kappa^2 sigma / (2 kappa^2 sigma + 1)", "modality": "stated", "locator": "Eq. (56)"}
+{"subject": "absence of log-periodic oscillations in kappa-Minkowski spectral dimensions", "relation": "proves", "object": "the three considered kappa-Minkowski Laplacians", "modality": "stated", "locator": "Section IV"}
+{"subject": "ambiguity in the definition of the spectral dimension", "relation": "depends-on", "object": "order of the Laplacian-like operator", "modality": "stated", "locator": "Section IV"}
+{"subject": "spectral zeta function zeta_T(s)", "relation": "defines", "object": "trace of T to the power minus s, for Re(s) large", "modality": "stated", "locator": "Eq. (15)"}
