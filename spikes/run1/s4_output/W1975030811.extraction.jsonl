@@ -1,0 +1,44 @@
+{"subject":"standard Podleś quantum sphere A(S^2_q)","relation":"defines","object":"algebra relations (1)","modality":"cited","locator":"Section 1"}
+{"subject":"algebra relations (1)","relation":"defines","object":"generators B, B*, A of A(S^2_q)","modality":"stated","locator":"Eq. (2)"}
+{"subject":"U_q(su(2)) relations","relation":"defines","object":"quantum group U_q(su(2)) with coproduct, counit, antipode and *-structure","modality":"stated","locator":"Eqs. (4)-(6)"}
+{"subject":"action of U_q(su(2)) on generators a, b","relation":"defines","object":"left module action on A(S^2_q)","modality":"stated","locator":"Eq. (7)"}
+{"subject":"action of U_q(su(2)) on B, B*, A","relation":"defines","object":"induced action on composite generators","modality":"stated","locator":"Eq. (9)"}
+{"subject":"adjoint-twisted action h triangleright x*","relation":"defines","object":"action on conjugates of algebra elements","modality":"stated","locator":"Eq. (8)"}
+{"subject":"module action on V","relation":"defines","object":"compatibility h(alpha v) = (h_(1) triangleright alpha)(h_(2) v)","modality":"stated","locator":"Eq. (10)"}
+{"subject":"representation V_l of U_q(su(2))","relation":"defines","object":"basis action of f, e, k on |l,m>","modality":"stated","locator":"Eq. (11)"}
+{"subject":"equivariance condition on B","relation":"depends-on","object":"U_q(su(2)) action on V (Eq. 10)","modality":"stated","locator":"Eq. (16)"}
+{"subject":"matrix coefficients B^+, B^0, B^- of B","relation":"proves","object":"explicit forms in terms of alpha^+_l, alpha^0_l, alpha^-_l","modality":"stated","locator":"Eq. (17)"}
+{"subject":"matrix coefficients of B*","relation":"defines","object":"tilde B^+, tilde B^0, tilde B^- in terms of alpha coefficients","modality":"stated","locator":"Eq. (18)"}
+{"subject":"matrix coefficients A^+, A^0, A^- of A","relation":"defines","object":"explicit forms in terms of alpha coefficients","modality":"stated","locator":"Eq. (19)"}
+{"subject":"alpha coefficients","relation":"proves","object":"alpha^-_{l+1} = -q^{2l+2} alpha^+_l","modality":"stated","locator":"Eq. (20)"}
+{"subject":"alpha^0_l recursion","relation":"proves","object":"recursion for alpha^0_l","modality":"stated","locator":"Eq. (21)"}
+{"subject":"commutation relation for B, B* and A","relation":"proves","object":"B*B - q^4 BB* = (1-q^2) A","modality":"stated","locator":"Eq. (22)"}
+{"subject":"alpha^0_l solution","relation":"defines","object":"closed form of alpha^0_l (first branch)","modality":"stated","locator":"Eq. (23)"}
+{"subject":"alpha^+_l solution","relation":"defines","object":"closed form of alpha^+_l (first branch)","modality":"stated","locator":"Eq. (24)"}
+{"subject":"alpha^0_l solution","relation":"defines","object":"closed form of alpha^0_l (second branch)","modality":"stated","locator":"Eq. (25)"}
+{"subject":"alpha^+_l solution","relation":"defines","object":"closed form of alpha^+_l (second branch)","modality":"stated","locator":"Eq. (26)"}
+{"subject":"alpha^+_{1/2}","relation":"defines","object":"value of (alpha^+_{1/2})^2","modality":"stated","locator":"Eq. (27)"}
+{"subject":"alpha coefficient constraints","relation":"proves","object":"quadratic constraints on (alpha^+_l)^2, (alpha^+_{l-1})^2, (alpha^0_l)^2","modality":"stated","locator":"Eq. (28)"}
+{"subject":"alpha coefficient constraints","relation":"proves","object":"second quadratic constraint on alpha coefficients","modality":"stated","locator":"Eq. (29)"}
+{"subject":"grading gamma","relation":"defines","object":"chiral grading gamma = diag(1,-1) on H_+ and H_-","modality":"stated","locator":"Eq. (29)"}
+{"subject":"representation pi of A(S^2_q)","relation":"defines","object":"block-diagonal representation pi = diag(pi_+, pi_-)","modality":"stated","locator":"Eq. (30)"}
+{"subject":"reality structure J","relation":"defines","object":"antilinear map J on |l,m>_pm to |l,-m>_mp","modality":"stated","locator":"Eq. (31)"}
+{"subject":"reality structure J","relation":"proves","object":"J^2 = -1 on the representation space","modality":"stated","locator":"Eq. (32), second display"}
+{"subject":"reality structure J","relation":"defines","object":"compatibility hJ = J(Sh)*","modality":"stated","locator":"Eq. (33)"}
+{"subject":"Dirac operator D","relation":"defines","object":"equivariance Dh = hD for all h in U_q(su(2))","modality":"stated","locator":"Eq. (34), first display"}
+{"subject":"Dirac operator D","relation":"defines","object":"first-order condition [[D,pi(alpha)], J pi(beta) J] = 0","modality":"stated","locator":"Eq. (34), second display"}
+{"subject":"Dirac operator D","relation":"defines","object":"off-diagonal block form with z and D_pm","modality":"stated","locator":"Eq. (35)"}
+{"subject":"Dirac operator D","relation":"defines","object":"eigenvalue action D|l,m>_pm = d^pm_l |l,m>_mp","modality":"stated","locator":"Eq. (36)"}
+{"subject":"operators D_pm","relation":"defines","object":"D_pm acting on |l,m>_pm with eigenvalue [l+1/2]","modality":"stated","locator":"Eq. (37)"}
+{"subject":"real structure compatibility (DJ - JD)=0","relation":"proves","object":"d^pm_l = conjugate of d^mp_l","modality":"stated","locator":"Eq. (40)"}
+{"subject":"recurrence for d^+_l","relation":"proves","object":"d^+_l + d^+_{l+2} = [2] d^+_{l+1}","modality":"stated","locator":"Eq. (38)"}
+{"subject":"recurrence for d^+_l","relation":"proves","object":"d^+_l = x q^l + y q^{-l}","modality":"stated","locator":"Eq. (39)"}
+{"subject":"Hilbert space H","relation":"defines","object":"completion with norm weighted by (1 + |z|^2 [l+1/2]^2)","modality":"stated","locator":"Eq. (43)"}
+{"subject":"commutator [D, pi(B)]","relation":"proves","object":"bounded representation of [D,pi(B)] on the B^+ component","modality":"stated","locator":"Eq. (40)"}
+{"subject":"commutator [D, pi(B)]","relation":"proves","object":"bounded representation of [D,pi(B)] on the B^0 component","modality":"stated","locator":"Eq. (41)"}
+{"subject":"commutator [D, pi(B)]","relation":"proves","object":"bounded representation of [D,pi(B)] on the B^- component","modality":"stated","locator":"Eq. (42)"}
+{"subject":"real spectral triple for the standard Podleś sphere","relation":"proves","object":"algebraic axioms of real spectral triples","modality":"stated","locator":"Section 5"}
+{"subject":"eigenvalues of D on the Podleś sphere","relation":"equivalent-to","object":"eigenvalues in Bibikov-Kulish [1]","modality":"stated","locator":"Section 5"}
+{"subject":"dimension axiom","relation":"proves","object":"dimension axiom can also be satisfied (asymptotic eigenvalue behaviour)","modality":"cited","locator":"Section 5"}
+{"subject":"algebraic part of real spectral triple axioms","relation":"depends-on","object":"Connes' axioms for real spectral triples [5]","modality":"cited","locator":"Section 1"}
+{"subject":"Dirac operator construction","relation":"uses-technique","object":"equivariant real spectral triples [15]","modality":"cited","locator":"Section 1"}
