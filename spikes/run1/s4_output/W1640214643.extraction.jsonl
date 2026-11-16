@@ -1,0 +1,19 @@
+{"subject": "Conformal Laplacian L_g", "relation": "defines", "object": "L_g := Δ_g + (n-2)/(4(n-1)) Scal_g (Yamabe operator)", "modality": "stated", "locator": "Theorem 1.2"}
+{"subject": "Theorem 1.1", "relation": "proves", "object": "sup_{g∈[g_0]} λ_1^+(D_g) Vol(M,g)^{1/n} = ∞ for compact spin manifolds of dimension n≥2", "modality": "stated", "locator": "Theorem 1.1"}
+{"subject": "Theorem 1.2", "relation": "proves", "object": "sup_{g∈[g_0]} λ_1^+(L_g) Vol(M,g)^{2/n} = ∞ for compact Riemannian manifolds of dimension n≥3", "modality": "stated", "locator": "Theorem 1.2"}
+{"subject": "Theorem 1.3", "relation": "proves", "object": "sup_{g∈[g_0]} λ_1^+(P_g) Vol(M,g)^{k/n} = ∞ for conformally covariant elliptic operators P_g of order k and bidegree ((n-k)/2,(n+k)/2) invertible on S^{n-1}×R", "modality": "stated", "locator": "Theorem 1.3"}
+{"subject": "Theorem 1.3", "relation": "generalises", "object": "Theorem 1.1", "modality": "stated", "locator": "Theorem 1.3"}
+{"subject": "Theorem 1.3", "relation": "generalises", "object": "Theorem 1.2", "modality": "stated", "locator": "Theorem 1.3"}
+{"subject": "conformally covariant elliptic operator of order k", "relation": "defines", "object": "contravariant functor from Riem^n (resp. Riemspin^n) to Laplace^n_k (resp. Dirac^n_k) with continuous coefficients in the C^k-topology of metrics", "modality": "stated", "locator": "Definition 2.2"}
+{"subject": "invertibility on S^{n-1}×R", "relation": "defines", "object": "P_g is an invertible operator H^k→L^2 for the standard product metric on S^{n-1}×R", "modality": "stated", "locator": "Definition 2.4"}
+{"subject": "Lemma 2.1 (Removal of singularities lemma)", "relation": "proves", "object": "a solution u of Pu=f on Ω\\{0} with the integrability conditions (2) is a strong solution of Pu=f on Ω", "modality": "stated", "locator": "Lemma 2.1"}
+{"subject": "Lemma 3.1", "relation": "proves", "object": "(M_∞, g_∞) is an exact b-metric in the sense of [28, Def. 2.8]", "modality": "stated", "locator": "Lemma 3.1"}
+{"subject": "Proposition 3.2", "relation": "proves", "object": "elliptic estimate ||(∇^∞)^s u||_{L^2(g_∞)} ≤ C(||u||_{L^2(g_∞)} + ||P_∞ u||_{L^2(g_∞)}) for s∈{0,...,k} on (M_∞, g_∞)", "modality": "stated", "locator": "Proposition 3.2"}
+{"subject": "Proposition 3.3", "relation": "proves", "object": "the map ker P_0 → ker P_∞, φ_0 ↦ φ_∞ = F_∞^{-(n-k)/2} φ_0 is an isomorphism of vector spaces", "modality": "stated", "locator": "Proposition 3.3"}
+{"subject": "Theorem 4.1", "relation": "proves", "object": "if liminf_{L→∞} |λ_j^±(P_L)| < σ_P then λ_j^±(P_L) → λ_j^±(P_∞) ∈ (-σ_P, σ_P) as L→∞", "modality": "stated", "locator": "Theorem 4.1"}
+{"subject": "Lemma 4.3", "relation": "proves", "object": "for any ε>0 there exist δ_0, i_0 with ||ψ_{i,ℓ}||_{L^2(B_y(δ_0))} ≤ ε||ψ_{i,ℓ}||_{L^2(M)} for i≥i_0, ℓ∈{0,...,m}", "modality": "stated", "locator": "Lemma 4.3"}
+{"subject": "Lemma 4.4", "relation": "proves", "object": "the sections ψ̄_1,...,ψ̄_m are orthogonal", "modality": "stated", "locator": "Lemma 4.4"}
+{"subject": "Theorem 1.1 (sup of Dirac first eigenvalue)", "relation": "uses-technique", "object": "asymptotically cylindrical blowup (metrics with longer and longer cylindrical parts, called Pinocchio metrics)", "modality": "stated", "locator": "Introduction, remarks on the proof construction"}
+{"subject": "infimum of λ_1^+(D_g) Vol(M,g)^{1/n} over [g_0]", "relation": "proves", "object": "is strictly positive", "modality": "cited", "locator": "Introduction, remark citing [3]"}
+{"subject": "sup of λ_1(Δ_p^g) Vol(M,g)^{2/n} for Hodge Laplacian on p-forms", "relation": "proves", "object": "equals +∞ for n≥4 and 2≤p≤n-2", "modality": "cited", "locator": "Introduction, remark citing [17]"}
+{"subject": "sup of λ_k(Δ^g) Vol(M,g)^{2/n} for standard Laplacian on functions", "relation": "proves", "object": "is finite", "modality": "cited", "locator": "Introduction, remark citing [18] (k=1) and [26] (general k)"}
