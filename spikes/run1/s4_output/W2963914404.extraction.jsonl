@@ -1,0 +1,31 @@
+{"subject":"quantum tori A_theta","relation":"proves","object":"if theta_n converges to theta then A_{theta_n} converges to A_theta in quantum Gromov-Hausdorff distance","modality":"stated","locator":"Abstract"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q","relation":"proves","object":"triangle inequality dist_q(A,C) <= dist_q(A,B) + dist_q(B,C)","modality":"stated","locator":"Eq. (24); Section 4"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q","relation":"proves","object":"dist_q(A_1,A_2) <= dist_GH(X_1,X_2) for compact metric spaces X_1, X_2","modality":"stated","locator":"Eq. (37); Section 4"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q","relation":"proves","object":"dist_GH(X_1,X_2) <= dist_H^{rho_L}(S(A_1),S(A_2))","modality":"stated","locator":"Eq. (38); Section 4"}
+{"subject":"quantum Gromov-Hausdorff distance on ordinary metric spaces","relation":"counterexample-to","object":"equality of dist_q with the ordinary Gromov-Hausdorff distance","modality":"cited","locator":"Section 4; Appendix 1"}
+{"subject":"Hanfeng Li's example","relation":"counterexample-to","object":"equality of dist_q with the ordinary Gromov-Hausdorff distance","modality":"cited","locator":"Appendix 1"}
+{"subject":"bridges","relation":"uses-technique","object":"estimating quantum Gromov-Hausdorff distances","modality":"stated","locator":"Section 5"}
+{"subject":"isometry classes of compact quantum metric spaces with dist_q","relation":"proves","object":"dist_q(A,B)=0 implies A and B are isometric as compact quantum metric spaces","modality":"stated","locator":"Section 7; Eq. (86)"}
+{"subject":"finite-dimensional compact quantum metric spaces","relation":"proves","object":"approximation of a C*-algebra with metric, in Gromov-Hausdorff distance, by finite-dimensional compact quantum metric spaces","modality":"stated","locator":"Section 8"}
+{"subject":"quantum tori A_theta and A_psi","relation":"proves","object":"dist_q(A_theta, A_psi) < epsilon for theta close to psi","modality":"stated","locator":"Eq. (109); Sections 9-11"}
+{"subject":"space of isometry classes of compact quantum metric spaces with dist_q","relation":"proves","object":"completeness","modality":"stated","locator":"Section 12"}
+{"subject":"quantum analogue of Gromov's compactness criterion","relation":"proves","object":"compactness criterion for subsets of the complete space of isometry classes","modality":"stated","locator":"Section 13"}
+{"subject":"every metric for a compact quantum metric space","relation":"proves","object":"can be obtained by the Dirac operator construction, answering question 11.1 of [62]","modality":"stated","locator":"Appendix 2"}
+{"subject":"Kantorovich metric rho_L on state spaces","relation":"defines","object":"rho_L(mu,nu) = sup{|mu(a)-nu(a)| : L(a) <= 1}","modality":"stated","locator":"Eq. (2)"}
+{"subject":"Hausdorff distance with respect to a metric","relation":"defines","object":"dist_H^rho(X,Y) = inf{r : X in N_r(Y) and Y in N_r(X)}","modality":"stated","locator":"Eq. (4)"}
+{"subject":"ordinary Gromov-Hausdorff distance dist_GH","relation":"defines","object":"inf over metrics rho in M(rho_X,rho_Y) of dist_H^rho(X,Y)","modality":"stated","locator":"Eq. (5)"}
+{"subject":"Lipschitz seminorm L_X on a compact metric space","relation":"defines","object":"L_X(g) = sup{|g(x)-g(y)|/rho_X(x,y) : x != y}","modality":"stated","locator":"Eq. (6)"}
+{"subject":"quotient Lipschitz seminorm L_B","relation":"defines","object":"L_B(b) = inf{L(a) : pi(a)=b}","modality":"stated","locator":"Eq. (8)"}
+{"subject":"quotient map pi and Lipschitz seminorms","relation":"proves","object":"L_X(pi(f)) <= L(f)","modality":"stated","locator":"Eq. (7)"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q","relation":"defines","object":"dist_q(A,B) = inf{dist_H^{rho_L}(S(A),S(B)) : L in M(L_A,L_B)}","modality":"stated","locator":"Eq. (23)"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q(A,R)","relation":"proves","object":"dist_q(A,R) = radius(A)","modality":"stated","locator":"Eq. (58)"}
+{"subject":"quantum Gromov-Hausdorff distance dist_q","relation":"proves","object":"dist_q(A,B) <= diameter(A) + diameter(B)","modality":"stated","locator":"Eq. (54)"}
+{"subject":"Lipschitz seminorm L^s on A","relation":"proves","object":"dist_q((A,L),(A,L^s)) = 0 = dist_q((A,L),(A^c,L^c))","modality":"stated","locator":"Eq. (76)"}
+{"subject":"Lipschitz seminorm with L^s(f) = ||f'||_infty","relation":"defines","object":"L^s(f) = ||f'||_infty","modality":"stated","locator":"Eq. (OPEN *)"}
+{"subject":"twisted product f*g on quantum tori","relation":"defines","object":"(f*g)(p) = sum f(q) g(p-q) sigma_theta(q,p)","modality":"stated","locator":"Eq. (9.1)"}
+{"subject":"cocycle sigma_theta on lattice","relation":"defines","object":"sigma_theta(p,q) = exp(i pi p.theta q)","modality":"stated","locator":"Eq. (106)"}
+{"subject":"Connes-Landi-Dubois-Violette spheres S_theta with Dirac operators","relation":"proves","object":"they form compact quantum metric spaces","modality":"cited","locator":"Introduction, Li's result"}
+{"subject":"Connes-Landi-Dubois-Violette spheres S_theta","relation":"proves","object":"if theta_n converges to theta then S_{theta_n} converges to S_theta in quantum Gromov-Hausdorff distance","modality":"cited","locator":"Introduction, Li's result"}
+{"subject":"matricial version of quantum Gromov-Hausdorff distance","relation":"defines","object":"matricial quantum Gromov-Hausdorff distance","modality":"cited","locator":"Introduction, Kerr's result"}
+{"subject":"compact quantum metric space","relation":"defines","object":"compact quantum metric space (C*-algebra with Lipschitz seminorm defined by an ordinary metric)","modality":"cited","locator":"Introduction, Compact quantum metric spaces"}
+{"subject":"Kantorovich metric on probability measures","relation":"generalises","object":"Kantorovich metric rho_L on state spaces of quantum metric spaces","modality":"stated","locator":"Introduction, Quantum metric spaces and the Kantorovich metric"}
