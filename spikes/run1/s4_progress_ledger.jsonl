@@ -124,3 +124,5 @@
 {"arm": "opus-comparison", "batch": 2, "papers": ["W7134934189","W7160450264","W7162107386","W7208731890","W7223805202"], "tokens_actual": 132329, "ts": "2026-11-15T03:04:53Z"}
 {"arm": "opus-comparison", "batch": 3, "papers": ["W1641073798","W1665497193","W1836597677","W2001941072","W2015765968"], "tokens_actual": 128215, "ts": "2026-11-15T03:08:23Z"}
 {"arm": "opus-comparison", "batch": 4, "papers": ["W2018785023","W2086216948","W2114197053","W2148017112","W2890203879"], "tokens_actual": 131637, "ts": "2026-11-15T03:12:16Z"}
+{"paper_id": "W4281690824", "stage": "restatement", "done": true, "ts": "2026-11-16T07:03:45Z"}
+{"paper_id": "W4281690824", "stage": "extraction", "done": true, "ts": "2026-11-16T07:04:02Z"}

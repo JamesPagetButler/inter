@@ -1,0 +1,28 @@
+{"subject":"Theorem B","relation":"uses-technique","object":"Lurie's unstraightening equivalences","modality":"stated","locator":"Abstract"}
+{"subject":"mate of an oplax square with horizontal left adjoints","relation":"equivalent-to","object":"lax square with horizontal right adjoints","modality":"stated","locator":"Introduction, Mates of squares"}
+{"subject":"Proposition A","relation":"specialises","object":"Corollary C","modality":"stated","locator":"Introduction, Corollary C and the following text"}
+{"subject":"lax symmetric monoidal functor","relation":"defines","object":"triangle over Fin_* in which f^⊗ preserves cocartesian morphisms covering inert morphisms","modality":"cited","locator":"Introduction, Monoidal structures"}
+{"subject":"oplax symmetric monoidal functor","relation":"defines","object":"triangle over Fin_*^op in which f_⊗ preserves cartesian morphisms covering inert morphisms","modality":"stated","locator":"Introduction, Monoidal structures"}
+{"subject":"Proposition A","relation":"proves","object":"extraction of adjoints gives inverse equivalences between lax symmetric monoidal right adjoints and opposite of oplax monoidal left adjoints","modality":"stated","locator":"Introduction, Proposition A"}
+{"subject":"Theorem B","relation":"equivalent-to","object":"Cocart^{lax,R}(B) ≃ (Cart^{opl,L}(B^op))^{(1,2)-op}","modality":"stated","locator":"Introduction, Theorem B"}
+{"subject":"Corollary C","relation":"equivalent-to","object":"MonCat_O^{lax,R} ≃ (MonCat_O^{opl,L})^{(1,2)-op}","modality":"stated","locator":"Introduction, Corollary C"}
+{"subject":"Corollary C","relation":"generalises","object":"Hinich's result on lax E_n-monoidal structure on internal mapping functor","modality":"stated","locator":"Introduction, text following Corollary C"}
+{"subject":"Hinich's result on lax E_n-monoidal structure on internal mapping functor","relation":"proves","object":"case n = ∞","modality":"cited","locator":"Introduction, text following Corollary C"}
+{"subject":"Gray fibration","relation":"defines","object":"functor p=(p_1,p_2): E→A×B with p_1 cocartesian, p_1-cocartesian morphisms sent to equivalences by p_2, and (p_2)_a cocartesian for each a","modality":"stated","locator":"Introduction, Fibrational description"}
+{"subject":"curved orthofibration","relation":"defines","object":"functor p=(p_1,p_2): E→A×B with p_1 cartesian, p_1-cartesian morphisms sent to equivalences by p_2, and (p_2)_a cocartesian for each a","modality":"stated","locator":"Introduction, Fibrational description"}
+{"subject":"Theorem D","relation":"equivalent-to","object":"Gray(A,B) ≃ CrvOrtho(A^op,B)","modality":"stated","locator":"Introduction, Theorem D"}
+{"subject":"Theorem D","relation":"equivalent-to","object":"OpGray(A,B) ≃ CrvOrtho(A,B^op)","modality":"stated","locator":"Introduction, Theorem D"}
+{"subject":"bifibration (curved orthofibration with ∞-groupoid fibres)","relation":"equivalent-to","object":"left and right fibrations under the equivalences of Theorem D","modality":"stated","locator":"Introduction, text following Theorem D"}
+{"subject":"equivalence between bifibrations and left/right fibrations","relation":"proves","object":"equivalence first established by Stevenson","modality":"cited","locator":"Introduction, text following Theorem D"}
+{"subject":"Theorem E","relation":"equivalent-to","object":"Gray(A,B) ≃ Fun(A⊠B, Cat)","modality":"stated","locator":"Introduction, Theorem E"}
+{"subject":"Theorem E","relation":"equivalent-to","object":"Cocart^lax(B) ≃ Fun^lax(B, Cat)","modality":"stated","locator":"Introduction, Theorem E"}
+{"subject":"Theorem E","relation":"equivalent-to","object":"Cart^opl(B) ≃ Fun^opl(B^op, Cat)","modality":"stated","locator":"Introduction, Theorem E"}
+{"subject":"Fun^lax(X,Y)","relation":"defines","object":"(∞,2)-category characterised by Hom_{Cat_2}(-, Fun^lax(X,Y)) ≃ Hom_{Cat_2}(- ⊠ X, Y)","modality":"stated","locator":"Introduction, universal definition of Fun^lax and Fun^opl"}
+{"subject":"Corollary F","relation":"equivalent-to","object":"Fun^{lax,R}(B,Cat) ≃ (Fun^{opl,L}(B,Cat))^{(1,2)-op}","modality":"stated","locator":"Introduction, Corollary F"}
+{"subject":"Theorem 1.1 of [Ha20b]","relation":"equivalent-to","object":"Corollary F","modality":"stated","locator":"Introduction, Remark"}
+{"subject":"Torii's span category construction","relation":"proves","object":"lax monoidal structure, without coherences, on the right adjoint of an oplax monoidal functor","modality":"cited","locator":"Introduction, Monoidal structures"}
+{"subject":"Definition 2.1.1 (p-cartesian morphism)","relation":"defines","object":"morphism α: y→z of X such that the square of mapping spaces over S is a pullback for every x∈X","modality":"stated","locator":"Section 2, Definition 2.1.1"}
+{"subject":"Definition 2.1.3 (cartesian and cocartesian fibration)","relation":"defines","object":"functor p: X→S having all p-cartesian (resp. p-cocartesian) lifts over S","modality":"stated","locator":"Section 2, Definition 2.1.3"}
+{"subject":"Definition 2.1.3 (cartesian and cocartesian fibration)","relation":"equivalent-to","object":"Lurie's definition of (co)cartesian fibration for quasicategories","modality":"stated","locator":"Section 2, Remark 2.1.5"}
+{"subject":"bicartesian fibration","relation":"defines","object":"functor that is both a cartesian and a cocartesian fibration","modality":"stated","locator":"Section 2, Definition 2.1.8"}
+{"subject":"locally cartesian fibration","relation":"defines","object":"functor p: X→S such that X×_S[1]→[1] is a cartesian fibration for every map [1]→S","modality":"stated","locator":"Section 2, Definition 2.1.6"}
