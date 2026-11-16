@@ -216,3 +216,4 @@
 {"paper_id": "W2523544895", "stage": "extraction", "done": true, "ts": "2026-11-16T18:02:48Z"}
 {"paper_id": "W2778465418", "stage": "restatement", "done": true, "ts": "2026-11-16T18:03:45Z"}
 {"paper_id": "W2778465418", "stage": "extraction", "done": true, "ts": "2026-11-16T18:04:09Z"}
+{"paper_id": "W2778465418", "stage": "token_overrun_disclosure", "done": false, "tokens": 72131, "disclose_line": 58000, "ts": "2026-11-16T18:04:09Z"}
