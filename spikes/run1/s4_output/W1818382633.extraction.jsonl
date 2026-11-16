@@ -1,0 +1,36 @@
+{"subject":"algebra A of a commutative unital spectral triple satisfying Conditions 1-11","relation":"proves","object":"A is the algebra of smooth functions on a compact spin manifold","modality":"stated","locator":"Abstract"}
+{"subject":"reconstruction of compact boundaryless manifold from commutative spectral triple","relation":"proves","object":"a compact boundaryless manifold whose smooth functions coincide with A","modality":"stated","locator":"Introduction, para 2"}
+{"subject":"closedness condition","relation":"uses-technique","object":"Poincaré duality formulated at level of Hochschild chains","modality":"stated","locator":"Introduction, para 3"}
+{"subject":"Poincaré duality in KK-theory","relation":"uses-technique","object":"Plymen's characterization of spin^c structures as Morita equivalence bimodules","modality":"stated","locator":"Introduction, para 3"}
+{"subject":"Gelfand spectrum X = sp(A)","relation":"proves","object":"X is a differentiable manifold","modality":"stated","locator":"Introduction, para 5"}
+{"subject":"C^infinity functional calculus","relation":"uses-technique","object":"multivariate C^infinity functional calculus for regular spectral triples [51]","modality":"cited","locator":"Introduction, para 5"}
+{"subject":"Proposition 2.6 (C^infinity Functional Calculus)","relation":"proves","object":"f(a) lies in A for f C^infinity near spectrum of a=a^* in A","modality":"stated","locator":"Proposition 2.6"}
+{"subject":"Proposition 2.8","relation":"proves","object":"f(a_1,...,a_n) lies in A_delta for commuting selfadjoint a_i and C^infinity f","modality":"stated","locator":"Proposition 2.8"}
+{"subject":"Lemma 2.4","relation":"proves","object":"A_delta is a pre-C*-algebra and (A_delta,H,D) is a QC^infinity spectral triple","modality":"stated","locator":"Lemma 2.4"}
+{"subject":"Lemma 2.10","relation":"proves","object":"existence of partition of unity phi_alpha in A subordinate to any finite open cover of sp(A)","modality":"stated","locator":"Lemma 2.10"}
+{"subject":"Proposition 2.13","relation":"proves","object":"for h in A nonvanishing on open U, ah^{-1} lies in C(sp(A)) for a in A with supp a in U","modality":"stated","locator":"Proposition 2.13"}
+{"subject":"Corollary 2.14","relation":"generalises","object":"Proposition 2.13","modality":"stated","locator":"Corollary 2.14"}
+{"subject":"Definition 2.2 QC^infinity condition","relation":"defines","object":"spectral triple with A and [D,A] contained in intersection of Dom delta^m","modality":"stated","locator":"Definition 2.2"}
+{"subject":"Remark 2.3 QC^k","relation":"specialises","object":"QC^infinity spectral triple (k finite version of QC^infinity)","modality":"stated","locator":"Remark 2.3"}
+{"subject":"Remark 2.9 first-order polynomial formula","relation":"depends-on","object":"first order property [[D,a],b]=0","modality":"stated","locator":"Remark 2.9"}
+{"subject":"Lemma 3.13","relation":"proves","object":"under Conditions 6 and 10, A contains no nontrivial projector","modality":"stated","locator":"Lemma 3.13"}
+{"subject":"Corollary 3.14","relation":"proves","object":"under Conditions 6 and 10, X is connected","modality":"stated","locator":"Corollary 3.14"}
+{"subject":"Lemma 3.15","relation":"proves","object":"H_infinity consists of continuous sections of a complex vector bundle S over X; constant rank if irreducible","modality":"stated","locator":"Lemma 3.15"}
+{"subject":"Lemma 3.16","relation":"proves","object":"C_D(A) is a unital selfadjoint subalgebra of Gamma(X, End S) with operator norm equal to endomorphism norm","modality":"stated","locator":"Lemma 3.16"}
+{"subject":"Corollary 3.17","relation":"proves","object":"pointwise C_D(A) is a direct sum of matrix algebras M_{k_1}(C)+...+M_{k_r}(C)","modality":"stated","locator":"Corollary 3.17"}
+{"subject":"Proposition 3.18","relation":"proves","object":"A-linear operators on H_infinity extend to bounded operators on H","modality":"stated","locator":"Proposition 3.18"}
+{"subject":"Lemma 3.19","relation":"proves","object":"A-valued Hermitian pairing (3.4) is independent of the choice of Dixmier trace","modality":"stated","locator":"Lemma 3.19"}
+{"subject":"Lemma 3.20","relation":"proves","object":"formula (3.10) expressing D on H_infinity in terms of Gamma, a^j_alpha and [D^2, a^j_alpha]","modality":"stated","locator":"Lemma 3.20"}
+{"subject":"Corollary 3.21","relation":"proves","object":"expansion of [D,a] under Conditions 6 and 7","modality":"stated","locator":"Corollary 3.21"}
+{"subject":"Lemma 4.1","relation":"proves","object":"[D,a][D,b]+[D,b][D,a] is a junk term for a,b in A","modality":"stated","locator":"Lemma 4.1"}
+{"subject":"Lemma 4.2","relation":"proves","object":"image of Gamma = pi_D(c) in Lambda^p_D A is nonzero","modality":"stated","locator":"Lemma 4.2"}
+{"subject":"Corollary 4.3","relation":"proves","object":"for positive nonzero a in A, a Gamma' is nonzero","modality":"stated","locator":"Corollary 4.3"}
+{"subject":"Proposition 4.4","relation":"proves","object":"open cover U_1..U_n of X on which [D,a^1_alpha],...,[D,a^p_alpha] are pointwise linearly independent","modality":"stated","locator":"Proposition 4.4"}
+{"subject":"Lemma 4.5","relation":"proves","object":"skewsymmetrized identity (4.4) vanishes for [D,a^{sigma(i)}_alpha] products","modality":"stated","locator":"Lemma 4.5"}
+{"subject":"Remark 4.6","relation":"proves","object":"Gamma'_alpha(x) wedge da(x) = 0 in End S_x for x in U_alpha","modality":"stated","locator":"Remark 4.6"}
+{"subject":"Lemma 3.12 (Connes)","relation":"cited","object":"Hochschild cocycle C_eta defined from Tr_omega and pi_D(eta), with B_0 C_eta = (-1)^k C_{d eta}","modality":"cited","locator":"Lemma 3.12"}
+{"subject":"Condition 2 (Metric)","relation":"depends-on","object":"metric distance (3.2) making X a metric space","modality":"stated","locator":"Condition 2"}
+{"subject":"Remark 3.2 Lipschitz inequality","relation":"depends-on","object":"metric distance (3.2)","modality":"stated","locator":"Remark 3.2, eq. (3.3)"}
+{"subject":"Remark 3.8","relation":"generalises","object":"dimension condition (Condition 1), subsumed by absolute continuity Condition 5","modality":"stated","locator":"Remark 3.8"}
+{"subject":"Remark 3.10","relation":"specialises","object":"reality condition Ja^*J^{-1}=a^circ for noncommutative A","modality":"stated","locator":"Remark 3.10"}
+{"subject":"Remark 3.11","relation":"depends-on","object":"closedness condition (3.7) rewritten as B_0 Phi = 0","modality":"stated","locator":"Remark 3.11"}

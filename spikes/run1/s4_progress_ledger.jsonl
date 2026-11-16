@@ -179,3 +179,5 @@
 {"paper_id": "W2963914404", "stage": "token_overrun_disclosure", "done": false, "tokens": 69630, "disclose_line": 58000, "ts": "2026-11-16T07:36:51Z"}
 {"paper_id": "W1975030811", "stage": "restatement", "done": true, "ts": "2026-11-16T07:37:32Z"}
 {"paper_id": "W1975030811", "stage": "extraction", "done": true, "ts": "2026-11-16T07:37:58Z"}
+{"paper_id": "W1818382633", "stage": "restatement", "done": true, "ts": "2026-11-16T07:38:42Z"}
+{"paper_id": "W1818382633", "stage": "extraction", "done": true, "ts": "2026-11-16T07:38:53Z"}
