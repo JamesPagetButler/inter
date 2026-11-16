@@ -928,3 +928,197 @@
 {"kind": "paper_status", "openalex_id": "https://openalex.org/W2074684047", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794614987.8402145}
 {"kind": "http_ok", "what": "oa-fallback:doi.org", "host": "doi.org", "status": 200, "retry_count": 0, "ts": 1794614988.510083}
 {"kind": "paper_status", "openalex_id": "https://openalex.org/W2074684047", "status": "text-unavailable", "reason": "oa-fallback-no-statements", "oa_url": "https://doi.org/10.1007/bf01760975", "ts": 1794614988.5105932}
+{"kind": "http_ok", "what": "openalex:W4281690824", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811592.9909036}
+{"kind": "http_ok", "what": "ar5iv:2011.08808", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811593.2715123}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4281690824", "status": "ok", "arxiv_id": "2011.08808", "n_statements": 401, "sha256": "c488c9a954cc8c65c8aacce9dd9c3a856ef588cb9c90f34e7c66ed1da75f2817", "ts": 1794811593.384571}
+{"kind": "http_ok", "what": "openalex:W4386977243", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811597.1054442}
+{"kind": "http_ok", "what": "ar5iv:2309.11449", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811597.4606516}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4386977243", "status": "ok", "arxiv_id": "2309.11449", "n_statements": 275, "sha256": "6865985c47a4fecf953a42786ecb67db9aeffbee122a775097e6a4063f16e95e", "ts": 1794811597.5407932}
+{"kind": "http_ok", "what": "openalex:W4414975384", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811601.2705824}
+{"kind": "http_ok", "what": "ar5iv:2509.25981", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811601.5826302}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4414975384", "status": "ok", "arxiv_id": "2509.25981", "n_statements": 272, "sha256": "e41a22458468e2bf58774043d4d8d0ecb6ad211ed00656909358eef2cfdd2956", "ts": 1794811601.6498334}
+{"kind": "http_ok", "what": "openalex:W7223152136", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811605.3497863}
+{"kind": "http_ok", "what": "ar5iv:2610.27918", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811605.960352}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7223152136", "status": "ok", "arxiv_id": "2610.27918", "n_statements": 1467, "sha256": "0ed47e316178836483b878a4b1791da044146b41590ec360a96588ce15a9318a", "ts": 1794811606.3300064}
+{"kind": "http_ok", "what": "openalex:W4226047364", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811609.4571602}
+{"kind": "http_ok", "what": "ar5iv:2202.12467", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811610.0859313}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4226047364", "status": "ok", "arxiv_id": "2202.12467", "n_statements": 130, "sha256": "eb53411211306d24fe0a11a317ca682c67f97903485980908f9c85c952d8712f", "ts": 1794811610.1303391}
+{"kind": "http_ok", "what": "openalex:W1829319785", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811613.6409786}
+{"kind": "http_ok", "what": "ar5iv:1507.06490", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811614.255333}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1829319785", "status": "ok", "arxiv_id": "1507.06490", "n_statements": 371, "sha256": "41f868349ad78f2dd599d6f1866bf0ea15bd46ed98f93dd38fd42b85470b3c43", "ts": 1794811614.3350315}
+{"kind": "http_ok", "what": "openalex:W3157137676", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811617.7558544}
+{"kind": "http_ok", "what": "ar5iv:1709.06651", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811618.4537032}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3157137676", "status": "ok", "arxiv_id": "1709.06651", "n_statements": 381, "sha256": "1a77f6c935912e60ac9bacafc9da6e75965ffea45e66f46d06105345c1b29e50", "ts": 1794811618.5768127}
+{"kind": "http_ok", "what": "openalex:W1778604937", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811621.9721677}
+{"kind": "http_ok", "what": "ar5iv:1211.5294", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811622.6548474}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1778604937", "status": "ok", "arxiv_id": "1211.5294", "n_statements": 352, "sha256": "aff121a2eca472297f0ad92ff0a15c20f8e531da3d5a7d4d4dfbdd05999744d5", "ts": 1794811622.774806}
+{"kind": "http_ok", "what": "openalex:W4312783323", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811626.0650618}
+{"kind": "http_ok", "what": "ar5iv:2002.01037", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811626.8166533}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4312783323", "status": "ok", "arxiv_id": "2002.01037", "n_statements": 292, "sha256": "a42a9fc7d8f36b30f231444f815ce13f348a9ed1cac5b7ed1198c7c4abc31045", "ts": 1794811626.8948538}
+{"kind": "http_ok", "what": "openalex:W7212929196", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811630.1742764}
+{"kind": "http_ok", "what": "ar5iv:2609.12110", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811631.1713386}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W7212929196", "status": "ok", "arxiv_id": "2609.12110", "n_statements": 976, "sha256": "75356951a535674e1d7b3e2a36caf77158615ccdeaae05e2319df86bd629b0b7", "ts": 1794811631.5064647}
+{"kind": "http_ok", "what": "openalex:W3047444260", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811634.369948}
+{"kind": "http_ok", "what": "ar5iv:2008.01101", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811635.5689902}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3047444260", "status": "ok", "arxiv_id": "2008.01101", "n_statements": 872, "sha256": "0c428eb65ca07af32b991af77e19c60d7586493163c82c1dc9b0c009f6257389", "ts": 1794811635.9276764}
+{"kind": "http_ok", "what": "openalex:W4414335198", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811638.46969}
+{"kind": "http_ok", "what": "ar5iv:2011.06533", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811640.0031242}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4414335198", "status": "ok", "arxiv_id": "2011.06533", "n_statements": 432, "sha256": "e2c47a658d1f4c6be15c257418887bd3e6802a943a9d4d88f74c7e0d35d35593", "ts": 1794811640.2093139}
+{"kind": "http_ok", "what": "openalex:W1487033877", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811646.6989746}
+{"kind": "http_ok", "what": "arxiv-search:Invariance theory, the heat equation, and the Atiyah-Singer ", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811647.1068363}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1487033877", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811647.1070857}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1487033877", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811647.107109}
+{"kind": "http_ok", "what": "openalex:W2085099209", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811650.933683}
+{"kind": "http_ok", "what": "ar5iv:hep-th/9602070", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811651.0403168}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2085099209", "status": "ok", "arxiv_id": "hep-th/9602070", "n_statements": 86, "sha256": "85c734eb08c424ac95d628fd2d815cccf0adfb1be5a7c34299c56d9a3ab53f93", "ts": 1794811651.0541465}
+{"kind": "http_ok", "what": "openalex:W2088474879", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811655.0648937}
+{"kind": "http_ok", "what": "ar5iv:hep-th/9602115", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811655.1967707}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2088474879", "status": "ok", "arxiv_id": "hep-th/9602115", "n_statements": 54, "sha256": "425ffb64e6d3c5c0230599828a05424f1adb5c31c8f3dccaf4d7a39d0ee16f23", "ts": 1794811655.2049708}
+{"kind": "http_ok", "what": "openalex:W4241593569", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811659.1872778}
+{"kind": "http_ok", "what": "arxiv-search:Noncommutative Geometry", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811659.366264}
+{"kind": "arxiv_search_hit", "openalex_id": "https://openalex.org/W4241593569", "arxiv_id": "1910.10407", "ts": 1794811659.3670354}
+{"kind": "http_ok", "what": "ar5iv:1910.10407", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811659.4932432}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4241593569", "status": "ok", "arxiv_id": "1910.10407", "n_statements": 31, "sha256": "debc28f02799869ab417aada454ed3d123c88f39c4459782561e1879a187be85", "ts": 1794811659.5064201}
+{"kind": "http_ok", "what": "openalex:W2074702261", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811663.3036158}
+{"kind": "http_ok", "what": "ar5iv:0810.2088", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811663.6723828}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2074702261", "status": "ok", "arxiv_id": "0810.2088", "n_statements": 572, "sha256": "011c47ab4cf58320c440c155e2128075d27ce24e022a7d44fd5eded240e61c38", "ts": 1794811663.7683423}
+{"kind": "http_ok", "what": "openalex:W2046714423", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811667.4385958}
+{"kind": "http_ok", "what": "ar5iv:0706.3688", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811667.7775972}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2046714423", "status": "ok", "arxiv_id": "0706.3688", "n_statements": 63, "sha256": "83427b52a0f787517e3450c9e1df37557fb078e1d38361237ba97397c8bb0b40", "ts": 1794811667.7937672}
+{"kind": "http_ok", "what": "openalex:W1969605686", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811671.55659}
+{"kind": "http_ok", "what": "ar5iv:1110.3500", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811671.9149582}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1969605686", "status": "ok", "arxiv_id": "1110.3500", "n_statements": 387, "sha256": "1857051e8da3d6383e9b9fede9a75ee5340be4a1369ef4a95064f243a6e0cf40", "ts": 1794811671.9842525}
+{"kind": "http_ok", "what": "openalex:W1552263642", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811675.6985948}
+{"kind": "http_ok", "what": "arxiv-search:Elements of Noncommutative Geometry", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811675.8707302}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1552263642", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811675.8709059}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1552263642", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811675.8709261}
+{"kind": "http_ok", "what": "openalex:W4313326288", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811679.8076289}
+{"kind": "http_ok", "what": "ar5iv:1912.13288", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811679.98072}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4313326288", "status": "ok", "arxiv_id": "1912.13288", "n_statements": 176, "sha256": "586f89909a318a08679121351357a838fb304f03b208bcfb37517c9ffd3af528", "ts": 1794811680.0531788}
+{"kind": "http_ok", "what": "openalex:W3158550123", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811683.9515636}
+{"kind": "http_ok", "what": "ar5iv:2105.01025", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811684.1254647}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3158550123", "status": "ok", "arxiv_id": "2105.01025", "n_statements": 164, "sha256": "c5124a6cf461eefcccd4762e1bb2c7f1754580ba1dcad047526e941822931258", "ts": 1794811684.1742442}
+{"kind": "http_ok", "what": "openalex:W3044313830", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811688.094046}
+{"kind": "http_ok", "what": "ar5iv:2007.10914", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811688.2788136}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3044313830", "status": "ok", "arxiv_id": "2007.10914", "n_statements": 188, "sha256": "68787795eceb2a277f9022098748122c585db07ca6743e38e3027ecd60bc5054", "ts": 1794811688.3548422}
+{"kind": "http_ok", "what": "openalex:W1978960972", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811692.2102642}
+{"kind": "http_ok", "what": "ar5iv:math/0011194", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811692.3862784}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1978960972", "status": "ok", "arxiv_id": "math/0011194", "n_statements": 124, "sha256": "499447ef75628fb0f94751a13ef5c48c85c67a9dba9530b4d2493b6d30519f41", "ts": 1794811692.408397}
+{"kind": "http_ok", "what": "openalex:W2963914404", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811696.3602011}
+{"kind": "http_ok", "what": "ar5iv:math/0011063", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811696.565551}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2963914404", "status": "ok", "arxiv_id": "math/0011063", "n_statements": 218, "sha256": "0a8c2aca79aba6d6c99163d924b906ac32d237c93b133156a1225f300d6627c5", "ts": 1794811696.6156356}
+{"kind": "http_ok", "what": "openalex:W1975030811", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811700.4644585}
+{"kind": "http_ok", "what": "ar5iv:math/0209048", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811700.6669483}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1975030811", "status": "ok", "arxiv_id": "math/0209048", "n_statements": 46, "sha256": "b6dfa7510eaf51b4aab753c8b28e533a4955917f7de41694108a1b659a76f60a", "ts": 1794811700.6804736}
+{"kind": "http_ok", "what": "openalex:W1818382633", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811704.5663178}
+{"kind": "http_ok", "what": "ar5iv:math/0610418", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811704.8776212}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1818382633", "status": "ok", "arxiv_id": "math/0610418", "n_statements": 376, "sha256": "c643dc516ae4156a782403596331bc38b599878c11d551c61ff2c186d72d9a60", "ts": 1794811704.962904}
+{"kind": "http_ok", "what": "openalex:W323716156", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811708.6889718}
+{"kind": "http_ok", "what": "arxiv-search:Zur Abh\u00e4ngigkeit des Dirac-operators von der Spin-Struktur", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811708.884201}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W323716156", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811708.8844023}
+{"kind": "http_error", "what": "oa-fallback:doi.org", "host": "doi.org", "url": "https://doi.org/10.4064/cm-48-1-57-62", "code": 308, "retry_count": 0, "ts": 1794811709.3655503}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W323716156", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811709.3656666}
+{"kind": "http_ok", "what": "openalex:W1533921740", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811712.819515}
+{"kind": "http_ok", "what": "arxiv-search:On the spectrum of a Riemannian manifold of positive constan", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811713.0605905}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1533921740", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811713.0607572}
+{"kind": "http_ok", "what": "oa-fallback:ocu-omu.repo.nii.ac.jp", "host": "ocu-omu.repo.nii.ac.jp", "status": 200, "retry_count": 0, "ts": 1794811715.7688255}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1533921740", "status": "text-unavailable", "reason": "oa-fallback-no-statements", "oa_url": "https://ocu-omu.repo.nii.ac.jp/records/2008684", "ts": 1794811715.773772}
+{"kind": "http_ok", "what": "openalex:W2028000385", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811716.951703}
+{"kind": "http_ok", "what": "arxiv-search:The Dirac operator on homogeneous spaces and its spectrum on", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811717.235175}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2028000385", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811717.2353919}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2028000385", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811717.2354114}
+{"kind": "http_ok", "what": "openalex:W2001832051", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811721.0585523}
+{"kind": "http_ok", "what": "arxiv-search:Metrics with harmonic spinors", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811721.4704218}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2001832051", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811721.4705904}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2001832051", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811721.4706097}
+{"kind": "http_ok", "what": "openalex:W2007822005", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811725.1687424}
+{"kind": "http_ok", "what": "arxiv-search:The Dirac spectrum of Bieberbach manifolds", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811725.6272178}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2007822005", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811725.6273909}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2007822005", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811725.6274116}
+{"kind": "http_ok", "what": "openalex:W2067585970", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811729.3389125}
+{"kind": "http_ok", "what": "ar5iv:1201.3150", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811729.47573}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2067585970", "status": "ok", "arxiv_id": "1201.3150", "n_statements": 162, "sha256": "fa8d341ba29b6cb566919e28c05b9968c3bcc61d3f8bae4e4aaf83a27030d9e9", "ts": 1794811729.511712}
+{"kind": "http_ok", "what": "openalex:W3016864563", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811733.4922268}
+{"kind": "http_ok", "what": "ar5iv:2004.06351", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811733.6457539}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3016864563", "status": "ok", "arxiv_id": "2004.06351", "n_statements": 368, "sha256": "b5677841e83ea22a70d02c63f4113b04011129f27685e61201c27466ad6b116b", "ts": 1794811733.7360168}
+{"kind": "http_ok", "what": "openalex:W1640214643", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811737.644431}
+{"kind": "http_ok", "what": "ar5iv:0708.0529", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811737.7657356}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1640214643", "status": "ok", "arxiv_id": "0708.0529", "n_statements": 75, "sha256": "cd6cdbb1d286c0552adef2f2f8326cb5ac93b8d69bf4332a5d0b7e9dc27aef5d", "ts": 1794811737.7820895}
+{"kind": "http_ok", "what": "openalex:W1664585534", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811741.7569551}
+{"kind": "http_ok", "what": "ar5iv:math/0204232", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811741.8631778}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1664585534", "status": "ok", "arxiv_id": "math/0204232", "n_statements": 22, "sha256": "7090d3f78424791d1fae74b499d595d9937502b70d1daff78954e822b99dcaa7", "ts": 1794811741.8683574}
+{"kind": "http_ok", "what": "openalex:W2964285793", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811745.8721175}
+{"kind": "http_ok", "what": "ar5iv:math/9901039", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811745.97149}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2964285793", "status": "ok", "arxiv_id": "math/9901039", "n_statements": 115, "sha256": "c6ce92f385051df9516960d63c8557a00154d0b971064eae917c378cb9e2c2c7", "ts": 1794811745.986851}
+{"kind": "http_ok", "what": "openalex:W3030730219", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811754.1410441}
+{"kind": "http_ok", "what": "ar5iv:2005.14210", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811754.2458847}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W3030730219", "status": "ok", "arxiv_id": "2005.14210", "n_statements": 82, "sha256": "e39ad81464d73a6aa692da690cb20b0e7b0fabb9ee558c72ddcac3e0184492cc", "ts": 1794811754.2671082}
+{"kind": "http_ok", "what": "openalex:W1882034614", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811758.3297968}
+{"kind": "http_ok", "what": "ar5iv:gr-qc/9906044", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811758.4257636}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1882034614", "status": "ok", "arxiv_id": "gr-qc/9906044", "n_statements": 49, "sha256": "96095d8ba4b1c4b0f9a61ffe60f1f22a6535d9df0920844e8f729ced694802a5", "ts": 1794811758.435292}
+{"kind": "http_ok", "what": "openalex:W24822342", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811762.4214585}
+{"kind": "http_ok", "what": "ar5iv:math/9807050", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811762.5417705}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W24822342", "status": "ok", "arxiv_id": "math/9807050", "n_statements": 45, "sha256": "f7dd3fc8648b05a12329bdfd60f358a4269fb103fb7e205f83fb2a7b6d029ee2", "ts": 1794811762.5506494}
+{"kind": "http_ok", "what": "openalex:W138852635", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811766.5107908}
+{"kind": "http_ok", "what": "arxiv-search:The Dirac Determinant of Spherical Space Forms", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811766.7045722}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W138852635", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811766.7047486}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W138852635", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811766.7047694}
+{"kind": "http_ok", "what": "openalex:W2985524293", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811770.6539254}
+{"kind": "http_ok", "what": "ar5iv:1911.01991", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811770.8205817}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2985524293", "status": "ok", "arxiv_id": "1911.01991", "n_statements": 432, "sha256": "f37ba9ea167b0eef3980e402cd267f9dc51daa77fa695fb05197c897caaff5e9", "ts": 1794811770.9088297}
+{"kind": "http_ok", "what": "openalex:W2964288547", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811774.7545564}
+{"kind": "http_ok", "what": "ar5iv:1412.2599", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811774.9376602}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2964288547", "status": "ok", "arxiv_id": "1412.2599", "n_statements": 158, "sha256": "6f1292f5853fbda555cbdbf2df0a7ed8cd69d4315c48058707796b8ce388883a", "ts": 1794811774.9829903}
+{"kind": "http_ok", "what": "openalex:W2232250512", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811778.9262166}
+{"kind": "http_ok", "what": "ar5iv:1509.08449", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811779.070093}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2232250512", "status": "ok", "arxiv_id": "1509.08449", "n_statements": 155, "sha256": "e93851767d604a39d1905acc8abb0d347c222c6597b02cecacdefd6b41045419", "ts": 1794811779.1155381}
+{"kind": "http_ok", "what": "openalex:W29961483", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811783.0289974}
+{"kind": "http_ok", "what": "arxiv-search:Spin Structures on Hypersurfaces and the Spectrum of the Dir", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811783.2531652}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W29961483", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811783.2533734}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W29961483", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811783.2533953}
+{"kind": "http_ok", "what": "openalex:W1533708179", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811787.1438935}
+{"kind": "http_ok", "what": "arxiv-search:Theory of Group Representations and Applications", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811787.4095955}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1533708179", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811787.4097707}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W1533708179", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811787.409797}
+{"kind": "http_ok", "what": "openalex:W2027703617", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811791.3204958}
+{"kind": "http_ok", "what": "arxiv-search:The spinor heat kernel in maximally symmetric spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811791.6703024}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2027703617", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811791.6704702}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2027703617", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811791.67049}
+{"kind": "http_ok", "what": "openalex:W2039132119", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811795.4514365}
+{"kind": "http_ok", "what": "arxiv-search:Spinor structures on spheres and projective spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811795.857444}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2039132119", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811795.8576226}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2039132119", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811795.8576422}
+{"kind": "http_ok", "what": "openalex:W2042490502", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811799.5938783}
+{"kind": "http_ok", "what": "arxiv-search:Harmonic analysis and propagators on homogeneous spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811800.034855}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2042490502", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811800.0350268}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2042490502", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811800.035047}
+{"kind": "http_ok", "what": "openalex:W2087640086", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811803.706703}
+{"kind": "http_ok", "what": "arxiv-search:Differential Geometry and Symmetric Spaces", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811804.1913867}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2087640086", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811804.1915627}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2087640086", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811804.191584}
+{"kind": "http_ok", "what": "openalex:W2770629133", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811807.7940311}
+{"kind": "http_ok", "what": "arxiv-search:Spin structures on manifolds", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811808.3955662}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2770629133", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811808.3957415}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2770629133", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811808.3957744}
+{"kind": "http_ok", "what": "openalex:W6948872679", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811811.924306}
+{"kind": "http_ok", "what": "arxiv-search:SPIN STRUCTURES ON MANIFOLDS", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811812.5819247}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W6948872679", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811812.5821102}
+{"kind": "http_ok", "what": "oa-fallback:doi.org", "host": "doi.org", "status": 200, "retry_count": 0, "ts": 1794811814.3383176}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W6948872679", "status": "text-unavailable", "reason": "oa-fallback-no-statements", "oa_url": "https://doi.org/10.5169/seals-38784", "ts": 1794811814.3872697}
+{"kind": "http_ok", "what": "openalex:W2502854791", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811816.0566373}
+{"kind": "http_ok", "what": "ar5iv:1610.08526", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811816.449982}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2502854791", "status": "ok", "arxiv_id": "1610.08526", "n_statements": 1220, "sha256": "6e337431ab1ad0dbd2e80b06fab32522d339a0721a2ee7b05af2a8d6961c36d0", "ts": 1794811816.7121754}
+{"kind": "http_ok", "what": "openalex:W4213330757", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811820.2085533}
+{"kind": "http_ok", "what": "arxiv-search:The Dirac Spectrum", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811820.4033008}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4213330757", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811820.4034693}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W4213330757", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811820.403491}
+{"kind": "http_ok", "what": "openalex:W2523544895", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811824.356633}
+{"kind": "http_ok", "what": "ar5iv:1609.05970", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811824.5409553}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2523544895", "status": "ok", "arxiv_id": "1609.05970", "n_statements": 296, "sha256": "b335c44c1e2694e256a9e543284fc03e545c3571c36d2a708d8ab367f2409798", "ts": 1794811824.626884}
+{"kind": "http_ok", "what": "openalex:W278105626", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811828.4496226}
+{"kind": "http_ok", "what": "arxiv-search:The Algebraic Theory of Spinors", "host": "export.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811828.6227975}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W278105626", "status": "text-unavailable", "reason": "no-arxiv-id", "ts": 1794811828.6229696}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W278105626", "status": "text-unavailable", "reason": "no-oa-location-or-fetch-failed", "ts": 1794811828.622989}
+{"kind": "http_ok", "what": "openalex:W2778465418", "host": "api.openalex.org", "status": 200, "retry_count": 0, "ts": 1794811832.5689142}
+{"kind": "http_ok", "what": "ar5iv:1712.07767", "host": "ar5iv.labs.arxiv.org", "status": 200, "retry_count": 0, "ts": 1794811832.7443368}
+{"kind": "paper_status", "openalex_id": "https://openalex.org/W2778465418", "status": "ok", "arxiv_id": "1712.07767", "n_statements": 367, "sha256": "af0eb0ef8aa3242f0560f093a337ac4ae1b5f46ef871d375a099f72c4c9351d2", "ts": 1794811832.825714}

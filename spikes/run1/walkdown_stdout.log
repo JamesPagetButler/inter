@@ -1,38 +1,75 @@
 {
-  "reproduce": "MISMATCH",
-  "diff": {
-    "match": false,
-    "old_count": 99,
-    "new_count": 99,
-    "old_only": [
-      [
-        "https://openalex.org/W7134934189",
-        "math"
-      ],
-      [
-        "https://openalex.org/W3104633719",
-        "physics"
-      ],
-      [
-        "https://openalex.org/W2114197053",
-        "physics"
-      ]
+  "reproduce": "OK",
+  "accessible_count": {
+    "math": 50,
+    "physics": 50
+  },
+  "tried": {
+    "math": 10,
+    "physics": 49
+  },
+  "pipeline_errors": {
+    "math": 0,
+    "physics": 0
+  },
+  "newly_accessible": {
+    "math": [
+      "https://openalex.org/W4281690824",
+      "https://openalex.org/W4386977243",
+      "https://openalex.org/W4414975384",
+      "https://openalex.org/W7223152136",
+      "https://openalex.org/W4226047364",
+      "https://openalex.org/W1829319785",
+      "https://openalex.org/W3157137676",
+      "https://openalex.org/W1778604937",
+      "https://openalex.org/W4312783323",
+      "https://openalex.org/W7212929196"
     ],
-    "new_only": [
-      [
-        "https://openalex.org/W4402954787",
-        "math"
-      ],
-      [
-        "https://openalex.org/W1971010458",
-        "physics"
-      ],
-      [
-        "https://openalex.org/W3099306974",
-        "physics"
-      ]
-    ],
-    "first_order_divergence_index": 15
-  }
+    "physics": [
+      "https://openalex.org/W3047444260",
+      "https://openalex.org/W4414335198",
+      "https://openalex.org/W2085099209",
+      "https://openalex.org/W2088474879",
+      "https://openalex.org/W4241593569",
+      "https://openalex.org/W2074702261",
+      "https://openalex.org/W2046714423",
+      "https://openalex.org/W1969605686",
+      "https://openalex.org/W4313326288",
+      "https://openalex.org/W3158550123",
+      "https://openalex.org/W3044313830",
+      "https://openalex.org/W1978960972",
+      "https://openalex.org/W2963914404",
+      "https://openalex.org/W1975030811",
+      "https://openalex.org/W1818382633",
+      "https://openalex.org/W2067585970",
+      "https://openalex.org/W3016864563",
+      "https://openalex.org/W1640214643",
+      "https://openalex.org/W1664585534",
+      "https://openalex.org/W2964285793",
+      "https://openalex.org/W3030730219",
+      "https://openalex.org/W1882034614",
+      "https://openalex.org/W24822342",
+      "https://openalex.org/W2985524293",
+      "https://openalex.org/W2964288547",
+      "https://openalex.org/W2232250512",
+      "https://openalex.org/W2502854791",
+      "https://openalex.org/W2523544895",
+      "https://openalex.org/W2778465418"
+    ]
+  },
+  "zero_statement_found": [
+    {
+      "openalex_id": "https://openalex.org/W1533921740",
+      "domain": "physics",
+      "arxiv_id": null,
+      "reason": "oa-fallback-no-statements"
+    },
+    {
+      "openalex_id": "https://openalex.org/W6948872679",
+      "domain": "physics",
+      "arxiv_id": null,
+      "reason": "oa-fallback-no-statements"
+    }
+  ],
+  "stopped_early_for_K1": false
 }
-EXIT:2

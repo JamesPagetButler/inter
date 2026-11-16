@@ -1,2 +1,3 @@
 already-accessible: {'math': 40, 'physics': 21}
 reproducing corpus construction (full fan-out re-run)...
+REPRODUCE: MISMATCH, continuing under beekeeper-approved A2 (3 swapped)
