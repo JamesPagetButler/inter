@@ -1,0 +1,39 @@
+{"subject":"|φ|^2","relation":"equivalent-to","object":"det φ","modality":"stated","locator":"Eq. (5)"}
+{"subject":"ξ_{a5}","relation":"defines","object":"ξ_a","modality":"stated","locator":"Eq. (7)"}
+{"subject":"ξ_{ab}","relation":"defines","object":"ξ_a ξ_b","modality":"stated","locator":"Eq. (7)"}
+{"subject":"ξ̃_a","relation":"defines","object":"matrix (0 e_a; e_a* 0)","modality":"stated","locator":"Eq. (8)"}
+{"subject":"C^{4,0}","relation":"defines","object":"collection of products of ξ_a, ξ_{ab} and 1","modality":"stated","locator":"Eq. (9)"}
+{"subject":"C^{4,0} (first form)","relation":"equivalent-to","object":"C^{4,0} (second form, with ξ̃_5 and ξ_{ab})","modality":"stated","locator":"Eq. (9)"}
+{"subject":"x_A","relation":"defines","object":"½ tr(z^+ ξ̃_A z)","modality":"stated","locator":"Eq. (13)"}
+{"subject":"z ~ z'","relation":"defines","object":"z' = zα with α a unit quaternion","modality":"stated","locator":"Eq. (12)"}
+{"subject":"(Φ1, Φ2)_∞","relation":"defines","object":"I_∞[Φ1* Φ2]","modality":"stated","locator":"Eq. (15)"}
+{"subject":"I_∞","relation":"defines","object":"(3/(4π^2)) ∫ d^5x δ(x_A^2 − 1)[...]","modality":"stated","locator":"Eq. (16)"}
+{"subject":"Ĵ_AB","relation":"defines","object":"½(ψ_α* ξ^{αβ}_AB ∂_{ψ_β*} + ψ_β ξ^{αβ}_AB ∂_{ψ_α})","modality":"stated","locator":"Eq. (17)"}
+{"subject":"x_A (in ψ variables)","relation":"equivalent-to","object":"ψ^+ ξ̃_A ψ","modality":"stated","locator":"Eq. (20) (second occurrence)"}
+{"subject":"d_p = dim 𝒜^p_∞","relation":"defines","object":"(1/6)(p+1)(p+2)(2p+3)","modality":"stated","locator":"Eq. (26) (first occurrence)"}
+{"subject":"𝒜_∞","relation":"defines","object":"⊕_{p=0}^∞ 𝒜^p_∞","modality":"stated","locator":"Eq. (22)"}
+{"subject":"S[Φ] (commutative)","relation":"defines","object":"I_∞[½(Ĵ_AB Φ)^2 + V(Φ)]","modality":"stated","locator":"Eq. (24)"}
+{"subject":"⟨F[Φ]⟩","relation":"defines","object":"normalised functional integral with weight e^{-S[Φ]}","modality":"stated","locator":"Eq. (25)"}
+{"subject":"d_pk","relation":"defines","object":"(1/6)(p+2)(k+1)(p−k+1)(p+k+3)","modality":"stated","locator":"Eq. (27)"}
+{"subject":"ψ_α","relation":"defines","object":"A_α R^{-1/2}","modality":"stated","locator":"Eq. (28)"}
+{"subject":"R","relation":"defines","object":"A_α* A_α","modality":"stated","locator":"Eq. (29)"}
+{"subject":"oscillator operators A_α","relation":"defines","object":"[A_α, A_β] = [A_α*, A_β*] = 0 and [A_α, A_β*] = δ_αβ","modality":"stated","locator":"Eq. (30)"}
+{"subject":"J_AB (non-commutative)","relation":"defines","object":"½ A_α* ξ^{αβ}_AB A_β","modality":"stated","locator":"Eq. (31)"}
+{"subject":"F_N","relation":"defines","object":"span of states |n⟩ with |n| = N","modality":"stated","locator":"Eq. (32)"}
+{"subject":"d_{N0}","relation":"defines","object":"binomial(N+3, 3)","modality":"stated","locator":"Eq. (33)"}
+{"subject":"(N,0) ⊗ (N,0)","relation":"equivalent-to","object":"⊕_{p=0}^N ⊕_{k=0}^p (p+k, p−k)","modality":"stated","locator":"Eq. (39)"}
+{"subject":"𝒜_N","relation":"defines","object":"⊕_{p=0}^N ⊕_{k=0}^p 𝒜_N^{p+k,p−k}","modality":"stated","locator":"Eq. (40)"}
+{"subject":"𝒜^R_N","relation":"defines","object":"⊕_{p=0}^N 𝒜_N^{pp}","modality":"stated","locator":"Eq. (42)"}
+{"subject":"(Φ1, Φ2)_N","relation":"defines","object":"I_N[Φ1* Φ2]","modality":"stated","locator":"Eq. (36)"}
+{"subject":"I_N","relation":"defines","object":"(1/d_{N0}) Tr_N[...]","modality":"stated","locator":"Eq. (37)"}
+{"subject":"Ĵ_AB Φ(x)","relation":"defines","object":"[J_AB, Φ(x)]","modality":"stated","locator":"Eq. (38)"}
+{"subject":"S[Φ] (non-commutative truncated)","relation":"defines","object":"I_N[½(Ĵ_AB Φ)^2 + V(Φ)]","modality":"stated","locator":"Eq. (44)"}
+{"subject":"S_n(F)","relation":"defines","object":"⟨F_n[Φ]⟩","modality":"stated","locator":"Eq. (46)"}
+{"subject":"S_n^*(F)","relation":"defines","object":"S_n(ΘF)","modality":"stated","locator":"Eq. (51)"}
+{"subject":"non-commutative truncated S^4 model","relation":"generalises","object":"commutative S^4 model (Hopf fibration S^7 → S^4)","modality":"stated","locator":"Section 3"}
+{"subject":"S^4 approach","relation":"generalises","object":"S^2 approach","modality":"stated","locator":"Introduction"}
+{"subject":"fuzzy deformation of S^2","relation":"uses-technique","object":"matrix geometry","modality":"cited","locator":"Introduction"}
+{"subject":"non-commutative homogeneous spaces","relation":"uses-technique","object":"coherent-state techniques","modality":"cited","locator":"Introduction"}
+{"subject":"quantisation of the non-commutative S^4 model","relation":"uses-technique","object":"Feynman (path) integrals","modality":"stated","locator":"Section 3"}
+{"subject":"quantum scalar field on truncated S^2","relation":"proves","object":"UV-regularisation occurs automatically upon non-commutative deformation of the algebra of functions","modality":"cited","locator":"Introduction"}
+{"subject":"standard sphere S^4","relation":"defines","object":"Hopf fibration S^7 → S^4","modality":"stated","locator":"Section 2"}
