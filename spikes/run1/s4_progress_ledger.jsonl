@@ -126,3 +126,5 @@
 {"arm": "opus-comparison", "batch": 4, "papers": ["W2018785023","W2086216948","W2114197053","W2148017112","W2890203879"], "tokens_actual": 131637, "ts": "2026-11-15T03:12:16Z"}
 {"paper_id": "W4281690824", "stage": "restatement", "done": true, "ts": "2026-11-16T07:03:45Z"}
 {"paper_id": "W4281690824", "stage": "extraction", "done": true, "ts": "2026-11-16T07:04:02Z"}
+{"paper_id": "W4386977243", "stage": "restatement", "done": true, "ts": "2026-11-16T07:04:27Z"}
+{"paper_id": "W4386977243", "stage": "extraction", "done": true, "ts": "2026-11-16T07:04:48Z"}
