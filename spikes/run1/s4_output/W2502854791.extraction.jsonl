@@ -1,0 +1,36 @@
+{"subject":"BMS","relation":"defines","object":"Lorentz ⋉ Supertranslations","modality":"stated","locator":"Eq. (1)"}
+{"subject":"Poincaré","relation":"defines","object":"Lorentz ⋉ Translations","modality":"stated","locator":"Eq. (2)"}
+{"subject":"Extended BMS","relation":"defines","object":"Superrotations ⋉ Supertranslations","modality":"stated","locator":"Eq. (9)"}
+{"subject":"BMS particle","relation":"defines","object":"irreducible, unitary representation of the BMS group","modality":"stated","locator":"Eq. (11)"}
+{"subject":"Prob(λ, Â, [Ψ])","relation":"defines","object":"|⟨Φ|Ψ⟩|² / (⟨Φ|Φ⟩⟨Ψ|Ψ⟩)","modality":"stated","locator":"Eq. (14)"}
+{"subject":"T","relation":"defines","object":"e^{iC(f,g)} T[f·g] (projective composition law)","modality":"stated","locator":"Eq. (16)"}
+{"subject":"C(f,g)","relation":"defines","object":"K(fg) − K(f) − K(g)","modality":"stated","locator":"Eq. (21)"}
+{"subject":"Ĝ","relation":"defines","object":"G × ℝ","modality":"stated","locator":"Eq. (19)"}
+{"subject":"group law on Ĝ","relation":"defines","object":"(f·g, λ + μ + C(f,g))","modality":"stated","locator":"Eq. (20)"}
+{"subject":"d_k c","relation":"defines","object":"cochain coboundary formula","modality":"stated","locator":"Eq. (24)"}
+{"subject":"H^k(g, V)","relation":"defines","object":"Ker(d_k) / Im(d_{k−1})","modality":"stated","locator":"Eq. (26)"}
+{"subject":"H^1(g)","relation":"equivalent-to","object":"g / [g, g]","modality":"stated","locator":"Eq. (28)"}
+{"subject":"H^2(ℝ²)","relation":"equivalent-to","object":"ℝ","modality":"stated","locator":"Eq. (33)"}
+{"subject":"ĝ","relation":"defines","object":"g ⊕ ℝ with bracket [(X,λ),(Y,μ)] = ([X,Y], c(X,Y))","modality":"stated","locator":"Eq. (35)"}
+{"subject":"T̂[f]","relation":"defines","object":"(T[f]·v + λ S(f), λ)","modality":"stated","locator":"Eq. (42)"}
+{"subject":"H^k(G, V) → H^k(g, V)","relation":"defines","object":"[C] ↦ [δC]","modality":"stated","locator":"Eq. (43)"}
+{"subject":"T","relation":"equivalent-to","object":"Ind_H^G(S)","modality":"stated","locator":"Eq. (80)"}
+{"subject":"Ind_H^G(S1 ⊕ S2)","relation":"equivalent-to","object":"Ind_H^G(S1) ⊕ Ind_H^G(S2)","modality":"stated","locator":"Eq. (86)"}
+{"subject":"Ind_H^G(S1 ⊗ S2)","relation":"equivalent-to","object":"Ind_H^G(S1) ⊗ Ind_H^G(S2)","modality":"stated","locator":"Eq. (86)"}
+{"subject":"(T1, P1) ~ (T2, P2)","relation":"equivalent-to","object":"S1 ~ S2","modality":"stated","locator":"Eq. (114)"}
+{"subject":"M","relation":"equivalent-to","object":"G / H","modality":"stated","locator":"Eq. (77)"}
+{"subject":"O_p","relation":"equivalent-to","object":"G / G_p","modality":"stated","locator":"Eq. (62)"}
+{"subject":"σ*_f(p)","relation":"equivalent-to","object":"f·p","modality":"stated","locator":"Eq. (129)"}
+{"subject":"G ⋉_σ A","relation":"defines","object":"(f,α)·(g,β) = (f·g, α·σ_f(β))","modality":"stated","locator":"Eq. (116)"}
+{"subject":"R","relation":"defines","object":"α ↦ e^{i⟨p,α⟩}","modality":"stated","locator":"Eq. (122)"}
+{"subject":"O_p","relation":"defines","object":"{f·p | f ∈ G}","modality":"stated","locator":"Eq. (60)"}
+{"subject":"G_p","relation":"defines","object":"{f ∈ G | f·p = p}","modality":"stated","locator":"Eq. (61)"}
+{"subject":"L²(M, μ, E)","relation":"defines","object":"ℒ²(M, μ, E) / N(M, μ, E)","modality":"stated","locator":"Eq. (52)"}
+{"subject":"P_U","relation":"defines","object":"∫_U dμ(k) Σ_ℓ ⟨Ψ_{k,ℓ}|·⟩ Ψ_{k,ℓ}","modality":"stated","locator":"Eq. (104)"}
+{"subject":"P_{f·U}","relation":"equivalent-to","object":"T[f] ∘ P_U ∘ T[f]^{−1}","modality":"stated","locator":"Eq. (109)"}
+{"subject":"U ∘ P^S ∘ U^{−1}","relation":"equivalent-to","object":"P_U","modality":"stated","locator":"Eq. (112)"}
+{"subject":"(T[f]·Ψ)(q)","relation":"defines","object":"√(ρ_{f^{−1}}(q)) Ψ(f^{−1}·q)","modality":"stated","locator":"Eq. (71)"}
+{"subject":"χ[f]","relation":"defines","object":"Tr(T[f])","modality":"stated","locator":"Eq. (99)"}
+{"subject":"Z(β, μ_1, …, μ_r)","relation":"defines","object":"Tr exp[−β(H − Σ_a μ_a Q_a)]","modality":"stated","locator":"Eq. (98)"}
+{"subject":"Bondi-type coordinates (r, z, u)","relation":"defines","object":"r = [x^i x^i]^{1/2}, z = (x¹ + i x²)/(r + x³), u = x⁰ − r","modality":"stated","locator":"Eq. (4)"}
+{"subject":"Minkowski metric (Eq. 3) in coordinates of Eq. (4)","relation":"equivalent-to","object":"−du² − 2 du dr + r² · 4 dz dz̄ / (1 + z z̄)²","modality":"stated","locator":"Eq. (5)"}
