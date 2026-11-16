@@ -1,0 +1,34 @@
+{"subject":"order zero condition","relation":"defines","object":"[a,b^0]=0 with b^0=Jb^*J^{-1}","modality":"stated","locator":"Section 1, Eq. (1.1)"}
+{"subject":"order one condition","relation":"defines","object":"[[D,a],b^0]=0 for all a,b in A_F","modality":"stated","locator":"Section 1, Eq. (1.2)"}
+{"subject":"classification of irreducible triplets (A,H,J)","relation":"proves","object":"two classes: real forms of M_k(C) and real forms of M_k(C)⊕M_k(C)","modality":"stated","locator":"Section 1"}
+{"subject":"grading analysis with Jγ=-γJ","relation":"proves","object":"exclusion of the first case, giving A=M_2(H)⊕M_4(C)","modality":"stated","locator":"Section 1"}
+{"subject":"unique involutive subalgebra A_F of maximal dimension of A^ev","relation":"proves","object":"existence and uniqueness up to isomorphism, with A_F isomorphic to C⊕H⊕M_3(C)","modality":"stated","locator":"Section 1"}
+{"subject":"spectral action on M×F with inner fluctuations","relation":"proves","object":"Standard Model minimally coupled to gravity","modality":"cited","locator":"Section 1"}
+{"subject":"Lemma 2.1","relation":"proves","object":"eJeJ^{-1}=0 for any projection e≠1 in Z(A)","modality":"stated","locator":"Lemma 2.1, Eq. (2.3)"}
+{"subject":"Lemma 2.1","relation":"proves","object":"e_1Je_2J^{-1}+e_2Je_1J^{-1} ∈ {0,1} for orthogonal central projections e_1,e_2","modality":"stated","locator":"Lemma 2.1, Eq. (2.4)"}
+{"subject":"Lemma 2.2","relation":"proves","object":"Z(A_C) is C, or Z(A_C)=C⊕C with Je_1J^{-1}=e_2","modality":"stated","locator":"Lemma 2.2"}
+{"subject":"representation β of A_C⊗A_C^0 in H","relation":"defines","object":"β(x⊗y)=xy^0","modality":"stated","locator":"Eq. (2.6)"}
+{"subject":"Lemma 2.4","relation":"proves","object":"irreducibility of the representation β of A_C⊗A_C^0 in H","modality":"stated","locator":"Lemma 2.4"}
+{"subject":"irreducible solution with Z(A_C)=C","relation":"equivalent-to","object":"dim H = n = k^2 is a square","modality":"stated","locator":"Proposition 2.5"}
+{"subject":"solution of Proposition 2.5","relation":"defines","object":"A_C=M_k(C) acting on itself with J(x)=x^*","modality":"stated","locator":"Proposition 2.5, Eq. (2.8)"}
+{"subject":"multiplicity m=2 case with J^2=-1","relation":"proves","object":"dim H = 2k^2","modality":"stated","locator":"Remark 2.6"}
+{"subject":"Lemma 2.7","relation":"proves","object":"β is the direct sum β_1⊕β_2 of two irreducible representations on H_1⊕H_2","modality":"stated","locator":"Lemma 2.7, Eq. (2.10)"}
+{"subject":"Lemma 2.7","relation":"proves","object":"dim H_j = k_1 k_2","modality":"stated","locator":"Lemma 2.7, item 3"}
+{"subject":"irreducible solution with Z(A_C)=C⊕C","relation":"equivalent-to","object":"dim H = n = 2k^2 is twice a square","modality":"stated","locator":"Proposition 2.8"}
+{"subject":"solution of Proposition 2.8","relation":"defines","object":"A_C=M_k(C)⊕M_k(C) with J(x,y)=(y^*,x^*)","modality":"stated","locator":"Proposition 2.8, Eq. (2.11)"}
+{"subject":"intrinsic description of solutions","relation":"defines","object":"A_C=End_C(W)⊕End_C(V) acting on H=E⊕E^* with J(ξ,η)=(η^*,ξ^*)","modality":"stated","locator":"Remark 2.9, Eqs. (2.12)-(2.14)"}
+{"subject":"Proposition 3.2","relation":"proves","object":"existence and uniqueness up to equivalence of a Z/2-grading with Jγ=-γJ","modality":"stated","locator":"Proposition 3.2, Eq. (3.2)"}
+{"subject":"grading γ on H","relation":"defines","object":"H=E⊖E^*, γ(ξ,η)=(γξ,-γη)","modality":"stated","locator":"Proposition 3.2, Eq. (3.3)"}
+{"subject":"Lemma 3.1","relation":"proves","object":"ε''=1 for any grading with γAγ^{-1}=A and Jγ=ε''γJ","modality":"stated","locator":"Lemma 3.1"}
+{"subject":"algebra A=End_H(W)⊕End_C(V)","relation":"equivalent-to","object":"M_2(H)⊕M_4(C)","modality":"stated","locator":"Section 3, Eq. (3.1)"}
+{"subject":"A_F","relation":"defines","object":"{(λ⊕q, λ⊕m) : λ∈C, q∈H, m∈M_3(C)} ⊂ H⊕H⊕M_4(C)","modality":"stated","locator":"Theorem 4.1, Eq. (4.2)"}
+{"subject":"Theorem 4.1","relation":"proves","object":"existence and uniqueness up to automorphism of A^ev of an involutive subalgebra A_F of maximal dimension admitting off-diagonal Dirac operators","modality":"stated","locator":"Theorem 4.1"}
+{"subject":"Eq. (4.3)","relation":"proves","object":"e_1Te_2=0 given [T,a]=0 for all a in A_F","modality":"stated","locator":"Section 4, Eq. (4.3)"}
+{"subject":"Eq. (4.4)","relation":"proves","object":"e_1Te_2=e_2Te_1=0 given [T,a^0]=0 for all a in A_F","modality":"stated","locator":"Section 4, Eq. (4.4)"}
+{"subject":"Lemma 4.2","relation":"proves","object":"no off-diagonal Dirac operator for A_F if the representations π_j are disjoint","modality":"stated","locator":"Lemma 4.2"}
+{"subject":"C(T)","relation":"proves","object":"C(T)=\{(λ,λ⊕m)∈H⊕M_4(C) : λ∈C, m∈M_3(C)\}","modality":"stated","locator":"Section 4, Eq. (44)"}
+{"subject":"dim_R C(T)","relation":"proves","object":"dim_R C(T)=2+18=20","modality":"stated","locator":"Section 4, Eq. (45)"}
+{"subject":"unimodular subgroup of unitary group acting by Ad(u)","relation":"equivalent-to","object":"gauge group of the Standard Model","modality":"stated","locator":"Theorem 4.3, item 1"}
+{"subject":"unimodular inner fluctuations of the metric","relation":"proves","object":"gauge bosons of the Standard Model","modality":"stated","locator":"Theorem 4.3, item 2"}
+{"subject":"action functional S=Tr(f(D_A/Λ))+½⟨Jξ̃,D_Aξ̃⟩","relation":"proves","object":"Standard Model with neutrino mixing and seesaw minimally coupled to Einstein gravity","modality":"stated","locator":"Theorem 4.3, item 3, Eq. (4.8)"}
+{"subject":"Int(A)","relation":"equivalent-to","object":"SU(A)={u∈A : uu^*=u^*u=1, det(u)=1}","modality":"stated","locator":"Remark 4.4, Eq. (4.9)"}
