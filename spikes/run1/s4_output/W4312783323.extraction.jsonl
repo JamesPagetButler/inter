@@ -1,0 +1,27 @@
+{"subject":"ADJ(X)_lax","relation":"equivalent-to","object":"FUN(C_1,X)_radj","modality":"stated","locator":"Theorem 1.1"}
+{"subject":"ADJ(CAT_∞)_lax → MND(CAT_∞)_lax (taking an adjunction to its induced monad)","relation":"proves","object":"fully faithful right adjoint with image the monadic adjunctions","modality":"stated","locator":"Theorem 1.2"}
+{"subject":"Nat(X,Y)","relation":"equivalent-to","object":"wide subcategory of Fun(X,Y)_colax containing colax transformations whose components are all equivalences","modality":"stated","locator":"Theorem 1.3"}
+{"subject":"Alg(End_X(X))","relation":"equivalent-to","object":"Mnd(X)_colax,X","modality":"stated","locator":"Theorem 1.4"}
+{"subject":"Alg(End_X(X))^op","relation":"equivalent-to","object":"Mnd(X)_lax,X","modality":"stated","locator":"Theorem 1.4"}
+{"subject":"Alg(Fun(C,C))^op","relation":"equivalent-to","object":"Cat_∞/C^mndradj","modality":"stated","locator":"Introduction, equivalence following Theorem 1.4"}
+{"subject":"MND(CAT_∞)_lax","relation":"equivalent-to","object":"FUN(C_1,CAT_∞)_mndradj","modality":"stated","locator":"Introduction, combination of Theorems 1.1 and 1.2"}
+{"subject":"Gray tensor product I⊗^colax J","relation":"defines","object":"colax Gray tensor product of (∞,2)-categories","modality":"stated","locator":"Definition 3.3"}
+{"subject":"X⊗^colax Y","relation":"defines","object":"colax Gray tensor product","modality":"stated","locator":"Definition 3.8"}
+{"subject":"X⊗^lax Y","relation":"defines","object":"Y⊗^colax X (lax Gray tensor product)","modality":"stated","locator":"Definition 3.8"}
+{"subject":"FUN(X,Y)_(co)lax","relation":"defines","object":"(∞,2)-category of functors and (co)lax natural transformations","modality":"stated","locator":"Definition 3.9"}
+{"subject":"(co)lax natural transformation","relation":"defines","object":"functor X⊗^(co)lax Δ^1 → Y","modality":"stated","locator":"Definition 3.9"}
+{"subject":"Assumption 3.5 (co-Segal condition and lax tensor product properties)","relation":"depends-on","object":"Theorem 1.3 and Theorem 1.4","modality":"stated","locator":"Assumption 3.5"}
+{"subject":"Assumptions 3.5(1),(2)","relation":"proves","object":"Maehara's construction of Gray tensor product as left Quillen bifunctor","modality":"cited","locator":"Remark 3.6"}
+{"subject":"Theorem 1.1","relation":"uses-technique","object":"main result of Riehl–Verity giving the equivalence on underlying ∞-groupoids","modality":"cited","locator":"Introduction, paragraph before Theorem 1.3"}
+{"subject":"Theorem 1.2","relation":"uses-technique","object":"work of Zaganidis on lax morphisms of adjunctions and monads","modality":"cited","locator":"Introduction, paragraph before Theorem 1.3"}
+{"subject":"Remark 2.12 comparison Seg_Θ2^op(S) ≃ Seg^2-fold","relation":"proves","object":"identification of Cat_(∞,2) with complete objects in Seg_Θ2^op(S)","modality":"cited","locator":"Remark 2.12"}
+{"subject":"Lemma 2.18","relation":"proves","object":"[1](C_1)∐_[0]…∐_[0][1](C_n) → [n](C_1,…,C_n) is an equivalence","modality":"stated","locator":"Lemma 2.18"}
+{"subject":"Lemma 2.19","relation":"proves","object":"[1](–) preserves weakly contractible colimits","modality":"stated","locator":"Lemma 2.19"}
+{"subject":"Lemma 2.20","relation":"proves","object":"Map_Cat(2,∞)([1](I),X) ≃ Map_Cat∞(I,X_1) for weakly contractible I","modality":"stated","locator":"Lemma 2.20"}
+{"subject":"Cat_(∞,2)","relation":"equivalent-to","object":"(∞,2)-categories as complete 2-fold Segal spaces","modality":"cited","locator":"Remark 2.7"}
+{"subject":"Cat_(∞,2)","relation":"equivalent-to","object":"∞-categories enriched in Cat_∞","modality":"cited","locator":"Remark 2.14"}
+{"subject":"[n](C_1,…,C_n)","relation":"defines","object":"free (∞,2)-category on the graph [n](C_1,…,C_n)_graph","modality":"stated","locator":"Definition 2.16"}
+{"subject":"Θ_2","relation":"defines","object":"category of objects [k](n_1,…,n_k) with inert and active morphisms","modality":"stated","locator":"Definition 2.8"}
+{"subject":"Seg_Δ^op(C)","relation":"defines","object":"full subcategory of Segal functors Δ^op → C","modality":"stated","locator":"Definition 2.4"}
+{"subject":"Cat_(∞,2)","relation":"defines","object":"full subcategory of Seg^S_Δ^op(Cat_∞) of complete functors","modality":"stated","locator":"Definition 2.5"}
+{"subject":"Remark 3.10 lax transformation","relation":"defines","object":"assignment of a lax square to each morphism f: X→X' in X","modality":"stated","locator":"Remark 3.10"}
