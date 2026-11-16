@@ -1,0 +1,19 @@
+{"subject":"decent v-stack","relation":"defines","object":"Definition 1.1 (decent: diagonal condition and existence of a chart)","modality":"stated","locator":"Definition 1.1"}
+{"subject":"chart of X","relation":"defines","object":"surjective representable cohomologically smooth map U→X from a locally separated locally spatial diamond U","modality":"stated","locator":"Definition 1.1"}
+{"subject":"clean chart","relation":"defines","object":"chart f:U→X with U separated locally spatial and f separated and cohomologically smooth","modality":"stated","locator":"Remark 1.2 (ii)"}
+{"subject":"fine morphism","relation":"defines","object":"morphism f:X→Y of decent v-stacks admitting a diagram with vertical charts and g locally compactifiable of finite dim.trg","modality":"stated","locator":"Definition 1.3 (i)"}
+{"subject":"ℓ-cohomologically smooth morphism","relation":"defines","object":"morphism of decent v-stacks admitting a chart diagram with g locally compactifiable and ℓ-cohomologically smooth","modality":"stated","locator":"Definition 1.3 (ii)"}
+{"subject":"Rf_!","relation":"proves","object":"existence of a natural functor Rf_!:D_et(X,Λ)→D_et(Y,Λ) for fine maps f of decent v-stacks, with properties (1)–(5)","modality":"stated","locator":"Theorem 1.4"}
+{"subject":"Rf_! for fine maps","relation":"generalises","object":"Rf_! of Scholze [11] for separated maps representable in locally spatial diamonds","modality":"stated","locator":"Theorem 1.4 (1)"}
+{"subject":"X↦D_et(X,Λ), f↦Rf_!","relation":"proves","object":"pseudo-functor from decent v-stacks with fine morphisms to triangulated categories","modality":"stated","locator":"Theorem 1.4 (2)"}
+{"subject":"Rf_!","relation":"proves","object":"projection formula Rf_!(A⊗f^*B)≅Rf_!A⊗B","modality":"stated","locator":"Theorem 1.4 (3)"}
+{"subject":"Rf_!","relation":"proves","object":"proper base change g^*Rf_!≅Rf'_!g̃^* for cartesian squares with f fine","modality":"stated","locator":"Theorem 1.4 (4)"}
+{"subject":"Rf_!","relation":"proves","object":"existence of right adjoint Rf^!","modality":"stated","locator":"Theorem 1.4 (5)"}
+{"subject":"Rf_!A","relation":"depends-on","object":"colimit formula Rf_!A ≃ colim_n R(f∘g_n)_! Rg_n^! A","modality":"stated","locator":"Heuristic, equation (1.2)"}
+{"subject":"cohomological codescent for surjective smooth maps","relation":"conjectures","object":"colim_n Rg_{n!}Rg_n^!A → A is an isomorphism","modality":"stated","locator":"Heuristic, equation (1.3)"}
+{"subject":"Theorem 2.6 enhanced operation map for decent v-stacks","relation":"proves","object":"existence of an enhanced operation map EO on δ*_{2,{2}}(Vstk^dct_∐)^cart_{F,all} with D(X)=D_et(X,Λ), f^* the Scholze pullback, and f_! = Rf_! of [11] for separated representable-in-locally-spatial-diamonds f","modality":"stated","locator":"Theorem 2.6"}
+{"subject":"Theorem 2.6 enhanced operation map","relation":"uses-technique","object":"enhanced operation map framework of Lu–Zheng [8] (DESCENT program)","modality":"cited","locator":"Section 1.2, Strategy for the enhanced operation map; Theorem 2.6"}
+{"subject":"canonical compactification","relation":"uses-technique","object":"factorisation f=p∘j with j open immersion and p proper, from [11, Proposition 18.6]","modality":"cited","locator":"Section 1.2, Main result step 2"}
+{"subject":"prespatial diamond","relation":"defines","object":"qcqs diamond X admitting spatial subdiamond X_0 with X_0(K,O_K)=X(K,O_K) for perfectoid K","modality":"stated","locator":"Definition 3.1"}
+{"subject":"decent v-stacks","relation":"specialises","object":"Artin v-stacks in the sense of [1, Definition IV.1.1]","modality":"stated","locator":"Section 1.2, Further statements (Proposition 4.4)"}
+{"subject":"Rf_! construction (1.2)","relation":"depends-on","object":"Rf_! for fine 0-truncated h","modality":"stated","locator":"Heuristic for the construction of Rf_!"}
