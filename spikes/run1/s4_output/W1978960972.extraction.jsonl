@@ -1,0 +1,20 @@
+{"subject":"Theorem 1(c) Dirac operator D","relation":"proves","object":"<(e-1/2)[D,e]^{2m}> = gamma for Riemannian metrics on S^{2m} with volume form equal to omega","modality":"stated","locator":"Theorem 1(c)"}
+{"subject":"Theorem 1(a) idempotent E","relation":"proves","object":"E = E^2 = E^* and ch_j(E)=0 for all j<m","modality":"stated","locator":"Theorem 1(a)"}
+{"subject":"Theorem 1(b) Hochschild cycle omega = ch_m(E)","relation":"proves","object":"omega is the volume form of the round sphere S^{2m}","modality":"stated","locator":"Theorem 1(b)"}
+{"subject":"Index formula (8)","relation":"depends-on","object":"vanishing condition ch_j(e)=0 for j<m (9)","modality":"stated","locator":"Equation (8)-(9)"}
+{"subject":"Index pairing (4)","relation":"uses-technique","object":"local cyclic cocycles","modality":"cited","locator":"Equation (4) and Introduction"}
+{"subject":"Metric on state space (3)","relation":"defines","object":"d(phi,psi) = Sup{|phi(a)-psi(a)| ; ||[D,a]||<=1}","modality":"stated","locator":"Equation (3)"}
+{"subject":"Index pairing D_e^+ (6)","relation":"defines","object":"D_e^+ = e D^+ e","modality":"stated","locator":"Equation (6)"}
+{"subject":"Integral (Dixmier-type) symbol in formula (8)","relation":"defines","object":"coefficient of the logarithmic divergence in the ordinary operator trace","modality":"cited","locator":"Equation (8)"}
+{"subject":"Quartic equation (11)","relation":"proves","object":"<(e-1/2)[D,e]^4> = gamma_5 for S^4 metrics with round volume form","modality":"stated","locator":"Equation (11)"}
+{"subject":"Volume quantization (12)","relation":"depends-on","object":"quartic equation (11) combined with index formula (8)","modality":"stated","locator":"Equation (12)"}
+{"subject":"Spectral action leading term (13)","relation":"depends-on","object":"volume quantization (12)","modality":"stated","locator":"Equation (13)"}
+{"subject":"Theorem 2(a) idempotent e on S^4_theta","relation":"proves","object":"e = e^2 = e^* and ch_j(e)=0 for j<2","modality":"stated","locator":"Theorem 2(a)"}
+{"subject":"Gr_{2,4}","relation":"proves","object":"Gr_{2,4} is a noncommutative space","modality":"stated","locator":"Theorem 2(b)"}
+{"subject":"Spectral triple (C^infty(S^4_theta), H, D)","relation":"proves","object":"fulfills all axioms of noncommutative manifolds","modality":"stated","locator":"Theorem 3(a)"}
+{"subject":"Theorem 3(b) Dirac operator D on S^4_theta","relation":"proves","object":"<(e-1/2)[D,e]^4> = gamma with canonical idempotent (III.48)","modality":"stated","locator":"Theorem 3(b)"}
+{"subject":"Theorem 6","relation":"proves","object":"compact spin Riemannian manifold M with isometry group of rank >= 2 admits a natural one-parameter isospectral deformation M_theta","modality":"stated","locator":"Theorem 6"}
+{"subject":"Lemma 4(a) commutator identity","relation":"proves","object":"l(x) r(y) - r(y) l(x) = (xy - yx) lambda^{n'_1 n_2} lambda^{n_2 p_1 + n'_1 p_2}","modality":"stated","locator":"Lemma 4(a), Equation (89)"}
+{"subject":"Lemma 4(b) star product x*y","relation":"defines","object":"x*y = lambda^{n'_1 n_2} xy","modality":"stated","locator":"Lemma 4(b), Equation (90)"}
+{"subject":"Lemma 4(b)","relation":"proves","object":"l(x) l(y) = l(x*y)","modality":"stated","locator":"Lemma 4(b)"}
+{"subject":"Lemma 5 conjugation identity","relation":"proves","object":"J~ l(x) J~^{-1} = r(J x J^{-1}) lambda^{-n_1 n_2}","modality":"stated","locator":"Lemma 5, Equation (97)"}
