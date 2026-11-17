@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "The text explicitly states Corollary 3.4 as the provided equation for (1/dim V)Tr f(D)."}
+{"n": 2, "grade": "wrong-modality", "reason": "The paper attributes the Dirac operators D^(0,2), D^(1,1), D^(2,0) to [Bar15] ('The next operators appear in [Bar15]'), so the modality should be cited."}
+{"n": 3, "grade": "faithful", "reason": "Section 1 explicitly asserts that the NC polynomials Phi_i and Psi_i either satisfy cyclic self-adjointness or are both cyclic anti-self-adjoint."}
+{"n": 4, "grade": "faithful", "reason": "The abstract explicitly states that a well-defined path integral can be stated as a random matrix model with the provided action."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 3.2 provides exactly this formula for the traces of even powers of the Dirac operator."}
+{"n": 6, "grade": "faithful", "reason": "Section 1 states that the main NC polynomial P satisfies a weaker concept ('cyclic self-adjointness')."}
+{"n": 7, "grade": "faithful", "reason": "Proposition 5.1 defines the delta symbol as 'the Levi-Civita symbol in absolute value', equal to 1 when the set is Delta_4 and 0 otherwise."}
+{"n": 8, "grade": "wrong-direction", "reason": "The works [Gla17] and [Gla] explored and obtained the spectral actions for these signatures, so the object (the references) 'proves' (obtains) the subject, not the other way around."}
+{"n": 9, "grade": "faithful", "reason": "Proposition 4.1 explicitly presents this formula for the trace of D^6."}
+{"n": 10, "grade": "faithful", "reason": "Section 1 provides exactly this equation for Tr f(D)."}
+{"n": 11, "grade": "faithful", "reason": "The abstract explicitly notes that the notion of fuzzy geometry 'incorporates familiar examples like fuzzy spheres'."}
+{"n": 12, "grade": "faithful", "reason": "Proposition 3.2 gives the formula for the trace of even powers of the Dirac operator via chord diagrams."}
+{"n": 13, "grade": "faithful", "reason": "Example 2.3 cites the Dirac operator of type (0,2) as appearing in [Bar15]."}
+{"n": 14, "grade": "faithful", "reason": "Section 1 notes that one determines the spectral action in terms of Seeley-DeWitt coefficients, citing [Gil95]."}
+{"n": 15, "grade": "faithful", "reason": "Definition 3.3 defines the single trace functional s_n(chi) via the stated equation."}
+{"n": 16, "grade": "faithful", "reason": "The abstract lists fuzzy tori alongside fuzzy spheres as familiar examples of fuzzy geometries."}
+{"n": 17, "grade": "faithful", "reason": "The abstract notes that the authors use 'Barrett’s characterization of Dirac operators of fuzzy geometries in order to systematically compute the spectral action'."}
+{"n": 18, "grade": "faithful", "reason": "The abstract states that they 'take a polynomial f with f(x) -> infinity as |x| -> infinity' for the spectral action."}
+{"n": 19, "grade": "faithful", "reason": "Corollary 3.4 explicitly states the given formula and clarifies that B's coefficients are independent of N."}
+{"n": 20, "grade": "faithful", "reason": "Section 1 explains that the polynomial alteration 'comes from a convergence requirement for the path-integral, as initiated in [BG16]'."}

@@ -1,0 +1,28 @@
+**Grading Claims: A Thought Process**
+
+Alright, let's dive into these claims, one by one. The goal is to verify each against the text of the paper and assign it a grade.  I need to be very precise here; "faithful" means the claim directly reflects the paper, while all the other grades are defined relative to things that are *not* faithful.
+
+*   **Claim 1:** Straightforward. The text explicitly states Definition 1.17 defines a "steady map." `faithful`.
+*   **Claim 2:** This one requires closer inspection. The initial subject extraction looks strange.  Mann defines "descendable maps," not "Mann's descendable maps."  The subject is clearly extracted wrongly here. The claim is `not-in-paper`.
+*   **Claim 3:** Looks good. Theorem 0.2 is cited as proving the sheaf definition.  `faithful`.
+*   **Claim 4:** Another easy one. Lemma 1.28 does indeed assert the steadiness of the natural map, and it's cited.  `faithful`.
+*   **Claim 5:** Straightforward: the text explicitly defines PCoh(A) within Theorem 0.1. `faithful`.
+*   **Claim 6:**  The claim relates to a section and a theorem. Checking carefully, the outline in the paper *does* show section 5 recovers theorem 0.1 from 0.3. Thus, `faithful`.
+*   **Claim 7:** This requires some care. The claim says "maps prove descendability" which is wrong; it's a *property* that applies. So, the relation is wrong, or the claim is not in the paper.  While the text does mention Mathew, it is not "proving".  `wrong-relation`.
+*   **Claim 8:**  The subject is "uncompleted analytic ring." This *does not define* the "uncompleted analytic ring (A, M)." The *definition* does. This looks like a mangled subject. Therefore, I will grade as `not-in-paper`.
+*   **Claim 9:**  The text clearly says Mann proves descent. The text also mentions E(A_solid).  `faithful`.
+*   **Claim 10:** The abstract is *not* the place for the generalization, although this is mentioned in the paper. The text says "In this paper, we generalize the result of Mathew", which occurs after theorem 0.3. This will get `wrong-locator`.
+*   **Claim 11:** The outline of the paper *does* state this. `faithful`.
+*   **Claim 12:** Again, direct definition from the paper's construction. `faithful`.
+*   **Claim 13:** Proposition 1.26 is a match to the cited text. `faithful`.
+*   **Claim 14:** Theorem 0.5 directly matches. `faithful`.
+*   **Claim 15:** Direct match of theorem to text. `faithful`.
+*   **Claim 16:** Clear, from Theorem 0.4. `faithful`.
+*   **Claim 17:** Mann defines descendable maps, so `faithful`.
+*   **Claim 18:**  Mathew does prove the statement.  `faithful`.
+*   **Claim 19:** Definition 1.9(2) matches. `faithful`.
+*   **Claim 20:** Theorem 0.4 discusses this. `faithful`.
+
+That should do it. Now, to double-check my work...
+
+

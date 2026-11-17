@@ -1,0 +1,12 @@
+{
+  "paper_id": "W2015765968",
+  "model": "gemini-3.1-pro-preview",
+  "thinking_budget": 10000,
+  "prompt_sha256": "99f432676e6acc90bea75d6dd1d4f2f3064536f5f46c8a0a2e2ac884a53f1330",
+  "input_sha256": "dc5d1f7c8837b3f7d633dacc97ab7f12a142453a9eec7c0c9f61ee31169b7802",
+  "request_sha256": "76787c86635d845319226465aa3247374440774a2bc2169ac4d6cfc3a9512cd4",
+  "answer_sha256": "9b121a8a689f48f5ed8ec5ba527a18dae5b93c082ff9ca078038cd1ce51fc38b",
+  "thoughts_sha256": "5898325c5249b4b838dafa3efa0b0d2a58565e696ff497a49730f1deac3bbd34",
+  "thought_tokens": 2867,
+  "finish_reason": "FinishReason.STOP"
+}
