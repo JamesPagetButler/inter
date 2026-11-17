@@ -54,8 +54,8 @@ The seed is **251117**, a PCG stream, and the sampler script is committed and ha
 
 1. **L0, code:** schema, rubric sha, every grade in the category set.
 2. **L1:** any verifier doubt goes to the checker. Two agreeing raters settle it.
-3. **L2:** for an L1 split, fresh verifier and checker sessions receive both positions plus the passage and must converge, or produce an impasse record (MO §3 / §10).
-4. **L3:** qbp-oppenheimer applies the rubric to L2 impasses. **Budget ≤ 30 items.** Rule-meaning disputes skip L3 (seq 5212).
+3. **L2:** for an L1 split, fresh verifier and checker sessions receive both positions plus the passage and must converge, or produce an impasse record (MO §3 / §10). **Every impasse record carries a dispute label**, `application` (how a rule applies to this claim) or `rule-meaning` (what a rule says, or whether it's right). Both L2 parties label it. **If they disagree on the label, it is `rule-meaning`**, the conservative route that skips L3.
+4. **L3:** qbp-oppenheimer applies the rubric to L2 impasses labelled `application`. **Budget ≤ 30 items.** The flag records overruns, and routing is unchanged. Rule-meaning disputes skip L3 (seq 5212). **If L3 cannot decide an application dispute, that shows the rubric doesn't decide the case, so the item goes to L4 as a rule-meaning question.**
 5. **L4:** panel of qbp-oppenheimer + qbp-architecture, with cartan as confirmer. Alternate: *pending, cth-implementor*.
 6. **L5:** the beekeeper, batched.
 
