@@ -73,6 +73,12 @@ EXPECT = {
 }
 
 
+def must(cond, msg):
+    """Hard check that survives python -O (bare assert would be stripped)."""
+    if not cond:
+        raise SystemExit(f"ABORT: {msg}")
+
+
 def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
@@ -84,7 +90,7 @@ def check_manifest(manifest: Path):
         h, rel = line.split(maxsplit=1)
         rel = rel.strip()
         p = (RUN1 / rel) if (RUN1 / rel).exists() else (RUN1.parent.parent / rel)
-        assert sha(p) == h, f"manifest mismatch: {rel}"
+        must(sha(p) == h, f"manifest mismatch: {rel}")
 
 
 def wilson(k, n):
@@ -113,13 +119,13 @@ def load_jsonl(p):
 
 def main():
     for rel, h in EXPECT.items():
-        assert sha(RUN1 / rel) == h, f"sha mismatch: {rel}"
+        must(sha(RUN1 / rel) == h, f"sha mismatch: {rel}")
     check_manifest(RUN1 / "s5_grades_A2_lean_sha256_manifest.txt")
     check_manifest(RUN1 / "s5_grading_packets_A2_sha256_manifest.txt")
 
     key = json.load(open(RUN1 / "s5_arm_key_A2_SEALED.json"))
     arm_values = {c["arm"] for pid in key["order"] for c in key["papers"][pid]["claims"]}
-    assert "primary" in arm_values and len(arm_values) == 2, arm_values
+    must("primary" in arm_values and len(arm_values) == 2, arm_values)
     other = (arm_values - {"primary"}).pop()
     ARM = {"primary": "haiku", other: "opus"}
 
@@ -131,10 +137,10 @@ def main():
                   load_jsonl(RUN1 / "s5_grades_A2_lean" / f"{pid}.grades.jsonl")}
         for c in paper["claims"]:
             g = grades[c["n"]]
-            assert g in GRADES, (pid, c["n"], g)
+            must(g in GRADES, (pid, c["n"], g))
             rows.append({"paper": pid, "domain": paper["domain"], "n": c["n"],
                          "arm": ARM[c["arm"]], "grade": g})
-    assert {r["paper"] for r in rows} == set(key["order"]) and len(key["order"]) == 20
+    must({r["paper"] for r in rows} == set(key["order"]) and len(key["order"]) == 20, "paper set != 20 keyed papers")
 
     def arm_stats(sub):
         f = sum(r["grade"] == "faithful" for r in sub)
@@ -175,7 +181,7 @@ def main():
     dis, sc_rows = 0, []
     for v in sc:
         r = lean[(v["paper"], v["n"])]
-        assert r["arm"] == "haiku", (v["paper"], v["n"])
+        must(r["arm"] == "haiku", (v["paper"], v["n"]))
         d = (v["grade"] == "faithful") != (r["grade"] == "faithful")
         dis += d
         sc_rows.append({"paper": v["paper"], "n": v["n"], "domain": v["domain"],
@@ -190,7 +196,7 @@ def main():
     for pid in INTERRATER:
         meta = json.load(open(gdir / f"{pid}.meta.json"))
         ans_p = gdir / f"{pid}.answer_RAW.txt"
-        assert hashlib.sha256(ans_p.read_text().encode("utf-8")).hexdigest() == meta["answer_sha256"], pid
+        must(hashlib.sha256(ans_p.read_text().encode("utf-8")).hexdigest() == meta["answer_sha256"], pid)
         gem = {}
         for line in ans_p.read_text().splitlines():
             line = line.strip()
