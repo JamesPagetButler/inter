@@ -39,7 +39,13 @@ Gemini parsing rule (fixed now): from answer_RAW.txt, every line that
 parses as a JSON object with integer "n" and string "grade" is taken
 (markdown fences and other lines ignored). A claim n missing from Gemini's
 output, or a grade outside the six frozen grades, is counted as
-`unparsed` and excluded from kappa; the count is reported.
+`unparsed` and excluded from kappa; the count is reported, per paper and
+per arm. The same n twice with the same grade is taken once; with different
+grades it is `unparsed` (not last-one-wins). If exclusions alone push the
+double-graded count below 40, `small_n_due_to_unparsed` is set, and §6 says
+the kappa gate was turned off by parsing, not by design.
+Lean grades must cover exactly each paper's keyed claim n-set (hard check).
+(oppenheimer's three asks, seq 250, applied before the key was opened.)
 
 Run under boxrun (deming, seq 226): 1 core, thread-pinned.
 """
@@ -133,8 +139,11 @@ def main():
     rows = []
     for pid in key["order"]:
         paper = key["papers"][pid]
-        grades = {g["n"]: g["grade"] for g in
-                  load_jsonl(RUN1 / "s5_grades_A2_lean" / f"{pid}.grades.jsonl")}
+        glines = load_jsonl(RUN1 / "s5_grades_A2_lean" / f"{pid}.grades.jsonl")
+        grades = {g["n"]: g["grade"] for g in glines}
+        must(len(glines) == len(grades), f"{pid}: duplicate n in lean grades")
+        must(set(grades) == {c["n"] for c in paper["claims"]},
+             f"{pid}: lean grade n-set != keyed claim n-set")
         for c in paper["claims"]:
             g = grades[c["n"]]
             must(g in GRADES, (pid, c["n"], g))
@@ -180,6 +189,7 @@ def main():
     sc = load_jsonl(RUN1 / "s5_spotcheck_A2" / "oppenheimer_spotcheck_verdicts.jsonl")
     dis, sc_rows = 0, []
     for v in sc:
+        must((v["paper"], v["n"]) in lean, f"spot-check pair not graded: {(v['paper'], v['n'])}")
         r = lean[(v["paper"], v["n"])]
         must(r["arm"] == "haiku", (v["paper"], v["n"]))
         d = (v["grade"] == "faithful") != (r["grade"] == "faithful")
@@ -193,11 +203,12 @@ def main():
     # Gemini inter-rater
     gdir = RUN1 / "s5_interrater_A2"
     pairs, unparsed = [], 0
+    unparsed_by = {"paper": {}, "arm": {"haiku": 0, "opus": 0}}
     for pid in INTERRATER:
         meta = json.load(open(gdir / f"{pid}.meta.json"))
         ans_p = gdir / f"{pid}.answer_RAW.txt"
         must(hashlib.sha256(ans_p.read_text().encode("utf-8")).hexdigest() == meta["answer_sha256"], pid)
-        gem = {}
+        gem, conflicted = {}, set()
         for line in ans_p.read_text().splitlines():
             line = line.strip()
             if not line.startswith("{"):
@@ -207,11 +218,17 @@ def main():
             except json.JSONDecodeError:
                 continue
             if isinstance(o.get("n"), int) and isinstance(o.get("grade"), str):
+                # same n twice: same grade -> once; different grades -> unparsed
+                if o["n"] in gem and gem[o["n"]] != o["grade"]:
+                    conflicted.add(o["n"])
                 gem[o["n"]] = o["grade"]
+        unparsed_by["paper"][pid] = 0
         for r in [r for r in rows if r["paper"] == pid]:
-            g = gem.get(r["n"])
+            g = None if r["n"] in conflicted else gem.get(r["n"])
             if g not in GRADES:
                 unparsed += 1
+                unparsed_by["paper"][pid] += 1
+                unparsed_by["arm"][r["arm"]] += 1
                 continue
             pairs.append((r["arm"], r["grade"] == "faithful", g == "faithful"))
     def kblock(ps):
@@ -220,7 +237,8 @@ def main():
         return {"double_graded": n, "kappa": kappa(a, b),
                 "raw_agreement": (sum(x == y for x, y in zip(a, b)) / n) if n else None,
                 "prevalence": ((sum(a) + sum(b)) / (2 * n)) if n else None}
-    ir = {"overall": kblock(pairs), "unparsed": unparsed,
+    ir = {"overall": kblock(pairs), "unparsed": unparsed, "unparsed_by": unparsed_by,
+          "small_n_due_to_unparsed": bool(len(pairs) < 40 <= len(pairs) + unparsed),
           "per_arm": {arm: kblock([p for p in pairs if p[0] == arm]) for arm in ("haiku", "opus")}}
     o = ir["overall"]
     ir["small_n_rule_applies"] = o["double_graded"] < 40
