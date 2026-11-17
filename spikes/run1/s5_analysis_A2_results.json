@@ -1,0 +1,583 @@
+{
+  "arms": {
+    "haiku": {
+      "graded": 190,
+      "faithful": 169,
+      "precision": 0.8894736842105263,
+      "wilson95": [
+        0.8369463492139949,
+        0.9265642065471013
+      ],
+      "wrong_locator": 2,
+      "locator_accuracy": 0.9883040935672515,
+      "grade_counts": {
+        "faithful": 169,
+        "not-in-paper": 1,
+        "wrong-direction": 1,
+        "wrong-locator": 2,
+        "wrong-modality": 4,
+        "wrong-relation": 13
+      },
+      "gate_precision": true,
+      "gate_locator": true
+    },
+    "opus": {
+      "graded": 197,
+      "faithful": 186,
+      "precision": 0.9441624365482234,
+      "wilson95": [
+        0.9027955588609403,
+        0.9685384823015014
+      ],
+      "wrong_locator": 3,
+      "locator_accuracy": 0.9841269841269841,
+      "grade_counts": {
+        "faithful": 186,
+        "not-in-paper": 3,
+        "wrong-direction": 0,
+        "wrong-locator": 3,
+        "wrong-modality": 2,
+        "wrong-relation": 3
+      },
+      "gate_precision": true,
+      "gate_locator": true
+    }
+  },
+  "by_domain": {
+    "math": {
+      "haiku": {
+        "graded": 90,
+        "faithful": 84,
+        "precision": 0.9333333333333333,
+        "wilson95": [
+          0.8620990515391679,
+          0.9690900724349752
+        ],
+        "wrong_locator": 0,
+        "locator_accuracy": 1.0,
+        "grade_counts": {
+          "faithful": 84,
+          "not-in-paper": 0,
+          "wrong-direction": 0,
+          "wrong-locator": 0,
+          "wrong-modality": 3,
+          "wrong-relation": 3
+        }
+      },
+      "opus": {
+        "graded": 97,
+        "faithful": 92,
+        "precision": 0.9484536082474226,
+        "wilson95": [
+          0.8849564452262672,
+          0.97778394910312
+        ],
+        "wrong_locator": 3,
+        "locator_accuracy": 0.968421052631579,
+        "grade_counts": {
+          "faithful": 92,
+          "not-in-paper": 0,
+          "wrong-direction": 0,
+          "wrong-locator": 3,
+          "wrong-modality": 1,
+          "wrong-relation": 1
+        }
+      }
+    },
+    "physics": {
+      "haiku": {
+        "graded": 100,
+        "faithful": 85,
+        "precision": 0.85,
+        "wilson95": [
+          0.7671644033458782,
+          0.9069401475158245
+        ],
+        "wrong_locator": 2,
+        "locator_accuracy": 0.9770114942528736,
+        "grade_counts": {
+          "faithful": 85,
+          "not-in-paper": 1,
+          "wrong-direction": 1,
+          "wrong-locator": 2,
+          "wrong-modality": 1,
+          "wrong-relation": 10
+        }
+      },
+      "opus": {
+        "graded": 100,
+        "faithful": 94,
+        "precision": 0.94,
+        "wilson95": [
+          0.8752318448839114,
+          0.9722138761993719
+        ],
+        "wrong_locator": 0,
+        "locator_accuracy": 1.0,
+        "grade_counts": {
+          "faithful": 94,
+          "not-in-paper": 3,
+          "wrong-direction": 0,
+          "wrong-locator": 0,
+          "wrong-modality": 1,
+          "wrong-relation": 2
+        }
+      }
+    }
+  },
+  "paired_difference_opus_minus_haiku": {
+    "estimate": 0.0546887523376971,
+    "ci95_paper_cluster_bootstrap": [
+      -0.020000000000000018,
+      0.13288805770772105
+    ],
+    "B": 10000,
+    "seed": 250125
+  },
+  "spot_check": {
+    "n": 50,
+    "disagreements": 7,
+    "pass": true,
+    "category_differences": 8,
+    "rows": [
+      {
+        "paper": "W1778604937",
+        "n": 4,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1778604937",
+        "n": 7,
+        "domain": "math",
+        "oppenheimer": "wrong-modality",
+        "lean_grader": "wrong-modality",
+        "disagree": false
+      },
+      {
+        "paper": "W1778604937",
+        "n": 10,
+        "domain": "math",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "faithful",
+        "disagree": true
+      },
+      {
+        "paper": "W1778604937",
+        "n": 18,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1820708574",
+        "n": 17,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1820708574",
+        "n": 20,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3146298757",
+        "n": 2,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3146298757",
+        "n": 7,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3162009980",
+        "n": 16,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3162009980",
+        "n": 18,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4390962404",
+        "n": 2,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4390962404",
+        "n": 4,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4390962404",
+        "n": 6,
+        "domain": "math",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "faithful",
+        "disagree": true
+      },
+      {
+        "paper": "W4390962404",
+        "n": 11,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4390962404",
+        "n": 16,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4390977661",
+        "n": 7,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "wrong-relation",
+        "disagree": true
+      },
+      {
+        "paper": "W4390977661",
+        "n": 19,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7160385925",
+        "n": 10,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7168273025",
+        "n": 4,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7168273025",
+        "n": 7,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7168273025",
+        "n": 17,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7168273025",
+        "n": 19,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7213497312",
+        "n": 2,
+        "domain": "math",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "wrong-relation",
+        "disagree": false
+      },
+      {
+        "paper": "W7213497312",
+        "n": 14,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W7213497312",
+        "n": 20,
+        "domain": "math",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1665497193",
+        "n": 1,
+        "domain": "physics",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "wrong-relation",
+        "disagree": false
+      },
+      {
+        "paper": "W1665497193",
+        "n": 14,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1665497193",
+        "n": 19,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1969605686",
+        "n": 11,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1969605686",
+        "n": 17,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W1969605686",
+        "n": 19,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2015765968",
+        "n": 18,
+        "domain": "physics",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "wrong-relation",
+        "disagree": false
+      },
+      {
+        "paper": "W2080238236",
+        "n": 3,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2080238236",
+        "n": 12,
+        "domain": "physics",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "faithful",
+        "disagree": true
+      },
+      {
+        "paper": "W2080238236",
+        "n": 18,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2085099209",
+        "n": 9,
+        "domain": "physics",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "faithful",
+        "disagree": true
+      },
+      {
+        "paper": "W2085099209",
+        "n": 10,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2085099209",
+        "n": 11,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2085099209",
+        "n": 18,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2890203879",
+        "n": 15,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W2985524293",
+        "n": 2,
+        "domain": "physics",
+        "oppenheimer": "wrong-relation",
+        "lean_grader": "faithful",
+        "disagree": true
+      },
+      {
+        "paper": "W2985524293",
+        "n": 14,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3158550123",
+        "n": 2,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W3158550123",
+        "n": 15,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4235693166",
+        "n": 3,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "wrong-locator",
+        "disagree": true
+      },
+      {
+        "paper": "W4235693166",
+        "n": 5,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4235693166",
+        "n": 10,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4235693166",
+        "n": 14,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      },
+      {
+        "paper": "W4313326288",
+        "n": 8,
+        "domain": "physics",
+        "oppenheimer": "not-in-paper",
+        "lean_grader": "wrong-relation",
+        "disagree": false
+      },
+      {
+        "paper": "W4313326288",
+        "n": 15,
+        "domain": "physics",
+        "oppenheimer": "faithful",
+        "lean_grader": "faithful",
+        "disagree": false
+      }
+    ]
+  },
+  "inter_rater": {
+    "overall": {
+      "double_graded": 80,
+      "kappa": 0.49420442571127504,
+      "raw_agreement": 0.85,
+      "prevalence": 0.825
+    },
+    "unparsed": 0,
+    "unparsed_by": {
+      "paper": {
+        "W4390977661": 0,
+        "W7160385925": 0,
+        "W2015765968": 0,
+        "W4313326288": 0
+      },
+      "arm": {
+        "haiku": 0,
+        "opus": 0
+      }
+    },
+    "small_n_due_to_unparsed": false,
+    "per_arm": {
+      "haiku": {
+        "double_graded": 40,
+        "kappa": 0.4791666666666669,
+        "raw_agreement": 0.875,
+        "prevalence": 0.8625
+      },
+      "opus": {
+        "double_graded": 40,
+        "kappa": 0.5,
+        "raw_agreement": 0.825,
+        "prevalence": 0.7875
+      }
+    },
+    "small_n_rule_applies": false,
+    "gate_pass": false
+  }
+}
