@@ -1,0 +1,8 @@
+FIXTURE RUBRIC (not a real round 1.1 rubric -- this is a synthetic fixture
+for checker_v1.py's dry-run known-answer test only. It is never read by any
+real grading call; its only purpose is to give build_request() fixed,
+versioned input so the test's pinned sha is reproducible.)
+
+Grade each claim as one of: faithful, not-faithful, wrong-relation,
+wrong-locator. Output one JSON line per claim: {"n": <int>, "grade": "<one
+of the four>"}. Nothing else.

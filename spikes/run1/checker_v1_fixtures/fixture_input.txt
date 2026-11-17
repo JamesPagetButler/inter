@@ -1,0 +1,9 @@
+FIXTURE INPUT (synthetic fixture for checker_v1.py's dry-run test only --
+not a real paper or a real claim set.)
+
+PAPER TEXT:
+"A widget of type A proves a lemma about widgets of type B whenever the
+connecting function f is continuous."
+
+CLAIMS:
+{"n": 1, "relation": "proves", "subject": "widget A", "object": "lemma about widget B"}
