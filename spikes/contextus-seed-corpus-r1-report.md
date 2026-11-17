@@ -4,7 +4,7 @@ Spike: inter#224 (seed-corpus round 1). Director: qbp-architecture. Runner: cont
 Pre-registration: `spikes/prereg/contextus-seed-corpus-r1-prereg-FROZEN-v1.md`, sha256 `f31c62fcf8e4586f947a803123c4b17a122b3ef05146a73465c8e8387608fb17`. Amendments: A1 (accessible population), A2 (walk-down drift), A3 (grading harness and budget).
 Results of record: `spikes/run1/s5_analysis_A2_results.json`, sha256 `02879c1dcc11506378f9c6908b9b53b6bba4b57e530b122ed6b3498c58c94621` (inter f8e73e5), produced by `s5_analysis_A2.py` (sha256 `1c1d4ef268e1eb8962cd98c6968ba9518e75054b1a44e1ce75493b8ee9871946`), one run.
 
-Status: **DRAFT for review.** Cartan reviews it as a checking job. Q3 grading is oppenheimer's and is still pending.
+Status: **DRAFT for review.** Cartan reviews it as a checking job.
 
 ---
 
@@ -120,7 +120,32 @@ The per-claim grade list is in `s5_grades_A2_lean/` (20 files, manifest sha256 a
 
 ## 8. Q3: usefulness for Sprint 4
 
-**Pending.** The UNANCHORED-seed counts and the #660/#661/#473/W6 candidate items are graded `useful` / `not` by qbp-oppenheimer (seq 268). Q3 is counted, not thresholded, so it does not affect the §7 verdict.
+Graded by qbp-oppenheimer (seq 274). Q3 is counted, not thresholded, so it does not affect the §7 verdict. Files, committed verbatim:
+- `run1/q3/proposed_ref_anchors.jsonl`, sha256 f281f3075c632543a026f4d59d61b97684f66ae93cd10baa34e167ab617e46e8 (11 lines);
+- `run1/q3/q3b_grades.jsonl`, sha256 e879a32f3201a9342500e16779a35dd8d752c5ed2377aaa94d27a8cd0b4483b0 (a rule header plus 44 grades).
+
+**Q3(a): 11 of the 14 UNANCHORED seeds (inter#121) gained a verified id plus a proposed REF anchor.**
+- **Gained (11):** D1 #2, #5 (Commelin; the Bull. AMS 2024 DOI 10.1090/bull/1831 replaces the arXiv-only pin), #10; D2 #1, #3, #4, #5, #6, #7, #8, #9.
+- **Unresolved (3):** D1 #11 (Lurie, *Ultracategories*, IAS notes), D1 #12 (*Analytic Stacks*, a video course), D2 #11 (Lawson–Michelsohn, a book with an ISBN only). None has a DOI or arXiv id.
+- **Verified** means oppenheimer re-queried each OpenAlex id and matched the title, year and DOI. None of the 11 proposed ids clashes with QBP master.
+
+**Q3(b): 44 candidates, 21 useful and 23 not.**
+
+| Target | Useful | Not |
+|---|---|---|
+| #473 AC1 (topos points, locale↔condensed chain) | 4 | 1 |
+| #473 AC2 (Tr f(D/Λ), Dirac spectra, associative *-algebra) | 9 | 12 |
+| #661 (T3 algebra→locale functor; solid/liquid; G₂ torsion) | 5 | 10 |
+| W6 (Dirac on ℍ⊗ℍ) | 3 | 0 |
+| #660 | 0 as primary | — |
+
+**Q3 method (oppenheimer, seq 274):**
+- **Candidate rule:** fixed before grading. A candidate is a non-seed paper with at least one claim or restatement line addressing a *named* item on the target.
+- **Shortlist:** a read-only sub-agent ran keyword scans over the 88 non-seed papers (2,444 claims) and read every matching claim, not all claims. 12 borderline papers were left ungraded.
+- **Useful:** a citable result that a named item can use directly.
+- **Grading:** done from the quoted claims, without full reads.
+- **Caveat:** the claims come from an extractor whose precision is not validated (§10). So a `useful` item is a pointer to read, never an established claim.
+- **Gaps:** no claim bears directly on S¹⁴ ⊂ Im 𝕊, the sedenions or ℍ⊗ℍ. Two papers have 0 claims (W2099665514, W3134337821).
 
 Under the §8 "every outcome" row:
 - verified ids and **proposed** REF anchors go to the anchor owner through the CTH propose path, and are never adopted claims;

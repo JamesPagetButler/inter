@@ -1,0 +1,45 @@
+{"rule": "useful = supplies a citable result (theorem, explicit formula, classification or proven negative) that a named item on the target can use directly; background, surveys, cited-only, and results already covered by a seed are 'not'", "grader": "qbp-oppenheimer", "basis": "graded on the quoted extracted claims and restatement lines from the shortlist, not full reads"}
+{"paper": "W7134934189", "primary_target": "#473-AC1", "grade": "useful", "reason": "explicit jointly conservative points of Cond(An): a direct answer to 'does the topos supply points'"}
+{"paper": "W4394665976", "primary_target": "#473-AC1", "grade": "useful", "reason": "infinity-categorical Stone duality; covers the profinite link that the unresolved Lurie seed was meant for"}
+{"paper": "W3113975734", "primary_target": "#473-AC1", "grade": "useful", "reason": "pretopos vs topos for pyknotic objects: the exact seed-7 question"}
+{"paper": "W3162009980", "primary_target": "#473-AC1", "grade": "useful", "reason": "CW to Cond fully faithful and ProFin=Stone stated as theorems: citable chain links"}
+{"paper": "W4417474213", "primary_target": "#473-AC1", "grade": "not", "reason": "presentation of Cond as a completion; a comparison point, not a step the chain needs"}
+{"paper": "W4390690021", "primary_target": "#661-T3", "grade": "useful", "reason": "proved algebra-to-profinite duality: a model for PROOF-algebra-to-locale-functor"}
+{"paper": "W7208731890", "primary_target": "#661-T3", "grade": "useful", "reason": "Frm <-> CAlg(Pr^L) adjunction: an algebra-to-frames (locales) functor, the T3 shape"}
+{"paper": "W4417030997", "primary_target": "#661", "grade": "not", "reason": "standard structure of Solid; already in the seed Analytic Geometry lectures"}
+{"paper": "W4412210893", "primary_target": "#661", "grade": "useful", "reason": "Lean-verified Noebeling in Mathlib: a pinned VML item (#660 'which tool bites')"}
+{"paper": "W4414975384", "primary_target": "#661", "grade": "not", "reason": "background on solid modules"}
+{"paper": "W4415961200", "primary_target": "#661", "grade": "useful", "reason": "proven non-fullness of Pro(D(Ab)) -> D(Cond(Ab)): a negative bearing on the classical-to-condensed chain"}
+{"paper": "W3164541593", "primary_target": "#661", "grade": "not", "reason": "liquid analytic rings over R/C only cited"}
+{"paper": "W4390962404", "primary_target": "#661", "grade": "not", "reason": "p-adic setting; weak fit"}
+{"paper": "W24822342", "primary_target": "#473-AC2", "grade": "useful", "reason": "closed-form round-sphere Dirac spectrum, can be evaluated at n=14 (second source to Camporesi-Higuchi)"}
+{"paper": "W2964285793", "primary_target": "#473-AC2", "grade": "not", "reason": "higher-spin operators beyond the need; sphere Dirac spectrum only cited"}
+{"paper": "W2964288547", "primary_target": "#473-AC2", "grade": "useful", "reason": "Dirac multiplicities on lens spaces S^n/Gamma: checkable against KILLED-locale-forcing-route Prop 15 (#660 secondary)"}
+{"paper": "W2996403098", "primary_target": "#473-AC2", "grade": "useful", "reason": "Dirac spectra through Hopf fibrations and Berger spheres: the S^3/S^7-via-Hopf harmonics route"}
+{"paper": "W2985524293", "primary_target": "#473-AC2", "grade": "not", "reason": "Casimir lemma for nearly Kaehler Dirac-type operator; narrow"}
+{"paper": "W2044511821", "primary_target": "#473-AC2", "grade": "useful", "reason": "Tr f(D/Lambda) with moment dependence, canonical form; the ledger has no id for it"}
+{"paper": "W2015765968", "primary_target": "#473-AC2", "grade": "useful", "reason": "explicit spectral-action coefficients; quaternion-valued Higgs inside the finite algebra (W6 secondary)"}
+{"paper": "W2046714423", "primary_target": "#473-AC2", "grade": "useful", "reason": "classification of finite real spectral triples, M_2(H)+M_4(C): bears on the associative *-algebra requirement"}
+{"paper": "W1882034614", "primary_target": "#473-AC2", "grade": "useful", "reason": "heat-kernel moments f_0, f_2 as integrals of the cutoff: supports PROOF-spectral-action-moment-scaling"}
+{"paper": "W2086216948", "primary_target": "#473-AC2", "grade": "not", "reason": "historical precursor; superseded by the 1997 seed"}
+{"paper": "W4313326288", "primary_target": "#473-AC2", "grade": "useful", "reason": "finite-dimensional Tr f(D) computation: the setting QBP's finite algebras need"}
+{"paper": "W3044313830", "primary_target": "#473-AC2", "grade": "not", "reason": "random-matrix RG; off the go/no-go"}
+{"paper": "W3158550123", "primary_target": "#473-AC2", "grade": "not", "reason": "4D Clifford conventions for fuzzy triples; not the H(x)H case"}
+{"paper": "W1969605686", "primary_target": "#473-AC2", "grade": "not", "reason": "NC tori modular curvature; off target"}
+{"paper": "W3030730219", "primary_target": "#473-AC2", "grade": "not", "reason": "dimension spectra of quantum spacetimes; off target"}
+{"paper": "W4241593569", "primary_target": "#473-AC2", "grade": "not", "reason": "survey"}
+{"paper": "W1975030811", "primary_target": "#473-AC2", "grade": "not", "reason": "quantum sphere; off target"}
+{"paper": "W1978960972", "primary_target": "#473-AC2", "grade": "not", "reason": "isospectral deformations; off target"}
+{"paper": "W1818382633", "primary_target": "#661-T3", "grade": "useful", "reason": "Connes reconstruction theorem: which axioms force a space from the algebra (algebra-to-space direction)"}
+{"paper": "W2074702261", "primary_target": "#473-AC2", "grade": "not", "reason": "overlaps the reconstruction theorem; secondary"}
+{"paper": "W2148017112", "primary_target": "#473-AC2", "grade": "useful", "reason": "associativity <=> d^2=0: a structural reason for the associative requirement in 473-dirac-probe"}
+{"paper": "W3016864563", "primary_target": "#473-AC2", "grade": "not", "reason": "Lorentzian Weyl coefficients; off the Euclidean go/no-go"}
+{"paper": "W2123061623", "primary_target": "W6", "grade": "useful", "reason": "product-triple conventions D=D_M(x)1+gamma(x)D_F, J=J_M(x)J_F: the tensor-product rule W6 needs"}
+{"paper": "W1664585534", "primary_target": "W6", "grade": "useful", "reason": "quaternionic structure J on spinors (n=3,4,5 mod 8) and H-multiplicities"}
+{"paper": "W2778465418", "primary_target": "W6", "grade": "useful", "reason": "Dirac-type operator with SU(2)xSU(2) (unit H x unit H) symmetry on S^3"}
+{"paper": "W1990159247", "primary_target": "#661", "grade": "not", "reason": "torsion forms already covered by the Bryant seed"}
+{"paper": "W2141149555", "primary_target": "#661", "grade": "not", "reason": "lecture notes; background"}
+{"paper": "W2232250512", "primary_target": "#661", "grade": "not", "reason": "torsion Killing spinors; off target"}
+{"paper": "W2018785023", "primary_target": "#661", "grade": "not", "reason": "string-compactification torsion classes; off target"}
+{"paper": "W2067585970", "primary_target": "#661", "grade": "not", "reason": "weak fit"}
+{"paper": "W1836597677", "primary_target": "#661", "grade": "not", "reason": "torsion only in a cited remark"}
