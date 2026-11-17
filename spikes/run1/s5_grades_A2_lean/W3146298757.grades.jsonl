@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Theorem 4.7.8 states \"There is a commutative diagram\" built from ev, h × id and Map_{[C^op,Ω]}(-,-) \"of (large) B-categories.\""}
+{"n": 2, "grade": "faithful", "reason": "Related work says \"our approach is different in that it is derived from the internal Grothendieck construction\", and Main results adds \"By making use of the Grothendieck construction, we derive our second main result, an internal version of Yoneda's lemma.\""}
+{"n": 3, "grade": "faithful", "reason": "Example 2.5.9: \"By construction, a map in C is a monomorphism if and only if its diagonal is an equivalence.\""}
+{"n": 4, "grade": "faithful", "reason": "Main results: \"one obtains an equivalence Cat(B) ≃ Shv_{Cat_∞}(B) between the ∞-category of B-categories and the ∞-category of Cat_∞-valued sheaves on B.\""}
+{"n": 5, "grade": "faithful", "reason": "Theorem 4.5.1: \"There is a canonical equivalence [C,Ω] ≃ LFib_C that is natural in C\", which the paper presents as \"an internal version of the Grothendieck construction\"."}
+{"n": 6, "grade": "faithful", "reason": "Section 1: \"we define a large B-category LFib_C whose objects are given by left fibrations over C.\""}
+{"n": 7, "grade": "faithful", "reason": "Proposition 3.1.2: the composite B_Δ → PSh_{B_Δ}(Δ) → B_Δ of (-)^{Δ^•} and (-)_0 \"is equivalent to the identity functor on B_Δ.\""}
+{"n": 8, "grade": "faithful", "reason": "Example 3.2.15: \"Proposition 3.2.7 shows that an S-category is precisely a complete Segal space as developed by Rezk.\""}
+{"n": 9, "grade": "faithful", "reason": "Definition 2.5.5: \"Then S is saturated if (1) ... (2) ... (3) S is closed under pushouts.\""}
+{"n": 10, "grade": "faithful", "reason": "Remark 3.2.3: \"As the Quillen model structure on the 1-category of simplicial sets is left proper, ordinary pushouts along monomorphisms of simplicial sets present homotopy pushouts in S.\""}
+{"n": 11, "grade": "faithful", "reason": "Proposition 2.5.2(4): \"both R and L are stable under taking retracts.\""}
+{"n": 12, "grade": "faithful", "reason": "Proposition 3.2.9: the inclusion \"exhibits Cat(B) as an accessible localisation of B_Δ. In particular, the ∞-category Cat(B) is presentable.\""}
+{"n": 13, "grade": "faithful", "reason": "Proposition 3.2.7 gives as equivalent \"(1) C is a B-category; (2) for all n ≥ 2 the maps C_n → C_1 ×_{C_0} ⋯ ×_{C_0} C_1 as well as the map C_0 → (C_0 × C_0) ×_{C_1 × C_1} C_3 are equivalences.\""}
+{"n": 14, "grade": "faithful", "reason": "Example 2.5.9: \"we say that a map is a strong epimorphism if it is internally left orthogonal to every monomorphism.\""}
+{"n": 15, "grade": "faithful", "reason": "Example 3.2.15: \"By a theorem of Joyal and Tierney [JT07] the ∞-category of complete Segal spaces is a model for the ∞-category of ∞-categories Cat_∞.\""}
+{"n": 16, "grade": "faithful", "reason": "Proposition 2.5.4 is attributed to \"[Lur09a, Proposition 5.5.5.7]\": \"there is a factorisation system (L,R) in C with R = S^⊥ and L = ⊥R.\""}
+{"n": 17, "grade": "faithful", "reason": "Example 2.5.9: \"If C is an ∞-topos, then strong epimorphisms are precisely covers, i.e. effective epimorphisms in the terminology of [Lur09a].\""}
+{"n": 18, "grade": "faithful", "reason": "Example 3.2.15 identifies the case B = S: \"an S-category is precisely a complete Segal space\", so B-categories generalise complete Segal spaces."}
+{"n": 19, "grade": "wrong-modality", "reason": "\"Such parametrised ∞-categories are a special case of the more general notion of categories in an arbitrary ∞-topos\" is this paper's own assertion, not one attributed to [BDG+16]."}
+{"n": 20, "grade": "wrong-modality", "reason": "\"they precisely correspond to categories in presheaf ∞-topoi\" is this paper's own assertion, not one attributed to [BDG+16]."}

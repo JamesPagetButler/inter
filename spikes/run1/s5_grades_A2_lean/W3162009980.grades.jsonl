@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Prop. 1.2.9 (2): \"The category Pro(C) is equivalent to the full subcategory of Fun(C,Set)^op whose objects are cofiltered limits of {Hom_C(X_i,·)}\"."}
+{"n": 2, "grade": "faithful", "reason": "Corollary 1.1.3: \"Every limit of compact Hausdorff spaces is compact Hausdorff.\""}
+{"n": 3, "grade": "faithful", "reason": "Def. and Prop. 1.1.2 assigns \"a compact Hausdorff space βX and a continuous map ι_X: X→βX satisfying the following universal property\" for maps to compact Hausdorff spaces."}
+{"n": 4, "grade": "faithful", "reason": "The Introduction's unnumbered Theorem speaks of \"extending the homotopy group functors on (pointed) anima π_0 ... π_1 ... π_n to unique cofiltered limit preserving functors on the corresponding pro-∞-categories Pro(π_0) ...\"."}
+{"n": 5, "grade": "wrong-locator", "reason": "The paper does say \"extremally disconnected compact Hausdorff spaces, or equivalently, of extremally disconnected profinite sets (cf. Def. 1.1.5)\", but it says so in the Introduction's definition of condensed sets, not in Prop. 2.1.2."}
+{"n": 6, "grade": "faithful", "reason": "Corollary 1.1.10: \"Every compact Hausdorff space admits a surjection from an extremally disconnected space.\""}
+{"n": 7, "grade": "faithful", "reason": "Lemma 1.2.2: \"The small functors are precisely given by the small colimits of representables.\""}
+{"n": 8, "grade": "faithful", "reason": "Remark 1.2.13: the map X → lim X_I \"is indeed a homeomorphism as argued in [Stacks, Tag 08ZY]\", so it is attributed to another work."}
+{"n": 9, "grade": "faithful", "reason": "The Introduction's Theorem introduces Pro(π_0), Pro(π_1), Pro(π_n) as the \"unique cofiltered limit preserving functors\" that extend π_0, π_1, π_n."}
+{"n": 10, "grade": "faithful", "reason": "Remark 1.1.6: \"Hausdorff extremally disconnected spaces are totally disconnected.\""}
+{"n": 11, "grade": "faithful", "reason": "Prop. 1.2.12: \"The category ProFin of profinite sets is equivalent to the category Stone of Stone spaces\"."}
+{"n": 12, "grade": "faithful", "reason": "Prop. 1.1.1: \"Every surjection of compact Hausdorff spaces is a quotient map.\""}
+{"n": 13, "grade": "faithful", "reason": "Corollary 1.1.10: \"Every compact Hausdorff space admits a surjection from an extremally disconnected space.\""}
+{"n": 14, "grade": "faithful", "reason": "Introduction Definition (cf. Def. 6.1.5): \"A condensed anima is a contravariant ∞-functor T: ExtrDisc^op → Ani ... taking finite disjoint unions to finite products.\""}
+{"n": 15, "grade": "faithful", "reason": "Lemma 1.1.4: \"Compact Hausdorff spaces are closed under finite coproducts and retracts.\""}
+{"n": 16, "grade": "faithful", "reason": "The Introduction's Theorem: the embedding Pro(Ani) ↪ Cond(Ani) \"admits a left adjoint functor Cond(Ani) → Pro(Ani)\"."}
+{"n": 17, "grade": "faithful", "reason": "Prop. 1.2.12: \"The category ProFin of profinite sets is equivalent to the category Stone of Stone spaces\"."}
+{"n": 18, "grade": "faithful", "reason": "Def. and Prop. 1.1.2: \"The assignment X ↦ βX yields a left adjoint functor to the embedding functor from the category of compact Hausdorff spaces to the category of topological spaces.\""}
+{"n": 19, "grade": "faithful", "reason": "Def. 1.1.5 (2): \"A topological space is called extremally disconnected if the closure of every open subset is open.\""}
+{"n": 20, "grade": "faithful", "reason": "Definition and Proposition (cf. Def. 4.2.2, Prop. 4.2.7): \"One has a fully faithful embedding C ↪ Ani(C).\""}
