@@ -154,18 +154,33 @@ The round 1.2 components get the same treatment in their own pre-reg, before any
 8. [ ] cartan's review: C1–C5 as applied here, plus D8–D10/P4, which are new since the v0.3 stamp.
 9. [ ] **Beekeeper approval of round 1.1.** It is a round added after inter#224's list was approved, so the standing run go doesn't cover it.
 
-## 10. Resources and kill conditions (provisional; deming to confirm)
+## 10. Resources and kill conditions (deming, live-test seq 5269; four-field unit)
 
-- **Opus** (verifier, 20 papers): ≈ 1.0–1.3M.
-- **Gemini** (120 double-graded, L1 on doubt at ~15%, the 20-item audit labeller): ≈ 0.35–0.5M.
+**Measured bases:** Opus lean grading ≈ 48.6k per paper. A Gemini call is ≈ 20k, mostly paper text.
+
+| Item | Base estimate |
+|---|---|
+| Verifier v1, 20 papers (≈ 50–60k each, including the rubric, doubt flags and P4) | 1.0–1.2M Opus |
+| §8b probe: verifier ×5 | 0.25–0.3M Opus |
+| Checker v1 on the 120 (one call per paper) | ≈ 0.45M Gemini |
+| **L1 on doubt (≈ 15% of 387): full paper text, batched per paper** | ≈ 0.4M Gemini |
+| Audit labeller (20 items) | ≈ 0.08M Gemini |
+| §8b probe: checker ×5 | 0.1–0.15M Gemini |
+| **Base grant** | **≈ 1.5M Opus + ≈ 1.1M Gemini**, each with the 1.5× kill line |
+
+- **Why L1 gets full text (director's choice):** every rater sees the **same input form**. A passage-only second opinion would reintroduce H7, input mismatch. The extra ≈ 0.17M is the price of comparability.
+- **Majority-of-3 (only if §8b triggers it):**
+  - verifier: ≈ 3.0–3.6M Opus;
+  - checker: ≈ +0.9M Gemini.
+  This is **not pre-granted.** It is a separate **pre-stated top-up request** with the beekeeper's own `--signoff`, filed only if the probe triggers it. The probe runs first, inside the base grant.
+- **Per-verifier stop: 65k (A3).** A 60k mean is tight on dense papers, so the **probe's per-run actuals must confirm the stop** before the 20-paper run. If any probe run exceeds 65k, the stop is re-set by signed amendment **before** the run, not after.
 - **Box:** API-bound. Scripts run under `boxrun`, 1 core, BLAS pinned. Disk ≤ 50 MB.
 - **Kill conditions:**
-  - tokens > 1.5× the granted estimate;
-  - per-verifier stop at 65k (A3, carried);
+  - tokens > 1.5× the grant;
   - a **safety decline** halts at that paper, never rerouted (§2a);
   - wall clock > 8 h;
-  - a box-pause file present.
-- **Run order:** staggered with 1.2, never concurrent (deming, seq 5256).
+  - the box-pause file is present.
+- **Staggered with 1.2,** never concurrent.
 
 ## 11. Spike rules
 
