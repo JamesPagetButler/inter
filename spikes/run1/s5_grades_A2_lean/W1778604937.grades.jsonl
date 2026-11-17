@@ -1,0 +1,20 @@
+{"n": 1, "grade": "wrong-relation", "reason": "The paper says Deligne \"developed a general theory for gluing two pseudofunctors of target Cat_1\" and that \"One of our results generalizes Deligne's gluing theory\"; it never says Deligne's theory generalises that gluing."}
+{"n": 2, "grade": "faithful", "reason": "Corollary 0.4 states \"the natural map δ_2^* N(Sch'')^cart_{P,I} → N(Sch'') is a categorical equivalence\", with P the proper morphisms and I the local isomorphisms."}
+{"n": 3, "grade": "faithful", "reason": "Theorem 0.1 states that under conditions (1)-(3) \"the natural map (0.9) g ... is a categorical equivalence\"."}
+{"n": 4, "grade": "faithful", "reason": "The proof of Corollary 0.3 says \"This follows immediately from Corollary 0.2 applied to C=Sch', E_1=P, E_2=J.\""}
+{"n": 5, "grade": "faithful", "reason": "Lemma 2.4(1) states \"the simplicial set Γ_Φ(R) is nonempty and connected, hence a connected component of Γ(R)\"."}
+{"n": 6, "grade": "faithful", "reason": "Corollary 0.4 states \"the natural map δ_2^* N(Sch'')^cart_{P,I} → N(Sch'') is a categorical equivalence\"."}
+{"n": 7, "grade": "wrong-modality", "reason": "The paper itself asserts \"there exists a canonical categorical equivalence from the simplicial set δ*_{2,{2}} C^cart_{E1,E2} to the ∞-category of correspondences introduced in [9] (Example 4.30)\"; only the correspondences come from [9]."}
+{"n": 8, "grade": "faithful", "reason": "Corollary 0.3's proof says it \"follows immediately from Corollary 0.2 applied to C=Sch', E_1=P, E_2=J\"."}
+{"n": 9, "grade": "faithful", "reason": "Right before Corollary 0.2 the paper says \"Taking k=2 and E_0=Ar(C) we obtain the following.\""}
+{"n": 10, "grade": "faithful", "reason": "Lemma 2.5 is headed \"([12] *Lemma 3.1.3)\"."}
+{"n": 11, "grade": "faithful", "reason": "The paper says \"The map g can be decomposed as ... g' ... g'' ... We prove that both g' and g'' are categorical equivalences\", using Corollary 0.2 to illustrate the proof."}
+{"n": 12, "grade": "faithful", "reason": "Lemma 2.4(2) states \"For homotopic morphisms Φ, Φ': N → R, we have Γ_Φ(R) = Γ_Φ'(R)\"."}
+{"n": 13, "grade": "faithful", "reason": "The paper says \"The fact that g'' is a categorical equivalence is an ∞-categorical generalization of Deligne's result [6] *Proposition 3.3.2.\""}
+{"n": 14, "grade": "faithful", "reason": "The proof of Corollary 0.3 says \"This follows immediately from Corollary 0.2\"."}
+{"n": 15, "grade": "faithful", "reason": "Definition 1.7 defines when \"A map f: T → S of simplicial sets is a categorical equivalence\"."}
+{"n": 16, "grade": "faithful", "reason": "The paper describes \"such an enhancement is a functor F^∞: N(Sch') → Cat_∞\", whose homotopy category is equivalent to D(X,Λ) and whose induced functor hf_!^∞ is equivalent to the classical f_!."}
+{"n": 17, "grade": "faithful", "reason": "The paper says the functoriality \"is encoded by a pseudofunctor F: Sch' → Cat_1 sending a scheme X ... to D(X,Λ) and a morphism f ... to the functor f_!\"."}
+{"n": 18, "grade": "faithful", "reason": "The paper says \"The fact that g'' is a categorical equivalence is an ∞-categorical generalization of Deligne's result [6] *Proposition 3.3.2.\""}
+{"n": 19, "grade": "faithful", "reason": "Corollary 0.2 states \"the natural map g: δ*_2 N(C)^cart_{E1,E2} → N(C) is a categorical equivalence\"."}
+{"n": 20, "grade": "faithful", "reason": "The paper says \"The extraordinary pushforward ... in étale cohomology of schemes was constructed in SGA 4 XVII [6].\""}

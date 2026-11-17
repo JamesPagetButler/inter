@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Definition 2.1(2): \"Dually, we say that a morphism e_1 → e_2 in E is f-cartesian (or simply cartesian) if it induces a pullback diagram\"."}
+{"n": 2, "grade": "faithful", "reason": "Example 1.6: \"The forgetful functor Top → Set ... is a cartesian fibration.\""}
+{"n": 3, "grade": "faithful", "reason": "Remark 2.3: \"A cocartesian fibration ... whose fibers f^{-1}(b) are all ∞-groupoids is called a left fibration.\""}
+{"n": 4, "grade": "faithful", "reason": "Theorem 3.3: \"Suppose that a map Δ^1 → E ... presents a p-cartesian morphism [1] → E. Then the edge f ∈ E_1 is JL-p-cartesian.\""}
+{"n": 5, "grade": "faithful", "reason": "Remark 1.3: \"a morphism in C^⊗ is called p-inert (or simply inert) if it is p-cocartesian and lies over an inert morphism in Fin_*\"."}
+{"n": 6, "grade": "faithful", "reason": "Definition 2.1(1): \"We say that a morphism e_1 → e_2 in E is f-cocartesian ... if it induces a pullback diagram\"."}
+{"n": 7, "grade": "faithful", "reason": "Example 1.6: \"The forgetful functor Top → Set ... is a cartesian fibration.\""}
+{"n": 8, "grade": "faithful", "reason": "Example 1.5: \"the forgetful functor VectBdl → Mfld ... to the category of manifolds is a cartesian fibration.\""}
+{"n": 9, "grade": "faithful", "reason": "Example 1.2: \"a symmetric monoidal functor ... is equivalent data to that of a morphism of cocartesian fibrations ... the fact that the functor respects the monoidal products is encoded by the fact that it preserves cocartesian morphisms.\""}
+{"n": 10, "grade": "faithful", "reason": "Remark 1.4: \"The observations of 1.2 and 1.3 form the foundations of the extremely versatile theory of ∞-operads introduced and studied in [Lur14, Chapter 2].\""}
+{"n": 11, "grade": "faithful", "reason": "Theorem 3.3: if \"a map Δ^1 → E ... presents a p-cartesian morphism\" then \"the edge f ∈ E_1 is JL-p-cartesian.\""}
+{"n": 12, "grade": "faithful", "reason": "Example 1.2: \"note that the identity map of Fin_* is a cocartesian fibration\"."}
+{"n": 13, "grade": "faithful", "reason": "Corollary 3.4 is stated as a corollary immediately following Theorem 3.3, concluding \"If p is a cartesian fibration, then p is a JL-cartesian fibration.\""}
+{"n": 14, "grade": "faithful", "reason": "Example 1.2: \"we can equivalently consider a symmetric monoidal category (C,⊗) as a cocartesian fibration C^⊗ → Fin_* over the category of finite pointed sets.\""}
+{"n": 15, "grade": "faithful", "reason": "Definition 2.1(2): \"We then say that the functor f is a cartesian fibration if every object of Fun([1],B) ×_{t,B,f} E admits an f-cartesian lift.\""}
+{"n": 16, "grade": "faithful", "reason": "Definition 2.1(2): f-cartesian if \"it induces a pullback diagram E_{/e_1} → E_{/e_2} ... in Cat_∞\"."}
+{"n": 17, "grade": "faithful", "reason": "Remark 2.3: \"A cocartesian fibration ... whose fibers f^{-1}(b) are all ∞-groupoids is called a left fibration.\""}
+{"n": 18, "grade": "faithful", "reason": "Example 1.5: \"the forgetful functor VectBdl → Mfld ... is a cartesian fibration.\""}
+{"n": 19, "grade": "faithful", "reason": "Definition 3.2: an edge f is JL-p-cartesian \"if the induced map E_{/f} → E_{/f(1)} ×_{B_{/p(f(1))}} B_{/p(f)} lies in (W ∩ F)_Joyal\"."}
+{"n": 20, "grade": "faithful", "reason": "Remark 1.3: \"a morphism T_+ → U_+ in Fin_* is inert if for all u ∈ U, the preimage α^{-1}(u) has exactly one element.\""}
