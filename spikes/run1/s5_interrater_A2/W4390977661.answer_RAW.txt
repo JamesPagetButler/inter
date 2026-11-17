@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "The paper states exactly that \"A map... in AnRing is steady if...\" in Definition 1.17."}
+{"n": 2, "grade": "not-in-paper", "reason": "The paper says Mann defines the notion of descendable maps of analytic rings; it does not say that \"Mann's descendable maps of analytic rings\" defines them."}
+{"n": 3, "grade": "faithful", "reason": "The paper cites André [And21, Theorem 4.1] in Theorem 0.2 for this exact sheaf property."}
+{"n": 4, "grade": "faithful", "reason": "The paper attributes to André [And21, Lemma 3.8] in Lemma 1.28 that the natural map is steady."}
+{"n": 5, "grade": "faithful", "reason": "The paper explicitly defines PCoh(A) as the category of pseudo-coherent complexes of A-modules in the text of Theorem 0.1."}
+{"n": 6, "grade": "faithful", "reason": "The outline paragraph states: \"Finally, in Section 5, we recover Theorem 0.1 from Theorem 0.3\"."}
+{"n": 7, "grade": "wrong-relation", "reason": "The paper states that Mathew shows these maps are descendable, not that the maps themselves \"prove\" descendability."}
+{"n": 8, "grade": "wrong-relation", "reason": "The paper defines the term \"uncompleted analytic ring\", but the term itself does not \"define\" the concept."}
+{"n": 9, "grade": "faithful", "reason": "Remark 0.6 explicitly states that Mann proves this descent using the stable monoidal category E(A_solid) instead of D(A_solid)."}
+{"n": 10, "grade": "wrong-locator", "reason": "The generalization claim relating Theorem 0.3 specifically to Theorem 0.1 is stated in the Introduction right after Theorem 0.3, not in the Abstract (which mentions the result but doesn't mention Theorem 0.3)."}
+{"n": 11, "grade": "faithful", "reason": "The outline section explicitly states \"In Section 2, we prove fppf descent for discrete rings in the context of condensed mathematics.\""}
+{"n": 12, "grade": "faithful", "reason": "Construction 1.20 explicitly defines the analytic ring A_solid for a finitely generated Z-algebra A, citing Scholze."}
+{"n": 13, "grade": "faithful", "reason": "Proposition 1.26 cites André to establish that this functor is fully faithful and its image is contained in 0-truncated analytic rings."}
+{"n": 14, "grade": "faithful", "reason": "Theorem 0.5 states exactly this equivalence of infinity-categories for a finitely presented faithfully flat map."}
+{"n": 15, "grade": "faithful", "reason": "Theorem 1.5 cites Scholze for exactly these properties of the abelian category Mod^cond_A."}
+{"n": 16, "grade": "faithful", "reason": "Theorem 0.4 formally states the existence of the object N_{B/A} in D(B_underline) satisfying the given equivalence."}
+{"n": 17, "grade": "faithful", "reason": "Remark 0.6 states that \"Mann defines the notion of descendable maps of analytic rings\"."}
+{"n": 18, "grade": "faithful", "reason": "The Introduction notes that \"Mathew shows that finitely presented faithfully flat maps of discrete rings are descendable\"."}
+{"n": 19, "grade": "faithful", "reason": "Definition 1.9(2) defines D(A,M) as the full subcategory of all complexes of A-modules (complete complexes)."}
+{"n": 20, "grade": "faithful", "reason": "Theorem 0.4 explicitly notes: \"In particular, the functor ... commutes with small limits.\""}
