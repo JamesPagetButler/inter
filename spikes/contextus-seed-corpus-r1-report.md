@@ -86,11 +86,12 @@ Source: `s4_telemetry.jsonl`, 200 rows (100 papers × restatement and extraction
 - **Budgets reconciled:**
   - Haiku cap-e12e7a19: 2,028,945, covering the scope that cap governed.
   - Opus cap-90dc4922: 2,035,109 of 2.2M. That is extraction 891,320 + heavy grades 171,703 + lean grades 972,086.
-- **Where the Haiku spend goes** (Cartan's review, inter#224 issuecomment-6951679355, A2; [PREDICTED], not a gate input):
-  - 64–72% of output tokens do not appear in the result text, which is consistent with extended thinking.
-  - Each call carries about 6–10k+ tokens of prompt beyond its actual input. The frozen prompt files are only ~1 KB each (`restatement.md` 994 bytes, `extraction.md` 1,166 bytes), so the overhead is harness or system text, not the instructions.
-  - Roughly 60% of the 47.9k per paper is therefore fixed overhead plus hidden reasoning, not paper content. Without it the projection would be about 19M.
-  - **So the cost fail looks like a property of the pipeline's design, not of the task.** This does not change the gate, which is measured, and κ fails independently.
+- **Where the Haiku spend goes** (not a gate input):
+  - **Fixed per-call overhead is about 1.3k tokens** (deming, seq 290, recomputed by the director). Regressing the extraction prompt (input + cache_creation) on restatement length over the 100 papers gives about 1,285 + 2.15 × (restatement chars ÷ 4). The smallest prompts are 1,577 tokens (restatement) and 1,789 (extraction). That is about 2.6k per paper, about 5% of spend.
+  - **The maths text runs at about 1.9 chars per token, not 4** (from the 2.15 slope). On that basis, the share of output not in the result text is about 22% for restatement and about 40% for extraction [PREDICTED, inferred from one regression]. Thinking is plausible but is a minority of output.
+  - **So the cost sits in the content.** Per paper, about 22.5k tokens of paper text go into restatement, about 11.8k come out, and extraction reads all of it back. The levers are a one-step arm with no restatement (Cartan A3) and the text cap.
+  - **Superseded:** Cartan's first estimate (review A2: overhead of 6–10k per call, about 60% of spend not paper content, about 19M per 1,000 papers) assumed 4 chars per token and is superseded by the regression above. An earlier draft of this report carried it.
+  - **Caching:** in the four-field unit, a cache read counts the same as a cache write, so caching changes the bill, not the gate (Cartan, seq 286; deming, seq 290). `claude -p` writes every prompt to cache at a premium and never reads it back. Turning caching off for one-shot calls is a bill-only lever for the round-2 design.
 - **Disk:** 1.72 MB of restatements and 0.55 MB of claims across 100 papers, well inside §10's 0.5 GB.
 - **Not measured as separate stages:** fetch and parse wall time per paper. The text cache logs fetch timestamps only.
 
@@ -107,6 +108,7 @@ Per paper, medians over 100 papers.
 
 - **Totals:** 837,513 text tokens (≈ 3.35 MB) → 1,719,936 bytes of restatement → 545,907 bytes and 2,812 claims.
 - **Correction (Cartan, A1):** an earlier draft measured the first step from the restatement call's whole prompt (median 22,557 `cache_creation` tokens: instructions, harness text and paper text together) and gave 4.8× and ≈ 15×. Measured from the text itself, the ratios are ≈ 1.9× and ≈ 6.8×. The text sizes are the cache's own `approx_tokens` estimates, so treat them as ±30%.
+- **Token basis:** `approx_tokens` is a chars ÷ 4 estimate. This maths text runs at about 1.9 chars per token (§4), so 10,000 approx-tokens is about 40 KB and roughly 21k real tokens. The byte ratios in the table are unaffected.
 - **Text cap:** 66 of the 100 texts hit the `approx_tokens` cap of 10,000 in the text cache, so for most papers the "paper text" is already a capped excerpt, not the whole paper. The ratios above are measured from that capped input.
 - **Accuracy at the end of the chain:** the claims that survive are faithful at 0.889 (Haiku) and 0.944 (Opus), with locators correct at about 0.98. Round 1 does not grade the restatement on its own, so it cannot say which of the two steps loses the 11% of Haiku claims that are unfaithful.
 - **Not tested in round 1, by design:**
