@@ -39,7 +39,7 @@ The director has seen the outcomes. So no consequence row is chosen or proposed 
 That is a proposal, not a frozen rule. It does not change round 1's record: round 1 stays no-go, and its grades, κ and §7 reading are untouched. The root-cause analysis is read post hoc as a design input, and any rubric rules it produces apply forward only.
 
 Still open for the beekeeper (process only):
-- Is round 1 re-graded under the new protocol, or does it apply forward only? The director recommends forward only. A re-grade would need a new pre-registration (round 1').
+- ~~Is round 1 re-graded under the new protocol, or does it apply forward only?~~ **Answered** by the beekeeper, first-hand in qbp-architecture's session on 2026-11-17: "I propose that we regrade round 1 work using the output of what you design." The regrade is a new pre-registered run (round 1-R) under the inter#300 v1 vocabulary. It is **additive**: this report's verdict and grades stand as recorded. The 19 RCA items are reported separately from the headline agreement figure, because they shaped the rules.
 - Who sits on the disagreement discussions at scale?
 - Is there an escalation cap per round?
 
