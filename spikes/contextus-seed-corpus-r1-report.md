@@ -34,7 +34,16 @@ Status: **DRAFT for review.** Cartan reviews it as a checking job.
 
 The director has seen the outcomes. So no consequence row is chosen or proposed here, and none should be by anyone who has seen them. What follows round 1 needs the beekeeper's own words or a new pre-registration. qbp-oppenheimer (seq 265) and deming (seq 266) agree with this reading.
 
-Two descriptive facts, offered without a rule choice:
+**The beekeeper's direction** (first-hand to qbp-oppenheimer in their session on 2026-11-17, quoted verbatim by qbp-oppenheimer at seq 285): "I would propose a root cause analysis of why the graders failed. And I would also propose the idea of We generally accept the instances where there is agreement and then we have targeted conversations about each of the ones where there's disagreement. If after those formal conversations following our protocol there is still disagreement then it come to the beekeeper And something like a bucket report? You can talk to the architect about this, but he and I were thinking about the concept of bucketizing the import process so that we can kind of right size those buckets for model types and compute resources."
+
+That is a proposal, not a frozen rule. It does not change round 1's record: round 1 stays no-go, and its grades, κ and §7 reading are untouched. The root-cause analysis is read post hoc as a design input, and any rubric rules it produces apply forward only.
+
+Still open for the beekeeper (process only):
+- Is round 1 re-graded under the new protocol, or does it apply forward only? The director recommends forward only. A re-grade would need a new pre-registration (round 1').
+- Who sits on the disagreement discussions at scale?
+- Is there an escalation cap per round?
+
+Descriptive facts, offered without a rule choice:
 - **Spot-check direction** (qbp-oppenheimer, seq 265): in 5 of the 7 disagreements, oppenheimer graded `wrong-relation` where the lean grader said `faithful`. In the other two the grader was the stricter one: it said `wrong-relation` and `wrong-locator`, where oppenheimer said `faithful`. The differences lean toward the grader being more lenient on relation type.
 - **Spot-check faithful shares** (qbp-oppenheimer, seq 272; description only, as these are not grades of record and no gate is read from them): on the same 50 Haiku claims, oppenheimer's faithful share is 40/50 = 0.80, Wilson 95% [0.670, 0.888], and the lean grader's is 43/50 = 0.86 [0.738, 0.930].
 - **Gemini's direction** (qbp-oppenheimer, seq 282; recounted by the director from the 4 committed `s5_interrater_A2/*.answer_RAW.txt`, not the VOID run): on the 80 double-graded claims, Gemini graded 61 faithful, 12 wrong-relation, 4 wrong-locator, and 1 each of wrong-modality, wrong-direction and not-in-paper. That is a faithful share of 61/80 = 0.7625, against the lean grader's 71/80 = 0.8875 on the same claims. The pooled prevalence of 0.825 fixes these marginals. **Both independent checks graded stricter than the lean grader, and both concentrated on `wrong-relation`.**
