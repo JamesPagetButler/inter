@@ -64,35 +64,52 @@ def check_happy_path() -> None:
     print("PASS (happy path): 3 double-graded + 5 probe = 8 calls, probe runs identical except run_index.")
 
 
+def expect_system_exit(fn, expected_substring: str, label: str) -> None:
+    """Assert fn() raises SystemExit whose message contains
+    expected_substring -- i.e. the guard itself fired, not some unrelated
+    exception that happens to also be non-zero (qbp-architecture, live-test
+    seq 5295: a KeyError crash is killed-by-crash, not killed-by-guard)."""
+    try:
+        fn()
+    except SystemExit as e:
+        msg = str(e)
+        if expected_substring not in msg:
+            raise AssertionError(
+                f"{label}: SystemExit message {msg!r} does not contain {expected_substring!r}"
+            )
+    except Exception as e:
+        raise AssertionError(
+            f"{label}: expected SystemExit containing {expected_substring!r}, "
+            f"got {type(e).__name__}: {e} -- this is killed-by-crash, not killed-by-guard"
+        )
+    else:
+        raise AssertionError(f"{label}: expected SystemExit containing {expected_substring!r}, build_plan succeeded")
+    print(f"PASS ({label}): rejected with the guard's own SystemExit, containing {expected_substring!r}.")
+
+
 def check_samples_sha_mismatch() -> None:
     text = fixture_samples_text()
-    try:
-        driver.build_plan(
+    expect_system_exit(
+        lambda: driver.build_plan(
             text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", samples_expected_sha="0" * 64
-        )
-    except SystemExit:
-        pass
-    else:
-        raise AssertionError("build_plan did not reject a samples sha mismatch")
-    print("PASS (samples sha mismatch): rejected as expected.")
+        ),
+        "samples sha mismatch",
+        "samples sha mismatch",
+    )
 
 
 def check_manifest_sample_mismatch() -> None:
-    import json
-
     text = fixture_samples_text()
     expected_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
     bad_manifest = dict(FIXTURE_MANIFEST)
     del bad_manifest["PB"]  # manifest now missing a paper the samples reference
-    try:
-        driver.build_plan(
+    expect_system_exit(
+        lambda: driver.build_plan(
             text, bad_manifest, Path("x"), Path("r"), "s", samples_expected_sha=expected_sha
-        )
-    except SystemExit:
-        pass
-    else:
-        raise AssertionError("build_plan did not reject a manifest/sample paper mismatch")
-    print("PASS (manifest mismatch): rejected as expected.")
+        ),
+        "manifest/sample paper mismatch",
+        "manifest mismatch",
+    )
 
 
 def check_probe_paper_not_in_manifest() -> None:
@@ -102,15 +119,13 @@ def check_probe_paper_not_in_manifest() -> None:
     samples["probe_paper"] = "NOT-IN-MANIFEST"
     text = json.dumps(samples)
     expected_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
-    try:
-        driver.build_plan(
+    expect_system_exit(
+        lambda: driver.build_plan(
             text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", samples_expected_sha=expected_sha
-        )
-    except SystemExit:
-        pass
-    else:
-        raise AssertionError("build_plan did not reject a probe paper missing from the manifest")
-    print("PASS (probe paper missing): rejected as expected.")
+        ),
+        "not in the grader-input manifest",
+        "probe paper missing",
+    )
 
 
 def main() -> int:
