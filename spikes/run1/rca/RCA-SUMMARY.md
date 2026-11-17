@@ -2,7 +2,7 @@
 
 Plan: `RCA-PLAN.md` (sha256 8ac259c4…0eec9, committed before any item was read).
 Items: `rca_items.jsonl` (sha256 a644f257…7fd3).
-Table: `rca_table.jsonl` (sha256 4789ed5b2668b945ba07e87652442fd8386ffd2a0404f708bfbe3f685a652037). The reading is qbp-oppenheimer's (spike-seed-corpus-s4 seq 299), committed verbatim. The director checked every row and wrote this summary.
+Table of record: `rca_table_v2.jsonl` (sha256 be28135775bb71cd728c13a78704b51e9fbae27058cddebcdcd7dac7f4bce22f, qbp-oppenheimer seq 301). It supersedes `rca_table.jsonl` (sha256 4789ed5b…2037, seq 299), which is kept beside it. v2 changes only items 5 and 17, each with a recode note. The reading is qbp-oppenheimer's, and both files are committed verbatim. The director checked every row and wrote this summary.
 
 **Round 1's record is unchanged.** This is a post-hoc design input, and every fix applies forward only.
 
@@ -12,15 +12,16 @@ Table: `rca_table.jsonl` (sha256 4789ed5b2668b945ba07e87652442fd8386ffd2a0404f70
 
 | Primary cause | Items | Count | Source | Domain |
 |---|---|---|---|---|
-| H1, relation vocabulary under-specified | 3, 4, 6–11, 17 | 9 | Gemini 8, spot-check 1 | maths 8, physics 1 |
+| H1, relation vocabulary under-specified | 3, 4, 6–11 | 8 | Gemini 8 | maths 8 |
 | H6, rubric asymmetry | 13–16, 18, 19 | 6 | spot-check 6 | maths 3, physics 3 |
 | H3, lean grader lenient | 12 | 1 | Gemini | maths |
 | H4, checker over-flagged | 5 | 1 | Gemini | maths |
 | H5, borderline | 2 | 1 | Gemini | physics |
 | other: checker lenient (the mirror of H3) | 1 | 1 | Gemini | physics |
+| other: locator convention under-specified | 17 | 1 | spot-check | physics |
 | H2, text cap / H7, input mismatch | — | 0 | | |
 
-- **Common issues (at least 3 items): H1 and H6, 15 of 19.**
+- **Common issues (at least 3 items): H1 and H6, 14 of 19.**
 - **H6 is entirely the spot-check's.** `grader.md` and `inter-rater.md` are byte-identical apart from their title line (director-verified), so the lean grader and Gemini held the same rules. qbp-oppenheimer's four judgment rules (seq 241) were never given to either.
 - **The settled grade agrees with the lean grader on 6 of 19:** 4 of 12 against Gemini (items 1, 3, 4, 5) and 2 of 7 against the spot-check (items 17, 19).
 - **7 of the remaining 13 rest on a rule written after reading** (R-proves, items 6–11 and 19). They are conditional on that rule.
@@ -30,9 +31,9 @@ Table: `rca_table.jsonl` (sha256 4789ed5b2668b945ba07e87652442fd8386ffd2a0404f70
 - **Item order and ids** match the item file row for row. Every cause is in the taxonomy. Every fix is a rubric rule.
 - **One grader, one pattern, two answers.** Items 6–11 and 19 are all "X proves P" with an object as the subject. The lean grader accepted it on 6–11 and rejected it on 19. That is what an undefined vocabulary produces.
 - **Item 12:** the packet text has "Theorem 0.2.5" with no enumerated part (2), which supports H3.
-- **H2 and H7 are zero,** even though 17 of the 19 items come from capped texts. No disagreement turned on missing or reformatted text. On items 2 and 6, Gemini's reason names the passage without quoting it. That doesn't change the cause.
-- **H1 is concentrated.** 6 of its 9 items come from one paper (W7160385925) and one pattern ("proves"). The H1 finding is real, but it rests on a narrow base.
-- **Item 17 classification** (a compound locator with a wrong section part) is coded H1. The plan's H1 is *relation* vocabulary, so a locator convention fits "other: locator convention under-specified" more strictly. This is put to qbp-oppenheimer and does not change the common-issue count, since H1 stays at 8 or more.
+- **H2 and H7 are zero,** even though 17 of the 19 items come from capped texts. No disagreement turned on missing or reformatted text. Each rater identified the passage. On items 2 and 6, Gemini named it rather than quoting it (corrected wording agreed at seq 301).
+- **H1 is concentrated.** 6 of its 8 items come from one paper (W7160385925) and one pattern ("proves"). So R-proves is one high-leverage rule, not evidence of a broad vocabulary failure (agreed at seq 301). How broad H1 is beyond that pattern is untested. The next pre-registration sizes its fresh double-grading to test it.
+- **Item 17** (a compound locator with a wrong section part) was recoded from H1 to "other: locator convention under-specified" in v2, because H1 is relation vocabulary only. Item 5's secondary cause moved the same way.
 - **Note against the spot-check** (qbp-oppenheimer's own concession): their rule 2 accepted "X proves P", which R-proves reverses. So the spot-check was as lenient as the lean grader on "proves". Report §2's direction finding carries this note.
 
 ## Forward fixes (from the table's `fix` field; applied forward only, given to every rater)
