@@ -14,8 +14,8 @@ Status: **DRAFT for review.** Cartan reviews it as a checking job.
 
 | §7 gate | Haiku (primary) | Opus (comparison) | Bar | Result |
 |---|---|---|---|---|
-| Precision | 169/190 = 0.889, Wilson 95% [0.837, 0.927] | 186/197 = 0.944, Wilson 95% [0.903, 0.969] | ≥ 0.85, lower bound ≥ 0.75 | PASS |
-| Locator accuracy | 0.988 | 0.984 | ≥ 0.85 | PASS |
+| Precision | 169/190 = 0.889, Wilson 95% [0.837, 0.927] | 186/197 = 0.944, Wilson 95% [0.903, 0.969] | ≥ 0.85, lower bound ≥ 0.75 | PASS (lean grader; not validated, §10) |
+| Locator accuracy | 0.988 | 0.984 | ≥ 0.85 | PASS (lean grader; not validated, §10) |
 | Grader agreement | κ 0.479 (40 claims) | κ 0.500 (40 claims) | κ ≥ 0.6, or raw ≥ 0.90 with prevalence > 0.85 | **FAIL** |
 | Spot-check | 7 of 50 disagree | | ≤ 10 | PASS |
 | Projected round 2 cost | ≈ 47.9M Haiku tokens | | ≤ 20M | **FAIL** |
@@ -64,9 +64,10 @@ Source: `s4_telemetry.jsonl`, 200 rows (100 papers × restatement and extraction
 | Restatement (Haiku) | 100 | 3,257,778 | 32,578 | 33,759 | 63,687 | 38.5 s |
 | Extraction (Haiku) | 100 | 1,536,839 | 15,368 | 15,445 | 26,167 | 18.4 s |
 | **Haiku total** | 100 | **4,794,617** | **47,946** | | | |
-| Opus arm extraction | 34 | 891,320 | | | | |
-| Lean grading (Opus) | 20 | 972,086 | | | 63,690 | |
+| Opus arm extraction | 34 | 891,320 † | 26,215 | | 31,736 | |
+| Lean grading (Opus) | 20 | 972,086 † | 48,604 | | 63,690 | |
 
+- **† Different basis:** the Opus rows are not from `s4_telemetry.jsonl`. They are the per-sub-agent token totals reported by the dispatching harness (`s4_opus_arm_telemetry.jsonl` `actual_tokens`; the lean ledger's `harness_subagent_tokens`), not the four-field telemetry sum. They are not directly comparable with the Haiku rows. Like for like on extraction alone, Opus ≈ 26.2k per paper against Haiku ≈ 15.4k, about 1.7× (Cartan, inter#224 issuecomment-6951684652).
 - **Count basis (deming ruling, seq 270):** the four-field sum, the same unit as `haiku_budget_gate.py`, the A1 grant, the 58k per-paper stop and the 65k grader stop.
 - **Haiku breakdown:** input + output = 1,673,012. cache_creation = 3,121,605. cache_read = 0.
 - **Linear projection to 1,000 papers:**
@@ -76,6 +77,11 @@ Source: `s4_telemetry.jsonl`, 200 rows (100 papers × restatement and extraction
 - **Budgets reconciled:**
   - Haiku cap-e12e7a19: 2,028,945, covering the scope that cap governed.
   - Opus cap-90dc4922: 2,035,109 of 2.2M. That is extraction 891,320 + heavy grades 171,703 + lean grades 972,086.
+- **Where the Haiku spend goes** (Cartan's review, inter#224 issuecomment-6951679355, A2; [PREDICTED], not a gate input):
+  - 64–72% of output tokens do not appear in the result text, which is consistent with extended thinking.
+  - Each call carries about 6–10k+ tokens of prompt beyond its actual input. The frozen prompt files are only ~1 KB each (`restatement.md` 994 bytes, `extraction.md` 1,166 bytes), so the overhead is harness or system text, not the instructions.
+  - Roughly 60% of the 47.9k per paper is therefore fixed overhead plus hidden reasoning, not paper content. Without it the projection would be about 19M.
+  - **So the cost fail looks like a property of the pipeline's design, not of the task.** This does not change the gate, which is measured, and κ fails independently.
 - **Disk:** 1.72 MB of restatements and 0.55 MB of claims across 100 papers, well inside §10's 0.5 GB.
 - **Not measured as separate stages:** fetch and parse wall time per paper. The text cache logs fetch timestamps only.
 
@@ -85,12 +91,13 @@ Per paper, medians over 100 papers.
 
 | Step | Size | Ratio to previous step |
 |---|---|---|
-| Paper text sent to restatement | ≈ 22,557 input tokens (≈ 90 KB at 4 bytes/token) | — |
-| Restatement | 18.2 KB | ≈ 4.8× smaller |
+| Paper text (text cache `approx_tokens`) | 10,000 tokens (≈ 40 KB at 4 bytes/token) | — |
+| Restatement | 18.2 KB | ≈ 1.9× smaller |
 | Extracted claims (JSONL) | 5.6 KB, 27.5 claims | ≈ 3.2× smaller |
-| **Paper → claims** | | **≈ 15× smaller** |
+| **Paper → claims** | | **≈ 6.8× smaller** (pooled ≈ 6.1×) |
 
-- **Totals:** 2,070,956 input tokens → 1,719,936 bytes of restatement → 545,907 bytes and 2,812 claims.
+- **Totals:** 837,513 text tokens (≈ 3.35 MB) → 1,719,936 bytes of restatement → 545,907 bytes and 2,812 claims.
+- **Correction (Cartan, A1):** an earlier draft measured the first step from the restatement call's whole prompt (median 22,557 `cache_creation` tokens: instructions, harness text and paper text together) and gave 4.8× and ≈ 15×. Measured from the text itself, the ratios are ≈ 1.9× and ≈ 6.8×. The text sizes are the cache's own `approx_tokens` estimates, so treat them as ±30%.
 - **Text cap:** 66 of the 100 texts hit the `approx_tokens` cap of 10,000 in the text cache, so for most papers the "paper text" is already a capped excerpt, not the whole paper. The ratios above are measured from that capped input.
 - **Accuracy at the end of the chain:** the claims that survive are faithful at 0.889 (Haiku) and 0.944 (Opus), with locators correct at about 0.98. Round 1 does not grade the restatement on its own, so it cannot say which of the two steps loses the 11% of Haiku claims that are unfaithful.
 - **Not tested in round 1, by design:**
@@ -107,7 +114,7 @@ The per-claim grade list is in `s5_grades_A2_lean/` (20 files, manifest sha256 a
 - **Domain guard:** checked 300 candidates in frozen score order, in batches of 150 per domain, until 50 per domain were admitted. 260 were in domain and 39 out of domain. The 13,716 lower-ranked candidates were never reached. This is a disclosed deviation from §2.3a's full-fan-out scope, per the director's live-test seq 4523 and 4533 rulings.
 - **Dedup:** 100 were selected. One merge on title-Jaccard ≥ 0.85 (W1971010458 into W3104633719) left 99. The duplicate rate is 1 in 100.
 - **Fetch failures:** 2 OpenAlex permanent failures, listed in `corpus_construct_output.json`. Neither was dropped silently.
-- **Answer to Q4:** yes. A 1–2-hop fan-out from 24 seeds reaches more than 100 unique papers.
+- **Answer to Q4:** yes. A 1–2-hop fan-out from 24 seeds reaches more than 100 unique papers. Uniqueness rests only on OpenAlex ids plus title-Jaccard ≥ 0.85. That is adequate at 1 duplicate in 100, but it is not a content-level dedup (Cartan, B3).
 
 ## 7. Accessible population (A1 §6)
 
