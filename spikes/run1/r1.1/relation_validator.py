@@ -9,12 +9,21 @@ whether a claim is semantically correct (the admissibility test against
 the paper's own text), which is the verifier/checker's job, not this
 component's.
 
+Field name: `relation_type`, per the signed doc's field conventions
+("A claim has `subject`, `relation_type`, `object`, ..."), not round-1's
+raw stored field name `relation` -- §I4 (qbp-architecture) asked that the
+SIGNED spelling win. Round-1's existing claims (field `relation`) are
+graded by the checker/verifier directly against the rubric text and never
+pass through this validator; this component targets v1-schema-conformant
+claims (round 1.2 extraction output), not legacy round-1 records.
+
 Checks performed:
-  - every required field is present (subject, relation, object, modality,
-    locator);
-  - `relation` is a known v1 type id, or a `proposed:<name>` placeholder
-    (propose-by-default -- an unknown type is never silently dropped or
-    hard-rejected);
+  - every required field is present (subject, relation_type, object,
+    modality, locator);
+  - `relation_type` is a known v1 type id, or a `proposed:<name>`
+    placeholder (propose-by-default -- an unknown type is never silently
+    dropped or hard-rejected); a bare `proposed:` (no name) and
+    `proposed:cites` are both still rejected;
   - `cites` is rejected outright: it is a modality, never a relation type;
   - `modality` is one of {stated, cited};
   - `depends-on`'s tail (if given in the n-ary `tail` form) has >= 1
@@ -27,6 +36,9 @@ states as validator responsibilities, never left to extraction:
   - `specialises(A, B)` -> `generalises(B, A)`;
   - `equivalent-to` is stored in canonical (sorted) subject/object order,
     since it is symmetric.
+main() canonicalizes every claim before validating it, so a
+`specialises`-typed claim from stdin is graded as the `generalises` the
+signed doc rewrites it to, not reported as unknown.
 
 paper_has_property_fraction() / flag_dumping_ground() implement the
 has-property review-flag guard (never a hard gate; the threshold is a
@@ -38,7 +50,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from relation_registry_gen import load_registry  # noqa: E402
 
-REQUIRED_CLAIM_FIELDS = ("subject", "relation", "object", "modality", "locator")
+REQUIRED_CLAIM_FIELDS = ("subject", "relation_type", "object", "modality", "locator")
 VALID_MODALITIES = ("stated", "cited")
 PROPOSED_PREFIX = "proposed:"
 
@@ -67,19 +79,29 @@ def validate_claim(claim: dict, registry: dict) -> list[str]:
         # base fields present.
         return violations
 
-    relation = claim["relation"]
+    relation_type = claim["relation_type"]
     type_ids = _type_ids(registry)
 
-    if relation == "cites":
+    if relation_type == "cites":
         violations.append(
             "'cites' is a modality, never a relation type (field conventions, all types)"
         )
-    elif relation.startswith(PROPOSED_PREFIX):
-        pass  # propose-by-default: never silently rejected, always flagged for review
-    elif relation not in type_ids:
+    elif relation_type.startswith(PROPOSED_PREFIX):
+        proposed_name = relation_type[len(PROPOSED_PREFIX):]
+        if not proposed_name:
+            violations.append(
+                "'proposed:' must name a candidate type, not be empty"
+            )
+        elif proposed_name == "cites":
+            violations.append(
+                "'proposed:cites' is still rejected -- cites is a modality, "
+                "never proposable as a relation type"
+            )
+        # else: a legitimate proposal, never silently rejected.
+    elif relation_type not in type_ids:
         violations.append(
-            f"unknown relation type '{relation}' -- "
-            f"use '{PROPOSED_PREFIX}{relation}' to propose it for review, "
+            f"unknown relation type '{relation_type}' -- "
+            f"use '{PROPOSED_PREFIX}{relation_type}' to propose it for review, "
             f"never an unregistered bare type id"
         )
 
@@ -88,7 +110,7 @@ def validate_claim(claim: dict, registry: dict) -> list[str]:
             f"modality '{claim['modality']}' not in {VALID_MODALITIES}"
         )
 
-    if relation == "depends-on" and "tail" in claim:
+    if relation_type == "depends-on" and "tail" in claim:
         tail = claim["tail"]
         if not isinstance(tail, list) or len(tail) < 1:
             violations.append("depends-on tail must be a list of >= 1 premises")
@@ -100,7 +122,7 @@ def validate_claim(claim: dict, registry: dict) -> list[str]:
                         f"kind in ('internal', 'external')"
                     )
 
-    if relation == "equivalent-to" and claim.get("sense") is not None:
+    if relation_type == "equivalent-to" and claim.get("sense") is not None:
         allowed = _sense_values(registry, "equivalent-to") or []
         if claim["sense"] not in allowed:
             violations.append(
@@ -116,11 +138,11 @@ def canonicalize_claim(claim: dict) -> dict:
     the input."""
     out = dict(claim)
 
-    if out.get("relation") == "specialises":
-        out["relation"] = "generalises"
+    if out.get("relation_type") == "specialises":
+        out["relation_type"] = "generalises"
         out["subject"], out["object"] = out["object"], out["subject"]
 
-    if out.get("relation") == "equivalent-to":
+    if out.get("relation_type") == "equivalent-to":
         subj, obj = out["subject"], out["object"]
         if obj < subj:
             out["subject"], out["object"] = obj, subj
@@ -131,7 +153,7 @@ def canonicalize_claim(claim: dict) -> dict:
 def paper_has_property_fraction(claims: list[dict]) -> float:
     if not claims:
         return 0.0
-    n_has_property = sum(1 for c in claims if c.get("relation") == "has-property")
+    n_has_property = sum(1 for c in claims if c.get("relation_type") == "has-property")
     return n_has_property / len(claims)
 
 
@@ -150,7 +172,7 @@ def main() -> None:
         line = line.strip()
         if not line:
             continue
-        claim = json.loads(line)
+        claim = canonicalize_claim(json.loads(line))
         violations = validate_claim(claim, registry)
         if violations:
             violations_total.append({"claim": claim, "violations": violations})

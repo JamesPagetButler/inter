@@ -11,95 +11,40 @@
  "source_sha256": "ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4",
  "types": [
   {
-   "admissibility_test": "Is the subject a result, and does the quoted passage say that this result establishes the object?",
    "arity": "binary",
-   "boundary": "with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.",
-   "direction": "result → statement.",
-   "examples": [
-    "W2015765968 c12: Proposition 2.24 proves the moduli space's real dimension is 10 (Prop. 2.24, Eq. 2.40)",
-    "W7160385925 c12 rewritten: Proposition 0.2.1 proves Z[S] ≅ colim-of-limits identity"
-   ],
    "id": "proves",
-   "meaning": "the result *subject* establishes the statement *object*.",
-   "near_miss": "RCA item 10: subject is an object (Z[S]), not a result -- that's has-property, not proves.",
-   "object_kind": "statement",
-   "subject_kind": "result",
    "symmetric": false
   },
   {
-   "admissibility_test": "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?",
    "arity": "binary",
-   "boundary": "with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.",
-   "direction": "object → predicate.",
-   "examples": [
-    "RCA item 10: Z[S] has-property quasiseparated; comes from a compactly generated weak Hausdorff space (Remark 0.2.2)",
-    "RCA item 9: condensed abelian groups has-property form an abelian category (§0.1)"
-   ],
    "guard": {
     "action": "flag paper for review (review flag only, never a hard gate -- threshold is set from round 1.1/1.2 data, not guessed)",
+    "field": "has-property",
     "threshold": 0.3
    },
    "id": "has-property",
-   "meaning": "the paper asserts that the object *subject* has the property *object*.",
-   "near_miss": "An isomorphism to a named object is equivalent-to, not a property.",
-   "object_kind": "predicate",
-   "subject_kind": "object",
    "symmetric": false
   },
   {
-   "admissibility_test": "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?",
    "arity": "binary",
-   "boundary": "with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.",
-   "direction": "definition → term.",
-   "examples": [
-    "RCA item 4: Definition 1.6 defines uncompleted analytic ring (A,M), cited [Sch19]",
-    "RCA item 3 rewritten: [Man22] defines descendable maps of analytic rings, cited, Remark 0.6"
-   ],
    "id": "defines",
-   "meaning": "the paper introduces the term *object* at the locator.",
-   "near_miss": "RCA item 14: c_l(λ) is introduced in Eq. 3.74; Eq. 3.76 only evaluates it, so that locator is equivalent-to (equal-value), not defines.",
-   "object_kind": "term or its defining content",
-   "subject_kind": "defining statement or defined term",
    "symmetric": false
   },
   {
-   "admissibility_test": "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?",
    "arity": "binary",
-   "boundary": "with `defines`, see above. With `subobject-of`, ⊂ is not ≅.",
-   "direction": "symmetric. The validator stores it in canonical order.",
-   "examples": [
-    "W1641073798 c17: Ω̂ for self-dual Ω equivalent-to √det A · A⁻¹ (sense: equal-value), Prop. 12",
-    "W1630303706 c2: restriction of the Pin(h)/Pin(−h) extensions equivalent-to the extension given by (5) (sense: isomorphic), Prop. 1"
-   ],
    "id": "equivalent-to",
-   "meaning": "the paper asserts that subject and object are the same, in the stated sense.",
-   "near_miss": "RCA item 2: ⊂ is inclusion, not equivalence, so that's subobject-of.",
-   "object_kind": "object or statement, same kind as subject",
    "sense_values": [
     "iff",
     "isomorphic",
     "equal-value",
     "equivalent-category"
    ],
-   "subject_kind": "object or statement",
    "symmetric": true
   },
   {
-   "admissibility_test": "Is this member invoked *as a step* of this proof?",
    "arity": "n-ary",
-   "boundary": "an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.",
    "closure_label": "closed-over-cited",
-   "connective": "AND inside one edge (all tail members needed jointly); OR across edges sharing the same head (alternative proofs, each with a route id)",
-   "direction": "head ← tail.",
-   "examples": [
-    "W4412210893 c3: theory of solid abelian groups ← {Nöbeling's theorem}, Abstract",
-    "RCA item 16 (corrected direction): \"A_∞ is a nearly-Kähler instanton\" (Remark 4.7) ← {[35, Proposition 3]}"
-   ],
    "id": "depends-on",
-   "meaning": "the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.",
-   "near_miss": "RCA item 16 as extracted had the consequence as the tail member instead of the premise -- a consequence of the head is never a premise.",
-   "object_kind": "tail: a set of ≥ 1 premises (result, statement, construction, hypothesis, equation label or external citation)",
-   "subject_kind": "head: result, statement or construction",
    "symmetric": false,
    "tail_kinds": [
     "internal",
@@ -107,87 +52,32 @@
    ]
   },
   {
-   "admissibility_test": "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?",
    "arity": "binary",
-   "boundary": "with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.",
    "canonical_rewrite": "specialises(A,B) -> generalises(B,A)",
-   "direction": "general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.",
-   "examples": [
-    "RCA item 5: Theorem 0.3 generalises Theorem 0.1 (Mathew), abstract: \"we generalize the result of Mathew\"",
-    "W1778604937 c3 rewritten: Theorem 0.1 generalises Corollary 0.2"
-   ],
    "id": "generalises",
-   "meaning": "*subject* is the more general one, and *object* is a special case of it.",
-   "near_miss": "RCA item 2: a subalgebra inclusion is subobject-of, not specialises.",
-   "object_kind": "result, theory or construction (special case)",
-   "subject_kind": "result, theory or construction (general)",
    "symmetric": false
   },
   {
-   "admissibility_test": "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?",
    "arity": "binary",
-   "boundary": "with `generalises` and `equivalent-to`, see above.",
-   "direction": "part → whole.",
-   "examples": [
-    "RCA item 2 re-typed: C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C), Eq. (1.2)",
-    "W7160385925 Theorem 0.2.5: Solid subobject-of Cond(Ab) (full subcategory)"
-   ],
    "id": "subobject-of",
-   "meaning": "*subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.",
-   "near_miss": "An equivalence of categories is equivalent-to, not inclusion.",
-   "object_kind": "object (whole), same kind as subject",
-   "subject_kind": "object (part)",
    "symmetric": false
   },
   {
-   "admissibility_test": "Is the subject the *example*, and does the passage show the object fails for it?",
    "arity": "binary",
-   "boundary": "with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.",
-   "direction": "example → statement it refutes.",
-   "examples": [
-    "W2074702261 re-typed: example (43) counterexample-to \"commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1\"",
-    "W1936971149 c39: Ḟ(n) ∖ dⁱF(n−1) counterexample-to \"every subobject weakly equivalent to F(n) is a cover\", Remark 10.2"
-   ],
    "id": "counterexample-to",
-   "meaning": "*subject* (an example or object) violates the statement *object*, as the paper shows.",
-   "near_miss": "W1501965422 c25 as extracted had the direction reversed -- the example is the subject, the statement that fails is the object.",
-   "object_kind": "statement or claim",
-   "subject_kind": "object or example",
    "symmetric": false
   },
   {
-   "admissibility_test": "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?",
    "arity": "binary",
-   "boundary": "with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.",
-   "direction": "source → conjectured statement.",
-   "examples": [
-    "W1936971149 c33: Remark 8.13 conjectures Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M",
-    "W2964288547 c15, subject re-typed: Remark 5.10 conjectures a Dirac isospectrality statement for r odd, t ≥ 1"
-   ],
    "id": "conjectures",
-   "meaning": "the paper (or the named source) asserts *object* without proof, as expected to hold.",
-   "near_miss": "W1936971149 c27 as extracted named a *kind* of result as the object rather than a statement; fixed by writing out the specific conjectured statement.",
-   "object_kind": "statement",
-   "subject_kind": "the paper, a remark, or a named conjecture",
    "symmetric": false
   },
   {
-   "admissibility_test": "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?",
    "arity": "binary",
-   "boundary": "with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**",
-   "direction": "user → method.",
-   "examples": [
-    "W1501965422 c24: enhancement of derived categories uses-technique stable ∞-categories (Lurie)",
-    "W1501965422 c23: six operations construction uses-technique ∞-categorical (co)homological descent"
-   ],
    "excluded_from": [
     "§6 proof-candidate ranking"
    ],
    "id": "uses-technique",
-   "meaning": "the result or construction *subject* is obtained by the named method *object*.",
-   "near_miss": "W1663788542 c19 as extracted named a specific cited result (Theorem 2.8) rather than a method -- a named method or framework is uses-technique; a specific cited result, even one named after a method, is depends-on.",
-   "object_kind": "named method or framework, not a specific result",
-   "subject_kind": "result or construction",
    "symmetric": false,
    "weight": "low"
   }
