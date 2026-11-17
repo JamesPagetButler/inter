@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Eq. (21) in the cited range states \"(sum_i tr F_i∧F_i − tr R∧R)/8π^2 + sum_α [C_α] = 0\"."}
+{"n": 2, "grade": "faithful", "reason": "Eq. (5) states \"G_N = α_GUT α'/4\"."}
+{"n": 3, "grade": "faithful", "reason": "Eq. (18) gives \"(dG)_{11 IJKL} = −(3√2 δ(x^11)/2π)(κ/4π)^{2/3}(tr F_[IJ F_KL] − ½ tr R_[IJ R_KL])\", which is inside the cited range."}
+{"n": 4, "grade": "faithful", "reason": "Eq. (14) \"G_N ≥ α_GUT^2/M_GUT^2\" comes right after Eq. (13) \"G_N = κ^2/16π^2 Vρ, α_GUT = (4πκ^2)^{2/3}/2V\", both inside the cited range."}
+{"n": 5, "grade": "faithful", "reason": "Eq. (75) states \"Δ^{-1} = c + 2√2 w = 1 + 2√2 q/R^3\", which is inside the cited range."}
+{"n": 6, "grade": "faithful", "reason": "Eq. (12) gives \"L = −(1/2κ^2)∫_{M^11} √g R − Σ_i (1/8π(4πκ^2)^{2/3}) ∫_{M^10_i} √g tr F_i^2\"."}
+{"n": 7, "grade": "faithful", "reason": "Eq. (16) gives \"δψ_I = D_I η + (√2/288)(Γ_IJKLM − 8 g_IJ Γ_KLM) G^JKLM η\", and Eq. (17) sets it to zero, both inside the cited range."}
+{"n": 8, "grade": "faithful", "reason": "Eq. (17) states \"D_I η + (√2/288)(Γ_IJKLM − 8 g_IJ Γ_KLM) G^JKLM η = 0\"."}
+{"n": 9, "grade": "faithful", "reason": "Eq. (4) gives \"G_N = e^{2φ}(α')^4/64πV, α_GUT = e^{2φ}(α')^3/16πV\"."}
+{"n": 10, "grade": "faithful", "reason": "Eq. (72) gives \"(1/8)∂_A b = −(√2/12) ∂_A w/(c+2√2 w)\", and Eq. (73) integrates it to \"b = −(1/3) ln(c + 2√2 w)\"."}
+{"n": 11, "grade": "faithful", "reason": "Eq. (42) \"∂_11 ψ + (√2/96)α = 0\" and Eq. (46) \"∂_11 b = (√2/24)α\" together give Eq. (47) \"b = −4ψ\"."}
+{"n": 12, "grade": "faithful", "reason": "Eq. (83) \"V = V_0(c + 2√2 w(x^11=0))^{4/3}\" uses the warp factor from Eq. (74) and w from Eq. (81)."}
+{"n": 13, "grade": "faithful", "reason": "Eq. (84) \"V = (24π^2(κ/4π)^{2/3}(k−12))^{4/3}(ρ_0^4/V_0)^{1/3}\" follows from the linear profile in Eq. (80) \"∂z/∂x^11 = −6π√2(κ/4π)^{2/3}(k−12)\", inside the cited range."}
+{"n": 14, "grade": "faithful", "reason": "Eq. (55) gives \"ρ_c = V / (2π^2 (κ/4π)^{2/3} |∫_X ω∧(tr F∧F − ½ tr R∧R)/8π^2|)\"."}
+{"n": 15, "grade": "faithful", "reason": "Eq. (76) \"ds^2 = Δ^{1/3} η dx dx + Δ^{-2/3} δ_AB dx^A dx^B\" follows from Eq. (71) \"e^{3f/2} = c + 2√2 w\" and Eq. (73) \"b = −(1/3) ln(c + 2√2 w)\"."}
+{"n": 16, "grade": "not-in-paper", "reason": "Eqs. (64)-(65) give \"G_ABCD = −e^{−3f/2} ε_ABCDE ∂^E w\" and \"d(e^{−3f/2} dw) = 0\", but the paper never calls this quantized self-dual flux on a Calabi-Yau, and the related integral in Eq. (78) is over \"K3\"."}
+{"n": 17, "grade": "faithful", "reason": "Eq. (44) states \"γ = 8ψ + f(x^11)\"."}
+{"n": 18, "grade": "faithful", "reason": "Eq. (77) states \"w = Σ_i q_i/|x − x_i|^3\"."}
+{"n": 19, "grade": "faithful", "reason": "Eq. (86) \"V/ρ = 32π^2(k−12)(κ/4π)^{2/3}\" follows from the linear profile in Eq. (80), inside the cited range."}
+{"n": 20, "grade": "faithful", "reason": "Eq. (75) states \"Δ^{-1} = c + 2√2 w = 1 + 2√2 q/R^3\"."}

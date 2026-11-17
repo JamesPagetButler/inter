@@ -1,0 +1,20 @@
+{"n": 1, "grade": "wrong-relation", "reason": "Remark 11 asserts the result rather than depending on it: \"This implies, on abstract grounds, ... that the full Ricci tensor can be expressed in terms of τ2 and dτ2.\""}
+{"n": 2, "grade": "faithful", "reason": "Remark 12: \"Their argument is rather involved, but Corollary 2 yields a simple proof\" of the Cleyton–Ivanov result."}
+{"n": 3, "grade": "faithful", "reason": "Remark 6: \"Proposition 2 implies the 1982 result of Fernández and Gray [6]\"."}
+{"n": 4, "grade": "faithful", "reason": "Corollary 2: \"A closed G2-structure ... has an Einstein underlying metric if and only if it satisfies d*σσ = τ2∧σ where dτ2 = 3/14|τ2|^2σ + 1/2*σ(τ2∧τ2)\"."}
+{"n": 5, "grade": "faithful", "reason": "Remark 13: \"the tangent bundle of M splits as an orthogonal direct sum of two integrable subbundles TM = P⊕Q\" with P-leaves \"associative\" and Q-leaves \"coassociative\"."}
+{"n": 6, "grade": "wrong-relation", "reason": "Proposition 2 states this result (\"is flat to first order if and only if its torsion forms all vanish\"); the proposition is not equivalent to its content but asserts it."}
+{"n": 7, "grade": "faithful", "reason": "Abstract: \"A formula is derived for the scalar curvature and Ricci curvature of a G2-structure in terms of its torsion.\""}
+{"n": 8, "grade": "faithful", "reason": "Definition 2: \"A 3-form σ on M that takes values in Λ^3_+(T*M) will be said to be a definite 3-form ... denoted Ω^3_+(M)\"."}
+{"n": 9, "grade": "faithful", "reason": "(4.38): \"V'_2(g2) ≃ V_{2,0} ⊕ V_{1,1} ⊕ V_{0,2}\"."}
+{"n": 10, "grade": "faithful", "reason": "Proposition 2: \"flat to first order if and only if its torsion forms all vanish, i.e., if and only if dσ = d*σσ = 0\"."}
+{"n": 11, "grade": "faithful", "reason": "Corollary 1: \"the scalar curvature of the underlying metric is non-positive\"."}
+{"n": 12, "grade": "faithful", "reason": "Proposition 1: \"there exist unique differential forms τ0, τ1, τ2 ∈ Ω^2_14, τ3 ∈ Ω^3_27 so that the following equations hold: (3.7)\"."}
+{"n": 13, "grade": "faithful", "reason": "Corollary 3: \"If C < 1, then σ is also coclosed.\""}
+{"n": 14, "grade": "faithful", "reason": "Remark 3: \"by an observation due to Gray [9], these two necessary conditions are also sufficient\"."}
+{"n": 15, "grade": "faithful", "reason": "Remark 13: \"TM = P⊕Q\" (4.56) with P \"of rank 3\" and Q \"of rank 4\", \"an orthogonal direct sum of two integrable subbundles\"."}
+{"n": 16, "grade": "faithful", "reason": "Remark 13: \"|τ|^2 must be a constant. Of course, if |τ|^2 = 0, then τ = 0 and σ is coclosed and hence gσ-parallel.\""}
+{"n": 17, "grade": "faithful", "reason": "Abstract: \"When the fundamental 3-form of the G2-structure is closed, this formula implies, in particular, that the scalar curvature of the underlying metric is nonpositive\"."}
+{"n": 18, "grade": "faithful", "reason": "Remark 13: \"Combining this with (4.50) yields (4.54) Δσ(|τ|^2) = 0.\""}
+{"n": 19, "grade": "faithful", "reason": "Remark 13: \"any solution of (4.49) must satisfy (4.53) d(|τ|^2) = 2/9 *σ(τ^3)\"."}
+{"n": 20, "grade": "faithful", "reason": "Remark 12: \"Corollary 2 yields a simple proof: ... Then, by Corollary 2, it follows that ...\"."}

@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Eq. (3.79) states \"\\mu(\\lambda)=|c_{0}(\\lambda)|^{-2}\"."}
+{"n": 2, "grade": "faithful", "reason": "Eq. (3.43) gives \"|c_{N}(nl)|^{-2}=\\frac{1}{2}\\int_{0}^{\\pi}d\\theta\\,\\sin^{N-1}\\theta\\,(\\phi_{nl}(\\theta)^{2}+\\psi_{nl}(\\theta)^{2})\". The claim leaves out the factor 1/2, but the relation it states is correct."}
+{"n": 3, "grade": "faithful", "reason": "The Eq. (3.29) block states \"\\psi_{nl}(\\theta)= ... =(-1)^{n-l}\\phi_{nl}(\\pi-\\theta)\"."}
+{"n": 4, "grade": "faithful", "reason": "Eqs. (4.12)-(4.15) give \"f_{N}(\\theta,t)=\\frac{1}{\\Omega_{N}}\\sum d_{n}\\phi_{n}(\\theta)e^{-t(n+N/2)^{2}}\", \"d_{n}=2(n+N-1)!/(n!(N-1)!)\" and \"K(x,x',t)=U(x,x')f_{N}(d(x,x'),t)\"."}
+{"n": 5, "grade": "not-in-paper", "reason": "Eqs. (3.31)-(3.32) are coupled first-order differential equations in theta that link phi_{nl} and psi_{nl} at the same n (\"[\\frac{d}{d\\theta}+...]\\phi_{nl}=-(n+\\frac{N}{2})\\psi_{nl}\"). The paper states no recursion in n."}
+{"n": 6, "grade": "faithful", "reason": "Eq. (5.16) states \"K(x,y,t)=\\frac{1}{d_{\\tau}}\\sum_{\\lambda\\in\\hat{U}(\\tau)}d_{\\lambda}\\varphi_{\\lambda}(x,y)e^{-t\\omega_{\\lambda}}\"."}
+{"n": 7, "grade": "faithful", "reason": "Eq. (5.16) gives this exact heat kernel expansion on U/K."}
+{"n": 8, "grade": "faithful", "reason": "Eq. (5.3) expands \"\\psi^{a}(x)=\\sum_{\\lambda\\in\\hat{U}(\\tau)}\\sum_{I}\\sum_{\\xi}\\psi^{I}_{\\lambda\\xi}U^{\\lambda}(\\sigma^{-1}(x))^{a\\xi}_{I}\" as a sum over irreducible representations of U with coefficients psi^I_{lambda xi}."}
+{"n": 9, "grade": "faithful", "reason": "Eq. (4.12) states \"f_{N}(\\theta,t)=\\frac{1}{\\Omega_{N}}\\sum_{n=0}^{\\infty}d_{n}\\phi_{n}(\\theta)e^{-t(n+N/2)^{2}}\"."}
+{"n": 10, "grade": "faithful", "reason": "Eq. (3.40) states \"\\not\\nabla\\psi_{\\pm nlm}^{(s)}=\\pm i(n+\\frac{N}{2})\\psi_{\\pm nlm}^{(s)}\"."}
+{"n": 11, "grade": "not-in-paper", "reason": "Eq. (3.42) is the orthonormality of the S^{N-1} spinors \\chi_{lm}^{(s)} (\"\\int_{S^{N-1}}d\\Omega_{N-1}\\chi_{lm}^{(s)\\dagger}\\chi_{l'm'}^{(s')}=\\delta...\"). The paper does not say the eigenspinors psi^{(s)}_{nlm} are orthonormal on S^{N-1}; their orthonormality is on S^N, in Eq. (3.41)."}
+{"n": 12, "grade": "faithful", "reason": "Eq. (3.76) gives \"c_{l}(\\lambda)={2^{N-2}\\over\\sqrt{\\pi}}{\\Gamma(N/2+l)\\Gamma(1/2+i\\lambda)\\over\\Gamma(N/2+l+i\\lambda)}\"."}
+{"n": 13, "grade": "faithful", "reason": "Eq. (4.7) gives \"K(\\theta,\\Omega,\\theta',\\Omega,t)={\\bf 1}\\sum_{n,l}{D_{N-1}(l)|c_{N}(nl)|^{2}\\over D_{N-1}(0)\\Omega_{N-1}}[\\phi_{nl}\\phi_{nl}'+\\psi_{nl}\\psi_{nl}']e^{-t(n+N/2)^{2}}\"."}
+{"n": 14, "grade": "faithful", "reason": "Eq. (4.5) gives \"K=\\sum_{n,l,m}|c_{N}(nl)|^{2}[\\phi_{nl}\\phi_{nl}\\hat\\chi\\otimes\\hat\\chi^{*}+\\psi_{nl}\\psi_{nl}\\hat\\chi\\otimes\\hat\\chi^{*}]e^{-t(n+N/2)^{2}}\"."}
+{"n": 15, "grade": "faithful", "reason": "Eq. (5.16) writes the heat kernel in terms of the spherical functions \\varphi_{\\lambda}(x,y)."}
+{"n": 16, "grade": "wrong-direction", "reason": "The paper says the spinor eigenfunctions on H^N \"are obtained by analytically continuing those on S^N\". The hyperbolic eigenfunctions come from the continuation, so the continuation does not use them as a technique."}
+{"n": 17, "grade": "faithful", "reason": "Eq. (3.54) states \"D_{N}(n)={2^{N/2}(N+n-1)!\\over n!(N-1)!}\"."}
+{"n": 18, "grade": "faithful", "reason": "Eq. (4.26) states \"\\hat{f}_{N}(y,t)={2^{N-3}\\Gamma(N/2)\\over\\pi^{N/2+1}}\\int_{0}^{+\\infty}\\phi_{\\lambda}(y)e^{-t\\lambda^{2}}\\mu(\\lambda)d\\lambda\" for the H^N heat kernel."}
+{"n": 19, "grade": "faithful", "reason": "Eq. (3.69) gives \"\\theta\\rightarrow iy, n\\rightarrow-i\\lambda-\\frac{N}{2}\", and the paper says \"spinor eigenfunctions on H^N are obtained by analytically continuing those on S^N\"."}
+{"n": 20, "grade": "faithful", "reason": "The Eq. (3.29)-(3.30) block states \"\\psi_{nl}(\\theta)=(-1)^{n-l}\\phi_{nl}(\\pi-\\theta)\"."}
