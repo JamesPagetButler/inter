@@ -13,3 +13,8 @@
 {"paper_id": "W2015765968", "batch": 3, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 52263, "tool_uses": 3, "over_65k_stop": false, "ts": "2026-11-17"}
 {"paper_id": "W2080238236", "batch": 3, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 63690, "tool_uses": 3, "over_65k_stop": false, "ts": "2026-11-17"}
 {"paper_id": "W2085099209", "batch": 3, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 43967, "tool_uses": 2, "over_65k_stop": false, "ts": "2026-11-17"}
+{"paper_id": "W2890203879", "batch": 4, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 33066, "tool_uses": 2, "over_65k_stop": false, "ts": "2026-11-17"}
+{"paper_id": "W2985524293", "batch": 4, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 53258, "tool_uses": 3, "over_65k_stop": false, "ts": "2026-11-17"}
+{"paper_id": "W3158550123", "batch": 4, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 53435, "tool_uses": 3, "over_65k_stop": false, "ts": "2026-11-17"}
+{"paper_id": "W4235693166", "batch": 4, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 42635, "tool_uses": 2, "over_65k_stop": false, "ts": "2026-11-17"}
+{"paper_id": "W4313326288", "batch": 4, "grader": "corpus-grader (lean, Read only)", "harness_subagent_tokens": 54611, "tool_uses": 3, "over_65k_stop": false, "ts": "2026-11-17"}

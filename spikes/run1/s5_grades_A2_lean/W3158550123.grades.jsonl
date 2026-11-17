@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Proposition 4.6 gives \"(4.15) ϑ := ∑_{μ,ν} η^{μν}(a_μ + k_μ)∘(a_ν + k_ν)\"."}
+{"n": 2, "grade": "faithful", "reason": "Proposition 4.7: \"The fluctuated Dirac operator of a finite Yang-Mills geometry satisfies D_gauge^2 = ...\" (4.20)."}
+{"n": 3, "grade": "wrong-relation", "reason": "The paper says finite geometries \"were classified by Paschke-Sitarz [PS98] and diagrammatically by Krajewski [Kra98]\"; the classification is their result, not a technique they use."}
+{"n": 4, "grade": "faithful", "reason": "Example 2.3: \"the gamma matrices can be replaced for the quaternion units ... to express the (0,3)-geometry Dirac operator as D^{(0,3)} = {H,•} + i[L_1,•] + j[L_2,•] + k[L_3,•]\"."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 4.6: \"D_gauge^2|_{X=0} = 1/2 ∑ γ^μγ^ν ⊗ F_{μν} + 1_V ⊗ ϑ, where (4.15) ϑ := ...\"."}
+{"n": 6, "grade": "faithful", "reason": "Corollary 5.2 comes straight after Proposition 5.1 on \"inner fluctuations of the Dirac operator along the finite geometry F\" and uses the resulting Higgs term Φ in D_ω^2."}
+{"n": 7, "grade": "wrong-locator", "reason": "The specialisation is stated inside Definition 4.1 (\"If moreover D_F = 0 above holds, then G_f × F is called Yang-Mills matrix spectral triple\"), not in text following it."}
+{"n": 8, "grade": "faithful", "reason": "Definition 4.1: \"We define a gauge matrix spectral triples as the spectral triple product G_f × F of a fuzzy geometry G_f with a finite geometry F ... dim A_F < ∞\"."}
+{"n": 9, "grade": "faithful", "reason": "Definition 4.1: \"If F is a finite geometry with A_F = M_n(C) and H_F = M_n(C) ... we say that G_f × F is a Yang-Mills–Higgs matrix spectral triple\"."}
+{"n": 10, "grade": "not-in-paper", "reason": "The paper only says \"The Spectral Action of these theories was later systematically computed ... in [Pér19]\" about Barrett-Glaser random NCG; it does not say its Yang-Mills(-Higgs) spectral action uses [Pér19]'s technique."}
+{"n": 11, "grade": "faithful", "reason": "Abstract: \"this allows to state Yang-Mills-Higgs theory (on four-dimensional Euclidean fuzzy space) as an explicit random multimatrix model\"."}
+{"n": 12, "grade": "wrong-relation", "reason": "The abstract contrasts rather than generalises: \"in contrast to 'almost-commutative manifolds', the present framework ... employs only finite-dimensional algebras\"."}
+{"n": 13, "grade": "faithful", "reason": "Definition 4.1: \"If moreover D_F = 0 above holds, then G_f × F is called Yang-Mills matrix spectral triple\"."}
+{"n": 14, "grade": "faithful", "reason": "Proposition 4.6: \"The square of the fluctuated Dirac operator of a Yang-Mills gauge matrix spectral triple that is flat (X=0 ...) is given by (4.14)\"."}
+{"n": 15, "grade": "faithful", "reason": "Lemma 3.3: \"The square of the Dirac operator of a fuzzy geometry G_f of signature η = diag(e_0,…,e_3) is D_f^2 = ...\" (3.5)."}
+{"n": 16, "grade": "faithful", "reason": "Proposition 5.3: \"In Riemannian signature, the field strength ... transforms ... F_{μν} ↦ F^u_{μν} = u F_{μν} u^* = Ad_u(F_{μν})\"."}
+{"n": 17, "grade": "faithful", "reason": "Definition 4.1: \"A_F = M_n(C) and H_F = M_n(C) with 2 ≤ n, we say that G_f × F is a Yang-Mills–Higgs matrix spectral triple\"."}
+{"n": 18, "grade": "faithful", "reason": "Lemma 4.13: \"The following sequence of groups is exact: 1 → μ_{mcd(n1,n2)} → U(1)×SU(n1)×SU(n2) → U(n1)×_det U(n2) → μ_{n1·n2} → 1\", where mcd is the greatest common divisor."}
+{"n": 19, "grade": "faithful", "reason": "Example 2.3, \"Type (0,4), s=4, Riemannian\", gives D^{(0,4)} = ∑ γ^α ⊗ [L_α,•] + ...."}
+{"n": 20, "grade": "faithful", "reason": "Lemma 4.4: \"setting K_μ = 0, the innerly fluctuated Dirac operator ... (4.11) D_gauge|_{K=0} = ∑_μ γ^{μ̂} ⊗ {X_μ + S_μ, •}_{e_μ̂}\"."}

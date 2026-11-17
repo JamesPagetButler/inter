@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Corollary 3.4 states \"1/dim V Tr f(D) = ... = N sum f_{2t} S_{2t} + B\" for the fuzzy (p,q)-geometry."}
+{"n": 2, "grade": "wrong-modality", "reason": "Example 2.3 attributes these operators to another work: \"The next operators appear in [Bar15]\"."}
+{"n": 3, "grade": "faithful", "reason": "Section 1 says \"the other NC polynomials Φi and Ψi (for fixed i) either satisfy this very condition, or they are both cyclic anti-self-adjoint.\""}
+{"n": 4, "grade": "faithful", "reason": "The abstract says the choice gives \"a well-defined path integral that can be stated as a random matrix model with action of the type S(D)=N·tr F+sum_i tr A_i·tr B_i\"."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 3.2 states \"The even powers of the Dirac operator satisfy (3.8) 1/dim V Tr(D^{2t}) = sum ... sum_{χ∈CD_{2n}}\"."}
+{"n": 6, "grade": "faithful", "reason": "Section 1 says \"only a weaker concept ('cyclic self-adjointness') defined here is satisfied by the main NC polynomial P\"."}
+{"n": 7, "grade": "faithful", "reason": "Proposition 5.1 defines (5.5) \"δ_{αμνρ}=1 when {α,μ,ν,ρ}=Δ4, 0 otherwise (i.e. ... the Levi-Civita symbol in absolute value)\"."}
+{"n": 8, "grade": "wrong-relation", "reason": "The paper only says \"Glaser explored the phase transition of the fuzzy-sphere–like (1,3) case ... together with that of (1,1) and (2,0) geometries\" and that the (1,3) action \"was obtained inside MCMCv4\", which is not a proves relation."}
+{"n": 9, "grade": "faithful", "reason": "Proposition 4.1 states \"1/2 Tr(D^6) = N·S_6[K1,K2] + B_6[K1,K2]\" for 2-dimensional fuzzy geometries, and the abstract says the formulas are \"given up to a sextic polynomial\"."}
+{"n": 10, "grade": "faithful", "reason": "Section 1 writes \"Tr f(D) = N·Tr_N P + sum_i Tr_N Φ_i Tr_N Ψ_i\"."}
+{"n": 11, "grade": "faithful", "reason": "The abstract says \"This notion incorporates familiar examples like fuzzy spheres and fuzzy tori.\""}
+{"n": 12, "grade": "faithful", "reason": "Proposition 3.2, eq. (3.8), gives 1/dim V Tr(D^{2t}) as a sum over chord diagrams χ∈CD_{2n}."}
+{"n": 13, "grade": "faithful", "reason": "Example 2.3 says \"The next operators appear in [Bar15]\" and then lists D^(0,2)."}
+{"n": 14, "grade": "faithful", "reason": "The introduction says the heat kernel expansion allows one \"to determine the spectral action Tr f(D/Λ) in terms of the Seeley-DeWitt coefficients a_{2n}(D^2) [Gil95]\"."}
+{"n": 15, "grade": "faithful", "reason": "Definition 3.3 defines \"the single trace functional s_n(χ) via a_n(χ)=N·s_n(χ)+b_n(χ)\"."}
+{"n": 16, "grade": "faithful", "reason": "The abstract says \"This notion incorporates familiar examples like fuzzy spheres and fuzzy tori.\""}
+{"n": 17, "grade": "faithful", "reason": "The abstract says \"we use Barrett's characterization of Dirac operators of fuzzy geometries in order to systematically compute the spectral action\"."}
+{"n": 18, "grade": "faithful", "reason": "The introduction says \"f is instead assumed to be a polynomial (with f(x)→∞ for |x|→∞)\"."}
+{"n": 19, "grade": "faithful", "reason": "Corollary 3.4 states, for even d, the formula with \"B stands for products of two traces, whose coefficients are all independent of N\"."}
+{"n": 20, "grade": "faithful", "reason": "The introduction says the alteration \"comes from a convergence requirement for the path-integral (1.1), as initiated in [BG16]\"."}

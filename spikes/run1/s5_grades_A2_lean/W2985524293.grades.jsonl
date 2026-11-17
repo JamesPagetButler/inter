@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Theorem 2.2 states \"the following are equivalent: 1. ∇φ=0 2. Hol(g_φ)⊆G_2\"."}
+{"n": 2, "grade": "faithful", "reason": "Remark 4.7: \"It follows from [35, Proposition 3] that an asymptotically conical G_2-instanton A must have connection at infinity A_∞ a nearly-Kähler instanton\"."}
+{"n": 3, "grade": "faithful", "reason": "Definition 3.1 defines the G_2 cone \"together with the torsion-free G_2-structure ... φ_C = r^2 ω∧dr + r^3 ImΩ\"."}
+{"n": 4, "grade": "faithful", "reason": "Proposition 4.29: \"W_crit(D_{A_C})={μ∈ℝ: μ+3∈Spec D^0_{A_∞}} ... Furthermore this set is discrete, unbounded and symmetric about −3\"."}
+{"n": 5, "grade": "faithful", "reason": "Definition 2.1 calls ∇φ=0 \"torsion free\" and Theorem 2.2 states it is equivalent to \"Hol(g_φ)⊆G_2\" and \"dφ=dψ=0\"."}
+{"n": 6, "grade": "faithful", "reason": "Definition 3.1: \"The G_2 cone of Σ is C(Σ)=(0,∞)×Σ together with the torsion-free G_2-structure ... We call ... Σ the link of the cone\"."}
+{"n": 7, "grade": "faithful", "reason": "Remark 4.30: \"In [9] Charbonneau and Harland show that the linearised nearly Kähler instanton equation on the link Σ is solved by one forms a satisfying D_{A_∞}(a·s)=2a·s\"."}
+{"n": 8, "grade": "faithful", "reason": "Remark 4.33: \"(D_A)_{-2} has index zero ... ind(D_A)_{-2+ϵ}=1/2(dim Ker D^0_{A∞})\" when the kernel is non-trivial."}
+{"n": 9, "grade": "faithful", "reason": "Definition 2.7: \"A 6-manifold (Σ,g) together with a real Killing spinor s_6 ... is called a nearly Kähler 6-manifold\"."}
+{"n": 10, "grade": "faithful", "reason": "Definition 4.6: \"The moduli space of G_2-instantons asymptotic to A_∞ with rate μ is M(A_∞,μ)={G_2 instantons A on P satisfying (35)}/G_μ\"."}
+{"n": 11, "grade": "faithful", "reason": "Theorem 4.38: \"the virtual dimension of the moduli space is dim I(A,μ) − dim O(A,μ) and M(A_∞,μ) is smooth if O(A,μ)={0}\"."}
+{"n": 12, "grade": "faithful", "reason": "Definition 4.6, equation (37): \"M(A_∞,μ)={G_2 instantons A on P satisfying (35)}/G_μ\"."}
+{"n": 13, "grade": "faithful", "reason": "Definition 3.2 defines AC G_2-manifolds by decay \"h^*(φ|_{M∖K})−φ_C\" relative to \"the G_2-structure on the cone\"."}
+{"n": 14, "grade": "faithful", "reason": "Definition 3.2: \"We call M an asymptotically conical (AC) G_2-manifold with rate μ<0 if ...\"."}
+{"n": 15, "grade": "faithful", "reason": "Lemma 5.3, eq. (63): \"(D^{1/3}_{A_can})^2 η=(−ρ_L(Cas_g)η+ρ_V(Cas_h)η+4η)\" on homogeneous nearly Kähler G/H."}
+{"n": 16, "grade": "faithful", "reason": "Theorem 4.23 (Slice Theorem): \"Let −5<μ<0 then Ω^1_{k+1,μ−1}=Ker(d_A^*)⊕d_A(Ω^0_{k+2,μ})\" (47)."}
+{"n": 17, "grade": "faithful", "reason": "Theorem 3.9: \"If k−7/p ≥ l+α then there is a continuous embedding L^p_{k,μ}(E)↪C^{l,α}_μ(E)\"."}
+{"n": 18, "grade": "faithful", "reason": "Theorem 4.38, for \"μ∈(ℝ∖W)∩(−5,0)\": \"the virtual dimension of the moduli space is dim I(A,μ)−dim O(A,μ)\"."}
+{"n": 19, "grade": "faithful", "reason": "Lemma 5.3: \"(D^{1/3}_{A_can})^2 preserves the decomposition Γ(Λ^0⊗E)⊕Γ(Λ^1⊗E)⊕Γ(Λ^6⊗E)\" and equals \"−ρ_L(Cas_g)η+ρ_V(Cas_h)η+4η\"."}
+{"n": 20, "grade": "faithful", "reason": "Theorem 4.10: the extension P \"is Fredholm whenever μ∈ℝ∖W_crit(P_C)\"."}
