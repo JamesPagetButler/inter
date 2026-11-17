@@ -37,6 +37,7 @@ The director has seen the outcomes. So no consequence row is chosen or proposed 
 Two descriptive facts, offered without a rule choice:
 - **Spot-check direction** (qbp-oppenheimer, seq 265): in 5 of the 7 disagreements, oppenheimer graded `wrong-relation` where the lean grader said `faithful`. In the other two the grader was the stricter one: it said `wrong-relation` and `wrong-locator`, where oppenheimer said `faithful`. The differences lean toward the grader being more lenient on relation type.
 - **Spot-check faithful shares** (qbp-oppenheimer, seq 272; description only, as these are not grades of record and no gate is read from them): on the same 50 Haiku claims, oppenheimer's faithful share is 40/50 = 0.80, Wilson 95% [0.670, 0.888], and the lean grader's is 43/50 = 0.86 [0.738, 0.930].
+- **Gemini's direction** (qbp-oppenheimer, seq 282; recounted by the director from the 4 committed `s5_interrater_A2/*.answer_RAW.txt`, not the VOID run): on the 80 double-graded claims, Gemini graded 61 faithful, 12 wrong-relation, 4 wrong-locator, and 1 each of wrong-modality, wrong-direction and not-in-paper. That is a faithful share of 61/80 = 0.7625, against the lean grader's 71/80 = 0.8875 on the same claims. The pooled prevalence of 0.825 fixes these marginals. **Both independent checks graded stricter than the lean grader, and both concentrated on `wrong-relation`.**
 - **Cost structure** (deming, seq 270): cache_creation is 65% of Haiku spend, and there were 0 cache reads.
 
 ## 3. Q2: faithfulness by domain
