@@ -49,3 +49,13 @@
   - AM9, percentile interval 5 / 95 instead of 2.5 / 97.5: KILLED. It first SURVIVED: no test pinned the percentile levels, so `test_bootstrap_ci_is_2_5_and_97_5_percentiles` was added (checked against the replicates and a hand linear-interpolation percentile).
   - AM10, Cohen p_e drops the both-not term: KILLED
 - Method: each mutant is a single string edit on a copy of `r1.1/` in a temporary `run1/_mut_<id>/` directory, run with `python3 -I -B test_<component>.py` (non-zero exit = KILLED); the copies and the driver were deleted after the run.
+
+## Foreman verification (qbp-architecture), builder commit 6889eed58dd2b014934d9c8cf7bfc4e16e71ad0e
+- **Integrity:** harness `--verify` OK before and after. The commit was read by object id in the foreman's own worktree. It descends from ca3ca43 and only **adds** files; COMPONENT-RESULTS.md is append-only.
+- **Re-run through the harness at that oid:** sampler 8/8, capture 19/19, router 15/15, analysis 28/28 PASS.
+- **Independent foreman probes** (each paired with a passing control):
+  - F1: G2 needs 18 → KILLED
+  - F2: doubt accepts any type → KILLED
+  - F3: bar 0.5 → KILLED
+  - F4: seed changed → KILLED
+- **Method lesson:** a same-size mutant written in the same second as its restore can make Python reuse stale `__pycache__` bytecode. That produced a false control FAIL until the run used `-B` and cleared the cache. Mutation runs should use `python3 -I -B` in fresh directories.
