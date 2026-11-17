@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Definition 2.7: \"The Brown–Comenetz spectrum is the essentially unique t-injective spectrum I_{Q/Z} ∈ Sp such that π_0 I_{Q/Z} ≅ Q/Z.\""}
+{"n": 2, "grade": "wrong-relation", "reason": "The paper cites the Hoffmann–Spitzweck result as the vanishing statement itself (\"Hoffmann and Spitzweck prove that ... Ext^q_LCA(A, T) = 0 (q ≥ 1)\"); the result does not use that vanishing as a technique."}
+{"n": 3, "grade": "faithful", "reason": "The Introduction says \"Passing to condensed spectra allows us to remove this finiteness hypothesis\" and calls the theorem \"a locally compact refinement of Brown–Comenetz duality.\""}
+{"n": 4, "grade": "faithful", "reason": "Corollary 4.11: \"For every spectrum E, the canonical map E^disc → (E^disc)^^ is an equivalence of condensed spectra.\""}
+{"n": 5, "grade": "faithful", "reason": "Section 1: \"For X ∈ Cond(Sp)_lc, define its Brown–Comenetz–Pontryagin dual by X^ := Hom_{Cond(Sp)}(X, I_T).\""}
+{"n": 6, "grade": "faithful", "reason": "Lemma 4.3: \"There is a canonical equivalence R(I_T) ≃ HT in D(Cond(Ab)).\""}
+{"n": 7, "grade": "faithful", "reason": "Section 1: \"Moreover, Pontryagin duality exchanges compact and discrete abelian groups. We use the formulation in [9, Theorem 4.1(ii)–(iii)].\""}
+{"n": 8, "grade": "faithful", "reason": "Main theorem (ii): \"For every X ∈ Cond(Sp)_lc and n ∈ Z, there is a natural isomorphism π_n X^ → (π_{-n}X)^.\""}
+{"n": 9, "grade": "faithful", "reason": "Theorem 4.10: \"the canonical biduality morphism d_X: X → X^^ is an equivalence.\""}
+{"n": 10, "grade": "faithful", "reason": "Corollary 4.7: \"In particular, X^ ∈ Cond(Sp)_lc.\""}
+{"n": 11, "grade": "faithful", "reason": "Main theorem (i): \"The spectrum I_T is coconnective, and there is a canonical isomorphism π_0 I_T ≅ T\", which Proposition 3.16 also states."}
+{"n": 12, "grade": "faithful", "reason": "Lemma 4.6: \"For every locally compact abelian group A, there is a natural equivalence (HA)^ ≃ H(A^).\""}
+{"n": 13, "grade": "faithful", "reason": "Abstract: \"In particular, every ordinary spectrum, viewed as a discrete condensed spectrum, satisfies biduality.\""}
+{"n": 14, "grade": "faithful", "reason": "Proposition 3.16: \"1. I_T ∈ Cond(Sp)_{≤0}. 2. There is a canonical isomorphism π_0 I_T ≅ T in Cond(Ab).\""}
+{"n": 15, "grade": "faithful", "reason": "Theorem 4.9: \"the following diagram of condensed abelian groups commutes\", relating π_n(d_X) to (−1)^n d_{π_n X}."}
+{"n": 16, "grade": "faithful", "reason": "Definition 3.15: \"Define I_T ∈ Cond(Sp) by the following pushout square\", which is the same square given in Section 1."}
+{"n": 17, "grade": "faithful", "reason": "Proposition 3.16 (1): \"I_T ∈ Cond(Sp)_{≤0}.\""}
+{"n": 18, "grade": "faithful", "reason": "Lemma 3.13: \"For every profinite set S, let B_S := (Q/Z)^disc(S). Then B_S is an injective abelian group.\""}
+{"n": 19, "grade": "faithful", "reason": "Remark 4.12: \"condensed duality gives H(Z^disc)^ ≃ HT, (HT)^ ≃ H(Z^disc).\""}
+{"n": 20, "grade": "faithful", "reason": "Remark 4.12: \"condensed duality gives H(Z^disc)^ ≃ HT, (HT)^ ≃ H(Z^disc).\""}

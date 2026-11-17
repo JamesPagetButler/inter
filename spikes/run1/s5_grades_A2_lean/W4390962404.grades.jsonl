@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Abstract: \"extending the theory of $D$-cap-modules of Ardakov and Wadsley to the theory of analytic $D$-modules.\""}
+{"n": 2, "grade": "faithful", "reason": "Definition 1.0.6: \"let 𝕍(ℱ)^† denote the overconvergent neighbourhood of zero.\""}
+{"n": 3, "grade": "faithful", "reason": "Theorem 1.0.12 (5): \"Suppose that f is solid smooth (resp. étale), then the maps f_dR^alg and f_dR are cohomologically smooth (resp. étale).\""}
+{"n": 4, "grade": "faithful", "reason": "Definition 1.0.2: \"A derived Tate adic space is a sheaf on anima X: Aff^{b,op}_R → Ani for the analytic topology of Aff^b_R, such that X admits an open analytic cover by bounded affinoid spaces.\""}
+{"n": 5, "grade": "faithful", "reason": "Section 1: \"Let X be a smooth variety over K, Simpson attaches a space X_dR^alg ... given by X_dR^alg(R)=X(R^red)\", citing [Sim96, ST97]."}
+{"n": 6, "grade": "faithful", "reason": "Remark 1.0.15: \"This provides an equivalence of 𝒟-stacks X_{dR,Y} := lim_{[n]∈Δ^op} (Δ^{n+1}_Y X)^†\", built from the analytic de Rham groupoid."}
+{"n": 7, "grade": "faithful", "reason": "Section 1: \"The study of D-modules via the de Rham stack, and its application to geometric Langlands, can be found in the work of Gaitsgory and Rozenblyum [GR14].\""}
+{"n": 8, "grade": "faithful", "reason": "Corollary 1.0.9: \"FM_1: Mod_□(𝕍(ℱ)^†) →∼ Mod_□(X/𝕍(ℱ^∨)^an).\""}
+{"n": 9, "grade": "faithful", "reason": "Theorem 1.0.12 (4): \"there is an equivalence of analytic de Rham stacks X_dR = Y^{†/X}_dR.\""}
+{"n": 10, "grade": "faithful", "reason": "Section 1: \"a six functor formalism for D_X-modules has been constructed by Bode in [Bod21].\""}
+{"n": 11, "grade": "faithful", "reason": "Corollary 1.0.9: \"In the notation of Theorem 1.0.8, there are natural equivalences ... given by Fourier-Mukai transforms FM_1 ... and FM_2\", a corollary of the analytic Cartier duality theorem."}
+{"n": 12, "grade": "faithful", "reason": "Theorem 1.0.17: \"g: X/(G^la/ℍ^†) → Y is cohomologically smooth and its underlying G^la-equivariant invertible sheaf is equivalent to Ω^d_{X/Y}[d] ⊗ ⋀^g Lie G[g] ⊗ ⋀^e ℓ_{ℍ^†/X}[-e].\""}
+{"n": 13, "grade": "faithful", "reason": "Theorem 1.0.12 (8): \"DR(X/Y) := f^alg_{dR,Y,*}1 = f_{dR,Y,*}1 ... can be naturally promoted to a filtered object given by the Hodge filtration, with graded pieces gr^i DR(X/Y)=Ω^i_{X/Y}.\""}
+{"n": 14, "grade": "faithful", "reason": "Theorem 1.0.7 (1): \"f is cohomologically smooth and there are natural equivalences f^!1_X = f^*⋀^d ℱ^∨[d] and f_!f^!1_X = Sym^†_X(ℱ).\""}
+{"n": 15, "grade": "faithful", "reason": "Theorem 1.0.17: \"g is cohomologically smooth and its underlying G^la-equivariant invertible sheaf is equivalent to Ω^d_{X/Y}[d] ⊗ ⋀^g Lie G[g] ⊗ ⋀^e ℓ_{ℍ^†/X}[-e].\""}
+{"n": 16, "grade": "faithful", "reason": "Proposition 1.0.14: \"There is a natural equivalence G^la_dR = G^sm.\""}
+{"n": 17, "grade": "faithful", "reason": "Theorem 1.0.1 (7): \"The ∞-category Mod(𝒜) of solid 𝒜-modules satisfies descent for the analytic topology of Spa 𝒜.\""}
+{"n": 18, "grade": "faithful", "reason": "Theorem 1.0.12 (6): \"Suppose that f is solid smooth, then we have natural equivalences ... f_dR^! 1_{Y_dR} = 1_{X_dR}[2d].\""}
+{"n": 19, "grade": "faithful", "reason": "Proposition 1.0.14: \"There is a natural equivalence G^la_dR = G^sm.\""}
+{"n": 20, "grade": "faithful", "reason": "Theorem 1.0.7 (4): \"g is cohomologically smooth with g^!1_X = g^*⋀^d ℱ[d], and there is a natural equivalence g_! ≅ g_*.\""}

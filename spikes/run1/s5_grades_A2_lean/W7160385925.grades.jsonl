@@ -1,0 +1,20 @@
+{"n": 1, "grade": "faithful", "reason": "Proposition 0.2.1 states \"There is a natural isomorphism of condensed abelian groups ℤ[S] ≅ ⋃_n lim_i ℤ[S_i]_{≤n} ⊂ lim_i ℤ[S_i]\" and proves it."}
+{"n": 2, "grade": "faithful", "reason": "Section 0.1 says \"passing to condensed abelian groups, we get a short exact sequence 0 → (ℝ, discrete topology) → (ℝ, natural topology) → Q → 0 of condensed abelian groups\"."}
+{"n": 3, "grade": "faithful", "reason": "Just before Definition 0.2.4 the paper says \"this ensures that ℤ[ℕ∪{∞}]^□/([∞]=0) = … = ℤ[[T]] is the power series algebra\"."}
+{"n": 4, "grade": "faithful", "reason": "Section 0.1 says \"we get a short exact sequence … of condensed abelian groups\", for a Q with the formula given."}
+{"n": 5, "grade": "faithful", "reason": "\"in a solid abelian group … one can form the integral ∫_S fμ := f̃(μ) ∈ M\"."}
+{"n": 6, "grade": "faithful", "reason": "Remark 0.2.2 says \"Moreover, by Lemma 0.1.3, the addition … is continuous\"."}
+{"n": 7, "grade": "faithful", "reason": "Proposition 0.2.8 says \"The class of profinite 𝔽_p-vector spaces forms an abelian subcategory of Cond(𝔽_p) stable under all limits, cokernels, and extensions\", with a proof."}
+{"n": 8, "grade": "wrong-modality", "reason": "Theorem 0.2.5 is attributed to another work, \"([Sch19, Theorem 5.8 (i), Theorem 6.2 (i)])\", so it is cited, not stated."}
+{"n": 9, "grade": "wrong-locator", "reason": "ℤ[S]^□ := lim_i ℤ[S_i] is defined in the text before Definition 0.2.4; Definition 0.2.4 defines when \"A condensed abelian group M is solid\"."}
+{"n": 10, "grade": "faithful", "reason": "Definition 0.1.1: \"A condensed set is a sheaf on ∗_proét\", where the site is \"ProFin … with covers given by finite families of jointly surjective maps\"."}
+{"n": 11, "grade": "wrong-locator", "reason": "The functor conditions appear after Definition 0.1.1 and its footnote, introduced by \"More concretely, a condensed set is a functor X: ProFin^op → Sets such that…\", not in the definition itself."}
+{"n": 12, "grade": "faithful", "reason": "Section 0.1: \"condensed abelian groups, like sheaves of abelian groups on any site, form an abelian category\"."}
+{"n": 13, "grade": "faithful", "reason": "Remark 0.2.2: \"the condensed set ℤ[S] is quasiseparated, and in fact comes from a compactly generated weak Hausdorff topological space ℤ[S]_top\"."}
+{"n": 14, "grade": "faithful", "reason": "Section 0.1: \"a condensed abelian group Q satisfying Q(S) = Cont(S,ℝ)/{locally constant maps S → ℝ}\"."}
+{"n": 15, "grade": "faithful", "reason": "Theorem 0.2.9: \"A condensed 𝔽_p-module M is solid if and only if it is a filtered colimit of profinite 𝔽_p-vector spaces\"."}
+{"n": 16, "grade": "faithful", "reason": "Proposition 0.1.2(2): \"Restricted to compactly generated … topological spaces, the functor is fully faithful\"."}
+{"n": 17, "grade": "faithful", "reason": "Lemma 0.1.3: \"inside the category of topological spaces, the natural map ⋃_n X_n × Y_n → (⋃_n X_n) × (⋃_n Y_n) is a homeomorphism\"."}
+{"n": 18, "grade": "faithful", "reason": "Footnote 5 on the sequence: \"using H^1(S,M)=0 for any profinite set S and discrete abelian group M … one gets the result\"."}
+{"n": 19, "grade": "faithful", "reason": "Proposition 0.1.2(4): \"The functor induces a fully faithful functor from the category of compactly generated weak Hausdorff spaces … to quasiseparated condensed sets\"."}
+{"n": 20, "grade": "faithful", "reason": "Theorem 0.2.5, cited to [Sch19], says \"The inclusion functor admits a left adjoint M ↦ M^□ (called solidification)\"."}
