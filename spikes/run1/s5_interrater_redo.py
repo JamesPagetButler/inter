@@ -19,8 +19,9 @@ are read straight off disk -- the frozen prompt at its frozen sha, the
 packet at its already-committed sha -- and neither ever passes through
 this script's own paraphrase or through a model's context before the
 network call. The exact request bytes and their sha256 are written to
-file BEFORE anything is sent. If either input's sha doesn't match what is
-asserted below, the script aborts before any call is made.
+file BEFORE anything is sent. The prompt's sha and all 4 inputs' shas are
+checked against the frozen/committed values up front, before the loop and
+before any call is made, so a bad input never lets a partial run start.
 
 The void run this replaces: `mcp__gemini__review_document`, model
 gemini-3.1-pro-preview, thinking=True, thinking_budget=10000 (the tool's
@@ -69,20 +70,30 @@ def sha256_of(text: str) -> str:
 def main():
     prompt_text = PROMPT_PATH.read_text()
     prompt_sha = sha256_of(prompt_text)
-    assert prompt_sha == PROMPT_SHA_FROZEN, (
-        f"inter-rater.md sha mismatch: got {prompt_sha}, expected {PROMPT_SHA_FROZEN}"
-    )
+    if prompt_sha != PROMPT_SHA_FROZEN:
+        raise SystemExit(
+            f"inter-rater.md sha mismatch: got {prompt_sha}, expected {PROMPT_SHA_FROZEN}"
+        )
+
+    # Check ALL inputs before the loop, so a bad one never lets a partial
+    # run start (Thompson vet F5).
+    inputs = {}
+    for paper_id, committed_sha in TARGETS:
+        input_path = GRADER_INPUTS_DIR / f"{paper_id}.grader_input.txt"
+        input_text = input_path.read_text()
+        input_sha = sha256_of(input_text)
+        if input_sha != committed_sha:
+            raise SystemExit(
+                f"{paper_id} grader_input sha mismatch: got {input_sha}, expected {committed_sha}"
+            )
+        inputs[paper_id] = input_text
 
     OUT_DIR.mkdir(exist_ok=True)
     client = _get_client()
 
     for paper_id, committed_sha in TARGETS:
-        input_path = GRADER_INPUTS_DIR / f"{paper_id}.grader_input.txt"
-        input_text = input_path.read_text()
-        input_sha = sha256_of(input_text)
-        assert input_sha == committed_sha, (
-            f"{paper_id} grader_input sha mismatch: got {input_sha}, expected {committed_sha}"
-        )
+        input_text = inputs[paper_id]
+        input_sha = committed_sha  # already verified above
 
         # Verbatim request: the frozen prompt, then the packet's own text. No
         # other wrapper, no paraphrase.
@@ -120,17 +131,43 @@ def main():
             print(f"{paper_id}: CALL FAILED, recorded as finding: {e}", file=sys.stderr)
             continue
 
-        answer_parts = []
-        thought_parts = []
-        if hasattr(response, "candidates") and response.candidates:
-            for part in response.candidates[0].content.parts:
-                if getattr(part, "thought", False):
-                    thought_parts.append(part.text)
-                else:
-                    answer_parts.append(part.text)
-        answer_text = "\n".join(answer_parts)
-        thought_text = "\n".join(thought_parts)
-        thought_tokens = getattr(response.usage_metadata, "thoughts_token_count", 0)
+        # Save the raw response straight after the call, before any parsing,
+        # so a parse failure never loses a paid call's answer (Thompson vet
+        # F6).
+        try:
+            raw_dump = response.model_dump_json()
+        except Exception as e:
+            raw_dump = f"<model_dump_json failed: {type(e).__name__}: {e}>"
+        (OUT_DIR / f"{paper_id}.response_RAW.json").write_text(raw_dump)
+
+        finish_reason = None
+        try:
+            if hasattr(response, "candidates") and response.candidates:
+                finish_reason = str(getattr(response.candidates[0], "finish_reason", None))
+        except Exception:
+            pass
+
+        try:
+            answer_parts = []
+            thought_parts = []
+            if hasattr(response, "candidates") and response.candidates:
+                for part in response.candidates[0].content.parts:
+                    text = getattr(part, "text", None) or ""
+                    if getattr(part, "thought", False):
+                        thought_parts.append(text)
+                    else:
+                        answer_parts.append(text)
+            answer_text = "\n".join(answer_parts)
+            thought_text = "\n".join(thought_parts)
+            thought_tokens = getattr(response.usage_metadata, "thoughts_token_count", 0)
+        except Exception as e:
+            (OUT_DIR / f"{paper_id}.PARSE_FAILED.txt").write_text(
+                f"finish_reason={finish_reason}\n"
+                f"exception={type(e).__name__}: {e}\n"
+                f"(raw response is in {paper_id}.response_RAW.json)\n"
+            )
+            print(f"{paper_id}: PARSE FAILED, recorded as finding: {e}", file=sys.stderr)
+            continue
 
         # Write raw response to file before anything reads it.
         (OUT_DIR / f"{paper_id}.answer_RAW.txt").write_text(answer_text)
@@ -145,11 +182,13 @@ def main():
             "answer_sha256": sha256_of(answer_text),
             "thoughts_sha256": sha256_of(thought_text),
             "thought_tokens": thought_tokens,
+            "finish_reason": finish_reason,
         }, indent=2))
 
         print(
             f"{paper_id}: wrote answer ({len(answer_text)} chars), "
-            f"thoughts ({len(thought_text)} chars), thought_tokens={thought_tokens}",
+            f"thoughts ({len(thought_text)} chars), thought_tokens={thought_tokens}, "
+            f"finish_reason={finish_reason}",
             file=sys.stderr,
         )
 
