@@ -6,8 +6,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import router  # noqa: E402
 
 F, WR = "faithful", "wrong-relation"
-IMP_APP = {"outcome": "impasse", "dispute": "application"}
-IMP_RULE = {"outcome": "impasse", "dispute": "rule-meaning"}
+IMP_APP = {"outcome": "impasse", "disputes": ["application", "application"]}
+IMP_RULE = {"outcome": "impasse", "disputes": ["rule-meaning", "rule-meaning"]}
+IMP_SPLIT_AR = {"outcome": "impasse", "disputes": ["application", "rule-meaning"]}
+IMP_SPLIT_RA = {"outcome": "impasse", "disputes": ["rule-meaning", "application"]}
+UNDECIDED = {"outcome": "undecided"}
 
 
 def it(**kw):
@@ -91,6 +94,43 @@ def test_undefined_states_fail_closed():
     raises(it(l1_grade=WR, l2={"outcome": "stalled"}))
     raises(it(l1_grade=WR, l2=IMP_APP, l3={"outcome": "impasse"}))
     raises(it(l1_grade=WR, l3={"outcome": "ruled", "grade": F}))  # L3 before L2
+
+
+def test_disagreeing_dispute_labels_resolve_to_rule_meaning():
+    # pre-reg §5 r4: labels from both L2 parties; disagreement -> rule-meaning (skips L3 -> L4)
+    for imp in (IMP_SPLIT_AR, IMP_SPLIT_RA):
+        r = router.route(it(l1_grade=WR, l2=imp))
+        assert r == {"status": "pending", "layer": "L4", "path": ["L0", "L1", "L2", "L4"]}, imp
+        raises(it(l1_grade=WR, l2=imp, l3={"outcome": "ruled", "grade": F}))
+    assert router.resolve_dispute(["application", "rule-meaning"]) == "rule-meaning"
+    assert router.resolve_dispute(["rule-meaning", "application"]) == "rule-meaning"
+    assert router.resolve_dispute(["application", "application"]) == "application"
+    assert router.resolve_dispute(["rule-meaning", "rule-meaning"]) == "rule-meaning"
+
+
+def test_missing_or_bad_dispute_label_raises():
+    for d in (None, [], ["application"], ["application", None], [None, "rule-meaning"],
+              ["application", "other"], ["application", "application", "rule-meaning"], "application"):
+        raises(it(l1_grade=WR, l2={"outcome": "impasse", "disputes": d}))
+    raises(it(l1_grade=WR, l2={"outcome": "impasse", "dispute": "application"}))  # old single-label form
+
+
+def test_l3_undecided_on_application_routes_to_l4():
+    r = router.route(it(l1_grade=WR, l2=IMP_APP, l3=UNDECIDED))
+    assert r == {"status": "pending", "layer": "L4", "path": ["L0", "L1", "L2", "L3", "L4"]}
+    r = router.route(it(l1_grade=WR, l2=IMP_APP, l3=UNDECIDED, l4={"outcome": "ruled", "grade": WR}))
+    assert r["status"] == "settled" and r["layer"] == "L4" and r["grade"] == WR
+    r = router.route(it(l1_grade=WR, l2=IMP_APP, l3=UNDECIDED, l4={"outcome": "impasse"}))
+    assert r == {"status": "pending", "layer": "L5", "path": ["L0", "L1", "L2", "L3", "L4", "L5"]}
+    # an L3-undecided item still used the L3 budget
+    assert router.route_round([it(l1_grade=WR, l2=IMP_APP, l3=UNDECIDED)] * 31)["l3_over_budget"] is True
+
+
+def test_other_l3_paths_unchanged():
+    raises(it(l1_grade=WR, l2=IMP_APP, l3={"outcome": "impasse"}))
+    raises(it(l1_grade=WR, l2=IMP_APP, l3={"outcome": "ruled", "grade": F}, l4={"outcome": "ruled", "grade": F}))
+    raises(it(l1_grade=WR, l2=IMP_RULE, l3=UNDECIDED))   # rule-meaning still skips L3
+    raises(it(l1_grade=WR, l2=IMP_APP, l4={"outcome": "ruled", "grade": F}))  # L4 before L3
 
 
 def _l3_items(k):

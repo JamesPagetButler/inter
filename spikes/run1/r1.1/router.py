@@ -6,8 +6,10 @@ Input: one item's state as a dict. L0 (capture.py) has already passed for it.
   doubt           bool, the verifier's doubt flag (required)
   l1_grade        checker grade at L1, or absent/None if L1 has not run
   l2              {"outcome": "converged", "grade": g}
-                  | {"outcome": "impasse", "dispute": "rule-meaning" | "application"}
-  l3              {"outcome": "ruled", "grade": g}   (L3 = qbp-oppenheimer applies the rubric)
+                  | {"outcome": "impasse", "disputes": [label_party1, label_party2]}
+                    each label "rule-meaning" | "application"; disagreeing labels -> rule-meaning (§5 r4)
+  l3              {"outcome": "ruled", "grade": g} | {"outcome": "undecided"}
+                  (L3 = qbp-oppenheimer applies the rubric; undecided -> L4, §5 r4)
   l4              {"outcome": "ruled", "grade": g} | {"outcome": "impasse"}
   l5              {"outcome": "ruled", "grade": g}   (the beekeeper)
 
@@ -22,8 +24,8 @@ Ladder:
   L2 converged           -> settled
   L2 impasse, rule-meaning dispute -> L4 (skips L3, seq 5212)
   L2 impasse, otherwise  -> L3
-  L3 ruling              -> settled
-  L4 ruling              -> settled; L4 impasse -> L5
+  L3 ruling              -> settled; L3 undecided -> L4
+  L4 ruling             -> settled; L4 impasse -> L5
   L5 ruling              -> settled
 Any state that does not fit the ladder raises RouterError (fail closed).
 
@@ -85,9 +87,7 @@ def route(item):
         return {"status": "settled", "grade": _grade(l2.get("grade"), "L2"), "layer": "L2", "path": path}
     if l2.get("outcome") != "impasse":
         raise RouterError(f"L2 outcome {l2.get('outcome')!r} undefined")
-    dispute = l2.get("dispute")
-    if dispute not in DISPUTES:
-        raise RouterError(f"L2 impasse needs dispute in {sorted(DISPUTES)}, got {dispute!r}")
+    dispute = resolve_dispute(l2.get("disputes"))
 
     if dispute == "application":
         path.append("L3")
@@ -96,15 +96,27 @@ def route(item):
             if _later(item, "l4", "l5"):
                 raise RouterError("later layer recorded before L3")
             return {"status": "pending", "layer": "L3", "path": path}
-        if l3.get("outcome") != "ruled":
+        if l3.get("outcome") == "ruled":
+            if _later(item, "l4", "l5"):
+                raise RouterError("L3 ruled but later layers recorded")
+            return {"status": "settled", "grade": _grade(l3.get("grade"), "L3"), "layer": "L3", "path": path}
+        if l3.get("outcome") != "undecided":
             raise RouterError(f"L3 outcome {l3.get('outcome')!r} undefined in §5")
-        if _later(item, "l4", "l5"):
-            raise RouterError("L3 ruled but later layers recorded")
-        return {"status": "settled", "grade": _grade(l3.get("grade"), "L3"), "layer": "L3", "path": path}
-
-    # rule-meaning dispute: skip L3
-    if item.get("l3") is not None:
+        # pre-reg §5 r4: L3 undecided -> L4, as a rule-meaning question
+    elif item.get("l3") is not None:
+        # rule-meaning dispute: skip L3
         raise RouterError("rule-meaning dispute must skip L3, but an L3 record exists")
+    return _l4(item, path)
+
+
+def resolve_dispute(labels):
+    """pre-reg §5 r4: both L2 parties label the impasse; if the labels disagree it is rule-meaning."""
+    if not isinstance(labels, (list, tuple)) or len(labels) != 2 or any(d not in DISPUTES for d in labels):
+        raise RouterError(f"L2 impasse needs two dispute labels in {sorted(DISPUTES)}, got {labels!r}")
+    return labels[0] if labels[0] == labels[1] else "rule-meaning"
+
+
+def _l4(item, path):
     path.append("L4")
     l4 = item.get("l4")
     if l4 is None:
