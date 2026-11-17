@@ -43,9 +43,20 @@ FIXTURE_INPUT = FIXTURE_DIR / "fixture_input.txt"
 # independently by checker_v1_test.py from the fixture files on disk, so a
 # stale pin here is caught rather than trusted. Changing either fixture
 # file, or changing build_request()'s concatenation, must update this
-# constant as a deliberate, reviewed edit.
+# constant as a deliberate, reviewed edit. Dry-run only -- unrelated to the
+# production rubric pin below.
 FIXTURE_EXPECTED_REQUEST_SHA = (
     "cd68da07338865d8e93d43a9ab07bb655964ee308d333d572b1183c90f48eccf"
+)
+
+# Production rubric pin (§I4 APPROVE on gate 2, inter 2b8b2e4, live-test
+# seq 5291): spikes/run1/vocab/relation-rubric-v1.txt on
+# qbp-architecture/seed-corpus-s5-grades, generated from the SIGNED
+# definitions (source_sha256=ea3f245e...f2d4) via the registry
+# (registry_sha256=edc8fd5f...8d13). `grade` enforces this by default;
+# pass --rubric-sha explicitly to override for a later rubric version.
+CANONICAL_RUBRIC_SHA = (
+    "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"
 )
 
 
@@ -55,6 +66,42 @@ def sha256_of(text: str) -> str:
 
 def build_request(rubric_text: str, input_text: str) -> str:
     return rubric_text + "\n\n" + input_text
+
+
+def rubric_id_line_of(rubric_text: str) -> str | None:
+    return next(
+        (line for line in rubric_text.splitlines() if line.startswith("RUBRIC-ID:")),
+        None,
+    )
+
+
+def validate_and_prepare(
+    rubric_text: str,
+    input_text: str,
+    rubric_sha_expected: str | None,
+    input_sha_expected: str | None,
+) -> dict:
+    """Pure validation + request construction, no I/O and no network --
+    the part of `grade` that checker_v1_test.py exercises directly, without
+    needing _get_client() or a real call."""
+    rubric_sha = sha256_of(rubric_text)
+    expected_rubric_sha = rubric_sha_expected or CANONICAL_RUBRIC_SHA
+    if rubric_sha != expected_rubric_sha:
+        raise SystemExit(
+            f"rubric sha mismatch: got {rubric_sha}, expected {expected_rubric_sha}"
+        )
+    input_sha = sha256_of(input_text)
+    if input_sha_expected and input_sha != input_sha_expected:
+        raise SystemExit(f"input sha mismatch: got {input_sha}, expected {input_sha_expected}")
+
+    request_text = build_request(rubric_text, input_text)
+    return {
+        "rubric_sha": rubric_sha,
+        "input_sha": input_sha,
+        "request_text": request_text,
+        "request_sha": sha256_of(request_text),
+        "rubric_id_line": rubric_id_line_of(rubric_text),
+    }
 
 
 def _get_client():
@@ -98,15 +145,12 @@ def cmd_grade(args) -> int:
     rubric_text = rubric_path.read_text()
     input_text = input_path.read_text()
 
-    rubric_sha = sha256_of(rubric_text)
-    if args.rubric_sha and rubric_sha != args.rubric_sha:
-        raise SystemExit(f"rubric sha mismatch: got {rubric_sha}, expected {args.rubric_sha}")
-    input_sha = sha256_of(input_text)
-    if args.input_sha and input_sha != args.input_sha:
-        raise SystemExit(f"input sha mismatch: got {input_sha}, expected {args.input_sha}")
-
-    request_text = build_request(rubric_text, input_text)
-    request_sha = sha256_of(request_text)
+    prepared = validate_and_prepare(rubric_text, input_text, args.rubric_sha, args.input_sha)
+    rubric_sha = prepared["rubric_sha"]
+    input_sha = prepared["input_sha"]
+    request_text = prepared["request_text"]
+    request_sha = prepared["request_sha"]
+    rubric_id_line = prepared["rubric_id_line"]
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -171,6 +215,7 @@ def cmd_grade(args) -> int:
                 "rubric_sha": rubric_sha,
                 "input_sha": input_sha,
                 "request_sha": request_sha,
+                "rubric_id_line": rubric_id_line,
                 "finish_reason": finish_reason,
                 "thought_tokens": thought_tokens,
             },

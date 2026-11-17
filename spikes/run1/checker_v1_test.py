@@ -74,9 +74,39 @@ def check_functional() -> None:
     print(f"PASS (functional): dry-run request sha {independent_sha} matches the pinned fixture value.")
 
 
+def check_canonical_rubric_pin() -> None:
+    """validate_and_prepare() is the pure logic cmd_grade calls before any
+    network access -- exercised directly here, no _get_client, no call."""
+    rubric_text = "RUBRIC-ID: relation-types-v1 source_sha256=abc registry_sha256=def\nbody\n"
+    input_text = "some input"
+
+    # Right sha (the canonical pin itself): passes, and the RUBRIC-ID line
+    # is extracted verbatim for the output record.
+    rubric_sha = hashlib.sha256(rubric_text.encode("utf-8")).hexdigest()
+    checker_v1.CANONICAL_RUBRIC_SHA = rubric_sha  # patch for this synthetic text
+    try:
+        prepared = checker_v1.validate_and_prepare(rubric_text, input_text, None, None)
+    finally:
+        pass
+    if prepared["rubric_id_line"] != "RUBRIC-ID: relation-types-v1 source_sha256=abc registry_sha256=def":
+        raise AssertionError(f"rubric_id_line not extracted correctly: {prepared['rubric_id_line']!r}")
+
+    # Wrong sha: a default-pin mismatch must raise SystemExit, not silently proceed.
+    checker_v1.CANONICAL_RUBRIC_SHA = "0" * 64
+    try:
+        checker_v1.validate_and_prepare(rubric_text, input_text, None, None)
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError("validate_and_prepare did not reject a rubric sha mismatch against the default pin")
+
+    print("PASS (canonical pin): RUBRIC-ID extraction and default-pin enforcement both correct.")
+
+
 def main() -> int:
     check_structural()
     check_functional()
+    check_canonical_rubric_pin()
     print("ALL PASS")
     return 0
 
