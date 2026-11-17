@@ -35,7 +35,8 @@ Status: **DRAFT for review.** Cartan reviews it as a checking job. Q3 grading is
 The director has seen the outcomes. So no consequence row is chosen or proposed here, and none should be by anyone who has seen them. What follows round 1 needs the beekeeper's own words or a new pre-registration. qbp-oppenheimer (seq 265) and deming (seq 266) agree with this reading.
 
 Two descriptive facts, offered without a rule choice:
-- **Spot-check direction** (qbp-oppenheimer, seq 265): in 5 of the 7 disagreements, oppenheimer graded `wrong-relation` where the lean grader said `faithful`. One went the other way on relation and one was `wrong-locator`. The differences lean toward the grader being more lenient on relation type.
+- **Spot-check direction** (qbp-oppenheimer, seq 265): in 5 of the 7 disagreements, oppenheimer graded `wrong-relation` where the lean grader said `faithful`. In the other two the grader was the stricter one: it said `wrong-relation` and `wrong-locator`, where oppenheimer said `faithful`. The differences lean toward the grader being more lenient on relation type.
+- **Spot-check faithful shares** (qbp-oppenheimer, seq 272; description only, as these are not grades of record and no gate is read from them): on the same 50 Haiku claims, oppenheimer's faithful share is 40/50 = 0.80, Wilson 95% [0.670, 0.888], and the lean grader's is 43/50 = 0.86 [0.738, 0.930].
 - **Cost structure** (deming, seq 270): cache_creation is 65% of Haiku spend, and there were 0 cache reads.
 
 ## 3. Q2: faithfulness by domain
@@ -141,6 +142,7 @@ Under the §8 "every outcome" row:
 7. **Thinking non-determinism.** Gemini runs with thinking enabled, so a re-run of the same request need not reproduce the same grades. The raw responses and thoughts are committed and hashed, and only the committed responses are scored.
 8. **Stale and live server paths.** The ruling at seq 234 named the server under `~/Documents/mcp-servers/gemini/`. deming corrected this to the live path `~/.claude/mcp-servers/gemini/server.py` (sha256 7657d49e…). The redo used the live one.
 9. **oppenheimer's spot-check method** (seq 241, verbatim in substance):
+   - **Graded blind:** no grader verdict, arm key or tally was seen before the verdicts were fixed by sha (98d5feaf…01dc, committed verbatim at 937dfea).
    - Graded by hand, with no sub-agent.
    - Four papers were checked by locating cited passages with search rather than a full read: W4390977661, W7160385925, W1665497193 and W2080238236.
    - Two judgment rules were fixed before any comparison:
@@ -160,9 +162,9 @@ Under the §8 "every outcome" row:
 ## 10. Record convention (inter#224 items 4–6)
 
 - **Claims:**
-  - *Grounded:* both arms pass precision and locator accuracy, as graded by the lean grader. The fan-out reaches 100+ unique papers. The cost is measured.
-  - *Unverified / inconclusive:* those grades rest on a grader whose agreement with an independent rater is below bar (κ 0.494). The precision figures are therefore **not validated** as measurements of faithfulness. The arm difference is not separated.
-  - *Mislabeled risk:* reading 0.889 or 0.944 as "the extractor is ~90% faithful" without the κ caveat.
+  - *Grounded:* the fan-out reaches 100+ unique papers. The cost is measured, and the projection fails the cap.
+  - *Unverified / inconclusive:* precision and locator accuracy. Both arms pass as graded by the lean grader, but that grader's agreement with an independent rater is below bar (κ 0.494), so the figures are **not validated** as measurements of faithfulness. The arm difference is not separated.
+  - *Mislabeled risk:* reading 0.889 or 0.944 as "the extractor is ~90% faithful" without the κ caveat. On the 50 claims oppenheimer graded blind, a second grader comes out lower (0.80 against 0.86, §2).
 - **Fired planning rows:** none. §8 has no row for this outcome (§2). The "every outcome" row still applies (§8 of this report).
 - **Lock:** none. This is a spike, nothing merges to main, and there is no CI drift-gate.
 
