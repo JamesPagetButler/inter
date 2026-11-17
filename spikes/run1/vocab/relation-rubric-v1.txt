@@ -1,0 +1,119 @@
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=0b789395304a25db2404fad132f461695ebd3a13f2847209c367b84f74259e12
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+## proves
+Meaning: the result *subject* establishes the statement *object*.
+Kinds: subject=result; object=statement
+Direction: result → statement.
+Admissibility test: Is the subject a result, and does the quoted passage say that this result establishes the object?
+Examples:
+  - W2015765968 c12: Proposition 2.24 proves the moduli space's real dimension is 10 (Prop. 2.24, Eq. 2.40)
+  - W7160385925 c12 rewritten: Proposition 0.2.1 proves Z[S] ≅ colim-of-limits identity
+Near-miss: RCA item 10: subject is an object (Z[S]), not a result -- that's has-property, not proves.
+Boundary: with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+## has-property
+Meaning: the paper asserts that the object *subject* has the property *object*.
+Kinds: subject=object; object=predicate
+Direction: object → predicate.
+Admissibility test: Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?
+Guard: flag paper for review (review flag only, never a hard gate -- threshold is set from round 1.1/1.2 data, not guessed) (threshold 0.3)
+Examples:
+  - RCA item 10: Z[S] has-property quasiseparated; comes from a compactly generated weak Hausdorff space (Remark 0.2.2)
+  - RCA item 9: condensed abelian groups has-property form an abelian category (§0.1)
+Near-miss: An isomorphism to a named object is equivalent-to, not a property.
+Boundary: with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+## defines
+Meaning: the paper introduces the term *object* at the locator.
+Kinds: subject=defining statement or defined term; object=term or its defining content
+Direction: definition → term.
+Admissibility test: Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?
+Examples:
+  - RCA item 4: Definition 1.6 defines uncompleted analytic ring (A,M), cited [Sch19]
+  - RCA item 3 rewritten: [Man22] defines descendable maps of analytic rings, cited, Remark 0.6
+Near-miss: RCA item 14: c_l(λ) is introduced in Eq. 3.74; Eq. 3.76 only evaluates it, so that locator is equivalent-to (equal-value), not defines.
+Boundary: with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+## equivalent-to
+Meaning: the paper asserts that subject and object are the same, in the stated sense.
+Kinds: subject=object or statement; object=object or statement, same kind as subject
+Direction: symmetric. The validator stores it in canonical order.
+Admissibility test: Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?
+Sense values: iff, isomorphic, equal-value, equivalent-category
+Examples:
+  - W1641073798 c17: Ω̂ for self-dual Ω equivalent-to √det A · A⁻¹ (sense: equal-value), Prop. 12
+  - W1630303706 c2: restriction of the Pin(h)/Pin(−h) extensions equivalent-to the extension given by (5) (sense: isomorphic), Prop. 1
+Near-miss: RCA item 2: ⊂ is inclusion, not equivalence, so that's subobject-of.
+Boundary: with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+## depends-on
+Meaning: the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+Kinds: subject=head: result, statement or construction; object=tail: a set of ≥ 1 premises (result, statement, construction, hypothesis, equation label or external citation)
+Direction: head ← tail.
+Admissibility test: Is this member invoked *as a step* of this proof?
+Connective: AND inside one edge (all tail members needed jointly); OR across edges sharing the same head (alternative proofs, each with a route id)
+Closure label: closed-over-cited
+Examples:
+  - W4412210893 c3: theory of solid abelian groups ← {Nöbeling's theorem}, Abstract
+  - RCA item 16 (corrected direction): "A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}
+Near-miss: RCA item 16 as extracted had the consequence as the tail member instead of the premise -- a consequence of the head is never a premise.
+Boundary: an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+
+## generalises
+Meaning: *subject* is the more general one, and *object* is a special case of it.
+Kinds: subject=result, theory or construction (general); object=result, theory or construction (special case)
+Direction: general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+Admissibility test: Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?
+Canonical rewrite: specialises(A,B) -> generalises(B,A)
+Examples:
+  - RCA item 5: Theorem 0.3 generalises Theorem 0.1 (Mathew), abstract: "we generalize the result of Mathew"
+  - W1778604937 c3 rewritten: Theorem 0.1 generalises Corollary 0.2
+Near-miss: RCA item 2: a subalgebra inclusion is subobject-of, not specialises.
+Boundary: with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+## subobject-of
+Meaning: *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+Kinds: subject=object (part); object=object (whole), same kind as subject
+Direction: part → whole.
+Admissibility test: Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?
+Examples:
+  - RCA item 2 re-typed: C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C), Eq. (1.2)
+  - W7160385925 Theorem 0.2.5: Solid subobject-of Cond(Ab) (full subcategory)
+Near-miss: An equivalence of categories is equivalent-to, not inclusion.
+Boundary: with `generalises` and `equivalent-to`, see above.
+
+## counterexample-to
+Meaning: *subject* (an example or object) violates the statement *object*, as the paper shows.
+Kinds: subject=object or example; object=statement or claim
+Direction: example → statement it refutes.
+Admissibility test: Is the subject the *example*, and does the passage show the object fails for it?
+Examples:
+  - W2074702261 re-typed: example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"
+  - W1936971149 c39: Ḟ(n) ∖ dⁱF(n−1) counterexample-to "every subobject weakly equivalent to F(n) is a cover", Remark 10.2
+Near-miss: W1501965422 c25 as extracted had the direction reversed -- the example is the subject, the statement that fails is the object.
+Boundary: with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+## conjectures
+Meaning: the paper (or the named source) asserts *object* without proof, as expected to hold.
+Kinds: subject=the paper, a remark, or a named conjecture; object=statement
+Direction: source → conjectured statement.
+Admissibility test: Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?
+Examples:
+  - W1936971149 c33: Remark 8.13 conjectures Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M
+  - W2964288547 c15, subject re-typed: Remark 5.10 conjectures a Dirac isospectrality statement for r odd, t ≥ 1
+Near-miss: W1936971149 c27 as extracted named a *kind* of result as the object rather than a statement; fixed by writing out the specific conjectured statement.
+Boundary: with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+## uses-technique
+Meaning: the result or construction *subject* is obtained by the named method *object*.
+Kinds: subject=result or construction; object=named method or framework, not a specific result
+Direction: user → method.
+Admissibility test: Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?
+Excluded from: §6 proof-candidate ranking
+Examples:
+  - W1501965422 c24: enhancement of derived categories uses-technique stable ∞-categories (Lurie)
+  - W1501965422 c23: six operations construction uses-technique ∞-categorical (co)homological descent
+Near-miss: W1663788542 c19 as extracted named a specific cited result (Theorem 2.8) rather than a method -- a named method or framework is uses-technique; a specific cited result, even one named after a method, is depends-on.
+Boundary: with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
