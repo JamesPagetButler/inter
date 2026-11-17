@@ -1,0 +1,25 @@
+# Verifier v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are verifying claims extracted from one mathematics or physics paper. The dispatch names two files. Read both, and nothing else:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Doubt.** Set `"doubt": true` **only** when you cannot grade confidently. That means the rubric does not clearly decide the case, the passage is genuinely ambiguous, or the grade depends on text not in the input. Give the reason in `doubt_reason`. Otherwise set `"doubt": false` and `"doubt_reason": ""`. A doubted claim still gets your best grade.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>", "doubt": <true|false>, "doubt_reason": "<text or empty>"}`
+2. One line echoing the rubric's first line exactly: `{"rubric_id": "<the RUBRIC-ID line>"}`
+3. One line exactly: `GRADES-END`
+4. One JSON line, your close-out report on your own process. **Your grades above are final, and this report cannot change them:**
+   `{"p4": {"friction": "<where the rubric or vocabulary didn't fit this paper, quoting the passage, or empty>", "doubt": "<what you were unsure of and why, or empty>", "missing_context": "<what you needed and didn't have, or empty>", "proposed_change": "<one concrete edit to your instructions or the rubric, or \"none\">", "process_observation": "<anything about the pipeline, or empty>"}}`
