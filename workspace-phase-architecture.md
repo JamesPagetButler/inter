@@ -438,11 +438,13 @@ flowchart TB
 **Line rule.**
 - **Wyrd owns what must be true and who may change it.** It checks invariants **over its own state at commit** (e.g. a lease belongs to exactly one grant; a use-once token is never consumed twice; a single admission authority; every mutation carries a valid capability; `index == closure`). These are the invariants to prove in Lean.
 - **Nidavellir owns making it so.** It discharges **physical-world invariants** (capacity, thermal headroom, per-host fit) at admission, and **records the evidence in Wyrd** (sample, derated capacity, utilisation on the grant row), so every physical claim is auditable after the fact even though Wyrd cannot check it live.
-- **Nidavellir's code holds no authoritative state, and Wyrd runs no process.** Reconcile loops are stateless; step-level checkpoints of long operations live in Nidavellir's durable runner/ledger files, and only milestone facts become Wyrd records. High-rate telemetry stays in Nidavellir-side files.
+- **Nidavellir's code holds no authoritative state, and Wyrd runs no process.** "Runs no process" means Wyrd launches and supervises **no workloads**. Wyrd's own server process (e.g. the Walk-phase Wyrd v0.2 service in §3.1) is itself a workload that Nidavellir supervises. Reconcile loops are stateless; step-level checkpoints of long operations live in Nidavellir's durable runner/ledger files, and only milestone facts become Wyrd records. High-rate telemetry stays in Nidavellir-side files.
 - **The line is drawn by role, not location.** Crawl's JSON files are "Wyrd v0.1" (§1.2, §4), so a file-based ledger that is the record of truth (e.g. the capacity ledger at S0–S2) is **Wyrd-role state** in its v0.1 form; it moves into the typed store at the flip.
 - **Tie-breaker:** *a path that must keep working when Wyrd is down must not depend on Wyrd.*
 
 **Edda** is the **shared policy vocabulary** across the line — contracts and caps, compiled and statically type-checked — not a runtime and not a third location. The same compiled `cap(...)` is satisfied by a ledger-minted token at S0 or a Wyrd `fed.grant.*` record later. **Enforcement is Wyrd's reference monitor** (capability tiers → Verðandi → Skuld); minting constructed (witnessed) caps is a reference-monitor act and so is Wyrd's. Runtime evaluation of Edda contracts would be new scope.
+
+**Reading "Skuld supervisor" under reading A.** Where this doc (§0.12 Wyrd node, §0.13.1, §3.6, §4.2) and the Wyrd README call Skuld a "supervisor enforcing privilege at the hardware boundary", read it as a **reference monitor**: Skuld authorises or refuses; it never launches or supervises processes. Its design surface is wyrd#108.
 
 **Boot floor (below L2).** Host kernel + systemd + a **minimal Nidavellir on v0.1 files**. It must exist and stay tested at every phase, including Run (Skuld enforces privilege *above* the floor, not instead of it). **Rule: degrade to a smaller safe mode, never to an unmanaged one.** Recurring test: boot with Wyrd absent → the federation comes up in reduced mode on files.
 
@@ -1497,7 +1499,7 @@ Cross-tenant Bridge Agent
 
 ### 4.5 Entry criterion (Walk → Run)
 
-See §2.6 above.
+See §3.6 above.
 
 ### 4.6 Exit criterion
 
