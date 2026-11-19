@@ -3,8 +3,9 @@
 **Per-phase architecture diagrams for the federation: Crawl → Toddle → Walk → Run.**
 
 > Author: qbp-architecture (Claude Opus 4.7) + James Paget Butler
-> Date: 2026-05-13; updated 2026-06-11
-> Status: v0.6 — Sprint 3 scope reconciled (Crawl close). Folds in: the **pentagon-pod split** — hot-swap *scaffold* pulled into Crawl (§1.6), bilateral *cognition* + L5/L6 gates stay Toddle (§2.x); the **#248 autonomic sensor-staleness** fix (single source of truth across disk/RAM/VRAM/thermal); the **Edda Stage-1 + qbp-cu/wyrd native-build** lane; QBP foundations Phase A→B→C sequencing; succession two-phase (Crawl provisional / Walk ratified; cockpit-render + activation-portal at Walk). Per-phase Mermaid diagrams not yet re-rendered for these deltas — criteria + roadmap updated; diagram nodes are a follow-up.
+> Date: 2026-05-13; updated 2026-06-11; amended 2026-11-18
+> **Amendment v0.7 (2026-11-18, inter#301 — federation resource scheduler design surface; reading A per beekeeper ruling "a for now"):** adds the **Nidavellir control-plane layer** between L2 (Wyrd) and L3 (services), the **Wyrd/Nidavellir line rule** + tie-breaker, **Edda** as the shared policy vocabulary, and the **boot floor** (§0.12); adds **RISC-V** as an instruction target and `(host_id, kind)` dispatch targets (§0.12, §0.14); adds **Wyrd graph durability** to the Toddle→Walk exit (§2.7, §5.0); adds a **Run success test** without changing Run's no-exit stance (§4.6); adds a control-plane row to the §4 comparison table. Reading B (Wyrd gains an execution model) stays open. Additive only — no other section rewritten.
+> Status (pre-amendment): v0.6 — Sprint 3 scope reconciled (Crawl close). Folds in: the **pentagon-pod split** — hot-swap *scaffold* pulled into Crawl (§1.6), bilateral *cognition* + L5/L6 gates stay Toddle (§2.x); the **#248 autonomic sensor-staleness** fix (single source of truth across disk/RAM/VRAM/thermal); the **Edda Stage-1 + qbp-cu/wyrd native-build** lane; QBP foundations Phase A→B→C sequencing; succession two-phase (Crawl provisional / Walk ratified; cockpit-render + activation-portal at Walk). Per-phase Mermaid diagrams not yet re-rendered for these deltas — criteria + roadmap updated; diagram nodes are a follow-up.
 > Convention sources:
 > - `~/Documents/inter/architecture-diagrams-best-practices.md` (visualization tier model, C4, Mermaid)
 > - `~/Documents/inter/roadmap-best-practices.md` §5 (roadmap house style)
@@ -363,7 +364,7 @@ The two layers are orthogonal. You can't replace Layer A with another framework 
 
 ### 0.12 Federation layer stack — top-down
 
-Beekeeper-refined 2026-05-14: the federation has four logical layers, with cross-layer dependencies as shown.
+Beekeeper-refined 2026-05-14: the federation has four logical layers, with cross-layer dependencies as shown. **Amended 2026-11-18 (inter#301, reading A):** a **control plane — Nidavellir** — sits between L2 and L3, and a **boot floor** sits below L2. L3/L4 keep their numbers so existing "L3 services" references stay valid.
 
 ```mermaid
 flowchart TB
@@ -379,34 +380,78 @@ flowchart TB
         CTH_S["CTH<br/>(epistemic health: ρ_net, ChainFidelity, anchor inventory)"]
     end
 
-    subgraph L2["LAYER 2 — SUBSTRATE"]
-        WYRD["Wyrd<br/>(native quaternion-native typed holographic hypergraph DB;<br/>Lean-verified; Mímir engrams at Walk;<br/>+ Skuld + HAMA Tier-N at Run)"]
+    subgraph CP["CONTROL PLANE — Nidavellir (between L2 and L3; inter#301, reading A)"]
+        NID["Nidavellir<br/>reconcile loops (stateless; rehydrate from Wyrd each pass) ·<br/>admission / scheduling (dispatch target = (host_id, kind)) ·<br/>process launch + supervision (systemd scopes, bwrap, podman) ·<br/>measurement / telemetry (raw streams stay here, in files)"]
     end
 
-    subgraph L1["LAYER 1 — COMPUTE PRIMITIVES"]
+    subgraph L2["LAYER 2 — SUBSTRATE"]
+        WYRD["Wyrd<br/>(native quaternion-native typed holographic hypergraph DB;<br/>Lean-verified; Mímir engrams at Walk;<br/>+ Skuld + HAMA Tier-N at Run)<br/>desired state + decision-relevant observed facts ·<br/>reference monitor (capability tiers → Verðandi → Skuld)"]
+    end
+
+    subgraph FLOOR["BOOT FLOOR (below L2) — safe mode, every phase"]
+        BF["host kernel + systemd +<br/>minimal Nidavellir on Wyrd v0.1 files<br/>(degrade to smaller safe mode, never unmanaged)"]
+    end
+
+    subgraph L1["LAYER 1 — COMPUTE PRIMITIVES + INSTRUCTION TARGETS"]
         QCU["QBP-Compute-Unit<br/>(Gearbox: QMul64 / QMul128 / QMulHighPrec / QRot / QConj /<br/>DetectSeam; emulator at Toddle; ROCm-backed at Run)"]
+        ISA["Host instruction targets<br/>x86-64 (Crawl box) · RISC-V (Walk SBCs)"]
     end
 
     L4 --> L3
+    L3 -->|launched + supervised by| NID
     L3 --> L2
+    NID <-->|"reads desired state; writes milestone facts + evidence<br/>(every mutation carries an Edda cap; Wyrd's monitor verifies)"| WYRD
+    NID -.->|Wyrd down → degrade to| BF
+    BF -->|launches + supervises| WYRD
     L2 --> L1
+    NID -->|dispatches onto| ISA
+    BF --> ISA
 
     classDef tenant fill:#fce,stroke:#933,color:#000
     classDef service fill:#eef,stroke:#339,color:#000
+    classDef control fill:#fef,stroke:#636,color:#000
     classDef substrate fill:#efe,stroke:#393,color:#000
+    classDef floor fill:#fff,stroke:#666,color:#000
     classDef compute fill:#ffe,stroke:#993,color:#000
 
     class QBP_T,SB_T,FUT tenant
     class BMA_S,CTX_S,CTH_S service
+    class NID control
     class WYRD substrate
-    class QCU compute
+    class BF floor
+    class QCU,ISA compute
 ```
 
 **Cross-layer dependencies:**
 - Tenants (L4) consume federation services (L3) to do domain work
 - Federation services (L3) all persist to / query the Wyrd substrate (L2)
+- Federation services (L3) are **launched, admitted and supervised by Nidavellir** (control plane); Nidavellir reconciles them toward the desired state held in Wyrd
+- Nidavellir reads desired state from Wyrd and writes back only decision-relevant **milestone facts** (started / completed / failed + end reason + provenance) and the **evidence** for physical-world claims; every Nidavellir → Wyrd mutation carries an **Edda** capability that Wyrd's reference monitor verifies
+- Nidavellir dispatches work onto L1 hosts; a dispatch target is `(host_id, kind)` (§0.14)
 - Wyrd's quaternion-native operations (Hebbian co-activation, rotation, conjugation, Seam detection) import QBP-CU primitives (L1) at runtime
 - BMA the federation service uses Contextus + CTH as **peers**, not internal subsystems
+- When Wyrd is unavailable, Nidavellir degrades to the **boot floor** (below L2), which runs on hosts directly
+
+#### 0.12.1 The Wyrd / Nidavellir line (amended 2026-11-18, inter#301 — reading A, "for now")
+
+**Reading A** (beekeeper, 2026-11-18, "a for now"): Wyrd is the source of desired state and the reference monitor; Nidavellir's control plane reconciles from Wyrd state and Wyrd authorises every action. Wyrd gains **no execution model**. "The database instantiates the OS" means the control plane is *fully determined by and rehydrated from* Wyrd, not *executed by* Wyrd. **Reading B** (Wyrd itself gains an execution model and runs the control plane — the Pick / AS-400 pattern) **stays open** as a later option if A's boundary becomes the constraint.
+
+**Line rule.**
+- **Wyrd owns what must be true and who may change it.** It checks invariants **over its own state at commit** (e.g. a lease belongs to exactly one grant; a use-once token is never consumed twice; a single admission authority; every mutation carries a valid capability; `index == closure`). These are the invariants to prove in Lean.
+- **Nidavellir owns making it so.** It discharges **physical-world invariants** (capacity, thermal headroom, per-host fit) at admission, and **records the evidence in Wyrd** (sample, derated capacity, utilisation on the grant row), so every physical claim is auditable after the fact even though Wyrd cannot check it live.
+- **Nidavellir's code holds no authoritative state, and Wyrd executes no workloads.** Wyrd launches and supervises nothing. **Wyrd's own server process** (e.g. the Walk-phase Wyrd v0.2 service in §3.1) **is launched and supervised by the boot floor**, as a systemd service below L2, **not by Nidavellir**. Nidavellir depends on Wyrd for its state, so if Nidavellir supervised Wyrd the dependency would be circular and the stack could not boot. Reconcile loops are stateless; step-level checkpoints of long operations live in Nidavellir's durable runner/ledger files, and only milestone facts become Wyrd records. High-rate telemetry stays in Nidavellir-side files.
+- **The line is drawn by role, not location.** Crawl's JSON files are "Wyrd v0.1" (§1.2, §4), so a file-based ledger that is the record of truth (e.g. the capacity ledger at S0–S2) is **Wyrd-role state** in its v0.1 form; it moves into the typed store at the flip.
+- **Tie-breaker:** *a path that must keep working when Wyrd is down must not depend on Wyrd.*
+
+**Edda** is the **shared policy vocabulary** across the line — contracts and caps, compiled and statically type-checked — not a runtime and not a third location. The same compiled `cap(...)` is satisfied by a ledger-minted token at S0 or a Wyrd `fed.grant.*` record later. **Enforcement is Wyrd's reference monitor** (capability tiers → Verðandi → Skuld); minting constructed (witnessed) caps is a reference-monitor act and so is Wyrd's. Runtime evaluation of Edda contracts would be new scope.
+
+**Reading "Skuld supervisor" under reading A.** Where this doc (§0.12 Wyrd node, §0.13.1, §3.6, §4.2) and the Wyrd README call Skuld a "supervisor enforcing privilege at the hardware boundary", read it as a **reference monitor**: Skuld authorises or refuses; it never launches or supervises processes. Its design surface is wyrd#108.
+
+**Boot floor (below L2).** Host kernel + systemd + a **minimal Nidavellir on v0.1 files**. The boot floor also **launches and supervises the Wyrd server**. The boot order is therefore: floor → Wyrd → full Nidavellir → L3. It must exist and stay tested at every phase, including Run (Skuld enforces privilege *above* the floor, not instead of it). **Rule: degrade to a smaller safe mode, never to an unmanaged one.** Recurring test: boot with Wyrd absent → the federation comes up in reduced mode on files.
+
+**Nested governors.** A service with its own resource governor (e.g. BMA's AUTO-S/AUTO-P) is a *nested* governor: Nidavellir grants the pod an envelope, the service divides it internally, and it never acts on resources outside its grant. Wyrd records only the pod's envelope grant; the service's internal sub-allocations are its own state. Workload-launch mechanisms (BMA's Podman runtime / pod-helper, boxrun, bwrap) are Nidavellir-side; BMA cognition is L3. No central daemon as a single point of failure — Nidavellir components are systemd units and scopes.
+
+Sources: inter#301 comments [6985078782](https://github.com/JamesPagetButler/inter/issues/301#issuecomment-6985078782) (phase placement), [6985094821](https://github.com/JamesPagetButler/inter/issues/301#issuecomment-6985094821) (reading A vs B), [6985404574](https://github.com/JamesPagetButler/inter/issues/301#issuecomment-6985404574) + [6985435277](https://github.com/JamesPagetButler/inter/issues/301#issuecomment-6985435277) (line ruling + amendments), [6986608090](https://github.com/JamesPagetButler/inter/issues/301#issuecomment-6986608090) (beekeeper: reading A, for now).
 
 **Where the inversion would be wrong:** "QBP-CU hosts Wyrd" is incorrect. QBP-CU is *below* Wyrd in the layering — Wyrd imports QBP-CU as a library; QBP-CU doesn't host anything. Wyrd's PR #2 wires `HamiltonProduct → gearbox.QMul64`, which is consumption, not hosting.
 
@@ -555,6 +600,8 @@ Both paradigms always operational; mix varies by phase:
 | **Toddle** | FX-8350 + drive upgrade; cart-tools harness exposes Python + Lean to BMA cells | QBP-CU emulator + M0.5 stubs (Xqbpoct, Xqbpvcp) | QW64 + QW128 stub |
 | **Walk** | Networked RISC-V SBCs; Python + Lean toolchains installed per relevant pod | QBP-CU M1 Gearbox (CSR-bound stateful, QW8 + QW128) | QW8 (peripheral) + QW128 (foveal) |
 | **Run** | RISC-V + ROCm node | QBP-CU M2 ternary matmul + ROCm-accelerated | QW256, QW1024 (sedenion-level) |
+
+**Instruction targets and dispatch targets (amended 2026-11-18, inter#301).** The federation has **three instruction targets**, not two: **x86-64** (the Crawl box, FX-8350; retained at Walk as the ROCm node per OD-13 default), **RISC-V** (the Walk hosts — networked SBCs; also the silicon-ladder base ISA, §0.13.2), and the **QBP-CU** lane (emulator → M1 Gearbox → M2 + ROCm). Because multi-host arrives at Walk, not last, the scheduler's dispatch target is **`(host_id, kind)`** — a host plus the kind of lane on it (CPU ISA, QBP-CU lane, GPU), each with its own capacity profile — so the Nidavellir scheduler (§0.12.1) is not redesigned at the Toddle→Walk boundary.
 
 ### 0.15 QBP-CU risk surfaces
 
@@ -1038,6 +1085,7 @@ See §1.6 above.
 | Walk hardware (RISC-V) | RISC-V SBC spec finalized; networked-federation topology designed; first node procured + BMA cross-compiled + smoke-tested | beekeeper + bma-implementor | **NOT a bigger workstation.** Networked RISC-V devices per beekeeper directive 2026-05-13 |
 | GPU placement decision | ROCm node stays on Crawl box; RISC-V devices query it as inference clients (default), OR T1 llama on CPU/NPU only | beekeeper | sub-decision OD-13 |
 | Federation-wide Wyrd v0.2 | CTH + Contextus + QBP-CU migrated to Wyrd-backed storage | per-impl | unifies the bus surface |
+| Wyrd graph durability | Persistence / WAL for the Wyrd graph (today `model.Graph` is in-memory only — no persistence, WAL or replication) | wyrd-implementor | Added 2026-11-18 (inter#301). Walk's storage tier is Wyrd v0.2 **federation-wide** as the primary store (§3.2); a primary store with no durability is not a Walk-ready substrate |
 | Multi-tenant scaffolding | NATS subjects, Wyrd namespaces, Honing-Loop tenant-attribution all designed; tested with QBP + synthetic test tenant | qbp-architecture + bma-implementor | Sharp Butler at Run requires this work to land at Walk |
 | Sharp Butler context testing | Use Toddle's already-live L5/L6 values reasoning to validate Sharp Butler scenarios (e.g., synthetic Paperclip proposals to shed service-reserve load — BMA must refuse or constrain). Validates the federation for second-tenant entry BEFORE Sharp Butler is a real tenant. | beekeeper + bma-implementor | Beekeeper directive 2026-05-13 — early Sharp Butler context testing as Walk addition |
 
@@ -1452,11 +1500,13 @@ Cross-tenant Bridge Agent
 
 ### 4.5 Entry criterion (Walk → Run)
 
-See §2.6 above.
+See §3.6 above.
 
 ### 4.6 Exit criterion
 
 There is no exit criterion from Run. Run is steady-state. Phase-after-Run is not defined; if it becomes relevant, it requires a new architecture-design conversation.
+
+**Run success test (amended 2026-11-18, inter#301 — a test of Run steady state, not an exit criterion).** Power off the box, boot a *different* machine, instantiate from a copy of Wyrd, and the federation comes back in the **same state** — seats, grants, memory, personas — with **nothing rebuilt by hand**. **"Same state" means the same *desired* state:** seats, personas, memory and the grant history. It does not mean live leases. Desired state is host-independent. Leases and grants bound to a `host_id` that is absent on the new machine are **not resumed**: they expire by TTL and are reclaimed, and the work is re-admitted on the new host. The new host registers its own `host_id` and capacity profile. It does not impersonate the old node, because physical evidence recorded against the old `host_id` (samples, derated capacity) says nothing about the new hardware. Under reading A (§0.12.1) this means **Nidavellir is fully rehydrated from Wyrd**, with **Skuld as the reference monitor on every control-plane action**; the boot floor (§0.12.1) is what first runs on the new machine. **Open dependency:** Skuld has no design surface yet (one README line today); wyrd-implementor owns scoping it against reading A. Until it exists, this test is a target, not a plannable gate.
 
 ---
 
@@ -1465,6 +1515,7 @@ There is no exit criterion from Run. Run is steady-state. Phase-after-Run is not
 | Dimension | Crawl | Toddle | Walk | Run |
 |---|---|---|---|---|
 | **Storage primary** | Wyrd v0.1 (JSON files) | Wyrd v0.2 (BMA scope) + Mímir engrams | Wyrd v0.2 federation-wide (+ Mímir engrams) | Wyrd v0.3 (+ Skuld + HAMA Tier-N; Wisdom Registry separate namespace) |
+| **Control plane (Nidavellir; inter#301, reading A)** | Reconcile loops on Wyrd v0.1 files (boot floor = full control plane) | Reconcile on files; shadow writes into Wyrd v0.2 | Grants / leases / seat registry flipped into Wyrd v0.2 federation-wide; dispatch across `(host_id, kind)` hosts | Fully rehydrated from Wyrd; Skuld reference monitor on every action; boot floor still tested |
 | **Event bus** | sessionbridge MCP | NATS (single-tenant) + sessionbridge for un-migrated projects | NATS (multi-tenant, networked across RISC-V nodes) | NATS + BRIDGE |
 | **Beekeeper presence** | Every cycle | Most cycles (Honing rare) | On-call (Honing edges) | Steward (weekly+) |
 | **BMA continuous loop** | No | **Yes — full bilateral on Crawl hardware** (forcing function for efficiency) | Yes — full bilateral distributed across RISC-V nodes | Yes |
@@ -1490,7 +1541,7 @@ What architecturally **mutates** at each phase boundary.
 stateDiagram-v2
     [*] --> Crawl
     Crawl --> Toddle: BMA Step 9 +<br/>OD-11 decided +<br/>Wyrd v0.2 design stable +<br/>NATS broker deployed +<br/>continuous-loop scaffold
-    Toddle --> Walk: 7-day continuous OK +<br/>Conscious bilateral built +<br/>Walk hardware procured +<br/>federation-wide Wyrd +<br/>multi-tenant scaffolding +<br/>L5/L6 inference-time live +<br/>Engineering Cart live
+    Toddle --> Walk: 7-day continuous OK +<br/>Conscious bilateral built +<br/>Walk hardware procured +<br/>federation-wide Wyrd +<br/>Wyrd graph durability +<br/>multi-tenant scaffolding +<br/>L5/L6 inference-time live +<br/>Engineering Cart live
     Walk --> Run: 30-day continuous +<br/>Wyrd v0.3 (Skuld+HAMA) +<br/>judge collective live +<br/>multi-tenant routing +<br/>ROCm compute
     Run --> Run: steady state<br/>(no exit criterion)
 
