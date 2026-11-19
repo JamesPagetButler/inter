@@ -45,7 +45,7 @@
 4. The failure policy.
 5. The one job model, three lanes by default, booked refresh with headroom and a last-known-good standby, the AMBER / RED / beekeeper ladder, the state handover through Wyrd, the desktop-load floor and the RAM degrade ladder (v1.7, v1.7.1).
 
-**Not decided by ratification (separate beekeeper calls):** the root cgroup delegation (`cpu cpuset io` on the user manager) and the optional SSD SMART read.
+**Not decided by ratification (separate beekeeper calls):** the root cgroup delegation. The record names `cpu cpuset io`. deming's current proposal, after a security vet, is `cpu io`, with cpuset deferred (memory and pids are already delegated). It is still a beekeeper decision. and the optional SSD SMART read.
 
 ---
 
@@ -234,7 +234,7 @@ P is the host's configured nominal telemetry interval in wall-clock seconds (≈
 - **Precondition:** a pause is allowed only if it frees the waiting job's **entire** resource vector under the admission rule. Otherwise there is no preemption, and the waiting job keeps its reservation (v1.4.2 [v1.1, M5]).
 - **Headroom drop after admission:** running work is paused, never killed; nothing new is minted until hysteresis clears (v1.4.2 §6; Nidavellir#144 AC6).
 - **Known S0 limitation:** a pause frees CPU and heat, not RAM or disk. A paused job can hold RAM until its TTL. S1 revisit trigger: any logged RAM-blocked wait over 10 min (v1.4.2 §3).
-- **S1+ RAM exception:** for the RAM axis and batch jobs only, the v1.7.1 D2 ladder replaces S0's "killing stays excluded" (§6.8).
+- **S1+ RAM exception:** for the RAM axis and batch jobs only, the v1.7.1 D2 ladder replaces S0's "killing stays excluded" (§6.10).
 
 ### 4.7 Best-fit placement and moves between targets (v1.5.2 §D, as amended by v1.6 V3, V4)
 - **Dispatch target is `(host_id, kind)`** (v1.4.2 §4 [v1.2]). `kind` is `x86` or `qbp-cu`, more later.
@@ -417,14 +417,14 @@ Wyrd durability; write-fence / CAS support (wyrd-implementor); the root cgroup d
 ### 7.1 S0 build plan (issuecomment-6997840093; Nidavellir#144)
 - **Functional core / imperative shell.** `decide`, `reclaim`, `backfill_ok`, `plausible`, `ttl_for`, `statement` are pure. The shell holds the flock and does IO, clock and telemetry reads only.
 - **Python 3 stdlib.** The Lean napkin `Decide.lean` mirrors `decide`.
-- **Every build and test under `boxrun` and `bwrap-builder.sh`,** in a linked worktree on `builder/s0-sched/*`.
+- **Every build and test under `boxrun` and `bwrap-builder.sh`,** in a linked worktree on `builder/<slug>/*` (the S0a build runs on `builder/s0a/shadow-gate`).
 - **Each test ships with its mutant;** CI fails if a mutant SURVIVES. Mutants are applied by a small patch runner, with no third-party mutation tool.
 - **On the Sprint 4 weave** (inter#194), with edda#108 (issuecomment-7022163369).
 
 ### 7.2 S0a: shadow gate (Nidavellir#144: cut issuecomment-7022177554, row correction -7022334791; CONFIRMED by deming with five conditions, -7022253523)
 - **What it does:** boxrun runs as today. Every request also goes to the gate, which runs `decide` and mints a grant row. The job runs whether or not the gate agreed. The grant is released when boxrun logs the job's end.
 - **ACs:** AC1, AC2, AC3, AC4, AC11, AC12, AC17.
-- **Matrix rows:** 1–14, 33–36, 46, plus six S0a-only rows, each with its mutant (§10.1).
+- **Matrix rows:** 1–14, 33–36, 44, 46, plus six S0a-only rows, each with its mutant (§10.1).
 - **deming's five build conditions (-7022253523):**
   1. **The gate can never become a new boxrun failure.** boxrun calls it before taking the box lease, with a 2 s hard timeout. On a gate error, timeout or crash, the job runs, logged `shadow-error`.
   2. **Shadow grants are tagged `mode=shadow`.** They never count as live capacity, and S0b's reader ignores them.
@@ -552,7 +552,8 @@ Remaining gates are drafted at S2 exit (v1.4.2 §6). Seats become scheduled work
 
 | Number | Current value | Refit source / gate | Cite |
 |---|---|---|---|
-| ε (sensor error) | measured, per axis; wider until cgroup delegation | sensor-calibration experiment vs a reference; S0 exit | v1.4.2; v1.7.1 D1 |
+| ε (sensor error) | **not yet calibrated.** S0a uses a stated provisional placeholder per axis, recorded in each shadow row's audit fields. Wider until the cgroup delegation | sensor-calibration experiment against a reference (owner: deming); before S0 exit | v1.4.2; v1.7.1 D1 |
+| `reserve` (per host) | provisional, from the Nidavellir#141 capacity profile | refit with the profile; AC17 | v1.4.2 §3, §7b |
 | Tier S template | 1 core, ≤ 10 min, ≤ 1 GB RAM, ≤ 100 MB disk, start ≤ 58 °C (n = 489) | per-job data, before S0 exit | v1.4.2 §3 |
 | Tier M template | 1 core, ≤ 60 min, ≤ 2 GB RAM, ≤ 1 GB disk (n = 32); its "start ≤ 50 °C" is superseded by the heat-selected gate (§11 C3) | per-job data, before S0 exit | v1.4.2 §3; v1.6.1 R8-B1 |
 | Tier L | per run by deming | until n ≥ 20 per-job runs | v1.4.2 §3 |
@@ -594,7 +595,7 @@ Remaining gates are drafted at S2 exit (v1.4.2 §6). Seats become scheduled work
 
 Every named test in the record, with its stage. Each ships with its mutant, KILLED. Row numbers refer to the Nidavellir#144 matrix where one exists.
 
-### 10.1 S0a (Nidavellir#144 rows 1–14, 33–36, 46, + six S0a-only rows)
+### 10.1 S0a (Nidavellir#144 rows 1–14, 33–36, 44, 46, + six S0a-only rows)
 
 | Row | Test | Mutant | Source |
 |---|---|---|---|
@@ -616,6 +617,7 @@ Every named test in the record, with its stage. Each ships with its mutant, KILL
 | 34 | no allowance tighter than the weakest leg's error | grade-only allowance | v1.6.2 G1 |
 | 35 | G1 never scales `reserve` or ε | grade scales reserve | v1.6.3 P1, T2 |
 | 36 | statement calibration logged for every run | emitted, not recorded | v1.6 V7.4 |
+| 44 | anti-weakening: loosened template without evidence fails CI | check skipped | v1.4.2 refit rule |
 | 46 | audit fields on every grant row | U_adm or capacity omitted | v1.4.2 §3 |
 | — | shadow never blocks: refusal logged `shadow-refuse`, job runs | refusal blocks the run | issuecomment-7022177554 |
 | — | gate unavailable or hung: the job still runs on time, logged `shadow-error` | a gate error blocks or delays the run past 2 s | -7022253523 (1) |
@@ -653,7 +655,6 @@ Every named test in the record, with its stage. Each ships with its mutant, KILL
 | 41 | gate down: M/L/SPIKE/GPU refused; S under boxrun | S bare; or M allowed | v1.6.3 failure policy |
 | 42 | boxrun refuses on missing row or hash mismatch | starts on defaults | v1.4.2 R4-M1a (S0 form) |
 | 43 | bypass flagged within k·P | detector off; fixed minutes | v1.4.2 §6, Nidavellir#144 ruling |
-| 44 | anti-weakening: loosened template without evidence fails CI | check skipped | v1.4.2 refit rule |
 | 45 | intake window | window on empty queue; place changes | v1.6 V3; v1.5.2 §B.1 |
 | 47 | repeated under-declaration flagged | no flag | v1.6.1 R8-M2 |
 | 48 | finish alarm (**addition beyond the record**) | no finish alarm | Nidavellir#144 [G-h] |
@@ -716,13 +717,13 @@ Every named test in the record, with its stage. Each ships with its mutant, KILL
 ### 11.1a Resolved during consolidation (qbp-architecture, 2026-11-19)
 - **C2. Wyrd at S1: resolved by the later ratified version.** v1.4.2 §5 kept Wyrd out of S0 and S1, and put graph durability at the flip gate. v1.7 and v1.7.1 are later and ratified, so they win for **continuous lanes**: Wyrd durability and the staging + CAS primitive are S1 prerequisites for any continuous capability. **Batch admission and the record of truth are unchanged:** admission stays ledger-only, and the ledger stays the system of record until the flip. Durability moves forward as a continuous-lane prerequisite only, not as an authority change.
 - **C3. M's start line: resolved by the record.** v1.6.1 R8-B1 names "gate by tag" as a **mutant** (Nidavellir#144 row 26). A tag-based "M starts ≤ 50 °C" line is therefore superseded, and the cooler-start gate is chosen by heat contributed. §9 is updated to match.
-- **C4. S0a rows: resolved.** The cut's row list was a slip, corrected on Nidavellir#144 (-7022334791). S0a is rows 1–14, 33–36 and 46. §7.2 and §10 are updated.
+- **C4. S0a rows: resolved.** The cut's row list was a slip, corrected on Nidavellir#144 (-7022334791). S0a is rows 1–14, 33–36, 44 and 46 (row 44 is AC17's test, added on deming's §I4, inter#304 issuecomment-7022406207). §7.2 and §10 are updated.
 - **C5. S0a status: resolved.** deming CONFIRMED the cut with five build conditions (-7022253523). These are in §7.2 and §10.1.
 
 ### 11.2 Not decided
 - **Pod layout and boundaries between pods** → inter#303 (v1.7 "Not decided"; issuecomment-7022163369). Each pod is a lane, and C2's contract is the handover between pods.
 - **The real cost of 3 lanes** and their interference: measured at S1 (v1.7).
-- **Root cgroup delegation** and the **SMART read**: beekeeper calls (issuecomment-6997840093).
+- **Root cgroup delegation** (record: `cpu cpuset io`; current proposal: `cpu io`, cpuset deferred) and the **SMART read**: beekeeper calls (issuecomment-6997840093; inter#304 issuecomment-7022406207).
 - **Reading B** (Wyrd executes): open for later (issuecomment-6986608090).
 - **Placement of "any host" requests** (choosing a queue across hosts): S1+ (v1.4.2 §3 [v1.3]).
 - **Ledger flock contention** across hosts: measured at S1→Walk (v1.4.2 §7b).
