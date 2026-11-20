@@ -25,13 +25,14 @@
 | v1.6.3 | issuecomment-6987708389 | P1/P2 pinned, grants immutable (T1), sensor ε its own leg (T2) | ratified 2026-11-18 |
 | v1.7 (+ r2–r4) | issuecomment-7017850231 | continuous capability as finite-lease chains | ratified 2026-11-19 |
 | v1.7.1 | issuecomment-7017928407 | desktop-load floor, RAM degrade ladder, Wyrd scoping | ratified 2026-11-19 |
-| v1.7.2 | issuecomment-7022202356 | federation possum mode | **DRAFT, not ratified** (Appendix A) |
+| v1.7.2 (r2) | issuecomment-7022202356 | federation possum mode (Appendix A) | ratified 2026-11-20 |
 
 **Also decided, outside the version chain:** reading A, for now (issuecomment-6986608090). Wyrd is the source of desired state and the reference monitor; Nidavellir's control plane reconciles from Wyrd; Wyrd gains no execution model. Reading B stays open.
 
 ### 1.3 Authority quotes
 - **v1.4.2 to v1.6.3:** the beekeeper ratified in session on 2026-11-18: *"301 ratified, go ahead"* (issuecomment-6997840093).
 - **v1.7 and v1.7.1:** the beekeeper ratified in session on 2026-11-19: *"Ratify v1.7 ratified"* (issuecomment-7022163369). Confirmed before ratification by deming (live-test seq 5538), wyrd-implementor (seq 5537) and the Gemini rounds.
+- **v1.7.2 (possum, r2):** the beekeeper ratified in session on 2026-11-20: *"Approved on all three"* (issuecomment-7047093954). Confirmed before ratification by deming (-7022301448).
 - **Reading A:** *"a for now"* (issuecomment-6986608090).
 
 ### 1.4 Review history
@@ -732,9 +733,9 @@ Every named test in the record, with its stage. Each ships with its mutant, KILL
 
 ---
 
-## Appendix A. v1.7.2 possum mode — **Draft, not ratified**
+## Appendix A. v1.7.2 possum mode — ratified 2026-11-20
 
-**Source:** issuecomment-7022202356 (r1), -7022279611 (r2), deming CONFIRMED -7022301448, plus deming's two notes. **Status:** r2 is confirmed by deming and awaits beekeeper ratification. Nothing here is in force. It would land at S1 beside v1.7 and does not touch S0.
+**Source:** issuecomment-7022202356 (r1), -7022279611 (r2), deming CONFIRMED -7022301448, plus deming's two notes. **Status:** r2 is ratified (beekeeper, 2026-11-20, issuecomment-7047093954). It lands at S1 beside v1.7 and does not touch S0. Figures marked PROVISIONAL are measured at S1.
 
 **Idea:** some jobs need nearly the whole box (a critical Cartan calculation, or the beekeeper gaming). Every continuous process drops to its lowest load, then comes back. It builds on BMA's committed possum controller (bma-systema `6cda99e`, `internal/bma/ccb/possum.go`), which yields the GPU when a foreign process holds the render node and rolling GPU use is above 28%.
 
@@ -761,5 +762,5 @@ Every named test in the record, with its stage. Each ships with its mutant, KILL
   - **D5. Interim practice until S1:** no new box-safety clearances or boxrun leases for the stated duration. Running jobs finish, and BMA's GL auto-yield frees the GPU.
   - **Footprint measurement is new S1 instrumentation.** The "heavy foreign load seen" AMBER is a separate one-way forwarder off `SE_POSSUM_GL_DETECTED`.
   - **New tests:** 11 (paused RSS not counted), 12 (grace bounded), 13 (works with deming absent), 13b (a file raise admits no job), 13c (clamp + AMBER), 14 (PSI-gated ramp), and test 9 extended to the forwarder.
-- **Draft tests (S1):** footprint by the deadline; trusted-base floor; every possum ends; seat-raised possum needs the beekeeper; queue unchanged; `reserve` and ε untouched; staged lift; refresh continues; GL auto-yield is local; authority quorum holds at 3 lanes.
-- **Not decided in the draft:** default `desktop_share`; a standing list of pre-approved seat jobs; how a pod drops to its footprint (inter#303 Q7).
+- **Tests (S1):** footprint by the deadline; trusted-base floor; every possum ends; seat-raised possum needs the beekeeper; queue unchanged; `reserve` and ε untouched; staged lift; refresh continues; GL auto-yield is local; authority quorum holds at 3 lanes.
+- **Not decided by ratification (open):** default `desktop_share`; a standing list of pre-approved seat jobs; how a pod drops to its footprint (inter#303 Q7).
