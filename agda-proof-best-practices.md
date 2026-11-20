@@ -1,6 +1,6 @@
 # Agda Proof Best Practices (Federation Standard)
 
-**Status:** v0.1 DRAFT (2026-11-20) — for inter#307
+**Status:** v0.1 (2026-11-20) — inter#307
 **Scope:** All federation Agda work — Cubical Agda first (QBP's homotopy layer, `proofs/agda/` builtins-only and `proofs/agda-cubical/` against agda/cubical), and any future Agda-verified component in another repo. QBP is the worked example throughout; the rules are repo-independent.
 **Companion docs:** [`lean-proof-best-practices.md`](lean-proof-best-practices.md) (the algebraic-layer sibling), [`code-review-best-practices.md`](code-review-best-practices.md), [`best-practices/definition-of-done.md`](best-practices/definition-of-done.md). Local run recipes (memory caps, box wrappers, thermal guard) live in the `agda` skill, not here.
 
@@ -28,7 +28,7 @@ If you remember nothing else: **`agda --safe` passing is the completeness gate**
 
 ## 2. Forbidden escapes — and the control that proves each is caught
 
-Forbidden always, in any file called proof: `postulate`, `primTrustMe`, `{-# REWRITE #-}` / `--rewriting`, `--type-in-type`, `{-# TERMINATING #-}` / `{-# NON_TERMINATING #-}`, `{-# NO_POSITIVITY_CHECK #-}` / `{-# NO_UNIVERSE_CHECK #-}`, and interaction holes (`?` / `{!!}`). If the checker rejects a definition on termination or positivity, **restructure the recursion** — never pragma past it.
+Forbidden always, in any file called proof: `postulate`, `primTrustMe` / `primEraseEquality` (the upstream Safe Agda name), `{-# REWRITE #-}` / `--rewriting`, `--type-in-type`, `{-# TERMINATING #-}` / `{-# NON_TERMINATING #-}`, `{-# NO_POSITIVITY_CHECK #-}` / `{-# NO_UNIVERSE_CHECK #-}`, and interaction holes (`?` / `{!!}`). If the checker rejects a definition on termination or positivity, **restructure the recursion** — never pragma past it.
 
 Each escape has (or should have) a **must-fail control**: a file that commits the escape and whose header records the error substring the checker must emit (`-- EXPECT: …`). The QBP suite lives in `tools/agda-toolcheck/mustfail/` (QBP PR #825, issue #823) and is run by `tools/agda-toolcheck/run.sh`, which reports REJECTED only when the file fails *with that message*.
 
@@ -37,13 +37,15 @@ Each escape has (or should have) a **must-fail control**: a file that commits th
 | top-level `postulate` | `Postulate.agda` | `Cannot postulate` | The Agda `sorry` is refused; by transitivity, so is one anywhere in the import closure |
 | `{-# TERMINATING #-}` (stands for the whole pragma family) | `Terminating.agda` | `TERMINATING` | A trusted-recursion pragma (with which `loop : ⊥` would check) is refused at the pragma, not the use |
 | interaction hole `?` (`{!!}` is the same construct) | `Hole.agda` | `Unsolved interaction metas` | Batch mode treats a hole as an error; `--safe` forbids `--allow-unsolved-metas`, so a hole can never be waved through |
-| a path between distinct points (`λ _ → true : true ≡ false`) | `BadPath.agda` | `UnequalTerms` | Path endpoints are checked definitionally — the control for the #472-class vacuity: a false equation cannot pass as a constant path |
+| a path between distinct points (`λ _ → true : true ≡ false`) | `BadPath.agda` | `UnequalTerms` | Path endpoints are checked definitionally: a **false** equation cannot pass as a constant path. This is not a vacuity control. Vacuity is a *true but empty* statement, which `--safe` cannot see (§0, §3) |
 | **`postulate` hidden in a `let`** (`let postulate p : ⊥ in p`) | `LetPostulate.agda` — marked `MUSTFAIL-KNOWN-HOLE` | `postulate` | **Not caught on the current pin** — see below |
-| `primTrustMe`, `REWRITE`, `NO_POSITIVITY_CHECK`, `NO_UNIVERSE_CHECK`, `NON_TERMINATING`, `--type-in-type` | *(no dedicated control yet)* | — | Documented upstream as refused by `--safe`; covered meanwhile by the lexical control below. A control per escape is the obvious extension of the suite |
+| `primTrustMe` / `primEraseEquality`, `REWRITE`, `NO_POSITIVITY_CHECK`, `NO_UNIVERSE_CHECK`, `NON_TERMINATING`, `--type-in-type` | *(no dedicated control yet)* | — | Documented upstream as refused by `--safe`; covered meanwhile by the lexical control below. A control per escape is the obvious extension of the suite |
 
 **The known hole in the gate (agda/agda#8341).** On the Agda release pinned at the time of writing, `--safe` **accepts** a `postulate` written inside a `let`. The control file is therefore accepted (status KNOWN-HOLE, reported, not a suite failure). It is fixed upstream (agda/agda PR 8340); the issue names the affected and fixed releases. Until the pin moves past the fix:
 
-- the gap is covered by a **lexical control**: `run.sh` strips line comments and greps every CI-gated proof file for `postulate | primTrustMe | REWRITE | TERMINATING | NON_TERMINATING | NO_POSITIVITY_CHECK | NO_UNIVERSE_CHECK | type-in-type | {!` — a hit fails the suite. Baseline: 0 hits in 17 gated files, so no existing proof uses the hole. QBP#823's findings propose wiring this control into CI now;
+- the gap is covered by a **lexical control**: `run.sh` strips line comments and greps every CI-gated proof file for `postulate | primTrustMe | REWRITE | TERMINATING | NON_TERMINATING | NO_POSITIVITY_CHECK | NO_UNIVERSE_CHECK | type-in-type | {!` — a hit fails the suite. Baseline: 0 hits in 17 gated files, so no existing proof uses the hole. QBP#823's findings propose wiring this control into CI now. **Two limits of this cover:**
+  - it strips everything after `--` on a line, which also blanks `{-# OPTIONS … #-}` pragmas, so a flag such as `--type-in-type` is caught by `--safe` itself, not by the grep;
+  - the grep has no planted-hit control of its own yet. Until a must-hit fixture proves it bites, treat "0 hits" as unverified coverage;
 - a reviewer of any Agda PR greps for the same tokens by hand (the audit step of the quick checklist);
 - on a pin that has the fix, `run.sh` reports the file **FIXED**; it must then be promoted to a plain `MUSTFAIL` and the feature table updated. A pin that has the fix and a control still marked KNOWN-HOLE is a stale suite.
 
@@ -103,7 +105,7 @@ Other repos write their own scoping rules in this section's style: the generaliz
 
 At the start of a task read them, confirm `agda --version` matches, and confirm the local library checkout is at the pinned commit (the toolcheck runner does both and fails on a mismatch). A local library registration that points at a stale checkout is the commonest silent divergence from CI.
 
-**The rule (QBP#823 R1–R7, summarized; ratification tracked on that issue):**
+**The rule (QBP#823 R1–R7, summarized). Proposed: in force once ratified on QBP#823.**
 
 | # | Rule |
 |---|---|
