@@ -1,6 +1,6 @@
 # Lean 4 Proof Best Practices (Federation Standard)
 
-**Status:** v1.1 (2026-11-21). v1.1 adds §13, validating a "checked in Lean" claim (QBP#830 AC7). v1.0 was 2026-05-31.
+**Status:** v1.1 (2026-11-21). v1.1 adds §13, validating a "checked in Lean" claim (QBP#830 AC7), and §13.6, proof-size advice (AC8). v1.0 was 2026-05-31.
 **Scope:** All federation Lean 4 / Mathlib work — primarily QBP foundations (`proofs/QBP/`), and any future Lean-verified component (Wyrd `HolographicHypergraph.lean`, notary TLA→Lean bridges, etc.).
 **Companion docs:** [`code-review-best-practices.md`](code-review-best-practices.md), [`test-quality-best-practices.md`](test-quality-best-practices.md), [`best-practices/definition-of-done.md`](best-practices/definition-of-done.md).
 
@@ -205,6 +205,21 @@ The following were not verified when this section was written. Confirm them on t
 QBP#830 sequences the first adoption after the Lean 4.35.0 bump for this reason.
 
 The post's closing caveat also stands: a Lean proof that passes all four questions says nothing about whether a *paper's* proof is correct.
+
+### 13.6 Proof size: advice, never a gate
+
+Beekeeper direction 2026-11-21, QBP#830 AC8. The aim is to split at natural seams, so that a person, an AI reviewer and the kernel can each check every piece. Q1 depends on this: a statement nobody can restate in one sentence is a statement nobody has really checked against its claim.
+
+- **Not a gate.** No CI check fails on size. Large is fine when the content is large.
+- **Split at meaning, not at a line count.** A good piece can be named and stated in one sentence: a lemma with its own meaning, a definition boundary, a reusable step.
+- **Signals for a "consider splitting" review note** (a note, never a block):
+  - the reviewer can't say what a lemma states in one sentence;
+  - the file mixes several topics;
+  - a statement depends on many local definitions;
+  - the kernel check is slow or memory-heavy compared with the rest of the corpus.
+- **Legitimately large:** big finite computations, enumerations (e.g. the 42 sedenion zero divisors) and generated tables. These carry a header saying why the file is large and how it is checked.
+- **Large files get a map:** a header listing the sections and the main theorems.
+- **No size numbers yet.** Any thresholds will come from the size-versus-review-miss model study (QBP#831), not from a guess.
 
 ---
 
