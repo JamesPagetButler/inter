@@ -140,7 +140,7 @@ The post's warning applies to us too. A green build only means the kernel accept
 
 ### 13.1 Q1: the statement says the thing
 
-The post's example: `∀ a b c n : ℕ, n ≥ 3 → a^n + b^n ≠ c^n` is *false*, because Lean's `ℕ` contains 0, so a = b = c = 0 is a counterexample. Reading by eye misses this kind of error. Gleipnir caught three such errors in one week, and every one was found by trying to *prove* the claim, not by reading it.
+The post's example: `∀ a b c n : ℕ, n ≥ 3 → a^n + b^n ≠ c^n` is *false*, because Lean's `ℕ` contains 0, so a = b = c = 0 is a counterexample. Reading by eye misses this kind of error. In one week Gleipnir caught two statement-level errors, both by trying to prove the claim. It also caught one reviewer misreading of the machine model, by checking it against the library's definition.
 
 - **Non-vacuity is a theorem, not a review note.** Where a statement could be vacuous, prove the side conditions are satisfiable. Gleipnir's LOCK-0 leg L0 is the model: it proves that P is nonempty, that P ⊆ NP, that some decidable language is not in P, and that a non-trivial NP verifier exists.
 - **Strongest form: prove equivalence with someone else's statement.** Where an independently written statement exists (another library, another formalisation, another machine model), prove the two equivalent. Gleipnir L3 does this against a vendored lean-dojo statement. The vendored copy is kept byte-identical by a drift test, whose trust anchor is constants written in the test. Each repo lists which anchors qualify; the list may start empty.
@@ -170,10 +170,12 @@ Comparator **cannot check** proofs that use native evaluation, because it has no
 - **Named exactly,** never by pattern or by file.
 - **Linked to an issue** that tracks re-proving it with kernel `decide` or structured enumeration (§1, §5).
 - **Checked for staleness:** the gate fails if the allowlist entry no longer matches a native-using theorem.
-- **Transitive:** the gate fails on any formal-tier theorem whose axiom closure contains a native-evaluation axiom, except the named exception itself. The allowlist covers the one name, not its dependents. This is Cartan's rule.
-  - Before Lean 4.29 the axiom is `Lean.ofReduceBool` / `Lean.trustCompiler`.
-  - From 4.29 on, each native computation adds its own named axiom (§1, RFC #12216), and the reference page says `Lean.trustCompiler` is removed in 4.35.0.
-  - So match the native-axiom *family* that the pinned toolchain's `#print axioms` actually emits, not a single hard-coded name. Re-check the match on every bump (§12).
+- **Transitive:** the gate fails on any formal-tier theorem whose axiom closure contains **any axiom outside {`propext`, `Classical.choice`, `Quot.sound`}**, except the named exception itself. The allowlist covers the one name, not its dependents. This is Cartan's rule.
+  - Key the rule on the allowlist, never on a native-axiom name. Native-axiom names change across toolchains:
+    - before Lean 4.29: `Lean.ofReduceBool` / `Lean.trustCompiler`;
+    - from 4.29 on: each native computation adds its own named axiom (§1, RFC #12216);
+    - the reference page says `Lean.trustCompiler` is removed in 4.35.0.
+  - The exception's entry records the exact axiom names the pinned toolchain's `#print axioms` emits for it. A bump that renames them therefore makes the entry stale, which fails the gate and forces a re-check (§12).
 - **Never formal grade** while the exception stands.
 
 QBP's one current exception is `hessian_traceSq_1152_universal`, tracked by QBP#582.
