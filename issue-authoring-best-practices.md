@@ -397,7 +397,7 @@ When this issue closes a gap surfaced elsewhere, the issue body links the surfac
 
 ```markdown
 **Surfaced by:**
-- Gemini-3-Pro review YYYY-MM-DD point (N)
+- Gemini review (model per stamp, e.g. `gemini-4-neon`) YYYY-MM-DD point (N)
 - Bridge channel `<channel>` seq=<N>
 - `repo-<name>-issue-#<N>` (parent / related)
 - Memory: `<memory-file>` documenting the prior decision

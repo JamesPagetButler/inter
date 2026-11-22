@@ -33,7 +33,7 @@ Herschel exists because Sprint 1 surfaced a real operational problem:
 | **Herschel (new)** | **Sonnet** | Sprint-execution driving (sustained, low-cost); cross-team review unblocking; project-board maintenance; dashboard updates; stale-poll detection; SLA tracking; routine bridge polling |
 | **Implementors** | varies per cart-model policy | Substantive PR work on per-PR threads |
 | **Marcy (bma gov-layer)** | Opus | Constitutional checks; gov-layer reviews; cognitive-architecture adjudication |
-| **qbp-oppenheimer (strategic lead)** | Opus + Gemini 3-Pro | QBP-side PR-pipeline strategic drive; theory authorship; anchor verification |
+| **qbp-oppenheimer (strategic lead)** | Opus + Gemini 4 Neon (profile `theory` / `t3`) | QBP-side PR-pipeline strategic drive; theory authorship; anchor verification |
 
 The new boundary: **Herschel runs sustained ops; qbp-architecture runs episodic strategy.** Each polls at appropriate cadence.
 
