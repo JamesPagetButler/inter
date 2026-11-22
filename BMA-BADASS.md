@@ -156,7 +156,7 @@ When stall threshold crossed, Herschel pings reviewer on bridge with cost-to-del
 
 | Cart × loop/op | Default model |
 |---|---|
-| Theory Cart (authorship + adjudication) | **Opus + Gemini 3-Pro HIGH** |
+| Theory Cart (authorship + adjudication) | **Opus + Gemini 4 Neon** (profile `theory`; Gemini routing per Nidavellir `ops/model-routing/gemini-profiles.json`, beekeeper 2026-11-22) |
 | Engineering Cart Loop 1 (Ideation/Reference) | **Sonnet** MED |
 | Engineering Cart Loop 2 (Architectural/Guidance) | **Sonnet** MED |
 | Engineering Cart Loop 3 (Real-World/Requirement) | Sonnet MED; **Opus only at gate-review step** |

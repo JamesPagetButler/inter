@@ -219,14 +219,26 @@ The mirror of §Sprint-Close: close *harvests + tidies*, housekeeping *clears th
 3. **Resume checkpoint** (each seat). Every seat writes its current state + its starting-queue tasks to its `RESUME.md` (per `best-practices/RESUME-template.md`) so the reload in step 5 is lossless.
 4. **Persona / wisdom update** (each seat; qbp-architecture coherence-ratifies). Each seat updates its OWN persona/launch doc with the wisdom + processes it actually accumulated — the seat-level analogue of §Sprint-Close's builder-learnings harvest. This is the standing quality-compounding step: done *every* prep, so persona quality rises sprint over sprint (the learnings flow back into who each seat is, not just into builders). "No new wisdom" is a valid outcome.
 4a. **Model-routing re-confirmation** (@nugent runs it; @deming capacity-gates it; the beekeeper approves any routing change). *Beekeeper-directed 2026-10-24 (inter#130): "new models are coming out so fast."* This is a token-frugal **confirmation**, not a discovery study, re-run **every prep**:
-   - **Trigger check first.** If no new model or version has been released by a provider we use since the last prep, record "no new models since <date>" and skip the run. That's a valid outcome.
+   - **Two triggers.**
+     - (1) Every prep, as above.
+     - (2) **Whenever the beekeeper notices a model change at any provider**, e.g. a new Claude or Gemini release. This trigger stands on its own and does not wait for sprint prep (beekeeper, 2026-11-22).
+   - **Trigger check first.** If no provider we use has released a new model or version since the last check, record "no new models since <date>" and skip the run. That's a valid outcome.
+   - **Gemini is included.** Gemini isn't a seat, so it isn't in the anchor-task run. Its table of record is Nidavellir `ops/model-routing/gemini-profiles.json` (Nidavellir#147), which maps profile to model. To check it:
+     - confirm the candidates with `models.list` on the federation key;
+     - smoke-test them;
+     - propose the diff for beekeeper approval.
+
+     A review gate follows the **review tier**, not the work type: a T3 review uses `profile=t3`, and T2 and below use `profile=t2`. A "Gemini signed" record cites the model stamp at the end of Gemini's answer.
    - **Anchor tasks, programmatically graded, never by an LLM judge** (the inter#130 Option-B set):
      - T1, relevance-filter (worker/sweep tier);
      - T2, coding-with-tests (coding tier);
      - T3, one proof-grade calibration node (proof tier). The 2026-09-30 octonion node, `INSIGHT-octonion-quaternion-branching`, is the reference.
    - **The token ceiling is enforced, not advisory.** The run aborts at the pre-stated budget. That's the inter#130 AC2 lesson: 1.32M tokens against a ~1M ceiling.
    - **Output:** the routing table (tier → model and effort), diffed against the current one, plus cost per correct answer for each candidate. Post it on the sprint's weave issue. **A routing change applies at step 5 (Reload)**, only after the beekeeper approves it.
-   - The current routing of record is inter#130 (2026-10-24): Haiku 4.5 for sweep, Sonnet 5 for coding and proof, Opus 5.5 for architecture and judgment (as policy).
+   - **Current routing of record.**
+     - **Claude:** the inter#130 tiers (2026-10-24), with every Sonnet 5 seat moved to **Sonnet 5.5** on 2026-11-13 by beekeeper direction (Nidavellir `ops/model-routing/README.md`): Haiku 4.5 for sweep, Sonnet 5.5 for coding and proof, and Opus 5.5 for architecture and judgment (as policy). cartan stays on Opus 5.5 until Fable 5.2 is approved.
+     - **Gemini (beekeeper, 2026-11-22):** Gemini 4 Neon for theory, Tier 3 review and conversation (the default); Carbon for spike thinking; Hydrogen for Tier 2 and below.
+   - **Open candidate for the Sprint 4 prep run:** Fable 5.2 (`claude-fable-5-2`) for the proof tier (T3 anchor). Its ID answers on our account. Note that the CLI 2.1.318 `fable` alias still resolves to 5.1, so the run must pin the full ID.
 5. **Reload** (deming/devops executes; each seat resumes). Restart every seat fresh — which **loads any pending code deploy automatically.** The reload is **staged**, not all-at-once: seats come back in stages per deming's relaunch runbook, under the inter#92 stagger and the box's capacity (the 2026-10-07 crash → staged Stage 1–4 relaunch is the reference run). This is the **deploy-propagation point**: a merged fix (e.g. a sessionbridge server change) goes live for all seats *here*, with no surgical mid-sprint reconnect. Each seat comes back on new code + its updated persona + its RESUME.md queue, and resumes from RESUME.md.
 6. **Verify + hand to kickoff** (deming health-sweep; qbp-architecture). Post-reload babysit-the-team sweep (every seat grounded + registered + wake waiter armed **and verified live**, per inter#157's `wake-wait.sh` and the inter#91 liveness check, because an armed waiter is not necessarily a live one + responsive), confirm each picked up its backlog, then the kickoff handoff (§2) fires → Sprint N+1 begins.
 
