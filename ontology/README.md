@@ -8,14 +8,14 @@ beekeeper (James) can look up what a term means, where it comes from, and how
 solid the ground under it is, in one place.
 
 It deliberately does **not** try to cover the whole federation. It covers the
-55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0; 102 since the forging-product and `math:` additions, v0.5.0; 107 since the two-axis formality model, v0.6.0) — the core vocabulary already in active
+55 terms named in the founding brief (68 since the 2026-10-08 forging & weaving entries; 72 since the 2026-10-09 inter#164 review harvest; 92 since the 2026-10-22 beekeeper rulings, v0.4.0; 102 since the forging-product and `math:` additions, v0.5.0; 107 since the two-axis formality model, v0.6.0; 111 since the CTH navigation measures, v0.7.0) — the core vocabulary already in active
 use, plus the known "capability" clash — with a clear path for adding more.
 
 ## What's here
 
 | File | What it is |
 |---|---|
-| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 107 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
+| `ontology.yaml` | **The machine-readable ontology.** One YAML document, 111 term entries, each with a human label, a human definition (quoted from source), a machine-parseable status/provenance tag, and citations. This is the single source of truth — everything else points at it. |
 | `ONTOLOGY-BEST-PRACTICES.md` | The research behind why this format was chosen (RDF/OWL/SKOS/JSON-LD/Turtle survey, dual-readability patterns, upper ontologies, versioning/drift) and the upgrade path to SKOS/JSON-LD if the vocabulary ever needs real machine inference. |
 | `README.md` | This file. |
 

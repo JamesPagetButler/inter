@@ -18,7 +18,7 @@
 _meta:
   title: "Federation Ontology (DRAFT)"
   status: DRAFT
-  version: "0.6.0"
+  version: "0.7.0"
   date: "2026-10-29"
   root_axiom: cth:AXIOM-1
   scope: >
@@ -68,6 +68,13 @@ _meta:
     craft: "Craft — the cockpit that renders the attention scalar (render side of the craft/Contextus seam). Owner seat: hutchins. Private repo: vocabulary only, no internal mechanics (beekeeper ruling, inter#173)."
 
   change_history:
+    "0.7.0": >
+      2026-11-22. CTH navigation measures (inter#311, beekeeper-directed
+      2026-11-22): cth:Potential, cth:NodeOfPotential, cth:LeaderProgress,
+      cth:PathGrounding, all design-proposal and all computed views (never stored
+      fields). Proposed by cartan; co-signed by cth-implementor; prefix, shape and
+      the single cost notion ruled by qbp-architecture; weights derived by
+      conserved flow (beekeeper ruling 2026-11-22). 107 -> 111 terms (4 new).
     "0.6.0": >
       2026-10-29. The two-axis formality model (inter#223, beekeeper-ratified
       2026-10-26; follow-through rulings 2026-10-28), inter#237 AC2/AC4/AC5.
@@ -576,6 +583,154 @@ terms:
       3b73b24 still records 0 / 0 for that anchor, so the backfill has not landed yet.
     review_ref:
       - https://github.com/JamesPagetButler/inter/pull/164#discussion_r4224681119
+
+  # --------------------------------------------------------------------------
+  # v0.7.0: CTH navigation measures (inter#311, beekeeper-directed 2026-11-22;
+  # proposed by cartan, co-signed by cth-implementor, prefix/shape ruled by
+  # qbp-architecture). ALL design-proposal: their parent, CTH v0.3 §11, is an
+  # untracked working draft, and §11.5 (Method 8) is [OPEN]. All four are
+  # COMPUTED VIEWS from `cth` tooling over an inventory, never stored ledger
+  # fields. None of them moves F (formality) or E (evidence).
+  # --------------------------------------------------------------------------
+
+  - id: cth:Potential
+    prefLabel: "potential, Π(v) (of an open node)"
+    definition: >
+      The downstream value that certifying an open node v would unlock, in the
+      current CTH graph state, derived by CONSERVED FLOW from root weights.
+      Only the roots (the programme's top goals) carry an input weight: Π(r) =
+      w(r). Every other node's potential is the flow it receives:
+      Π(v) = Σ over open goals g with v ∈ B(g) of Π(g) / |B(g)|.
+      Here B(g) is the set of open sources of g's cheapest live chain, with chain
+      cost as in cth:NodeOfPotential. The sum runs only over goals that v actually
+      blocks, so |B(g)| ≥ 1.
+      CHAIN-READY: if every source of g's cheapest live chain is already done
+      (B(g) is empty), the chain step itself is the remaining work. g is then
+      actionable and keeps its own Π instead of passing it on. Flow is conserved:
+      the potential summed over the actionable nodes equals the summed root
+      weights. Π is zero for a node that receives no flow.
+    status: design-proposal
+    axiom_grounding: "none — a prioritisation measure over the CTH dependency graph, not a claim."
+    broader: []
+    narrower: [cth:NodeOfPotential]
+    related: [cth:LeaderProgress, cth:PathGrounding, cth:derivation-edge, fed:FormalityF, fed:EvidenceE, spike:Leader]
+    source:
+      - file: /home/prime/Documents/inter/drafts/CTH-Theory-v0_3-DRAFT-navigation-layer.md
+        quote: "§11.5: 'forecasting which open questions sit near a conductive path — a map of the reachable'; proposed Method 8, [OPEN]"
+      - file: /home/prime/Documents/confluent-trust/compute/gap.go
+        quote: "WeightedGap (a Dijkstra over the chain hypergraph) and RankEddies (a ranked value-over-cost view): the structures a `cth` Π report reverses (confluent-trust main 625d4af)"
+    notes: >
+      STATE-RELATIVE: recomputed after every return stroke or kill. That is why it
+      is a computed view and never a stored field: a stored Π goes stale as soon as
+      any other node changes (ruling, inter#311). If a design ever needs to persist
+      it, that is a confluent-trust schema surface (cth-implementor), as a
+      timestamped snapshot record, never a live field.
+      ANTI-LAUNDERING: Π ranks where to look; it says nothing about what is true.
+      It is NEVER cited as evidence for a claim, and it moves neither F nor E.
+      WEIGHTS ARE DERIVED (beekeeper ruling 2026-11-22, as recorded on inter#311
+      issuecomment-7081493757; supersedes the earlier "beekeeper-ratified
+      constants" line). Only the root weights are inputs; Gleipnir's are its two
+      node-0 targets, 1 each. Every other weight is that node's own Π. Because the
+      flow is conserved, splitting a node into more pieces re-divides its share
+      without raising the total. That answers the concern that counting anchors
+      would reward splitting lemmas (lean-proof-best-practices.md §13.6).
+      CALIBRATION TRIAL: Gleipnir#121 (`cth/potential.py`, 7 tests), bounded to
+      the end of Gleipnir tactic (b). On Gleipnir's Clay inventory, conservation
+      holds (2.0 in, 2.0 out), and all the node-0 weight lands on LOCK-0 L1, the
+      last open definitional leg. The verdict, and a `compute.Potential` proposal
+      to cth-implementor if it works, come at the tactic (b) close. The
+      chain-ready case came from that trial: without it, a goal whose chain has
+      no open source lost its Π.
+      CHEAPEST LIVE CHAIN ONLY, BY DESIGN: a blocker on an alternative route gets no
+      credit from g. Alternative routes are funded by policy (the exploration
+      floor), not by Π. Spreading credit over k cheapest paths (Yen's algorithm on
+      the same Dijkstra) is deferred until a calibration run shows it is needed.
+      Formula corrected from 'goals reachable from v' to 'goals v blocks' after
+      Harlequin's Gleipnir#118 review (R1).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/311#issuecomment-7081429414
+      - https://github.com/JamesPagetButler/inter/issues/311#issuecomment-7081448864
+
+  - id: cth:NodeOfPotential
+    prefLabel: "node of potential"
+    definition: >
+      An open node whose potential is high relative to its cost to certify. Among
+      the open nodes reachable in the current budget, it is the top band by
+      Π(v) / cost(v): the gradient target that leaders are amplified towards.
+      cost(v) is the step-difficulty-weighted cost of v's cheapest remaining
+      certification path, from the inventory's own weights (the §2.7 Definition 16
+      step-difficulty table, as summed by the chain weight in `cth` compute). The
+      same cost defines the "cheapest path" in cth:Potential.
+    status: design-proposal
+    axiom_grounding: "none — see cth:Potential."
+    broader: [cth:Potential]
+    narrower: []
+    related: [cth:LeaderProgress, spike:Leader]
+    source:
+      - file: /home/prime/Documents/confluent-trust/compute/gap.go
+        quote: "StepDifficulty returns w(e) for a derivation step type per the §2.7 difficulty table; chainWeight returns the total weighted difficulty of a chain (confluent-trust main 625d4af)"
+    notes: >
+      ONE COST NOTION: cost comes from the inventory's step-difficulty weights, the
+      system's one cost primitive, so that every seat computes the same nodes of
+      potential from the same graph (ruling, inter#311 change (a)). A programme's
+      budget unit, e.g. Gleipnir's attempt slots, is a policy-level translation of
+      this cost, recorded on the trail. It is not a second definition. How wide
+      the "top band" is, is policy, not vocabulary. So are the amplify rule and the
+      exploration floor (Gleipnir#118 §11.1).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/311#issuecomment-7081429414
+
+  - id: cth:LeaderProgress
+    prefLabel: "leader progress (towards the leader's own target)"
+    definition: >
+      How far a leader ℓ (Def 25, CTH v0.3 §11.2) has got towards ITS OWN target
+      node v. It is the tuple (F tier reached: napkin < research < formal;
+      fraction of v's legs green; edges remaining), compared lexicographically,
+      and read from the leader's CTH trail. Aggregated over leaders, it is
+      Method 8's "distribution of where leaders get furthest".
+    status: design-proposal
+    axiom_grounding: "none — see cth:Potential."
+    broader: []
+    narrower: []
+    related: [cth:Potential, cth:NodeOfPotential, fed:FormalityF, spike:Leader]
+    source:
+      - file: /home/prime/Documents/inter/drafts/CTH-Theory-v0_3-DRAFT-navigation-layer.md
+        quote: "Definition 25 (Leader / Return Stroke): 'a bounded exploratory chain-in-progress toward a goal g'; §11.5: 'the distribution of where leaders get furthest is itself the forecast'"
+    notes: >
+      A TUPLE, NEVER A SCALAR: its three parts can't be compared on one scale.
+      Collapsing them into one number waits for a calibration run, and so does any
+      "Π × progress" product. Measured only against the leader's own target, so
+      that progress on a leg node can't inflate a theorem-node leader's rank
+      (Harlequin's Gleipnir#118 review, R2).
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/311#issuecomment-7081429414
+
+  - id: cth:PathGrounding
+    prefLabel: "path grounding (of a conductive path)"
+    definition: >
+      The fraction of a conductive path's leaves that are formal grade under
+      lean-proof-best-practices.md §13: checked against a trusted statement, with
+      axioms only from {propext, Classical.choice, Quot.sound}. These may be our
+      own theorems or a library's, e.g. Mathlib. The rest are cited prose
+      arguments, listed explicitly as the path's ungrounded edges.
+    status: design-proposal
+    axiom_grounding: "none — see cth:Potential."
+    broader: []
+    narrower: []
+    related: [cth:Potential, cth:ProofState, cth:proof_assistants, fed:FormalityF]
+    source:
+      - file: /home/prime/Documents/inter/lean-proof-best-practices.md
+        quote: "§13.2 (trusted statements, standard-axiom allowlist) and §13.3 (a native-computation exception is never formal grade); inter PR #309"
+    notes: >
+      A native_decide-excepted theorem is NOT a grounded leaf, because
+      "kernel-checked" alone would admit it (ruling, inter#311 change (d)).
+      Grounding is necessary, not sufficient: one library under one kernel is still
+      a single trust base, so grounding sits alongside independent-statement and
+      second-kernel checks (§13.1, §13.4). An ungrounded edge is a cheap,
+      high-potential leader, because promoting it raises grounding directly. That
+      is a use of the term, i.e. policy.
+    review_ref:
+      - https://github.com/JamesPagetButler/inter/issues/311#issuecomment-7081429414
 
   # ==========================================================================
   # WYRD — quaternion-native typed holographic hypergraph DB
