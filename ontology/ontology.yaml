@@ -73,7 +73,8 @@ _meta:
       2026-11-22): cth:Potential, cth:NodeOfPotential, cth:LeaderProgress,
       cth:PathGrounding, all design-proposal and all computed views (never stored
       fields). Proposed by cartan; co-signed by cth-implementor; prefix, shape and
-      the single cost notion ruled by qbp-architecture. 107 -> 111 terms (4 new).
+      the single cost notion ruled by qbp-architecture; weights derived by
+      conserved flow (beekeeper ruling 2026-11-22). 107 -> 111 terms (4 new).
     "0.6.0": >
       2026-10-29. The two-axis formality model (inter#223, beekeeper-ratified
       2026-10-26; follow-through rulings 2026-10-28), inter#237 AC2/AC4/AC5.
@@ -596,13 +597,18 @@ terms:
     prefLabel: "potential, Π(v) (of an open node)"
     definition: >
       The downstream value that certifying an open node v would unlock, in the
-      current CTH graph state, relative to a weighted goal set:
-      Π(v) = Σ over goals g with v ∈ B(g) of w(g) / |B(g)|.
-      Here B(g) is g's set of open blockers on its cheapest remaining dependency
-      path, with path cost as in cth:NodeOfPotential. The sum runs only over goals
-      that v actually blocks, so |B(g)| ≥ 1. w(g) is the goal weight. Certifying
-      the last blocker of g carries g's full weight. Π is zero for a node that
-      blocks no goal.
+      current CTH graph state, derived by CONSERVED FLOW from root weights.
+      Only the roots (the programme's top goals) carry an input weight: Π(r) =
+      w(r). Every other node's potential is the flow it receives:
+      Π(v) = Σ over open goals g with v ∈ B(g) of Π(g) / |B(g)|.
+      Here B(g) is the set of open sources of g's cheapest live chain, with chain
+      cost as in cth:NodeOfPotential. The sum runs only over goals that v actually
+      blocks, so |B(g)| ≥ 1.
+      CHAIN-READY: if every source of g's cheapest live chain is already done
+      (B(g) is empty), the chain step itself is the remaining work. g is then
+      actionable and keeps its own Π instead of passing it on. Flow is conserved:
+      the potential summed over the actionable nodes equals the summed root
+      weights. Π is zero for a node that receives no flow.
     status: design-proposal
     axiom_grounding: "none — a prioritisation measure over the CTH dependency graph, not a claim."
     broader: []
@@ -621,12 +627,21 @@ terms:
       timestamped snapshot record, never a live field.
       ANTI-LAUNDERING: Π ranks where to look; it says nothing about what is true.
       It is NEVER cited as evidence for a claim, and it moves neither F nor E.
-      GOAL WEIGHTS w(g): beekeeper-ratified constants for top goals, proposed by
-      the programme head and recorded with their date. They are not derived from
-      anchor counts, because counting anchors would reward splitting lemmas
-      (lean-proof-best-practices.md §13.6). A derived scheme waits for calibration
-      evidence.
-      CHEAPEST PATH ONLY, BY DESIGN: a blocker on an alternative route gets no
+      WEIGHTS ARE DERIVED (beekeeper ruling 2026-11-22, as recorded on inter#311
+      issuecomment-7081493757; supersedes the earlier "beekeeper-ratified
+      constants" line). Only the root weights are inputs; Gleipnir's are its two
+      node-0 targets, 1 each. Every other weight is that node's own Π. Because the
+      flow is conserved, splitting a node into more pieces re-divides its share
+      without raising the total. That answers the concern that counting anchors
+      would reward splitting lemmas (lean-proof-best-practices.md §13.6).
+      CALIBRATION TRIAL: Gleipnir#121 (`cth/potential.py`, 7 tests), bounded to
+      the end of Gleipnir tactic (b). On Gleipnir's Clay inventory, conservation
+      holds (2.0 in, 2.0 out), and all the node-0 weight lands on LOCK-0 L1, the
+      last open definitional leg. The verdict, and a `compute.Potential` proposal
+      to cth-implementor if it works, come at the tactic (b) close. The
+      chain-ready case came from that trial: without it, a goal whose chain has
+      no open source lost its Π.
+      CHEAPEST LIVE CHAIN ONLY, BY DESIGN: a blocker on an alternative route gets no
       credit from g. Alternative routes are funded by policy (the exploration
       floor), not by Π. Spreading credit over k cheapest paths (Yen's algorithm on
       the same Dijkstra) is deferred until a calibration run shows it is needed.
