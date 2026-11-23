@@ -201,7 +201,8 @@ def check_labeller_set(labeller_set, pinned_rubric_sha, expected_items):
 
     Each record's rubric sha is its own `rubric_sha` if present, else the set header's `rubric_sha`.
     Any record whose effective sha is missing, empty or != pinned voids the WHOLE labeller set
-    (so G2 reads void, never pass). Out-of-set grades or wrong item coverage reject.
+    (so G2 reads void, never pass). So does a header without "blind": true (amendment 2; header
+    only, JSON boolean only). Out-of-set grades or wrong item coverage reject.
     """
     header = labeller_set.get("header") or {}
     recs = labeller_set.get("records") or []
@@ -214,6 +215,10 @@ def check_labeller_set(labeller_set, pinned_rubric_sha, expected_items):
             void.append(f"{r.get('paper')}/{r.get('n')}: rubric_sha {eff} != pinned {pinned_rubric_sha}")
     if not recs:
         void.append("no labeller records")
+    # Amendment 2: the header must attest blindness (did not see verifier/checker/agreed grades).
+    # Header-level only, exactly the JSON boolean true; any record-level "blind" key is ignored.
+    if header.get("blind") is not True:
+        void.append(f"header blind attestation must be true, got {header.get('blind')!r}")
     for r in recs:
         if r.get("grade") not in GRADE_SET:
             errs.append(f"{r.get('paper')}/{r.get('n')}: grade outside category set: {r.get('grade')!r}")

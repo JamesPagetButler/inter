@@ -263,6 +263,68 @@ def test_bundle_cannot_override_the_pinned_rubric_sha():
     assert an.analyse(b, RUN1, B=50)["audit"]["g2_pass"] == "void"
 
 
+# ---------- amendment 2: blindness -> G2 void; checker grades outside the 120 never counted ----------
+
+def test_g2_void_when_a_labeller_set_is_not_blind():
+    for side, val in (("labeller_a", False), ("labeller_b", None), ("labeller_b", "true")):
+        b = _bundle()
+        if val is None:
+            b["audit_labellers"][side]["header"].pop("blind")
+        else:
+            b["audit_labellers"][side]["header"]["blind"] = val
+        r = an.analyse(b, RUN1, B=50)
+        assert r["audit"]["g2_pass"] == "void", (side, val)
+        assert r["decision"]["outcome"] == "not listed: G2 void (audit labeller rubric parity)"
+
+
+def _extra_checker(b, flip_all=True):
+    # Add checker grades (e.g. L1 doubt checks) for keyed claims OUTSIDE the double-graded 120.
+    dg = {(p, n) for p, n in b["double_graded"]}
+    added = 0
+    for p, d in b["verifier"].items():
+        for n, v in d.items():
+            if (p, int(n)) not in dg:
+                g = "not-in-paper" if v["grade"] == "faithful" else "faithful"
+                b["checker"].setdefault(p, {})[n] = g if flip_all else v["grade"]
+                added += 1
+    return added
+
+
+def test_checker_grades_outside_the_120_never_counted():
+    for kw in ({}, {"checker_flip": True}):
+        base = json.dumps(an.analyse(_bundle(**kw), RUN1, B=300), sort_keys=True)
+        b = _bundle(**kw)
+        assert _extra_checker(b) == 387 - 120
+        assert json.dumps(an.analyse(b, RUN1, B=300), sort_keys=True) == base, kw
+
+
+def test_checker_extra_grades_must_still_be_valid():
+    b = _bundle()
+    _extra_checker(b)
+    p = next(iter(b["checker"]))
+    extra = next(n for n in b["verifier"][p] if [p, int(n)] not in b["double_graded"])
+    b["checker"][p][extra] = "maybe"
+    try:
+        an.analyse(b, RUN1, B=10)
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError("out-of-set extra checker grade accepted")
+
+
+def test_checker_must_still_cover_all_120():
+    b = _bundle()
+    p, n = b["double_graded"][0]
+    b["checker"][p].pop(str(n))
+    _extra_checker(b)
+    try:
+        an.analyse(b, RUN1, B=10)
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError("missing double-graded checker grade accepted")
+
+
 # ---------- round 1 reproduction ----------
 
 def test_reproduces_round1_kappa_0494():
@@ -334,9 +396,9 @@ def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10, a_sha=PIN, b
     items = draw["double_graded"][:20] if not checker_flip else []
     audit = [{"paper": p, "n": n, "agreed_grade": lean[p][n]} for p, n in items]
     labellers = {
-        "labeller_a": {"labeller": "qbp-oppenheimer", "header": {"rubric_sha": a_sha},
+        "labeller_a": {"labeller": "qbp-oppenheimer", "header": {"rubric_sha": a_sha, "blind": True},
                        "records": [{"paper": p, "n": n, "grade": lean[p][n]} for p, n in items]},
-        "labeller_b": {"labeller": "gemini-labeller", "header": {"rubric_sha": b_sha} if b_sha is not None else {},
+        "labeller_b": {"labeller": "gemini-labeller", "header": {"rubric_sha": b_sha, "blind": True} if b_sha is not None else {"blind": True},
                        "records": [{"paper": p, "n": n, "grade": lean[p][n] if i < audit_confirmed else "not-in-paper"}
                                    for i, (p, n) in enumerate(items)]}}
     return {"verifier": ver, "checker": chk, "double_graded": [list(x) for x in draw["double_graded"]],

@@ -346,3 +346,55 @@ original was restored with a sha check.
   - Q11 labeller `[:16]` and `[:63]`
   - checker meta `[:16]` and `[:63]`
   - verifier received sha `[:16]` and `[:63]`
+
+### Amendment-2 FIX ROUND: blindness attestation and checker grades outside the 120 (on bb3490c)
+**Blindness attestation**
+- `l0_checks.check_labeller_set` now voids a labeller set unless its **header** carries
+  `"blind": true`, which attests that the labeller did not see the verifier, checker or agreed
+  grades.
+- Only the JSON boolean `true` counts. A missing value, `false`, or any non-boolean value
+  (`"true"`, `"True"`, `1`, `"yes"`, a list, a dict, null) voids the set.
+- The check is header-level only. A record-level `blind` key is ignored, whichever way it points.
+- A void set makes G2 read void through the existing path, and the decision is "not listed: G2
+  void (audit labeller rubric parity)". This was tested for each labeller in `analyse()`.
+- The existing ok fixtures now attest `blind: true`.
+
+**Checker grades outside the 120**
+- `analyse()` now accepts checker grades beyond the double-graded 120, for example L1 doubt checks.
+- It still requires that the checker grades cover all 120, that every extra grade is for a keyed
+  claim, and that every grade is in the category set.
+- It then uses only the 120 for κ, G1–G3, audit eligibility and every other measurement. Before
+  this change, an extra checker grade aborted the analysis.
+- The new test adds checker grades for all 267 non-sampled claims, deliberately the opposite of
+  the verifier. It checks that the results are byte-identical with and without them, for both the
+  identical-checker and flipped-checker fixtures.
+
+**Tests**
+- `test_l0_checks.py`: 35/35 PASS. The 5 new blindness tests failed first.
+- `test_analysis_r11.py`: 44/44 PASS.
+  - The blind-G2-void test and the outside-120 byte-identity test failed first.
+  - The extra-grade-validity and coverage tests passed before the change only because any extra
+    grade aborted the analysis then.
+- All suites give 109/109 under pytest.
+
+**Mutants**
+- Blindness, all KILLED:
+  - B1, check removed
+  - B2a, any truthy value accepted
+  - B2b, the string `"true"` accepted
+  - B3, missing treated as true
+  - B4, record-level `blind: true` overrides a missing or false header
+  - B5, record-level `blind: false` overrides a true header
+- Outside the 120, all KILLED:
+  - C1, all checker grades pooled everywhere
+  - C2, κ-120 pooled
+  - C3, the G3 set pooled
+  - C4, extra grades not validated
+- All 44 earlier mutants re-run on the final files: all KILLED.
+  - l0: L0-M1–M6, R2-M1–M6, Q11 `[:16]`/`[:63]` on all three paths
+  - analysis: M1–M9, Q4–Q10, R6-M1–M6, R2-A1–A3
+
+**Determinism and κ**
+- Round 1's κ is still 0.49420442571127504.
+- The `round1` and the B = 10000 fixture `run` outputs are byte-identical across two runs, and the
+  `run` output is identical to d7da191's.

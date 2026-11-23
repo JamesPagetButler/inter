@@ -183,9 +183,13 @@ def test_checker_role_rejects_out_of_set_grade():
 ITEMS = {("P", 1), ("P", 2), ("Q", 5)}
 
 
-def lab(header=None, recs=None, who="qbp-oppenheimer"):
+def lab(header=None, recs=None, who="qbp-oppenheimer", blind=True):
+    # Every set attests blindness in its header unless a test says otherwise (amendment 2).
     recs = recs if recs is not None else [{"paper": p, "n": n, "grade": "faithful"} for p, n in sorted(ITEMS)]
-    return {"labeller": who, "header": header if header is not None else {}, "records": recs}
+    h = dict(header) if header is not None else {}
+    if blind is not None and "blind" not in h:
+        h["blind"] = blind
+    return {"labeller": who, "header": h, "records": recs}
 
 
 def ls(x):
@@ -257,6 +261,42 @@ def test_verifier_received_sha_last_char_mismatch_voids():
     assert run(GOOD, rubric_sha=LAST)["status"] == "void"
     for role in l0.VERIFIER_ROLES:
         assert rr(role, {"text": GOOD, "received_rubric_sha": LAST})["status"] == "void", role
+
+
+# ---------- amendment 2 (cartan gate-8 note): header-level blindness attestation ----------
+
+def test_blind_true_attested_ok():
+    assert ls(lab(header={"rubric_sha": PIN_SHA}))["status"] == "ok"
+
+
+def test_blind_missing_voids():
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, blind=None))["status"] == "void"
+
+
+def test_blind_false_voids():
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, blind=False))["status"] == "void"
+
+
+def test_blind_non_boolean_voids():
+    for v in ("true", "True", 1, "yes", [True], {"v": True}, None):
+        r = ls(lab(header={"rubric_sha": PIN_SHA, "blind": v}))
+        assert r["status"] == "void", (v, r)
+
+
+def test_blind_record_level_cannot_override_header():
+    recs = [{"paper": p, "n": n, "grade": "faithful", "blind": True} for p, n in sorted(ITEMS)]
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs, blind=None))["status"] == "void"
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs, blind=False))["status"] == "void"
+    # and a record-level false doesn't matter when the header attests (header-level only)
+    recs = [{"paper": p, "n": n, "grade": "faithful", "blind": False} for p, n in sorted(ITEMS)]
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs))["status"] == "ok"
+
+
+def test_blind_void_beats_reject_and_applies_to_both_labellers():
+    for who in ("qbp-oppenheimer", "gemini-labeller"):
+        assert ls(lab(header={"rubric_sha": PIN_SHA}, blind=False, who=who))["status"] == "void"
+    recs = [{"paper": "P", "n": 1, "grade": "bogus"}]
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs, blind=False))["status"] == "void"
 
 
 if __name__ == "__main__":

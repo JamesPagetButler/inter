@@ -25,7 +25,8 @@ Committed before any 1.1 rating exists. Method choices are fixed here:
 
 Inputs (`run` bundle JSON, after L0):
   verifier: {paper: {n: {"grade": g, "doubt": bool}}}  -- all 387 keyed claims
-  checker:  {paper: {n: g}}                             -- exactly the double-graded 120
+  checker:  {paper: {n: g}}                             -- must cover the double-graded 120; any
+                                                           others (e.g. L1) are validated, then ignored
   double_graded: [[paper, n], ...]                      -- must equal sampler.draw()'s committed draw
   audit: [{"paper","n","agreed_grade"}]                           (20)
   audit_labellers: {"labeller_a"|"labeller_b": {"labeller": name, "header": {"rubric_sha": ...},
@@ -296,9 +297,13 @@ def analyse(bundle, run1=RUN1, B=B, seed=SEED):
         must(v.get("grade") in GRADES and isinstance(v.get("doubt"), bool), f"verifier {c}: {v}")
     dg = sorted((p, int(n)) for p, n in bundle["double_graded"])
     must(dg == sampler.draw(claims, cont, seed=SEED)["double_graded"], "double_graded != the committed §4 draw")
-    chk = {(p, int(n)): g for p, d in bundle["checker"].items() for n, g in d.items()}
-    must(set(chk) == set(dg), "checker grades must cover exactly the double-graded set")
-    must(all(g in GRADES for g in chk.values()), "checker grade outside the category set")
+    chk_all = {(p, int(n)): g for p, d in bundle["checker"].items() for n, g in d.items()}
+    must(set(dg) <= set(chk_all), "checker grades must cover the whole double-graded set")
+    must(set(chk_all) <= set(rows), "checker grade for a claim that is not keyed")
+    must(all(g in GRADES for g in chk_all.values()), "checker grade outside the category set")
+    # Amendment 2: checker grades outside the double-graded 120 (e.g. L1 doubt checks) never enter
+    # kappa, G1-G3 or any measurement. Only this restriction is used from here on.
+    chk = {c: chk_all[c] for c in dg}
 
     res = {"validity": validity}
     res["kappa_120"] = _kappa_with_ci(dg, ver, chk, B, seed)
