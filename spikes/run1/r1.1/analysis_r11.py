@@ -101,6 +101,13 @@ def wilson(k, n):
     return (p, max(0.0, c - h), min(1.0, c + h))
 
 
+def percentile_ci(reps):
+    """Percentile 95% interval: numpy's default (linear) percentile at 2.5 and 97.5; None if empty."""
+    if not reps:
+        return None
+    return [float(np.percentile(reps, 2.5)), float(np.percentile(reps, 97.5))]
+
+
 def cluster_bootstrap_kappa(pairs_by_paper, B=B, seed=SEED):
     papers = sorted(pairs_by_paper)
     rng = np.random.default_rng(seed)
@@ -114,7 +121,7 @@ def cluster_bootstrap_kappa(pairs_by_paper, B=B, seed=SEED):
             undefined += 1
         else:
             reps.append(float(k))
-    ci = [float(np.percentile(reps, 2.5)), float(np.percentile(reps, 97.5))] if reps else None
+    ci = percentile_ci(reps)
     return {"B": B, "seed": seed, "undefined": undefined, "ci95": ci, "replicates": reps}
 
 

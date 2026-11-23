@@ -220,3 +220,37 @@ original was restored with a sha check.
 - P4 clustering by RCA cause.
 - The per-category distribution "against round 1" is given on the same claims only.
 - The §8b probe measures (Fleiss' κ, the unanimous share) are outside this component's §8a row.
+
+### analysis_r11.py FIX ROUND (qbp-architecture independent probe Q4 on 08f49bc)
+- **Found:** the probe changed `np.percentile(reps, 2.5)` to `5`, and it **SURVIVED** every test.
+  The tests pinned the replicate frequencies but not the interval endpoints, and G1 and G3 are
+  decided on the lower bound. A real bootstrap of discrete κ values has ties at its neighbouring
+  ranks, so it can't tell the linear rule from nearest-rank on its own.
+- **Fix:**
+  - The interval is factored into `percentile_ci(reps)`.
+  - New tests:
+    - `test_percentile_ci_hand_computed`: reps = i², i = 0..10, gives [0.25, 95.25] by hand. Linear
+      at h = 0.25 is 0.25; at h = 9.75 it is 81 + 0.75·19. Nearest-rank would give 0 / 100, and the
+      5th / 95th percentiles would give 0.5 / 90.5.
+    - `test_cluster_bootstrap_ci_is_percentile_ci_of_its_replicates`: checks the wiring.
+    - `test_cluster_bootstrap_ci_endpoints_are_2_5_and_97_5`: an 8-paper fixture, checked against
+      a numpy-free linear percentile in the test. It first asserts that the 2.5/5 and 95/97.5
+      percentiles differ, so the test can tell them apart.
+    - `test_g1_reads_lower_bound_of_the_120_interval` and `test_g3_reads_lower_bound_of_the_114_interval`:
+      a monkeypatched bootstrap returns [0.55, 0.90] with point κ 1. G1 must give
+      "G1 fail, point ≥ 0.6", and G3 must give "G3 fail".
+- **Known-answer tests, `test_analysis_r11.py`: 28/28 PASS.** All four suites give 72/72 under pytest.
+- **Mutations:**
+  - Q4, lower 2.5→5: KILLED
+  - Q5, upper 97.5→95: KILLED
+  - Q6, endpoints swapped: KILLED
+  - Q7, G1 fed ci[1]: KILLED
+  - Q8, G3 fed ci[1]: KILLED
+  - Q9, nearest-rank percentile: **SURVIVED** against the bootstrap-fixture test alone, then KILLED by
+    the hand-computed `percentile_ci` test. The first attempt used `method=`, which numpy 1.26 doesn't
+    accept, so it died on a TypeError. That was not counted as a kill, and the mutant was redone with
+    `interpolation=`.
+  - Q10, bootstrap bypasses `percentile_ci` with an inline 5: KILLED
+  - M1–M9 re-run on this file: all KILLED.
+- **Results unchanged:** round 1's κ is still 0.49420442571127504. The `round1` and the B = 10000
+  fixture `run` outputs are byte-identical across two runs, and to the 08f49bc outputs.

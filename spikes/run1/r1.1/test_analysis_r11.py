@@ -101,6 +101,80 @@ def test_cluster_bootstrap_counts_undefined():
     assert len(bs["replicates"]) == 2000 - bs["undefined"]
 
 
+def _hand_linear_percentile(sorted_vals, q):
+    # Independent of numpy: the "linear" (type 7) rule. h = (N-1) q/100; interpolate r[floor h] .. r[floor h + 1].
+    h = (len(sorted_vals) - 1) * q / 100
+    lo = int(h)
+    hi = min(lo + 1, len(sorted_vals) - 1)
+    return sorted_vals[lo] + (h - lo) * (sorted_vals[hi] - sorted_vals[lo])
+
+
+def _varied_fixture():
+    # 8 papers with different agreement patterns, so the replicate distribution is spread out and
+    # its 2.5/5 and 95/97.5 percentiles differ (checked below, so the test can discriminate them).
+    pats = [(1, 1), (0, 0), (1, 0), (0, 1)]
+    return {"P%d" % i: [pats[(i * j + j // 2) % 4] for j in range(3 + i)] for i in range(8)}
+
+
+def test_cluster_bootstrap_ci_endpoints_are_2_5_and_97_5():
+    bs = an.cluster_bootstrap_kappa(_varied_fixture(), B=2000, seed=251117)
+    r = sorted(bs["replicates"])
+    lo, hi = _hand_linear_percentile(r, 2.5), _hand_linear_percentile(r, 97.5)
+    # the fixture must separate the neighbouring percentiles, or this test proves nothing
+    assert lo != _hand_linear_percentile(r, 5) and hi != _hand_linear_percentile(r, 95)
+    assert lo < hi
+    assert abs(bs["ci95"][0] - lo) < 1e-12 and abs(bs["ci95"][1] - hi) < 1e-12, (bs["ci95"], lo, hi)
+
+
+def test_hand_percentile_known_values():
+    # 0..100 in steps of 1 -> the q-th percentile is exactly q; 5 values [0,1,2,3,10]: 97.5 -> h = 3.9 -> 3 + 0.9*7 = 9.3
+    vals = [float(i) for i in range(101)]
+    assert _hand_linear_percentile(vals, 2.5) == 2.5 and _hand_linear_percentile(vals, 97.5) == 97.5
+    assert abs(_hand_linear_percentile([0.0, 1.0, 2.0, 3.0, 10.0], 97.5) - 9.3) < 1e-12
+
+
+def test_percentile_ci_hand_computed():
+    # reps = i^2, i = 0..10 (N = 11), linear rule h = (N-1) q/100 = q/10:
+    #   2.5  -> h = 0.25 -> 0  + 0.25*(1-0)    = 0.25   (nearest would give 0, the 5th pct 0.5)
+    #   97.5 -> h = 9.75 -> 81 + 0.75*(100-81) = 95.25  (nearest would give 100, the 95th pct 90.5)
+    reps = [float(i * i) for i in range(11)]
+    assert an.percentile_ci(reps) == [0.25, 95.25]
+    assert an.percentile_ci(list(reversed(reps))) == [0.25, 95.25]   # order-free
+    assert an.percentile_ci([]) is None
+
+
+def test_cluster_bootstrap_ci_is_percentile_ci_of_its_replicates():
+    bs = an.cluster_bootstrap_kappa(_varied_fixture(), B=500, seed=5)
+    assert bs["ci95"] == an.percentile_ci(bs["replicates"])
+
+
+def _with_fixed_bootstrap(ci_by_n, fn):
+    # Monkeypatch the bootstrap so the decision sees a known interval; restored afterwards.
+    orig = an.cluster_bootstrap_kappa
+
+    def fake(by, B=an.B, seed=an.SEED):
+        n = sum(len(v) for v in by.values())
+        return {"B": B, "seed": seed, "undefined": 0, "ci95": list(ci_by_n[n]), "replicates": []}
+    an.cluster_bootstrap_kappa = fake
+    try:
+        return fn()
+    finally:
+        an.cluster_bootstrap_kappa = orig
+
+
+def test_g1_reads_lower_bound_of_the_120_interval():
+    # point kappa 1, interval [0.55, 0.90]: G1 must FAIL on the lower bound (inconclusive row).
+    r = _with_fixed_bootstrap({120: (0.55, 0.90), 114: (0.7, 0.95)}, lambda: an.analyse(_bundle(), RUN1, B=10))
+    assert r["decision"]["inputs"]["g1_lower_bound"] == 0.55
+    assert r["decision"]["outcome"] == "G1 fail, point kappa >= 0.6"
+
+
+def test_g3_reads_lower_bound_of_the_114_interval():
+    r = _with_fixed_bootstrap({120: (0.7, 0.95), 114: (0.55, 0.90)}, lambda: an.analyse(_bundle(), RUN1, B=10))
+    assert r["decision"]["inputs"]["g3_lower_bound"] == 0.55
+    assert r["decision"]["outcome"] == "G1 pass, G2 pass, G3 fail"
+
+
 # ---------- round 1 reproduction ----------
 
 def test_reproduces_round1_kappa_0494():
