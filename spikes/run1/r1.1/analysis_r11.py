@@ -8,13 +8,18 @@ Committed before any 1.1 rating exists. Method choices are fixed here:
   - paper-cluster bootstrap: resample the papers with replacement (as many as there are), pool
     their pairs, recompute kappa; B = 10000; numpy default_rng(251117) (PCG64); percentile interval
     (2.5, 97.5) with numpy's default (linear) percentile. A replicate whose kappa is undefined is
-    dropped and counted (assumption A-A1). Each bootstrap starts its own default_rng(251117)
+    dropped and counted (assumption A-A1). R6 (cartan gate 8): if the drops exceed 1% of B
+    (strictly: undefined * 100 > B, so 100 of 10000 is not over, 101 is), that gate reads
+    INCONCLUSIVE, never pass or fail; the drop count and rate are reported beside the interval. Each bootstrap starts its own default_rng(251117)
     (assumption A-A2), so the 120 and the without-W7160385925 intervals do not depend on run order.
   - Wilson 95%, z = 1.959964 (round 1's constant).
   - G1: lower bound of the 120's interval >= 0.6. G3: the same on the 114 without W7160385925.
   - G2: >= 17 of exactly 20 audit items confirmed by both labellers (labeller grade == agreed grade,
     exact category; assumption A-A3). Audit items must be double-graded items where verifier grade ==
-    checker grade == agreed_grade (exact; A-A3).
+    checker grade == agreed_grade (exact; A-A3). R2 (cartan gate 8): each labeller's records must
+    carry the pinned rubric sha (per record, or in the set header), checked by
+    l0_checks.check_labeller_set against the pin below (a bundle cannot override it). A missing or
+    mismatched sha voids that labeller's set, and G2 reads "void", never pass.
   - Decision: §8 table, evaluated validity -> G1 -> G2 -> G3; anything unlisted (e.g. an undefined
     bound) is "not listed" -> L4 -> beekeeper. The director picks no consequence.
 
@@ -22,7 +27,9 @@ Inputs (`run` bundle JSON, after L0):
   verifier: {paper: {n: {"grade": g, "doubt": bool}}}  -- all 387 keyed claims
   checker:  {paper: {n: g}}                             -- exactly the double-graded 120
   double_graded: [[paper, n], ...]                      -- must equal sampler.draw()'s committed draw
-  audit: [{"paper","n","agreed_grade","labeller_a","labeller_b"}]   (20)
+  audit: [{"paper","n","agreed_grade"}]                           (20)
+  audit_labellers: {"labeller_a"|"labeller_b": {"labeller": name, "header": {"rubric_sha": ...},
+                    "records": [{"paper","n","grade"[,"rubric_sha"]}]}}   (qbp-oppenheimer, Gemini labeller)
   validity: {"void": bool, "cause": str}
   routing_summary: escalation_router.route_all()["summary"]  (optional, passed through)
   tokens: {stage: {four numeric fields}}                       (optional)
@@ -42,6 +49,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import sampler  # noqa: E402
+import l0_checks  # noqa: E402
 
 RUN1 = HERE.parent
 SEED = 251117
@@ -50,6 +58,9 @@ Z = 1.959964
 GRADES = ("faithful", "wrong-relation", "wrong-direction", "wrong-modality", "wrong-locator", "not-in-paper")
 W716 = "W7160385925"
 BAR = 0.6
+PINNED_RUBRIC_SHA = "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"   # pre-reg gate 2
+DROP_CEILING_PCT = 1      # R6: drops > 1% of B -> inconclusive
+INCONCLUSIVE = "inconclusive: bootstrap drops > 1% of B"
 ROUND1_HAIKU_PRECISION = 0.889          # §7 P1, as stated
 CONTAMINATED_LABEL = "circular: the rules were written while reading these"
 
@@ -106,6 +117,11 @@ def percentile_ci(reps):
     if not reps:
         return None
     return [float(np.percentile(reps, 2.5)), float(np.percentile(reps, 97.5))]
+
+
+def drops_exceed_ceiling(undefined, B):
+    """R6: strictly more than DROP_CEILING_PCT % of B replicates dropped (integer arithmetic)."""
+    return undefined * 100 > DROP_CEILING_PCT * B
 
 
 def cluster_bootstrap_kappa(pairs_by_paper, B=B, seed=SEED):
@@ -202,19 +218,28 @@ def reproduce_round1(run1=RUN1):
 
 # ---------------- §8 decision ----------------
 
-def decide(void, g1_lb, g1_point, g2_pass, g3_lb):
+def decide(void, g1_lb, g1_point, g2_pass, g3_lb, g1_inconclusive=False, g3_inconclusive=False):
+    """g2_pass: True / False / None (undefined) / "void" (an audit labeller failed rubric parity)."""
     def out(o, owner):
         return {"outcome": o, "owner": owner, "inputs": {"void": void, "g1_lower_bound": g1_lb, "g1_point": g1_point,
-                                                         "g2_pass": g2_pass, "g3_lower_bound": g3_lb}}
+                                                         "g2_pass": g2_pass, "g3_lower_bound": g3_lb,
+                                                         "g1_inconclusive": g1_inconclusive,
+                                                         "g3_inconclusive": g3_inconclusive}}
     if void:
         return out("void", "qbp-architecture")
+    if g1_inconclusive:
+        return out("G1 " + INCONCLUSIVE, "L4 -> beekeeper")
     if g1_lb is None or g1_point is None:
         return out("not listed", "L4 -> beekeeper")
     if g1_lb >= BAR:
+        if g2_pass == "void":
+            return out("not listed: G2 void (audit labeller rubric parity)", "L4 -> beekeeper")
         if g2_pass is None:
             return out("not listed", "L4 -> beekeeper")
         if not g2_pass:
             return out("G1 pass, G2 fail", "L4 panel")
+        if g3_inconclusive:
+            return out("G1 pass, G2 pass, G3 " + INCONCLUSIVE, "L4 -> beekeeper")
         if g3_lb is None:
             return out("not listed", "L4 -> beekeeper")
         return out("G1 pass, G2 pass, G3 pass" if g3_lb >= BAR else "G1 pass, G2 pass, G3 fail", "qbp-architecture")
@@ -250,6 +275,8 @@ def _kappa_with_ci(dg, ver, chk, B, seed):
     blk = kblock([x for p in sorted(by) for x in by[p]])
     bs = cluster_bootstrap_kappa(by, B=B, seed=seed)
     bs.pop("replicates")
+    bs["drop_rate"] = bs["undefined"] / bs["B"]
+    bs["drops_exceed_ceiling"] = drops_exceed_ceiling(bs["undefined"], bs["B"])
     blk.update({"papers": len(by), "bootstrap": bs})
     return blk
 
@@ -279,15 +306,29 @@ def analyse(bundle, run1=RUN1, B=B, seed=SEED):
     res["kappa_without_W7160385925"] = _kappa_with_ci(dg_x, ver, chk, B, seed)
 
     audit = bundle.get("audit") or []
+    items = [(a["paper"], int(a["n"])) for a in audit]
+    must(len(set(items)) == len(items), "duplicate audit item")
+    labs = bundle.get("audit_labellers") or {}
+    parity, lab = {}, {}
+    for side in ("labeller_a", "labeller_b"):
+        ls = labs.get(side) or {"labeller": side, "header": {}, "records": []}
+        ls = dict(ls, records=[dict(r, n=int(r["n"])) for r in ls.get("records") or []])
+        chkd = l0_checks.check_labeller_set(ls, PINNED_RUBRIC_SHA, set(items)) if audit else {"status": "ok"}
+        must(chkd["status"] != "reject", f"{side}: {chkd.get('errors')}")
+        parity[side] = chkd
+        lab[side] = {(r["paper"], r["n"]): r["grade"] for r in ls["records"]}
     conf = 0
-    for a in audit:
-        c = (a["paper"], int(a["n"]))
+    for a, c in zip(audit, items):
         must(c in chk and ver[c]["grade"] == chk[c] == a["agreed_grade"], f"audit item {c} is not an agreed item")
         must(c not in cont, f"audit item {c} is contaminated")
-        conf += a["labeller_a"] == a["agreed_grade"] and a["labeller_b"] == a["agreed_grade"]
-    must(len({(a["paper"], int(a["n"])) for a in audit}) == len(audit), "duplicate audit item")
+        conf += lab["labeller_a"][c] == a["agreed_grade"] and lab["labeller_b"][c] == a["agreed_grade"]
+    g2 = (conf >= 17) if len(audit) == 20 else None
+    if any(v["status"] == "void" for v in parity.values()):
+        g2 = "void"
     res["audit"] = {"n": len(audit), "confirmed_by_both": conf, "share": (conf / len(audit)) if audit else None,
-                    "g2_pass": (conf >= 17) if len(audit) == 20 else None}
+                    "labeller_parity": {k: {"status": v["status"], "void_reasons": v.get("void_reasons", [])}
+                                        for k, v in parity.items()},
+                    "g2_pass": g2}
 
     head = sorted(c for c in rows if c not in cont)
     contam = sorted(c for c in rows if c in cont)
@@ -323,7 +364,9 @@ def analyse(bundle, run1=RUN1, B=B, seed=SEED):
     g1_lb = k["bootstrap"]["ci95"][0] if k["bootstrap"]["ci95"] else None
     kx = res["kappa_without_W7160385925"]
     g3_lb = kx["bootstrap"]["ci95"][0] if kx["bootstrap"]["ci95"] else None
-    res["decision"] = decide(False, g1_lb, k["kappa"], res["audit"]["g2_pass"], g3_lb)
+    res["decision"] = decide(False, g1_lb, k["kappa"], res["audit"]["g2_pass"], g3_lb,
+                             g1_inconclusive=k["bootstrap"]["drops_exceed_ceiling"],
+                             g3_inconclusive=kx["bootstrap"]["drops_exceed_ceiling"])
     return res
 
 

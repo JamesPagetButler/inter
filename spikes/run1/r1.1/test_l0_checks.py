@@ -131,6 +131,102 @@ def test_deterministic():
     assert json.dumps(run(GOOD), sort_keys=True) == json.dumps(run(GOOD), sort_keys=True)
 
 
+# ---------- R2 (cartan gate 8): parity for every rater, incl. L1/L2 and both audit labellers ----------
+
+CHK_OK = {"meta": {"rubric_sha": PIN_SHA}, "grades": {1: "faithful", 2: "wrong-relation", 3: "not-in-paper"}}
+
+
+def rr(role, rec):
+    return l0.check_rater_run(role, rec, PIN_SHA, PIN_ID, {1, 2, 3})
+
+
+def test_l2_verifier_session_parity_checked():
+    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": PIN_SHA})["status"] == "ok"
+    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": "0" * 64})["status"] == "void"
+    bad_echo = output([grade_line(1), grade_line(2), grade_line(3)], rubric_id=PIN_ID + "x")
+    assert rr("L2-verifier", {"text": bad_echo, "received_rubric_sha": PIN_SHA})["status"] == "void"
+
+
+def test_l1_checker_session_parity_checked():
+    assert rr("L1-checker", CHK_OK)["status"] == "ok"
+    assert rr("L1-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64}))["status"] == "void"
+    assert rr("L1-checker", dict(CHK_OK, meta={}))["status"] == "void"
+
+
+def test_l2_checker_session_parity_checked():
+    assert rr("L2-checker", CHK_OK)["status"] == "ok"
+    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64}))["status"] == "void"
+    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": None}))["status"] == "void"
+
+
+def test_every_rater_role_is_parity_checked():
+    for role in l0.VERIFIER_ROLES:
+        assert rr(role, {"text": GOOD, "received_rubric_sha": "0" * 64})["status"] == "void", role
+    for role in l0.CHECKER_ROLES:
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": "2" * 64}))["status"] == "void", role
+    assert set(l0.VERIFIER_ROLES) == {"verifier", "L2-verifier"}
+    assert set(l0.CHECKER_ROLES) == {"checker", "L1-checker", "L2-checker"}
+    try:
+        rr("L3", CHK_OK)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("unknown role accepted")
+
+
+def test_checker_role_rejects_out_of_set_grade():
+    assert rr("L1-checker", dict(CHK_OK, grades={1: "faithful", 2: "maybe", 3: "faithful"}))["status"] == "reject"
+    # void beats reject
+    assert rr("L1-checker", {"meta": {}, "grades": {1: "maybe", 2: "x", 3: "y"}})["status"] == "void"
+
+
+ITEMS = {("P", 1), ("P", 2), ("Q", 5)}
+
+
+def lab(header=None, recs=None, who="qbp-oppenheimer"):
+    recs = recs if recs is not None else [{"paper": p, "n": n, "grade": "faithful"} for p, n in sorted(ITEMS)]
+    return {"labeller": who, "header": header if header is not None else {}, "records": recs}
+
+
+def ls(x):
+    return l0.check_labeller_set(x, PIN_SHA, ITEMS)
+
+
+def test_labeller_header_sha_ok():
+    assert ls(lab(header={"rubric_sha": PIN_SHA}))["status"] == "ok"
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, who="gemini-labeller"))["status"] == "ok"
+
+
+def test_labeller_per_record_sha_ok():
+    recs = [{"paper": p, "n": n, "grade": "faithful", "rubric_sha": PIN_SHA} for p, n in sorted(ITEMS)]
+    assert ls(lab(recs=recs))["status"] == "ok"
+
+
+def test_labeller_missing_sha_voids():
+    assert ls(lab())["status"] == "void"                                   # no header sha, no record sha
+    recs = [{"paper": p, "n": n, "grade": "faithful", "rubric_sha": PIN_SHA} for p, n in sorted(ITEMS)]
+    recs[1].pop("rubric_sha")
+    assert ls(lab(recs=recs))["status"] == "void"                          # one record unprovable
+    assert ls(lab(header={"rubric_sha": ""}))["status"] == "void"
+    assert ls(lab(header={"rubric_sha": None}))["status"] == "void"
+
+
+def test_labeller_mismatched_sha_voids():
+    assert ls(lab(header={"rubric_sha": "3" * 64}))["status"] == "void"
+    recs = [{"paper": p, "n": n, "grade": "faithful"} for p, n in sorted(ITEMS)]
+    recs[2]["rubric_sha"] = "4" * 64                                       # record overrides a good header
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs))["status"] == "void"
+
+
+def test_labeller_grade_and_coverage_rejects():
+    recs = [{"paper": p, "n": n, "grade": "faithful"} for p, n in sorted(ITEMS)]
+    recs[0]["grade"] = "fine"
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs))["status"] == "reject"
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs[:2]))["status"] == "reject"
+    # void beats reject
+    assert ls(lab(header={"rubric_sha": "5" * 64}, recs=recs))["status"] == "void"
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

@@ -173,6 +173,57 @@ def check_checker_grades(grades_by_n, expected_ns):
     return {"status": "reject" if errs else "ok", "errors": errs}
 
 
+# ---- R2 (cartan gate 8): C3 for every rater run, not only the first verifier/checker ----
+# L1 is a fresh checker session; L2 is fresh verifier + checker sessions (§5). They carry the same
+# records as their first-pass counterparts, so they go through the same parity checks.
+VERIFIER_ROLES = ("verifier", "L2-verifier")
+CHECKER_ROLES = ("checker", "L1-checker", "L2-checker")
+
+
+def check_rater_run(role, record, pinned_rubric_sha, pinned_rubric_id, expected_ns):
+    """record: verifier roles {"text", "received_rubric_sha"}; checker roles {"meta", "grades"}."""
+    if role in VERIFIER_ROLES:
+        r = check_verifier_output(record["text"], expected_ns, record.get("received_rubric_sha"),
+                                  pinned_rubric_sha, pinned_rubric_id)
+    elif role in CHECKER_ROLES:
+        m = check_checker_meta(record.get("meta") or {}, pinned_rubric_sha)
+        g = check_checker_grades(record.get("grades") or {}, expected_ns)
+        status = "void" if m["status"] == "void" else g["status"]
+        r = {"status": status, "void_reasons": m["void_reasons"], "errors": g["errors"]}
+    else:
+        raise ValueError(f"unknown rater role: {role!r}")
+    r["role"] = role
+    return r
+
+
+def check_labeller_set(labeller_set, pinned_rubric_sha, expected_items):
+    """Audit labeller records (qbp-oppenheimer's hand labels, the fresh Gemini labeller).
+
+    Each record's rubric sha is its own `rubric_sha` if present, else the set header's `rubric_sha`.
+    Any record whose effective sha is missing, empty or != pinned voids the WHOLE labeller set
+    (so G2 reads void, never pass). Out-of-set grades or wrong item coverage reject.
+    """
+    header = labeller_set.get("header") or {}
+    recs = labeller_set.get("records") or []
+    void, errs = [], []
+    for r in recs:
+        eff = r["rubric_sha"] if "rubric_sha" in r else header.get("rubric_sha")
+        if not eff:
+            void.append(f"{r.get('paper')}/{r.get('n')}: no rubric_sha on record or header")
+        elif eff != pinned_rubric_sha:
+            void.append(f"{r.get('paper')}/{r.get('n')}: rubric_sha {eff} != pinned {pinned_rubric_sha}")
+    if not recs:
+        void.append("no labeller records")
+    for r in recs:
+        if r.get("grade") not in GRADE_SET:
+            errs.append(f"{r.get('paper')}/{r.get('n')}: grade outside category set: {r.get('grade')!r}")
+    got = [(r.get("paper"), r.get("n")) for r in recs]
+    if len(got) != len(set(got)) or set(got) != set(expected_items):
+        errs.append("labeller item set != expected audit items")
+    status = "void" if void else ("reject" if errs else "ok")
+    return {"status": status, "labeller": labeller_set.get("labeller"), "void_reasons": void, "errors": errs}
+
+
 def run_validity(results):
     """§8: any C3 mismatch makes the whole run void (recorded, no outcome read)."""
     nvoid = sum(r["status"] == "void" for r in results)

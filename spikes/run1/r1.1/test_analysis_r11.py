@@ -148,13 +148,14 @@ def test_cluster_bootstrap_ci_is_percentile_ci_of_its_replicates():
     assert bs["ci95"] == an.percentile_ci(bs["replicates"])
 
 
-def _with_fixed_bootstrap(ci_by_n, fn):
-    # Monkeypatch the bootstrap so the decision sees a known interval; restored afterwards.
+def _with_fixed_bootstrap(ci_by_n, fn, undefined_by_n=None, fake_B=None):
+    # Monkeypatch the bootstrap so the decision sees a known interval and drop count; restored afterwards.
     orig = an.cluster_bootstrap_kappa
 
     def fake(by, B=an.B, seed=an.SEED):
         n = sum(len(v) for v in by.values())
-        return {"B": B, "seed": seed, "undefined": 0, "ci95": list(ci_by_n[n]), "replicates": []}
+        und = (undefined_by_n or {}).get(n, 0)
+        return {"B": fake_B or B, "seed": seed, "undefined": und, "ci95": list(ci_by_n[n]), "replicates": []}
     an.cluster_bootstrap_kappa = fake
     try:
         return fn()
@@ -173,6 +174,93 @@ def test_g3_reads_lower_bound_of_the_114_interval():
     r = _with_fixed_bootstrap({120: (0.7, 0.95), 114: (0.55, 0.90)}, lambda: an.analyse(_bundle(), RUN1, B=10))
     assert r["decision"]["inputs"]["g3_lower_bound"] == 0.55
     assert r["decision"]["outcome"] == "G1 pass, G2 pass, G3 fail"
+
+
+# ---------- R6 (cartan gate 8): ceiling on dropped bootstrap replicates ----------
+
+def test_drop_ceiling_boundary_is_strictly_more_than_1pct():
+    assert an.drops_exceed_ceiling(100, 10000) is False      # exactly 1%: not inconclusive
+    assert an.drops_exceed_ceiling(101, 10000) is True
+    assert an.drops_exceed_ceiling(0, 10000) is False
+    assert an.drops_exceed_ceiling(2, 200) is False and an.drops_exceed_ceiling(3, 200) is True
+
+
+def test_bootstrap_block_reports_drop_count_and_rate():
+    r = _with_fixed_bootstrap({120: (0.7, 0.9), 114: (0.7, 0.9)}, lambda: an.analyse(_bundle(), RUN1, B=10000),
+                              undefined_by_n={120: 101, 114: 7}, fake_B=10000)
+    b = r["kappa_120"]["bootstrap"]
+    assert b["undefined"] == 101 and b["drop_rate"] == 0.0101 and b["drops_exceed_ceiling"] is True
+    b = r["kappa_without_W7160385925"]["bootstrap"]
+    assert b["undefined"] == 7 and b["drop_rate"] == 0.0007 and b["drops_exceed_ceiling"] is False
+
+
+def test_g1_exactly_1pct_drops_still_decides():
+    r = _with_fixed_bootstrap({120: (0.7, 0.9), 114: (0.7, 0.9)}, lambda: an.analyse(_bundle(), RUN1, B=10000),
+                              undefined_by_n={120: 100, 114: 100}, fake_B=10000)
+    assert r["decision"]["outcome"] == "G1 pass, G2 pass, G3 pass"
+
+
+def test_g1_over_1pct_drops_reads_inconclusive_not_pass():
+    r = _with_fixed_bootstrap({120: (0.7, 0.9), 114: (0.7, 0.9)}, lambda: an.analyse(_bundle(), RUN1, B=10000),
+                              undefined_by_n={120: 101}, fake_B=10000)
+    assert r["decision"]["outcome"] == "G1 inconclusive: bootstrap drops > 1% of B"
+    assert r["decision"]["inputs"]["g1_inconclusive"] is True
+
+
+def test_g1_over_1pct_drops_reads_inconclusive_not_fail():
+    r = _with_fixed_bootstrap({120: (0.3, 0.5), 114: (0.7, 0.9)}, lambda: an.analyse(_bundle(), RUN1, B=10000),
+                              undefined_by_n={120: 500}, fake_B=10000)
+    assert r["decision"]["outcome"] == "G1 inconclusive: bootstrap drops > 1% of B"
+
+
+def test_g3_over_1pct_drops_reads_inconclusive():
+    r = _with_fixed_bootstrap({120: (0.7, 0.9), 114: (0.7, 0.9)}, lambda: an.analyse(_bundle(), RUN1, B=10000),
+                              undefined_by_n={114: 101}, fake_B=10000)
+    assert r["decision"]["outcome"] == "G1 pass, G2 pass, G3 inconclusive: bootstrap drops > 1% of B"
+
+
+def test_decide_inconclusive_rows():
+    D = an.decide
+    assert D(False, 0.7, 0.7, True, 0.9, g1_inconclusive=True)["outcome"] == "G1 inconclusive: bootstrap drops > 1% of B"
+    assert D(False, 0.4, 0.4, True, 0.9, g1_inconclusive=True)["owner"] == "L4 -> beekeeper"
+    assert D(False, 0.7, 0.7, True, 0.4, g3_inconclusive=True)["outcome"].endswith("G3 inconclusive: bootstrap drops > 1% of B")
+    assert D(False, 0.7, 0.7, False, 0.9, g3_inconclusive=True)["outcome"] == "G1 pass, G2 fail"   # G2 before G3
+    assert D(True, 0.7, 0.7, True, 0.9, g1_inconclusive=True)["outcome"] == "void"
+
+
+# ---------- R2 (cartan gate 8): audit-labeller rubric parity -> G2 void ----------
+
+def test_g2_void_when_a_labeller_sha_mismatches():
+    r = an.analyse(_bundle(b_sha="9" * 64), RUN1, B=200)
+    assert r["audit"]["g2_pass"] == "void"
+    assert r["audit"]["labeller_parity"]["labeller_b"]["status"] == "void"
+    assert r["decision"]["outcome"] == "not listed: G2 void (audit labeller rubric parity)"
+    assert r["decision"]["owner"] == "L4 -> beekeeper"
+
+
+def test_g2_void_when_a_labeller_sha_is_missing():
+    r = an.analyse(_bundle(b_sha=None), RUN1, B=200)
+    assert r["audit"]["g2_pass"] == "void" and r["decision"]["outcome"].startswith("not listed: G2 void")
+    r = an.analyse(_bundle(a_sha=None), RUN1, B=200)   # qbp-oppenheimer's hand labels too
+    assert r["audit"]["labeller_parity"]["labeller_a"]["status"] == "void" and r["audit"]["g2_pass"] == "void"
+
+
+def test_g2_void_with_otherwise_perfect_audit_is_not_pass():
+    r = an.analyse(_bundle(a_sha="8" * 64, audit_confirmed=20), RUN1, B=200)
+    assert r["audit"]["confirmed_by_both"] == 20 and r["audit"]["g2_pass"] == "void"
+    assert r["decision"]["outcome"] == "not listed: G2 void (audit labeller rubric parity)"
+
+
+def test_decide_g2_void_rows():
+    D = an.decide
+    assert D(False, 0.7, 0.7, "void", 0.9)["outcome"] == "not listed: G2 void (audit labeller rubric parity)"
+    assert D(False, 0.5, 0.5, "void", 0.9)["outcome"] == "G1 fail, point kappa < 0.6"   # G1 decides first
+
+
+def test_bundle_cannot_override_the_pinned_rubric_sha():
+    b = _bundle(a_sha="7" * 64, b_sha="7" * 64)
+    b["pinned_rubric_sha"] = "7" * 64
+    assert an.analyse(b, RUN1, B=50)["audit"]["g2_pass"] == "void"
 
 
 # ---------- round 1 reproduction ----------
@@ -230,7 +318,10 @@ def _lean():
     return out
 
 
-def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10):
+PIN = "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"
+
+
+def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10, a_sha=PIN, b_sha=PIN):
     lean = _lean()
     claims, cont = sampler.load_inputs(RUN1)
     draw = sampler.draw(claims, cont)
@@ -240,11 +331,16 @@ def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10):
     for p, n in draw["double_graded"]:
         g = lean[p][n]
         chk.setdefault(p, {})[str(n)] = (flip.get(g, "faithful") if checker_flip else g)
-    audit = [{"paper": p, "n": n, "agreed_grade": lean[p][n], "labeller_a": lean[p][n],
-              "labeller_b": lean[p][n] if i < audit_confirmed else "not-in-paper"}
-             for i, (p, n) in enumerate(draw["double_graded"][:20])] if not checker_flip else []
+    items = draw["double_graded"][:20] if not checker_flip else []
+    audit = [{"paper": p, "n": n, "agreed_grade": lean[p][n]} for p, n in items]
+    labellers = {
+        "labeller_a": {"labeller": "qbp-oppenheimer", "header": {"rubric_sha": a_sha},
+                       "records": [{"paper": p, "n": n, "grade": lean[p][n]} for p, n in items]},
+        "labeller_b": {"labeller": "gemini-labeller", "header": {"rubric_sha": b_sha} if b_sha is not None else {},
+                       "records": [{"paper": p, "n": n, "grade": lean[p][n] if i < audit_confirmed else "not-in-paper"}
+                                   for i, (p, n) in enumerate(items)]}}
     return {"verifier": ver, "checker": chk, "double_graded": [list(x) for x in draw["double_graded"]],
-            "audit": audit, "validity": {"void": False, "cause": ""},
+            "audit": audit, "audit_labellers": labellers, "validity": {"void": False, "cause": ""},
             "tokens": {"verifier": {"input": 10, "output": 2, "cache_read": 0, "cache_write": 0}}}
 
 

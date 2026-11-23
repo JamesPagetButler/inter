@@ -254,3 +254,75 @@ original was restored with a sha check.
   - M1–M9 re-run on this file: all KILLED.
 - **Results unchanged:** round 1's κ is still 0.49420442571127504. The `round1` and the B = 10000
   fixture `run` outputs are byte-identical across two runs, and to the 08f49bc outputs.
+
+### Gate-8 FIX ROUND: cartan R2 and R6 (inter#224, on 044333c)
+**R2, rubric parity for every rater**
+- `l0_checks.check_rater_run(role, …)` covers the roles verifier, L2-verifier, checker, L1-checker
+  and L2-checker. L1 is a fresh checker session and L2 is fresh verifier and checker sessions, so
+  each goes through the same C3 check as its first-pass counterpart.
+- `l0_checks.check_labeller_set()` checks audit-labeller records: qbp-oppenheimer's hand labels and
+  the Gemini labeller.
+  - A record's effective sha is its own `rubric_sha` if it has one, otherwise the set header's.
+  - Any missing, empty or mismatched sha voids that labeller's whole set.
+  - An out-of-set grade or wrong item coverage rejects the set. Void outranks reject.
+- `analysis_r11.analyse()` now takes the labeller grades only from `audit_labellers` sets. It checks
+  them against a pinned constant (`PINNED_RUBRIC_SHA`, which a bundle cannot override). If either
+  set is void, G2 reads `"void"` and the decision is "not listed: G2 void (audit labeller rubric
+  parity)" → L4 → beekeeper, never pass. G1 is still evaluated first.
+
+**R6, ceiling on dropped bootstrap replicates**
+- `drops_exceed_ceiling(undefined, B)` uses a strict inequality, `undefined*100 > B`: 100 of 10000
+  is not over the ceiling, and 101 is.
+- Each bootstrap block reports `undefined`, `drop_rate` and `drops_exceed_ceiling`.
+- If G1's drops are over the ceiling, the outcome is "G1 inconclusive: bootstrap drops > 1% of B",
+  never pass or fail.
+- If G3's drops are over, the outcome is "G1 pass, G2 pass, G3 inconclusive: …". G2 is still
+  evaluated before G3.
+- Both inconclusive outcomes are owned by "L4 -> beekeeper", because the §8 table doesn't list them.
+
+**Tests**
+- `test_l0_checks.py`: 24/24 PASS.
+  - The 10 new tests failed first: L2-verifier, L1-checker and L2-checker parity; every role is
+    checked; labeller header sha, per-record sha, missing sha, mismatched sha, and grade/coverage.
+- `test_analysis_r11.py`: 40/40 PASS.
+  - Of the 12 new tests, 3 failed first on an unknown keyword or a missing attribute: the ceiling
+    boundary at 100/101 of 10000 and 2/3 of 200, and the inconclusive decision rows.
+  - The other 9 failed first because the format change made the shared fixture fail:
+    - drop count and rate reported;
+    - exactly 1% still decides;
+    - over 1% is inconclusive, not pass and not fail;
+    - G3 over 1% is inconclusive;
+    - G2 void on a mismatched sha, on a missing sha (for each labeller), and with an otherwise
+      perfect 20/20 audit;
+    - G2-void decision rows;
+    - the bundle cannot override the pin.
+  - The bundle format change made 9 existing fixture-based tests fail with KeyError. After the fix
+    they pass unchanged.
+- All four suites give **94/94 under pytest**.
+
+**Mutants**
+- R2 in l0_checks, all KILLED:
+  - labeller sha check dropped
+  - missing sha accepted by defaulting to the pin
+  - missing sha accepted by skipping falsy values
+  - header sha wins over a record's own sha
+  - L1/L2 checker meta not enforced
+  - L2 verifier sha assumed to be the pin
+- R2 in analysis, all KILLED:
+  - G2 void mapped to pass
+  - analyse ignores labeller parity
+  - the bundle overrides the pin
+- R6, all KILLED:
+  - ceiling ignored
+  - `>=` at exactly 1%
+  - G1 inconclusive mapped through to pass or fail
+  - G3 inconclusive mapped to pass
+  - analyse drops the G1 flag
+  - analyse drops the G3 flag
+- Re-run on the final files, all KILLED: analysis M1–M9 and Q4–Q10, L0 M1–M6.
+
+**Determinism and κ**
+- Round 1's κ is still 0.49420442571127504.
+- The `round1` and the B = 10000 fixture `run` outputs are byte-identical across two runs.
+- The `run` output differs from earlier fixture runs only because of the new fields and the new
+  bundle format.
