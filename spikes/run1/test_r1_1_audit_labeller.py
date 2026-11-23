@@ -54,7 +54,7 @@ def check_happy_path(l0) -> None:
 
     if ls["labeller"] != "gemini-audit":
         raise AssertionError(f"labeller name wrong: {ls}")
-    if ls["header"] != {"rubric_sha": CANONICAL_RUBRIC_SHA}:
+    if ls["header"] != {"rubric_sha": CANONICAL_RUBRIC_SHA, "blind": True}:
         raise AssertionError(f"header wrong: {ls['header']}")
     expected_records = [
         {"paper": "PA", "n": 1, "grade": "faithful"},
@@ -95,11 +95,24 @@ def check_wrong_rubric_sha_voids_under_the_oracle(l0) -> None:
     print("PASS (wrong rubric sha): the real check_labeller_set reads it as void, as expected.")
 
 
+def check_blind_defaults_true_and_is_overridable() -> None:
+    grades_by_paper = {"PA": {1: "faithful"}}
+    audit_items = [("PA", 1)]
+    default_ls = builder.build_labeller_set("gemini-audit", grades_by_paper, audit_items)
+    if default_ls["header"]["blind"] is not True:
+        raise AssertionError(f"blind should default to True: {default_ls['header']}")
+    explicit_ls = builder.build_labeller_set("hand-labeller", grades_by_paper, audit_items, blind=False)
+    if explicit_ls["header"]["blind"] is not False:
+        raise AssertionError(f"blind=False override did not take: {explicit_ls['header']}")
+    print("PASS (blind field): defaults true (qbp-architecture seq 327), explicit override to false also works.")
+
+
 def main() -> int:
     l0 = load_l0_checks()
     check_happy_path(l0)
     check_missing_grade_fails_loudly()
     check_wrong_rubric_sha_voids_under_the_oracle(l0)
+    check_blind_defaults_true_and_is_overridable()
     print("ALL PASS")
     return 0
 

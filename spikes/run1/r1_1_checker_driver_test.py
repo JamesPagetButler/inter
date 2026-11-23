@@ -42,6 +42,8 @@ def check_happy_path() -> None:
         Path("grader_inputs"),
         Path("rubric.txt"),
         "rubric-sha",
+        Path("prompt.txt"),
+        "prompt-sha",
         samples_expected_sha=expected_sha,
     )
     # 3 papers double-graded + 5 probe runs on PX = 8 calls.
@@ -55,13 +57,19 @@ def check_happy_path() -> None:
         raise AssertionError(f"probe calls wrong: {probe}")
     if sorted(c["run_index"] for c in probe) != [0, 1, 2, 3, 4]:
         raise AssertionError(f"probe run_index set wrong: {[c['run_index'] for c in probe]}")
-    # The probe's 5 requests must be identical to each other (same rubric,
-    # same input) and distinguishable only by run_index/label, per
-    # qbp-architecture seq 5267 -- never by changing the input/rubric per run.
-    probe_fingerprints = {(c["rubric"], c["rubric_sha"], c["input"], c["input_sha"]) for c in probe}
+    # The probe's 5 requests must be identical to each other (same prompt,
+    # same rubric, same input) and distinguishable only by run_index/label,
+    # per qbp-architecture seq 5267 -- never by changing the
+    # prompt/input/rubric per run.
+    probe_fingerprints = {
+        (c["prompt"], c["prompt_sha"], c["rubric"], c["rubric_sha"], c["input"], c["input_sha"])
+        for c in probe
+    }
     if len(probe_fingerprints) != 1:
         raise AssertionError(f"probe requests are not identical across runs: {probe_fingerprints}")
-    print("PASS (happy path): 3 double-graded + 5 probe = 8 calls, probe runs identical except run_index.")
+    if any(c["prompt"] != "prompt.txt" or c["prompt_sha"] != "prompt-sha" for c in plan):
+        raise AssertionError(f"prompt/prompt_sha not threaded into every plan entry: {plan}")
+    print("PASS (happy path): 3 double-graded + 5 probe = 8 calls, probe runs identical except run_index, prompt threaded through.")
 
 
 def expect_system_exit(fn, expected_substring: str, label: str) -> None:
@@ -91,7 +99,7 @@ def check_samples_sha_mismatch() -> None:
     text = fixture_samples_text()
     expect_system_exit(
         lambda: driver.build_plan(
-            text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", samples_expected_sha="0" * 64
+            text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", Path("p"), "ps", samples_expected_sha="0" * 64
         ),
         "samples sha mismatch",
         "samples sha mismatch",
@@ -105,7 +113,7 @@ def check_manifest_sample_mismatch() -> None:
     del bad_manifest["PB"]  # manifest now missing a paper the samples reference
     expect_system_exit(
         lambda: driver.build_plan(
-            text, bad_manifest, Path("x"), Path("r"), "s", samples_expected_sha=expected_sha
+            text, bad_manifest, Path("x"), Path("r"), "s", Path("p"), "ps", samples_expected_sha=expected_sha
         ),
         "manifest/sample paper mismatch",
         "manifest mismatch",
@@ -121,7 +129,7 @@ def check_probe_paper_not_in_manifest() -> None:
     expected_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
     expect_system_exit(
         lambda: driver.build_plan(
-            text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", samples_expected_sha=expected_sha
+            text, FIXTURE_MANIFEST, Path("x"), Path("r"), "s", Path("p"), "ps", samples_expected_sha=expected_sha
         ),
         "not in the grader-input manifest",
         "probe paper missing",

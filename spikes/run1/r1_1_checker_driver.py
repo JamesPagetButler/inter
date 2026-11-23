@@ -59,6 +59,8 @@ def build_plan(
     grader_inputs_dir: Path,
     rubric_path: Path,
     rubric_sha: str,
+    prompt_path: Path,
+    prompt_sha: str,
     samples_expected_sha: str = SAMPLES_EXPECTED_SHA,
 ) -> list:
     samples_sha = sha256_of_text(samples_text)
@@ -88,6 +90,8 @@ def build_plan(
                 "kind": "double_graded",
                 "label": paper_id,
                 "run_index": None,
+                "prompt": str(prompt_path),
+                "prompt_sha": prompt_sha,
                 "rubric": str(rubric_path),
                 "rubric_sha": rubric_sha,
                 "input": str(grader_inputs_dir / Path(relpath).name),
@@ -101,6 +105,8 @@ def build_plan(
                 "kind": "probe",
                 "label": probe_paper,
                 "run_index": run_index,
+                "prompt": str(prompt_path),
+                "prompt_sha": prompt_sha,
                 "rubric": str(rubric_path),
                 "rubric_sha": rubric_sha,
                 "input": str(grader_inputs_dir / Path(relpath).name),
@@ -126,6 +132,10 @@ def execute_plan(plan: list, out_dir: str) -> int:
             "-I",
             str(CHECKER),
             "grade",
+            "--prompt",
+            call["prompt"],
+            "--prompt-sha",
+            call["prompt_sha"],
             "--rubric",
             call["rubric"],
             "--rubric-sha",
@@ -151,6 +161,8 @@ def main() -> int:
     parser.add_argument("--samples", required=True)
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--grader-inputs-dir", required=True)
+    parser.add_argument("--prompt", required=True)
+    parser.add_argument("--prompt-sha", required=True)
     parser.add_argument("--rubric", required=True)
     parser.add_argument("--rubric-sha", required=True)
     parser.add_argument("--out-dir", required=True)
@@ -168,6 +180,8 @@ def main() -> int:
         Path(args.grader_inputs_dir),
         Path(args.rubric),
         args.rubric_sha,
+        Path(args.prompt),
+        args.prompt_sha,
     )
     print_plan(plan)
 

@@ -1,0 +1,7 @@
+FIXTURE PROMPT (not the real checker-v1.md -- this is a synthetic fixture
+for checker_v1.py's dry-run known-answer test only. It is never read by any
+real grading call; its only purpose is to give build_request() fixed,
+versioned input so the test's pinned sha is reproducible.)
+
+You are checking claims. Below this prompt come two blocks: the rubric,
+then the grader input. Output one JSON line per claim, then GRADES-END.

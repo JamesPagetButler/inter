@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Checker v1 (contextus-seed-corpus round 1.1, inter#300 draft r2, §8a/§8b).
+"""Checker v1 (contextus-seed-corpus round 1.1, amendment 2, §8a/§8b).
 
 Direct google-genai `generate_content` calls, request bytes hashed to a file
 before any network call (the A2 inter-rater redo pattern). Serves three
@@ -14,16 +14,21 @@ discipline:
     the hashed request text -- qbp-architecture, live-test seq 5267).
 
 Modes:
-  dry-run -- fixture rubric + fixture input, no network call, checks the
-             request sha against the pinned known-answer value (§8a row
-             for this component).
-  grade   -- real run: rubric + input -> one generate_content call, with
-             the F5/F6 hardening from the A2 redo (shas checked up front,
-             raw response written before any parsing, finish_reason
-             recorded, parts-extraction failure writes a PARSE_FAILED
-             finding and returns rather than raising).
+  dry-run -- fixture prompt + fixture rubric + fixture input, no network
+             call, checks the request sha against the pinned known-answer
+             value (§8a row for this component).
+  grade   -- real run: checker-v1.md + rubric + input -> one
+             generate_content call, with the F5/F6 hardening from the A2
+             redo (shas checked up front, raw response written before any
+             parsing, finish_reason recorded, parts-extraction failure
+             writes a PARSE_FAILED finding and returns rather than raising).
 
-request_text = rubric_text + "\n\n" + input_text
+Amendment 2 (spike-seed-corpus-s4 seq 325): contextus-spike found at build
+time that the original two-part request (rubric + input) carried no
+grading-task instructions at all -- nothing told Gemini what to do or what
+to output. The request is now three parts:
+
+request_text = prompt_text + "\n\n" + rubric_text + "\n\n" + input_text
 request_sha  = sha256(request_text.encode("utf-8")).hexdigest()
 """
 import argparse
@@ -36,17 +41,18 @@ GEMINI_SERVER_DIR = Path.home() / ".claude" / "mcp-servers" / "gemini"
 MODEL = "gemini-3.1-pro-preview"
 
 FIXTURE_DIR = Path(__file__).parent / "checker_v1_fixtures"
+FIXTURE_PROMPT = FIXTURE_DIR / "fixture_prompt.txt"
 FIXTURE_RUBRIC = FIXTURE_DIR / "fixture_rubric.txt"
 FIXTURE_INPUT = FIXTURE_DIR / "fixture_input.txt"
 
 # Known-answer pin (§8a component test for this row). Recomputed
 # independently by checker_v1_test.py from the fixture files on disk, so a
-# stale pin here is caught rather than trusted. Changing either fixture
-# file, or changing build_request()'s concatenation, must update this
-# constant as a deliberate, reviewed edit. Dry-run only -- unrelated to the
-# production rubric pin below.
+# stale pin here is caught rather than trusted. Changing any fixture file,
+# or changing build_request()'s concatenation, must update this constant as
+# a deliberate, reviewed edit. Dry-run only -- unrelated to the production
+# rubric/prompt pins below.
 FIXTURE_EXPECTED_REQUEST_SHA = (
-    "cd68da07338865d8e93d43a9ab07bb655964ee308d333d572b1183c90f48eccf"
+    "e02100b4b65d641f6fe47bc0ea266c35419125190e51e842ae1f622bc38a0d54"
 )
 
 # Production rubric pin (§I4 APPROVE on gate 2, inter 2b8b2e4, live-test
@@ -59,13 +65,25 @@ CANONICAL_RUBRIC_SHA = (
     "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"
 )
 
+# Production checker prompt pin (amendment 2, inter `bb3490c`):
+# spikes/prereg/contextus-seed-corpus-r1.1-prompts/checker-v1.md. Carries
+# the shared-grading-task-v1.md block (sha256
+# 826f9cde034937920e585a25189d0cf063ef565878f27ea08147f4e2b45e6cd6) as a
+# byte-exact substring, plus the checker's own framing and output contract
+# ({"n","grade","reason"} lines, then GRADES-END; no doubt, no p4). `grade`
+# enforces this by default; pass --prompt-sha explicitly to override for a
+# later prompt version.
+CANONICAL_PROMPT_SHA = (
+    "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803"
+)
+
 
 def sha256_of(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def build_request(rubric_text: str, input_text: str) -> str:
-    return rubric_text + "\n\n" + input_text
+def build_request(prompt_text: str, rubric_text: str, input_text: str) -> str:
+    return prompt_text + "\n\n" + rubric_text + "\n\n" + input_text
 
 
 def rubric_id_line_of(rubric_text: str) -> str | None:
@@ -76,14 +94,22 @@ def rubric_id_line_of(rubric_text: str) -> str | None:
 
 
 def validate_and_prepare(
+    prompt_text: str,
     rubric_text: str,
     input_text: str,
+    prompt_sha_expected: str | None,
     rubric_sha_expected: str | None,
     input_sha_expected: str | None,
 ) -> dict:
     """Pure validation + request construction, no I/O and no network --
     the part of `grade` that checker_v1_test.py exercises directly, without
     needing _get_client() or a real call."""
+    prompt_sha = sha256_of(prompt_text)
+    expected_prompt_sha = prompt_sha_expected or CANONICAL_PROMPT_SHA
+    if prompt_sha != expected_prompt_sha:
+        raise SystemExit(
+            f"prompt sha mismatch: got {prompt_sha}, expected {expected_prompt_sha}"
+        )
     rubric_sha = sha256_of(rubric_text)
     expected_rubric_sha = rubric_sha_expected or CANONICAL_RUBRIC_SHA
     if rubric_sha != expected_rubric_sha:
@@ -94,8 +120,9 @@ def validate_and_prepare(
     if input_sha_expected and input_sha != input_sha_expected:
         raise SystemExit(f"input sha mismatch: got {input_sha}, expected {input_sha_expected}")
 
-    request_text = build_request(rubric_text, input_text)
+    request_text = build_request(prompt_text, rubric_text, input_text)
     return {
+        "prompt_sha": prompt_sha,
         "rubric_sha": rubric_sha,
         "input_sha": input_sha,
         "request_text": request_text,
@@ -117,9 +144,10 @@ def _get_client():
 
 
 def cmd_dry_run(args) -> int:
+    prompt_text = FIXTURE_PROMPT.read_text()
     rubric_text = FIXTURE_RUBRIC.read_text()
     input_text = FIXTURE_INPUT.read_text()
-    request_text = build_request(rubric_text, input_text)
+    request_text = build_request(prompt_text, rubric_text, input_text)
     request_sha = sha256_of(request_text)
 
     out_dir = Path(args.out_dir)
@@ -140,12 +168,17 @@ def cmd_dry_run(args) -> int:
 
 
 def cmd_grade(args) -> int:
+    prompt_path = Path(args.prompt)
     rubric_path = Path(args.rubric)
     input_path = Path(args.input)
+    prompt_text = prompt_path.read_text()
     rubric_text = rubric_path.read_text()
     input_text = input_path.read_text()
 
-    prepared = validate_and_prepare(rubric_text, input_text, args.rubric_sha, args.input_sha)
+    prepared = validate_and_prepare(
+        prompt_text, rubric_text, input_text, args.prompt_sha, args.rubric_sha, args.input_sha
+    )
+    prompt_sha = prepared["prompt_sha"]
     rubric_sha = prepared["rubric_sha"]
     input_sha = prepared["input_sha"]
     request_text = prepared["request_text"]
@@ -212,6 +245,7 @@ def cmd_grade(args) -> int:
                 "run_index": args.run_index,
                 "model": MODEL,
                 "thinking_budget": 10000,
+                "prompt_sha": prompt_sha,
                 "rubric_sha": rubric_sha,
                 "input_sha": input_sha,
                 "request_sha": request_sha,
@@ -235,6 +269,8 @@ def main() -> None:
     p_dry.set_defaults(func=cmd_dry_run)
 
     p_grade = sub.add_parser("grade")
+    p_grade.add_argument("--prompt", required=True)
+    p_grade.add_argument("--prompt-sha")
     p_grade.add_argument("--rubric", required=True)
     p_grade.add_argument("--rubric-sha")
     p_grade.add_argument("--input", required=True)
