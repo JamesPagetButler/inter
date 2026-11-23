@@ -179,17 +179,41 @@ def check_checker_grades(grades_by_n, expected_ns):
 VERIFIER_ROLES = ("verifier", "L2-verifier")
 CHECKER_ROLES = ("checker", "L1-checker", "L2-checker")
 
+# ---- amendment 2 B2: prompt parity (defence in depth). Pinned here; no record or bundle overrides them.
+# sha256 of the committed prompt files in spikes/prereg/contextus-seed-corpus-r1.1-prompts/.
+VERIFIER_PROMPT_SHA = "6d417edb1ea05eb3c9870208a479d7c523c2b02c71969a3377fbd3b668176289"   # verifier-v1.md
+CHECKER_PROMPT_SHA = "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803"    # checker-v1.md
+LABELLER_PROMPT_SHA = "9d4d784ea13945f0207bb37c8974d9914097ae17445f2508ae8efec8fd955eff"   # audit-labeller-v1.md
+ROLE_PROMPT_SHA = {"verifier": VERIFIER_PROMPT_SHA, "L2-verifier": VERIFIER_PROMPT_SHA,
+                   "checker": CHECKER_PROMPT_SHA, "L1-checker": CHECKER_PROMPT_SHA, "L2-checker": CHECKER_PROMPT_SHA}
+# qbp-oppenheimer's hand labels use no prompt. Exempt by the set HEADER's "labeller" identity, exact match only.
+PROMPT_EXEMPT_LABELLERS = ("qbp-oppenheimer",)
+
+
+def _prompt_void(got, pin, where):
+    if not got:
+        return [f"{where}: no prompt_sha"]
+    if got != pin:
+        return [f"{where}: prompt_sha {got} != pinned {pin}"]
+    return []
+
 
 def check_rater_run(role, record, pinned_rubric_sha, pinned_rubric_id, expected_ns):
-    """record: verifier roles {"text", "received_rubric_sha"}; checker roles {"meta", "grades"}."""
+    """record: verifier roles {"text", "received_rubric_sha", "prompt_sha"} (the sub-agent dispatch
+    record); checker roles {"meta": {"rubric_sha", "prompt_sha", ...}, "grades"}.
+    A missing or non-pinned prompt_sha for the role voids the run (amendment 2 B2)."""
     if role in VERIFIER_ROLES:
         r = check_verifier_output(record["text"], expected_ns, record.get("received_rubric_sha"),
                                   pinned_rubric_sha, pinned_rubric_id)
+        pv = _prompt_void(record.get("prompt_sha"), ROLE_PROMPT_SHA[role], f"{role} dispatch")
+        if pv:
+            r = dict(r, status="void", void_reasons=r["void_reasons"] + pv, grades=[])
     elif role in CHECKER_ROLES:
         m = check_checker_meta(record.get("meta") or {}, pinned_rubric_sha)
         g = check_checker_grades(record.get("grades") or {}, expected_ns)
-        status = "void" if m["status"] == "void" else g["status"]
-        r = {"status": status, "void_reasons": m["void_reasons"], "errors": g["errors"]}
+        pv = _prompt_void((record.get("meta") or {}).get("prompt_sha"), ROLE_PROMPT_SHA[role], f"{role} meta")
+        status = "void" if (m["status"] == "void" or pv) else g["status"]
+        r = {"status": status, "void_reasons": m["void_reasons"] + pv, "errors": g["errors"]}
     else:
         raise ValueError(f"unknown rater role: {role!r}")
     r["role"] = role
@@ -219,6 +243,11 @@ def check_labeller_set(labeller_set, pinned_rubric_sha, expected_items):
     # Header-level only, exactly the JSON boolean true; any record-level "blind" key is ignored.
     if header.get("blind") is not True:
         void.append(f"header blind attestation must be true, got {header.get('blind')!r}")
+    # Amendment 2 B2: every labeller except qbp-oppenheimer's hand labels (no prompt) must carry the
+    # pinned audit-labeller prompt sha in the header. Exemption keyed on the header identity only.
+    if header.get("labeller") not in PROMPT_EXEMPT_LABELLERS:
+        void += _prompt_void(header.get("prompt_sha"), LABELLER_PROMPT_SHA,
+                             f"labeller {header.get('labeller')!r} header")
     for r in recs:
         if r.get("grade") not in GRADE_SET:
             errs.append(f"{r.get('paper')}/{r.get('n')}: grade outside category set: {r.get('grade')!r}")

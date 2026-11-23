@@ -398,3 +398,59 @@ original was restored with a sha check.
 - Round 1's κ is still 0.49420442571127504.
 - The `round1` and the B = 10000 fixture `run` outputs are byte-identical across two runs, and the
   `run` output is identical to d7da191's.
+
+### Amendment-2 B2 FIX ROUND: prompt parity, defence in depth (on 7163c7f)
+**Pins**
+- `l0_checks.py` pins the committed prompt shas as module constants. A record, header or bundle
+  key never overrides them. The test re-hashes the prompt files on disk and checks they match.
+  - verifier and L2-verifier: `6d417edb…6289` (`verifier-v1.md`)
+  - checker, L1-checker and L2-checker: `cc4c6c2f…8803` (`checker-v1.md`)
+  - audit labeller: `9d4d784e…5eff` (`audit-labeller-v1.md`)
+
+**Checks**
+- `check_rater_run` voids a run whose `prompt_sha` is missing or differs from its role's pin:
+  - verifier roles: the sub-agent dispatch record's `prompt_sha`;
+  - checker roles: `meta.prompt_sha`.
+- `check_labeller_set` voids a set whose header `prompt_sha` is missing or differs from the
+  audit-labeller pin, with one exemption:
+  - It applies only when the set **header's** `"labeller"` equals `"qbp-oppenheimer"` exactly. Those
+    are hand labels and use no prompt.
+  - Any other identity requires the pin: near-miss names, the empty string, or no identity at all.
+  - The outer or record-level name does not grant the exemption.
+- In `analyse()`, a void Gemini labeller set makes G2 read void, as for rubric parity.
+
+**Tests**
+- Every mismatch fixture differs from its pin only in the last hex character. Cross-role shas (the
+  labeller or verifier sha offered to a checker) also void.
+- `test_l0_checks.py`: 44/44 PASS. The 9 new tests failed first.
+- `test_analysis_r11.py`: 47/47 PASS.
+  - The planted-or-missing test and the bundle-override test failed first.
+  - The honest-shas test passed before the change, as expected.
+- All suites give 121/121 under pytest.
+
+**Mutants**
+- Prompt check removed, all KILLED:
+  - P1a, checker roles
+  - P1b, verifier roles
+  - P1c, labeller
+  - P1d, analysis widens the exemption
+- P2, missing `prompt_sha` accepted: KILLED
+- Checker role accepts another role's sha, all KILLED:
+  - P3, the labeller sha accepted
+  - P3b, L1-checker mapped to the labeller pin
+- The oppenheimer exemption widened, all KILLED:
+  - P4a, any name
+  - P4b, substring match
+  - P4c, the outer non-header name
+- A pin overridden, all KILLED:
+  - P5a, by checker meta
+  - P5b, by the verifier dispatch record
+  - P5c, by the labeller header
+  - P5d, by the bundle in `analyse`
+- All 53 earlier mutants re-run on the final files: all KILLED. R2-M5 was re-expressed for the new
+  line as "meta void ignored, prompt kept".
+
+**Determinism and κ**
+- Round 1's κ is still 0.49420442571127504.
+- The `round1` and the B = 10000 fixture `run` outputs are byte-identical across two runs, and the
+  `run` output is unchanged from 7163c7f.

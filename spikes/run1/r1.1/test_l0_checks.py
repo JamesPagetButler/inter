@@ -133,7 +133,12 @@ def test_deterministic():
 
 # ---------- R2 (cartan gate 8): parity for every rater, incl. L1/L2 and both audit labellers ----------
 
-CHK_OK = {"meta": {"rubric_sha": PIN_SHA}, "grades": {1: "faithful", 2: "wrong-relation", 3: "not-in-paper"}}
+PROMPTS = HERE.parent.parent / "prereg" / "contextus-seed-corpus-r1.1-prompts"
+V_PROMPT = "6d417edb1ea05eb3c9870208a479d7c523c2b02c71969a3377fbd3b668176289"   # verifier-v1.md
+C_PROMPT = "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803"   # checker-v1.md
+L_PROMPT = "9d4d784ea13945f0207bb37c8974d9914097ae17445f2508ae8efec8fd955eff"   # audit-labeller-v1.md
+CHK_OK = {"meta": {"rubric_sha": PIN_SHA, "prompt_sha": C_PROMPT},
+          "grades": {1: "faithful", 2: "wrong-relation", 3: "not-in-paper"}}
 
 
 def rr(role, rec):
@@ -141,29 +146,29 @@ def rr(role, rec):
 
 
 def test_l2_verifier_session_parity_checked():
-    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": PIN_SHA})["status"] == "ok"
-    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": "0" * 64})["status"] == "void"
+    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": PIN_SHA, "prompt_sha": V_PROMPT})["status"] == "ok"
+    assert rr("L2-verifier", {"text": GOOD, "received_rubric_sha": "0" * 64, "prompt_sha": V_PROMPT})["status"] == "void"
     bad_echo = output([grade_line(1), grade_line(2), grade_line(3)], rubric_id=PIN_ID + "x")
-    assert rr("L2-verifier", {"text": bad_echo, "received_rubric_sha": PIN_SHA})["status"] == "void"
+    assert rr("L2-verifier", {"text": bad_echo, "received_rubric_sha": PIN_SHA, "prompt_sha": V_PROMPT})["status"] == "void"
 
 
 def test_l1_checker_session_parity_checked():
     assert rr("L1-checker", CHK_OK)["status"] == "ok"
-    assert rr("L1-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64}))["status"] == "void"
-    assert rr("L1-checker", dict(CHK_OK, meta={}))["status"] == "void"
+    assert rr("L1-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64, "prompt_sha": C_PROMPT}))["status"] == "void"
+    assert rr("L1-checker", dict(CHK_OK, meta={"prompt_sha": C_PROMPT}))["status"] == "void"
 
 
 def test_l2_checker_session_parity_checked():
     assert rr("L2-checker", CHK_OK)["status"] == "ok"
-    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64}))["status"] == "void"
-    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": None}))["status"] == "void"
+    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": "1" * 64, "prompt_sha": C_PROMPT}))["status"] == "void"
+    assert rr("L2-checker", dict(CHK_OK, meta={"rubric_sha": None, "prompt_sha": C_PROMPT}))["status"] == "void"
 
 
 def test_every_rater_role_is_parity_checked():
     for role in l0.VERIFIER_ROLES:
-        assert rr(role, {"text": GOOD, "received_rubric_sha": "0" * 64})["status"] == "void", role
+        assert rr(role, {"text": GOOD, "received_rubric_sha": "0" * 64, "prompt_sha": V_PROMPT})["status"] == "void", role
     for role in l0.CHECKER_ROLES:
-        assert rr(role, dict(CHK_OK, meta={"rubric_sha": "2" * 64}))["status"] == "void", role
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": "2" * 64, "prompt_sha": C_PROMPT}))["status"] == "void", role
     assert set(l0.VERIFIER_ROLES) == {"verifier", "L2-verifier"}
     assert set(l0.CHECKER_ROLES) == {"checker", "L1-checker", "L2-checker"}
     try:
@@ -189,6 +194,9 @@ def lab(header=None, recs=None, who="qbp-oppenheimer", blind=True):
     h = dict(header) if header is not None else {}
     if blind is not None and "blind" not in h:
         h["blind"] = blind
+    h.setdefault("labeller", who)
+    if who != "qbp-oppenheimer":
+        h.setdefault("prompt_sha", L_PROMPT)
     return {"labeller": who, "header": h, "records": recs}
 
 
@@ -254,13 +262,13 @@ def test_labeller_record_sha_last_char_mismatch_voids():
 def test_checker_meta_sha_last_char_mismatch_voids():
     assert l0.check_checker_meta({"rubric_sha": LAST}, PIN_SHA)["status"] == "void"
     for role in l0.CHECKER_ROLES:
-        assert rr(role, dict(CHK_OK, meta={"rubric_sha": LAST}))["status"] == "void", role
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": LAST, "prompt_sha": C_PROMPT}))["status"] == "void", role
 
 
 def test_verifier_received_sha_last_char_mismatch_voids():
     assert run(GOOD, rubric_sha=LAST)["status"] == "void"
     for role in l0.VERIFIER_ROLES:
-        assert rr(role, {"text": GOOD, "received_rubric_sha": LAST})["status"] == "void", role
+        assert rr(role, {"text": GOOD, "received_rubric_sha": LAST, "prompt_sha": V_PROMPT})["status"] == "void", role
 
 
 # ---------- amendment 2 (cartan gate-8 note): header-level blindness attestation ----------
@@ -297,6 +305,85 @@ def test_blind_void_beats_reject_and_applies_to_both_labellers():
         assert ls(lab(header={"rubric_sha": PIN_SHA}, blind=False, who=who))["status"] == "void"
     recs = [{"paper": "P", "n": 1, "grade": "bogus"}]
     assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs, blind=False))["status"] == "void"
+
+
+# ---------- amendment 2 B2: prompt parity (defence in depth) ----------
+
+PLAST = lambda sha: sha[:-1] + ("0" if sha[-1] != "0" else "1")  # noqa: E731  (differs only in last hex char)
+
+
+def test_prompt_pins_match_committed_prompt_files():
+    for name, pin in (("verifier-v1.md", V_PROMPT), ("checker-v1.md", C_PROMPT), ("audit-labeller-v1.md", L_PROMPT)):
+        assert hashlib.sha256((PROMPTS / name).read_bytes()).hexdigest() == pin, name
+    assert l0.ROLE_PROMPT_SHA == {"verifier": V_PROMPT, "L2-verifier": V_PROMPT, "checker": C_PROMPT,
+                                  "L1-checker": C_PROMPT, "L2-checker": C_PROMPT}
+    assert l0.LABELLER_PROMPT_SHA == L_PROMPT and l0.PROMPT_EXEMPT_LABELLERS == ("qbp-oppenheimer",)
+
+
+def test_checker_roles_prompt_sha_checked():
+    for role in l0.CHECKER_ROLES:
+        assert rr(role, CHK_OK)["status"] == "ok", role
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": PIN_SHA, "prompt_sha": PLAST(C_PROMPT)}))["status"] == "void", role
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": PIN_SHA}))["status"] == "void", role          # missing
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": PIN_SHA, "prompt_sha": None}))["status"] == "void", role
+
+
+def test_checker_role_rejects_other_roles_prompt_shas():
+    for role in l0.CHECKER_ROLES:
+        for other in (L_PROMPT, V_PROMPT):
+            assert rr(role, dict(CHK_OK, meta={"rubric_sha": PIN_SHA, "prompt_sha": other}))["status"] == "void", (role, other)
+
+
+def test_verifier_roles_dispatch_prompt_sha_checked():
+    for role in l0.VERIFIER_ROLES:
+        ok = {"text": GOOD, "received_rubric_sha": PIN_SHA, "prompt_sha": V_PROMPT}
+        assert rr(role, ok)["status"] == "ok", role
+        assert rr(role, dict(ok, prompt_sha=PLAST(V_PROMPT)))["status"] == "void", role
+        assert rr(role, dict(ok, prompt_sha=C_PROMPT))["status"] == "void", role
+        assert rr(role, {"text": GOOD, "received_rubric_sha": PIN_SHA})["status"] == "void", role       # missing
+
+
+def test_record_cannot_override_role_prompt_pin():
+    planted = PLAST(C_PROMPT)
+    for k in ("pinned_prompt_sha", "expected_prompt_sha", "prompt_pin"):
+        meta = {"rubric_sha": PIN_SHA, "prompt_sha": planted, k: planted}
+        assert rr("L1-checker", dict(CHK_OK, meta=meta))["status"] == "void", k
+        assert rr("L1-checker", dict(CHK_OK, meta=meta, **{k: planted}))["status"] == "void", k
+        v = {"text": GOOD, "received_rubric_sha": PIN_SHA, "prompt_sha": PLAST(V_PROMPT), k: PLAST(V_PROMPT)}
+        assert rr("L2-verifier", v)["status"] == "void", k
+
+
+def test_gemini_labeller_prompt_sha_checked():
+    g = dict(header={"rubric_sha": PIN_SHA}, who="gemini-labeller")
+    assert ls(lab(**g))["status"] == "ok"
+    assert ls(lab(header={"rubric_sha": PIN_SHA, "prompt_sha": PLAST(L_PROMPT)}, who="gemini-labeller"))["status"] == "void"
+    assert ls(lab(header={"rubric_sha": PIN_SHA, "prompt_sha": C_PROMPT}, who="gemini-labeller"))["status"] == "void"
+    h = {"rubric_sha": PIN_SHA, "labeller": "gemini-labeller", "blind": True}                               # missing
+    assert ls({"labeller": "gemini-labeller", "header": h, "records": lab()["records"]})["status"] == "void"
+
+
+def test_any_non_oppenheimer_labeller_needs_the_prompt_sha():
+    for who in ("qbp-oppenheimer2", "QBP-Oppenheimer", "oppenheimer", "cartan", "", None):
+        h = {"rubric_sha": PIN_SHA, "labeller": who, "blind": True}
+        assert ls({"labeller": who, "header": h, "records": lab()["records"]})["status"] == "void", who
+
+
+def test_oppenheimer_hand_labels_exempt_by_header_identity_only():
+    h = {"rubric_sha": PIN_SHA, "labeller": "qbp-oppenheimer", "blind": True}
+    assert ls({"labeller": "qbp-oppenheimer", "header": h, "records": lab()["records"]})["status"] == "ok"
+    # the exemption is keyed on the HEADER identity, not the outer/record name
+    h = {"rubric_sha": PIN_SHA, "labeller": "gemini-labeller", "blind": True}
+    assert ls({"labeller": "qbp-oppenheimer", "header": h, "records": lab()["records"]})["status"] == "void"
+    h = {"rubric_sha": PIN_SHA, "blind": True}
+    recs = [dict(r, labeller="qbp-oppenheimer") for r in lab()["records"]]
+    assert ls({"labeller": "qbp-oppenheimer", "header": h, "records": recs})["status"] == "void"
+
+
+def test_labeller_header_cannot_override_prompt_pin():
+    planted = PLAST(L_PROMPT)
+    for k in ("pinned_prompt_sha", "expected_prompt_sha", "prompt_pin"):
+        h = {"rubric_sha": PIN_SHA, "prompt_sha": planted, k: planted}
+        assert ls(lab(header=h, who="gemini-labeller"))["status"] == "void", k
 
 
 if __name__ == "__main__":

@@ -325,6 +325,28 @@ def test_checker_must_still_cover_all_120():
         raise AssertionError("missing double-graded checker grade accepted")
 
 
+# ---------- amendment 2 B2: Gemini labeller prompt parity -> G2 void ----------
+
+def test_g2_void_when_gemini_labeller_prompt_sha_planted_or_missing():
+    for bp in (L_PROMPT[:-1] + ("0" if L_PROMPT[-1] != "0" else "1"), None):
+        r = an.analyse(_bundle(b_prompt=bp), RUN1, B=50)
+        assert r["audit"]["labeller_parity"]["labeller_b"]["status"] == "void", bp
+        assert r["audit"]["g2_pass"] == "void"
+        assert r["decision"]["outcome"] == "not listed: G2 void (audit labeller rubric parity)"
+
+
+def test_bundle_cannot_override_the_labeller_prompt_pin():
+    planted = "a" * 64
+    b = _bundle(b_prompt=planted)
+    for k in ("pinned_prompt_sha", "labeller_prompt_sha", "prompt_pins"):
+        b[k] = planted if k != "prompt_pins" else {"audit-labeller": planted}
+    assert an.analyse(b, RUN1, B=50)["audit"]["g2_pass"] == "void"
+
+
+def test_honest_prompt_shas_keep_g2_pass():
+    assert an.analyse(_bundle(), RUN1, B=50)["audit"]["g2_pass"] is True
+
+
 # ---------- round 1 reproduction ----------
 
 def test_reproduces_round1_kappa_0494():
@@ -383,7 +405,10 @@ def _lean():
 PIN = "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"
 
 
-def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10, a_sha=PIN, b_sha=PIN):
+L_PROMPT = "9d4d784ea13945f0207bb37c8974d9914097ae17445f2508ae8efec8fd955eff"
+
+
+def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10, a_sha=PIN, b_sha=PIN, b_prompt=L_PROMPT):
     lean = _lean()
     claims, cont = sampler.load_inputs(RUN1)
     draw = sampler.draw(claims, cont)
@@ -396,9 +421,12 @@ def _bundle(checker_flip=False, audit_confirmed=20, doubt_every=10, a_sha=PIN, b
     items = draw["double_graded"][:20] if not checker_flip else []
     audit = [{"paper": p, "n": n, "agreed_grade": lean[p][n]} for p, n in items]
     labellers = {
-        "labeller_a": {"labeller": "qbp-oppenheimer", "header": {"rubric_sha": a_sha, "blind": True},
+        "labeller_a": {"labeller": "qbp-oppenheimer",
+                       "header": {"rubric_sha": a_sha, "blind": True, "labeller": "qbp-oppenheimer"},
                        "records": [{"paper": p, "n": n, "grade": lean[p][n]} for p, n in items]},
-        "labeller_b": {"labeller": "gemini-labeller", "header": {"rubric_sha": b_sha, "blind": True} if b_sha is not None else {"blind": True},
+        "labeller_b": {"labeller": "gemini-labeller",
+                       "header": dict({"rubric_sha": b_sha} if b_sha is not None else {}, blind=True,
+                                      labeller="gemini-labeller", prompt_sha=b_prompt),
                        "records": [{"paper": p, "n": n, "grade": lean[p][n] if i < audit_confirmed else "not-in-paper"}
                                    for i, (p, n) in enumerate(items)]}}
     return {"verifier": ver, "checker": chk, "double_graded": [list(x) for x in draw["double_graded"]],
