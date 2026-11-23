@@ -163,11 +163,72 @@ def check_production_prompt_contains_shared_block() -> None:
     print("PASS (production prompt): checker-v1.md matches its pin and carries the shared grading-task block byte-exact.")
 
 
+def expect_parse_rejects(text: str, expected_ns, expected_substring: str, label: str) -> None:
+    try:
+        checker_v1.parse_grade_lines(text, expected_ns)
+    except SystemExit as e:
+        if expected_substring not in str(e):
+            raise AssertionError(f"{label}: SystemExit message {str(e)!r} does not contain {expected_substring!r}")
+    except Exception as e:
+        raise AssertionError(
+            f"{label}: expected SystemExit containing {expected_substring!r}, "
+            f"got {type(e).__name__}: {e} -- this is killed-by-crash, not killed-by-guard"
+        )
+    else:
+        raise AssertionError(f"{label}: expected SystemExit containing {expected_substring!r}, parse_grade_lines succeeded")
+    print(f"PASS ({label}): rejected with the guard's own SystemExit, containing {expected_substring!r}.")
+
+
+def check_parse_grade_lines() -> None:
+    good = (
+        '{"n": 1, "grade": "faithful", "reason": "quote one"}\n'
+        '{"n": 2, "grade": "wrong-relation", "reason": "quote two"}\n'
+        "GRADES-END\n"
+    )
+    grades = checker_v1.parse_grade_lines(good, {1, 2})
+    if grades != {1: "faithful", 2: "wrong-relation"}:
+        raise AssertionError(f"happy-path parse wrong: {grades}")
+    print("PASS (parse happy path): two grade lines + GRADES-END parsed to {n: grade}.")
+
+    expect_parse_rejects(
+        '{"n": 1, "grade": "faithful", "reason": "quote"}\n',
+        {1}, "GRADES-END", "parse: missing GRADES-END",
+    )
+    expect_parse_rejects(
+        '{"n": 1, "grade": "faithful", "reason": "quote"}\n'
+        '{"n": 1, "grade": "wrong-relation", "reason": "other"}\n'
+        "GRADES-END\n",
+        {1}, "duplicate n", "parse: duplicate n",
+    )
+    expect_parse_rejects(
+        '{"n": 1, "grade": "made-up-grade", "reason": "quote"}\n'
+        "GRADES-END\n",
+        {1}, "outside the category set", "parse: grade outside category set",
+    )
+    expect_parse_rejects(
+        '{"n": 1, "grade": "faithful", "reason": "quote"}\n'
+        "GRADES-END\n"
+        '{"p4": {}}\n',
+        {1}, "after GRADES-END", "parse: content after GRADES-END",
+    )
+    expect_parse_rejects(
+        '{"n": 1, "grade": "faithful", "reason": "quote"}\n'
+        "GRADES-END\n",
+        {1, 2}, "n-set mismatch", "parse: n-set mismatch",
+    )
+    expect_parse_rejects(
+        "not json at all\n"
+        "GRADES-END\n",
+        set(), "is not JSON", "parse: malformed JSON line",
+    )
+
+
 def main() -> int:
     check_structural()
     check_functional()
     check_canonical_pins()
     check_production_prompt_contains_shared_block()
+    check_parse_grade_lines()
     print("ALL PASS")
     return 0
 

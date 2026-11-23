@@ -77,9 +77,68 @@ CANONICAL_PROMPT_SHA = (
     "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803"
 )
 
+# The output contract shared by checker-v1.md and audit-labeller-v1.md
+# (amendment 2 B1): one {"n","grade","reason"} JSON line per claim, then
+# exactly one GRADES-END line, nothing after -- no doubt, no p4 (those are
+# verifier-only).
+GRADE_SET = frozenset(
+    ("faithful", "wrong-relation", "wrong-direction", "wrong-modality", "wrong-locator", "not-in-paper")
+)
+GRADE_LINE_KEYS = frozenset(("n", "grade", "reason"))
+GRADES_END = "GRADES-END"
+
 
 def sha256_of(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def parse_grade_lines(text: str, expected_ns) -> dict:
+    """Parses the shared checker/audit-labeller output contract into
+    {n: grade}. Reused by audit_labeller_v1.py for the same reason the
+    prompt itself is shared (amendment 2 B1) -- one parser, not two that
+    could silently drift apart.
+
+    Fails loudly (SystemExit) and never silently drops or guesses a grade:
+    malformed JSON, wrong keys, an out-of-category grade, a duplicate n, an
+    n-set mismatch against `expected_ns`, more/less than one GRADES-END
+    line, or any non-blank content after it are all rejected by name.
+    """
+    lines = text.splitlines()
+    if lines.count(GRADES_END) != 1:
+        raise SystemExit(f"expected exactly one {GRADES_END} line, found {lines.count(GRADES_END)}")
+    end_idx = lines.index(GRADES_END)
+    before, after = lines[:end_idx], lines[end_idx + 1:]
+    if any(ln.strip() for ln in after):
+        raise SystemExit(f"non-blank content after {GRADES_END}: {after!r}")
+
+    grades = {}
+    for ln in before:
+        if not ln.strip():
+            continue
+        try:
+            o = json.loads(ln)
+        except json.JSONDecodeError:
+            raise SystemExit(f"grade line is not JSON: {ln[:80]!r}")
+        if not (isinstance(o, dict) and set(o) == GRADE_LINE_KEYS):
+            raise SystemExit(f"grade line keys must be exactly {sorted(GRADE_LINE_KEYS)}: {o!r}")
+        n, grade, reason = o["n"], o["grade"], o["reason"]
+        if not (isinstance(n, int) and not isinstance(n, bool)):
+            raise SystemExit(f"n not an int: {n!r}")
+        if grade not in GRADE_SET:
+            raise SystemExit(f"n={n}: grade outside the category set: {grade!r}")
+        if not isinstance(reason, str) or not reason.strip():
+            raise SystemExit(f"n={n}: empty or non-string reason")
+        if n in grades:
+            raise SystemExit(f"duplicate n in grade lines: {n}")
+        grades[n] = grade
+
+    expected = set(expected_ns)
+    if set(grades) != expected:
+        raise SystemExit(
+            "n-set mismatch: missing "
+            f"{sorted(expected - set(grades))}, extra {sorted(set(grades) - expected)}"
+        )
+    return grades
 
 
 def build_request(prompt_text: str, rubric_text: str, input_text: str) -> str:
