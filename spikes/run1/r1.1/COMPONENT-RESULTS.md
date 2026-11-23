@@ -72,3 +72,151 @@ against the paper's own text — that stays the verifier/checker's job
 path (`registry/` vs the actual `spikes/run1/vocab/`) is the architect's
 own fix in the pre-reg; `quote` becomes required only in the 1.2
 extraction schema, not 1.1, per the review.
+
+## §8a director components (qbp-architecture): L0 checks, escalation router, analysis script, P4 capture
+All four are pure local code: no network, no model call. Every test file was run before its module
+existed and failed (ImportError), and was then made to pass. Each test file runs both as
+`python3 -I test_x.py` (exit 1 on any failure) and under `python3 -m pytest` (plain `test_*`
+functions): **66/66 collected and PASS under pytest**. All runs under `boxrun`, 1 core.
+Mutations were applied one at a time (an exact-once string replacement), the test was run, and the
+original was restored with a sha check.
+
+### l0_checks.py (§5 L0, §3 C3, §8 validity)
+- Known-answer tests, `test_l0_checks.py`: 14/14 PASS. The committed rubric hashes to the pin
+  `f950c385…ed23`, and its first line is the RUBRIC-ID. Five out-of-set grades are each rejected,
+  and all six categories are accepted. A wrong echoed rubric_id voids, and a missing echo voids. A
+  received-rubric sha that differs in one hex digit voids. Void beats reject. A checker meta.json
+  `rubric_sha` mismatch, or a missing one, voids. An out-of-set checker grade is rejected. Ten
+  schema faults are rejected. One void output voids the whole run (`run_validity`). Output is
+  deterministic.
+- Mutations:
+  - M1 (the §8a mutation), received-rubric sha check removed: KILLED (3 tests)
+  - M2, category-set check removed: KILLED
+  - M3, echoed-rubric_id comparison removed: KILLED
+  - M4, reject made to dominate void: KILLED
+  - M5, `run_validity` ignores voids: KILLED
+  - M6, checker meta sha check removed: KILLED
+- The CLI was run twice on a fixture: identical bytes.
+
+### escalation_router.py (§5 ladder)
+- Known-answer tests, `test_escalation_router.py`: 20/20 PASS:
+  - no doubt settles at L0; an L0 reject is not routed;
+  - doubt goes to L1; L1 agreement settles; an L1 split goes to L2, including a split between two
+    non-faithful grades;
+  - L2 converged settles; an L2 impasse goes to L3;
+  - a rule-meaning impasse goes to L4 with no L3 in its path, even when a stray L3 ruling is
+    supplied; L3 may refer an item up as rule-meaning;
+  - an L3 or L4 ruling settles and is a calibration item; an unresolved L4 goes to L5;
+  - an audit disagreement goes to L2;
+  - exactly 30 items at L3 are not flagged; 31 are flagged, and only the 31st in id order;
+  - rule-meaning items don't consume the L3 budget;
+  - the summary counts and doubt rate are correct; bad inputs raise; output is deterministic and
+    independent of input order.
+- Mutations:
+  - M1, rule-meaning routed via L3: KILLED (4 tests)
+  - M2, budget check `>=`, an off-by-one: KILLED
+  - M3, over-budget flag dropped: KILLED
+  - M4, doubt ignored: KILLED
+  - M5, L1 agreement judged faithful-vs-not: KILLED
+  - M6, L3 ruling not marked as calibration: KILLED
+- The CLI was run twice on a fixture: identical bytes.
+
+### analysis_r11.py (§6, §7, §8)
+- Known-answer tests, `test_analysis_r11.py`: 22/22 PASS.
+  - **Cohen's κ:**
+    - exactly 1; exactly 0 (po = pe = 0.5);
+    - prevalence-skewed: 85/5/5/5 of 100 gives po 0.90, κ = 4/9;
+    - -1; undefined (None) when pe = 1.
+  - **Wilson:** 8/10 → [0.490162, 0.943318], computed by hand in the test and matching the textbook
+    0.490 / 0.943. 0/10 → [0, z²/(n+z²) = 0.277533].
+  - **Paper-cluster bootstrap, two-paper fixture:** paper A has κ 1 and paper B has κ -1, so only
+    {1, 0, -1} can occur. Every replicate is in that set, at frequencies ¼ / ½ / ¼, and CI = [-1, 1].
+    A seeded run is byte-identical on a re-run and changes with the seed. Undefined replicates are
+    counted at the expected (2/3)³ rate.
+  - **Round-1 reproduction:** see below.
+  - **Round-1 Gemini parse rule:** a conflicting duplicate is unparsed.
+  - **§8 decision table:** every row, plus "not listed" for an undefined bound or an undefined G2.
+  - **Full-bundle fixtures** (verifier = round-1 lean grades):
+    - identical raters give κ 1 on 120 and on 114/19 papers;
+    - the headline arms sum to 325 and the contaminated arms to 62, the latter labelled circular;
+    - haiku has 169 faithful in all;
+    - an inverted checker gives the closed-form κ, -pe/(1-pe), and "G1 fail, point < 0.6";
+    - 16/20 audit → G2 fail, and 17/20 → pass;
+    - void → no outcome read;
+    - a missing verifier grade or an out-of-set checker grade aborts;
+    - doubt rate and four-field tokens are correct;
+    - output is deterministic.
+- **Round 1's κ reproduced:** κ = 0.49420442571127504. That is round 1's
+  `s5_analysis_A2_results.json` value bit-for-bit, and the whole `overall` and `per_arm` blocks are
+  dict-equal: n 80, raw agreement 0.85, prevalence 0.825; haiku 0.4791666666666669, opus 0.5.
+  - The inputs are round 1's own files, read independently by this script. They are the A3 lean
+    grades `s5_grades_A2_lean/` (manifest a2f2754b…039f, every entry sha-checked) against the
+    Gemini redo answers `s5_interrater_A2/<id>.answer_RAW.txt`, each checked against its
+    meta.json `answer_sha256`. The papers are W4390977661, W7160385925, W2015765968 and
+    W4313326288, both arms. The arm key is sha-checked (af6f985e…f206).
+- Mutations:
+  - M1, κ's pe drops the both-not term: KILLED (7 tests)
+  - M2, item-level instead of paper-cluster bootstrap: KILLED
+  - M3, unseeded bootstrap RNG: KILLED
+  - M4, Wilson z²/(4n) for z²/(4n²): KILLED
+  - M5, the round-1 conflicting-duplicate rule removed: it first **SURVIVED**. Round 1's data has no
+    conflicting duplicate, so the reproduction couldn't see it. The parser was factored out
+    (`parse_gemini_answer`) and given a direct fixture test, and on re-run it was KILLED.
+  - M6, G1 judged on the point κ, not the lower bound: KILLED
+  - M7, W7160385925 not excluded for G3: KILLED
+  - M8, contaminated claims left in the headline pool: KILLED
+  - M9, an undefined replicate counted as κ 1: KILLED
+  - M1–M4 and M6–M9 were re-run on the final file after the M5 refactor: all KILLED.
+- The CLI was run twice each, for `round1` and for `run` on a fixture bundle at the full B = 10000:
+  identical bytes.
+
+### p4_capture.py (§3 P4)
+- Known-answer tests, `test_p4_capture.py`: 10/10 PASS.
+  - The grades hash is the sha256 of the exact bytes through `GRADES-END\n`, and editing P4 doesn't
+    change it.
+  - Extracting before recording is refused (`NotRecorded`), and so is extracting under another key.
+  - A grade altered after recording is refused (`GradeAltered`), at extract and at re-record.
+  - Five ways for a P4 to carry a grade are all refused: an extra key, a nested object, a grade
+    JSON inside a string, a grade line after GRADES-END, and a second GRADES-END.
+  - A missing or malformed P4 is refused.
+  - Prose that discusses a grade is kept.
+  - Recording twice is a no-op (one ledger line), and the ledger bytes are identical across two
+    fresh runs.
+- Mutations:
+  - M1 (the §8a mutation), extract without a prior record: KILLED
+  - M2, re-hash at extract removed: KILLED
+  - M3, the grade-carrying detector gutted: KILLED
+  - M4, re-record with a new hash allowed: KILLED
+  - M5, the ledger not idempotent: KILLED
+- The CLI (record ×2, extract) was run twice in fresh ledgers: identical bytes.
+
+### Assumptions where the pre-reg is silent (simplest reading; the director should ratify or amend)
+- **A-R1:** only verifier doubts and audit-labeller disagreements enter the ladder. A non-doubted
+  verifier/checker disagreement on the 120 is the κ measurement, not an escalation.
+- **A-R2:** "agree"/"split" at L1 is exact grade equality over the six categories.
+- **A-R3:** a rule-meaning dispute is a boolean on the L2 impasse record, or an L3 referral up. It
+  always goes to L4, never through L3.
+- **A-R4:** an audit item goes to L2 unless both labellers equal the agreed grade. G2 is scored on
+  the labellers' original grades, never on the L2 outcome.
+- **A-R5:** L3 over budget is flagged, not truncated. Items beyond 30, in sorted id order, carry
+  `l3_over_budget`.
+- **A-R6:** an unresolved L4 goes to L5. An L4 ruling settles.
+- **A-A1:** an undefined κ replicate (pe = 1) is dropped and counted.
+- **A-A2:** each bootstrap restarts `default_rng(251117)`. The interval is a numpy linear percentile.
+- **A-A3:** "agreed" (audit eligibility) and labeller "confirmation" are exact-grade matches.
+- **A-A4:** P2's drops are like-for-like: round-1 lean minus v1 precision on the same headline haiku
+  claims. P1 uses the literal 0.889.
+- **A-A5:** "tokens (four-field)" means each stage carries exactly four numeric fields. The field
+  names aren't fixed here.
+- **A-P1:** "a report that alters a grade" is defined mechanically: the grade section differs from
+  the recorded hash, extra content follows GRADES-END, or the P4 carries a grade/n key (including as
+  embedded JSON).
+- **A-P2:** prose that discusses a grade is kept.
+- **A-L1:** C3 for the verifier needs both of these: the sha of the bytes dispatched equals the pin,
+  and the echoed id equals the pinned first line. A missing echo voids. The verifier output's JSON
+  key order is not enforced.
+
+### Not computed (needs a reading, or isn't specified)
+- P4 clustering by RCA cause.
+- The per-category distribution "against round 1" is given on the same claims only.
+- The §8b probe measures (Fleiss' κ, the unanimous share) are outside this component's §8a row.

@@ -1,0 +1,144 @@
+"""Known-answer tests for l0_checks.py (pre-reg §5 L0, §8a, §3 C3, §8 validity).
+
+Run: python3 -I test_l0_checks.py   or   python3 -I -m pytest -q test_l0_checks.py
+"""
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import l0_checks as l0  # noqa: E402
+
+RUBRIC = HERE.parent / "vocab" / "relation-rubric-v1.txt"
+PIN_SHA = "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23"
+PIN_ID = RUBRIC.read_text(encoding="utf-8").splitlines()[0]
+P4 = {"friction": "", "doubt": "", "missing_context": "", "proposed_change": "none", "process_observation": ""}
+
+
+def grade_line(n, grade="faithful", doubt=False, reason="quotes 'x'", doubt_reason=""):
+    return json.dumps({"n": n, "grade": grade, "reason": reason, "doubt": doubt, "doubt_reason": doubt_reason})
+
+
+def output(grades, rubric_id=PIN_ID, p4=P4):
+    lines = list(grades) + [json.dumps({"rubric_id": rubric_id}), "GRADES-END", json.dumps({"p4": p4})]
+    return "\n".join(lines) + "\n"
+
+
+GOOD = output([grade_line(1), grade_line(2, "wrong-relation", True, doubt_reason="rubric unclear"), grade_line(3, "not-in-paper")])
+
+
+def run(text, expected_ns=(1, 2, 3), rubric_sha=PIN_SHA):
+    return l0.check_verifier_output(text, expected_ns=set(expected_ns), received_rubric_sha=rubric_sha,
+                                    pinned_rubric_sha=PIN_SHA, pinned_rubric_id=PIN_ID)
+
+
+def test_pinned_rubric_file_matches_pin():
+    # The committed rubric file is the one whose sha the pre-reg will pin.
+    assert hashlib.sha256(RUBRIC.read_bytes()).hexdigest() == PIN_SHA
+    assert l0.check_pin_consistency(RUBRIC, PIN_SHA, PIN_ID) == []
+
+
+def test_pin_consistency_detects_wrong_id_or_sha():
+    assert l0.check_pin_consistency(RUBRIC, "0" * 64, PIN_ID)
+    assert l0.check_pin_consistency(RUBRIC, PIN_SHA, PIN_ID + " x")
+
+
+def test_good_output_ok():
+    r = run(GOOD)
+    assert r["status"] == "ok", r
+    assert r["errors"] == []
+    assert [g["n"] for g in r["grades"]] == [1, 2, 3]
+
+
+def test_grade_outside_category_set_rejected():
+    for bad in ("faithfull", "Faithful", "wrong-locator ", "partially-faithful", ""):
+        r = run(output([grade_line(1), grade_line(2, bad), grade_line(3)]))
+        assert r["status"] == "reject", (bad, r)
+        assert any("category" in e for e in r["errors"]), r
+
+
+def test_all_six_categories_accepted():
+    gs = ["faithful", "wrong-relation", "wrong-direction", "wrong-modality", "wrong-locator", "not-in-paper"]
+    r = run(output([grade_line(i + 1, g) for i, g in enumerate(gs)]), expected_ns=range(1, 7))
+    assert r["status"] == "ok", r
+
+
+def test_echoed_rubric_id_mismatch_voids():
+    r = run(output([grade_line(1), grade_line(2), grade_line(3)], rubric_id=PIN_ID.replace("ea3f", "ea3e")))
+    assert r["status"] == "void", r
+
+
+def test_missing_rubric_id_echo_voids():
+    text = "\n".join([grade_line(1), grade_line(2), grade_line(3), "GRADES-END", json.dumps({"p4": P4})]) + "\n"
+    assert run(text)["status"] == "void"
+
+
+def test_received_rubric_sha_mismatch_voids():
+    # The rater echoed the right id, but the file it was handed is not the pinned bytes.
+    r = run(GOOD, rubric_sha="f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed24")
+    assert r["status"] == "void", r
+    assert any("sha" in e for e in r["void_reasons"])
+
+
+def test_void_beats_reject():
+    r = run(output([grade_line(1, "bogus"), grade_line(2), grade_line(3)]), rubric_sha="0" * 64)
+    assert r["status"] == "void"
+
+
+def test_checker_meta_sha_mismatch_voids():
+    assert l0.check_checker_meta({"rubric_sha": PIN_SHA}, PIN_SHA)["status"] == "ok"
+    assert l0.check_checker_meta({"rubric_sha": "1" * 64}, PIN_SHA)["status"] == "void"
+    assert l0.check_checker_meta({}, PIN_SHA)["status"] == "void"
+
+
+def test_checker_grade_outside_set_rejected():
+    r = l0.check_checker_grades({1: "faithful", 2: "maybe"}, expected_ns={1, 2})
+    assert r["status"] == "reject"
+    assert l0.check_checker_grades({1: "faithful", 2: "wrong-direction"}, expected_ns={1, 2})["status"] == "ok"
+
+
+def test_schema_errors_rejected():
+    cases = [
+        output([grade_line(1), grade_line(2)]),                                     # missing n=3
+        output([grade_line(1), grade_line(2), grade_line(3), grade_line(3)]),       # duplicate n
+        output([grade_line(1), grade_line(2), grade_line(4)]),                      # unexpected n
+        output([grade_line(1), grade_line(2), json.dumps({"n": 3, "grade": "faithful", "reason": "r", "doubt": "no", "doubt_reason": ""})]),
+        output([grade_line(1), grade_line(2), grade_line(3, doubt=True, doubt_reason="")]),  # doubt w/o reason
+        output([grade_line(1), grade_line(2), grade_line(3, doubt=False, doubt_reason="x")]),
+        output([grade_line(1), grade_line(2), grade_line(3)]).replace("GRADES-END\n", ""),
+        output([grade_line(1), grade_line(2), grade_line(3)]) + "trailing junk\n",
+        output([grade_line(1), "not json", grade_line(2), grade_line(3)]),
+        output([grade_line(1), grade_line(2), grade_line(3)], p4={"friction": ""}),
+    ]
+    for i, t in enumerate(cases):
+        r = run(t)
+        assert r["status"] == "reject", (i, r)
+
+
+def test_run_validity_one_void_voids_all():
+    ok = run(GOOD)
+    void = run(GOOD, rubric_sha="0" * 64)
+    assert l0.run_validity([ok, ok])["status"] == "valid"
+    v = l0.run_validity([ok, void, ok])
+    assert v["status"] == "void" and v["void_count"] == 1
+    rej = run(output([grade_line(1, "bogus"), grade_line(2), grade_line(3)]))
+    assert l0.run_validity([ok, rej])["status"] == "valid-with-rejects"
+
+
+def test_deterministic():
+    assert json.dumps(run(GOOD), sort_keys=True) == json.dumps(run(GOOD), sort_keys=True)
+
+
+if __name__ == "__main__":
+    fails = 0
+    for name, fn in sorted(globals().items()):
+        if name.startswith("test_") and callable(fn):
+            try:
+                fn()
+                print("PASS", name)
+            except Exception as e:  # noqa: BLE001
+                fails += 1
+                print("FAIL", name, repr(e))
+    sys.exit(1 if fails else 0)
