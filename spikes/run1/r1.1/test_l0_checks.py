@@ -227,6 +227,38 @@ def test_labeller_grade_and_coverage_rejects():
     assert ls(lab(header={"rubric_sha": "5" * 64}, recs=recs))["status"] == "void"
 
 
+# ---------- Q11 (director probe on d7da191): a sha differing only in its LAST hex char must void ----------
+
+LAST = PIN_SHA[:-1] + ("4" if PIN_SHA[-1] != "4" else "5")
+
+
+def test_last_char_fixture_is_a_one_char_difference():
+    assert len(LAST) == 64 and LAST != PIN_SHA and LAST[:63] == PIN_SHA[:63]
+
+
+def test_labeller_header_sha_last_char_mismatch_voids():
+    assert ls(lab(header={"rubric_sha": LAST}))["status"] == "void"
+
+
+def test_labeller_record_sha_last_char_mismatch_voids():
+    recs = [{"paper": p, "n": n, "grade": "faithful", "rubric_sha": PIN_SHA} for p, n in sorted(ITEMS)]
+    recs[1]["rubric_sha"] = LAST
+    assert ls(lab(recs=recs))["status"] == "void"
+    assert ls(lab(header={"rubric_sha": PIN_SHA}, recs=recs))["status"] == "void"
+
+
+def test_checker_meta_sha_last_char_mismatch_voids():
+    assert l0.check_checker_meta({"rubric_sha": LAST}, PIN_SHA)["status"] == "void"
+    for role in l0.CHECKER_ROLES:
+        assert rr(role, dict(CHK_OK, meta={"rubric_sha": LAST}))["status"] == "void", role
+
+
+def test_verifier_received_sha_last_char_mismatch_voids():
+    assert run(GOOD, rubric_sha=LAST)["status"] == "void"
+    for role in l0.VERIFIER_ROLES:
+        assert rr(role, {"text": GOOD, "received_rubric_sha": LAST})["status"] == "void", role
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

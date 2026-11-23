@@ -326,3 +326,23 @@ original was restored with a sha check.
 - The `round1` and the B = 10000 fixture `run` outputs are byte-identical across two runs.
 - The `run` output differs from earlier fixture runs only because of the new fields and the new
   bundle format.
+
+### l0_checks.py FIX ROUND: director probe Q11 (on d7da191)
+- **Found:** truncating the labeller sha comparison to `eff[:16] != pinned[:16]` **SURVIVED**,
+  because every mismatch fixture differed from the pin early in the string. Against the d7da191
+  tests I confirmed:
+  - `[:63]` on the labeller path SURVIVED;
+  - `[:63]` on the checker-meta path also **SURVIVED**;
+  - `[:63]` on the verifier received-sha path was already KILLED, because its fixture differs in
+    the last hex character.
+- **Fix:** five new tests use a sha that differs from the pin only in its last hex character. A
+  self-check asserts the first 63 characters are equal. The tests cover:
+  - the labeller header sha;
+  - the labeller record sha, both without a header and overriding a good header;
+  - checker meta, both directly and for each of checker, L1-checker and L2-checker;
+  - verifier received sha, both directly and for verifier and L2-verifier.
+- **Known-answer tests, `test_l0_checks.py`: 29/29 PASS.** All suites give 99/99 under pytest.
+- **Mutants on the new tests:** all six KILLED.
+  - Q11 labeller `[:16]` and `[:63]`
+  - checker meta `[:16]` and `[:63]`
+  - verifier received sha `[:16]` and `[:63]`
