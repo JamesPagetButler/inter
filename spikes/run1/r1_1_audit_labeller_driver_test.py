@@ -3,7 +3,9 @@
 logic, no subprocess, no network, no real manifest/grader-input files -- a
 small synthetic fixture with a known correct plan.
 """
+import json
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -73,11 +75,47 @@ def check_duplicate_pair() -> None:
     )
 
 
+def check_collect_grades_happy_path() -> None:
+    plan = [
+        {"paper": "PA", "claim_numbers": [1, 5]},
+        {"paper": "PB", "claim_numbers": [2]},
+    ]
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        (tmp / "PA.grades.json").write_text(json.dumps({"1": "faithful", "5": "wrong-relation"}))
+        (tmp / "PB.grades.json").write_text(json.dumps({"2": "faithful"}))
+        merged = driver.collect_grades(tmp, plan)
+    expected = {"PA": {1: "faithful", 5: "wrong-relation"}, "PB": {2: "faithful"}}
+    if merged != expected:
+        raise AssertionError(f"collect_grades wrong: {merged}")
+    print("PASS (collect_grades happy path): two papers merged into {paper: {n: grade}} with int keys.")
+
+
+def check_collect_grades_missing_file() -> None:
+    plan = [{"paper": "PA", "claim_numbers": [1]}, {"paper": "PB", "claim_numbers": [2]}]
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        (tmp / "PA.grades.json").write_text(json.dumps({"1": "faithful"}))
+        # PB.grades.json deliberately not written.
+        try:
+            driver.collect_grades(tmp, plan)
+        except SystemExit as e:
+            if "PB" not in str(e):
+                raise AssertionError(f"SystemExit doesn't name the missing paper: {e}")
+        except Exception as e:
+            raise AssertionError(f"got {type(e).__name__}: {e} -- killed-by-crash, not killed-by-guard")
+        else:
+            raise AssertionError("expected SystemExit for a missing grades.json, collect_grades succeeded")
+    print("PASS (collect_grades missing file): rejected with the guard's own SystemExit, naming the missing paper.")
+
+
 def main() -> int:
     check_happy_path()
     check_empty_audit_items()
     check_paper_not_in_manifest()
     check_duplicate_pair()
+    check_collect_grades_happy_path()
+    check_collect_grades_missing_file()
     print("ALL PASS")
     return 0
 

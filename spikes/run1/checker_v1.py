@@ -162,19 +162,35 @@ def validate_and_prepare(
 ) -> dict:
     """Pure validation + request construction, no I/O and no network --
     the part of `grade` that checker_v1_test.py exercises directly, without
-    needing _get_client() or a real call."""
-    prompt_sha = sha256_of(prompt_text)
-    expected_prompt_sha = prompt_sha_expected or CANONICAL_PROMPT_SHA
-    if prompt_sha != expected_prompt_sha:
+    needing _get_client() or a real call.
+
+    qbp-architecture, seq 329: `prompt_sha_expected` / `rubric_sha_expected`
+    are never allowed to REPLACE the canonical pin -- a caller cannot
+    legitimise a planted prompt or rubric by also supplying its own
+    matching sha. If given, they may only ASSERT the canonical value (and
+    are rejected immediately if they disagree with it, before the actual
+    text's sha is even checked); the real check is always against
+    CANONICAL_PROMPT_SHA / CANONICAL_RUBRIC_SHA, full stop. Only
+    `input_sha_expected` stays a true per-call assertion, because the input
+    legitimately varies call to call and has no canonical pin."""
+    if prompt_sha_expected is not None and prompt_sha_expected != CANONICAL_PROMPT_SHA:
         raise SystemExit(
-            f"prompt sha mismatch: got {prompt_sha}, expected {expected_prompt_sha}"
+            f"--prompt-sha override does not match the canonical pin: got "
+            f"{prompt_sha_expected}, canonical {CANONICAL_PROMPT_SHA}"
+        )
+    prompt_sha = sha256_of(prompt_text)
+    if prompt_sha != CANONICAL_PROMPT_SHA:
+        raise SystemExit(f"prompt sha mismatch: got {prompt_sha}, expected {CANONICAL_PROMPT_SHA}")
+
+    if rubric_sha_expected is not None and rubric_sha_expected != CANONICAL_RUBRIC_SHA:
+        raise SystemExit(
+            f"--rubric-sha override does not match the canonical pin: got "
+            f"{rubric_sha_expected}, canonical {CANONICAL_RUBRIC_SHA}"
         )
     rubric_sha = sha256_of(rubric_text)
-    expected_rubric_sha = rubric_sha_expected or CANONICAL_RUBRIC_SHA
-    if rubric_sha != expected_rubric_sha:
-        raise SystemExit(
-            f"rubric sha mismatch: got {rubric_sha}, expected {expected_rubric_sha}"
-        )
+    if rubric_sha != CANONICAL_RUBRIC_SHA:
+        raise SystemExit(f"rubric sha mismatch: got {rubric_sha}, expected {CANONICAL_RUBRIC_SHA}")
+
     input_sha = sha256_of(input_text)
     if input_sha_expected and input_sha != input_sha_expected:
         raise SystemExit(f"input sha mismatch: got {input_sha}, expected {input_sha_expected}")

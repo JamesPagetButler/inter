@@ -118,6 +118,30 @@ def execute_plan(plan: list, out_dir: str) -> int:
     return 0
 
 
+def collect_grades(out_dir: Path, plan: list) -> dict:
+    """qbp-architecture, seq 329: "the glue for {stem}.grades.json ->
+    {paper: {n: grade}} can go in now, because the shape is fixed by R8."
+
+    Reads each planned paper's own `{paper}.grades.json` (written by
+    audit_labeller_v1.py's `label` command) and assembles exactly the
+    `grades_by_paper` shape r1_1_audit_labeller.build_labeller_set() takes.
+    Fails loudly, by paper, if a planned paper's grades file is missing --
+    never silently drops a paper from the merged result."""
+    out_dir = Path(out_dir)
+    grades_by_paper = {}
+    missing = []
+    for call in plan:
+        paper = call["paper"]
+        grades_path = out_dir / f"{paper}.grades.json"
+        if not grades_path.exists():
+            missing.append(paper)
+            continue
+        grades_by_paper[paper] = {int(n): g for n, g in json.loads(grades_path.read_text()).items()}
+    if missing:
+        raise SystemExit(f"missing {{paper}}.grades.json for planned paper(s): {missing}")
+    return grades_by_paper
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--audit-items", required=True, help="JSON file: [[paper, n], ...]")
@@ -132,6 +156,11 @@ def main() -> int:
         "--execute",
         action="store_true",
         help="actually invoke audit_labeller_v1.py; default is plan-only (nothing paid runs)",
+    )
+    parser.add_argument(
+        "--merge-grades-out",
+        help="after --execute, collect every planned paper's {paper}.grades.json into "
+        "{paper: {n: grade}} and write it here, ready for r1_1_audit_labeller.py --grades",
     )
     args = parser.parse_args()
 
@@ -152,7 +181,14 @@ def main() -> int:
         print("Plan-only (pass --execute to actually call audit_labeller_v1.py). Nothing paid ran.")
         return 0
 
-    return execute_plan(plan, args.out_dir)
+    rc = execute_plan(plan, args.out_dir)
+    if rc != 0 or not args.merge_grades_out:
+        return rc
+
+    grades_by_paper = collect_grades(Path(args.out_dir), plan)
+    Path(args.merge_grades_out).write_text(json.dumps(grades_by_paper, indent=2, sort_keys=True))
+    print(f"OK: merged {len(grades_by_paper)} papers' grades to {args.merge_grades_out}")
+    return 0
 
 
 if __name__ == "__main__":
