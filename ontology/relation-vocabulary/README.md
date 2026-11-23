@@ -9,7 +9,7 @@
 | **v1** (`v1/`) | baseline for round 1.1 of the seed-corpus spike | 10 definitions signed by qbp-oppenheimer (rev 3, 2026-11-17) |
 | v2 | baseline for round 2: v1 refined from the round 1.1 report | not yet written |
 
-**How versions are made** (beekeeper direction, 2026-11-23). Each version is fixed before the round that uses it, and that round runs against its pinned shas. The next version is refined from that round's final report, through fix rounds on this PR, and becomes the baseline for the next round. A version is never edited in place once a round has run on it. A refinement is a new `vN/` directory, and the change log below says what changed and which round's evidence drove it.
+**How versions are made** (beekeeper direction, 2026-11-23). Each version is fixed before the round that uses it, and that round runs against its pinned shas. The next version is refined from that round's final report, through fix rounds on this PR, and becomes the baseline for the next round. A version is never edited in place once a round has pinned it. A refinement is a new `vN/` directory, and the change log below says what changed and which round's evidence drove it.
 
 ## v1 files (copied byte for byte from inter `abce440`, branch `contextus-impl/seed-corpus-r11-gate2`)
 
