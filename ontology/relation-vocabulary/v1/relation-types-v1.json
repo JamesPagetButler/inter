@@ -1,0 +1,85 @@
+{
+ "rejected_relations": [
+  {
+   "id": "cites",
+   "reason": "modality, never a relation type (field conventions, all types)"
+  }
+ ],
+ "signed_by": "qbp-oppenheimer",
+ "signed_rev": 3,
+ "source_file": "spikes/run1/vocab/relation-definitions-v1-SIGNED.md",
+ "source_sha256": "ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4",
+ "types": [
+  {
+   "arity": "binary",
+   "id": "proves",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "guard": {
+    "action": "flag paper for review (review flag only, never a hard gate -- threshold is set from round 1.1/1.2 data, not guessed)",
+    "field": "has-property",
+    "threshold": 0.3
+   },
+   "id": "has-property",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "id": "defines",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "id": "equivalent-to",
+   "sense_values": [
+    "iff",
+    "isomorphic",
+    "equal-value",
+    "equivalent-category"
+   ],
+   "symmetric": true
+  },
+  {
+   "arity": "n-ary",
+   "closure_label": "closed-over-cited",
+   "id": "depends-on",
+   "symmetric": false,
+   "tail_kinds": [
+    "internal",
+    "external"
+   ]
+  },
+  {
+   "arity": "binary",
+   "canonical_rewrite": "specialises(A,B) -> generalises(B,A)",
+   "id": "generalises",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "id": "subobject-of",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "id": "counterexample-to",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "id": "conjectures",
+   "symmetric": false
+  },
+  {
+   "arity": "binary",
+   "excluded_from": [
+    "§6 proof-candidate ranking"
+   ],
+   "id": "uses-technique",
+   "symmetric": false,
+   "weight": "low"
+  }
+ ]
+}
