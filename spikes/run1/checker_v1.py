@@ -92,7 +92,33 @@ def sha256_of(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def parse_grade_lines(text: str, expected_ns) -> dict:
+# F-0b-1 (qbp-architecture, spike-seed-corpus-s4 seq 344): Gemini sometimes
+# wraps the whole answer in a single ```json / ``` markdown fence. Only a
+# fence wrapping the ENTIRE answer (first non-blank line is exactly ```json
+# or ```, last non-blank line is exactly ```) is stripped -- nothing else is
+# normalised, so a fence at only one end, the wrong fence language, a fence
+# that doesn't wrap everything, or text before the opening fence are all
+# still rejected by the unchanged logic below, just on the original text.
+FENCE_OPEN_MARKERS = frozenset(("```json", "```"))
+FENCE_CLOSE_MARKER = "```"
+
+
+def _strip_wrapping_fence(text: str) -> tuple[str, bool]:
+    lines = text.splitlines()
+    nonblank_idx = [i for i, ln in enumerate(lines) if ln.strip()]
+    if len(nonblank_idx) < 2:
+        return text, False
+    first_idx, last_idx = nonblank_idx[0], nonblank_idx[-1]
+    if (
+        lines[first_idx].strip() in FENCE_OPEN_MARKERS
+        and lines[last_idx].strip() == FENCE_CLOSE_MARKER
+    ):
+        stripped = lines[:first_idx] + lines[first_idx + 1:last_idx] + lines[last_idx + 1:]
+        return "\n".join(stripped), True
+    return text, False
+
+
+def parse_grade_lines(text: str, expected_ns) -> tuple[dict, bool]:
     """Parses the shared checker/audit-labeller output contract into
     {n: grade}. Reused by audit_labeller_v1.py for the same reason the
     prompt itself is shared (amendment 2 B1) -- one parser, not two that
@@ -102,7 +128,12 @@ def parse_grade_lines(text: str, expected_ns) -> dict:
     malformed JSON, wrong keys, an out-of-category grade, a duplicate n, an
     n-set mismatch against `expected_ns`, more/less than one GRADES-END
     line, or any non-blank content after it are all rejected by name.
+
+    Returns (grades, defenced): defenced is True iff a single wrapping
+    ```json/``` fence was stripped before parsing (F-0b-1), so callers can
+    report the count.
     """
+    text, defenced = _strip_wrapping_fence(text)
     lines = text.splitlines()
     if lines.count(GRADES_END) != 1:
         raise SystemExit(f"expected exactly one {GRADES_END} line, found {lines.count(GRADES_END)}")
@@ -138,7 +169,7 @@ def parse_grade_lines(text: str, expected_ns) -> dict:
             "n-set mismatch: missing "
             f"{sorted(expected - set(grades))}, extra {sorted(set(grades) - expected)}"
         )
-    return grades
+    return grades, defenced
 
 
 def build_request(prompt_text: str, rubric_text: str, input_text: str) -> str:

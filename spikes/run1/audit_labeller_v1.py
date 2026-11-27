@@ -212,7 +212,7 @@ def cmd_label(args) -> int:
     (out_dir / f"{stem}.thoughts_RAW.txt").write_text(thought_text)
 
     try:
-        grades = checker_v1.parse_grade_lines(answer_text, claim_numbers)
+        grades, defenced = checker_v1.parse_grade_lines(answer_text, claim_numbers)
     except SystemExit as e:
         (out_dir / f"{stem}.PARSE_FAILED.txt").write_text(f"{e} -- see {stem}.answer_RAW.txt")
         return 0
@@ -234,11 +234,12 @@ def cmd_label(args) -> int:
                 "rubric_id_line": prepared["rubric_id_line"],
                 "finish_reason": finish_reason,
                 "thought_tokens": thought_tokens,
+                "defenced": defenced,
             },
             indent=2,
         )
     )
-    print(f"OK: {stem} finish_reason={finish_reason} grades={grades}")
+    print(f"OK: {stem} finish_reason={finish_reason} defenced={defenced} grades={grades}")
     return 0
 
 

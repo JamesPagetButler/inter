@@ -185,10 +185,12 @@ def check_parse_grade_lines() -> None:
         '{"n": 2, "grade": "wrong-relation", "reason": "quote two"}\n'
         "GRADES-END\n"
     )
-    grades = checker_v1.parse_grade_lines(good, {1, 2})
+    grades, defenced = checker_v1.parse_grade_lines(good, {1, 2})
     if grades != {1: "faithful", 2: "wrong-relation"}:
         raise AssertionError(f"happy-path parse wrong: {grades}")
-    print("PASS (parse happy path): two grade lines + GRADES-END parsed to {n: grade}.")
+    if defenced:
+        raise AssertionError("happy-path (no fence) was wrongly flagged defenced=True")
+    print("PASS (parse happy path): two grade lines + GRADES-END parsed to {n: grade}, defenced=False.")
 
     expect_parse_rejects(
         '{"n": 1, "grade": "faithful", "reason": "quote"}\n',
@@ -220,6 +222,147 @@ def check_parse_grade_lines() -> None:
         "not json at all\n"
         "GRADES-END\n",
         set(), "is not JSON", "parse: malformed JSON line",
+    )
+
+
+def check_fence_stripping() -> None:
+    """F-0b-1 (qbp-architecture, spike-seed-corpus-s4 seq 344): a single
+    ```json/``` fence wrapping the WHOLE answer is stripped; anything short
+    of that (one end only, wrong fence language, an interior fence, or
+    preamble text before the opening fence) is left alone and still
+    rejected by the unchanged logic."""
+    clean = '{"n": 1, "grade": "faithful", "reason": "quote"}\nGRADES-END'
+
+    fenced_json = "```json\n" + clean + "\n```\n"
+    grades, defenced = checker_v1.parse_grade_lines(fenced_json, {1})
+    if grades != {1: "faithful"} or not defenced:
+        raise AssertionError(f"```json-fenced good answer not parsed/flagged correctly: {grades}, defenced={defenced}")
+
+    fenced_plain = "```\n" + clean + "\n```\n"
+    grades, defenced = checker_v1.parse_grade_lines(fenced_plain, {1})
+    if grades != {1: "faithful"} or not defenced:
+        raise AssertionError(f"```-fenced (no 'json') good answer not parsed/flagged correctly: {grades}, defenced={defenced}")
+    print("PASS (fence stripping, happy path): a whole-answer ```json or ``` fence is stripped, defenced=True, same grades as unfenced.")
+
+    expect_parse_rejects(
+        "```json\n" + clean + "\n",  # no closing fence
+        {1}, "is not JSON",
+        "fence: opening only, no closing -- still rejected",
+    )
+    expect_parse_rejects(
+        clean + "\n```\n",  # no opening fence; closing fence is content after GRADES-END
+        {1}, "after GRADES-END",
+        "fence: closing only, no opening -- still rejected",
+    )
+    expect_parse_rejects(
+        # closing fence sits after GRADES-END (fence doesn't wrap the whole
+        # answer in a way the stripper recognises as a complete fence pair,
+        # since the opening marker is "```python", not "```json"/"```") --
+        # rejected as trailing content, same as any other unstripped fence.
+        "```python\n" + clean + "\n```\n",
+        {1}, "after GRADES-END",
+        "fence: wrong language tag -- still rejected",
+    )
+    expect_parse_rejects(
+        '{"n": 1, "grade": "faithful", "reason": "quote"}\n'
+        "```\n"
+        "GRADES-END\n",  # fence INSIDE the grade block, not wrapping the whole thing
+        {1}, "is not JSON",
+        "fence: interior fence, not wrapping the whole answer -- still rejected",
+    )
+    expect_parse_rejects(
+        # preamble before the opening fence -- the stripper only looks at
+        # the first/last NON-BLANK line, so "here is my answer:" being first
+        # means no strip happens, and the real closing fence (after
+        # GRADES-END) is rejected as trailing content.
+        "here is my answer:\n```json\n" + clean + "\n```\n",
+        {1}, "after GRADES-END",
+        "fence: text before the opening fence -- still rejected",
+    )
+    print("PASS (fence stripping, rejections): one-end-only, wrong language, interior, and pre-fence-text cases are all still rejected.")
+
+
+def check_fence_both_ends_mutant_killed() -> None:
+    """Mutation check: a mutant that drops the BOTH-ENDS requirement (e.g.
+    strips on the closing fence alone, ignoring the opening line) must be
+    caught -- demonstrated here by showing the mutant wrongly accepts a
+    closing-only fence that the real _strip_wrapping_fence (and the suite's
+    own 'fence: closing only' rejection above) correctly rejects."""
+    closing_only = '{"n": 1, "grade": "faithful", "reason": "quote"}\nGRADES-END\n```\n'
+
+    # Sanity: the real implementation rejects this (also covered above).
+    try:
+        checker_v1.parse_grade_lines(closing_only, {1})
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError("real _strip_wrapping_fence unexpectedly accepted a closing-only fence")
+
+    def mutant_last_end_only(text: str):
+        lines = text.splitlines()
+        nonblank_idx = [i for i, ln in enumerate(lines) if ln.strip()]
+        if len(nonblank_idx) < 2:
+            return text, False
+        last_idx = nonblank_idx[-1]
+        if lines[last_idx].strip() == "```":  # BUG: never checks the first line
+            stripped = lines[:last_idx] + lines[last_idx + 1:]
+            return "\n".join(stripped), True
+        return text, False
+
+    original = checker_v1._strip_wrapping_fence
+    checker_v1._strip_wrapping_fence = mutant_last_end_only
+    try:
+        try:
+            grades, defenced = checker_v1.parse_grade_lines(closing_only, {1})
+        except SystemExit as e:
+            raise AssertionError(
+                f"both-ends mutant was still rejected ({e}) -- this probe no longer "
+                "demonstrates the both-ends check as load-bearing; rewrite it"
+            )
+        if grades != {1: "faithful"} or not defenced:
+            raise AssertionError(f"mutant behaved unexpectedly: grades={grades}, defenced={defenced}")
+    finally:
+        checker_v1._strip_wrapping_fence = original
+    print(
+        "PASS (both-ends mutant demonstrated killed): dropping the first-line check lets a "
+        "closing-only fence through, which the real both-ends guard (and the suite's own "
+        "'fence: closing only' rejection) correctly refuses -- confirms the check is load-bearing."
+    )
+
+
+PROBE_DIR = HERE / "s5_r1.1_probe" / "checker"
+# Committed in `3577576` (checker half of the §8b repeatability probe):
+# runs 1-3 on W7168273025 came back wrapped in a ```json ... ``` fence,
+# which is the live finding F-0b-1 itself (qbp-architecture seq 344).
+PROBE_FENCED_RUNS = (1, 2, 3)
+PROBE_EXPECTED_NS = set(range(1, 21))
+
+
+def check_real_fenced_probe_answers() -> None:
+    for i in PROBE_FENCED_RUNS:
+        path = PROBE_DIR / f"W7168273025.run{i}.answer_RAW.txt"
+        fenced_text = path.read_text()
+        lines = fenced_text.splitlines()
+        nonblank = [ln for ln in lines if ln.strip()]
+        if nonblank[0].strip() not in ("```json", "```") or nonblank[-1].strip() != "```":
+            raise AssertionError(
+                f"run{i} fixture at {path} is not fenced as expected -- test premise broken: "
+                f"{nonblank[0]!r} .. {nonblank[-1]!r}"
+            )
+        manually_defenced_text = "\n".join(lines[1:-1])
+
+        fenced_grades, fenced_defenced = checker_v1.parse_grade_lines(fenced_text, PROBE_EXPECTED_NS)
+        plain_grades, plain_defenced = checker_v1.parse_grade_lines(manually_defenced_text, PROBE_EXPECTED_NS)
+
+        if not fenced_defenced:
+            raise AssertionError(f"run{i}: real fenced answer was not flagged defenced=True")
+        if plain_defenced:
+            raise AssertionError(f"run{i}: manually de-fenced copy was wrongly flagged defenced=True")
+        if fenced_grades != plain_grades:
+            raise AssertionError(f"run{i}: fenced parse {fenced_grades} != manually-de-fenced parse {plain_grades}")
+    print(
+        f"PASS (real fenced probe answers): runs {PROBE_FENCED_RUNS} of the committed §8b probe "
+        "parse to the same grades fenced vs. manually de-fenced, each flagged defenced correctly."
     )
 
 
@@ -262,6 +405,9 @@ def main() -> int:
     check_canonical_pins()
     check_production_prompt_contains_shared_block()
     check_parse_grade_lines()
+    check_fence_stripping()
+    check_fence_both_ends_mutant_killed()
+    check_real_fenced_probe_answers()
     check_override_cannot_replace_the_pin()
     print("ALL PASS")
     return 0
