@@ -1,0 +1,39 @@
+{
+ "api_calls": 3,
+ "dispatch_sha256_as_sent": "dde2a84ad925d43ab2ef38e76bd2eded5ece30de9ea622ea158ebfcbf28657bb",
+ "files_read": [
+  "spikes/run1/s5_grader_inputs_A2/W2015765968.grader_input.txt",
+  "spikes/run1/vocab/relation-rubric-v1.txt"
+ ],
+ "paper": "W2015765968",
+ "per_call": [
+  {
+   "cache_creation_input_tokens": 22752,
+   "cache_read_input_tokens": 0,
+   "input_tokens": 2,
+   "output_tokens": 203
+  },
+  {
+   "cache_creation_input_tokens": 31869,
+   "cache_read_input_tokens": 22752,
+   "input_tokens": 2,
+   "output_tokens": 152
+  },
+  {
+   "cache_creation_input_tokens": 3597,
+   "cache_read_input_tokens": 54621,
+   "input_tokens": 2,
+   "output_tokens": 5211
+  }
+ ],
+ "prompt_sha": "6d417edb1ea05eb3c9870208a479d7c523c2b02c71969a3377fbd3b668176289",
+ "rater": "opus-verifier-v1",
+ "rubric_sha": "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23",
+ "sum": {
+  "cache_creation_input_tokens": 58218,
+  "cache_read_input_tokens": 77373,
+  "input_tokens": 6,
+  "output_tokens": 5566
+ },
+ "sum_all": 141163
+}
