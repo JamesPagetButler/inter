@@ -26,7 +26,7 @@ Pinned components (from the set above): the rubric `f950c385…ed23`; samples `a
 | 7. deming: box safety and token grant | ✔ | Spike channel seq 336 (grant, box safety); seq 346 and 348 (stops, unit); **seq 360: signed for amendment 4** |
 | 8. cartan's review | ✔ | Seq 334 (amendment 3); **seq 364: signed for amendment 4** (frozen set re-hashed, runner pins re-hashed, 5 suites re-run) |
 | Registry owner on amendments | ✔ | contextus-impl: seq 339 (amendments 1–3), **seq 362 (amendment 4)** |
-| 9. Beekeeper approval of round 1.1 | ✔ in principle; **disclosure sign-off pending** | Spend approved 2026-11-25 (recorded by deming, seq 336). "Run 1.1", given 2026-11-27 in the director's session. The beekeeper's sign-off on amendment 4's disclosure (below) is required before the run go. |
+| 9. Beekeeper approval of round 1.1 | ✔ | Spend approved 2026-11-25 (recorded by deming, seq 336). "Run 1.1", given 2026-11-27 in the director's session. **Disclosure signed off 2026-11-27** in the director's session: the beekeeper answered "Sign off, run it" to the full disclosure text below. |
 
 ## Disclosure the beekeeper signs (from amendment 4)
 The Gemini unit correction (D3) was **found after the probe**. It is what makes the 1.1 run fit under the **unchanged** 1.65M Gemini kill line. **Under the pre-registered four-field unit, the worst case was 2.33M, over the line**; under the corrected unit it is 1.45M. The correction is sourced from the Gemini API reference and matches the API's own `total_token_count` on 5/5 probe calls. Both sums are recorded for every call. The Opus side: every probe run exceeded the old 65k per-run stop, so the stop is re-set to 95k. The Opus line stays at 2.25M, enforced cumulatively; the projected total is about 2.03–2.07M.
