@@ -1,0 +1,64 @@
+**Evaluation of Mathematical Claims**
+
+Okay, here's the rundown of my assessment. I've gone through each claim systematically, comparing it to the provided text and applying the rubric. My process involved carefully checking the subject, relation, and object for consistency with the paper's content, and ensuring the "grade" aligns with the rubric's definitions. I paid close attention to the nuances of the relationships (proving, defining, equivalence, etc.) and whether the direction of definitions was properly aligned. I've provided a single-sentence quote from the paper to justify each grading. Here's the JSON output for each claim:
+
+[
+  {
+    "n": 1,
+    "grade": "wrong-relation",
+    "reason": "Then there is a natural isomorphism \mathrm{Spec}(\mathrm{Ho}(D_{\mathrm{tors}}(\mathfrak{X})))\cong\mathfrak{X} of ringed spaces."
+  },
+  {
+    "n": 2,
+    "grade": "faithful",
+    "reason": "Let \mathfrak{X},\mathfrak{Y}\in\mathrm{FSch}^{\mathrm{qt}}. If there is a symmetric monoidal triangulated equivalence \mathrm{Ho}(\mathrm{Nuc}^{\mathrm{CS}}(\mathfrak{X}))\cong\mathrm{Ho}(\mathrm{Nuc}^{\mathrm{CS}}(\mathfrak{Y})), then \mathfrak{X}\cong\mathfrak{Y}."
+  },
+  {
+    "n": 3,
+    "grade": "faithful",
+    "reason": "An object x\in C is called nuclear if, for every compact object c\in C, the natural map \operatorname{RHom}(c,1_{C})\otimes x\to\operatorname{RHom}(c,x) is an isomorphism."
+  },
+  {
+    "n": 4,
+    "grade": "wrong-relation",
+    "reason": "The functor \mathrm{Nuc}^{\mathrm{CS}}:(\mathrm{FSch}^{\mathrm{qt}})^{\mathrm{op}}\to\mathrm{tt}\text{-}\mathrm{Cat}^{\mathrm{mcg}\text{-}\mathrm{fun}}_{\infty} is fully faithful."
+  },
+  {
+    "n": 5,
+    "grade": "faithful",
+    "reason": "Moreover, this construction defines a contravariant functor \mathrm{Spec}:(\mathrm{tt}\text{-}\mathrm{Cat}^{\mathrm{wcg}})^{\mathrm{op}}\to\mathrm{LocSpaces}."
+  },
+  {
+    "n": 6,
+    "grade": "wrong-relation",
+    "reason": "Theorem 1.1 (Corollary 5.2 ) ."
+  },
+  {
+    "n": 7,
+    "grade": "wrong-direction",
+    "reason": "The full subcategory of nuclear objects in C is denoted by \mathrm{Nuc}(C)."
+  },
+  {
+    "n": 8,
+    "grade": "faithful",
+    "reason": "Then there is a natural morphism of ringed spaces \mathrm{Spec}(T^{\prime})\to\mathrm{Spec}(T):Q\mapsto\langle{\{a\in T^{\omega}\mid F(a)\in Q\}}\rangle."
+  },
+  {
+    "n": 9,
+    "grade": "faithful",
+    "reason": "The following functors are fully faithful: ... \displaystyle(\mathrm{fin.aff.FSch}_{k})^{\mathrm{op}}\to\mathrm{CAlg}_{k}(\mathrm{Cat}^{\mathrm{dual}}_{\mathrm{st}}):\mathfrak{X}\mapsto\mathrm{Nuc}^{\mathrm{CS}}(\mathfrak{X})."
+  },
+  {
+    "n": 10,
+    "grade": "faithful",
+    "reason": "If there is a symmetric monoidal triangulated equivalence \mathrm{Ho}(\mathrm{Nuc}^{\mathrm{CS}}(\mathfrak{X}))\cong\mathrm{Ho}(\mathrm{Nuc}^{\mathrm{CS}}(\mathfrak{Y})), then \mathfrak{X}\cong\mathfrak{Y}."
+  },
+  {
+    "n": 11,
+    "grade": "faithful",
+    "reason": "The following functors are fully faithful: \displaystyle(\mathrm{fin.FSch}_{k})^{\mathrm{op}}\to\mathrm{CAlg}_{k}(\mathrm{Cat}^{\mathrm{dual}}_{\mathrm{st}}):\mathfrak{X}\mapsto\mathrm{Nuc}^{\mathrm{Ef}}(\mathfrak{X})"
+  },
+  {
+    "n": 12,
+    "grade": "faithful
+

@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "wrong-relation", "reason": "The subject is an object, not a result, so it cannot be used with the 'proves' relation."}
+{"n": 2, "grade": "faithful", "reason": "Corollary 5.2(2) states: \"If there is a symmetric monoidal triangulated equivalence Ho(Nuc^CS(X)) ≅ Ho(Nuc^CS(Y)), then X ≅ Y.\""}
+{"n": 3, "grade": "wrong-modality", "reason": "The definition is attributed to a citation (\"[7, Definitions 8.5]\"), so the modality should be 'cited' rather than 'stated'."}
+{"n": 4, "grade": "wrong-relation", "reason": "The subject is a functor (an object), not a result, so it cannot be the subject of 'proves'."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 4.7 introduces the functor: \"this construction defines a contravariant functor Spec\"."}
+{"n": 6, "grade": "faithful", "reason": "The text asserts their identity: \"Theorem 1.1 (Corollary 5.2 ) .\""}
+{"n": 7, "grade": "wrong-direction", "reason": "The 'defines' relation must point from the defining statement to the defined term, but here the subject is the defined term Nuc(C)."}
+{"n": 8, "grade": "faithful", "reason": "Proposition 4.7 states: \"Then there is a natural morphism of ringed spaces Spec(T') -> Spec(T)\"."}
+{"n": 9, "grade": "faithful", "reason": "Theorem 1.2 asserts: \"The following functors are fully faithful: ... (fin.aff.FSch_k)^op -> CAlg_k(Cat^dual_st): X -> Nuc^CS(X).\""}
+{"n": 10, "grade": "faithful", "reason": "Corollary 5.2(2) states: \"If there is a symmetric monoidal triangulated equivalence Ho(Nuc^CS(X)) ≅ Ho(Nuc^CS(Y)), then X ≅ Y.\""}
+{"n": 11, "grade": "faithful", "reason": "Theorem 1.2 asserts: \"The following functors are fully faithful: (fin.FSch_k)^op -> CAlg_k(Cat^dual_st): X -> Nuc^Ef(X)\"."}
+{"n": 12, "grade": "faithful", "reason": "Theorem 3.3 states: \"Moreover, D_tors(X) is a strongly compactly generated localizing ideal of Nuc^CS(X).\""}
+{"n": 13, "grade": "faithful", "reason": "Proposition 2.8 states the assignment \"satisfies Zariski descent\" and the restriction \"is a quotient functor and its kernel is a smashing ideal.\""}
+{"n": 14, "grade": "faithful", "reason": "Definition 4.4 states: \"The ringed space Spec(T) = (Spc(T), O_T) is called the Balmer spectrum...\""}
+{"n": 15, "grade": "faithful", "reason": "Theorem 6.7 states: \"If X, Y in FSch^sq_k, then Map_{CAlg_k(Cat^dual_st)}(Nuc^CS(X), Nuc^CS(Y)) ≅ Hom(Y, X).\""}
+{"n": 16, "grade": "faithful", "reason": "Lemma A.1 states: \"Then F is a quotient functor and its kernel is a smashing ideal.\""}
+{"n": 17, "grade": "faithful", "reason": "Theorem 6.5 states: \"Then the map of sets ... is bijective.\""}
+{"n": 18, "grade": "faithful", "reason": "Theorem 1.2 states: \"The following functors are fully faithful: ... (fin.aff.FSch_k)^op -> CAlg_k(Cat^dual_st): X -> Nuc^CS(X).\""}
+{"n": 19, "grade": "faithful", "reason": "Theorem 6.7 states: \"Then Map_{CAlg_k(Cat^dual_st)}(Nuc^Ef(X), Nuc^Ef(Y)) ≅ Hom(Y, X).\""}
+{"n": 20, "grade": "faithful", "reason": "Corollary A.4 states: \"Then E^rig -> (E/I)^rig is a quotient functor and its kernel is a smashing ideal.\""}
+GRADES-END
+```

@@ -1,0 +1,70 @@
+{
+  "probe_paper": "W7168273025",
+  "checker_version_sha": "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803",
+  "rubric_sha": "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23",
+  "input_sha": "837d478654de4cd1ee975091335fe2f0eb849f74aa591e1ac3fbc1982a0f93eb",
+  "driver_commit": "7d775dc",
+  "note": "runs are identical request bytes (same request_sha across all 5); cached_content_token_count is null/missing on run0-1 and 14158 on run2-4, consistent with Gemini implicit context caching activating after repeated identical requests -- observed, not engineered.",
+  "runs": [
+    {
+      "run_index": 0,
+      "request_sha": "eb27988b95cfea1594e51166d4967c25d8847ec1aee0ff3e2835aa0d4428076c",
+      "finish_reason": "FinishReason.STOP",
+      "thought_tokens_meta_json": 3854,
+      "usage_metadata": {
+        "prompt_token_count": 16209,
+        "cached_content_token_count": "missing",
+        "thoughts_token_count": 3854,
+        "candidates_token_count": 1298
+      }
+    },
+    {
+      "run_index": 1,
+      "request_sha": "eb27988b95cfea1594e51166d4967c25d8847ec1aee0ff3e2835aa0d4428076c",
+      "finish_reason": "FinishReason.STOP",
+      "thought_tokens_meta_json": 4749,
+      "usage_metadata": {
+        "prompt_token_count": 16209,
+        "cached_content_token_count": "missing",
+        "thoughts_token_count": 4749,
+        "candidates_token_count": 1472
+      }
+    },
+    {
+      "run_index": 2,
+      "request_sha": "eb27988b95cfea1594e51166d4967c25d8847ec1aee0ff3e2835aa0d4428076c",
+      "finish_reason": "FinishReason.STOP",
+      "thought_tokens_meta_json": 3901,
+      "usage_metadata": {
+        "prompt_token_count": 16209,
+        "cached_content_token_count": 14158,
+        "thoughts_token_count": 3901,
+        "candidates_token_count": 1076
+      }
+    },
+    {
+      "run_index": 3,
+      "request_sha": "eb27988b95cfea1594e51166d4967c25d8847ec1aee0ff3e2835aa0d4428076c",
+      "finish_reason": "FinishReason.STOP",
+      "thought_tokens_meta_json": 5008,
+      "usage_metadata": {
+        "prompt_token_count": 16209,
+        "cached_content_token_count": 14158,
+        "thoughts_token_count": 5008,
+        "candidates_token_count": 890
+      }
+    },
+    {
+      "run_index": 4,
+      "request_sha": "eb27988b95cfea1594e51166d4967c25d8847ec1aee0ff3e2835aa0d4428076c",
+      "finish_reason": "FinishReason.STOP",
+      "thought_tokens_meta_json": 4146,
+      "usage_metadata": {
+        "prompt_token_count": 16209,
+        "cached_content_token_count": 14158,
+        "thoughts_token_count": 4146,
+        "candidates_token_count": 1103
+      }
+    }
+  ]
+}

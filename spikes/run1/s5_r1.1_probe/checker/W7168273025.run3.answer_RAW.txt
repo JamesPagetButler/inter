@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "wrong-relation", "reason": "The subject is an object, not a result, so it cannot use the 'proves' relation; it should be 'has-property' or 'equivalent-to' according to the rubric."}
+{"n": 2, "grade": "faithful", "reason": "The claim correctly captures that Corollary 5.2(2) proves the stated implication about symmetric monoidal triangulated equivalences."}
+{"n": 3, "grade": "faithful", "reason": "Definition 2.5 explicitly introduces the term 'nuclear' object."}
+{"n": 4, "grade": "wrong-relation", "reason": "The subject is a functor (an object), not a result, so the relation 'proves' is invalid and 'has-property' should be used instead."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 4.7 introduces the contravariant functor Spec, as stated: \"Moreover, this construction defines a contravariant functor Spec\"."}
+{"n": 6, "grade": "wrong-relation", "reason": "The rubric for 'equivalent-to' requires both sides to be objects or statements, but Theorem 1.1 and Corollary 5.2 are results."}
+{"n": 7, "grade": "wrong-direction", "reason": "The relation 'defines' must go from the definition to the term, but this claim goes from the defined term 'Nuc(C)' to its defining content."}
+{"n": 8, "grade": "faithful", "reason": "Proposition 4.7 proves the existence of this natural morphism of ringed spaces."}
+{"n": 9, "grade": "faithful", "reason": "Theorem 1.2 proves this full faithfulness result for the affine case."}
+{"n": 10, "grade": "faithful", "reason": "Corollary 5.2(2) establishes that the equivalence of categories implies X ≅ Y."}
+{"n": 11, "grade": "faithful", "reason": "Theorem 1.2 states exactly that this functor is fully faithful for k = Z or a field."}
+{"n": 12, "grade": "faithful", "reason": "Theorem 3.3 explicitly proves that D_tors(X) is a strongly compactly generated localizing ideal of Nuc^CS(X)."}
+{"n": 13, "grade": "faithful", "reason": "Proposition 2.8 proves Zariski descent for Nuc^Ef(X) and that the restriction functor is a quotient functor with a smashing ideal kernel."}
+{"n": 14, "grade": "faithful", "reason": "Definition 4.4 introduces the term 'Balmer spectrum'."}
+{"n": 15, "grade": "faithful", "reason": "Theorem 6.7 explicitly states this isomorphism of mapping spaces."}
+{"n": 16, "grade": "faithful", "reason": "Lemma A.1 establishes exactly this property for the described homomorphism."}
+{"n": 17, "grade": "faithful", "reason": "Theorem 6.5 proves the bijection between points with tr.deg_k κ(x) < c and π_0 of the specified category of field-valued objects."}
+{"n": 18, "grade": "faithful", "reason": "Theorem 1.2 proves that the Nuc^CS(X) functor is fully faithful on affine formal schemes over Z or a field."}
+{"n": 19, "grade": "faithful", "reason": "Theorem 6.7 proves the stated isomorphism of mapping spaces when Y is nearly of <c-type."}
+{"n": 20, "grade": "faithful", "reason": "Corollary A.4 states that E^rig -> (E/I)^rig is a quotient functor and its kernel is a smashing ideal when f is ω_1-compact."}
+GRADES-END
+```

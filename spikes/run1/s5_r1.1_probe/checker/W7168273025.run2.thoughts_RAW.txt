@@ -1,0 +1,36 @@
+**Grading the Claims: A Review of Relations and Modalities**
+
+Alright, let's dive into these claims, putting on my expert hat. I need to dissect each statement, scrutinize the relationship between the subject and object, and ensure the modality is spot-on. Here’s my thought process for each one:
+
+1.  **Claim 1**: Hmm, the subject here is `Spec(Ho(D_tors(X)))`, a bit of a mouthful, but clearly an *object* in the mathematical sense. The relation is "proves," and the object is an isomorphism. But the theorem itself doesn't define the subject, it *relates* the subject to another thing. So, "proves" feels wrong when the subject is an object, I'll go with `wrong-relation`.
+
+2.  **Claim 2**: This is straightforward: "Corollary 5.2" is a *result*. The object is a statement about an equivalence. The relation "proves" is faithful because it correctly reflects the relationship. Good, `faithful`.
+
+3.  **Claim 3**: "Definition 2.5." The object here is nuclear object, and it’s a standard definition, but with a citation, so let's double check. Ah, the citation is the problem! If the definition is taken from or attributed to an outside source, the modality should reflect that. It's not *stated* within this specific paper; it’s *cited*. Thus `wrong-modality`.
+
+4.  **Claim 4**: The subject is the functor `Nuc^CS`. The relation is "proves", but the subject is an *object* itself. So, this feels off, because it’s not really *proving* the subject, it's about the subject’s properties. Therefore, `wrong-relation`.
+
+5.  **Claim 5**: "Proposition 4.7." This constructs and defines a functor, and the proposition defines the symbol Spec for the functor. The definition is, in fact, "this construction defines a contravariant functor Spec." That is where a new symbol for the functor is introduced. It's a borderline case, but the construction *does* introduce the symbol `Spec`, so it’s `faithful`.
+
+6.  **Claim 6**: "Theorem 1.1" and "Corollary 5.2". They're being presented as the *same* thing. "equivalent-to" feels right if it indicates identity, but this isn't about *equivalence*; it's that one *is* the other. It explicitly says "Theorem 1.1 (Corollary 5.2)." This indicates identity. Thus, `faithful`.
+
+7.  **Claim 7**: `Nuc(C)` is the subject, and it's defined by "Definition 2.5". This definition introduces the notation `Nuc(C)`. The notation `Nuc(C)` is a notation for the term/object. The defining statement in definition directs to term. The direction is important here: definition → term. The claim gets the direction backward. So, `wrong-direction`.
+
+8.  **Claim 8**: "Proposition 4.7" *proves* a statement about a morphism of ringed spaces. The relationship is accurate. The subject is a result. Therefore, `faithful`.
+
+9.  **Claim 9**: "Theorem 1.2" and the statement of fully faithful functors is accurate. It proves the fully faithfulness. No issues. This is `faithful`.
+
+10. **Claim 10**: "Corollary 5.2 (reconstruction from Ho(Nuc^CS))". This is a straightforward statement and the subject and object correctly reflect the relationship. This is `faithful`.
+
+11. **Claim 11**: "Theorem 1.2". The functor is fully faithful. This is accurate. This is `faithful`.
+
+12. **Claim 12**: "Theorem 3.3" and the characterization of `D_tors(X)` as a strongly compactly generated localizing ideal of `Nuc^CS(X)`. Accurate. This is `faithful`.
+
+13. **Claim 13**: "Proposition 2.8" This is about Zariski descent, which is correctly stated. Accurately describes the results. Therefore, `faithful`.
+
+14. **Claim 14**: "Definition 4.4" *defines* the Balmer spectrum. This is accurate. Therefore, `faithful`.
+
+15. **Claim 15**: "Theorem 6.7" gives an isomorphism of mapping spaces. Subject, relation and object are a faithful reflection of what it proves, the accurate relationship. `faithful`.
+
+16. **Claim 16**: "Lemma A.1." It
+

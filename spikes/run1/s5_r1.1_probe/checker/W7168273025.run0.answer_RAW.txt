@@ -1,0 +1,21 @@
+{"n": 1, "grade": "wrong-relation", "reason": "The subject is an object rather than a result, so it cannot use the 'proves' relation."}
+{"n": 2, "grade": "faithful", "reason": "If 𝔛, 𝔜 are affine, and there is a symmetric monoidal triangulated equivalence Ho(Nuc^CS(𝔛)) ≅ Ho(Nuc^CS(𝔜)), then 𝔛 ≅ 𝔜."}
+{"n": 3, "grade": "faithful", "reason": "An object x ∈ C is called nuclear if, for every compact object c ∈ C, the natural map RHom(c,1_C) ⊗ x → RHom(c,x) is an isomorphism."}
+{"n": 4, "grade": "wrong-relation", "reason": "The subject is an object (a functor) rather than a result, so it cannot use 'proves' and should use 'has-property'."}
+{"n": 5, "grade": "faithful", "reason": "Moreover, this construction defines a contravariant functor Spec: (tt-Cat^wcg)^op → LocSpaces."}
+{"n": 6, "grade": "wrong-relation", "reason": "Placing the name of a corollary in parentheses next to a theorem does not assert mathematical equivalence as defined by the rubric."}
+{"n": 7, "grade": "wrong-direction", "reason": "The subject is the defined term and the object is the defining content, but the 'defines' relation requires the direction to be definition → term."}
+{"n": 8, "grade": "faithful", "reason": "Then there is a natural morphism of ringed spaces Spec(T') → Spec(T) : Q ↦ ⟨{a ∈ T^ω ∣ F(a) ∈ Q}⟩."}
+{"n": 9, "grade": "faithful", "reason": "The following functors are fully faithful: ... (fin.aff.FSch_k)^op → CAlg_k(Cat^dual_st) : 𝔛 ↦ Nuc^CS(𝔛)."}
+{"n": 10, "grade": "faithful", "reason": "If 𝔛, 𝔜 ∈ FSch^qt. If there is a symmetric monoidal triangulated equivalence Ho(Nuc^CS(𝔛)) ≅ Ho(Nuc^CS(𝔜)), then 𝔛 ≅ 𝔜."}
+{"n": 11, "grade": "faithful", "reason": "The following functors are fully faithful: (fin.FSch_k)^op → CAlg_k(Cat^dual_st) : 𝔛 ↦ Nuc^Ef(𝔛)."}
+{"n": 12, "grade": "faithful", "reason": "Moreover, D_tors(𝔛) is a strongly compactly generated localizing ideal of Nuc^CS(𝔛)."}
+{"n": 13, "grade": "faithful", "reason": "For formal schemes, the assignment 𝔛 ↦ Nuc^Ef(𝔛) satisfies Zariski descent in Pr^L_st. Moreover, for every open subset U ⊂ 𝔛, the restriction functor Nuc^Ef(𝔛) → Nuc^Ef(U) is a quotient functor and its kernel is a smashing ideal."}
+{"n": 14, "grade": "faithful", "reason": "The ringed space Spec(T) = (Spc(T), 𝒪_T) is called the Balmer spectrum of a weakly compactly generated tt-category T."}
+{"n": 15, "grade": "faithful", "reason": "If 𝔛, 𝔜 ∈ FSch^sq_k, then Map_CAlg_k(Cat^dual_st)(Nuc^CS(𝔛), Nuc^CS(𝔜)) ≅ Hom(𝔜, 𝔛)."}
+{"n": 16, "grade": "faithful", "reason": "Then F is a quotient functor and its kernel is a smashing ideal."}
+{"n": 17, "grade": "faithful", "reason": "Then the map of sets ϕ : {x ∈ 𝔛 ∣ tr.deg_k(κ(x)) < 𝔠} → π_0((Fld_k)_Nuc^Ef(𝔛)/) : x ↦ (Nuc^Ef(𝔛) → Nuc^Ef(κ(x)) ≅ D(κ(x))) is bijective."}
+{"n": 18, "grade": "faithful", "reason": "The following functors are fully faithful: ... (fin.aff.FSch_k)^op → CAlg_k(Cat^dual_st) : 𝔛 ↦ Nuc^CS(𝔛)."}
+{"n": 19, "grade": "faithful", "reason": "Assume that 𝔜 is nearly of <𝔠-type over k. Then Map_CAlg_k(Cat^dual_st)(Nuc^Ef(𝔛), Nuc^Ef(𝔜)) ≅ Hom(𝔜, 𝔛)."}
+{"n": 20, "grade": "faithful", "reason": "Assume that f is ω_1-compact. Then E^rig → (E/I)^rig is a quotient functor and its kernel is a smashing ideal."}
+GRADES-END
