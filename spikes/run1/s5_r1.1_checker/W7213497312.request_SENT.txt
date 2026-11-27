@@ -1,0 +1,328 @@
+# Checker v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are checking claims extracted from one mathematics or physics paper. Below this prompt come two blocks, in order:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>"}`
+2. One line exactly: `GRADES-END`
+
+
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+**Field conventions (all types):**
+- A claim has `subject`, `relation_type`, `object`, `modality ∈ {stated, cited}`, `locator` and **`quote`** (a verbatim span, checked mechanically against the source).
+- **Modality is never a relation.** `cites` is rejected by the validator.
+- "Result" means a theorem, proposition, lemma, corollary, remark or claim, or the paper itself.
+- "Statement" means a mathematical assertion. "Object" means a mathematical object, structure, space, category or quantity. "Predicate" means a property phrase that can be asserted of an object.
+
+### 1. `proves`
+1. **Meaning:** the result *subject* establishes the statement *object*.
+2. **Kinds:** subject is a result; object is a statement.
+3. **Direction:** result → statement.
+4. **Admissibility test:** "Is the subject a result, and does the quoted passage say that this result establishes the object?" If the subject is an object rather than a result, use `has-property`.
+5. **Examples:**
+   - (a) W2015765968 c12: `Proposition 2.24 proves "moduli space C_3 ≅ (U(3)×U(3))\(GL_3(C)×GL_3(C))/U(3) has real dimension 10"`, Prop. 2.24, Eq. (2.40) [verified, RCA item 1 context].
+   - (b) W7160385925 c12 rewritten: `Proposition 0.2.1 proves "Z[S] ≅ ⋃_n lim_i Z[S_i]_{≤n}"` [verified, RCA item 6].
+   - **Near-miss:** RCA item 10: `Z[S] proves "quasiseparated…"`. The subject is an object, so this is `has-property` [verified].
+6. **Boundary:** with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+### 2. `has-property`
+1. **Meaning:** the paper asserts that the object *subject* has the property *object*.
+2. **Kinds:** subject is an object; object is a **predicate phrase**, never a full statement and never another object.
+3. **Direction:** object → predicate.
+4. **Admissibility test:** "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?" The locator names the asserting result or sentence.
+5. **Examples:**
+   - (a) RCA item 10: `Z[S] has-property "quasiseparated; comes from a compactly generated weak Hausdorff space"`, Remark 0.2.2 [verified].
+   - (b) RCA item 9: `condensed abelian groups has-property "form an abelian category"`, §0.1 [verified].
+   - **Near-miss:** `Z[S] has-property "Z[S] ≅ ⋃_n …"`. An isomorphism to a named object is `equivalent-to`, not a property.
+6. **Boundary:** with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+### 3. `defines`
+1. **Meaning:** the paper introduces the term *object* at the locator.
+2. **Kinds:** subject is the defining statement (e.g. "Definition 1.6") or the defined term; object is the term or its defining content.
+3. **Direction:** definition → term.
+4. **Admissibility test:** "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?" A formula or identification for a quantity already named is not `defines`.
+5. **Examples:**
+   - (a) RCA item 4: `Definition 1.6 defines "uncompleted analytic ring (A,M)"`, cited [Sch19] [verified].
+   - (b) RCA item 3, rewritten with a non-degenerate subject: `[Man22] defines "descendable maps of analytic rings"`, cited, Remark 0.6 [verified].
+   - **Near-misses** [verified]:
+     - RCA item 14: `c_l(λ) defines "…Eq. (3.76)"`. c_l(λ) is introduced in Eq. (3.74), and Eq. (3.76) evaluates it, so this is `equivalent-to` (sense: equal-value).
+     - RCA item 15: G_N, Newton's constant, has a prior meaning.
+6. **Boundary:** with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+### 4. `equivalent-to` (+ `sense`)
+1. **Meaning:** the paper asserts that subject and object are the same, in the stated sense.
+2. **Kinds:** both are objects, or both are statements, of the same kind. `sense ∈ {iff, isomorphic, equal-value, equivalent-category}`. `sense` is required whenever it can be read from the passage, and otherwise left out.
+3. **Direction:** symmetric. The validator stores it in canonical order.
+4. **Admissibility test:** "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?"
+5. **Examples:**
+   - (a) W1641073798 c17: `Ω̂ for self-dual Ω, represented by A, equivalent-to √det A · A⁻¹` (sense: equal-value), Prop. 12. Quote: "If A ∈ Sym²S* represents a self-dual 3-form Ω then Ω̂ = √det A A⁻¹ ∈ Sym²S" [verified].
+   - (b) W1630303706 c2: `restriction of the Pin(h) and Pin(−h) extensions to Spin(h) equivalent-to "the extension given by (5)"` (sense: isomorphic), Prop. 1. Quote: "By restriction to Spin(h) each of these extensions reduces to the one given by (5)." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) …` "⊂" C⊕H⊕H⊕M_3(C). That's inclusion, not equivalence, so `subobject-of` [verified].
+6. **Boundary:** with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+### 5. `depends-on` (n-ary: head + premise set)
+1. **Meaning:** the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+2. **Kinds:** the head is a result, statement or construction. The tail is a **set of ≥ 1** premises, each a result, statement, construction, hypothesis, equation label or external citation. Each tail member is typed `internal` (a label in this paper) or `external` (a `\cite` or a named result).
+3. **Direction:** head ← tail.
+   - **AND** inside one edge: all tail members are needed jointly.
+   - **OR** across edges with the same head: alternative proofs. Each edge carries a `route` id.
+   - A binary claim is a tail of size 1.
+4. **Admissibility test, per tail member:** "Is this member invoked *as a step* of this proof?"
+   - Not a premise: a comparison ("cf."), a technique reuse ("as in the proof of …", which is `uses-technique`), or context ("this generalises …", which is `generalises`).
+   - A consequence of the head is never a premise.
+   - The edge must quote the sentence(s) that invoke each premise.
+5. **Examples:**
+   - (a) W4412210893 c3: `theory of solid abelian groups ← {Nöbeling's theorem}`, Abstract. Quote: "Nöbeling's theorem … is a crucial ingredient in the theory of solid abelian groups; without it one cannot give any nonzero examples of solid abelian groups." [verified]
+   - (b) RCA item 16, in the correct direction: `"A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}` [verified].
+   - **Near-miss:** RCA item 16 as extracted: `AC G_2-instanton ← {"A_∞ is NK instanton"}`. That's a consequence, not a premise [verified].
+   - Joint/alternative cues:
+     - "by Lemmas 2 and 3", "combining", "together with" → **joint**;
+     - "alternatively", "another proof", "can also be deduced from" → a **new route**;
+     - several refs in one `proof` environment with no cue → joint by default.
+6. **Boundary:**
+   - With `uses-technique`, the object is a method, not a result.
+   - With citation, a reference is a premise only if it's invoked as a step.
+   - **Closure:** an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+   - Tail recall is measured against all in-proof refs (D11a seed), which are classified premise / comparison / technique / context.
+
+### 6. `generalises` (stored direction; `specialises` is rewritten)
+1. **Meaning:** *subject* is the more general one, and *object* is a special case of it.
+2. **Kinds:** both are results, theories or constructions.
+3. **Direction:** general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+4. **Admissibility test:** "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?" Inclusion of a sub-object is not specialisation.
+5. **Examples:**
+   - (a) RCA item 5: `Theorem 0.3 generalises Theorem 0.1 (Mathew)`, abstract: "we generalize the result of Mathew" [verified].
+   - (b) W1778604937 c3, rewritten: `Theorem 0.1 generalises Corollary 0.2`. Quote: "Taking k=2 and E₀=Ar(C) we obtain the following." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) specialises C⊕H⊕H⊕M_3(C)`. That's a subalgebra inclusion, so `subobject-of` [verified].
+6. **Boundary:** with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+### 7. `subobject-of`
+1. **Meaning:** *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+2. **Kinds:** both are objects of the same kind.
+3. **Direction:** part → whole.
+4. **Admissibility test:** "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?"
+5. **Examples:**
+   - (a) RCA item 2, re-typed: `C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C)`, Eq. (1.2) [verified].
+   - (b) W7160385925, Theorem 0.2.5: `Solid subobject-of Cond(Ab)` (full subcategory, "as a subcategory of the category Cond(Ab)") [verified, packet text].
+   - **Near-miss:** an equivalence of categories is `equivalent-to`, not inclusion.
+6. **Boundary:** with `generalises` and `equivalent-to`, see above.
+
+### 8. `counterexample-to`
+1. **Meaning:** *subject* (an example or object) violates the statement *object*, as the paper shows.
+2. **Kinds:** subject is an object or example; object is a statement or claim.
+3. **Direction:** example → statement it refutes.
+4. **Admissibility test:** "Is the subject the *example*, and does the passage show the object fails for it?"
+5. **Examples:**
+   - (a) W2074702261, re-typed from c26: `example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"`. Quote: the example shows they "do not suffice to entail the conclusion of Lemma 5.1" [verified]. (The claim as extracted, `Remark 5.5 counterexample-to "regularity of …"`, is garbled. What Remark 5.5 asserts is a property of example (43), "regularity fails", which is `has-property`.)
+   - (b) W1936971149 c39: `Ḟ(n) ∖ dⁱF(n−1) (0<i<n) counterexample-to "every subobject weakly equivalent to F(n) is a cover"`, Remark 10.2. Quote: "…is weakly equivalent to F(n) in the Segal space model category structure, but is not a cover." [verified]
+   - **Near-miss:** W1501965422 c25 as extracted: `naive descent for derived categories counterexample-to BG_m`. The direction is reversed. Quote, §0.2: naive descent "does not hold anymore, since otherwise the classifying stack BG_m over an algebraically closed field would have finite cohomological dimension, which is false." So BG_m is the example and naive descent is the statement that fails [verified].
+6. **Boundary:** with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+### 9. `conjectures`
+1. **Meaning:** the paper (or the named source) asserts *object* without proof, as expected to hold.
+2. **Kinds:** subject is the paper, a remark, or a named conjecture; object is a statement.
+3. **Direction:** source → conjectured statement.
+4. **Admissibility test:** "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?"
+5. **Examples:**
+   - (a) W1936971149 c33: `Remark 8.13 conjectures "Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M"`. Quote: "It seems that … the statements of (8.11) and (8.12) should hold for any 'reasonable' model category" [verified; the extractor called 8.12 a theorem, but it is a corollary].
+   - (b) W2964288547 c15, subject re-typed: `Remark 5.10 conjectures "L(r²t;1,1+rt,1+2rt,1+4rt) and L(r²t;1,1−rt,1−2rt,1−4rt) are Dirac isospectral, r odd, t ≥ 1"`. Quote: "The computations … hint at Theorem 5.6 being generalizable to the pairs …" [verified; the remark doesn't restate Theorem 5.6's r ≥ 7].
+   - **Near-miss (form only):** W1936971149 c27 as extracted: `Remark 8.4 conjectures "generalisation of Theorem 8.3 to arbitrary closed model categories"`. The content is right ("This result (8.3) presumably generalizes to an arbitrary closed model category"), but the object names a *kind* of result, not the statement. Fix: "Theorem 8.3 holds for any closed model category, with map_V the Dwyer–Kan function complexes" [verified].
+6. **Boundary:** with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+### 10. `uses-technique` (low weight)
+1. **Meaning:** the result or construction *subject* is obtained by the named method *object*.
+2. **Kinds:** subject is a result or construction; object is a **named method or framework**, not a specific result.
+3. **Direction:** user → method.
+4. **Admissibility test:** "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?"
+5. **Examples:**
+   - (a) W1501965422 c24: `enhancement of derived categories uses-technique stable ∞-categories (Lurie)`. Quote: "Instead of the usual unbounded derived category, we work with its enhancement, which is a stable ∞-category in the sense of Lurie" [verified].
+   - (b) W1501965422 c23: `six operations construction uses-technique ∞-categorical (co)homological descent`. Quote, Abstract: "We enhance derived categories … to the level of ∞-categories and introduce ∞-categorical (co)homological descent." [verified]
+   - **Near-miss:** W1663788542 c19 as extracted: `Proposition 2.14 uses-technique Dold–Kan correspondence (Theorem 2.8)`. Prop. 2.14's statement is phrased through the cited Theorem 2.8 ("The tower associated (via the Dold-Kan correspondence) …"), a specific result, so it's `depends-on` [verified]. **Rule:** a named method or framework is `uses-technique`; a specific cited result, even one named after a method, is `depends-on`.
+6. **Boundary:** with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
+
+**Settled at signing:**
+- (i) A **remark** counts as a result for `proves` when it proves something (papers do prove things in remarks). A remark that only *hints* is `conjectures`, as Remark 5.10 and Remark 8.13 show.
+- (ii) The `has-property` dumping-ground threshold stays **open by design**. It's measured in round 1.1/1.2 and set from data in the pre-reg, not guessed. Until then it's a review flag only, never a gate.
+- (iii) Every example and near-miss is verified against the paper.
+
+
+## Paper text
+
+We construct an involutive duality on condensed spectra with locally compact homotopy groups, extending classical Pontryagin duality. We prove that dualization induces Pontryagin duality on homotopy groups, with degrees reversed, and that the canonical biduality map is an equivalence. In particular, every ordinary spectrum, viewed as a discrete condensed spectrum, satisfies biduality, without any
+finiteness assumptions on its homotopy groups.
+
+1 Introduction This result addresses a difficulty already identified by Brown and Comenetz at the outset of their theory. In their 1974 account, they explicitly set aside the natural topology on the character groups and explained that their inability to incorporate it led to finiteness assumptions in most of their results [ 2 , Introduction] . The issue was already present with ℝ / ℤ
+\mathbb{R}/\mathbb{Z} as the character group: its topology was forgotten in passing to spectra. Condensed spectra allow us to retain this topology and establish biduality for locally compact homotopy groups. 1.1 Motivation and statement of the main result Pontryagin duality and Brown–Comenetz duality are two instances of the same principle: an object can sometimes be recovered from its characters
+into a suitable dualizing object. The purpose of this paper is to construct a common generalization of these two dualities in the category of condensed spectra. Let A A be a locally compact abelian group. Its Pontryagin dual is A ^ = Hom cont ⁡ ( A , 𝕋 ) , \widehat{A}=\operatorname{Hom}_{\mathrm{cont}}\left(A,\mathbb{T}\right), endowed with the compact-open topology, where 𝕋 = ℝ / ℤ
+\mathbb{T}=\mathbb{R}/\mathbb{Z} is the circle group. The Pontryagin duality theorem states that A ^ \widehat{A} is again locally compact and that the evaluation map d A : A → A ^ ^ d_{A}:A\to\widehat{\widehat{A}} is an isomorphism. Moreover, Pontryagin duality exchanges compact and discrete abelian groups. We use the formulation in [ 9 , Theorem 4.1(ii)–(iii)] . If topological abelian groups are
+regarded as condensed abelian groups, then the condensed internal Hom recovers the compact-open topology: for a compactly generated Hausdorff topological abelian group A A and a Hausdorff topological abelian group B B , there is a natural isomorphism Hom ¯ Cond ⁡ ( Ab ) ​ ( A , B ) ≅ Hom cont ⁡ ( A , B )
+\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}(A,B)\cong\operatorname{Hom}_{\mathrm{cont}}(A,B) of condensed abelian groups, where the right-hand side is the condensed abelian group associated with the compact-open topology [ 9 , Proposition 4.2] . Thus, Pontryagin duality can be written intrinsically in condensed mathematics as A ^ = Hom ¯ Cond ⁡ ( Ab ) ​ ( A , 𝕋 ) .
+\widehat{A}=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}\left(A,\mathbb{T}\right). For finite abelian groups, Pontryagin duality reduces to the usual character duality A ↦ Hom ⁡ ( A , ℚ / ℤ ) , A\mapsto\operatorname{Hom}(A,\mathbb{Q}/\mathbb{Z}), since every character has finite image and 𝕋 tors ≅ ℚ / ℤ \mathbb{T}_{\mathrm{tors}}\cong\mathbb{Q}/\mathbb{Z} . There is a parallel
+construction in stable homotopy theory. Since ℚ / ℤ \mathbb{Q}/\mathbb{Z} is injective in Ab \mathrm{Ab} , it admits an injective lift, relative to the standard t t -structure on spectra, to a spectrum I ℚ / ℤ I_{\mathbb{Q}/\mathbb{Z}} . In Lurie’s terminology, this follows from the classification of injective objects in a stable category with a t t -structure [ 7 , Definition C.5.7.2, Proposition
+C.5.7.3, and Theorem C.5.7.4] . We write X ^ := Hom ¯ Sp ​ ( X , I ℚ / ℤ ) \widehat{X}:=\underline{\operatorname{Hom}}_{\mathrm{Sp}}\left(X,I_{\mathbb{Q}/\mathbb{Z}}\right) for the Brown–Comenetz dual of a spectrum X X . The resulting spectrum satisfies π n ​ X ^ ≅ Hom ¯ Ab ​ ( π − n ​ X , ℚ / ℤ )
+\pi_{n}\widehat{X}\cong\underline{\operatorname{Hom}}_{\mathrm{Ab}}\left(\pi_{-n}X,\mathbb{Q}/\mathbb{Z}\right) naturally in every spectrum X X and every integer n n . If all homotopy groups of X X are finite, the evaluation map X ⟶ X ^ ^ X\longrightarrow\widehat{\widehat{X}} is an equivalence; this is the Brown–Comenetz duality theorem [ 8 , Theorem 7.4.1] . Passing to condensed spectra allows us
+to remove this finiteness hypothesis. For the duality constructed below, every ordinary spectrum, regarded as a discrete condensed spectrum, is canonically equivalent to its double dual. Its homotopy groups may be arbitrary abelian groups: their discrete topology makes them locally compact, while their duals carry the compact topology supplied by Pontryagin duality. We seek a dualizing spectrum in
+Cond ⁡ ( Sp ) \mathrm{Cond}(\mathrm{Sp}) whose effect on homotopy groups is Pontryagin duality. Let Cond ​ ( Sp ) lc ⊆ Cond ⁡ ( Sp ) \mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}\subseteq\mathrm{Cond}(\mathrm{Sp}) denote the full subcategory of condensed spectra X X such that π n ​ X \pi_{n}X is a locally compact abelian group for every n ∈ ℤ n\in\mathbb{Z} . The desired object I 𝕋 I_{\mathbb{T}}
+should satisfy π n ​ Hom ¯ Cond ⁡ ( Sp ) ​ ( X , I 𝕋 ) ≅ Hom ¯ Cond ⁡ ( Ab ) ​ ( π − n ​ X , 𝕋 ) \pi_{n}\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}\left(X,I_{\mathbb{T}}\right)\cong\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}\left(\pi_{-n}X,\mathbb{T}\right) for every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} . This would simultaneously refine
+the Brown–Comenetz formula in the topological direction and the Pontryagin duality formula in the stable direction. There is an immediate obstruction to constructing I 𝕋 I_{\mathbb{T}} as an injective lift: the condensed circle 𝕋 \mathbb{T} is not injective in Cond ⁡ ( Ab ) \mathrm{Cond}(\mathrm{Ab}) . Nevertheless, this failure of injectivity disappears when testing against locally compact
+sources. More precisely, Hoffmann and Spitzweck prove that, for every locally compact abelian group A A , Ext LCA q ⁡ ( A , 𝕋 ) = 0 ( q ≥ 1 ) \operatorname{Ext}^{q}_{\operatorname{LCA}}\left(A,\mathbb{T}\right)=0\qquad(q\geq 1) [ 4 , Proposition 4.14(vii)] . The comparison functor D b ​ ( LCA ) ⟶ D ⁡ ( Cond ⁡ ( Ab ) ) D^{b}\left(\operatorname{LCA}\right)\longrightarrow
+D\left(\mathrm{Cond}(\mathrm{Ab})\right) is fully faithful [ 9 , Corollary 4.9] , and the proof identifies the corresponding derived internal Hom objects [ 9 , Corollary 4.9, proof] . It is in this sense that, although 𝕋 \mathbb{T} is not injective in Cond ⁡ ( Ab ) \mathrm{Cond}(\mathrm{Ab}) , it behaves as an injective object when tested against locally compact sources. We therefore construct the
+desired spectrum by gluing the ordinary Brown–Comenetz spectrum to the Eilenberg–Mac Lane spectrum of the circle. Let ι : ( ℚ / ℤ ) disc ⟶ 𝕋 \iota:\left(\mathbb{Q}/\mathbb{Z}\right)^{\mathrm{disc}}\longrightarrow\mathbb{T} be the natural inclusion, and let h disc : H ⁡ ( ( ℚ / ℤ ) disc ) ⟶ I ℚ / ℤ disc
+h^{\mathrm{disc}}:H\left(\left(\mathbb{Q}/\mathbb{Z}\right)^{\mathrm{disc}}\right)\longrightarrow I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}} be the discrete condensation of the map corresponding to id ℚ / ℤ ∈ End Ab ⁡ ( ℚ / ℤ ) \operatorname{id}_{\mathbb{Q}/\mathbb{Z}}\in\operatorname{End}_{\mathrm{Ab}}\left(\mathbb{Q}/\mathbb{Z}\right) under the Brown–Comenetz universal property. We define I 𝕋 ∈
+Cond ⁡ ( Sp ) I_{\mathbb{T}}\in\mathrm{Cond}(\mathrm{Sp}) by the following pushout square: H ⁡ ( ( ℚ / ℤ ) disc ) {\lx@inpgf@ignorespaces{H\left(\left(\mathbb{Q}/\mathbb{Z}\right)^{\mathrm{disc}}\right)}} H ​ 𝕋 {\lx@inpgf@ignorespaces{H\mathbb{T}}} I ℚ / ℤ disc {\lx@inpgf@ignorespaces{I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}}}} I 𝕋 . {\lx@inpgf@ignorespaces{I_{\mathbb{T}}.}} H ​ ι
+\scriptstyle{\lx@inpgf@ignorespaces H\iota} h disc \scriptstyle{\lx@inpgf@ignorespaces h^{\mathrm{disc}}} ⌟ \scriptstyle{\lx@inpgf@ignorespaces\lrcorner} The two terms on the right and lower left have complementary virtues: H ​ 𝕋 H\mathbb{T} has the desired degree-zero homotopy group, whereas I ℚ / ℤ disc I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}} has the desired stable character-theoretic
+universal property. The pushout joins them along their common discrete torsion part. For X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} , define its Brown–Comenetz–Pontryagin dual by X ^ := Hom ¯ Cond ⁡ ( Sp ) ​ ( X , I 𝕋 ) . \widehat{X}:=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}\left(X,I_{\mathbb{T}}\right). The main result is the following. Theorem (Condensed
+Brown–Comenetz–Pontryagin duality) . With I 𝕋 I_{\mathbb{T}} and ( − ) ^ \widehat{(-)} as above, the following hold: (i) The spectrum I 𝕋 I_{\mathbb{T}} is coconnective, and there is a canonical isomorphism π 0 ​ I 𝕋 ≅ 𝕋 . \pi_{0}I_{\mathbb{T}}\cong\mathbb{T}. (ii) For every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} and n ∈ ℤ n\in\mathbb{Z} , there is a natural isomorphism
+π n ​ X ^ → ∼ π − n ​ X ^ . \pi_{n}\widehat{X}\xrightarrow{\ \sim\ }\widehat{\pi_{-n}X}. (iii) The canonical evaluation map d X : X ⟶ X ^ ^ d_{X}:X\longrightarrow\widehat{\widehat{X}} is an equivalence for every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} . Consequently, ( − ) ^ : Cond ​ ( Sp ) lc op → ∼ Cond ​ ( Sp ) lc
+\widehat{(-)}:\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}^{\mathrm{op}}\xrightarrow{\ \sim\ }\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} is a contravariant equivalence whose quasi-inverse is itself. The theorem can be read in two ways. It is a stable refinement of Pontryagin duality because its effect on every homotopy group is the compact-open Pontryagin dual. It is also a locally compact refinement of
+Brown–Comenetz duality because its homotopy formula has exactly the same form as the classical Brown–Comenetz formula, with ℚ / ℤ \mathbb{Q}/\mathbb{Z} replaced by the condensed circle 𝕋 \mathbb{T} . Related work During the final preparation of this paper, we became aware of forthcoming work by Thomas Nikolaus and Phil Pützstück on condensed Anderson duality and reflexivity. The duality theorem
+for condensed spectra with locally compact homotopy groups proved here is also established in their work, with a different proof. The two projects were developed independently. Acknowledgments We are deeply grateful to our advisor, Shachar Carmeli, for his guidance and support, and to Lior Yanovski for suggesting this research project. We thank Akhil Mathew and Dustin Clausen for insightful
+discussions on condensed mathematics. We also thank the members of our research group for their support and for the many conversations through which the ideas in this paper took shape. Finally, we acknowledge the use of ChatGPT (OpenAI) and Gemini (Google) for assistance in exploring ideas and improving the clarity of the exposition. We have independently verified all results and proofs and take
+full responsibility for the content. Funding This work was partially supported by BSF Grant No. 2024766 and by the Azrieli Foundation.
+
+Theorem (Condensed Brown–Comenetz–Pontryagin duality): With I 𝕋 I_{\mathbb{T}} and ( − ) ^ \widehat{(-)} as above, the following hold: (i) The spectrum I 𝕋 I_{\mathbb{T}} is coconnective, and there is a canonical isomorphism π 0 ​ I 𝕋 ≅ 𝕋 . \pi_{0}I_{\mathbb{T}}\cong\mathbb{T}. (ii) For every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} and n ∈ ℤ n\in\mathbb{Z} , there is a
+natural isomorphism π n ​ X ^ → ∼ π − n ​ X ^ . \pi_{n}\widehat{X}\xrightarrow{\ \sim\ }\widehat{\pi_{-n}X}. (iii) The canonical evaluation map d X : X ⟶ X ^ ^ d_{X}:X\longrightarrow\widehat{\widehat{X}} is an equivalence for every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} . Consequently, ( − ) ^ : Cond ​ ( Sp ) lc op → ∼ Cond ​ ( Sp ) lc
+\widehat{(-)}:\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}^{\mathrm{op}}\xrightarrow{\ \sim\ }\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} is a contravariant equivalence whose quasi-inverse is itself.
+
+Notation 2.1: For an abelian category 𝒜 \mathcal{A} , we use the notation [ X , Y ] 𝒜 := Hom ¯ 𝒜 ​ ( X , Y ) . [X,Y]_{\mathcal{A}}:=\underline{\operatorname{Hom}}_{\mathcal{A}}(X,Y). For a stable ∞ \infty -category 𝒞 \mathcal{C} , we will use [ X , Y ] 𝒞 := Hom h ​ 𝒞 ⁡ ( X , Y ) = π 0 ​ Map 𝒞 ⁡ ( X , Y ) .
+[X,Y]_{\mathcal{C}}:=\operatorname{Hom}_{h\mathcal{C}}(X,Y)=\pi_{0}\operatorname{Map}_{\mathcal{C}}(X,Y). In either case, [ X , Y ] [X,Y] denotes the abelian group of morphisms from X X to Y Y .
+
+Definition 2.2 (Injective objects in an abelian category): Let 𝒜 \mathcal{A} be an abelian category. An object J ∈ 𝒜 J\in\mathcal{A} is called injective if the contravariant functor [ − , J ] 𝒜 : 𝒜 op ⟶ Ab [-,J]_{\mathcal{A}}\colon\mathcal{A}^{\mathrm{op}}\longrightarrow\mathrm{Ab} is exact. We denote by Inj ⁡ ( 𝒜 ) ⊆ 𝒜 \operatorname{Inj}(\mathcal{A})\subseteq\mathcal{A} the full subcategory
+spanned by the injective objects.
+
+Definition 2.3 (The heart of a t t -structure): Let 𝒞 \mathcal{C} be a stable ∞ \infty -category equipped with a t t -structure ( 𝒞 ≥ 0 , 𝒞 ≤ 0 ) \bigl(\mathcal{C}_{\geq 0},\mathcal{C}_{\leq 0}\bigr) in the sense of [ 6 , Definition 1.2.1.4] . Its heart is the full subcategory 𝒞 ♡ := 𝒞 ≥ 0 ∩ 𝒞 ≤ 0 . \mathcal{C}^{\heartsuit}:=\mathcal{C}_{\geq 0}\cap\mathcal{C}_{\leq 0}. The truncation functors
+determine a functor π 0 : 𝒞 ⟶ 𝒞 ♡ \pi_{0}\colon\mathcal{C}\longrightarrow\mathcal{C}^{\heartsuit} given by either of the canonically equivalent composites π 0 := τ ≤ 0 ​ τ ≥ 0 ≃ τ ≥ 0 ​ τ ≤ 0 . \pi_{0}:=\tau_{\leq 0}\tau_{\geq 0}\simeq\tau_{\geq 0}\tau_{\leq 0}. More generally, using the homological indexing convention, we define π n ​ ( X ) := π 0 ​ ( Σ − n ​ X ) ( n ∈ ℤ ) .
+\pi_{n}(X):=\pi_{0}\bigl(\Sigma^{-n}X\bigr)\qquad(n\in\mathbb{Z}). The category 𝒞 ♡ \mathcal{C}^{\heartsuit} is an ordinary abelian category; see [ 6 , Definition 1.2.1.11 and Remark 1.2.1.12] .
+
+Definition 2.4 ( t t -injective objects): An object Q ∈ 𝒞 Q\in\mathcal{C} is called t t -injective if Q ∈ 𝒞 ≤ 0 Q\in\mathcal{C}_{\leq 0} and [ X , Σ ​ Q ] 𝒞 = 0 [X,\Sigma Q]_{\mathcal{C}}=0 for every X ∈ 𝒞 ≤ 0 X\in\mathcal{C}_{\leq 0} . We denote by Inj t ⁡ ( 𝒞 ) ⊆ 𝒞 \operatorname{Inj}_{t}(\mathcal{C})\subseteq\mathcal{C} the full subcategory spanned by the t t -injective objects. Lurie calls
+these objects simply injective; the expression t t -injective emphasizes their dependence on the chosen t t -structure. See [ 7 , Definition C.5.7.2] .
+
+Proposition 2.5 (Lurie): For X , Q ∈ 𝒞 X,Q\in\mathcal{C} , denote by ρ X , Q : [ X , Q ] 𝒞 ⟶ [ π 0 ​ X , π 0 ​ Q ] 𝒞 ♡ , \rho_{X,Q}:[X,Q]_{\mathcal{C}}\longrightarrow\bigl[\pi_{0}X,\pi_{0}Q\bigr]_{\mathcal{C}^{\heartsuit}}, the canonical map of abelian groups induced by π 0 \pi_{0} . Then the following conditions are equivalent: (1) The object Q Q is t t -injective. (1) ρ X , Q \rho_{X,Q} is an
+isomorphism for every X ∈ 𝒞 X\in\mathcal{C}
+
+Theorem 2.6 (Lurie): Let 𝒫 \mathcal{P} be a Grothendieck prestable ∞ \infty -category, and let 𝒞 := Sp ⁡ ( 𝒫 ) \mathcal{C}:=\operatorname{Sp}(\mathcal{P}) be equipped with its canonical t t -structure. Then the functor π 0 \pi_{0} induces an equivalence of ordinary categories π 0 : h ​ Inj t ⁡ ( 𝒞 ) → ∼ Inj ⁡ ( 𝒞 ♡ ) . \pi_{0}\colon h\operatorname{Inj}_{t}(\mathcal{C})\xrightarrow{\ \sim\
+}\operatorname{Inj}\bigl(\mathcal{C}^{\heartsuit}\bigr). In particular, every injective object J ∈ 𝒞 ♡ J\in\mathcal{C}^{\heartsuit} admits a t t -injective lift I J ∈ 𝒞 I_{J}\in\mathcal{C} , together with an isomorphism π 0 ​ I J ≅ J . \pi_{0}I_{J}\cong J. Such a lift, equipped with this identification, is unique up to unique isomorphism in h ​ 𝒞 h\mathcal{C} compatible with the identification.
+Moreover, for every X ∈ 𝒞 X\in\mathcal{C} , the canonical map ρ X , I J \rho_{X,I_{J}} , followed by the chosen identification π 0 ​ I J ≅ J \pi_{0}I_{J}\cong J , gives an isomorphism [ X , I J ] 𝒞 → ∼ [ π 0 ​ X , J ] 𝒞 ♡ . [X,I_{J}]_{\mathcal{C}}\xrightarrow{\ \sim\ }\bigl[\pi_{0}X,J\bigr]_{\mathcal{C}^{\heartsuit}}. This universal property characterizes I J I_{J} together with its identification
+π 0 ​ I J ≅ J \pi_{0}I_{J}\cong J .
+
+Definition 2.7 (Brown–Comenetz spectrum): The Brown–Comenetz spectrum is the essentially unique t t -injective spectrum I ℚ / ℤ ∈ Sp I_{\mathbb{Q}/\mathbb{Z}}\in\mathrm{Sp} such that π 0 ​ I ℚ / ℤ ≅ ℚ / ℤ . \pi_{0}I_{\mathbb{Q}/\mathbb{Z}}\cong\mathbb{Q}/\mathbb{Z}.
+
+Remark 2.8: The spectrum I ℚ / ℤ I_{\mathbb{Q}/\mathbb{Z}} is not the Eilenberg–Mac Lane spectrum H ⁡ ( ℚ / ℤ ) H(\mathbb{Q}/\mathbb{Z}) . The former represents the functor X ⟼ [ π 0 ​ X , ℚ / ℤ ] Ab X\longmapsto\bigl[\pi_{0}X,\mathbb{Q}/\mathbb{Z}\bigr]_{\mathrm{Ab}} on all spectra, whereas the latter represents ordinary cohomology with coefficients in ℚ / ℤ \mathbb{Q}/\mathbb{Z} .
+
+Definition 3.1 (The pro-étale site of a point): Let ProFin \mathrm{ProFin} denote the category of profinite sets and continuous maps. The pro-étale site of a point , denoted ∗ pro ​ e ´ ​ t , \ast_{\mathrm{pro\acute{e}t}}, is the category ProFin \mathrm{ProFin} , equipped with the Grothendieck topology in which a finite family { S i ⟶ S } i = 1 n \{S_{i}\longrightarrow S\}_{i=1}^{n} is a covering
+family if the induced map ∐ i = 1 n S i ⟶ S \coprod_{i=1}^{n}S_{i}\longrightarrow S is surjective; see [ 9 , Definition 1.2] .
+
+Definition 3.2 (Condensed objects): For an ordinary category ℰ \mathcal{E} with the required limits, a condensed ℰ \mathcal{E} -valued object is an ℰ \mathcal{E} -valued sheaf on the pro-étale site of a point. We write Cond ⁡ ( ℰ ) := Shv ⁡ ( ∗ pro ​ e ´ ​ t , ℰ ) . \mathrm{Cond}(\mathcal{E}):=\operatorname{Shv}(\operatorname{\ast_{\mathrm{pro\acute{e}t}}},\mathcal{E}). In particular, Cond ⁡ ( Ab
+) \mathrm{Cond}(\mathrm{Ab}) is the category of condensed abelian groups; see [ 9 , Definition 1.2] .
+
+Definition 3.3 (Condensed spectra): For anima and spectra, we use the hypercomplete version of this construction: Cond ⁡ ( 𝒮 ) := Shv hyp ⁡ ( ∗ pro ​ e ´ ​ t , 𝒮 ) . \mathrm{Cond}(\mathcal{S}):=\operatorname{Shv}^{\mathrm{hyp}}(\operatorname{\ast_{\mathrm{pro\acute{e}t}}},\mathcal{S}). This convention agrees with the pyknotic presentation by hypersheaves on compact Hausdorff spaces; see [ 9 ,
+Proposition 2.3] and [ 1 , Corollary 2.4.4] . The hypercompleteness convention is essential below, as it ensures that homotopy objects detect equivalences. Equivalently, since stabilization of hypercomplete sheaves is computed pointwise, we can define the ∞ \infty -category of condensed spectra as the stabilization Cond ⁡ ( Sp ) := Sp ⁡ ( Cond ⁡ ( 𝒮 ) ) .
+\mathrm{Cond}(\mathrm{Sp}):=\mathrm{Sp}\bigl(\mathrm{Cond}(\mathcal{S})\bigr).
+
+Definition 3.4 (Homotopy groups of a condensed spectrum): Let X ∈ Cond ⁡ ( Sp ) X\in\mathrm{Cond}(\mathrm{Sp}) . For every integer n n , the n n -th homotopy group of X X is the condensed abelian group π n ​ X ∈ Cond ⁡ ( Ab ) \pi_{n}X\in\mathrm{Cond}(\mathrm{Ab}) obtained by taking the sheaf associated with the presheaf S ⟼ π n ​ ( X ⁡ ( S ) ) . S\longmapsto\pi_{n}\bigl(X(S)\bigr).
+
+Definition 3.5 (The condensed object associated with a topological space): Let T T be a topological space. Its associated condensed set, denoted T ¯ , \underline{T}, is defined on a profinite set S S by T ¯ ​ ( S ) := Cont ⁡ ( S , T ) , \underline{T}(S):=\operatorname{Cont}(S,T), the set of continuous maps from S S to T T . If T T is a topological group, ring, or abelian group, then T ¯
+\underline{T} is naturally a condensed group, ring, or abelian group, respectively.
+
+Definition 3.6 (Discrete condensed objects): Let M M be a set, group, ring, or abelian group, equipped with the discrete topology. Its associated condensed object is denoted M disc . M^{\mathrm{disc}}. For every profinite set S S , one has M disc ​ ( S ) = Cont ⁡ ( S , M ) , M^{\mathrm{disc}}(S)=\operatorname{Cont}(S,M), where the right-hand side consists of the locally constant maps S → M S\to M
+.
+
+Definition 3.7 (Discrete condensed spectra): There is a fully faithful functor ( − ) disc : Sp ⟶ Cond ⁡ ( Sp ) , (-)^{\mathrm{disc}}:\mathrm{Sp}\longrightarrow\mathrm{Cond}(\mathrm{Sp}), left adjoint to the global sections functor. Explicitly, for a spectrum E E and a profinite set S S , E disc ​ ( S ) = colim S ↠ S 0 E S 0 , E^{\mathrm{disc}}(S)=\operatorname*{colim}_{S\twoheadrightarrow
+S_{0}}E^{S_{0}}, where S 0 S_{0} ranges over the finite continuous quotients of S S . we call E disc E^{\mathrm{disc}} the discrete condensed spectrum associated to E E .
+
+Definition 3.8 (Eilenberg–Mac Lane condensed spectra): For every condensed abelian group A ∈ Cond ⁡ ( Ab ) A\in\mathrm{Cond}(\mathrm{Ab}) , we denote by H ​ A ∈ Cond ⁡ ( Sp ) HA\in\mathrm{Cond}(\mathrm{Sp}) the corresponding Eilenberg–Mac Lane condensed spectrum. It is characterized by π 0 ​ ( H ​ A ) ≅ A \pi_{0}(HA)\cong A and π n ​ ( H ​ A ) = 0 for every ​ n ≠ 0 . \pi_{n}(HA)=0\qquad\text{for
+every }n\neq 0.
+
+Definition 3.9 (The symmetric monoidal structure on condensed spectra): The category Cond ⁡ ( Sp ) \mathrm{Cond}(\mathrm{Sp}) is a presentable stable closed symmetric monoidal ∞ \infty -category, with unit given by 𝕊 disc \mathbb{S}^{\mathrm{disc}} ; see [ 7 , Proposition 1.3.4.7] . The closed symmetric monoidal structure on Cond ⁡ ( Sp ) \mathrm{Cond}(\mathrm{Sp}) provides an internal Hom
+condensed spectrum Hom ¯ Cond ⁡ ( Sp ) ​ ( X , Y ) ∈ Cond ⁡ ( Sp ) , \underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(X,Y)\in\mathrm{Cond}(\mathrm{Sp}), characterized by the natural equivalence Map Cond ⁡ ( Sp ) ⁡ ( Z , Hom ¯ Cond ⁡ ( Sp ) ​ ( X , Y ) ) ≃ Map Cond ⁡ ( Sp ) ⁡ ( Z ⊗ X , Y )
+\operatorname{Map}_{\mathrm{Cond}(\mathrm{Sp})}\left(Z,\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(X,Y)\right)\simeq\operatorname{Map}_{\mathrm{Cond}(\mathrm{Sp})}\left(Z\otimes X,Y\right) for all Z ∈ Cond ⁡ ( Sp ) Z\in\mathrm{Cond}(\mathrm{Sp}) .
+
+Notation 3.10: Similarly to the notation used in the abelian and stable settings, we will use [ X , Y ] Cond ⁡ ( Ab ) := Hom ¯ Cond ⁡ ( Ab ) ​ ( X , Y ) . [X,Y]_{\mathrm{Cond}(\mathrm{Ab})}:=\underline{\operatorname{Hom}}_{\mathcal{\mathrm{Cond}}(\mathrm{Ab})}(X,Y). and [ X , Y ] Cond ⁡ ( Sp ) := π 0 ​ Hom ¯ Cond ⁡ ( Sp ) ​ ( X , Y )
+[X,Y]_{\mathrm{Cond}(\mathrm{Sp})}:=\pi_{0}\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(X,Y) to denote the condensed abelian group of morphisms from X X to Y Y .
+
+Definition 3.11: Define Cond ​ ( Sp ) lc ⊆ Cond ⁡ ( Sp ) \mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}\subseteq\mathrm{Cond}(\mathrm{Sp}) as the full subcategory of locally compact condensed spectra spanned by those objects X X for which π n ​ X \pi_{n}X is represented by a locally compact abelian group for every n ∈ ℤ n\in\mathbb{Z} .
+
+Corollary 3.12: Let A A be a locally compact abelian group then R ​ Hom ¯ Cond ⁡ ( Ab ) ​ ( A , 𝕋 ) = Hom ¯ Cond ⁡ ( Ab ) ​ ( A , 𝕋 ) ​ [ 0 ] . \mathrm{R}\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}(A,\mathbb{T})=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}(A,\mathbb{T})[0].
+
+Lemma 3.13: For every profinite set S S , let B S := ( ℚ / ℤ ) disc ​ ( S ) . B_{S}:=(\mathbb{Q}/\mathbb{Z})^{\mathrm{disc}}(S). Then B S B_{S} is an injective abelian group.
+
+Lemma 3.14: For every profinite set S S , there is a canonical equivalence I ℚ / ℤ disc ​ ( S ) ≃ I B S , I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}}(S)\simeq I_{B_{S}}, where I B S I_{B_{S}} denotes the Brown–Comenetz spectrum associated to the injective B S B_{S} .
+
+Definition 3.15 (The condensed Pontryagin dualizing spectrum): Define I 𝕋 ∈ Cond ⁡ ( Sp ) I_{\mathbb{T}}\in\mathrm{Cond}(\mathrm{Sp}) by the following pushout square: H ⁡ ( ( ℚ / ℤ ) disc ) {\lx@inpgf@ignorespaces{H\left(\left(\mathbb{Q}/\mathbb{Z}\right)^{\mathrm{disc}}\right)}} H ​ 𝕋 {\lx@inpgf@ignorespaces{H\mathbb{T}}} I ℚ / ℤ disc
+{\lx@inpgf@ignorespaces{I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}}}} I 𝕋 . {\lx@inpgf@ignorespaces{I_{\mathbb{T}}.}} H ​ ι \scriptstyle{\lx@inpgf@ignorespaces H\iota} h disc \scriptstyle{\lx@inpgf@ignorespaces h^{\mathrm{disc}}} ⌟ \scriptstyle{\lx@inpgf@ignorespaces\lrcorner}
+
+Proposition 3.16: The following hold for the condensed spectrum I 𝕋 I_{\mathbb{T}} : 1. I 𝕋 ∈ Cond ​ ( Sp ) ≤ 0 I_{\mathbb{T}}\in\mathrm{Cond}(\mathrm{Sp})_{\leq 0} . 2. There is a canonical isomorphism π 0 ​ I 𝕋 ≅ 𝕋 \pi_{0}I_{\mathbb{T}}\cong\mathbb{T} in Cond ⁡ ( Ab ) \mathrm{Cond}(\mathrm{Ab}) .
+
+Lemma 4.1 (Enriched restriction–coinduction): For M ∈ D ⁡ ( Cond ⁡ ( Ab ) ) M\in D(\mathrm{Cond}(\mathrm{Ab})) and Y ∈ Cond ⁡ ( Sp ) Y\in\mathrm{Cond}(\mathrm{Sp}) , there is a natural equivalence Hom ¯ Cond ⁡ ( Sp ) ​ ( U ⁡ ( M ) , Y ) ≃ U ⁡ ( Hom ¯ D ⁡ ( Cond ⁡ ( Ab ) ) ​ ( M , R ⁡ ( Y ) ) ) . \underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(U(M),Y)\simeq
+U\left(\underline{\operatorname{Hom}}_{D(\mathrm{Cond}(\mathrm{Ab}))}(M,R(Y))\right).
+
+Lemma 4.2: Let h : H ⁡ ( ℚ / ℤ ) ⟶ I ℚ / ℤ h:H(\mathbb{Q}/\mathbb{Z})\longrightarrow I_{\mathbb{Q}/\mathbb{Z}} be the morphism corresponding to id ℚ / ℤ \operatorname{id}_{\mathbb{Q}/\mathbb{Z}} , and let h disc h^{\mathrm{disc}} denote its discrete condensation. Then the adjoint of h disc h^{\mathrm{disc}} , h ~ : H ⁡ ( ( ℚ / ℤ ) disc ) ⟶ R ⁡ ( I ℚ / ℤ disc ) ,
+\widetilde{h}:H\left(\left(\mathbb{Q}/\mathbb{Z}\right)^{\mathrm{disc}}\right)\longrightarrow R\left(I_{\mathbb{Q}/\mathbb{Z}}^{\mathrm{disc}}\right), is an equivalence in D ⁡ ( Cond ⁡ ( Ab ) ) D\bigl(\mathrm{Cond}(\mathrm{Ab})\bigr) .
+
+Lemma 4.3: There is a canonical equivalence R ⁡ ( I 𝕋 ) ≃ H ​ 𝕋 R(I_{\mathbb{T}})\simeq H\mathbb{T} in D ⁡ ( Cond ⁡ ( Ab ) ) D\bigl(\mathrm{Cond}(\mathrm{Ab})\bigr) .
+
+Notation 4.4: For a condensed spectrum Y Y , write Y ^ := Hom ¯ Cond ⁡ ( Sp ) ​ ( Y , I 𝕋 ) . \widehat{Y}:=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}\left(Y,I_{\mathbb{T}}\right). . For a condensed abelian group B B , write B ^ := Hom ¯ Cond ⁡ ( Ab ) ​ ( B , 𝕋 ) . \widehat{B}:=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}\left(B,\mathbb{T}\right). .
+
+Proposition 4.5 (The universal property of the dualizing spectrum): Let X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} be a locally compact condensed spectrum. Then the natural morphism of condensed abelian groups ρ X : π 0 ​ X ^ ⟶ π 0 ​ X ^ \rho_{X}:\pi_{0}\widehat{X}\longrightarrow\widehat{\pi_{0}X} is an isomorphism. Here ρ X \rho_{X} is adjoint to the pairing π 0 ​ Hom ¯
+Cond ⁡ ( Sp ) ​ ( X , I 𝕋 ) ⊗ π 0 ​ X \displaystyle\pi_{0}\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(X,I_{\mathbb{T}})\otimes\pi_{0}X ⟶ π 0 ​ ( Hom ¯ Cond ⁡ ( Sp ) ​ ( X , I 𝕋 ) ⊗ X ) \displaystyle\longrightarrow\pi_{0}\left(\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}(X,I_{\mathbb{T}})\otimes X\right) → π 0 ​ ( ev X ) π 0 ​ I 𝕋 → ∼ 𝕋 . \displaystyle\xrightarrow{\
+\pi_{0}(\operatorname{ev}_{X})\ }\pi_{0}I_{\mathbb{T}}\xrightarrow{\ \sim\ }\mathbb{T}.
+
+Lemma 4.6: For every locally compact abelian group A A , there is a natural equivalence H ​ A ^ ≃ H ​ A ^ \widehat{HA}\simeq H\widehat{A} (4.1) whose induced identification on π 0 \pi_{0} is ρ H ​ A \rho_{HA} . Consequently, for every n ∈ ℤ n\in\mathbb{Z} , Σ n ​ H ​ A ^ ≃ Σ − n ​ H ​ A ^ . \widehat{\Sigma^{n}HA}\simeq\Sigma^{-n}H\widehat{A}.
+
+Corollary 4.7 (The homotopy formula): For every X ∈ Cond ​ ( Sp ) lc X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} and every n ∈ ℤ n\in\mathbb{Z} , Proposition 4.5 , applied to Σ n ​ X \Sigma^{n}X , gives a natural isomorphism ρ X , n : π n ​ X ^ → ∼ π − n ​ X ^ , \rho_{X,n}:\pi_{n}\widehat{X}\xrightarrow{\ \sim\ }\widehat{\pi_{-n}X}, In particular, X ^ ∈ Cond ​ ( Sp ) lc
+\widehat{X}\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}} .
+
+Definition 4.8 (Pontryagin and condensed Brown–Comenetz duality): For a condensed abelian group A A , define A ^ := Hom ¯ Cond ⁡ ( Ab ) ​ ( A , 𝕋 ) . \widehat{A}:=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Ab})}\left(A,\mathbb{T}\right). Let ev A : A ^ ⊗ A ⟶ 𝕋 \operatorname{ev}_{A}:\widehat{A}\otimes A\longrightarrow\mathbb{T} be the evaluation morphism. The Pontryagin biduality
+morphism d A : A ⟶ A ^ ^ d_{A}:A\longrightarrow\widehat{\widehat{A}} is the adjunct of A ⊗ A ^ → σ A , A ^ A ^ ⊗ A → ev A 𝕋 , A\otimes\widehat{A}\xrightarrow{\ \sigma_{A,\widehat{A}}\ }\widehat{A}\otimes A\xrightarrow{\ \operatorname{ev}_{A}\ }\mathbb{T}, where σ \sigma denotes the symmetry. For a condensed spectrum X X , define X ^ := Hom ¯ Cond ⁡ ( Sp ) ​ ( X , I 𝕋 ) .
+\widehat{X}:=\underline{\operatorname{Hom}}_{\mathrm{Cond}(\mathrm{Sp})}\left(X,I_{\mathbb{T}}\right). Let ev X : X ^ ⊗ X ⟶ I 𝕋 \operatorname{ev}_{X}:\widehat{X}\otimes X\longrightarrow I_{\mathbb{T}} be the evaluation morphism. The condensed Brown–Comenetz biduality morphism d X : X ⟶ X ^ ^ d_{X}:X\longrightarrow\widehat{\widehat{X}} is the adjunct of X ⊗ X ^ → σ X , X ^ X ^ ⊗ X → ev X I 𝕋 .
+X\otimes\widehat{X}\xrightarrow{\ \sigma_{X,\widehat{X}}\ }\widehat{X}\otimes X\xrightarrow{\ \operatorname{ev}_{X}\ }I_{\mathbb{T}}.
+
+Theorem 4.9 (Compatibility with biduality): Let X ∈ Cond ​ ( S ​ p ) lc X\in\mathrm{Cond}(Sp)_{\mathrm{lc}} . For every n ∈ ℤ n\in\mathbb{Z} , the following diagram of condensed abelian groups commutes: π n ​ X {\lx@inpgf@ignorespaces\pi_{n}X} π n ​ X ^ ^ {\lx@inpgf@ignorespaces\pi_{n}\widehat{\widehat{X}}} π n ​ X ^ ^ {\lx@inpgf@ignorespaces\widehat{\widehat{\pi_{n}X}}} π − n ​ X ^ ^ .
+{\lx@inpgf@ignorespaces\widehat{\pi_{-n}\widehat{X}}.} π n ​ ( d X ) \scriptstyle{\lx@inpgf@ignorespaces\pi_{n}(d_{X})} ( − 1 ) n ​ d π n ​ X \scriptstyle{\lx@inpgf@ignorespaces(-1)^{n}d_{\pi_{n}X}} ρ X ^ , n \scriptstyle{\lx@inpgf@ignorespaces\rho_{\widehat{X},n}} ρ X , − n ^ \scriptstyle{\lx@inpgf@ignorespaces\widehat{\rho_{X,-n}}}
+
+Theorem 4.10 (Condensed Brown–Comenetz–Pontryagin duality): For every locally compact condensed spectrum X ∈ Cond ​ ( Sp ) lc , X\in\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}, the canonical biduality morphism d X : X ⟶ X ^ ^ d_{X}:X\longrightarrow\widehat{\widehat{X}} is an equivalence. Moreover, condensed Brown–Comenetz dualization restricts to a contravariant equivalence ( − ) ^ : Cond ​ ( Sp ) lc
+op → ∼ Cond ​ ( Sp ) lc , \widehat{(-)}:\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}^{\mathrm{op}}\xrightarrow{\ \sim\ }\mathrm{Cond}(\mathrm{Sp})_{\mathrm{lc}}, whose quasi-inverse is itself. In particular, it defines an involutive duality on the category of locally compact condensed spectra.
+
+Corollary 4.11 (Biduality for ordinary spectra): For every spectrum E E , the canonical map E disc ⟶ E disc ^ ^ E^{\mathrm{disc}}\longrightarrow\widehat{\widehat{E^{\mathrm{disc}}}} is an equivalence of condensed spectra.
+
+Remark 4.12: For example, condensed duality gives H ⁡ ( ℤ disc ) ^ ≃ H ​ 𝕋 , H ​ 𝕋 ^ ≃ H ⁡ ( ℤ disc ) . \widehat{H(\mathbb{Z}^{\mathrm{disc}})}\simeq H\mathbb{T},\qquad\widehat{H\mathbb{T}}\simeq H(\mathbb{Z}^{\mathrm{disc}}). By comparison, the classical Brown–Comenetz double dual of H ​ ℤ H\mathbb{Z} is H ⁡ ( ∏ p ℤ p ) H(\prod_{p}\mathbb{Z}_{p}) , with biduality map induced by profinite
+completion. Retaining the topology on the character group restores the original spectrum.
+
+## Claims
+
+{"n": 1, "subject": "Brown–Comenetz spectrum", "relation": "defines", "object": "the essentially unique t-injective spectrum I_{Q/Z} with pi_0 I_{Q/Z} isomorphic to Q/Z", "modality": "stated", "locator": "Definition 2.7"}
+{"n": 2, "subject": "Hoffmann–Spitzweck result on Ext^q_LCA(A, T)", "relation": "uses-technique", "object": "vanishing of higher Ext groups of locally compact abelian groups into T, used in the construction", "modality": "cited", "locator": "Section 1, Hoffmann–Spitzweck"}
+{"n": 3, "subject": "Condensed Brown–Comenetz–Pontryagin duality", "relation": "generalises", "object": "Brown–Comenetz duality for spectra with finite homotopy groups", "modality": "stated", "locator": "Section 1, Introduction"}
+{"n": 4, "subject": "Corollary 4.11 (Biduality for ordinary spectra)", "relation": "proves", "object": "for every spectrum E, the canonical map E^disc -> double dual of E^disc is an equivalence of condensed spectra", "modality": "stated", "locator": "Corollary 4.11"}
+{"n": 5, "subject": "condensed Brown–Comenetz dual", "relation": "defines", "object": "for X in Cond(Sp)_lc, the dual of X is Hom_{Cond(Sp)}(X, I_T)", "modality": "stated", "locator": "Section 1, Construction"}
+{"n": 6, "subject": "Lemma 4.3", "relation": "proves", "object": "R(I_T) is equivalent to HT in D(Cond(Ab))", "modality": "stated", "locator": "Lemma 4.3"}
+{"n": 7, "subject": "Pontryagin duality", "relation": "proves", "object": "Pontryagin duality exchanges compact and discrete abelian groups", "modality": "cited", "locator": "Section 1"}
+{"n": 8, "subject": "Main theorem (Condensed Brown–Comenetz–Pontryagin duality)", "relation": "proves", "object": "for every X in Cond(Sp)_lc and n in Z, a natural isomorphism from pi_n of the dual of X to the Pontryagin dual of pi_{-n}X", "modality": "stated", "locator": "Section 1, Main theorem (ii)"}
+{"n": 9, "subject": "Theorem 4.10 (Condensed Brown–Comenetz–Pontryagin duality)", "relation": "proves", "object": "for every X in Cond(Sp)_lc, the canonical biduality morphism d_X: X -> double dual of X is an equivalence", "modality": "stated", "locator": "Theorem 4.10"}
+{"n": 10, "subject": "Corollary 4.7 (Homotopy formula)", "relation": "proves", "object": "the dual of X lies in Cond(Sp)_lc for X in Cond(Sp)_lc", "modality": "stated", "locator": "Corollary 4.7"}
+{"n": 11, "subject": "Condensed Brown–Comenetz–Pontryagin duality", "relation": "proves", "object": "I_T is coconnective with pi_0 I_T isomorphic to T", "modality": "stated", "locator": "Theorem (Condensed Brown–Comenetz–Pontryagin duality), part (i) in Section 1; Proposition 3.16"}
+{"n": 12, "subject": "Lemma 4.6", "relation": "proves", "object": "natural equivalence widehat(HA) simeq H widehat(A) for locally compact abelian A", "modality": "stated", "locator": "Lemma 4.6"}
+{"n": 13, "subject": "Biduality for ordinary spectra", "relation": "specialises", "object": "Condensed Brown–Comenetz–Pontryagin duality", "modality": "stated", "locator": "Abstract"}
+{"n": 14, "subject": "Proposition 3.16", "relation": "proves", "object": "I_T lies in Cond(Sp)_{<=0} and pi_0 I_T is isomorphic to T", "modality": "stated", "locator": "Proposition 3.16"}
+{"n": 15, "subject": "Theorem 4.9 (Compatibility with biduality)", "relation": "proves", "object": "commutativity of the square relating pi_n(d_X) and the biduality maps on pi_n X", "modality": "stated", "locator": "Theorem 4.9"}
+{"n": 16, "subject": "Definition 3.15 (The condensed Pontryagin dualizing spectrum)", "relation": "defines", "object": "I_T via the pushout square in Section 1", "modality": "stated", "locator": "Definition 3.15"}
+{"n": 17, "subject": "Proposition 3.16", "relation": "proves", "object": "I_T lies in Cond(Sp)_{<=0}", "modality": "stated", "locator": "Proposition 3.16 (1)"}
+{"n": 18, "subject": "Lemma 3.13", "relation": "proves", "object": "(Q/Z)^disc(S) is an injective abelian group for every profinite set S", "modality": "stated", "locator": "Lemma 3.13"}
+{"n": 19, "subject": "Remark 4.12", "relation": "proves", "object": "the condensed dual of H(Z^disc) is equivalent to HT and the condensed dual of HT is equivalent to H(Z^disc)", "modality": "stated", "locator": "Remark 4.12"}
+{"n": 20, "subject": "Remark 4.12", "relation": "proves", "object": "widehat(H(Z^disc)) simeq HT and widehat(HT) simeq H(Z^disc)", "modality": "stated", "locator": "Remark 4.12"}

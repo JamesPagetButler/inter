@@ -1,0 +1,24 @@
+{
+  "label": "W1778604937",
+  "run_index": null,
+  "model": "gemini-3.1-pro-preview",
+  "thinking_budget": 10000,
+  "prompt_sha": "cc4c6c2fd740cac29829921c9d1f0ecbef50b85668137ff9dca021a096ac8803",
+  "rubric_sha": "f950c385c016e8c0b23b6e8e8941d0448fcb049a31eb7fa404f3ed7f1b4eed23",
+  "input_sha": "7ed4b2631a30eec8deaa25833b1b4df0ec745a255d91fb142b972b8e17a13db9",
+  "request_sha": "2d1c637cd9b73e7057f558d1bab89bc7f7e8b8edb6371c89ffe720c04a5a0f98",
+  "rubric_id_line": "RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13",
+  "finish_reason": "FinishReason.STOP",
+  "thought_tokens": 4641,
+  "usage": {
+    "prompt_token_count": 20001,
+    "cached_content_token_count": null,
+    "thoughts_token_count": 4641,
+    "candidates_token_count": 1150
+  },
+  "usage_sums": {
+    "four_field": 25792,
+    "three_field": 25792
+  },
+  "rater": "gemini-checker-v1"
+}

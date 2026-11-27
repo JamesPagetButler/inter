@@ -1,0 +1,240 @@
+# Checker v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are checking claims extracted from one mathematics or physics paper. Below this prompt come two blocks, in order:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>"}`
+2. One line exactly: `GRADES-END`
+
+
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+**Field conventions (all types):**
+- A claim has `subject`, `relation_type`, `object`, `modality ∈ {stated, cited}`, `locator` and **`quote`** (a verbatim span, checked mechanically against the source).
+- **Modality is never a relation.** `cites` is rejected by the validator.
+- "Result" means a theorem, proposition, lemma, corollary, remark or claim, or the paper itself.
+- "Statement" means a mathematical assertion. "Object" means a mathematical object, structure, space, category or quantity. "Predicate" means a property phrase that can be asserted of an object.
+
+### 1. `proves`
+1. **Meaning:** the result *subject* establishes the statement *object*.
+2. **Kinds:** subject is a result; object is a statement.
+3. **Direction:** result → statement.
+4. **Admissibility test:** "Is the subject a result, and does the quoted passage say that this result establishes the object?" If the subject is an object rather than a result, use `has-property`.
+5. **Examples:**
+   - (a) W2015765968 c12: `Proposition 2.24 proves "moduli space C_3 ≅ (U(3)×U(3))\(GL_3(C)×GL_3(C))/U(3) has real dimension 10"`, Prop. 2.24, Eq. (2.40) [verified, RCA item 1 context].
+   - (b) W7160385925 c12 rewritten: `Proposition 0.2.1 proves "Z[S] ≅ ⋃_n lim_i Z[S_i]_{≤n}"` [verified, RCA item 6].
+   - **Near-miss:** RCA item 10: `Z[S] proves "quasiseparated…"`. The subject is an object, so this is `has-property` [verified].
+6. **Boundary:** with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+### 2. `has-property`
+1. **Meaning:** the paper asserts that the object *subject* has the property *object*.
+2. **Kinds:** subject is an object; object is a **predicate phrase**, never a full statement and never another object.
+3. **Direction:** object → predicate.
+4. **Admissibility test:** "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?" The locator names the asserting result or sentence.
+5. **Examples:**
+   - (a) RCA item 10: `Z[S] has-property "quasiseparated; comes from a compactly generated weak Hausdorff space"`, Remark 0.2.2 [verified].
+   - (b) RCA item 9: `condensed abelian groups has-property "form an abelian category"`, §0.1 [verified].
+   - **Near-miss:** `Z[S] has-property "Z[S] ≅ ⋃_n …"`. An isomorphism to a named object is `equivalent-to`, not a property.
+6. **Boundary:** with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+### 3. `defines`
+1. **Meaning:** the paper introduces the term *object* at the locator.
+2. **Kinds:** subject is the defining statement (e.g. "Definition 1.6") or the defined term; object is the term or its defining content.
+3. **Direction:** definition → term.
+4. **Admissibility test:** "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?" A formula or identification for a quantity already named is not `defines`.
+5. **Examples:**
+   - (a) RCA item 4: `Definition 1.6 defines "uncompleted analytic ring (A,M)"`, cited [Sch19] [verified].
+   - (b) RCA item 3, rewritten with a non-degenerate subject: `[Man22] defines "descendable maps of analytic rings"`, cited, Remark 0.6 [verified].
+   - **Near-misses** [verified]:
+     - RCA item 14: `c_l(λ) defines "…Eq. (3.76)"`. c_l(λ) is introduced in Eq. (3.74), and Eq. (3.76) evaluates it, so this is `equivalent-to` (sense: equal-value).
+     - RCA item 15: G_N, Newton's constant, has a prior meaning.
+6. **Boundary:** with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+### 4. `equivalent-to` (+ `sense`)
+1. **Meaning:** the paper asserts that subject and object are the same, in the stated sense.
+2. **Kinds:** both are objects, or both are statements, of the same kind. `sense ∈ {iff, isomorphic, equal-value, equivalent-category}`. `sense` is required whenever it can be read from the passage, and otherwise left out.
+3. **Direction:** symmetric. The validator stores it in canonical order.
+4. **Admissibility test:** "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?"
+5. **Examples:**
+   - (a) W1641073798 c17: `Ω̂ for self-dual Ω, represented by A, equivalent-to √det A · A⁻¹` (sense: equal-value), Prop. 12. Quote: "If A ∈ Sym²S* represents a self-dual 3-form Ω then Ω̂ = √det A A⁻¹ ∈ Sym²S" [verified].
+   - (b) W1630303706 c2: `restriction of the Pin(h) and Pin(−h) extensions to Spin(h) equivalent-to "the extension given by (5)"` (sense: isomorphic), Prop. 1. Quote: "By restriction to Spin(h) each of these extensions reduces to the one given by (5)." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) …` "⊂" C⊕H⊕H⊕M_3(C). That's inclusion, not equivalence, so `subobject-of` [verified].
+6. **Boundary:** with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+### 5. `depends-on` (n-ary: head + premise set)
+1. **Meaning:** the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+2. **Kinds:** the head is a result, statement or construction. The tail is a **set of ≥ 1** premises, each a result, statement, construction, hypothesis, equation label or external citation. Each tail member is typed `internal` (a label in this paper) or `external` (a `\cite` or a named result).
+3. **Direction:** head ← tail.
+   - **AND** inside one edge: all tail members are needed jointly.
+   - **OR** across edges with the same head: alternative proofs. Each edge carries a `route` id.
+   - A binary claim is a tail of size 1.
+4. **Admissibility test, per tail member:** "Is this member invoked *as a step* of this proof?"
+   - Not a premise: a comparison ("cf."), a technique reuse ("as in the proof of …", which is `uses-technique`), or context ("this generalises …", which is `generalises`).
+   - A consequence of the head is never a premise.
+   - The edge must quote the sentence(s) that invoke each premise.
+5. **Examples:**
+   - (a) W4412210893 c3: `theory of solid abelian groups ← {Nöbeling's theorem}`, Abstract. Quote: "Nöbeling's theorem … is a crucial ingredient in the theory of solid abelian groups; without it one cannot give any nonzero examples of solid abelian groups." [verified]
+   - (b) RCA item 16, in the correct direction: `"A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}` [verified].
+   - **Near-miss:** RCA item 16 as extracted: `AC G_2-instanton ← {"A_∞ is NK instanton"}`. That's a consequence, not a premise [verified].
+   - Joint/alternative cues:
+     - "by Lemmas 2 and 3", "combining", "together with" → **joint**;
+     - "alternatively", "another proof", "can also be deduced from" → a **new route**;
+     - several refs in one `proof` environment with no cue → joint by default.
+6. **Boundary:**
+   - With `uses-technique`, the object is a method, not a result.
+   - With citation, a reference is a premise only if it's invoked as a step.
+   - **Closure:** an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+   - Tail recall is measured against all in-proof refs (D11a seed), which are classified premise / comparison / technique / context.
+
+### 6. `generalises` (stored direction; `specialises` is rewritten)
+1. **Meaning:** *subject* is the more general one, and *object* is a special case of it.
+2. **Kinds:** both are results, theories or constructions.
+3. **Direction:** general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+4. **Admissibility test:** "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?" Inclusion of a sub-object is not specialisation.
+5. **Examples:**
+   - (a) RCA item 5: `Theorem 0.3 generalises Theorem 0.1 (Mathew)`, abstract: "we generalize the result of Mathew" [verified].
+   - (b) W1778604937 c3, rewritten: `Theorem 0.1 generalises Corollary 0.2`. Quote: "Taking k=2 and E₀=Ar(C) we obtain the following." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) specialises C⊕H⊕H⊕M_3(C)`. That's a subalgebra inclusion, so `subobject-of` [verified].
+6. **Boundary:** with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+### 7. `subobject-of`
+1. **Meaning:** *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+2. **Kinds:** both are objects of the same kind.
+3. **Direction:** part → whole.
+4. **Admissibility test:** "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?"
+5. **Examples:**
+   - (a) RCA item 2, re-typed: `C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C)`, Eq. (1.2) [verified].
+   - (b) W7160385925, Theorem 0.2.5: `Solid subobject-of Cond(Ab)` (full subcategory, "as a subcategory of the category Cond(Ab)") [verified, packet text].
+   - **Near-miss:** an equivalence of categories is `equivalent-to`, not inclusion.
+6. **Boundary:** with `generalises` and `equivalent-to`, see above.
+
+### 8. `counterexample-to`
+1. **Meaning:** *subject* (an example or object) violates the statement *object*, as the paper shows.
+2. **Kinds:** subject is an object or example; object is a statement or claim.
+3. **Direction:** example → statement it refutes.
+4. **Admissibility test:** "Is the subject the *example*, and does the passage show the object fails for it?"
+5. **Examples:**
+   - (a) W2074702261, re-typed from c26: `example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"`. Quote: the example shows they "do not suffice to entail the conclusion of Lemma 5.1" [verified]. (The claim as extracted, `Remark 5.5 counterexample-to "regularity of …"`, is garbled. What Remark 5.5 asserts is a property of example (43), "regularity fails", which is `has-property`.)
+   - (b) W1936971149 c39: `Ḟ(n) ∖ dⁱF(n−1) (0<i<n) counterexample-to "every subobject weakly equivalent to F(n) is a cover"`, Remark 10.2. Quote: "…is weakly equivalent to F(n) in the Segal space model category structure, but is not a cover." [verified]
+   - **Near-miss:** W1501965422 c25 as extracted: `naive descent for derived categories counterexample-to BG_m`. The direction is reversed. Quote, §0.2: naive descent "does not hold anymore, since otherwise the classifying stack BG_m over an algebraically closed field would have finite cohomological dimension, which is false." So BG_m is the example and naive descent is the statement that fails [verified].
+6. **Boundary:** with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+### 9. `conjectures`
+1. **Meaning:** the paper (or the named source) asserts *object* without proof, as expected to hold.
+2. **Kinds:** subject is the paper, a remark, or a named conjecture; object is a statement.
+3. **Direction:** source → conjectured statement.
+4. **Admissibility test:** "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?"
+5. **Examples:**
+   - (a) W1936971149 c33: `Remark 8.13 conjectures "Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M"`. Quote: "It seems that … the statements of (8.11) and (8.12) should hold for any 'reasonable' model category" [verified; the extractor called 8.12 a theorem, but it is a corollary].
+   - (b) W2964288547 c15, subject re-typed: `Remark 5.10 conjectures "L(r²t;1,1+rt,1+2rt,1+4rt) and L(r²t;1,1−rt,1−2rt,1−4rt) are Dirac isospectral, r odd, t ≥ 1"`. Quote: "The computations … hint at Theorem 5.6 being generalizable to the pairs …" [verified; the remark doesn't restate Theorem 5.6's r ≥ 7].
+   - **Near-miss (form only):** W1936971149 c27 as extracted: `Remark 8.4 conjectures "generalisation of Theorem 8.3 to arbitrary closed model categories"`. The content is right ("This result (8.3) presumably generalizes to an arbitrary closed model category"), but the object names a *kind* of result, not the statement. Fix: "Theorem 8.3 holds for any closed model category, with map_V the Dwyer–Kan function complexes" [verified].
+6. **Boundary:** with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+### 10. `uses-technique` (low weight)
+1. **Meaning:** the result or construction *subject* is obtained by the named method *object*.
+2. **Kinds:** subject is a result or construction; object is a **named method or framework**, not a specific result.
+3. **Direction:** user → method.
+4. **Admissibility test:** "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?"
+5. **Examples:**
+   - (a) W1501965422 c24: `enhancement of derived categories uses-technique stable ∞-categories (Lurie)`. Quote: "Instead of the usual unbounded derived category, we work with its enhancement, which is a stable ∞-category in the sense of Lurie" [verified].
+   - (b) W1501965422 c23: `six operations construction uses-technique ∞-categorical (co)homological descent`. Quote, Abstract: "We enhance derived categories … to the level of ∞-categories and introduce ∞-categorical (co)homological descent." [verified]
+   - **Near-miss:** W1663788542 c19 as extracted: `Proposition 2.14 uses-technique Dold–Kan correspondence (Theorem 2.8)`. Prop. 2.14's statement is phrased through the cited Theorem 2.8 ("The tower associated (via the Dold-Kan correspondence) …"), a specific result, so it's `depends-on` [verified]. **Rule:** a named method or framework is `uses-technique`; a specific cited result, even one named after a method, is `depends-on`.
+6. **Boundary:** with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
+
+**Settled at signing:**
+- (i) A **remark** counts as a result for `proves` when it proves something (papers do prove things in remarks). A remark that only *hints* is `conjectures`, as Remark 5.10 and Remark 8.13 show.
+- (ii) The `has-property` dumping-ground threshold stays **open by design**. It's measured in round 1.1/1.2 and set from data in the pre-reg, not guessed. Until then it's a review flag only, never a gate.
+- (iii) Every example and near-miss is verified against the paper.
+
+
+## Paper text
+
+We compute the information theoretic von Neumann entropy of the state associated to the fermionic second quantization of a spectral triple. We show that this entropy is given by the spectral action of the spectral triple for a specific universal function. The main result of our paper is the surprising relation between this function and the Riemann zeta function. It manifests itself in particular
+by the values of the coefficients $${c(d)}$$ c(d) by which it multiplies the d dimensional terms in the heat expansion of the spectral triple. We find that $${c(d)}$$ c(d) is the product of the Riemann xi function evaluated at $${-d}$$ -d by an elementary expression. In particular $${c(4)}$$ c(4) is a rational multiple of $${\zeta(5)}$$ ζ(5) and $${c(2)}$$ c(2) a rational multiple of
+$${\zeta(3)}$$ ζ(3). The functional equation gives a duality between the coefficients in positive dimension, which govern the high energy expansion, and the coefficients in negative dimension, exchanging even dimension with odd dimension.
+
+1 Introduction The spectral action principle [ 4 ] has so far been developed for arbitrary test functions of the form χ ⁡ ( D 2 / Λ 2 ) \chi(D^{2}/\Lambda^{2}) of a spectral triple ( 𝒜 , ℋ , D ) ({\mathcal{A}},{\mathcal{H}},D) . The spectral action defined, for a fixed choice of χ \chi , as Tr ⁡ ( χ ⁡ ( D 2 / Λ 2 ) ) {\rm Tr}(\chi(D^{2}/\Lambda^{2})) is an additive functional of the spectral
+triple ( 𝒜 , ℋ , D ) ({\mathcal{A}},{\mathcal{H}},D) , i.e. when evaluated on the direct sum of two spectral triples it behaves additively. This additivity is, at the conceptual level, a key property of the spectral action. Motivated by the formalism of Quantum field theory, one gets another natural way to obtain an additive functional of spectral triples: given ( 𝒜 , ℋ , D )
+({\mathcal{A}},{\mathcal{H}},D) one performs the fermionic second quantization using the Clifford algebra of the underlying real Hilbert space ℋ ℝ {\mathcal{H}}_{\mathbb{R}} and evaluating the von Neumann information theoretic entropy of the unique state satisfying the KMS condition at inverse temperature β \beta with respect to the time evolution of the Clifford algebra induced by the operator D
+D . The second quantization transforms direct sums into tensor products and moreover the von Neumann entropy of the tensor product of two states is the sum of the respective entropies. Thus one indeed obtains an additive functional of spectral triples in this way, which we simply call the “entropy” S ⁡ ( 𝒜 , ℋ , D ) S({\mathcal{A}},{\mathcal{H}},D) of the spectral triple. After recalling the KMS
+condition in § 2.1 and the fermionic second quantization in § 2.2 we show in § 3 that the entropy functional is the spectral action for a specific universal test function χ ⁡ ( x ) = h ⁡ ( x ) \chi(x)=h(\sqrt{x}) . The main result of this paper is the surprising intimate relation, explored in § 4 between the function h h and the Riemann zeta function. This is explained at the conceptual level to
+try to understand why it appears. The content of this paper is purely mathematical. As far as physical applications are concerned, using the role of the spectral action as a framework to unify all fundamental interactions, this work indicates in particular the need to develop the spectral approach in connection with second quantization. Acknowledgements The work of A. H. C is supported in part by
+the National Science Foundation Grant No. Phys-1518371. A. H. C would also like to thank Institute for Mathematics, Astrophysics and Particle Physics, Radboud University Nijmegen for hospitality where part of this work was done. The involved research has partly been enabled by a Radboud Excellence Professorship awarded to Prof. Chamseddine. WvS would like to thank Sijbrand de Jong for stimulating
+discussions on entropy and the spectral action. WvS thanks IHÉS for hospitality during a visit in early 2018, as well as NWO for support via VIDI-grant 016.133.326.
+
+Definition 2.1: Let ( 𝒞 , σ t ) ({\mathcal{C}},\sigma_{t}) be a C ∗ C^{*} -dynamical system. For a given 0 < β < ∞ 0<\beta<\infty , a state φ \varphi on the unital C ∗ C^{*} -algebra 𝒞 {\mathcal{C}} satisfies the KMS condition at inverse temperature β \beta if for all a , b ∈ 𝒞 a,b\in{\mathcal{C}} , there exists a function F a , b ​ ( z ) F_{a,b}(z) which is holomorphic on the strip I β = { z ∈ ℂ
+| 0 < ℑ ⁡ ( z ) < β } , I_{\beta}=\{z\in{\mathbb{C}}\,|\,0<\Im(z)<\beta\}, (1) continuous on the boundary ∂ I β \partial I_{\beta} and bounded, with the property that for all t ∈ ℝ t\in{\mathbb{R}} F a , b ​ ( t ) = φ ⁡ ( a ​ σ t ​ ( b ) ) and F a , b ​ ( t + i ​ β ) = φ ⁡ ( σ t ​ ( b ) ​ a ) . F_{a,b}(t)=\varphi(a\sigma_{t}(b))\ \ \text{ and }\ \ F_{a,b}(t+i\beta)=\varphi(\sigma_{t}(b)a). (2)
+
+Proposition 2.2: Let ℋ {\mathcal{H}} be a complex Hilbert space, D D a self-adjoint operator in ℋ {\mathcal{H}} with compact resolvent. Let C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) be the complexified Clifford algebra of the underlying real Hilbert space ℋ ℝ {\mathcal{H}}_{\mathbb{R}} and σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) be the one-parameter group
+of automorphisms associated to exp ⁡ ( i ​ t ​ D ) ∈ Aut ⁡ ( ℋ ℝ ) \exp(itD)\in{\rm Aut}({\mathcal{H}}_{\mathbb{R}}) . Then for any β > 0 \beta>0 there exists a unique KMS β state ψ β \psi_{\beta} on the C ∗ C^{*} -dynamical system ( C , σ t ) (C,\sigma_{t}) .
+
+Proposition 2.3: Let ℋ {\mathcal{H}} , D D , C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) , σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) and ψ β \psi_{\beta} be as in Proposition 2.2 . Then if the operator exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class, the state ψ β \psi_{\beta} is of type I and the associated irreducible representation is given by the
+Fermionic second quantization associated to the complex structure I := i ​ sign ​ D I:=i\ {\rm sign}\,D on ℋ ℝ {\mathcal{H}}_{\mathbb{R}} .
+
+Lemma 2.4: The above representation γ I \gamma_{I} of the complexified Clifford algebra Cliff ℂ ​ ( V ) {\rm Cliff}_{\mathbb{C}}(V) on Fock space ℒ ⁡ ( ⋀ V I ) {\mathcal{L}}(\exterior V_{I}) is irreducible.
+
+Remark 2.5: More generally speaking, the Shale–Stinespring Theorem [ 9 ] says that the automorphism on Cliff ℂ ​ ( V ) {\rm Cliff}_{\mathbb{C}}(V) defined by an orthogonal operator T : V → V T:V\to V is implementable by a unitary operator on Fock space ⋀ V I \exterior V_{I} if and only if T + I ​ T ​ I T+ITI is Hilbert-Schmidt.
+
+Proposition 2.6: ( i ) (i) The one-parameter group σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) is implemented in the (physical) Fock representation by the one-parameter unitary group W ⁡ ( t ) = ⋀ exp ⁡ ( it ​ | D | ) W(t)=\exterior\exp(it|D|) , i.e. one has γ I ​ ( σ t ​ ( A ) ) = ⋀ ( e it ​ | D | ) ​ γ I ​ ( A ) ​ ⋀ ( e − it ​ | D | ) , ∀ A ∈ Cliff ℂ ​ ( V ) .
+\gamma_{I}(\sigma_{t}(A))=\exterior(e^{it|D|})\gamma_{I}(A)\exterior(e^{-it|D|})\,,\,~\forall A\in{\rm Cliff}_{\mathbb{C}}(V). (4) ( i ​ i ) (ii) If exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class the state ψ β \psi_{\beta} is of type I and is given by ψ β ​ ( A ) = 1 Z ​ Tr ​ ( ⋀ exp ⁡ ( − β ​ | D | ) ​ γ I ​ ( A ) ) , ∀ A ∈ Cliff ℂ ​ ( V ) \psi_{\beta}(A)=\frac{1}{Z}{\rm
+Tr}\left(\exterior\exp(-\beta|D|)\gamma_{I}(A)\right)\,,\,~\forall A\in{\rm Cliff}_{\mathbb{C}}(V) (5) where the normalization factor Z Z is finite.
+
+Lemma 3.1: Let x > 0 x>0 , the entropy of the partition of the unit interval in two intervals with ratio of size x x , is given by ℰ ⁡ ( x ) := log ⁡ ( x + 1 ) − x ​ log ⁡ ( x ) x + 1 . {\mathcal{E}}(x):=\log(x+1)-\frac{x\log(x)}{x+1}.
+
+Corollary 3.2: One has ℰ ⁡ ( x ) = ℰ ⁡ ( 1 / x ) {\mathcal{E}}(x)={\mathcal{E}}(1/x) for any x > 0 x>0 .
+
+Lemma 3.3: Let T ∈ ℒ 1 ​ ( ℋ ) + T\in{\mathcal{L}}^{1}({\mathcal{H}})^{+} be a positive trace class operator and ϕ \phi the state associated to ⋀ T \exterior T then S ⁡ ( ϕ ) = Tr ⁡ ( ℰ ⁡ ( T ) ) . S(\phi)={\rm Tr}({\mathcal{E}}(T)). (6)
+
+Theorem 3.4: Let ℋ {\mathcal{H}} , D D , C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) , σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) and ψ β \psi_{\beta} be as in Proposition 2.2 . Then if the operator exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class, the state ψ β \psi_{\beta} is of type I and its von Neumann entropy is equal to the spectral action Tr ⁡ ( h
+⁡ ( β ​ D ) ) {\rm Tr}(h(\beta D)) for the spectral function h ⁡ ( x ) := ℰ ⁡ ( e − x ) h(x):={\mathcal{E}}(e^{-x}) .
+
+Lemma 4.1: The function h ⁡ ( x ) h(x) is an even positive function of the variable x ∈ ℝ x\in{\mathbb{R}} . Its derivative is h ′ ​ ( x ) = − x 4 ​ cosh 2 ⁡ ( x 2 ) . h^{\prime}(x)=-\frac{x}{4\cosh^{2}\left(\frac{x}{2}\right)}.
+
+Lemma 4.2: One has, for x ≥ 0 x\geq 0 , ∑ ℤ ( 2 ​ π ​ n + π ) 2 − x ( ( 2 ​ π ​ n + π ) 2 + x ) 2 = 1 4 ​ cosh 2 ⁡ ( x 2 ) . \sum_{\mathbb{Z}}\frac{(2\pi n+\pi)^{2}-x}{\left((2\pi n+\pi)^{2}+x\right)^{2}}=\frac{1}{4\cosh^{2}\left(\frac{\sqrt{x}}{2}\right)}.
+
+Lemma 4.3: One has g ⁡ ( t ) = − 1 4 ​ π ​ t 3 / 2 ​ ∑ ℤ ( − 1 ) n ​ n 2 ​ q n 2 , q = e − 1 4 ​ t . g(t)=\frac{-1}{4\sqrt{\pi}t^{3/2}}\sum_{\mathbb{Z}}(-1)^{n}n^{2}q^{n^{2}},\ \ q=e^{-\frac{1}{4t}}. (9)
+
+Proposition 4.4: One has h ⁡ ( x ) = ∫ 0 ∞ e − t ​ x 2 ​ g ~ ​ ( t ) ​ 𝑑 t . h(x)=\int_{0}^{\infty}e^{-tx^{2}}\tilde{g}(t)dt. (10)
+
+Lemma 4.5: ( i ) (i) One has 2 ​ ∫ 0 ∞ h ⁡ ( x ) ​ x ​ 𝑑 x = 9 ​ ζ ​ ( 3 ) 2 , 2 ​ ∫ 0 ∞ h ⁡ ( x ) ​ x 3 ​ 𝑑 x = 225 ​ ζ ​ ( 5 ) 4 . 2\int_{0}^{\infty}h(x)xdx=\frac{9\,\zeta(3)}{2},\ \ 2\int_{0}^{\infty}h(x)x^{3}dx=\frac{225\,\zeta(5)}{4}. (11) ( i ​ i ) (ii) More generally ∫ 0 ∞ h ⁡ ( x ) ​ x α ​ 𝑑 x = 1 − 2 − α − 1 α + 1 ​ Γ ​ ( α + 3 ) ​ ζ ​ ( α + 2 ) .
+\int_{0}^{\infty}h(x)x^{\alpha}dx=\frac{1-2^{-\alpha-1}}{\alpha+1}\Gamma(\alpha+3)\zeta(\alpha+2). (12)
+
+Lemma 4.6: The coefficient of t a t^{a} in the heat expansion is the term γ ⁡ ( a ) = 1 − 2 − 2 ​ a a ​ π − a ​ ξ ​ ( 2 ​ a ) . \gamma(a)=\frac{1-2^{-2a}}{a}\pi^{-a}\xi(2a).
+
+## Claims
+
+{"n": 1, "subject": "E(x)", "relation": "defines", "object": "entropy of partitioning the unit interval into two intervals with ratio x, E(x)=log(x+1) - x log(x)/(x+1)", "modality": "stated", "locator": "Lemma 3.1"}
+{"n": 2, "subject": "Lemma 3.3", "relation": "proves", "object": "for a positive trace-class operator T, the state associated to ⋀T has entropy S(φ)=Tr(E(T))", "modality": "stated", "locator": "Lemma 3.3"}
+{"n": 3, "subject": "c(2)", "relation": "equivalent-to", "object": "a rational multiple of zeta(3)", "modality": "stated", "locator": "Abstract"}
+{"n": 4, "subject": "Proposition 4.4", "relation": "proves", "object": "h(x) = integral from 0 to infinity of exp(-t x^2) g~(t) dt", "modality": "stated", "locator": "Proposition 4.4, eq. (10)"}
+{"n": 5, "subject": "Lemma 4.6", "relation": "proves", "object": "the coefficient of t^a in the heat expansion is γ(a) = [(1-2^{-2a})/a] π^{-a} ξ(2a)", "modality": "stated", "locator": "Lemma 4.6"}
+{"n": 6, "subject": "h(x)", "relation": "defines", "object": "spectral function h(x):=E(e^{-x})", "modality": "stated", "locator": "Theorem 3.4"}
+{"n": 7, "subject": "Proposition 2.6", "relation": "proves", "object": "ψ_β(A) = (1/Z)Tr(⋀exp(-β|D|)γ_I(A)) when exp(-β|D|) is trace class", "modality": "stated", "locator": "Proposition 2.6(ii)"}
+{"n": 8, "subject": "Lemma 4.5(i)", "relation": "proves", "object": "2 integral_0^infinity h(x) x dx = 9 zeta(3)/2 and 2 integral_0^infinity h(x) x^3 dx = 225 zeta(5)/4", "modality": "stated", "locator": "Lemma 4.5(i), eq. (11)"}
+{"n": 9, "subject": "c(4)", "relation": "equivalent-to", "object": "a rational multiple of zeta(5)", "modality": "stated", "locator": "Abstract"}
+{"n": 10, "subject": "Lemma 4.2", "relation": "proves", "object": "for x≥0, Σ_Z [(2πn+π)²-x]/[(2πn+π)²+x]² = 1/(4cosh²(√x/2))", "modality": "stated", "locator": "Lemma 4.2"}
+{"n": 11, "subject": "Corollary 3.2", "relation": "proves", "object": "E(x)=E(1/x) for any x>0", "modality": "stated", "locator": "Corollary 3.2"}
+{"n": 12, "subject": "entropy of a spectral triple S(A,H,D)", "relation": "defines", "object": "additive functional obtained from fermionic second quantization and the KMS state", "modality": "stated", "locator": "Section 1"}
+{"n": 13, "subject": "Lemma 4.1", "relation": "proves", "object": "h'(x) = -x / (4 cosh^2(x/2))", "modality": "stated", "locator": "Lemma 4.1"}
+{"n": 14, "subject": "Lemma 3.3", "relation": "proves", "object": "S(phi) = Tr(E(T)) for the state associated to the exterior algebra element of positive trace-class T", "modality": "stated", "locator": "Lemma 3.3, eq. (6)"}
+{"n": 15, "subject": "Lemma 4.5(ii)", "relation": "proves", "object": "integral_0^infinity h(x) x^alpha dx = (1 - 2^{-alpha-1})/(alpha+1) Gamma(alpha+3) zeta(alpha+2)", "modality": "stated", "locator": "Lemma 4.5(ii), eq. (12)"}
+{"n": 16, "subject": "spectral action principle", "relation": "defines", "object": "spectral action Tr(chi(D^2/Lambda^2)) of a spectral triple", "modality": "cited", "locator": "Section 1"}
+{"n": 17, "subject": "Lemma 4.1", "relation": "proves", "object": "h(x) is an even positive function with h'(x) = -x/(4cosh²(x/2))", "modality": "stated", "locator": "Lemma 4.1"}
+{"n": 18, "subject": "Corollary 3.2", "relation": "proves", "object": "E(x) = E(1/x) for x > 0", "modality": "stated", "locator": "Corollary 3.2"}
+{"n": 19, "subject": "ψ_β", "relation": "equivalent-to", "object": "fermionic second quantization associated to the complex structure I:=i sign D on H_R", "modality": "stated", "locator": "Proposition 2.3"}
+{"n": 20, "subject": "Proposition 2.2", "relation": "proves", "object": "existence of a unique KMS_β state ψ_β on (Cliff_C(H_R),σ_t) for any β>0, for self-adjoint D with compact resolvent", "modality": "stated", "locator": "Proposition 2.2"}

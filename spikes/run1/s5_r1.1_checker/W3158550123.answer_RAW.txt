@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "The text explicitly defines theta using \":=\" in \"\u03d1 := \\sum_{\\mu,\\nu}\\eta^{\\mu\\nu}(\\text{\\char 97\\relax}_{\\mu}+\\text{\\char 107\\relax}_{\\mu})\\circ(\\text{\\char 97\\relax}_{\\nu}+\\text{\\char 107\\relax}_{\\nu})\"."}
+{"n": 2, "grade": "faithful", "reason": "Proposition 4.7 provides the formula: \"The fluctuated Dirac operator of a finite Yang-Mills geometry satisfies D_{\\text{\\tiny gauge}}^{2} = ...\""}
+{"n": 3, "grade": "wrong-relation", "reason": "The text states \"These were classified by Paschke-Sitarz [ PS98 ] and diagrammatically by Krajewski [ Kra98 ]\", which describes a past achievement, not a method used to construct a new result."}
+{"n": 4, "grade": "wrong-relation", "reason": "The Dirac operator is an already-named quantity here; providing its explicit formula is `equivalent-to` (sense: equal-value), not `defines`."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 4.6 establishes the identity for the squared Dirac operator at X=0."}
+{"n": 6, "grade": "not-in-paper", "reason": "The text of Corollary 5.2 does not explicitly mention or invoke Proposition 5.1 as a premise."}
+{"n": 7, "grade": "wrong-relation", "reason": "The passage introduces the term via \"is called Yang-Mills matrix spectral triple\", which is a definition (`defines`), not a generalization/specialization."}
+{"n": 8, "grade": "faithful", "reason": "Definition 4.1 introduces the term: \"We define a gauge matrix spectral triples as the spectral triple product G_{\\text{\\char 102\\relax}}\\times F\"."}
+{"n": 9, "grade": "wrong-relation", "reason": "The passage introduces the term \"Yang-Mills-Higgs matrix spectral triple\" via \"we say that... is a...\", which is `defines`, not `specialises`."}
+{"n": 10, "grade": "wrong-relation", "reason": "The text merely notes that \"The Spectral Action of these theories was later systematically computed... in [ P\u00e9r19 ]\", which is context/fact, not a technique used to obtain the paper's own result."}
+{"n": 11, "grade": "faithful", "reason": "The Abstract asserts they are identified: \"this allows to state Yang-Mills-Higgs theory... as an explicit random multimatrix model\"."}
+{"n": 12, "grade": "wrong-relation", "reason": "The text contrasts the new framework with almost-commutative manifolds (\"in contrast to 'almost-commutative manifolds', the present framework... employs only finite-dimensional algebras\"), but does not claim it generalises it."}
+{"n": 13, "grade": "faithful", "reason": "Definition 4.1 introduces the term: \"If moreover D_{F}=0 above holds, then G_{\\text{\\char 102\\relax}}\\times F is called Yang-Mills matrix spectral triple.\""}
+{"n": 14, "grade": "faithful", "reason": "Proposition 4.6 establishes this formula: \"The square of the fluctuated Dirac operator of a Yang-Mills gauge matrix spectral triple that is flat... is given by...\""}
+{"n": 15, "grade": "faithful", "reason": "Lemma 3.3 establishes the formula: \"The square of the Dirac operator of a fuzzy geometry G_{\\text{\\char 102\\relax}}... is D^{2}_{\\text{\\char 102\\relax}} = ...\""}
+{"n": 16, "grade": "faithful", "reason": "Proposition 5.3 states how the field strength transforms: \"\\mathscr{F}_{\\mu\\nu}=[\\mathsf{F}_{\\mu\\nu},\\bullet]\\mapsto\\mathscr{F}_{\\mu\\nu}^{u}=[\\mathsf{F}_{\\mu\\nu}^{u},\\bullet]\"."}
+{"n": 17, "grade": "faithful", "reason": "Definition 4.1 introduces the term: \"we say that G_{\\text{\\char 102\\relax}}\\times F is a Yang-Mills\u2013Higgs matrix spectral triple\"."}
+{"n": 18, "grade": "faithful", "reason": "Lemma 4.13 establishes the exact sequence of groups shown."}
+{"n": 19, "grade": "wrong-relation", "reason": "The example gives a formula for a quantity already defined (the Dirac operator of type (0,4)), which makes it `equivalent-to`, not `defines`."}
+{"n": 20, "grade": "faithful", "reason": "Lemma 4.4 gives the explicit form: \"the innerly fluctuated Dirac operator D_{\\text{\\tiny gauge}} is given by D_{\\text{\\tiny gauge}}|_{K=0} = ...\""}
+GRADES-END

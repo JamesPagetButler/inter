@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "The text states that \"The category Pro(C) is equivalent to the full subcategory of Fun(C, Set)^op whose objects are cofiltered limits of { Hom_C(X_i, -) }\"."}
+{"n": 2, "grade": "wrong-relation", "reason": "The subject \"limits of compact Hausdorff spaces\" is a mathematical object, not a result, so this should be has-property instead of proves."}
+{"n": 3, "grade": "wrong-direction", "reason": "The subject is the defined term and the object is the defining content, but the defines relation must point from the definition to the term."}
+{"n": 4, "grade": "faithful", "reason": "The unnumbered theorem in the introduction states that extending the homotopy group functors to unique cofiltered limit preserving functors yields the required pro-groups."}
+{"n": 5, "grade": "wrong-locator", "reason": "The equivalence is stated in an unnumbered Definition in the introduction that merely cites \"(cf. Prop. 2.1.2)\", so it is not asserted at the location \"Prop. 2.1.2\" itself."}
+{"n": 6, "grade": "faithful", "reason": "Corollary 1.1.10 directly states that \"Every compact Hausdorff space admits a surjection from an extremally disconnected space.\""}
+{"n": 7, "grade": "faithful", "reason": "Lemma 1.2.2 asserts that \"The small functors are precisely given by the small colimits of representables.\""}
+{"n": 8, "grade": "wrong-relation", "reason": "The subject \"Stone space X\" is an object, not a result, so it cannot be the subject of a proves relation."}
+{"n": 9, "grade": "wrong-relation", "reason": "The unnumbered theorem establishes the existence and uniqueness of the extensions, which is a mathematical statement (proves), not the introduction of a new term (defines)."}
+{"n": 10, "grade": "faithful", "reason": "Remark 1.1.6 establishes that \"Hausdorff extremally disconnected spaces are totally disconnected.\""}
+{"n": 11, "grade": "faithful", "reason": "Proposition 1.2.12 states that \"The category ProFin of profinite sets is equivalent to the category Stone of Stone spaces\"."}
+{"n": 12, "grade": "faithful", "reason": "Proposition 1.1.1 explicitly states that \"Every surjection of compact Hausdorff spaces is a quotient map.\""}
+{"n": 13, "grade": "wrong-relation", "reason": "The subject \"compact Hausdorff spaces\" is a mathematical object rather than a result, so this should be has-property."}
+{"n": 14, "grade": "wrong-direction", "reason": "The subject is the term \"condensed anima\" and the object is its definition, but the defines relation points from the definition to the term."}
+{"n": 15, "grade": "faithful", "reason": "Lemma 1.1.4 establishes that \"Compact Hausdorff spaces are closed under finite coproducts and retracts.\""}
+{"n": 16, "grade": "wrong-relation", "reason": "The subject \"embedding Pro(Ani) -> Cond(Ani)\" is a mathematical object, not a result, so it cannot be the subject of a proves relation."}
+{"n": 17, "grade": "faithful", "reason": "Proposition 1.2.12 asserts that \"The category ProFin of profinite sets is equivalent to the category Stone of Stone spaces\"."}
+{"n": 18, "grade": "wrong-relation", "reason": "The \"X -> beta X assignment\" is a mathematical construction/object, not a result, so this should be has-property rather than proves."}
+{"n": 19, "grade": "wrong-direction", "reason": "The subject is the defined term and the object is the defining content, which is the reverse of the required definition -> term direction for defines."}
+{"n": 20, "grade": "wrong-locator", "reason": "The claim is based on an unnumbered Definition and Proposition in the introduction that cites \"(cf. Def. 4.2.2 , Prop. 4.2.7)\", rather than being asserted at the location Prop. 4.2.7 itself."}
+GRADES-END

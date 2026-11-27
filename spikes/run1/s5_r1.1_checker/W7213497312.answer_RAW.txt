@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "The paper introduces the term in Definition 2.7, stating \"The Brown–Comenetz spectrum is the essentially unique t-injective spectrum...\"."}
+{"n": 2, "grade": "wrong-relation", "reason": "The object is a specific result (the vanishing of higher Ext groups) rather than a named method or framework, failing the admissibility test for uses-technique."}
+{"n": 3, "grade": "faithful", "reason": "The Introduction states that \"The purpose of this paper is to construct a common generalization of these two dualities in the category of condensed spectra.\""}
+{"n": 4, "grade": "faithful", "reason": "Corollary 4.11 establishes that \"the canonical map... is an equivalence of condensed spectra.\""}
+{"n": 5, "grade": "faithful", "reason": "The paper states \"define its Brown–Comenetz–Pontryagin dual by X^ := Hom_{Cond(Sp)}(X, I_T)\"."}
+{"n": 6, "grade": "faithful", "reason": "Lemma 4.3 states \"There is a canonical equivalence R(I_T) \u2243 HT in D(Cond(Ab)).\""}
+{"n": 7, "grade": "faithful", "reason": "The text states \"Moreover, Pontryagin duality exchanges compact and discrete abelian groups. We use the formulation in [9, Theorem 4.1(ii)–(iii)].\""}
+{"n": 8, "grade": "faithful", "reason": "The main theorem states \"For every X \u2208 Cond(Sp)_lc and n \u2208 Z, there is a natural isomorphism...\"."}
+{"n": 9, "grade": "faithful", "reason": "Theorem 4.10 asserts that \"the canonical biduality morphism d_X: X \u27f6 \u00a0X^\u02c6^\u02c6 is an equivalence.\""}
+{"n": 10, "grade": "faithful", "reason": "Corollary 4.7 concludes \"In particular, X^\u02c6 \u2208 Cond(Sp)_lc.\""}
+{"n": 11, "grade": "faithful", "reason": "The main theorem states \"(i) The spectrum I_T is coconnective, and there is a canonical isomorphism \u03c0_0 I_T \u2245 T.\""}
+{"n": 12, "grade": "faithful", "reason": "Lemma 4.6 establishes that \"there is a natural equivalence \\widehat{HA} \u2243 H\\widehat{A}\"."}
+{"n": 13, "grade": "faithful", "reason": "The abstract points out that \"In particular, every ordinary spectrum, viewed as a discrete condensed spectrum, satisfies biduality,\" presenting it as a special case."}
+{"n": 14, "grade": "faithful", "reason": "Proposition 3.16 establishes that \"1. I_T \u2208 Cond(Sp)_{\u2264 0}\" and \"2. There is a canonical isomorphism \u03c0_0 I_T \u2245 T\"."}
+{"n": 15, "grade": "faithful", "reason": "Theorem 4.9 provides that \"the following diagram of condensed abelian groups commutes\" relating the biduality maps."}
+{"n": 16, "grade": "faithful", "reason": "Definition 3.15 introduces the dualizing spectrum by explicitly defining it via the pushout square."}
+{"n": 17, "grade": "faithful", "reason": "Proposition 3.16 explicitly states \"1. I_T \u2208 Cond(Sp)_{\u2264 0}.\""}
+{"n": 18, "grade": "faithful", "reason": "Lemma 3.13 states \"Then B_S is an injective abelian group.\""}
+{"n": 19, "grade": "faithful", "reason": "Remark 4.12 observes that \"condensed duality gives H(Z^disc)^\u02c6 \u2243 HT, HT^\u02c6 \u2243 H(Z^disc).\""}
+{"n": 20, "grade": "faithful", "reason": "Remark 4.12 presents the computation \"H(Z^disc)^\u02c6 \u2243 HT, HT^\u02c6 \u2243 H(Z^disc).\""}
+GRADES-END

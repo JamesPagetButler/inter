@@ -1,0 +1,21 @@
+{"n": 1, "grade": "wrong-relation", "reason": "The subject is an object, so 'proves' is invalid because it requires a result as the subject."}
+{"n": 2, "grade": "wrong-relation", "reason": "The passage says 'The next operators appear in [Bar15]', indicating they are cited examples rather than a new definition introduced here."}
+{"n": 3, "grade": "wrong-relation", "reason": "The subject is an object, so 'proves' is invalid; it should be 'has-property'."}
+{"n": 4, "grade": "faithful", "reason": "...in order to obtain a well-defined path integral that can be stated as a random matrix model with action of the type..."}
+{"n": 5, "grade": "faithful", "reason": "Proposition 3.2 establishes the formula for 1/dim V Tr(D^{2t}) in terms of chord diagrams."}
+{"n": 6, "grade": "wrong-relation", "reason": "The subject is an object, so 'proves' is incorrect."}
+{"n": 7, "grade": "faithful", "reason": "Also (5.5) \\delta_{\\alpha\\mu\\nu\\rho} = ... (i.e. \\delta_{\\alpha\\mu\\nu\\rho} is the Levi-Civita symbol in absolute value)."}
+{"n": 8, "grade": "wrong-relation", "reason": "The text states 'Later, Glaser explored the phase transition of the fuzzy-sphere\u2013like (1,3) case', which is context, not a proof relation."}
+{"n": 9, "grade": "wrong-direction", "reason": "Proposition 4.1 is the result that establishes the formula, so the result should be the subject and the formula the object."}
+{"n": 10, "grade": "faithful", "reason": "...\\mathrm{Tr}\\hskip 1.0ptf(D)=N\\cdot\\mathrm{Tr}_{\\hskip-0.9ptN}\\hskip 1.0ptP+\\sum_{i}\\mathrm{Tr}_{\\hskip-0.9ptN}\\hskip 1.0pt\\Phi_{i}\\mathrm{Tr}_{\\hskip-0.9ptN}\\hskip 1.0pt\\Psi_{i}..."}
+{"n": 11, "grade": "faithful", "reason": "This notion incorporates familiar examples like fuzzy spheres and fuzzy tori."}
+{"n": 12, "grade": "wrong-direction", "reason": "Proposition 3.2 is the result establishing the formula, so it should be the subject, not the object."}
+{"n": 13, "grade": "wrong-relation", "reason": "The passage states 'The next operators appear in [Bar15]', which is an external citation of examples rather than a premise used in a proof."}
+{"n": 14, "grade": "wrong-relation", "reason": "The passage states 'The elements of Gilkey\u2019s theory are not used here', making this contextual background rather than a premise for a proof."}
+{"n": 15, "grade": "faithful", "reason": "We define the bi-trace functional... and the single trace functional \\mathfrak{s}_n(\\chi) via \\mathfrak{a}_n(\\chi) = N\\cdot\\mathfrak{s}_n(\\chi)+\\mathfrak{b}_n(\\chi)."}
+{"n": 16, "grade": "faithful", "reason": "This notion incorporates familiar examples like fuzzy spheres and fuzzy tori."}
+{"n": 17, "grade": "wrong-relation", "reason": "The subject is a mathematical quantity (an object), whereas 'depends-on' requires a result, statement, or construction as the head."}
+{"n": 18, "grade": "wrong-relation", "reason": "The text states 'a polynomial spectral action itself is already considered in [MvS14]', so it is not defined here."}
+{"n": 19, "grade": "faithful", "reason": "Corollary 3.4 establishes the provided formula with B standing for bi-trace terms with N-independent coefficients."}
+{"n": 20, "grade": "wrong-relation", "reason": "The citation provides context ('comes from a convergence requirement... as initiated in [BG16]') rather than acting as a premise in a proof."}
+GRADES-END

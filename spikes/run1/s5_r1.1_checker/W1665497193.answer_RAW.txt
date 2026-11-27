@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "wrong-relation", "reason": "The passage says 'This implies ... that the full Ricci tensor can be expressed in terms of \u03c4_2 and d\u03c4_2', which establishes a statement rather than invoking it as a premise for a proof, making it 'proves' rather than 'depends-on'."}
+{"n": 2, "grade": "faithful", "reason": "The text states 'Corollary 2 yields a simple proof' of the result by Cleyton and Ivanov, establishing it."}
+{"n": 3, "grade": "faithful", "reason": "The text in Remark 6 states 'Proposition 2 implies the 1982 result of Fern\u00e1ndez and Gray'."}
+{"n": 4, "grade": "faithful", "reason": "Corollary 2 states 'A closed G_2-structure \u03c3 ... has an Einstein underlying metric if and only if it satisfies d*\u03c3 = \u03c4_2 \u2227 \u03c3 where d\u03c4_2 = 3/14 |\u03c4_2|^2 \u03c3 + 1/2 *\u03c3(\u03c4_2 \u2227 \u03c4_2)'."}
+{"n": 5, "grade": "faithful", "reason": "Remark 13 states 'the tangent bundle of M splits as an orthogonal direct sum of two integrable subbundles ... P-leaves are calibrated by ... orient the P-leaves as associative submanifolds and the Q-leaves as coassociative submanifolds'."}
+{"n": 6, "grade": "wrong-relation", "reason": "The subject 'Proposition 2' is a result, while the object is a statement, so this should be 'proves' rather than 'equivalent-to', which requires both subject and object to be of the same kind."}
+{"n": 7, "grade": "wrong-relation", "reason": "The abstract states 'A formula is derived for the scalar curvature and Ricci curvature of a G_2-structure in terms of its torsion', which means the formula uses these mathematical objects as variables, but 'depends-on' requires the object to be a premise set (results, statements) invoked as a proof step."}
+{"n": 8, "grade": "faithful", "reason": "Definition 2 states 'A 3-form \u03c3 on M that takes values in \u039b^3_+(T^*M) will be said to be a definite 3-form on M. The set of definite 3-forms on M will be denoted \u03a9^3_+(M)'."}
+{"n": 9, "grade": "faithful", "reason": "Equation (4.38) in Remark 11 explicitly asserts the isomorphism 'V'_2(g_2) \u2243 V_{2,0} \u2295 V_{1,1} \u2295 V_{0,2}'."}
+{"n": 10, "grade": "faithful", "reason": "Proposition 2 states 'A G_2-structure ... is flat to first order if and only if its torsion forms all vanish, i.e., if and only if d\u03c3 = d*\u03c3\u03c3 = 0'."}
+{"n": 11, "grade": "faithful", "reason": "Corollary 1 states 'For any closed G_2-structure \u03c3 ... the scalar curvature of the underlying metric is non-positive'."}
+{"n": 12, "grade": "faithful", "reason": "Proposition 1 and equations (3.7) state 'there exist unique differential forms ... so that the following equations hold: d\u03c3 = \u03c4_0 *\u03c3 \u03c3 + 3 \u03c4_1 \u2227 \u03c3 + *\u03c3 \u03c4_3' and 'd *\u03c3 \u03c3 = 4 \u03c4_1 \u2227 *\u03c3 \u03c3 + \u03c4_2 \u2227 \u03c3'."}
+{"n": 13, "grade": "faithful", "reason": "Corollary 3 states 'If C < 1, then \u03c3 is also coclosed'."}
+{"n": 14, "grade": "faithful", "reason": "Remark 3 cites 'an observation due to Gray [9], these two necessary conditions are also sufficient: ... Thus, M admits a G_2-structure'."}
+{"n": 15, "grade": "faithful", "reason": "Remark 13 states 'the tangent bundle of M splits as an orthogonal direct sum of two integrable subbundles (4.56) TM = P \u2295 Q' with ranks 3 and 4."}
+{"n": 16, "grade": "faithful", "reason": "Remark 13 states 'It then follows from (4.54) that |\u03c4|^2 must be a constant. Of course, if |\u03c4|^2 = 0, then \u03c4 = 0 and \u03c3 is coclosed and hence g_\u03c3-parallel'."}
+{"n": 17, "grade": "wrong-locator", "reason": "The Abstract states 'this formula implies, in particular, that the scalar curvature of the underlying metric is nonpositive', which establishes the dependency for the statement, but it does not label it 'Corollary 1' there."}
+{"n": 18, "grade": "faithful", "reason": "Remark 13 states 'Combining this with (4.50) yields (4.54) \u0394_\u03c3(|\u03c4|^2) = 0'."}
+{"n": 19, "grade": "faithful", "reason": "Remark 13 states 'Consequently, any solution of (4.49) must satisfy ... (4.53) d(|\u03c4|^2) = 2/9 *\u03c3(\u03c4^3)'."}
+{"n": 20, "grade": "faithful", "reason": "Remark 12 states 'Their argument is rather involved, but Corollary 2 yields a simple proof', showing that the proof relies on Corollary 2."}
+GRADES-END
+```

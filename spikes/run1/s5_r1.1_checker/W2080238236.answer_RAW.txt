@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "faithful", "reason": "Eq. (3.79) asserts the equality between these two quantities."}
+{"n": 2, "grade": "not-in-paper", "reason": "Eq. (3.43) includes a factor of 1/2 in the formula, which the object omits, so the paper does not assert this exact equivalence."}
+{"n": 3, "grade": "wrong-locator", "reason": "The equation linking \\psi_{nl}(\\theta) to (-1)^{n-l}\\phi_{nl}(\\pi-\\theta) is labelled as Eq. (3.30), not Eq. (3.29)."}
+{"n": 4, "grade": "wrong-relation", "reason": "The subject 'heat kernel on S^N' is a mathematical object, not a result, so it cannot 'prove' a statement; this should be 'has-property' or 'equivalent-to'."}
+{"n": 5, "grade": "wrong-relation", "reason": "The subject 'pair (phi_nl, psi_nl)' is an object, not a result, so 'proves' is inapplicable."}
+{"n": 6, "grade": "wrong-relation", "reason": "The subject 'heat kernel on a general symmetric space U/K' is an object, not a result, so it cannot 'prove' a statement."}
+{"n": 7, "grade": "wrong-relation", "reason": "The subject 'heat kernel K(x,y,t) on U/K' is an object, so 'proves' is the wrong relation type."}
+{"n": 8, "grade": "not-in-paper", "reason": "The text does not mention the term 'Peter-Weyl-type expansion'."}
+{"n": 9, "grade": "wrong-relation", "reason": "The subject 'f_N(theta,t)' is an object, not a result, so 'proves' is incorrect."}
+{"n": 10, "grade": "wrong-relation", "reason": "The subject 'eigenspinors psi^{(s)}_{pm nlm} on S^N' is an object, so it cannot be the subject of 'proves'."}
+{"n": 11, "grade": "wrong-relation", "reason": "The subject 'eigenspinors psi^{(s)}_{pm nlm}' is an object, so 'proves' is the wrong relation."}
+{"n": 12, "grade": "wrong-relation", "reason": "The quantity c_l(\\lambda) is introduced earlier in Eq. (3.74), and Eq. (3.76) merely evaluates it, making this an 'equivalent-to' relation (sense: equal-value) rather than 'defines'."}
+{"n": 13, "grade": "wrong-relation", "reason": "The subject 'heat kernel on S^N' is an object, so 'proves' is not the correct relation type."}
+{"n": 14, "grade": "wrong-relation", "reason": "The subject 'heat kernel K on S^N' is an object, not a result, so it cannot be the subject of 'proves'."}
+{"n": 15, "grade": "wrong-relation", "reason": "The subject 'heat kernel on a general symmetric space U/K' is an object, not a result or construction, so 'depends-on' cannot be used here."}
+{"n": 16, "grade": "wrong-relation", "reason": "For 'uses-technique', the object must be a named method or framework, not specific eigenfunctions; moreover, the subject is not a result."}
+{"n": 17, "grade": "wrong-relation", "reason": "The subject 'degeneracy D_N(n) of eigenvalue n on S^N' is an object, so 'proves' is the wrong relation."}
+{"n": 18, "grade": "wrong-relation", "reason": "The subject 'heat kernel on H^N' is an object, not a result, so 'proves' is incorrect."}
+{"n": 19, "grade": "faithful", "reason": "The paper obtains the Dirac eigenspinors on H^N by the named technique of analytically continuing those on S^N, with the substitution given in Eq. (3.69)."}
+{"n": 20, "grade": "wrong-relation", "reason": "The subject 'partner function psi_nl(theta)' is an object, so it cannot 'prove' a statement."}
+GRADES-END
+```

@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"anomaly cancellation condition\"."}
+{"n": 2, "grade": "faithful", "reason": "Eq. (5): G_{N}={\\alpha_{GUT}\\alpha^{\\prime}\\over 4}."}
+{"n": 3, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"G-flux Bianchi identity\"."}
+{"n": 4, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"bound\" or \"Horava-Witten\"."}
+{"n": 5, "grade": "wrong-relation", "reason": "Eq. (75) uses an ordinary equality '=', not a ':=' or text like 'we call', so it does not meet the admissibility test for defines and is instead equivalent-to."}
+{"n": 6, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"Horava-Witten 11-dimensional action\"."}
+{"n": 7, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"supersymmetry condition\"."}
+{"n": 8, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"unbroken supersymmetry condition\"."}
+{"n": 9, "grade": "wrong-relation", "reason": "G_N is Newton's constant which has a prior meaning (as noted in the rubric), so it is equivalent-to, not defines."}
+{"n": 10, "grade": "not-in-paper", "reason": "The text contains no prose asserting that Eq. (73) depends on or is integrated from Eq. (72)."}
+{"n": 11, "grade": "not-in-paper", "reason": "The text contains no prose asserting that Eq. (47) depends on Eq. (42) and Eq. (46)."}
+{"n": 12, "grade": "not-in-paper", "reason": "The text contains no prose asserting that Eq. (83) depends on Eq. (74) and Eq. (81)."}
+{"n": 13, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"volume modulus\"."}
+{"n": 14, "grade": "wrong-relation", "reason": "Eq. (55) uses an ordinary equality '=', not a ':=' or text like 'we call', so it does not meet the admissibility test for defines and is instead equivalent-to."}
+{"n": 15, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"warped metric\"."}
+{"n": 16, "grade": "not-in-paper", "reason": "The text does not contain the phrase \"quantized self-dual G-flux\"."}
+{"n": 17, "grade": "wrong-relation", "reason": "gamma is already used in Eq. (34), so Eq. (44) provides an evaluation (equivalent-to), not a definition."}
+{"n": 18, "grade": "wrong-relation", "reason": "w is already used earlier such as in Eq. (62), so Eq. (77) provides an evaluation (equivalent-to), not a definition."}
+{"n": 19, "grade": "not-in-paper", "reason": "The text contains no prose asserting that Eq. (86) depends on a linear profile from earlier equations."}
+{"n": 20, "grade": "wrong-relation", "reason": "Eq. (75) uses an ordinary equality '=', not a ':=' or text like 'we call', so it does not meet the admissibility test for defines and is instead equivalent-to."}
+GRADES-END
+```

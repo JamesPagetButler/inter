@@ -1,0 +1,329 @@
+# Checker v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are checking claims extracted from one mathematics or physics paper. Below this prompt come two blocks, in order:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>"}`
+2. One line exactly: `GRADES-END`
+
+
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+**Field conventions (all types):**
+- A claim has `subject`, `relation_type`, `object`, `modality ∈ {stated, cited}`, `locator` and **`quote`** (a verbatim span, checked mechanically against the source).
+- **Modality is never a relation.** `cites` is rejected by the validator.
+- "Result" means a theorem, proposition, lemma, corollary, remark or claim, or the paper itself.
+- "Statement" means a mathematical assertion. "Object" means a mathematical object, structure, space, category or quantity. "Predicate" means a property phrase that can be asserted of an object.
+
+### 1. `proves`
+1. **Meaning:** the result *subject* establishes the statement *object*.
+2. **Kinds:** subject is a result; object is a statement.
+3. **Direction:** result → statement.
+4. **Admissibility test:** "Is the subject a result, and does the quoted passage say that this result establishes the object?" If the subject is an object rather than a result, use `has-property`.
+5. **Examples:**
+   - (a) W2015765968 c12: `Proposition 2.24 proves "moduli space C_3 ≅ (U(3)×U(3))\(GL_3(C)×GL_3(C))/U(3) has real dimension 10"`, Prop. 2.24, Eq. (2.40) [verified, RCA item 1 context].
+   - (b) W7160385925 c12 rewritten: `Proposition 0.2.1 proves "Z[S] ≅ ⋃_n lim_i Z[S_i]_{≤n}"` [verified, RCA item 6].
+   - **Near-miss:** RCA item 10: `Z[S] proves "quasiseparated…"`. The subject is an object, so this is `has-property` [verified].
+6. **Boundary:** with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+### 2. `has-property`
+1. **Meaning:** the paper asserts that the object *subject* has the property *object*.
+2. **Kinds:** subject is an object; object is a **predicate phrase**, never a full statement and never another object.
+3. **Direction:** object → predicate.
+4. **Admissibility test:** "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?" The locator names the asserting result or sentence.
+5. **Examples:**
+   - (a) RCA item 10: `Z[S] has-property "quasiseparated; comes from a compactly generated weak Hausdorff space"`, Remark 0.2.2 [verified].
+   - (b) RCA item 9: `condensed abelian groups has-property "form an abelian category"`, §0.1 [verified].
+   - **Near-miss:** `Z[S] has-property "Z[S] ≅ ⋃_n …"`. An isomorphism to a named object is `equivalent-to`, not a property.
+6. **Boundary:** with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+### 3. `defines`
+1. **Meaning:** the paper introduces the term *object* at the locator.
+2. **Kinds:** subject is the defining statement (e.g. "Definition 1.6") or the defined term; object is the term or its defining content.
+3. **Direction:** definition → term.
+4. **Admissibility test:** "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?" A formula or identification for a quantity already named is not `defines`.
+5. **Examples:**
+   - (a) RCA item 4: `Definition 1.6 defines "uncompleted analytic ring (A,M)"`, cited [Sch19] [verified].
+   - (b) RCA item 3, rewritten with a non-degenerate subject: `[Man22] defines "descendable maps of analytic rings"`, cited, Remark 0.6 [verified].
+   - **Near-misses** [verified]:
+     - RCA item 14: `c_l(λ) defines "…Eq. (3.76)"`. c_l(λ) is introduced in Eq. (3.74), and Eq. (3.76) evaluates it, so this is `equivalent-to` (sense: equal-value).
+     - RCA item 15: G_N, Newton's constant, has a prior meaning.
+6. **Boundary:** with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+### 4. `equivalent-to` (+ `sense`)
+1. **Meaning:** the paper asserts that subject and object are the same, in the stated sense.
+2. **Kinds:** both are objects, or both are statements, of the same kind. `sense ∈ {iff, isomorphic, equal-value, equivalent-category}`. `sense` is required whenever it can be read from the passage, and otherwise left out.
+3. **Direction:** symmetric. The validator stores it in canonical order.
+4. **Admissibility test:** "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?"
+5. **Examples:**
+   - (a) W1641073798 c17: `Ω̂ for self-dual Ω, represented by A, equivalent-to √det A · A⁻¹` (sense: equal-value), Prop. 12. Quote: "If A ∈ Sym²S* represents a self-dual 3-form Ω then Ω̂ = √det A A⁻¹ ∈ Sym²S" [verified].
+   - (b) W1630303706 c2: `restriction of the Pin(h) and Pin(−h) extensions to Spin(h) equivalent-to "the extension given by (5)"` (sense: isomorphic), Prop. 1. Quote: "By restriction to Spin(h) each of these extensions reduces to the one given by (5)." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) …` "⊂" C⊕H⊕H⊕M_3(C). That's inclusion, not equivalence, so `subobject-of` [verified].
+6. **Boundary:** with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+### 5. `depends-on` (n-ary: head + premise set)
+1. **Meaning:** the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+2. **Kinds:** the head is a result, statement or construction. The tail is a **set of ≥ 1** premises, each a result, statement, construction, hypothesis, equation label or external citation. Each tail member is typed `internal` (a label in this paper) or `external` (a `\cite` or a named result).
+3. **Direction:** head ← tail.
+   - **AND** inside one edge: all tail members are needed jointly.
+   - **OR** across edges with the same head: alternative proofs. Each edge carries a `route` id.
+   - A binary claim is a tail of size 1.
+4. **Admissibility test, per tail member:** "Is this member invoked *as a step* of this proof?"
+   - Not a premise: a comparison ("cf."), a technique reuse ("as in the proof of …", which is `uses-technique`), or context ("this generalises …", which is `generalises`).
+   - A consequence of the head is never a premise.
+   - The edge must quote the sentence(s) that invoke each premise.
+5. **Examples:**
+   - (a) W4412210893 c3: `theory of solid abelian groups ← {Nöbeling's theorem}`, Abstract. Quote: "Nöbeling's theorem … is a crucial ingredient in the theory of solid abelian groups; without it one cannot give any nonzero examples of solid abelian groups." [verified]
+   - (b) RCA item 16, in the correct direction: `"A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}` [verified].
+   - **Near-miss:** RCA item 16 as extracted: `AC G_2-instanton ← {"A_∞ is NK instanton"}`. That's a consequence, not a premise [verified].
+   - Joint/alternative cues:
+     - "by Lemmas 2 and 3", "combining", "together with" → **joint**;
+     - "alternatively", "another proof", "can also be deduced from" → a **new route**;
+     - several refs in one `proof` environment with no cue → joint by default.
+6. **Boundary:**
+   - With `uses-technique`, the object is a method, not a result.
+   - With citation, a reference is a premise only if it's invoked as a step.
+   - **Closure:** an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+   - Tail recall is measured against all in-proof refs (D11a seed), which are classified premise / comparison / technique / context.
+
+### 6. `generalises` (stored direction; `specialises` is rewritten)
+1. **Meaning:** *subject* is the more general one, and *object* is a special case of it.
+2. **Kinds:** both are results, theories or constructions.
+3. **Direction:** general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+4. **Admissibility test:** "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?" Inclusion of a sub-object is not specialisation.
+5. **Examples:**
+   - (a) RCA item 5: `Theorem 0.3 generalises Theorem 0.1 (Mathew)`, abstract: "we generalize the result of Mathew" [verified].
+   - (b) W1778604937 c3, rewritten: `Theorem 0.1 generalises Corollary 0.2`. Quote: "Taking k=2 and E₀=Ar(C) we obtain the following." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) specialises C⊕H⊕H⊕M_3(C)`. That's a subalgebra inclusion, so `subobject-of` [verified].
+6. **Boundary:** with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+### 7. `subobject-of`
+1. **Meaning:** *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+2. **Kinds:** both are objects of the same kind.
+3. **Direction:** part → whole.
+4. **Admissibility test:** "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?"
+5. **Examples:**
+   - (a) RCA item 2, re-typed: `C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C)`, Eq. (1.2) [verified].
+   - (b) W7160385925, Theorem 0.2.5: `Solid subobject-of Cond(Ab)` (full subcategory, "as a subcategory of the category Cond(Ab)") [verified, packet text].
+   - **Near-miss:** an equivalence of categories is `equivalent-to`, not inclusion.
+6. **Boundary:** with `generalises` and `equivalent-to`, see above.
+
+### 8. `counterexample-to`
+1. **Meaning:** *subject* (an example or object) violates the statement *object*, as the paper shows.
+2. **Kinds:** subject is an object or example; object is a statement or claim.
+3. **Direction:** example → statement it refutes.
+4. **Admissibility test:** "Is the subject the *example*, and does the passage show the object fails for it?"
+5. **Examples:**
+   - (a) W2074702261, re-typed from c26: `example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"`. Quote: the example shows they "do not suffice to entail the conclusion of Lemma 5.1" [verified]. (The claim as extracted, `Remark 5.5 counterexample-to "regularity of …"`, is garbled. What Remark 5.5 asserts is a property of example (43), "regularity fails", which is `has-property`.)
+   - (b) W1936971149 c39: `Ḟ(n) ∖ dⁱF(n−1) (0<i<n) counterexample-to "every subobject weakly equivalent to F(n) is a cover"`, Remark 10.2. Quote: "…is weakly equivalent to F(n) in the Segal space model category structure, but is not a cover." [verified]
+   - **Near-miss:** W1501965422 c25 as extracted: `naive descent for derived categories counterexample-to BG_m`. The direction is reversed. Quote, §0.2: naive descent "does not hold anymore, since otherwise the classifying stack BG_m over an algebraically closed field would have finite cohomological dimension, which is false." So BG_m is the example and naive descent is the statement that fails [verified].
+6. **Boundary:** with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+### 9. `conjectures`
+1. **Meaning:** the paper (or the named source) asserts *object* without proof, as expected to hold.
+2. **Kinds:** subject is the paper, a remark, or a named conjecture; object is a statement.
+3. **Direction:** source → conjectured statement.
+4. **Admissibility test:** "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?"
+5. **Examples:**
+   - (a) W1936971149 c33: `Remark 8.13 conjectures "Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M"`. Quote: "It seems that … the statements of (8.11) and (8.12) should hold for any 'reasonable' model category" [verified; the extractor called 8.12 a theorem, but it is a corollary].
+   - (b) W2964288547 c15, subject re-typed: `Remark 5.10 conjectures "L(r²t;1,1+rt,1+2rt,1+4rt) and L(r²t;1,1−rt,1−2rt,1−4rt) are Dirac isospectral, r odd, t ≥ 1"`. Quote: "The computations … hint at Theorem 5.6 being generalizable to the pairs …" [verified; the remark doesn't restate Theorem 5.6's r ≥ 7].
+   - **Near-miss (form only):** W1936971149 c27 as extracted: `Remark 8.4 conjectures "generalisation of Theorem 8.3 to arbitrary closed model categories"`. The content is right ("This result (8.3) presumably generalizes to an arbitrary closed model category"), but the object names a *kind* of result, not the statement. Fix: "Theorem 8.3 holds for any closed model category, with map_V the Dwyer–Kan function complexes" [verified].
+6. **Boundary:** with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+### 10. `uses-technique` (low weight)
+1. **Meaning:** the result or construction *subject* is obtained by the named method *object*.
+2. **Kinds:** subject is a result or construction; object is a **named method or framework**, not a specific result.
+3. **Direction:** user → method.
+4. **Admissibility test:** "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?"
+5. **Examples:**
+   - (a) W1501965422 c24: `enhancement of derived categories uses-technique stable ∞-categories (Lurie)`. Quote: "Instead of the usual unbounded derived category, we work with its enhancement, which is a stable ∞-category in the sense of Lurie" [verified].
+   - (b) W1501965422 c23: `six operations construction uses-technique ∞-categorical (co)homological descent`. Quote, Abstract: "We enhance derived categories … to the level of ∞-categories and introduce ∞-categorical (co)homological descent." [verified]
+   - **Near-miss:** W1663788542 c19 as extracted: `Proposition 2.14 uses-technique Dold–Kan correspondence (Theorem 2.8)`. Prop. 2.14's statement is phrased through the cited Theorem 2.8 ("The tower associated (via the Dold-Kan correspondence) …"), a specific result, so it's `depends-on` [verified]. **Rule:** a named method or framework is `uses-technique`; a specific cited result, even one named after a method, is `depends-on`.
+6. **Boundary:** with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
+
+**Settled at signing:**
+- (i) A **remark** counts as a result for `proves` when it proves something (papers do prove things in remarks). A remark that only *hints* is `conjectures`, as Remark 5.10 and Remark 8.13 show.
+- (ii) The `has-property` dumping-ground threshold stays **open by design**. It's measured in round 1.1/1.2 and set from data in the pre-reg, not guessed. Until then it's a review flag only, never a gate.
+- (iii) Every example and near-miss is verified against the paper.
+
+
+## Paper text
+
+This article consists of some loosely related remarks about the geometry of G_2-structures on 7-manifolds and is partly based on old unpublished joint work with two other people: F. Reese Harvey and Steven Altschuler. Much of this work has since been subsumed in the work of Hitchin \cite{MR02m:53070} and Joyce \cite{MR01k:53093}. I am making it available now mainly because of interest expressed by
+others in seeing these results written up since they do not seem to have all made it into the literature. A formula is derived for the scalar curvature and Ricci curvature of a G_2-structure in terms of its torsion. When the fundamental 3-form of the G_2-structure is closed, this formula implies, in particular, that the scalar curvature of the underlying metric is nonpositive and vanishes if and
+only if the structure is torsion-free. This version contains some new results on the pinching of Ricci curvature for metrics associated to closed G_2-structures. Some formulae are derived for closed solutions of the Laplacian flow that specify how various related quantities, such as the torsion and the metric, evolve with the flow. These may be useful in studying convergence or long-time existence
+for given initial data.
+
+1. Introduction This brief article consists of a collection of remarks on the geometry of G 2 {{\rm G}_{2}} -structures on 7 7 -manifolds, some of which are based on old unpublished joint work carried out on separate occasions with two other people: F. Reese Harvey and Steven Altschuler. The work with Reese Harvey (recounted in § 5 ) concerned techniques for calculating various quantities
+associated to a G 2 {\rm G}_{2} -structure, possibly with torsion, and was carried out intermittently during the period 1988 through 1994. The work with Steven Altschuler (recounted in § 6 ) concerned the geometry of a natural Laplacian flow for G 2 {\rm G}_{2} -structures and was carried out in 1992. The main reason for making these remarks available now is that some of these formulae and results
+do not seem to have appeared yet in the literature and some people have expressed an interest in learning about them.
+
+Definition 1 (The group G 2 {\rm G}_{2} ): (2.2) G 2 = { g ∈ GL ( 7 , ℝ ) g ∗ ( ϕ ) = ϕ } . {{\rm G}_{2}}=\left\{\ g\in\operatorname{GL}(7,{\mathbb{R}})\ \vrule\ g^{*}(\phi)=\phi\ \right\}.
+
+Remark 1 (The vector cross product definition of G 2 {\rm G}_{2} ): Given a vector space V V over ℝ {\mathbb{R}} endowed with a positive definite inner product ⟨ , ⟩ : V × V → ℝ \langle,\rangle:V\times V\to{\mathbb{R}} , a ( 2 2 -fold) vector cross product on ( V , ⟨ , ⟩ ) \bigl(V,\langle,\rangle\bigr) is a skew-symmetric bilinear pairing × : V × V → V \times:V\times V\to V that satisfies (2.34) ⟨
+v 1 × v 2 , v 1 ⟩ = 0 and | v 1 × v 2 | 2 = | v 1 | 2 ​ | v 2 | 2 − ⟨ v 1 , v 2 ⟩ 2 \langle v_{1}\times v_{2},v_{1}\rangle=0\qquad\text{and}\qquad|v_{1}\times v_{2}|^{2}=|v_{1}|^{2}\,|v_{2}|^{2}-\langle v_{1},v_{2}\rangle^{2} for all v 1 , v 2 ∈ V v_{1},v_{2}\in V . It can be shown that the GL ⁡ ( 7 , ℝ ) \operatorname{GL}(7,{\mathbb{R}}) -stabilizer of the vector cross product × ϕ \times_{\phi}
+is equal to G 2 {\rm G}_{2} . Hence one could take × ϕ : ℝ 7 × ℝ 7 → ℝ 7 \times_{\phi}:{\mathbb{R}}^{7}\times{\mathbb{R}}^{7}\to{\mathbb{R}}^{7} as the algebraic structure defining G 2 {\rm G}_{2} . In fact, this is what Gray did in his work on G 2 {\rm G}_{2} -structures. However, I find that the 3 3 -form formulation is more congenial for computations, so vector cross products will not play any
+significant role in this article.
+
+Definition 2 (Definite 3 3 -forms on manifolds): A 3 3 -form σ \sigma on M M that takes values in Λ + 3 ​ ( T ∗ ​ M ) \Lambda^{3}_{+}(T^{*}M) will be said to be a definite 3 3 -form on M M . The set of definite 3 3 -forms on M M will be denoted Ω + 3 ​ ( M ) \Omega^{3}_{+}(M) .
+
+Remark 2 (Alternative terminologies): Some authors use ‘almost G 2 {\rm G}_{2} -structure’ to refer to what I am calling a G 2 {\rm G}_{2} -structure in this article. Apparently, this practice stems from an imagined analogy with the distinction between ‘almost complex structure’ and ‘complex structure’. However, for a subgroup G ⊂ GL ⁡ ( n , ℝ ) G\subset\operatorname{GL}(n,{\mathbb{R}}) , the use
+of ‘ G G -structure’ on an n n -manifold M M to mean a G G -subbundle of the GL ⁡ ( n , ℝ ) \operatorname{GL}(n,{\mathbb{R}}) -bundle of frames (or coframes) on M M is well established. It seems unwise to tamper with this usage, especially since ‘almost G G -structure’ suggests a structure that lacks some property of actual G G -structures. Making an exception for the case G = G 2 G={{\rm G}_{2}}
+merely invites confusion. This use of ‘ G G -structure’ does not conflict with the ‘almost complex structure’ vs. ‘complex structure’ usage since a complex structure on a 2 ​ n 2n -manifold is not simply a GL ⁡ ( n , ℂ ) \operatorname{GL}(n,{\mathbb{C}}) -structure, but is (by the Newlander-Nirenberg theorem, equivalent to) a GL ⁡ ( n , ℂ ) \operatorname{GL}(n,{\mathbb{C}}) -structure with an
+assumed integrability property, whereas an ‘almost complex structure’ actually is (equivalent to) a GL ⁡ ( n , ℂ ) \operatorname{GL}(n,{\mathbb{C}}) -structure, not an ‘almost GL ⁡ ( n , ℂ ) \operatorname{GL}(n,{\mathbb{C}}) -structure’. Some authors speak of an ‘integrable G 2 {\rm G}_{2} -structure’, meaning a G 2 {\rm G}_{2} -structure σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) satisfying
+some differential equations, such as d ​ σ = 0 \mathrm{d}\sigma=0 (the exact differential equation intended varies with the author). Again, this usage appears to stem from an imagined analogy with a symplectic structure, which is defined by a nondegenerate 2 2 -form ω \omega that is closed, i.e., d ​ ω = 0 \mathrm{d}\omega=0 . In the symplectic case, Darboux’ Theorem says that ω \omega is, indeed,
+locally equivalent to the flat model, i.e., is ‘integrable’ in the standard terminology of the theory of Lie pseudo-groups. (In a similar way, one speaks of ‘integrable almost complex structures’.) This usage of ‘integrable’ for G 2 {\rm G}_{2} -structures also seems ill-advised to me since, as will be seen below, no first order condition on a G 2 {\rm G}_{2} -structure implies that it is locally
+equivalent to the flat model (which is the only interpretation of ‘integrable’ in this context that would be consistent with the established usage in the theory of Lie pseudo-groups). Moreover, this encourages the confusing shift of terminology in which ‘ G 2 {\rm G}_{2} -structure’ is used to mean ‘integrable G 2 {\rm G}_{2} -structure’ and ‘almost G 2 {\rm G}_{2} -structure’ is used to mean an
+actual G 2 {\rm G}_{2} -structure. For this reason, none of the modifiers ‘integrable’, ‘almost’, ‘nearly’, or their ilk will be used in this article when referring to G 2 {\rm G}_{2} -structures. However, since it seems to be harmless, the terminology ‘ G 2 {\rm G}_{2} -manifold’ will sometimes be used to denote a manifold endowed with a G 2 {\rm G}_{2} -structure that is flat to first order
+(i.e., ‘torsion-free’ in the usual terminology).
+
+Definition 3 (Associated metric, orientation, and vector cross product): For any σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) , denote by g σ g_{\sigma} , ∗ σ *_{\sigma} , and × σ \times_{\sigma} the metric, Hodge star operator, and vector cross product on M M that are canonically associated to σ \sigma . When it is needed, the oriented orthonormal frame bundle of g σ g_{\sigma} with this
+orientation will be denoted 𝖥 σ = F σ ⋅ SO ⁡ ( 7 ) \mathsf{F}_{\sigma}=F_{\sigma}\cdot\operatorname{SO}(7) .
+
+Remark 3 (Existence of G 2 {\rm G}_{2} -structures): Because G 2 {\rm G}_{2} is both connected and simply connected, a connected 7 7 -manifold M M can support a G 2 {\rm G}_{2} -structure only if it is both orientable and spinnable, i.e., if the first two Stiefel-Whitney classes of M M vanish. Conversely, by an observation due to Gray [ 9 ] , these two necessary conditions are also sufficient:
+Since G 2 {{\rm G}_{2}} is simply connected, it is the image under the standard double covering map ρ : Spin ⁡ ( 7 ) → SO ⁡ ( 7 ) \rho:\operatorname{Spin}(7)\to\operatorname{SO}(7) of a unique subgroup of Spin ⁡ ( 7 ) \operatorname{Spin}(7) , which, by abuse of language, will also be called G 2 {{\rm G}_{2}} . Now, Spin ⁡ ( 7 ) \operatorname{Spin}(7) has a faithful representation on ℝ 8
+{\mathbb{R}}^{8} and hence can be regarded as a subgroup of SO ⁡ ( 8 ) \operatorname{SO}(8) . The restriction of this representation to G 2 {{\rm G}_{2}} must also be faithful and hence, for dimension reasons, it must be isomorphic to 𝖵 0 , 0 ⊕ 𝖵 1 , 0 \mathsf{V}_{0,0}\oplus\mathsf{V}_{1,0} . In particular, G 2 {{\rm G}_{2}} fixes a vector in ℝ 8 {\mathbb{R}}^{8} and acts transitively on the unit
+6 6 -sphere orthogonal to this vector. Consequently, Spin ⁡ ( 7 ) \operatorname{Spin}(7) must act transitively on the unit 7 7 -sphere in ℝ 8 {\mathbb{R}}^{8} with stabilizer subgroup G 2 {{\rm G}_{2}} . Now, suppose M 7 M^{7} to be orientable and spinnable. Choose a Riemannian metric g g , an orientation, and a spin structure 𝖥 ~ → M \tilde{\mathsf{F}}\to M , i.e., a spin double cover of the SO ⁡
+( 7 ) \operatorname{SO}(7) -bundle 𝖥 → M \mathsf{F}\to M consisting of oriented, g g -orthonormal coframes on M M . The associated spinor bundle 𝕊 = 𝖥 ~ × Spin ⁡ ( 7 ) ℝ 8 {\mathbb{S}}=\tilde{\mathsf{F}}\times_{\operatorname{Spin}(7)}{\mathbb{R}}^{8} is a vector bundle of rank 8 8 over the 7 7 -manifold M M and therefore has a nonvanishing unit section s : M → 𝕊 s:M\to{\mathbb{S}} . This allows
+one to reduce the structure group of 𝖥 ~ \tilde{\mathsf{F}} (and hence 𝖥 \mathsf{F} ) from Spin ⁡ ( 7 ) \operatorname{Spin}(7) to G 2 {{\rm G}_{2}} (since, by the previous paragraph, this is, up to conjugacy, the Spin ⁡ ( 7 ) \operatorname{Spin}(7) -stablizer of any nonzero vector in ℝ 8 {\mathbb{R}}^{8} ). Thus, M M admits a G 2 {{\rm G}_{2}} -structure whose associated metric and orientation are
+the chosen ones.
+
+Remark 4 ( G 2 {\rm G}_{2} -structures with the same associated metric and orientation): These type decompositions have many uses. For example, they furnish a description of all of the G 2 {\rm G}_{2} -structures that have the same associated metric and orientation as a given σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) : Let a a and α \alpha be a function and a 1 1 -form, respectively, on M M
+with a 2 + | α | σ 2 = 1 a^{2}+|\alpha|^{2}_{\sigma}=1 . Then the 3 3 -form (3.6) σ ~ = ( a 2 − | α | σ 2 ) ​ σ + 2 ​ a ​ ∗ σ ​ ( α ∧ σ ) + 𝗂 ⁡ ( α ∘ α ) \tilde{\sigma}=\bigl(a^{2}-|\alpha|^{2}_{\sigma})\,\sigma+2a\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu\bigl(\alpha{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma)+\mathsf{i}\bigl(\alpha\circ\alpha) is definite and has the same associated metric and orientation as σ \sigma . (This pointwise fact is most easily proved by checking it in the case σ = ϕ \sigma=\phi and ( a , α ) = ( c , s ​ e 1 ) (a,\alpha)=(c,s\,e^{1})
+where c 2 + s 2 = 1 c^{2}+s^{2}=1 and then using the fact that G 2 {\rm G}_{2} acts transitively on the unit 6 6 -sphere in ℝ 7 {\mathbb{R}}^{7} to reduce to this case.) Moreover, any definite 3 3 -form on M M that has g σ g_{\sigma} and ∗ σ \mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu as associated metric and orientation is of the form ( 3.6 ) for some pair ( a , α ) (a,\alpha)
+satisfying a 2 + | α | σ 2 = 1 a^{2}+|\alpha|^{2}_{\sigma}=1 , unique up to replacement by ( − a , − α ) (-a,-\alpha) . (If H 1 ​ ( M , ℤ 2 ) ≠ 0 H^{1}(M,{\mathbb{Z}}_{2})\not=0 , the pair ( a , α ) (a,\alpha) might only be defined up to sign.) Of course, some such formula was expected, since SO ⁡ ( 7 ) / G 2 ≃ ℝ ​ ℙ 7 \operatorname{SO}(7)/{{\rm G}_{2}}\simeq{\mathbb{R}}{\mathbb{P}}^{7} (a
+consequence of the result Spin ⁡ ( 7 ) / G 2 ≃ S 7 \operatorname{Spin}(7)/{{\rm G}_{2}}\simeq S^{7} discussed in Remark 3 ). What ( 3.6 ) displays is a concrete isomorphism between the bundle 𝖥 σ / G 2 \mathsf{F}_{\sigma}/{{\rm G}_{2}} and the ℝ ​ ℙ 7 {\mathbb{R}}{\mathbb{P}}^{7} -bundle ℙ ⁡ ( ℝ ⊕ T ∗ ​ M ) {\mathbb{P}}\bigl({\mathbb{R}}\oplus T^{*}M\bigr) over M M .
+
+Proposition 1 (The torsion forms): For any G 2 {\rm G}_{2} -structure σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) , there exist unique differential forms τ 0 ∈ Ω 0 ​ ( M ) \tau_{0}\in\Omega^{0}(M) , τ 1 ∈ Ω 1 ​ ( M ) \tau_{1}\in\Omega^{1}(M) , τ 2 ∈ Ω 14 2 ​ ( M , σ ) \tau_{2}\in\Omega^{2}_{14}(M,\sigma) , and τ 3 ∈ Ω 27 3 ​ ( M , σ ) \tau_{3}\in\Omega^{3}_{27}(M,\sigma) so that the following
+equations hold: (3.7) d ​ σ \displaystyle\mathrm{d}\,\sigma = τ 0 ​ ∗ σ ​ σ + 3 ​ τ 1 ∧ σ + ∗ σ ​ τ 3 , \displaystyle=\tau_{0}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma+3\,\tau_{1}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\tau_{3}\,, d ​ ∗ σ
+​ σ \displaystyle\mathrm{d}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma = 4 ​ τ 1 ∧ ∗ σ ​ σ + τ 2 ∧ σ . \displaystyle=\qquad 4\,\tau_{1}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu\sigma+\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma\,.
+
+Definition 4 (The torsion forms): For a definite 3 3 -form σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) , the quadruple of forms ( τ 0 , τ 1 , τ 2 , τ 3 ) (\tau_{0},\tau_{1},\tau_{2},\tau_{3}) defined by ( 3.7 ) will be referred to as the intrinsic torsion forms of σ \sigma .
+
+Remark 5 (General intrinsic torsion): The existence of the identity ( 3.8 ) may seem surprising at first, but the existence of such an identity can be understood by general considerations. For any subgroup G ⊂ SO ⁡ ( n ) G\subset\operatorname{SO}(n) , the first order invariants (usually called the ‘intrinsic torsion’) of a G G -structure F F on an n n -manifold M M take values in a bundle over M M
+associated to the natural G G -representation on ( 𝔰 ​ 𝔬 ( n ) / 𝔤 ) ⊗ ℝ n (\operatorname{\mathfrak{so}}(n)/\operatorname{\mathfrak{g}})\otimes{\mathbb{R}}^{n} . (See § 4.2 below for a further explication of this fact.) When the first order invariants of a given G G -structure vanish, it is said to be ‘ 1 1 -flat’ or ‘flat to first order’. For more discussion of this notion, see [ 2 ] .
+
+Proposition 2 ( 1 1 -flatness of G 2 {\rm G}_{2} -structures): A G 2 {\rm G}_{2} -structure σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) is flat to first order if and only if its torsion forms all vanish, i.e., if and only if d ​ σ = d ​ ∗ σ ​ σ = 0 \mathrm{d}\sigma=\mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma=0 .
+
+Remark 6 (Fernández and Gray’s theorem on vector cross products): Proposition 2 implies the 1982 result of Fernández and Gray [ 6 ] that a vector cross product × : T ​ M × T ​ M → T ​ M \times:TM{\times}TM\to TM that is compatible with a Riemannian metric g g on M M is g g -parallel if and only if the corresponding 3 3 -form is closed and coclosed (with respect to g g ). The essential difference
+between Proposition 2 and their result is that they assume a specific metric g g and vector cross product to be given, whereas Proposition 2 starts with a definite 3 3 -form σ \sigma and constructs a specific metric associated to σ \sigma .
+
+Remark 7 (Canonical connections): The use of the term ‘natural’ with regard to the connection ` on the G G -structure F F should not be construed to mean that this is the only ‘canonical’ connection on M M that is compatible with F F . In many cases, this is only one of a family of possible ‘canonical’ connections that can be defined in terms of the first-order invariants of the G G -structure F F
+and that are preserved under equivalence of G G -structures. For example, if the G G -modules V 1 ​ ( 𝔤 ) V_{1}(\operatorname{\mathfrak{g}}) and 𝔤 ⊗ ℝ n \operatorname{\mathfrak{g}}\otimes{\mathbb{R}}^{n} have common constituents, so that the space Hom G ⁡ ( V 1 ​ ( 𝔤 ) , 𝔤 ⊗ ℝ n ) \Hom^{G}\bigl(V_{1}(\operatorname{\mathfrak{g}}),\operatorname{\mathfrak{g}}\otimes{\mathbb{R}}^{n}\bigr) of G G
+-equivariant homomorphisms between the two spaces has dimension r > 0 r>0 , there will be an r r -parameter family of ways of modifying ` , by adding a 𝔤 \operatorname{\mathfrak{g}} -valued 1 1 -form whose coefficients are linear in the torsion functions, in such a way that the resulting modification defines a connection on M M compatible with the G G -structure F F . Each element in this r r
+-parameter family of connections can be regarded as canonical in the sense that equivalence of G G -structures will induce isomorphisms between the corresponding connections in the r r -parameter family. Of course, there is no a priori reason to consider only connection modifications that are linear in the torsion functions; for example, any G G -equivariant polynomial mapping V 1 ​ ( 𝔤 ) → 𝔤 ⊗ ℝ
+n V_{1}(\operatorname{\mathfrak{g}})\to\operatorname{\mathfrak{g}}\otimes{\mathbb{R}}^{n} could be used to define such a modification of ` . However, these ‘higher’ modifications do not often arise in practice. Depending on the intended use, it could well be that one of these other connections (rather than the one being called ‘natural’ in the present article) is better suited for expressing
+identities of one kind or another.
+
+Remark 8 (Canonical G 2 {{\rm G}_{2}} -connections): Since 𝔤 2 ⊗ 𝖵 1 , 0 = 𝖵 1 , 0 ⊕ 𝖵 2 , 0 ⊕ 𝖵 1 , 1 \operatorname{\mathfrak{g}}_{2}\otimes\mathsf{V}_{1,0}=\mathsf{V}_{1,0}\oplus\mathsf{V}_{2,0}\oplus\mathsf{V}_{1,1} shares two G 2 {{\rm G}_{2}} -irreducible modules with V 1 ​ ( 𝔤 ) V_{1}(\operatorname{\mathfrak{g}}) , it follows from Remark 7 that there is actually a 2 2 -parameter family of
+canonical connections associated to any G 2 {{\rm G}_{2}} -structure σ \sigma . Each element in this family is compatible with σ \sigma (in the sense that σ \sigma is parallel under the corresponding parallel translation). Since the common constituents 𝖵 1 , 0 \mathsf{V}_{1,0} and 𝖵 2 , 0 \mathsf{V}_{2,0} correspond to the torsion forms τ 1 \tau_{1} and τ 3 \tau_{3} , respectively, it follows that
+the entire two-parameter family of canonical connections collapses to a single connection if and only if the G 2 {{\rm G}_{2}} -structure σ \sigma satisfies τ 1 = τ 3 = 0 \tau_{1}=\tau_{3}=0 . In this case, differentiating the equations ( 3.7 ) shows that τ 0 ​ τ 2 = 0 \tau_{0}\tau_{2}=0 and d ​ τ 0 = 0 \mathrm{d}\tau_{0}=0 . In particular, when M M is connected, it follows that τ 0 \tau_{0} is
+constant. If τ 0 = 0 \tau_{0}=0 , then the G 2 {{\rm G}_{2}} -structure is closed. If τ 0 ≠ 0 \tau_{0}\not=0 , then τ 2 = 0 \tau_{2}=0 and one has the equation d ​ σ = τ 0 ​ ∗ σ ​ σ \mathrm{d}\sigma=\tau_{0}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma , which is the defining equation for the so-called ‘nearly G 2 {{\rm G}_{2}} -manifolds’. Thus, the family of canonical G 2 {{\rm
+G}_{2}} -connections associated to a G 2 {{\rm G}_{2}} -structure σ \sigma collapses to a single G 2 {{\rm G}_{2}} -connection if and only if either σ \sigma is closed or it defines a nearly G 2 {{\rm G}_{2}} -manifold.
+
+Remark 9 (Covariant differentials): The decisive advantage of using the forms D ​ ø D\hbox{\teneur\char 28\relax} and D ​ ` D\hbox{\teneur\char 18\relax} to express the curvature tensor is that these forms do not contain all of the information about the second order invariants of the underlying G 2 {\rm G}_{2} -structure σ \sigma although they do contain enough information to recover the Riemann
+curvature tensor of the underlying metric.
+
+Remark 10 (General identities): It is perhaps worth remarking on why the identities ( 4.28 ) and ( 4.30 ) could be expected to have the form that they do. In the first place, one knows that the scalar curvature must be expressible in a G 2 {\rm G}_{2} -invariant manner as a sum of a linear expression in the second order invariants, i.e., a section of a vector bundle modeled on V 2 ​ ( 𝔤 2 )
+V_{2}(\operatorname{\mathfrak{g}}_{2}) , and an expression in the first order invariants, i.e., the torsion forms, that is at most quadratic. A glance at ( 4.7 ) shows that there is only one trivial summand in the representation V 2 ​ ( 𝔤 2 ) V_{2}(\operatorname{\mathfrak{g}}_{2}) and hence there is essentially only one possible second order term up to a universal constant multiple. Since δ ​ τ 1
+\delta\tau_{1} is a scalar second order invariant, it must represent this copy of 𝖵 0 , 0 \mathsf{V}_{0,0} in V 2 ​ ( 𝔤 2 ) V_{2}(\operatorname{\mathfrak{g}}_{2}) . As for the first order terms, since V 1 ​ ( 𝔤 2 ) V_{1}(\operatorname{\mathfrak{g}}_{2}) consists of four mutually inequivalent G 2 {\rm G}_{2} -modules, the space of G 2 {\rm G}_{2} -invariant quadratic forms on this space has
+dimension 4 4 and must be represented by the square norms of the four torsion forms. Thus, a formula of the form ( 4.28 ) was inevitable; it was just a matter of determining the numerical coefficients, which was done with the aid of Maple . The argument for the form of ( 4.30 ) is quite similar. Since the scalar curvature has already been determined, it is a question of writing down a formula for
+the trace-free part of the Ricci tensor, i.e., finding linear terms in V 2 ​ ( 𝔤 2 ) V_{2}(\operatorname{\mathfrak{g}}_{2}) and quadratic terms in V 1 ​ ( 𝔤 2 ) V_{1}(\operatorname{\mathfrak{g}}_{2}) that take values in the G 2 {\rm G}_{2} -module 𝖵 2 , 0 \mathsf{V}_{2,0} . Again, a glance at ( 4.7 ) shows that there are at most three possible second order terms and it is not difficult to see that
+the three second order terms that take values in 𝖵 2 , 0 \mathsf{V}_{2,0} found by taking derivatives of τ 1 \tau_{1} , τ 2 \tau_{2} , and τ 3 \tau_{3} and projecting into a suitable 𝖵 2 , 0 \mathsf{V}_{2,0} representation are, in fact, independent and generate the three copies of 𝖵 2 , 0 \mathsf{V}_{2,0} that appear in V 2 ​ ( 𝔤 2 ) V_{2}(\operatorname{\mathfrak{g}}_{2}) . On the other hand,
+using representation theory to compute the second symmetric power of V 1 ​ ( 𝔤 2 ) V_{1}(\operatorname{\mathfrak{g}}_{2}) shows that there exist eight copies of 𝖵 2 , 0 \mathsf{V}_{2,0} in this symmetric power. Of those eight copies, five are computable via wedge product and appear in the formula for Ricci. Of the remaining three, one bilinear in τ 2 \tau_{2} and τ 3 \tau_{3} and the other two
+quadratic in τ 3 \tau_{3} , only one of the terms quadratic in τ 3 \tau_{3} actually makes an appearance. The rest is just a matter of determining constants.
+
+Remark 11 (Differential invariants of closed G 2 {\rm G}_{2} -structures): Just as one can compute the dimension of the space of k k -jets of G G -structures as in § 4.2 , one can compute the dimension of the space of k k -jets of G G -structures satisfying some set of differential equations. In the case of closed G 2 {\rm G}_{2} -structures, denote the module of k k -th order differential
+invariants by V k ′ ​ ( 𝔤 2 ) ⊂ V k ​ ( 𝔤 2 ) V^{\prime}_{k}(\operatorname{\mathfrak{g}}_{2})\subset V_{k}(\operatorname{\mathfrak{g}}_{2}) . One finds, for example, that (4.38) V 1 ′ ​ ( 𝔤 2 ) ≃ 𝖵 0 , 1 V 2 ′ ​ ( 𝔤 2 ) ≃ 𝖵 2 , 0 ⊕ 𝖵 1 , 1 ⊕ 𝖵 0 , 2 . V^{\prime}_{1}(\operatorname{\mathfrak{g}}_{2})\simeq\mathsf{V}_{0,1}\qquad\qquad
+V^{\prime}_{2}(\operatorname{\mathfrak{g}}_{2})\simeq\mathsf{V}_{2,0}\oplus\mathsf{V}_{1,1}\oplus\mathsf{V}_{0,2}. This implies, on abstract grounds, that the scalar curvature of the underlying metric of a closed G 2 {\rm G}_{2} -structure must be expressed in terms of the first order invariants (since there is no 𝖵 0 , 0 \mathsf{V}_{0,0} component in V 2 ′ ​ ( 𝔤 2 )
+V^{\prime}_{2}(\operatorname{\mathfrak{g}}_{2}) ) and that the full Ricci tensor can be expressed in terms of τ 2 \tau_{2} and d ​ τ 2 \mathrm{d}\tau_{2} . Thus, the form of ( 4.36 ) and ( 4.37 ) could have been anticipated, if not the numerical coefficients. Of course, it is easy to ‘write down’ the general closed G 2 {\rm G}_{2} -structure locally: If β ∈ Ω 2 ​ ( ℝ 7 )
+\beta\in\Omega^{2}({\mathbb{R}}^{7}) is a (smooth) 2 2 -form that vanishes to second order at 0 ∈ ℝ 7 0\in{\mathbb{R}}^{7} , then the 3 3 -form σ = ϕ + d ​ β \sigma=\phi+\mathrm{d}\beta will equal ϕ \phi at 0 0 and hence will be a closed, definite 3 3 -form on some open neighborhood of 0 ∈ ℝ 7 0\in{\mathbb{R}}^{7} . Conversely, if σ \sigma is a closed G 2 {\rm G}_{2} -structure on a manifold M 7
+M^{7} , then any point p ∈ M p\in M has an open neighborhood U U on which there exists a p p -centered coordinate chart x : U → ℝ 7 x:U\to{\mathbb{R}}^{7} such that σ U = x ∗ ​ ( ϕ + d ​ β ) \sigma_{U}=x^{*}(\phi+\mathrm{d}\beta) where β ∈ Ω 2 ​ ( ℝ 7 ) \beta\in\Omega^{2}({\mathbb{R}}^{7}) is a 2 2 -form that vanishes to second order at 0 ∈ ℝ 7 0\in{\mathbb{R}}^{7} . In a sense that it is possible
+to make precise using Cartan’s notion of the generality of the space of solutions of a system of pde , one can develop this discussion further to show that the general closed G 2 {\rm G}_{2} -structure modulo diffeomorphism depends on 8 8 functions of seven variables.
+
+Corollary 1: For any closed G 2 {\rm G}_{2} -structure σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) , the scalar curvature of the underlying metric is non-positive and vanishes identically if and only if the entire Ricci tensor of the underlying metric vanishes. Equivalently, the scalar curvature vanishes identically if and only if σ \sigma satisfies d ​ σ = d ​ ∗ σ ​ σ = 0
+\mathrm{d}\sigma=\mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma=0 .
+
+Corollary 2: A closed G 2 {\rm G}_{2} -structure σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) has an Einstein underlying metric if and only if it satisfies d ​ ∗ σ ​ σ = τ 2 ∧ σ \mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma=\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma where d ​ τ 2 = 3
+14 ​ | τ 2 | 2 ​ σ + 1 2 ​ ∗ σ ​ ( τ 2 ∧ τ 2 ) \mathrm{d}\tau_{2}={\textstyle\frac{3}{14}}\,|\tau_{2}|^{2}\,\sigma+{\textstyle\frac{1}{2}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2}) .
+
+Remark 12 (Nonexistence of compact Einstein examples): I do not know whether there exist any closed G 2 {\rm G}_{2} -structures that are Einstein but not Ricci-flat, even local (i.e., incomplete) ones. After Version 1.0 1.0 of the present article was posted to the arXiv, Cleyton and Ivanov [ 3 ] gave an argument (based on a comparison of the Ricci curvatures of the Levi-Civita connection and the
+canonical connection of the underlying G 2 {{\rm G}_{2}} -structure) showing that no compact 7 7 -manifold can support a closed G 2 {{\rm G}_{2}} -structure σ \sigma whose underlying metric g σ g_{\sigma} is Einstein unless σ \sigma is also coclosed, i.e., d ​ ∗ σ ​ σ = 0 \mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma=0 . Their argument is rather involved, but Corollary 2
+yields a simple proof: Suppose that σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) is a closed G 2 {{\rm G}_{2}} -structure whose underlying metric g σ g_{\sigma} is Einstein. Then, by Corollary 2 , it follows that d ​ ∗ σ ​ σ = τ 2 ∧ σ \mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu\sigma=\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma where d ​ τ 2 = 3 14 ​ | τ 2 | 2 ​ σ + 1 2 ​ ∗ σ ​ ( τ 2 ∧ τ 2 ) \mathrm{d}\tau_{2}={\textstyle\frac{3}{14}}\,|\tau_{2}|^{2}\,\sigma+{\textstyle\frac{1}{2}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2}) . Now, using this formula together with the formula ( 2.21 ), one finds (4.40) d ⁡ ( 1 3 ​ τ 2 3 ) \displaystyle\mathrm{d}\bigl({\textstyle\frac{1}{3}}{\tau_{2}}^{3}\bigr) = τ 2 2 ∧ d ​ τ 2 = τ 2 2 ∧ ( 3 14 ​ | τ 2 | 2 ​ σ + 1 2 ​ ∗ σ ​ ( τ 2 ∧ τ 2 ) )
+\displaystyle={\tau_{2}}^{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\mathrm{d}\tau_{2}={\tau_{2}}^{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\bigl({\textstyle\frac{3}{14}}\,|\tau_{2}|^{2}\,\sigma+{\textstyle\frac{1}{2}}\mskip
+1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2})\bigr) = − 3 14 ​ | τ 2 | 4 ​ ∗ σ ​ 1 + 1 2 ​ | τ 2 ∧ τ 2 | 2 ​ ∗ σ ​ 1 = 2 7 ​ | τ 2 | 4 ​ ∗ σ ​ 1 . \displaystyle=-{\textstyle\frac{3}{14}}\,|\tau_{2}|^{4}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu1+{\textstyle\frac{1}{2}}|\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2}|^{2}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu1={\textstyle\frac{2}{7}}|\tau_{2}|^{4}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu1. Now, suppose that M M were compact. Integrating both ends of ( 4.40 ) over M
+M and applying Stokes’ theorem yields (4.41) 0 = ∫ M d ⁡ ( 1 3 ​ τ 2 3 ) = ∫ M 2 7 ​ | τ 2 | 4 ​ ∗ σ ​ 1 , 0=\int_{M}\mathrm{d}\bigl({\textstyle\frac{1}{3}}{\tau_{2}}^{3}\bigr)=\int_{M}{\textstyle\frac{2}{7}}|\tau_{2}|^{4}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu1\,, implying that τ 2 \tau_{2} must vanish identically, as was to be shown.
+
+Corollary 3: Suppose that σ ∈ Ω + 3 ​ ( M ) \sigma\in\Omega^{3}_{+}(M) is a closed G 2 {{\rm G}_{2}} -structure on a compact 7 7 -manifold M M that satisfies the pinching condition (4.42) | Ric 0 ⁡ ( g σ ) | 2 ≤ 4 21 ​ C ​ Scal ⁡ ( g σ ) 2 . \bigl|\operatorname{Ric}^{0}(g_{\sigma})\bigr|^{2}\leq{\textstyle\frac{4}{21}}\,C\,\operatorname{Scal}(g_{\sigma})^{2}. for some constant C ≤ 1 C\leq 1 . If C
+< 1 C<1 , then σ \sigma is also coclosed. If C = 1 C=1 , then equality must hold in ( 4.42 ) everywhere on M M . Moreover, in this case, the identity (4.43) 𝗂 ⁡ ( Ric 0 ⁡ ( g σ ) ) = 2 3 ​ ( ∗ σ ​ ( τ 2 ∧ τ 2 ) + 1 7 ​ | τ 2 | 2 ​ σ ) \mathsf{i}\bigl(\operatorname{Ric}^{0}(g_{\sigma})\bigr)={\textstyle\frac{2}{3}}\bigl(\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2})+{\textstyle\frac{1}{7}}|\tau_{2}|^{2}\,\sigma\bigr) or, equivalently, (4.44) d ​ τ 2 = 1 6 ​ ( | τ 2 | 2 ​ σ + ∗ σ ​ ( τ 2 ∧ τ 2 ) ) \mathrm{d}\tau_{2}={\textstyle\frac{1}{6}}\,\bigl(|\tau_{2}|^{2}\,\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau_{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau_{2})\bigr) must hold everywhere on M M .
+
+Remark 13 (Extremally Ricci-pinched closed G 2 {{\rm G}_{2}} -structures): Note that another way of phrasing Corollary 3 is to use ( 4.45 ) to show that the inequality (4.48) ∫ M | Ric 0 ⁡ ( g σ ) | 2 ​ ∗ σ ​ 1 ≥ 4 21 ​ ∫ M Scal ⁡ ( g σ ) 2 ​ ∗ σ ​ 1 \int_{M}\bigl|\operatorname{Ric}^{0}(g_{\sigma})\bigr|^{2}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu1\geq\frac{4}{21}\int_{M}\operatorname{Scal}(g_{\sigma})^{2}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu1 holds for any closed G 2 {{\rm G}_{2}} -structure σ \sigma on a compact manifold M 7 M^{7} and that equality holds in ( 4.48 ) if and only if σ \sigma satisfies (4.49) d ​ σ = 0 , d ​ ∗ σ ​ σ = τ ∧ σ , d ​ τ = 1 6 ​ ( | τ | 2 ​ σ + ∗ σ ​ ( τ ∧ τ ) ) .
+\mathrm{d}\sigma=0,\qquad\mathrm{d}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\sigma=\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma,\qquad\mathrm{d}\tau={\textstyle\frac{1}{6}}\,\bigl(|\tau|^{2}\,\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)\bigr). Indeed, Corollary 3 suggests that the G 2 {{\rm G}_{2}} -structures σ \sigma that satisfy ( 4.49 ) might be of particular interest, since these are, in some sense, the most ‘extremally Ricci-pinched’ that a closed G 2 {{\rm G}_{2}} -structure can be on a
+compact 7 7 -manifold. One can see that there are some rather subtle restrictions on such structures on compact manifolds by developing these equations a bit further: Note that ( 4.49 ) implies (4.50) d ⁡ ( τ 3 ) \displaystyle\mathrm{d}\bigl({\tau}^{3}\bigr) = 3 ​ τ 2 ∧ d ​ τ = τ 2 ∧ ( 1 2 ​ | τ | 2 ​ σ + 1 2 ​ ∗ σ ​ ( τ ∧ τ ) )
+\displaystyle=3\,{\tau}^{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\mathrm{d}\tau={\tau}^{2}{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\bigl({\textstyle\frac{1}{2}}\,|\tau|^{2}\,\sigma+{\textstyle\frac{1}{2}}\mskip
+1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)\bigr) = − 1 2 ​ | τ | 4 ​ ∗ σ ​ 1 + 1 2 ​ | τ ∧ τ | 2 ​ ∗ σ ​ 1 = 0 . \displaystyle=-{\textstyle\frac{1}{2}}\,|\tau|^{4}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu1+{\textstyle\frac{1}{2}}|\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau|^{2}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu1=0. On the other hand, computation using the structure equations and ( 4.49 ) yields (4.51) 0 = d ⁡ ( d ​ τ ) = d ⁡ ( 1 6 ​ ( | τ | 2 ​ σ + ∗ σ ​ ( τ ∧ τ ) ) ) = α ∧ σ + ∗ σ ​ γ
+0=\mathrm{d}\bigl(\mathrm{d}\tau\bigr)=\mathrm{d}\left({\textstyle\frac{1}{6}}\,\bigl(|\tau|^{2}\,\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)\bigr)\right)=\alpha{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\gamma where γ \gamma lies in Ω 27 3 ​ ( M , σ )
+\Omega^{3}_{27}(M,\sigma) and (4.52) α = 1 8 ​ ( d ⁡ ( | τ | 2 ) − 2 9 ​ ∗ σ ​ ( τ 3 ) ) . \alpha={\textstyle\frac{1}{8}}\,\bigl(\mathrm{d}\bigl(|\tau|^{2}\bigr)-{\textstyle\frac{2}{9}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau^{3})\bigr). Consequently, any solution of ( 4.49 ) must satisfy 2 2 2 The vanishing of γ \gamma as defined in ( 4.51 ) imposes 27 27 more equations on the
+covariant derivative of τ \tau , but these are not as easily stated as ( 4.53 ). (4.53) d ⁡ ( | τ | 2 ) = 2 9 ​ ∗ σ ​ ( τ 3 ) . \mathrm{d}\bigl(|\tau|^{2}\bigr)={\textstyle\frac{2}{9}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau^{3}). Combining this with ( 4.50 ) yields (4.54) Δ σ ​ ( | τ | 2 ) = 0 . \Delta_{\sigma}(|\tau|^{2}\bigr)=0. Assume now that M M is compact and connected.
+It then follows from ( 4.54 ) that | τ | 2 |\tau|^{2} must be a constant. Of course, if | τ | 2 = 0 |\tau|^{2}=0 , then τ = 0 \tau=0 and σ \sigma is coclosed and hence g σ g_{\sigma} -parallel. Thus, assume from now on that | τ | 2 > 0 |\tau|^{2}>0 . Then ( 4.53 ) implies that τ 3 = 0 \tau^{3}=0 . However, | τ ∧ τ | 2 = | τ | 4 ≠ 0
+|\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau|^{2}=|\tau|^{4}\not=0 , implying that τ \tau has constant rank 4 4 (instead of the a priori maximum of 6 6 ) and hence that τ ∧ τ \tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau is a nonzero
+simple 4 4 -form of constant norm. Using ( 2.23 ) and the fact that τ 3 = 0 \tau^{3}=0 then yields (4.55) d ⁡ ( τ 2 ) \displaystyle\mathrm{d}\bigl({\tau}^{2}\bigr) = 2 ​ τ ∧ d ​ τ = 1 3 ​ τ ∧ ( | τ | 2 ​ σ + ∗ σ ​ ( τ ∧ τ ) )
+\displaystyle=2\,\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\mathrm{d}\tau={\textstyle\frac{1}{3}}\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\bigl(\,|\tau|^{2}\,\sigma+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)\bigr) = − 1 3 ​ | τ | 2 ​ ∗ σ ​ τ + 1 3 ​ | τ | 2 ​ ∗ σ ​ τ = 0 , \displaystyle=-{\textstyle\frac{1}{3}}\,|\tau|^{2}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu\tau+{\textstyle\frac{1}{3}}\,|\tau|^{2}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu\tau=0, So that the simple 4 4 -form τ ∧ τ \tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau is closed. Since τ ∧ τ \tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau is simple with constant norm, the 3 3 -form ∗ σ ​ ( τ ∧ τ ) \mskip
+1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau) is also nonzero and simple, with constant norm. Moreover, in view of the constancy of | τ | 2 |\tau|^{2} , expanding d ⁡ ( d ​ τ ) = 0 \mathrm{d}\bigl(\mathrm{d}\tau\bigr)=0 and using ( 4.49 ) shows that ∗ σ ​ ( τ ∧ τ )
+\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau) is also closed. Consequently, the tangent bundle of M M splits as an orthogonal direct sum of two integrable subbundles (4.56) T ​ M = P ⊕ Q TM=P\oplus Q with P = { v ∈ T M v ( τ ∧ τ ) = 0 } P=\{\,v\in TM\ \vrule\
+v\mathbin{\hbox{\vrule height=1.4pt,width=4.0pt,depth=-1.0pt\vrule height=4.0pt,width=0.4pt,depth=-1.0pt}}(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)=0\,\} of rank 3 3 and Q = { v ∈ T M v ∗ σ ( τ ∧ τ ) = 0 } Q=\{\,v\in TM\ \vrule\ v\mathbin{\hbox{\vrule height=1.4pt,width=4.0pt,depth=-1.0pt\vrule
+height=4.0pt,width=0.4pt,depth=-1.0pt}}\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip 1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau)=0\,\} of rank 4 4 . The P P -leaves are calibrated by − | τ | − 2 ​ ∗ σ ​ ( τ ∧ τ ) -|\tau|^{-2}\,\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau) while the Q Q -leaves are calibrated by − | τ | − 2 ​ ( τ ∧ τ ) -|\tau|^{-2}\,(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\wedge}}}\tau) . (The reason for the minus signs is that they correctly
+orient the P P -leaves as associative submanifolds and the Q Q -leaves as coassociative submanifolds.) The Ricci curvature in this case simplifies to (4.57) Ric ⁡ ( g σ ) = 1 12 ​ 𝗃 ​ ( ∗ σ ​ ( τ ∧ τ ) ) = − 1 6 ​ | τ | 2 ​ ( g σ ) ​ P , \operatorname{Ric}(g_{\sigma})={\textstyle\frac{1}{12}}\,\mathsf{j}\bigl(\mskip 1.0mu\mathord{*\kern-0.5pt_{\sigma}}\mskip
+1.0mu(\tau{\mathchoice{\,{\scriptstyle\wedge}\,}{{\scriptstyle\wedge}}{{\scriptscriptstyle\wedge}}{{\scriptscriptstyle\we
+
+## Claims
+
+{"n": 1, "subject": "Remark 11", "relation": "depends-on", "object": "full Ricci tensor of a closed G2-structure expressed in terms of tau_2 and d tau_2", "modality": "stated", "locator": "Remark 11"}
+{"n": 2, "subject": "Remark 12", "relation": "proves", "object": "Cleyton–Ivanov theorem", "modality": "stated", "locator": "Remark 12"}
+{"n": 3, "subject": "Proposition 2", "relation": "proves", "object": "Fernández–Gray theorem (1982)", "modality": "stated", "locator": "Remark 6"}
+{"n": 4, "subject": "Corollary 2", "relation": "proves", "object": "a closed sigma has Einstein g_sigma iff d(*_sigma sigma) = tau_2 wedge sigma with d tau_2 = (3/14)|tau_2|^2 sigma + (1/2) *_sigma(tau_2 wedge tau_2)", "modality": "stated", "locator": "Corollary 2"}
+{"n": 5, "subject": "Remark 13", "relation": "proves", "object": "under the equality conditions with |tau|^2 > 0, TM splits orthogonally into integrable subbundles P (rank 3, associative leaves) and Q (rank 4, coassociative leaves)", "modality": "stated", "locator": "Remark 13"}
+{"n": 6, "subject": "Proposition 2", "relation": "equivalent-to", "object": "sigma is flat to first order iff all torsion forms vanish iff d sigma = d(*_sigma sigma) = 0", "modality": "stated", "locator": "Proposition 2"}
+{"n": 7, "subject": "formula for scalar and Ricci curvature of a G2-structure", "relation": "depends-on", "object": "torsion forms tau_0, tau_1, tau_2, tau_3", "modality": "stated", "locator": "Abstract"}
+{"n": 8, "subject": "Definition 2", "relation": "defines", "object": "definite 3-forms Omega^3_+(M) as 3-forms taking values in Lambda^3_+(T*M)", "modality": "stated", "locator": "Definition 2"}
+{"n": 9, "subject": "V'_2(g2) (closed G2 second-order invariants)", "relation": "equivalent-to", "object": "V_{2,0} plus V_{1,1} plus V_{0,2}", "modality": "stated", "locator": "Remark 11, equation (4.38)"}
+{"n": 10, "subject": "Proposition 2", "relation": "proves", "object": "a G2-structure sigma is flat to first order iff all its torsion forms vanish, i.e. d sigma = d(*_sigma sigma) = 0", "modality": "stated", "locator": "Proposition 2"}
+{"n": 11, "subject": "Corollary 1", "relation": "proves", "object": "for closed sigma, the scalar curvature of g_sigma is non-positive", "modality": "stated", "locator": "Corollary 1"}
+{"n": 12, "subject": "Proposition 1", "relation": "proves", "object": "for any sigma in Omega^3_+(M) there exist unique torsion forms tau_0 in Omega^0, tau_1 in Omega^1, tau_2 in Omega^2_14, tau_3 in Omega^3_27 with d sigma = tau_0 *_sigma sigma + 3 tau_1 wedge sigma + *_sigma tau_3 and d(*_sigma sigma) = 4 tau_1 wedge *_sigma sigma + tau_2 wedge sigma", "modality": "stated", "locator": "Proposition 1, (3.7)/(3.8)"}
+{"n": 13, "subject": "Corollary 3", "relation": "proves", "object": "if C < 1 in the pinching condition (4.42), then sigma is coclosed", "modality": "stated", "locator": "Corollary 3, equation (4.42)"}
+{"n": 14, "subject": "Gray [9] result", "relation": "proves", "object": "a connected orientable spinnable 7-manifold admits a G2-structure", "modality": "cited", "locator": "Remark 3"}
+{"n": 15, "subject": "Remark 13 (4.56)", "relation": "proves", "object": "TM splits as an orthogonal direct sum of integrable subbundles P (rank 3) and Q (rank 4)", "modality": "stated", "locator": "Remark 13, equation (4.56)"}
+{"n": 16, "subject": "Remark 13", "relation": "proves", "object": "under the equality conditions on compact connected M, |tau|^2 is constant; if |tau|^2 = 0 then sigma is coclosed and g_sigma-parallel", "modality": "stated", "locator": "Remark 13"}
+{"n": 17, "subject": "Corollary 1", "relation": "depends-on", "object": "formula for scalar and Ricci curvature of a G2-structure in terms of its torsion", "modality": "stated", "locator": "Abstract"}
+{"n": 18, "subject": "Remark 13 (4.54)", "relation": "proves", "object": "under (4.49), the Laplacian of |tau|^2 vanishes", "modality": "stated", "locator": "Remark 13, equation (4.54)"}
+{"n": 19, "subject": "Remark 13 (4.53)", "relation": "proves", "object": "under (4.49), d(|tau|^2) = (2/9) *_sigma(tau^3)", "modality": "stated", "locator": "Remark 13, equation (4.53)"}
+{"n": 20, "subject": "Remark 12", "relation": "depends-on", "object": "Corollary 2", "modality": "stated", "locator": "Remark 12"}

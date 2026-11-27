@@ -1,0 +1,76 @@
+## Paper text
+
+We compute the information theoretic von Neumann entropy of the state associated to the fermionic second quantization of a spectral triple. We show that this entropy is given by the spectral action of the spectral triple for a specific universal function. The main result of our paper is the surprising relation between this function and the Riemann zeta function. It manifests itself in particular
+by the values of the coefficients $${c(d)}$$ c(d) by which it multiplies the d dimensional terms in the heat expansion of the spectral triple. We find that $${c(d)}$$ c(d) is the product of the Riemann xi function evaluated at $${-d}$$ -d by an elementary expression. In particular $${c(4)}$$ c(4) is a rational multiple of $${\zeta(5)}$$ ζ(5) and $${c(2)}$$ c(2) a rational multiple of
+$${\zeta(3)}$$ ζ(3). The functional equation gives a duality between the coefficients in positive dimension, which govern the high energy expansion, and the coefficients in negative dimension, exchanging even dimension with odd dimension.
+
+1 Introduction The spectral action principle [ 4 ] has so far been developed for arbitrary test functions of the form χ ⁡ ( D 2 / Λ 2 ) \chi(D^{2}/\Lambda^{2}) of a spectral triple ( 𝒜 , ℋ , D ) ({\mathcal{A}},{\mathcal{H}},D) . The spectral action defined, for a fixed choice of χ \chi , as Tr ⁡ ( χ ⁡ ( D 2 / Λ 2 ) ) {\rm Tr}(\chi(D^{2}/\Lambda^{2})) is an additive functional of the spectral
+triple ( 𝒜 , ℋ , D ) ({\mathcal{A}},{\mathcal{H}},D) , i.e. when evaluated on the direct sum of two spectral triples it behaves additively. This additivity is, at the conceptual level, a key property of the spectral action. Motivated by the formalism of Quantum field theory, one gets another natural way to obtain an additive functional of spectral triples: given ( 𝒜 , ℋ , D )
+({\mathcal{A}},{\mathcal{H}},D) one performs the fermionic second quantization using the Clifford algebra of the underlying real Hilbert space ℋ ℝ {\mathcal{H}}_{\mathbb{R}} and evaluating the von Neumann information theoretic entropy of the unique state satisfying the KMS condition at inverse temperature β \beta with respect to the time evolution of the Clifford algebra induced by the operator D
+D . The second quantization transforms direct sums into tensor products and moreover the von Neumann entropy of the tensor product of two states is the sum of the respective entropies. Thus one indeed obtains an additive functional of spectral triples in this way, which we simply call the “entropy” S ⁡ ( 𝒜 , ℋ , D ) S({\mathcal{A}},{\mathcal{H}},D) of the spectral triple. After recalling the KMS
+condition in § 2.1 and the fermionic second quantization in § 2.2 we show in § 3 that the entropy functional is the spectral action for a specific universal test function χ ⁡ ( x ) = h ⁡ ( x ) \chi(x)=h(\sqrt{x}) . The main result of this paper is the surprising intimate relation, explored in § 4 between the function h h and the Riemann zeta function. This is explained at the conceptual level to
+try to understand why it appears. The content of this paper is purely mathematical. As far as physical applications are concerned, using the role of the spectral action as a framework to unify all fundamental interactions, this work indicates in particular the need to develop the spectral approach in connection with second quantization. Acknowledgements The work of A. H. C is supported in part by
+the National Science Foundation Grant No. Phys-1518371. A. H. C would also like to thank Institute for Mathematics, Astrophysics and Particle Physics, Radboud University Nijmegen for hospitality where part of this work was done. The involved research has partly been enabled by a Radboud Excellence Professorship awarded to Prof. Chamseddine. WvS would like to thank Sijbrand de Jong for stimulating
+discussions on entropy and the spectral action. WvS thanks IHÉS for hospitality during a visit in early 2018, as well as NWO for support via VIDI-grant 016.133.326.
+
+Definition 2.1: Let ( 𝒞 , σ t ) ({\mathcal{C}},\sigma_{t}) be a C ∗ C^{*} -dynamical system. For a given 0 < β < ∞ 0<\beta<\infty , a state φ \varphi on the unital C ∗ C^{*} -algebra 𝒞 {\mathcal{C}} satisfies the KMS condition at inverse temperature β \beta if for all a , b ∈ 𝒞 a,b\in{\mathcal{C}} , there exists a function F a , b ​ ( z ) F_{a,b}(z) which is holomorphic on the strip I β = { z ∈ ℂ
+| 0 < ℑ ⁡ ( z ) < β } , I_{\beta}=\{z\in{\mathbb{C}}\,|\,0<\Im(z)<\beta\}, (1) continuous on the boundary ∂ I β \partial I_{\beta} and bounded, with the property that for all t ∈ ℝ t\in{\mathbb{R}} F a , b ​ ( t ) = φ ⁡ ( a ​ σ t ​ ( b ) ) and F a , b ​ ( t + i ​ β ) = φ ⁡ ( σ t ​ ( b ) ​ a ) . F_{a,b}(t)=\varphi(a\sigma_{t}(b))\ \ \text{ and }\ \ F_{a,b}(t+i\beta)=\varphi(\sigma_{t}(b)a). (2)
+
+Proposition 2.2: Let ℋ {\mathcal{H}} be a complex Hilbert space, D D a self-adjoint operator in ℋ {\mathcal{H}} with compact resolvent. Let C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) be the complexified Clifford algebra of the underlying real Hilbert space ℋ ℝ {\mathcal{H}}_{\mathbb{R}} and σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) be the one-parameter group
+of automorphisms associated to exp ⁡ ( i ​ t ​ D ) ∈ Aut ⁡ ( ℋ ℝ ) \exp(itD)\in{\rm Aut}({\mathcal{H}}_{\mathbb{R}}) . Then for any β > 0 \beta>0 there exists a unique KMS β state ψ β \psi_{\beta} on the C ∗ C^{*} -dynamical system ( C , σ t ) (C,\sigma_{t}) .
+
+Proposition 2.3: Let ℋ {\mathcal{H}} , D D , C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) , σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) and ψ β \psi_{\beta} be as in Proposition 2.2 . Then if the operator exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class, the state ψ β \psi_{\beta} is of type I and the associated irreducible representation is given by the
+Fermionic second quantization associated to the complex structure I := i ​ sign ​ D I:=i\ {\rm sign}\,D on ℋ ℝ {\mathcal{H}}_{\mathbb{R}} .
+
+Lemma 2.4: The above representation γ I \gamma_{I} of the complexified Clifford algebra Cliff ℂ ​ ( V ) {\rm Cliff}_{\mathbb{C}}(V) on Fock space ℒ ⁡ ( ⋀ V I ) {\mathcal{L}}(\exterior V_{I}) is irreducible.
+
+Remark 2.5: More generally speaking, the Shale–Stinespring Theorem [ 9 ] says that the automorphism on Cliff ℂ ​ ( V ) {\rm Cliff}_{\mathbb{C}}(V) defined by an orthogonal operator T : V → V T:V\to V is implementable by a unitary operator on Fock space ⋀ V I \exterior V_{I} if and only if T + I ​ T ​ I T+ITI is Hilbert-Schmidt.
+
+Proposition 2.6: ( i ) (i) The one-parameter group σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) is implemented in the (physical) Fock representation by the one-parameter unitary group W ⁡ ( t ) = ⋀ exp ⁡ ( it ​ | D | ) W(t)=\exterior\exp(it|D|) , i.e. one has γ I ​ ( σ t ​ ( A ) ) = ⋀ ( e it ​ | D | ) ​ γ I ​ ( A ) ​ ⋀ ( e − it ​ | D | ) , ∀ A ∈ Cliff ℂ ​ ( V ) .
+\gamma_{I}(\sigma_{t}(A))=\exterior(e^{it|D|})\gamma_{I}(A)\exterior(e^{-it|D|})\,,\,~\forall A\in{\rm Cliff}_{\mathbb{C}}(V). (4) ( i ​ i ) (ii) If exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class the state ψ β \psi_{\beta} is of type I and is given by ψ β ​ ( A ) = 1 Z ​ Tr ​ ( ⋀ exp ⁡ ( − β ​ | D | ) ​ γ I ​ ( A ) ) , ∀ A ∈ Cliff ℂ ​ ( V ) \psi_{\beta}(A)=\frac{1}{Z}{\rm
+Tr}\left(\exterior\exp(-\beta|D|)\gamma_{I}(A)\right)\,,\,~\forall A\in{\rm Cliff}_{\mathbb{C}}(V) (5) where the normalization factor Z Z is finite.
+
+Lemma 3.1: Let x > 0 x>0 , the entropy of the partition of the unit interval in two intervals with ratio of size x x , is given by ℰ ⁡ ( x ) := log ⁡ ( x + 1 ) − x ​ log ⁡ ( x ) x + 1 . {\mathcal{E}}(x):=\log(x+1)-\frac{x\log(x)}{x+1}.
+
+Corollary 3.2: One has ℰ ⁡ ( x ) = ℰ ⁡ ( 1 / x ) {\mathcal{E}}(x)={\mathcal{E}}(1/x) for any x > 0 x>0 .
+
+Lemma 3.3: Let T ∈ ℒ 1 ​ ( ℋ ) + T\in{\mathcal{L}}^{1}({\mathcal{H}})^{+} be a positive trace class operator and ϕ \phi the state associated to ⋀ T \exterior T then S ⁡ ( ϕ ) = Tr ⁡ ( ℰ ⁡ ( T ) ) . S(\phi)={\rm Tr}({\mathcal{E}}(T)). (6)
+
+Theorem 3.4: Let ℋ {\mathcal{H}} , D D , C := Cliff ℂ ​ ( ℋ ℝ ) C:={\rm Cliff}_{\mathbb{C}}({\mathcal{H}}_{\mathbb{R}}) , σ t ∈ Aut ⁡ ( C ) \sigma_{t}\in{\rm Aut}(C) and ψ β \psi_{\beta} be as in Proposition 2.2 . Then if the operator exp ⁡ ( − β ​ | D | ) \exp(-\beta|D|) is of trace class, the state ψ β \psi_{\beta} is of type I and its von Neumann entropy is equal to the spectral action Tr ⁡ ( h
+⁡ ( β ​ D ) ) {\rm Tr}(h(\beta D)) for the spectral function h ⁡ ( x ) := ℰ ⁡ ( e − x ) h(x):={\mathcal{E}}(e^{-x}) .
+
+Lemma 4.1: The function h ⁡ ( x ) h(x) is an even positive function of the variable x ∈ ℝ x\in{\mathbb{R}} . Its derivative is h ′ ​ ( x ) = − x 4 ​ cosh 2 ⁡ ( x 2 ) . h^{\prime}(x)=-\frac{x}{4\cosh^{2}\left(\frac{x}{2}\right)}.
+
+Lemma 4.2: One has, for x ≥ 0 x\geq 0 , ∑ ℤ ( 2 ​ π ​ n + π ) 2 − x ( ( 2 ​ π ​ n + π ) 2 + x ) 2 = 1 4 ​ cosh 2 ⁡ ( x 2 ) . \sum_{\mathbb{Z}}\frac{(2\pi n+\pi)^{2}-x}{\left((2\pi n+\pi)^{2}+x\right)^{2}}=\frac{1}{4\cosh^{2}\left(\frac{\sqrt{x}}{2}\right)}.
+
+Lemma 4.3: One has g ⁡ ( t ) = − 1 4 ​ π ​ t 3 / 2 ​ ∑ ℤ ( − 1 ) n ​ n 2 ​ q n 2 , q = e − 1 4 ​ t . g(t)=\frac{-1}{4\sqrt{\pi}t^{3/2}}\sum_{\mathbb{Z}}(-1)^{n}n^{2}q^{n^{2}},\ \ q=e^{-\frac{1}{4t}}. (9)
+
+Proposition 4.4: One has h ⁡ ( x ) = ∫ 0 ∞ e − t ​ x 2 ​ g ~ ​ ( t ) ​ 𝑑 t . h(x)=\int_{0}^{\infty}e^{-tx^{2}}\tilde{g}(t)dt. (10)
+
+Lemma 4.5: ( i ) (i) One has 2 ​ ∫ 0 ∞ h ⁡ ( x ) ​ x ​ 𝑑 x = 9 ​ ζ ​ ( 3 ) 2 , 2 ​ ∫ 0 ∞ h ⁡ ( x ) ​ x 3 ​ 𝑑 x = 225 ​ ζ ​ ( 5 ) 4 . 2\int_{0}^{\infty}h(x)xdx=\frac{9\,\zeta(3)}{2},\ \ 2\int_{0}^{\infty}h(x)x^{3}dx=\frac{225\,\zeta(5)}{4}. (11) ( i ​ i ) (ii) More generally ∫ 0 ∞ h ⁡ ( x ) ​ x α ​ 𝑑 x = 1 − 2 − α − 1 α + 1 ​ Γ ​ ( α + 3 ) ​ ζ ​ ( α + 2 ) .
+\int_{0}^{\infty}h(x)x^{\alpha}dx=\frac{1-2^{-\alpha-1}}{\alpha+1}\Gamma(\alpha+3)\zeta(\alpha+2). (12)
+
+Lemma 4.6: The coefficient of t a t^{a} in the heat expansion is the term γ ⁡ ( a ) = 1 − 2 − 2 ​ a a ​ π − a ​ ξ ​ ( 2 ​ a ) . \gamma(a)=\frac{1-2^{-2a}}{a}\pi^{-a}\xi(2a).
+
+## Claims
+
+{"n": 1, "subject": "E(x)", "relation": "defines", "object": "entropy of partitioning the unit interval into two intervals with ratio x, E(x)=log(x+1) - x log(x)/(x+1)", "modality": "stated", "locator": "Lemma 3.1"}
+{"n": 2, "subject": "Lemma 3.3", "relation": "proves", "object": "for a positive trace-class operator T, the state associated to ⋀T has entropy S(φ)=Tr(E(T))", "modality": "stated", "locator": "Lemma 3.3"}
+{"n": 3, "subject": "c(2)", "relation": "equivalent-to", "object": "a rational multiple of zeta(3)", "modality": "stated", "locator": "Abstract"}
+{"n": 4, "subject": "Proposition 4.4", "relation": "proves", "object": "h(x) = integral from 0 to infinity of exp(-t x^2) g~(t) dt", "modality": "stated", "locator": "Proposition 4.4, eq. (10)"}
+{"n": 5, "subject": "Lemma 4.6", "relation": "proves", "object": "the coefficient of t^a in the heat expansion is γ(a) = [(1-2^{-2a})/a] π^{-a} ξ(2a)", "modality": "stated", "locator": "Lemma 4.6"}
+{"n": 6, "subject": "h(x)", "relation": "defines", "object": "spectral function h(x):=E(e^{-x})", "modality": "stated", "locator": "Theorem 3.4"}
+{"n": 7, "subject": "Proposition 2.6", "relation": "proves", "object": "ψ_β(A) = (1/Z)Tr(⋀exp(-β|D|)γ_I(A)) when exp(-β|D|) is trace class", "modality": "stated", "locator": "Proposition 2.6(ii)"}
+{"n": 8, "subject": "Lemma 4.5(i)", "relation": "proves", "object": "2 integral_0^infinity h(x) x dx = 9 zeta(3)/2 and 2 integral_0^infinity h(x) x^3 dx = 225 zeta(5)/4", "modality": "stated", "locator": "Lemma 4.5(i), eq. (11)"}
+{"n": 9, "subject": "c(4)", "relation": "equivalent-to", "object": "a rational multiple of zeta(5)", "modality": "stated", "locator": "Abstract"}
+{"n": 10, "subject": "Lemma 4.2", "relation": "proves", "object": "for x≥0, Σ_Z [(2πn+π)²-x]/[(2πn+π)²+x]² = 1/(4cosh²(√x/2))", "modality": "stated", "locator": "Lemma 4.2"}
+{"n": 11, "subject": "Corollary 3.2", "relation": "proves", "object": "E(x)=E(1/x) for any x>0", "modality": "stated", "locator": "Corollary 3.2"}
+{"n": 12, "subject": "entropy of a spectral triple S(A,H,D)", "relation": "defines", "object": "additive functional obtained from fermionic second quantization and the KMS state", "modality": "stated", "locator": "Section 1"}
+{"n": 13, "subject": "Lemma 4.1", "relation": "proves", "object": "h'(x) = -x / (4 cosh^2(x/2))", "modality": "stated", "locator": "Lemma 4.1"}
+{"n": 14, "subject": "Lemma 3.3", "relation": "proves", "object": "S(phi) = Tr(E(T)) for the state associated to the exterior algebra element of positive trace-class T", "modality": "stated", "locator": "Lemma 3.3, eq. (6)"}
+{"n": 15, "subject": "Lemma 4.5(ii)", "relation": "proves", "object": "integral_0^infinity h(x) x^alpha dx = (1 - 2^{-alpha-1})/(alpha+1) Gamma(alpha+3) zeta(alpha+2)", "modality": "stated", "locator": "Lemma 4.5(ii), eq. (12)"}
+{"n": 16, "subject": "spectral action principle", "relation": "defines", "object": "spectral action Tr(chi(D^2/Lambda^2)) of a spectral triple", "modality": "cited", "locator": "Section 1"}
+{"n": 17, "subject": "Lemma 4.1", "relation": "proves", "object": "h(x) is an even positive function with h'(x) = -x/(4cosh²(x/2))", "modality": "stated", "locator": "Lemma 4.1"}
+{"n": 18, "subject": "Corollary 3.2", "relation": "proves", "object": "E(x) = E(1/x) for x > 0", "modality": "stated", "locator": "Corollary 3.2"}
+{"n": 19, "subject": "ψ_β", "relation": "equivalent-to", "object": "fermionic second quantization associated to the complex structure I:=i sign D on H_R", "modality": "stated", "locator": "Proposition 2.3"}
+{"n": 20, "subject": "Proposition 2.2", "relation": "proves", "object": "existence of a unique KMS_β state ψ_β on (Cliff_C(H_R),σ_t) for any β>0, for self-adjoint D with compact resolvent", "modality": "stated", "locator": "Proposition 2.2"}

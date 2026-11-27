@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "The text explicitly states in Theorem 2.2 that \"the following are equivalent: 1. \\nabla\\varphi=0 2. \\text{Hol}(g_{\\varphi})\\subseteq G_{2}\"."}
+{"n": 2, "grade": "wrong-relation", "reason": "The subject \"Asymptotically conical G_2-instanton\" is an object, not a result or statement, failing the admissibility test for `depends-on`."}
+{"n": 3, "grade": "faithful", "reason": "Definition 3.1 introduces the G_2 cone of \\Sigma and its torsion-free G_2-structure \\varphi_C."}
+{"n": 4, "grade": "faithful", "reason": "Proposition 4.29 explicitly states that the set of critical weights is W_crit(D_{A_C}) = {\\mu : \\mu+3 \\in \\text{Spec} D^0_{A_\\infty}} and is discrete, unbounded, and symmetric about -3."}
+{"n": 5, "grade": "wrong-relation", "reason": "The subject \"Torsion-free G_2-structure\" is an object, while the object \"Hol(g_phi) contained in G_2...\" is a statement, meaning they are of different kinds and cannot be related by `equivalent-to`."}
+{"n": 6, "grade": "faithful", "reason": "Definition 3.1 introduces the term G_2 cone and defines it as (0,\\infty)\\times\\Sigma with the torsion-free G_2-structure \\varphi_C."}
+{"n": 7, "grade": "wrong-relation", "reason": "The passage says \"the linearised nearly K\u00e4hler instanton equation ... is solved by one forms...\", meaning this is the solution space rather than an equivalence between two mathematical statements or objects of the same kind."}
+{"n": 8, "grade": "wrong-relation", "reason": "The subject \"Fredholm index statement for D_A at rate -2\" is a descriptive phrase, not a named result in the paper, failing admissibility for `proves`."}
+{"n": 9, "grade": "wrong-relation", "reason": "Definition 2.7 is a definition that introduces nearly K\u00e4hler 6-manifolds as having a real Killing spinor; this is not a proof that depends on a premise, so `depends-on` is incorrect."}
+{"n": 10, "grade": "faithful", "reason": "Definition 4.6 explicitly defines the moduli space of G_2-instantons asymptotic to A_\\infty with rate \\mu modulo \\mathcal{G}_\\mu."}
+{"n": 11, "grade": "wrong-relation", "reason": "The subject \"Virtual dimension of moduli space\" is a quantity, not a result, so it cannot act as the subject of `proves`."}
+{"n": 12, "grade": "faithful", "reason": "Definition 4.6 defines the moduli space \\mathcal{M}(A_\\infty,\\mu) as G_2-instantons asymptotic to A_\\infty with rate \\mu modulo the gauge group \\mathcal{G}_\\mu."}
+{"n": 13, "grade": "wrong-relation", "reason": "Definition 3.2 uses the concept of a G_2 cone to define an asymptotically conical G_2-manifold, which is a definition rather than a proof depending on premises."}
+{"n": 14, "grade": "wrong-direction", "reason": "The `defines` relation must point from the defining statement (Definition 3.2) to the term introduced (Asymptotically conical G_2-manifold), but this claim has it backwards."}
+{"n": 15, "grade": "wrong-relation", "reason": "The subject \"Dirac-type operator on homogeneous nearly Kahler manifolds\" is an object or topic, not a result, failing the admissibility test for `proves`."}
+{"n": 16, "grade": "faithful", "reason": "Theorem 4.23, named the Slice Theorem, proves the decomposition of \\Omega^1 into the stated components for -5<\\mu<0."}
+{"n": 17, "grade": "faithful", "reason": "Theorem 3.9, named the Weighted Sobolev Embedding Theorem, establishes the continuous embedding under the stated inequality."}
+{"n": 18, "grade": "faithful", "reason": "Theorem 4.38 explicitly establishes that for \\mu \\in (\\mathbb{R}\\setminus W)\\cap(-5,0), the virtual dimension is dim \\mathcal{I}(A,\\mu) - dim \\mathcal{O}(A,\\mu)."}
+{"n": 19, "grade": "faithful", "reason": "Lemma 5.3 states that (D^{1/3}_{A_{can}})^2 preserves the splitting and evaluates to -\\rho_L(\\text{Cas}_\\mathfrak{g}) + \\rho_V(\\text{Cas}_\\mathfrak{h}) + 4."}
+{"n": 20, "grade": "wrong-relation", "reason": "The condition \\mu \\notin W_{\\text{crit}}(P_C) is a hypothesis of Theorem 4.10, not a premise invoked as a step in a proof, so `depends-on` does not apply."}
+GRADES-END

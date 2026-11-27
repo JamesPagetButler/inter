@@ -1,0 +1,346 @@
+# Checker v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are checking claims extracted from one mathematics or physics paper. Below this prompt come two blocks, in order:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>"}`
+2. One line exactly: `GRADES-END`
+
+
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+**Field conventions (all types):**
+- A claim has `subject`, `relation_type`, `object`, `modality ∈ {stated, cited}`, `locator` and **`quote`** (a verbatim span, checked mechanically against the source).
+- **Modality is never a relation.** `cites` is rejected by the validator.
+- "Result" means a theorem, proposition, lemma, corollary, remark or claim, or the paper itself.
+- "Statement" means a mathematical assertion. "Object" means a mathematical object, structure, space, category or quantity. "Predicate" means a property phrase that can be asserted of an object.
+
+### 1. `proves`
+1. **Meaning:** the result *subject* establishes the statement *object*.
+2. **Kinds:** subject is a result; object is a statement.
+3. **Direction:** result → statement.
+4. **Admissibility test:** "Is the subject a result, and does the quoted passage say that this result establishes the object?" If the subject is an object rather than a result, use `has-property`.
+5. **Examples:**
+   - (a) W2015765968 c12: `Proposition 2.24 proves "moduli space C_3 ≅ (U(3)×U(3))\(GL_3(C)×GL_3(C))/U(3) has real dimension 10"`, Prop. 2.24, Eq. (2.40) [verified, RCA item 1 context].
+   - (b) W7160385925 c12 rewritten: `Proposition 0.2.1 proves "Z[S] ≅ ⋃_n lim_i Z[S_i]_{≤n}"` [verified, RCA item 6].
+   - **Near-miss:** RCA item 10: `Z[S] proves "quasiseparated…"`. The subject is an object, so this is `has-property` [verified].
+6. **Boundary:** with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+### 2. `has-property`
+1. **Meaning:** the paper asserts that the object *subject* has the property *object*.
+2. **Kinds:** subject is an object; object is a **predicate phrase**, never a full statement and never another object.
+3. **Direction:** object → predicate.
+4. **Admissibility test:** "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?" The locator names the asserting result or sentence.
+5. **Examples:**
+   - (a) RCA item 10: `Z[S] has-property "quasiseparated; comes from a compactly generated weak Hausdorff space"`, Remark 0.2.2 [verified].
+   - (b) RCA item 9: `condensed abelian groups has-property "form an abelian category"`, §0.1 [verified].
+   - **Near-miss:** `Z[S] has-property "Z[S] ≅ ⋃_n …"`. An isomorphism to a named object is `equivalent-to`, not a property.
+6. **Boundary:** with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+### 3. `defines`
+1. **Meaning:** the paper introduces the term *object* at the locator.
+2. **Kinds:** subject is the defining statement (e.g. "Definition 1.6") or the defined term; object is the term or its defining content.
+3. **Direction:** definition → term.
+4. **Admissibility test:** "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?" A formula or identification for a quantity already named is not `defines`.
+5. **Examples:**
+   - (a) RCA item 4: `Definition 1.6 defines "uncompleted analytic ring (A,M)"`, cited [Sch19] [verified].
+   - (b) RCA item 3, rewritten with a non-degenerate subject: `[Man22] defines "descendable maps of analytic rings"`, cited, Remark 0.6 [verified].
+   - **Near-misses** [verified]:
+     - RCA item 14: `c_l(λ) defines "…Eq. (3.76)"`. c_l(λ) is introduced in Eq. (3.74), and Eq. (3.76) evaluates it, so this is `equivalent-to` (sense: equal-value).
+     - RCA item 15: G_N, Newton's constant, has a prior meaning.
+6. **Boundary:** with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+### 4. `equivalent-to` (+ `sense`)
+1. **Meaning:** the paper asserts that subject and object are the same, in the stated sense.
+2. **Kinds:** both are objects, or both are statements, of the same kind. `sense ∈ {iff, isomorphic, equal-value, equivalent-category}`. `sense` is required whenever it can be read from the passage, and otherwise left out.
+3. **Direction:** symmetric. The validator stores it in canonical order.
+4. **Admissibility test:** "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?"
+5. **Examples:**
+   - (a) W1641073798 c17: `Ω̂ for self-dual Ω, represented by A, equivalent-to √det A · A⁻¹` (sense: equal-value), Prop. 12. Quote: "If A ∈ Sym²S* represents a self-dual 3-form Ω then Ω̂ = √det A A⁻¹ ∈ Sym²S" [verified].
+   - (b) W1630303706 c2: `restriction of the Pin(h) and Pin(−h) extensions to Spin(h) equivalent-to "the extension given by (5)"` (sense: isomorphic), Prop. 1. Quote: "By restriction to Spin(h) each of these extensions reduces to the one given by (5)." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) …` "⊂" C⊕H⊕H⊕M_3(C). That's inclusion, not equivalence, so `subobject-of` [verified].
+6. **Boundary:** with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+### 5. `depends-on` (n-ary: head + premise set)
+1. **Meaning:** the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+2. **Kinds:** the head is a result, statement or construction. The tail is a **set of ≥ 1** premises, each a result, statement, construction, hypothesis, equation label or external citation. Each tail member is typed `internal` (a label in this paper) or `external` (a `\cite` or a named result).
+3. **Direction:** head ← tail.
+   - **AND** inside one edge: all tail members are needed jointly.
+   - **OR** across edges with the same head: alternative proofs. Each edge carries a `route` id.
+   - A binary claim is a tail of size 1.
+4. **Admissibility test, per tail member:** "Is this member invoked *as a step* of this proof?"
+   - Not a premise: a comparison ("cf."), a technique reuse ("as in the proof of …", which is `uses-technique`), or context ("this generalises …", which is `generalises`).
+   - A consequence of the head is never a premise.
+   - The edge must quote the sentence(s) that invoke each premise.
+5. **Examples:**
+   - (a) W4412210893 c3: `theory of solid abelian groups ← {Nöbeling's theorem}`, Abstract. Quote: "Nöbeling's theorem … is a crucial ingredient in the theory of solid abelian groups; without it one cannot give any nonzero examples of solid abelian groups." [verified]
+   - (b) RCA item 16, in the correct direction: `"A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}` [verified].
+   - **Near-miss:** RCA item 16 as extracted: `AC G_2-instanton ← {"A_∞ is NK instanton"}`. That's a consequence, not a premise [verified].
+   - Joint/alternative cues:
+     - "by Lemmas 2 and 3", "combining", "together with" → **joint**;
+     - "alternatively", "another proof", "can also be deduced from" → a **new route**;
+     - several refs in one `proof` environment with no cue → joint by default.
+6. **Boundary:**
+   - With `uses-technique`, the object is a method, not a result.
+   - With citation, a reference is a premise only if it's invoked as a step.
+   - **Closure:** an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+   - Tail recall is measured against all in-proof refs (D11a seed), which are classified premise / comparison / technique / context.
+
+### 6. `generalises` (stored direction; `specialises` is rewritten)
+1. **Meaning:** *subject* is the more general one, and *object* is a special case of it.
+2. **Kinds:** both are results, theories or constructions.
+3. **Direction:** general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+4. **Admissibility test:** "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?" Inclusion of a sub-object is not specialisation.
+5. **Examples:**
+   - (a) RCA item 5: `Theorem 0.3 generalises Theorem 0.1 (Mathew)`, abstract: "we generalize the result of Mathew" [verified].
+   - (b) W1778604937 c3, rewritten: `Theorem 0.1 generalises Corollary 0.2`. Quote: "Taking k=2 and E₀=Ar(C) we obtain the following." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) specialises C⊕H⊕H⊕M_3(C)`. That's a subalgebra inclusion, so `subobject-of` [verified].
+6. **Boundary:** with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+### 7. `subobject-of`
+1. **Meaning:** *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+2. **Kinds:** both are objects of the same kind.
+3. **Direction:** part → whole.
+4. **Admissibility test:** "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?"
+5. **Examples:**
+   - (a) RCA item 2, re-typed: `C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C)`, Eq. (1.2) [verified].
+   - (b) W7160385925, Theorem 0.2.5: `Solid subobject-of Cond(Ab)` (full subcategory, "as a subcategory of the category Cond(Ab)") [verified, packet text].
+   - **Near-miss:** an equivalence of categories is `equivalent-to`, not inclusion.
+6. **Boundary:** with `generalises` and `equivalent-to`, see above.
+
+### 8. `counterexample-to`
+1. **Meaning:** *subject* (an example or object) violates the statement *object*, as the paper shows.
+2. **Kinds:** subject is an object or example; object is a statement or claim.
+3. **Direction:** example → statement it refutes.
+4. **Admissibility test:** "Is the subject the *example*, and does the passage show the object fails for it?"
+5. **Examples:**
+   - (a) W2074702261, re-typed from c26: `example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"`. Quote: the example shows they "do not suffice to entail the conclusion of Lemma 5.1" [verified]. (The claim as extracted, `Remark 5.5 counterexample-to "regularity of …"`, is garbled. What Remark 5.5 asserts is a property of example (43), "regularity fails", which is `has-property`.)
+   - (b) W1936971149 c39: `Ḟ(n) ∖ dⁱF(n−1) (0<i<n) counterexample-to "every subobject weakly equivalent to F(n) is a cover"`, Remark 10.2. Quote: "…is weakly equivalent to F(n) in the Segal space model category structure, but is not a cover." [verified]
+   - **Near-miss:** W1501965422 c25 as extracted: `naive descent for derived categories counterexample-to BG_m`. The direction is reversed. Quote, §0.2: naive descent "does not hold anymore, since otherwise the classifying stack BG_m over an algebraically closed field would have finite cohomological dimension, which is false." So BG_m is the example and naive descent is the statement that fails [verified].
+6. **Boundary:** with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+### 9. `conjectures`
+1. **Meaning:** the paper (or the named source) asserts *object* without proof, as expected to hold.
+2. **Kinds:** subject is the paper, a remark, or a named conjecture; object is a statement.
+3. **Direction:** source → conjectured statement.
+4. **Admissibility test:** "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?"
+5. **Examples:**
+   - (a) W1936971149 c33: `Remark 8.13 conjectures "Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M"`. Quote: "It seems that … the statements of (8.11) and (8.12) should hold for any 'reasonable' model category" [verified; the extractor called 8.12 a theorem, but it is a corollary].
+   - (b) W2964288547 c15, subject re-typed: `Remark 5.10 conjectures "L(r²t;1,1+rt,1+2rt,1+4rt) and L(r²t;1,1−rt,1−2rt,1−4rt) are Dirac isospectral, r odd, t ≥ 1"`. Quote: "The computations … hint at Theorem 5.6 being generalizable to the pairs …" [verified; the remark doesn't restate Theorem 5.6's r ≥ 7].
+   - **Near-miss (form only):** W1936971149 c27 as extracted: `Remark 8.4 conjectures "generalisation of Theorem 8.3 to arbitrary closed model categories"`. The content is right ("This result (8.3) presumably generalizes to an arbitrary closed model category"), but the object names a *kind* of result, not the statement. Fix: "Theorem 8.3 holds for any closed model category, with map_V the Dwyer–Kan function complexes" [verified].
+6. **Boundary:** with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+### 10. `uses-technique` (low weight)
+1. **Meaning:** the result or construction *subject* is obtained by the named method *object*.
+2. **Kinds:** subject is a result or construction; object is a **named method or framework**, not a specific result.
+3. **Direction:** user → method.
+4. **Admissibility test:** "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?"
+5. **Examples:**
+   - (a) W1501965422 c24: `enhancement of derived categories uses-technique stable ∞-categories (Lurie)`. Quote: "Instead of the usual unbounded derived category, we work with its enhancement, which is a stable ∞-category in the sense of Lurie" [verified].
+   - (b) W1501965422 c23: `six operations construction uses-technique ∞-categorical (co)homological descent`. Quote, Abstract: "We enhance derived categories … to the level of ∞-categories and introduce ∞-categorical (co)homological descent." [verified]
+   - **Near-miss:** W1663788542 c19 as extracted: `Proposition 2.14 uses-technique Dold–Kan correspondence (Theorem 2.8)`. Prop. 2.14's statement is phrased through the cited Theorem 2.8 ("The tower associated (via the Dold-Kan correspondence) …"), a specific result, so it's `depends-on` [verified]. **Rule:** a named method or framework is `uses-technique`; a specific cited result, even one named after a method, is `depends-on`.
+6. **Boundary:** with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
+
+**Settled at signing:**
+- (i) A **remark** counts as a result for `proves` when it proves something (papers do prove things in remarks). A remark that only *hints* is `conjectures`, as Remark 5.10 and Remark 8.13 show.
+- (ii) The `has-property` dumping-ground threshold stays **open by design**. It's measured in round 1.1/1.2 and set from data in the pre-reg, not guessed. Until then it's a review flag only, never a gate.
+- (iii) Every example and near-miss is verified against the paper.
+
+
+## Paper text
+
+We develop some basic concepts in the theory of higher categories internal to an arbitrary $\infty$-topos. We define internal left and right fibrations and prove a version of the Grothendieck construction and of Yoneda's lemma for internal categories.
+
+1. Introduction Motivation In various areas of geometry, one of the principal strategies is to study geometric objects by means of algebraic invariants such as cohomology, K K -theory and (stable or unstable) homotopy groups. Usually these invariants are constructed in a functorial way, in the sense that they define (possibly higher) presheaves on a suitable (higher) category 𝒞 \mathcal{C} of the
+geometric objects of interest. Usually, 𝒞 \mathcal{C} is equipped with a Grothendieck topology that encodes the topological behaviour of the geometric objects contained in 𝒞 \mathcal{C} , and one typically expects reasonable algebraic invariants to respect this topology in that they should define (higher) sheaves on 𝒞 \mathcal{C} . In that way, one can study the global nature of these objects by
+means of their local behaviour. For example, if A A is an abelian group and if n ≥ 0 n\geq 0 is an integer, there is a higher sheaf 𝐇 n ​ ( − , A ) \mathbf{H}^{n}(-,A) for the étale topology on the category Sch \Sch of schemes that takes values in the ∞ \infty -category Grp ⁡ ( 𝒮 ) \Grp(\mathcal{S}) of group objects in ∞ \infty -groupoids, such that for any scheme X X the group π 0 ​ 𝐇 n ​ ( X , A
+) ∈ Grp ⁡ ( Set ) \pi_{0}\mathbf{H}^{n}(X,A)\in\Grp(\Set) is the n n th étale cohomology group of X X with coefficients in A A [ Lur09a , § 7] . In modern flavours of geometry, the study of categorified invariants has come more and more into focus. For example, one of the fundamental invariants that one can associate to a scheme X X is its unbounded derived category D ⁡ ( X ) \D(X) . In order to
+turn this construction into a sheaf on Sch \Sch , i.e. in order to be able to glue derived categories, one first passes to an ∞ \infty -categorical enhancement: there is a sheaf X ↦ QCoh ⁡ ( X ) X\mapsto\QCoh(X) on Sch \Sch that sends X X to the symmetric monoidal stable ∞ \infty -category of quasi-coherent sheaves on X X such that the homotopy category of QCoh ⁡ ( X ) \QCoh(X) recovers the
+derived category D ⁡ ( X ) \D(X) of X X . The properties of QCoh \QCoh and their relations to the geometry of the scheme X X have been investigated by numerous authors, for example by Lurie in [ Lur18 ] and by Ben-Zvi, Francis and Nadler in [ BZFN10 ] . Furthermore, the sheaf QCoh \QCoh plays a fundamental role in geometric representation theory; in [ Gai14 ] Gaitsgory studies section-wise module
+∞ \infty -categories over the sheaf QCoh \QCoh , i.e. the sheaf of ∞ \infty -categories that are acted on by QCoh \QCoh . Another categorical invariant on schemes comes from motivic homotopy theory: the assignment that sends a scheme X X to its unstable motivic homotopy ∞ \infty -category H ⁡ ( X ) \MH(X) defines a sheaf for the Nisnevich topology on Sch \Sch , and similarly the assignment X ↦ SH
+⁡ ( X ) X\mapsto\SH(X) in which SH ⁡ ( X ) \SH(X) is the stable motivic homotopy ∞ \infty -category on X X defines a sheaf for the Nisnevich topology on Sch \Sch [ Hoy17 ] . The latter plays a prominent role in the formalisation of the six operations in motivic homotopy theory, see for example [ CD19 ] for an overview. It has been long known that for many choices of an (a priori higher) category 𝒜
+\mathcal{A} , the datum of an 𝒜 \mathcal{A} -valued sheaf on Sch \Sch is equivalent to that of an 𝒜 \mathcal{A} -object internal to the ∞ \infty -topos Sh 𝒮 ⁡ ( Sch ) \Shv_{\mathcal{S}}(\Sch) , or the 1 1 -topos Sh Set ⁡ ( Sch ) \Shv_{\Set}(\Sch) in the case that 𝒜 \mathcal{A} is actually a 1 1 -category. For example, a sheaf of abelian groups on Sch \Sch is simply an abelian group internal to Sh
+Set ⁡ ( Sch ) \Shv_{\Set}(\Sch) , and the collection of structure sheaves 𝒪 X \mathcal{O}_{X} for X ∈ Sch X\in\Sch are encoded by a single ring object in Sh Set ⁡ ( Sch ) \Shv_{\Set}(\Sch) , the sheaf represented by the affine line. By making use of the internal logic of the ∞ \infty -topos of sheaves on Sch \Sch , one can therefore study such invariants in the same way as one studies their
+non-parametrised counterpart in the ∞ \infty -category of ∞ \infty -groupoids, see for example the PhD thesis of Blechschmidt [ Ble17 ] for an application of these ideas to algebraic geometry in the 1 1 -categorical case. The study of higher invariants, i.e. sheaves on Sch \Sch that take values in a reasonable ∞ \infty -category 𝒜 \mathcal{A} , thus naturally leads to the emerging field of
+homotopy type theory [ Uni13 ] . In fact, it is now known [ Shu19 ] that much of homotopy type theory has a model in an arbitrary ∞ \infty -topos. By extending the same line of thought to the case of categorical invariants on schemes, the datum of a sheaf of ∞ \infty -categories on Sch \Sch is equivalent to that of a category internal to the ∞ \infty -topos Sh 𝒮 ⁡ ( Sch ) \Shv_{\mathcal{S}}(\Sch)
+. One should therefore be able to formulate and study the properties of such sheaves by means of studying their categorical properties when viewed internally in the ∞ \infty -topos Sh 𝒮 ⁡ ( Sch ) \Shv_{\mathcal{S}}(\Sch) . Such an internal perspective on category theory is not only useful for the study of categorical invariants on schemes, but in other situations as well. For example, work of
+Barwick, Glasman and Haine [ BGH20 , BH19 ] shows that the proétale ∞ \infty -topos S proét S_{\text{pro\'{e}t}} of any coherent scheme S S can be naturally regarded as a pyknotic ∞ \infty -category , i.e. as a category internal to the ∞ \infty -topos Pyk ⁡ ( 𝒮 ) \Pyk(\mathcal{S}) of pyknotic ∞ \infty -groupoids. Moreover, Sebastian Wolf shows in [ Wol20 ] that internally in Pyk ⁡ ( 𝒮 )
+\Pyk(\mathcal{S}) the ∞ \infty -topos S proét S_{\text{pro\'{e}t}} turns out to simply be given by a presheaf category, which amounts to a significant simplification of the structure of S proét S_{\text{pro\'{e}t}} . Although bare homotopy type theory is insufficient to argue synthetically about such structures (owing to the presence of non-invertible arrows), Riehl and Shulman [ RS17 ] have
+proposed an additional layer to homotopy type theory that rectifies this problem and that is powerful enough to support a synthetic formulation of basic higher categorical constructions. In the present paper, our goal is to study sheaves of ∞ \infty -categories from a semantic point of view: as categories internal to an ∞ \infty -topos ℬ \mathcal{B} . On the one hand, this is meant to provide
+tools for studying categorical invariants in geometry, such as those that are mentioned above. On the other hand, the study of categories internal to an ∞ \infty -topos ℬ \mathcal{B} should provide categorical semantics for the type theory developed by Riehl and Shulman. We do not aim to turn this into a formal statement, nevertheless we believe that developing the semantical side of the story
+might serve as a bridge to foster future development of the syntactic theory as well. Main results The present paper constitutes the first in a series of papers aimed at developing the theory of categories internal to an arbitrary ∞ \infty -topos ℬ \mathcal{B} , hereafter referred to as ℬ \mathcal{B} -categories . Arguably, Yoneda’s lemma is at the very core of any flavour of category theory, so
+in this paper we will focus on a proof of this result in the context of internal higher categories. We define the ∞ \infty -category Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) of ℬ \mathcal{B} -categories as the full subcategory of the ∞ \infty -category of simplicial objects in ℬ \mathcal{B} that satisfy the Segal condition and univalence , mimicking the definition of complete Segal spaces given by Rezk [
+Rez01 ] as previously done by Lurie [ Lur09b ] and Rasekh [ Ras18 ] . Since complete Segal spaces provide a model for the ∞ \infty -category of ∞ \infty -categories, the latter can be identified with Cat ∞ \Cat_{\infty} , and one obtains an equivalence Cat ⁡ ( ℬ ) ≃ Sh Cat ∞ ⁡ ( ℬ ) \Cat(\mathcal{B})\simeq\Shv_{\Cat_{\infty}}(\mathcal{B}) between the ∞ \infty -category of ℬ \mathcal{B} -categories
+and the ∞ \infty -category of Cat ∞ \Cat_{\infty} -valued sheaves on ℬ \mathcal{B} . Consequently, the sheaf ℬ / ⁣ − \mathcal{B}_{\hskip-1.0pt/-} that sends an object A ∈ ℬ A\in\mathcal{B} to the slice ∞ \infty -category ℬ / A \mathcal{B}_{\hskip-1.0pt/A} defines a (large) ℬ \mathcal{B} -category Ω \mathsf{\Omega} that we will refer to as the internal universe of ℬ \mathcal{B} and which represents
+the reflection of ℬ \mathcal{B} within itself. We furthermore show that Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) is cartesian closed, hence that for any two ℬ \mathcal{B} -categories 𝖢 \mathsf{C} and 𝖣 \mathsf{D} there is a ℬ \mathcal{B} -category [ 𝖢 , 𝖣 ] ∈ Cat ⁡ ( ℬ ) {[\mathsf{C},\mathsf{D}]}\in\Cat(\mathcal{B}) of functors between 𝖢 \mathsf{C} and 𝖣 \mathsf{D} . The first of the two main results in this
+paper is an internal version of the Grothendieck construction : For any ℬ \mathcal{B} -category 𝖢 \mathsf{C} , we define a large ℬ \mathcal{B} -category 𝖫𝖥𝗂𝖻 𝖢 \ILFib_{\mathsf{C}} whose objects are given by left fibrations over 𝖢 \mathsf{C} . We then show: Theorem 4.5.1 . There is a canonical equivalence [ 𝖢 , Ω ] ≃ 𝖫𝖥𝗂𝖻 𝖢 {[\mathsf{C},\mathsf{\Omega}]}\simeq\ILFib_{\mathsf{C}} that is natural in
+𝖢 \mathsf{C} . By making use of the Grothendieck construction, we derive our second main result, an internal version of Yoneda’s lemma. For any ℬ \mathcal{B} -category 𝖢 \mathsf{C} , we construct a mapping bifunctor map 𝖢 ⁡ ( − , − ) : 𝖢 op × 𝖢 → Ω \Map_{\mathsf{C}}(-,-)\colon\mathsf{C}^{\mathrm{op}}\times\mathsf{C}\to\mathsf{\Omega} whose transpose gives rise to the Yoneda embedding h : 𝖢 → [ 𝖢
+op , Ω ] h\colon\mathsf{C}\to{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]} . Let ev : 𝖢 op × [ 𝖢 op , Ω ] → Ω \ev\colon\mathsf{C}^{\mathrm{op}}\times{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}\to\mathsf{\Omega} be the evaluation functor, i.e. the counit of the adjunction 𝖢 op × − ⊣ [ 𝖢 op , − ] \mathsf{C}^{\mathrm{op}}\times-\dashv{[\mathsf{C}^{\mathrm{op}},-]} . We then show: Theorem 4.7.8 .
+There is a commutative diagram 𝖢 op × [ 𝖢 op , Ω ] {\lx@inpgf@ignorespaces\mathsf{C}^{\mathrm{op}}\times{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}} [ 𝖢 op , Ω ] op × [ 𝖢 op , Ω ] {\lx@inpgf@ignorespaces{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}^{\mathrm{op}}}\times{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}} Ω {\lx@inpgf@ignorespaces\mathsf{\Omega}} ev
+\scriptstyle{\lx@inpgf@ignorespaces\ev} h × id \scriptstyle{\lx@inpgf@ignorespaces h\times\id} map [ 𝖢 op , Ω ] ⁡ ( − , − ) \scriptstyle{\lx@inpgf@ignorespaces\Map_{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}(-,-)} of (large) ℬ \mathcal{B} -categories. In particular, Theorem 4.7.8 implies that the Yoneda embedding h h is a fully faithful functor. Related work The idea of developing category
+theory internal to some topos is not new; in as early as 1963, Lawvere formulated axioms for a theory of categories [ Law63 ] , and in subsequent years Bénabou developed the theory of internal categories in a presheaf topos through the notion of fibred categories. For a detailed exposition of the theory of categories in a 1 1 -topos, the reader may consult [ Joh02 ] . In the world of higher
+category theory, Riehl and Shulman [ RS17 ] have proposed a synthetic approach to the theory of ∞ \infty -categories. The theory of categories in an ∞ \infty -topos as presented herein is expected to provide categorical semantics to their type theory (cf. [ RS17 , Remark A.14] ). We therefore believe that our version of Yoneda’s lemma can be formally deduced from their work. However, our approach
+is different in that it is derived from the internal Grothendieck construction, which is not featured in [ RS17 ] and which is a useful result in its own right. On the semantic side of the story, Barwick, Dotto, Glasman, Nardin and Shah [ BDG+16 ] have developed the theory of ∞ \infty -categories that are parametrised by a base ∞ \infty -category. Such parametrised ∞ \infty -categories are a
+special case of the more general notion of categories in an arbitrary ∞ \infty -topos; they precisely correspond to categories in presheaf ∞ \infty -topoi. Lastly, we note that Rasekh has previously worked out some aspects of the theory of internal higher categories in [ Ras18 ] . Acknowledgments I would like to thank my advisor Rune Haugseng for his support and help throughout the process of
+writing this paper. I furthermore thank Simon Pepin Lehalleur for introducing me to the world of higher category theory and for his invaluable guidance during the early stages of this project. I would also like to thank Mathieu Anel for helpful discussions.
+
+Theorem 4.5.1: There is a canonical equivalence [ 𝖢 , Ω ] ≃ 𝖫𝖥𝗂𝖻 𝖢 {[\mathsf{C},\mathsf{\Omega}]}\simeq\ILFib_{\mathsf{C}} that is natural in 𝖢 \mathsf{C} .
+
+Theorem 4.7.8: There is a commutative diagram 𝖢 op × [ 𝖢 op , Ω ] {\lx@inpgf@ignorespaces\mathsf{C}^{\mathrm{op}}\times{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}} [ 𝖢 op , Ω ] op × [ 𝖢 op , Ω ] {\lx@inpgf@ignorespaces{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}^{\mathrm{op}}}\times{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}} Ω {\lx@inpgf@ignorespaces\mathsf{\Omega}} ev
+\scriptstyle{\lx@inpgf@ignorespaces\ev} h × id \scriptstyle{\lx@inpgf@ignorespaces h\times\id} map [ 𝖢 op , Ω ] ⁡ ( − , − ) \scriptstyle{\lx@inpgf@ignorespaces\Map_{{[\mathsf{C}^{\mathrm{op}},\mathsf{\Omega}]}}(-,-)} of (large) ℬ \mathcal{B} -categories.
+
+Remark 2.4.1: If ℬ \mathcal{B} is an ∞ \infty -topos, there are a priori two ways to define the universe enlargement ℬ ​ ℬ ^ ^
+\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}} relative to the universe 𝐖 \mathbf{W} : either
+by applying the above construction to the pair 𝐔 ∈ 𝐖 \mathbf{U}\in\mathbf{W} , i.e. by defining ℬ ​ ℬ ^ ^ = Sh 𝒮 ​ 𝒮 ^ ^ ⁡ ( ℬ )
+\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}=\smash{\Shv_{\mathchoice{\widehat{\raisebox{0.90417pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.60275pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}}(\mathcal{B})}
+, or by applying this construction first to the pair 𝐔 ∈ 𝐕 \mathbf{U}\in\mathbf{V} and then to the pair 𝐕 ∈ 𝐖 \mathbf{V}\in\mathbf{W} , i.e. by setting ℬ ​ ℬ ^ ^ = Sh 𝒮 ​ 𝒮 ^ ^ ⁡ ( ℬ ^ )
+\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{B}$}}\smash{\widehat{\mathcal{B}}}}}=\smash{\Shv_{\mathchoice{\widehat{\raisebox{0.90417pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.60275pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}}(\widehat{\mathcal{B}}})
+, where the right-hand side now denotes the ∞ \infty -categories of functors ℬ ^ op → 𝒮 ​ 𝒮 ^ ^
+\widehat{\mathcal{B}}^{\mathrm{op}}\to\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}} that
+commute with 𝐕 \mathbf{V} -small limits. It turns out that either approach results in the same object: in fact, upon identifying 𝐔 \mathbf{U} with a regular cardinal in 𝐕 \mathbf{V} , we may identify ℬ \mathcal{B} with the ∞ \infty -category Ind ^ 𝐔 ​ ( ℬ ) \widehat{\Ind}_{\mathbf{U}}(\mathcal{B}) , hence [ Lur09a , Proposition 5.3.5.10] implies that the inclusion ℬ ↪ ℬ ^
+\mathcal{B}\hookrightarrow\widehat{\mathcal{B}} induces an equivalence Fun 𝐔 ​ -filt. ⁡ ( ℬ ^ , 𝒮 ​ 𝒮 ^ ^ op ) ≃ Fun ⁡ ( ℬ , 𝒮 ​ 𝒮 ^ ^ op )
+\Fun^{\mathbf{U}\text{-filt.}}(\widehat{\mathcal{B}},\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}^{\mathrm{op}})\simeq\Fun(\mathcal{B},\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}^{\mathrm{op}})
+in which the left-hand side denotes the full subcategory of Fun ⁡ ( ℬ ^ , 𝒮 ​ 𝒮 ^ ^ op )
+\Fun(\widehat{\mathcal{B}},\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}^{\mathrm{op}}) that
+is spanned by those functors that preserve 𝐔 \mathbf{U} -filtered colimits. Now [ Lur09a , Proposition 5.5.1.9] implies that the above equivalence restricts to an equivalence Sh 𝒮 ​ 𝒮 ^ ^ ⁡ ( ℬ ^ ) ≃ Sh 𝒮 ​ 𝒮 ^ ^ ⁡ ( ℬ )
+\smash{\Shv_{\mathchoice{\widehat{\raisebox{0.90417pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.60275pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}}(\widehat{\mathcal{B}})\simeq\Shv_{\mathchoice{\widehat{\raisebox{0.90417pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.60275pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}}(\mathcal{B})}
+, noting that its proof does not require 𝒮 ​ 𝒮 ^ ^ op
+\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\mathcal{S}$}}\smash{\widehat{\mathcal{S}}}}}^{\mathrm{op}} to be presentable (relative to
+the universe 𝐕 \mathbf{V} ) but merely to admit 𝐕 \mathbf{V} -small colimits.
+
+Lemma 2.4.2: For every A ∈ ℬ A\in\mathcal{B} , the equivalence PSh 𝒮 ^ ⁡ ( ℬ / A ) ≃ PSh 𝒮 ^ ⁡ ( ℬ ) / A \PSh_{\widehat{\mathcal{S}}}(\mathcal{B}_{\hskip-1.0pt/A})\simeq\PSh_{\widehat{\mathcal{S}}}(\mathcal{B})_{\hskip-1.0pt/A} restricts to an equivalence ℬ / A ^ ≃ ℬ ^ / A . \widehat{\mathcal{B}_{\hskip-1.0pt/A}}\simeq\widehat{\mathcal{B}}_{\hskip-1.0pt/A}.
+
+Proposition 2.4.3: There is a canonical equivalence ℬ / ⁣ − ^ ≃ ℬ ^ / ⁣ − \widehat{\mathcal{B}_{\hskip-1.0pt/-}}\simeq\widehat{\mathcal{B}}_{\hskip-1.0pt/-} of functors ℬ op → Cat ⁡ Cat ^ ^ ∞
+\mathcal{B}^{\mathrm{op}}\to\mathchoice{\widehat{\raisebox{1.29167pt}{\vphantom{$\Cat$}}\smash{\widehat{\Cat}}}}{\widehat{\raisebox{0.86108pt}{\vphantom{$\Cat$}}\smash{\widehat{\Cat}}}}{\widehat{\raisebox{-1.5pt}{\vphantom{$\Cat$}}\smash{\widehat{\Cat}}}}{\widehat{\raisebox{1.0pt}{\vphantom{$\Cat$}}\smash{\widehat{\Cat}}}}_{\infty} .
+
+Proposition 2.4.4: For any ∞ \infty -topos ℬ \mathcal{B} the inclusion ℬ ↪ ℬ ^ \mathcal{B}\hookrightarrow\widehat{\mathcal{B}} commutes with small limits and colimits, and the internal mapping bifunctor on ℬ ^ \widehat{\mathcal{B}} restricts to the internal mapping bifunctor on ℬ \mathcal{B} .
+
+Definition 2.5.1: Let 𝒞 \mathcal{C} be an ∞ \infty -category. A factorisation system is a pair ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) of families of maps in 𝒞 \mathcal{C} such that (1) Any map f f in 𝒞 \mathcal{C} admits a factorisation f ≃ r ​ l f\simeq rl with r ∈ ℛ r\in\mathcal{R} and l ∈ ℒ l\in\mathcal{L} . (2) ℒ ⊥ = ℛ \mathcal{L}^{\bot}=\mathcal{R} as well as ⊥ ℛ = ℒ
+\prescript{\bot}{}{\mathcal{R}}=\mathcal{L} .
+
+Proposition 2.5.2: Let 𝒞 \mathcal{C} be an ∞ \infty -category and let ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) be a factorisation system in 𝒞 \mathcal{C} . Then (1) The intersection ℒ ∩ ℛ \mathcal{L}\cap\mathcal{R} is precisely the collection of equivalences in 𝒞 \mathcal{C} ; (2) if g ∈ ℒ g\in\mathcal{L} , then f ​ g ∈ ℒ fg\in\mathcal{L} if and only f ∈ ℒ f\in\mathcal{L} ; dually, if f ∈ ℛ
+f\in\mathcal{R} then f ​ g ∈ ℛ fg\in\mathcal{R} if and only if g ∈ ℛ g\in\mathcal{R} ; (3) ℛ \mathcal{R} is stable under pullbacks and ℒ \mathcal{L} is stable under pushouts; (4) both ℛ \mathcal{R} and ℒ \mathcal{L} are stable under taking retracts. (5) ℛ \mathcal{R} is stable under all limits that exist in Fun ⁡ ( Δ 1 , 𝒞 ) \Fun(\Delta^{1},\mathcal{C}) , and dually ℒ \mathcal{L} is stable under
+all colimits that exist in Fun ⁡ ( Δ 1 , 𝒞 ) \Fun(\Delta^{1},\mathcal{C}) .∎
+
+Remark 2.5.3: Suppose that ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) is a factorisation system in an ∞ \infty -category 𝒞 \mathcal{C} that has a final object 1 ∈ 𝒞 1\in\mathcal{C} , and let f : c → d f\colon c\to d be a map in 𝒞 \mathcal{C} . Let L : 𝒞 → ℛ / 1 L\colon\mathcal{C}\to\mathcal{R}_{\hskip-1.0pt/1} be a left adjoint to the inclusion, and consider the commutative diagram c
+{\lx@inpgf@ignorespaces c} d {\lx@inpgf@ignorespaces d} L ⁡ ( c ) {\lx@inpgf@ignorespaces L(c)} L ⁡ ( d ) {\lx@inpgf@ignorespaces L(d)} 1 {\lx@inpgf@ignorespaces 1} 1 {\lx@inpgf@ignorespaces 1} f \scriptstyle{\lx@inpgf@ignorespaces f} L ⁡ ( f ) \scriptstyle{\lx@inpgf@ignorespaces L(f)} id \scriptstyle{\lx@inpgf@ignorespaces\id} in which the two vertical compositions are determined by the
+factorisation of the two terminal maps π c : c → 1 \pi_{c}\colon c\to 1 and π d : d → 1 \pi_{d}\colon d\to 1 into maps in ℒ \mathcal{L} and ℛ \mathcal{R} . If f f is contained in ℒ \mathcal{L} , then item (2) of Proposition 2.5.2 implies that L ⁡ ( f ) L(f) must be contained in ℒ \mathcal{L} as well. On the other hand, item (2) of Proposition 2.5.2 also implies that L ⁡ ( f ) L(f) is contained in
+ℛ \mathcal{R} . Hence L ⁡ ( f ) L(f) must be an equivalence. In other words, the functor L L sends maps in ℒ \mathcal{L} to equivalences in ℛ / 1 \mathcal{R}_{\hskip-1.0pt/1} . The converse is however not true in general, i.e. not every map that is sent to an equivalence by L L must necessarily be contained in ℒ \mathcal{L} . A notable exception is the case where π d : d → 1 \pi_{d}\colon d\to 1
+is already contained in ℒ \mathcal{L} . In this case, the map d → L ⁡ ( d ) d\to L(d) is an equivalence, hence L ⁡ ( f ) L(f) being an equivalence does imply that f f is contained in ℒ \mathcal{L} .
+
+Proposition 2.5.4 ( [ Lur09a , Proposition 5.5.5.7] ): Let 𝒞 \mathcal{C} be a presentable ∞ \infty -category and let S S be a small set of maps in 𝒞 \mathcal{C} . Then there is a factorisation system ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) in 𝒞 \mathcal{C} with ℛ = S ⊥ \mathcal{R}=S^{\bot} and ℒ = ⊥ ℛ \mathcal{L}=\prescript{\bot}{}{\mathcal{R}} .∎
+
+Definition 2.5.5: Let 𝒞 \mathcal{C} be a presentable ∞ \infty -category and let S S be a class of maps in 𝒞 \mathcal{C} . Then S S is saturated if (1) S S contains all equivalences in 𝒞 \mathcal{C} and is closed under composition; (2) S S is closed under small colimits in Fun ⁡ ( Δ 1 , 𝒞 ) \Fun(\Delta^{1},\mathcal{C}) ; (3) S S is closed under pushouts.
+
+Proposition 2.5.6: Let 𝒞 \mathcal{C} be a presentable ∞ \infty -category and let S S be a small set of maps in 𝒞 \mathcal{C} . Let ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) be the associated factorisation system. Then ℒ \mathcal{L} is the smallest saturated class of maps that contains S S .
+
+Proposition 2.5.7 ( [ ABFJ20 , Proposition 3.2.9] ): Let 𝒞 \mathcal{C} be a presentable and cartesian closed ∞ \infty -category and let S S be a small set of maps in 𝒞 \mathcal{C} . Then there is a factorisation system ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) in 𝒞 \mathcal{C} such that ℛ = S ⊩ \mathcal{R}=S^{{\begin{sideways}$\!\Vdash$\end{sideways}}} and ℒ = ⊩ ℛ = ⊥ ℛ
+\mathcal{L}=\prescript{{\begin{sideways}$\!\Vdash$\end{sideways}}}{}{\mathcal{R}}=\prescript{\bot}{}{\mathcal{R}} .∎
+
+Proposition 2.5.8: Let 𝒞 \mathcal{C} be a presentable and cartesian closed ∞ \infty -category and let S S be a small set of maps in 𝒞 \mathcal{C} . Let ( ℒ , ℛ ) (\mathcal{L},\mathcal{R}) be the factorisation system provided by Proposition 2.5.7 . Then ℒ \mathcal{L} is the smallest saturated class of maps that contains the set { c × f | c ∈ 𝒞 , f ∈ S } \{c\times f~|~c\in\mathcal{C},~f\in S\} .∎
+
+Example 2.5.9: Let 𝒞 \mathcal{C} be a presentable and cartesian closed ∞ \infty -category. We say that a map f : c → d f\colon c\to d is a monomorphism if it is internally right orthogonal to the codiagonal 1 ⊔ 1 → 1 1\sqcup 1\to 1 , where 1 1 is the final object in 𝒞 \mathcal{C} . By construction, a map in 𝒞 \mathcal{C} is a monomorphism if and only if its diagonal is an equivalence. Dually, we
+say that a map is a strong epimorphism if it is internally left orthogonal to every monomorphism. By Proposition 2.5.7 , one obtains a factorisation system in which the left class are strong epimorphisms and the right class are monomorphisms. If 𝒞 \mathcal{C} is an ∞ \infty -topos, then strong epimorphisms are precisely covers , i.e. effective epimorphisms in the terminology of [ Lur09a ] . This
+follows from the fact that covers and monomorphisms form a factorisation system in any ∞ \infty -topos [ Lur09a , Example 5.2.8.16] , combined with the fact that the left class of a factorisation system is uniquely determined by the right class.
+
+Remark 3.1.1: For any object A A in the ∞ \infty -topos ℬ \mathcal{B} , we may regard A A as a constant simplicial object via the diagonal functor ℬ ↪ ℬ Δ \mathcal{B}\hookrightarrow\mathcal{B}_{\Delta} . Since products in ℬ Δ \mathcal{B}_{\Delta} are computed objectwise, the endofunctor A × − A\times- on ℬ Δ \mathcal{B}_{\Delta} is equivalent to the functor that is given by postcomposing
+simplicial objects with the product functor A × − : ℬ → ℬ A\times-\colon\mathcal{B}\to\mathcal{B} . The latter admits a right adjoint [ A , − ] : ℬ → ℬ {[A,-]}\colon\mathcal{B}\to\mathcal{B} , and since postcomposition with an adjunction induces an adjunction on the level of functor ∞ \infty -categories, the uniqueness of adjoints implies that the internal mapping objects functor [ A , − ] : ℬ Δ →
+ℬ Δ {[A,-]}\colon\mathcal{B}_{\Delta}\to\mathcal{B}_{\Delta} is obtained by applying the internal mapping objects functor of ℬ \mathcal{B} levelwise to simplicial objects in ℬ \mathcal{B} . More precisely, the restriction of the internal mapping object bifunctor [ − , − ] {[-,-]} on ℬ Δ \mathcal{B}_{\Delta} along the inclusion ℬ op × ℬ Δ ↪ ℬ Δ op × ℬ Δ
+\mathcal{B}^{\mathrm{op}}\times\mathcal{B}_{\Delta}\hookrightarrow\mathcal{B}_{\Delta}^{\mathrm{op}}\times\mathcal{B}_{\Delta} is equivalent to the transpose of the composite functor ℬ op × ℬ Δ × Δ op → id ℬ op × ev Δ op ℬ op × ℬ → [ − , − ] ℬ
+\mathcal{B}^{\mathrm{op}}\times\mathcal{B}_{\Delta}\times\Delta^{\mathrm{op}}\xrightarrow{\id_{\mathcal{B}^{\mathrm{op}}}\times\ev_{\Delta^{\mathrm{op}}}}\mathcal{B}^{\mathrm{op}}\times\mathcal{B}\xrightarrow{{[-,-]}}\mathcal{B} in which ev Δ op \ev_{\Delta^{\mathrm{op}}} denotes the evaluation functor (i.e the counit of the adjunction − × Δ op ⊣ Fun ( Δ op , − )
+-\times\Delta^{\mathrm{op}}\dashv\Fun(\Delta^{\mathrm{op}},-) ) and in which the second functor is the internal mapping object bifunctor on ℬ \mathcal{B} . In particular, this argument shows that the internal mapping objects bifunctor on ℬ Δ \mathcal{B}_{\Delta} restricts to the internal mapping objects bifunctor on ℬ \mathcal{B} , which justifies our choice of notation.
+
+Proposition 3.1.2: The composite functor ℬ Δ → ( − ) Δ ∙ PSh ℬ Δ ⁡ ( Δ ) → ( − ) 0 ℬ Δ \mathcal{B}_{\Delta}\xrightarrow{(-)^{\Delta^{\bullet}}}\PSh_{\mathcal{B}_{\Delta}}(\Delta)\xrightarrow{(-)_{0}}\mathcal{B}_{\Delta} in which the second arrow denotes postcomposition with the evaluation functor ( − ) 0 : ℬ Δ → ℬ (-)_{0}\colon\mathcal{B}_{\Delta}\to\mathcal{B} is equivalent to the identity
+functor on ℬ Δ \mathcal{B}_{\Delta} .∎
+
+Lemma 3.1.3: Let S S be a saturated class of maps in ℬ \mathcal{B} that contains the maps s 0 : Δ 1 ⊗ C → C s^{0}\colon\Delta^{1}\otimes C\to C for every C ∈ ℬ Δ C\in\mathcal{B}_{\Delta} . Then S S contains the projection Δ n ⊗ A → A \Delta^{n}\otimes A\to A for every n ≥ 0 n\geq 0 and every A ∈ ℬ A\in\mathcal{B} .
+
+Proposition 3.1.4: For any simplicial object C ∈ ℬ Δ C\in\mathcal{B}_{\Delta} , the following are equivalent: (1) C C is contained in the essential image of the diagonal functor ι : ℬ ↪ ℬ Δ \iota\colon\mathcal{B}\hookrightarrow\mathcal{B}_{\Delta} . (2) C C is internally local with respect to the map s 0 : Δ 1 → Δ 0 s^{0}\colon\Delta^{1}\to\Delta^{0} .
+
+Definition 3.1.5: A simplicial object in ℬ \mathcal{B} is said to be a ℬ \mathcal{B} -groupoid if it satisfies the equivalent conditions from Proposition 3.1.4 . We denote by Grpd ⁡ ( ℬ ) ↪ ℬ Δ \Grpd(\mathcal{B})\hookrightarrow\mathcal{B}_{\Delta} the full subcategory spanned by the ℬ \mathcal{B} -groupoids.
+
+Definition 3.2.1: For any n ≥ 1 n\geq 1 , let I n = Δ 1 ⊔ Δ 0 ⋯ ⊔ Δ 0 Δ 1 ⊂ Δ n I^{n}=\Delta^{1}\sqcup_{\Delta^{0}}\cdots\sqcup_{\Delta^{0}}\Delta^{1}\subset\Delta^{n} denote the spine of Δ n \Delta^{n} , i.e the simplicial sub- ∞ \infty -groupoid of Δ n \Delta^{n} that is spanned by the inclusions d { i − 1 , i } : Δ 1 ⊂ Δ n d^{\{i-1,i\}}\colon\Delta^{1}\subset\Delta^{n} for i = 1 , … , n
+i=1,\dots,n . Furthermore, let E 1 E^{1} be the simplicial ∞ \infty -groupoid that is defined by the pushout square Δ 1 ⊔ Δ 1 {\lx@inpgf@ignorespaces\Delta^{1}\sqcup\Delta^{1}} Δ 0 ⊔ Δ 0 {\lx@inpgf@ignorespaces\Delta^{0}\sqcup\Delta^{0}} Δ 3 {\lx@inpgf@ignorespaces\Delta^{3}} E 1 . {\lx@inpgf@ignorespaces E^{1}.} s 0 ⊔ s 0 \scriptstyle{\lx@inpgf@ignorespaces s^{0}\sqcup s^{0}} d { 0 , 2 } ⊔ d { 1
+, 3 } \scriptstyle{\lx@inpgf@ignorespaces d^{\{0,2\}}\sqcup d^{\{1,3\}}} ⌟ {\lx@inpgf@ignorespaces\lrcorner} We refer to E 1 E^{1} as the walking equivalence .
+
+Remark 3.2.2: Many authors define the walking equivalence as the simplicial set that arises as the nerve of the category with two objects and a unique isomorphism between them. The simplicial set E 1 E^{1} from Definition 3.2.1 is different in that it is comprised of a map together with separate left and right inverses.
+
+Remark 3.2.3: In the situation of Definition 3.2.1 , the colimits that define I n I^{n} and E 1 E^{1} can be computed as the ordinary (i.e 1 1 -categorical) pushouts in the 1 1 -category of simplicial sets. Indeed, colimits in 𝒮 Δ \mathcal{S}_{\Delta} are computed levelwise and so are ordinary colimits in Set Δ \Set_{\Delta} , hence it suffice to show that for any integer k ≥ 0 k\geq 0 the
+colimits in 𝒮 \mathcal{S} of the diagrams in Set ↪ 𝒮 \Set\hookrightarrow\mathcal{S} that define I k n I^{n}_{k} and E k 1 E^{1}_{k} can be computed by the ordinary colimits of these diagrams in Set \Set . As the Quillen model structure on the 1 1 -category of simplicial sets is left proper, ordinary pushouts along monomorphisms of simplicial sets present homotopy pushouts in 𝒮 \mathcal{S} . Now I
+n I^{n} is an iterated pushout along monomorphisms in 𝒮 Δ \mathcal{S}_{\Delta} , hence I k n I^{n}_{k} is an iterated pushout along monomorphisms in Set ↪ 𝒮 \Set\hookrightarrow\mathcal{S} , hence the claim follows for I n I^{n} . Regarding the simplicial ∞ \infty -groupoid E 1 E^{1} , note that E 1 E^{1} fits into the commutative diagram Δ 1 {\lx@inpgf@ignorespaces\Delta^{1}} Δ 0
+{\lx@inpgf@ignorespaces\Delta^{0}} Δ 1 {\lx@inpgf@ignorespaces\Delta^{1}} Δ 3 {\lx@inpgf@ignorespaces\Delta^{3}} Δ 3 ⊔ Δ 1 Δ 0 {\lx@inpgf@ignorespaces\Delta^{3}\sqcup_{\Delta^{1}}\Delta^{0}} Δ 0 {\lx@inpgf@ignorespaces\Delta^{0}} Δ 0 ⊔ Δ 1 Δ 3 {\lx@inpgf@ignorespaces\Delta^{0}\sqcup_{\Delta^{1}}\Delta^{3}} E 1 {\lx@inpgf@ignorespaces E^{1}} d { 1 , 3 } \scriptstyle{\lx@inpgf@ignorespaces
+d^{\{1,3\}}} ⌟ {\lx@inpgf@ignorespaces\lrcorner} d { 0 , 2 } \scriptstyle{\lx@inpgf@ignorespaces d^{\{0,2\}}} ⌟ {\lx@inpgf@ignorespaces\lrcorner} ⌟ {\lx@inpgf@ignorespaces\lrcorner} of simplicial ∞ \infty -groupoids. Since the pushouts in the lower left and in the upper right corner are computed by the ordinary pushouts of simplicial sets, the claim now follows from the straightforward observation
+that the composition Δ 1 ↪ Δ 3 → Δ 3 ⊔ Δ 1 Δ 0 \Delta^{1}\hookrightarrow\Delta^{3}\to\Delta^{3}\sqcup_{\Delta^{1}}\Delta^{0} is a monomorphism.
+
+Definition 3.2.4: An object C ∈ ℬ Δ C\in\mathcal{B}_{\Delta} is a ℬ \mathcal{B} -category if (Segal conditions) C C is internally local with respect to the map I 2 ↪ Δ 2 I^{2}\hookrightarrow\Delta^{2} , and (univalence) C C is internally local with respect to the map E 1 → Δ 0 E^{1}\to\Delta^{0} . We denote the full subcategory of ℬ Δ \mathcal{B}_{\Delta} that is spanned by the ℬ \mathcal{B}
+-categories by Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) .
+
+Lemma 3.2.5: The following sets generate the same saturated class of maps in ℬ Δ \mathcal{B}_{\Delta} : (1) S = { I 2 ⊗ K ↪ Δ 2 ⊗ K | K ∈ ℬ Δ } S=\{I^{2}\otimes K\hookrightarrow\Delta^{2}\otimes K~|~K\in\mathcal{B}_{\Delta}\} ; (2) T = { I n ⊗ A ↪ Δ n ⊗ A | n ≥ 2 , A ∈ ℬ } T=\{I^{n}\otimes A\hookrightarrow\Delta^{n}\otimes A~|~n\geq 2,~A\in\mathcal{B}\} ; (3) U = { I n ⊗ K ↪ Δ n ⊗ K | n ≥ 2 , K ∈
+ℬ Δ } U=\{I^{n}\otimes K\hookrightarrow\Delta^{n}\otimes K~|~n\geq 2,~K\in\mathcal{B}_{\Delta}\} .
+
+Lemma 3.2.6: Let S S be a strongly saturated class of maps in ℬ \mathcal{B} that contains the maps E 1 ⊗ A → A E^{1}\otimes A\to A and I n ⊗ A ↪ Δ n ⊗ A I^{n}\otimes A\hookrightarrow\Delta^{n}\otimes A for all A ∈ ℬ A\in\mathcal{B} and all n ≥ 0 n\geq 0 . Then S S contains the maps E 1 ⊗ C → C E^{1}\otimes C\to C for all C ∈ ℬ Δ C\in\mathcal{B}_{\Delta} .
+
+Proposition 3.2.7: Let C C be a simplicial object in ℬ \mathcal{B} . The following conditions are equivalent: (1) C C is a ℬ \mathcal{B} -category; (2) for all n ≥ 2 n\geq 2 the maps C n → C 1 × C 0 ⋯ × C 0 C 1 C_{n}\to C_{1}\times_{C_{0}}\cdots\times_{C_{0}}C_{1} as well as the map C 0 → ( C 0 × C 0 ) × C 1 × C 1 C 3 C_{0}\to(C_{0}\times C_{0})\times_{C_{1}\times C_{1}}C_{3} are equivalences.
+
+Remark 3.2.8: Proposition 3.2.7 allows us to make sense of the notion of a 𝒞 \mathcal{C} -category for any ∞ \infty -category 𝒞 \mathcal{C} with finite limits. That is, we may define a 𝒞 \mathcal{C} -category to be a simplicial object C ∈ 𝒞 Δ C\in\mathcal{C}_{\Delta} that satisfies the second condition of Proposition 3.2.7 .
+
+Proposition 3.2.9: The inclusion Cat ⁡ ( ℬ ) ↪ ℬ Δ \Cat(\mathcal{B})\hookrightarrow\mathcal{B}_{\Delta} exhibits Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) as an accessible localisation of ℬ Δ \mathcal{B}_{\Delta} . In particular, the ∞ \infty -category Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) is presentable.∎
+
+Remark 3.2.10: As Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) is an accessible localisation of ℬ Δ \mathcal{B}_{\Delta} , the inclusion Cat ⁡ ( ℬ ) ↪ ℬ Δ \Cat(\mathcal{B})\hookrightarrow\mathcal{B}_{\Delta} creates small limits. On the other hand, colimits of small diagrams are usually not created (or even preserved) by the inclusion, as these can be computed by applying the localisation functor ℬ Δ → Cat ⁡ ( ℬ
+) \mathcal{B}_{\Delta}\to\Cat(\mathcal{B}) to the colimits of the underlying diagrams of simplicial objects in ℬ \mathcal{B} . Filtered colimits, on the other hand, are created by the inclusion Cat ⁡ ( ℬ ) ↪ ℬ Δ \Cat(\mathcal{B})\hookrightarrow\mathcal{B}_{\Delta} . In fact, as such colimits commute with finite limits, it is immediate from Proposition 3.2.7 that the colimit in ℬ Δ
+\mathcal{B}_{\Delta} of a small filtered diagram of ℬ \mathcal{B} -categories is contained in Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) and is therefore the colimit of this diagram in Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) . In particular, as colimits are universal in ℬ Δ \mathcal{B}_{\Delta} , this observation implies that filtered colimits are universal in Cat ⁡ ( ℬ ) \Cat(\mathcal{B}) .
+
+Proposition 3.2.11: The full subcategory Cat ⁡ ( ℬ ) ↪ ℬ Δ \Cat(\mathcal{B})\hookrightarrow\mathcal{B}_{\Delta} is an exponential ideal and therefore in particular a cartesian closed ∞ \infty -category. In other words, if 𝖢 \mathsf{C} is a ℬ \mathcal{B} -category and D D is a simplicial object in ℬ \mathcal{B} , the internal mapping object [ D , 𝖢 ] {[D,\mathsf{C}]} is a ℬ \mathcal{B} -category.∎
+
+Corollary 3.2.12: The localisation functor ℬ Δ → Cat ⁡ ( ℬ ) \mathcal{B}_{\Delta}\to\Cat(\mathcal{B}) preserves finite products.∎
+
+Proposition 3.2.13: The groupoidification functor ( − ) gpd : Cat ⁡ ( ℬ ) → Grpd ⁡ ( ℬ ) (-)^{\mathrm{gpd}}\colon\Cat(\mathcal{B})\to\Grpd(\mathcal{B}) commutes with small colimits and finite products.
+
+Proposition 3.2.14: The core ℬ \mathcal{B} -groupoid functor ( − ) ≃ : Cat ⁡ ( ℬ ) → Grpd ⁡ ( ℬ ) (-)^{\simeq}\colon\Cat(\mathcal{B})\to\Grpd(\mathcal{B}) commutes with small filtered colimits and small limits.
+
+Example 3.2.15: Proposition 3.2.7 shows that an 𝒮 \mathcal{S} -category is precisely a complete Segal space as developed by Rezk [ Rez01 ] . By a theorem of Joyal and Tierney [ JT07 ] the ∞ \infty -category of complete Segal spaces is a model for the ∞ \infty -category of ∞ \infty -categories Cat ∞ \Cat_{\infty} , i.e. the left Kan extension of the inclusion Δ ↪ Cat ∞
+\Delta\hookrightarrow\Cat_{\infty} determines an equivalence Cat ⁡ ( 𝒮 ) ≃ Cat ∞ \Cat(\mathcal{S})\simeq\Cat_{\infty} .
+
+Lemma 3.3.1: Let F : 𝒞 → 𝒟 F\colon\mathcal{C}\to\mathcal{D} be a functor between ∞ \infty -categories that admit finite limits such that F F preserves pullbacks and such that for any map f : c → c ′ f\colon c\to c^{\prime} in 𝒞 \mathcal{C} the commutative square F ⁡ ( c × c ) {\lx@inpgf@ignorespaces F(c\times c)} F ⁡ ( c ′ × c ′ ) {\lx@inpgf@ignorespaces F(c^{\prime}\times c^{\prime})} F ⁡ ( c ) ×
+F ⁡ ( c ) {\lx@inpgf@ignorespaces F(c)\times F(c)} F ⁡ ( c ′ ) × F ⁡ ( c ′ ) {\lx@inpgf@ignorespaces F(c^{\prime})\times F(c^{\prime})} F ⁡ ( f × f ) \scriptstyle{\lx@inpgf@ignorespaces F(f\times f)} F ⁡ ( f ) × F ⁡ ( f ) \scriptstyle{\lx@inpgf@ignorespaces F(f)\times F(f)} is cartesian. Then the induced functor 𝒞 Δ → 𝒟 Δ \mathcal{C}_{\Delta}\to\mathcal{D}_{\Delta} that is given by postcomposition
+with F F sends 𝒞 \mathcal{C} -categories to 𝒟 \mathcal{D} -categories and therefore restricts to a functor F : Cat ⁡ ( 𝒞 ) → Cat ⁡ ( 𝒟 ) . F\colon\Cat(\mathcal{C})\to\Cat(\mathcal{D}). In particular, any left exact functor F F between finitely complete ∞ \infty -categories induces a functor on the level of categories.
+
+Proposition 3.3.2: There are two commutative squares Grpd ⁡ ( ℬ ) {\lx@inpgf@ignorespaces\Grpd(\mathcal{B})}
+
+## Claims
+
+{"n": 1, "subject": "Theorem 4.7.8", "relation": "proves", "object": "commutativity of the diagram relating ev, h x id and Map_{[C^op,Omega]}(-,-)", "modality": "stated", "locator": "Theorem 4.7.8"}
+{"n": 2, "subject": "internal Yoneda lemma", "relation": "depends-on", "object": "internal Grothendieck construction", "modality": "stated", "locator": "Section 1, Related work"}
+{"n": 3, "subject": "monomorphism", "relation": "equivalent-to", "object": "map whose diagonal is an equivalence", "modality": "stated", "locator": "Example 2.5.9"}
+{"n": 4, "subject": "Cat(B)", "relation": "equivalent-to", "object": "Shv_{Cat_∞}(B), Cat_∞-valued sheaves on B", "modality": "stated", "locator": "Section 1, Main results"}
+{"n": 5, "subject": "Theorem 4.5.1", "relation": "proves", "object": "canonical equivalence [C,Ω] ≃ LFib_C, natural in C (internal Grothendieck construction)", "modality": "stated", "locator": "Theorem 4.5.1"}
+{"n": 6, "subject": "LFib_C", "relation": "defines", "object": "large B-category whose objects are left fibrations over C", "modality": "stated", "locator": "Section 1"}
+{"n": 7, "subject": "composite B_Δ → PSh_{B_Δ}(Δ) → B_Δ of evaluation at 0 with the powers Δ^•", "relation": "equivalent-to", "object": "identity functor on B_Δ", "modality": "stated", "locator": "Proposition 3.1.2"}
+{"n": 8, "subject": "S-category", "relation": "equivalent-to", "object": "complete Segal space", "modality": "stated", "locator": "Example 3.2.15"}
+{"n": 9, "subject": "saturated class of maps", "relation": "defines", "object": "class satisfying the conditions of Definition 2.5.5", "modality": "stated", "locator": "Definition 2.5.5"}
+{"n": 10, "subject": "Remark 3.2.3 (computation of colimits defining I^n and E^1)", "relation": "uses-technique", "object": "left properness of the Quillen model structure on simplicial sets", "modality": "stated", "locator": "Remark 3.2.3"}
+{"n": 11, "subject": "Proposition 2.5.2", "relation": "proves", "object": "L and R are stable under retracts", "modality": "stated", "locator": "Proposition 2.5.2(4)"}
+{"n": 12, "subject": "Proposition 3.2.9", "relation": "proves", "object": "Cat(B) is an accessible localisation of B_Δ, hence presentable", "modality": "stated", "locator": "Proposition 3.2.9"}
+{"n": 13, "subject": "Proposition 3.2.7", "relation": "proves", "object": "C is a B-category iff the Segal maps C_n → C_1 ×_{C_0} ... ×_{C_0} C_1 (n ≥ 2) and C_0 → (C_0 × C_0) ×_{C_1 × C_1} C_3 are equivalences", "modality": "stated", "locator": "Proposition 3.2.7"}
+{"n": 14, "subject": "strong epimorphism", "relation": "defines", "object": "map internally left orthogonal to every monomorphism", "modality": "stated", "locator": "Example 2.5.9"}
+{"n": 15, "subject": "∞-category of complete Segal spaces", "relation": "equivalent-to", "object": "Cat_∞", "modality": "cited", "locator": "Example 3.2.15"}
+{"n": 16, "subject": "[Lur09a, Proposition 5.5.5.7]", "relation": "proves", "object": "existence of a factorisation system with R = S^⊥ and L = ⊥R for a small set S in a presentable ∞-category", "modality": "cited", "locator": "Proposition 2.5.4"}
+{"n": 17, "subject": "strong epimorphism", "relation": "equivalent-to", "object": "cover (effective epimorphism) in an ∞-topos", "modality": "stated", "locator": "Example 2.5.9"}
+{"n": 18, "subject": "B-category", "relation": "generalises", "object": "complete Segal space (S-category)", "modality": "stated", "locator": "Example 3.2.15"}
+{"n": 19, "subject": "parametrised ∞-categories of Barwick et al. [BDG+16]", "relation": "specialises", "object": "categories in an arbitrary ∞-topos", "modality": "cited", "locator": "Section 1, Related work"}
+{"n": 20, "subject": "parametrised ∞-categories of Barwick et al. [BDG+16]", "relation": "equivalent-to", "object": "categories in presheaf ∞-topoi", "modality": "cited", "locator": "Section 1, Related work"}

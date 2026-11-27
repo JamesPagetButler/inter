@@ -1,0 +1,10 @@
+```json
+{"n": 1, "grade": "wrong-relation", "reason": "The paper states \"prove a geometric Satake equivalence over the Fargues--Fontaine curve\", making it the statement being proven, not a result that establishes the object."}
+{"n": 2, "grade": "faithful", "reason": "The paper states \"we ... define ... a map from the spectral Bernstein center to the Bernstein center\"."}
+{"n": 3, "grade": "faithful", "reason": "The paper states \"we prove finiteness results for the cohomology of local Shimura varieties\"."}
+{"n": 4, "grade": "faithful", "reason": "The paper states \"we define a category of $\\ell$-adic sheaves on the stack $\\mathrm{Bun}_G$ of $G$-bundles on the Fargues--Fontaine curve\"."}
+{"n": 5, "grade": "faithful", "reason": "The paper states \"define ... the spectral action of the category of perfect complexes on the stack of $L$-parameters on the category of $\\ell$-adic sheaves on $\\mathrm{Bun}_G$\"."}
+{"n": 6, "grade": "faithful", "reason": "The paper states \"define $L$-parameters associated with irreducible smooth representations of $G(E)$\"."}
+{"n": 7, "grade": "faithful", "reason": "The paper states \"we prove finiteness results for the cohomology of ... general moduli spaces of local shtukas\"."}
+```
+GRADES-END

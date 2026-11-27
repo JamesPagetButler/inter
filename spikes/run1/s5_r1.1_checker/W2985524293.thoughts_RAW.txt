@@ -1,0 +1,46 @@
+**Evaluation of Mathematical Physics Claims**
+
+Alright, let's dive into these claims. I understand the task: evaluate each against the text, following the rubric rules, and provide a single JSON line per claim. Here's my assessment:
+
+{"claim": 1, "grade": "faithful", "quote": "the following are equivalent: 1. \\nabla\\varphi=0 2. \\text{Hol}(g_{\\varphi})\\subseteq G_{2}"}
+
+{"claim": 2, "grade": "wrong-relation"}
+
+{"claim": 3, "grade": "faithful"}
+
+{"claim": 4, "grade": "faithful"}
+
+{"claim": 5, "grade": "wrong-relation"}
+
+{"claim": 6, "grade": "faithful"}
+
+{"claim": 7, "grade": "wrong-relation"}
+
+{"claim": 8, "grade": "wrong-relation"}
+
+{"claim": 9, "grade": "wrong-relation"}
+
+{"claim": 10, "grade": "faithful"}
+
+{"claim": 11, "grade": "wrong-relation"}
+
+{"claim": 12, "grade": "faithful"}
+
+{"claim": 13, "grade": "wrong-relation"}
+
+{"claim": 14, "grade": "wrong-direction"}
+
+{"claim": 15, "grade": "wrong-relation"}
+
+{"claim": 16, "grade": "faithful"}
+
+{"claim": 17, "grade": "faithful"}
+
+{"claim": 18, "grade": "faithful"}
+
+{"claim": 19, "grade": "faithful"}
+
+{"claim": 20, "grade": "wrong-relation"}
+
+GRADES-END
+

@@ -1,0 +1,49 @@
+**Evaluation of Mathematical Claims**
+
+Okay, here's the rundown of how I'm evaluating these claims. I've got the rubric in mind, focusing on the `defines` and `proves` relations, and the admissible subjects and objects. I'm keeping a sharp eye on the nuanced cases, especially where the subject might be a definition or the defined term. I'm going to output the JSON lines and finish with `GRADES-END`.
+
+For **Claim 1**, the definition of "steady map" looks straightforward. The text explicitly defines it, so the grade is **faithful**.
+
+With **Claim 2**, this one's a little tricky. The subject is "Mann's descendable maps of analytic rings," and the relation is `defines` and the object is "descendable maps of analytic rings". But it seems that the subject is the same as the thing being defined, which is not really a defining statement, but rather an instance of the defined object. The rubric makes it a case of **wrong-relation**. I'm marking it as wrong-relation because it's the *term* that is the subject, not the *defining statement*. The subject is the defined term, as I understand it.
+
+**Claim 3** is about a functor defining a sheaf of infinity-categories, and the text backs this up. The claim is **faithful**.
+
+**Claim 4**, the lemma proves a natural map is steady. This is a clear case of proving something, so it is **faithful**.
+
+**Claim 5** is about the notation `PCoh(A)`. The text just says "where PCoh(A) is the category...". The rubric says that a formula or identification for a quantity already named should not be `defines`. This is an instance of an identification, not a definition, so I'm marking it **wrong-relation**.
+
+In **Claim 6**, Section 5 "recovers" a theorem from another. The paper uses the word "recover" which means proves. The grade is **faithful**.
+
+For **Claim 7**, Mathew shows that an object "finitely presented faithfully flat maps..." *has the property* "descendable". This isn't a "proves" relationship. The subject has property; the rubric says it's a **wrong-relation**.
+
+**Claim 8** is a standard definition of an uncompleted analytic ring. The text explicitly defines this, so **faithful**.
+
+In **Claim 9**, Mann proves faithfully flat descent. This is another clear instance of proving something, so it is **faithful**.
+
+**Claim 10** generalizes a theorem. This is again a clear `generalizes` relationship, which is covered in `proves`. So it is **faithful**.
+
+**Claim 11**, the section proves fppf descent, this is a clear case of proving something, so **faithful**.
+
+**Claim 12** has a construction defining an analytic ring. Looks like the text defines the object in question. So the grade is **faithful**.
+
+**Claim 13**, the proposition proves a functor is fully faithful. It is a clear case of proving a property of a functor, thus **faithful**.
+
+**Claim 14** is about an equivalence of categories. The text states an equivalence, which means it proves that the equivalence exists. Thus, **faithful**.
+
+For **Claim 15**, the text specifies that the category has a set of properties, so it proves those properties. The claim is **faithful**.
+
+**Claim 16**, the theorem proves the existence of an object, which has certain properties. This is a standard case of proving. The grade is **faithful**.
+
+**Claim 17**, Mann defines descendable maps. So the subject is the defining source, the object is what's being defined. So it is **faithful**. This is consistent with Claim 2's fix.
+
+**Claim 18** says Mathew proves something. It is a clear case of proving something, so it is **faithful**.
+
+In **Claim 19**, the text defines a subcategory. The grade is **faithful**.
+
+Finally, **Claim 20** is about a functor commuting with limits; the text proves the functor is defined and has this property. It is **faithful**.
+
+{"n": 1, "grade": "faithful", "reason": "The text explicitly defines steady map."}
+{"n": 2, "grade": "wrong-relation", "reason": "Mann's descendable maps of analytic rings is an instance of the object being defined. The subject is a degenerate case."}
+{"n": 3, "grade": "faithful", "reason": "The text states the functor defines a sheaf."}
+{"n": 4, "grade": "faithful", "reason": "The lemma proves a
+

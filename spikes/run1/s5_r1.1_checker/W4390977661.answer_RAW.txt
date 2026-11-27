@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "A map f : ( 𝒜 , ℳ 𝒜 ) → ( ℬ , ℳ ℬ ) in AnRing is steady if for all maps..."}
+{"n": 2, "grade": "wrong-relation", "reason": "Mann defines the notion of descendable maps of analytic rings and constructs a general theory of them to prove faithfully flat descent."}
+{"n": 3, "grade": "faithful", "reason": "Then the functor U ↦ 𝒟 ⁡ ( ( 𝒪 X ​ ( U ) , 𝒪 X + ​ ( U ) ) ■ ) defines a sheaf of ∞-categories on X."}
+{"n": 4, "grade": "faithful", "reason": "The natural map ℤ ■ → ℤ ​ [ T ] ■ in AnRing is steady."}
+{"n": 5, "grade": "wrong-relation", "reason": "where PCoh ⁡ ( A ) is the category of pseudo-coherent complexes of A -modules and Δ is the simplex category."}
+{"n": 6, "grade": "faithful", "reason": "Finally, in Section 5, we recover Theorem 0.1 from Theorem 0.3 by using the method used in [ And21 , Section 5] ."}
+{"n": 7, "grade": "wrong-relation", "reason": "In [ Mat16 , Definition 3.18] , Mathew shows that finitely presented faithfully flat maps of discrete rings are descendable ( [ Mat16 , Corollary 3.33] )."}
+{"n": 8, "grade": "faithful", "reason": "An uncompleted pre-analytic ring ( 𝒜 , ℳ ) is called an uncompleted analytic ring if..."}
+{"n": 9, "grade": "faithful", "reason": "While writing this paper, the author was informed that Mann proves faithfully flat descent for discrete rings by a slightly different approach in his thesis [ Man22 ] ."}
+{"n": 10, "grade": "faithful", "reason": "This theorem is a generalization of Theorem 0.1 ."}
+{"n": 11, "grade": "faithful", "reason": "In Section 2, we prove fppf descent for discrete rings in the context of condensed mathematics."}
+{"n": 12, "grade": "faithful", "reason": "We define an uncompleted pre-analytic ring A ■ as follows:"}
+{"n": 13, "grade": "faithful", "reason": "Then the following functor is fully faithful: cAff → AnRing ; ( A , A + ) ↦ ( A , A + ) ■ ."}
+{"n": 14, "grade": "faithful", "reason": "Then we have an equivalence of ∞-categories 𝒟 ⁡ ( A ■ ) ​ ⟶ ∼ ​ lim ← [ n ] ∈ Δ ⁡ 𝒟 ⁡ ( ( B n / A ) ■ ) ."}
+{"n": 15, "grade": "faithful", "reason": "The category Mod 𝒜 cond is an abelian category which satisfies Grothendieck’s axioms (AB3), (AB4), (AB5), (AB6), (AB3*), and (AB4*)."}
+{"n": 16, "grade": "faithful", "reason": "There exists an object N B / A ∈ 𝒟 ⁡ ( B ¯ ) satisfying the following conditions:"}
+{"n": 17, "grade": "faithful", "reason": "Mann defines the notion of descendable maps of analytic rings and constructs a general theory of them to prove faithfully flat descent."}
+{"n": 18, "grade": "faithful", "reason": "In [ Mat16 , Definition 3.18] , Mathew shows that finitely presented faithfully flat maps of discrete rings are descendable ( [ Mat16 , Corollary 3.33] )."}
+{"n": 19, "grade": "faithful", "reason": "We define 𝒟 ⁡ ( 𝒜 , ℳ ) ⊂ 𝒟 ⁡ ( 𝒜 ) to be the full ∞-subcategory of all complexes of 𝒜 -modules M such that for all extremally disconnected sets S, the map..."}
+{"n": 20, "grade": "faithful", "reason": "In particular, the functor − ⊗ A ■ 𝕃 B ■ : 𝒟 ( A ■ ) → 𝒟 ( B ■ ) commutes with small limits."}
+GRADES-END

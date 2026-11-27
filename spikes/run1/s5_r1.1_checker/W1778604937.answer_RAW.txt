@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "not-in-paper", "reason": "The text states that 'One of our results generalizes Deligne's gluing theory', so Deligne's theory is the special case (the object), not the generalisation (the subject), and the paper's result generalises it, not Deligne's theory generalising the gluing of pseudofunctors."}
+{"n": 2, "grade": "faithful", "reason": "The text explicitly states the object statement as the conclusion of Corollary 0.4."}
+{"n": 3, "grade": "faithful", "reason": "The text explicitly states this result as Theorem 0.1."}
+{"n": 4, "grade": "faithful", "reason": "The proof of Corollary 0.3 explicitly says it 'follows immediately from Corollary 0.2 applied to C=Sch', E_1=P, E_2=J', which corresponds to fixing parameters and therefore means Corollary 0.3 specialises Corollary 0.2."}
+{"n": 5, "grade": "faithful", "reason": "The text in Lemma 2.4(1) explicitly states 'the simplicial set Γ_Φ(R) is nonempty and connected, hence a connected component of Γ(R)'."}
+{"n": 6, "grade": "faithful", "reason": "This correctly extracts the conclusion of Corollary 0.4."}
+{"n": 7, "grade": "faithful", "reason": "The text states 'there exists a canonical categorical equivalence from the simplicial set δ*_{2,{2}} C^cart_{E1,E2} to the ∞-category of correspondences introduced in [9]', which fits equivalent-to with sense equivalent-category."}
+{"n": 8, "grade": "faithful", "reason": "The proof of Corollary 0.3 states 'This follows immediately from Corollary 0.2 applied to C=Sch', E_1=P, E_2=J', which is a valid specialisation."}
+{"n": 9, "grade": "faithful", "reason": "The text states 'Taking k = 2 and E_0 = Ar(C) we obtain the following. Corollary 0.2', showing Corollary 0.2 is obtained by fixing parameters in Theorem 0.1."}
+{"n": 10, "grade": "wrong-relation", "reason": "'cited' is a modality, not a relation type, as per the rubric field conventions."}
+{"n": 11, "grade": "wrong-relation", "reason": "The decomposition of g into g' and g'' is part of the proof strategy for Theorem 0.1/Corollary 0.2, not a premise invoked as a step, so it does not meet the admissibility test for depends-on."}
+{"n": 12, "grade": "faithful", "reason": "The text in Lemma 2.4(2) states 'For homotopic morphisms Φ, Φ': N → R, we have Γ_Φ(R) = Γ_Φ'(R)'."}
+{"n": 13, "grade": "faithful", "reason": "The text states 'The fact that g'' is a categorical equivalence is an ∞-categorical generalization of Deligne’s result [6]*Proposition 3.3.2'."}
+{"n": 14, "grade": "wrong-relation", "reason": "The text says Corollary 0.3 is obtained by applying Corollary 0.2 to specific parameters; as per the rubric boundary, a special case doesn't *use* the general result (depends-on), it is an instance of it (generalises/specialises)."}
+{"n": 15, "grade": "faithful", "reason": "Definition 1.7 explicitly introduces and defines the term 'categorical equivalence' for a map of simplicial sets."}
+{"n": 16, "grade": "faithful", "reason": "The text introduces F^∞ by stating 'such an enhancement is a functor F^∞ ... whose homotopy category is equivalent to D(X,Λ) ... induced functor ... is equivalent to the classical f_!'."}
+{"n": 17, "grade": "faithful", "reason": "The text defines F by stating 'The functoriality of this operation is encoded by a pseudofunctor F : Sch' → Cat_1 sending a scheme X ... to D(X,Λ) and a morphism f ... to the functor f_!'."}
+{"n": 18, "grade": "wrong-relation", "reason": "The text states that 'The fact that g'' is a categorical equivalence' generalises Deligne's result, not the map g'' itself; a map is a construction, while the object is a result, which does not match the kinds for generalises."}
+{"n": 19, "grade": "faithful", "reason": "The object perfectly captures the statement proved in Corollary 0.2."}
+{"n": 20, "grade": "faithful", "reason": "The text cites [6] as the place where the term 'extraordinary pushforward' was introduced and constructed."}
+GRADES-END
+```

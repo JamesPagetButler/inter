@@ -1,0 +1,30 @@
+**Claim Validation Summary**
+
+Okay, here's my breakdown of each claim, keeping in mind the rubric and aiming for accuracy and adherence to the paper's specific language. I've considered each claim with the diligence you would expect from an expert in the field.
+
+*   **Claim 1:** Definition 2.1 defines an *f*-cartesian morphism. The text explicitly states that a morphism is *f*-cartesian if it induces a pullback diagram. Grade: faithful.
+
+*   **Claim 2:** The forgetful functor `Top -> Set` specializes to a cartesian fibration (Definition 2.1(2)). I had to really think about this one. The initial interpretation, based on the rubric, was tricky because the relation `specializes` got rewritten as `generalizes`. Then the issue came to the rubric for `generalises`. But the provided text says the functor *is* a cartesian fibration. This is an example, but not a generalization. It's a `has-property` relation. Grade: wrong-relation.
+
+*   **Claim 3:** A left fibration specializes to a cocartesian fibration. This one required some careful thought. I had to consider the rubric, the types of the object, and what it meant to specialize, and how `specialises` turns into `generalises`. The definition in the text is clear: a left fibration is a cocartesian fibration with an additional condition. So does a cocartesian fibration generalize a left fibration? Yes, by adding a condition. But `generalises` requires that they are results, theories or constructions. They're object types. So, I ultimately concluded the inclusion is not a "specialization" or "generalization" in the way the rubric intends. This is a subobject of a more general structure. The claim is incorrect in the sense that it doesn't align with the intended relation. Grade: wrong-relation.
+
+*   **Claim 4:** Theorem 3.3 proves a statement about JL-p-cartesian morphisms. The text exactly matches the claim. Grade: faithful.
+
+*   **Claim 5:** Remark 1.3 defines a *p*-inert morphism. Subject is the defining *statement* (the Remark), and the object is the defined *term*. This corresponds to the correct `definition -> term` direction. The text aligns perfectly with this definition. Grade: faithful.
+
+*   **Claim 6:** Definition 2.1 defines an *f*-cocartesian morphism. Same logic as claim 1. It directly matches the definition in the text. Grade: faithful.
+
+*   **Claim 7:** The forgetful functor `Top -> Set` specializes to a cartesian fibration. Same reasoning as Claim 2. Grade: wrong-relation.
+
+*   **Claim 8:** The forgetful functor `VectBdl -> Mfld` specializes to a cartesian fibration. Same reasoning as Claim 2 and Claim 7. Grade: wrong-relation.
+
+*   **Claim 9:** A symmetric monoidal functor is equivalent to a morphism of cocartesian fibrations over Fin\* preserving cocartesian morphisms. This claim hinges on the paper's use of "equivalent data." The text explicitly says this is equivalent data. The relation `equivalent-to` works here because both are mathematical structures, or objects. Grade: faithful.
+
+*   **Claim 10:** The theory of ∞-operads depends on observations of Examples 1.2 and Remark 1.3. While the text states these observations form the "foundations," the relation 'depends-on' requires the observations to be invoked as a *step* of a proof. This isn't a direct dependence *within the paper*. I must assess this through the lens of the rubric, so it's a context, but not proof. The rubric says, does the edge invoke a premise? The text doesn't explicitly *depend* on them in the context of the *paper's* arguments. Grade: wrong-relation.
+
+*   **Claim 11:** Theorem 3.3 proves a statement about JL-p-cartesian edges, which is the same as Claim 4. The text aligns with the claim. Grade: faithful.
+
+*   **Claim 12:** The identity functor on Fin\* specializes to a cocartesian fibration. This is the same logic as Claims 2, 7, and 8. The text gives an example of the identity functor as a cocartesian fibration. Grade: wrong-relation.
+
+*   **Claim 13:** Corollary 3.4 depends on Theorem 3.3. This is where I must apply my expertise. *Does the text of Corollary 3.4 explicitly depend on Theorem 3.3?* The answer is no, because
+

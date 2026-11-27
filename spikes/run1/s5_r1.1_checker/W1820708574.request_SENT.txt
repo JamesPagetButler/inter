@@ -1,0 +1,297 @@
+# Checker v1 prompt (round 1.1; frozen with the round 1.1 pre-registration)
+
+You are checking claims extracted from one mathematics or physics paper. Below this prompt come two blocks, in order:
+1. **The rubric.** Its first line is `RUBRIC-ID: …`. It defines each relation type: meaning, subject and object kinds, direction, an admissibility test, examples, near-misses, and the boundary with its nearest neighbour.
+2. **The grader input.** It contains the paper's own text and a numbered list of claims in JSON. You do not know which system extracted them.
+
+For each claim, judge it **against the paper's text, using the rubric's definitions and admissibility tests**. Do not use outside knowledge of the paper or its field to supply what the text doesn't say. Give exactly one grade:
+- `faithful`: the relation, as the rubric defines it, holds between subject and object, with the right direction; the modality is right (`stated` = this paper asserts it; `cited` = attributed to another work); and the locator is right.
+- `wrong-relation`: the paper relates subject and object, but the rubric's definition of this relation is not met. For example, the admissibility test fails, or a neighbouring relation applies instead.
+- `wrong-direction`: the relation holds the other way round.
+- `wrong-modality`: stated and cited are swapped.
+- `wrong-locator`: the claim is correct, but not asserted at the given location. Every part of a compound locator must be correct.
+- `not-in-paper`: the paper's text does not assert this.
+
+If more than one error applies, give the first in this order: not-in-paper, wrong-relation, wrong-direction, wrong-modality, wrong-locator.
+
+**Output.** Output exactly these lines, in this order, and nothing else:
+1. One JSON line per claim, in claim order:
+   `{"n": <claim number>, "grade": "<grade>", "reason": "<one sentence quoting the paper's words>"}`
+2. One line exactly: `GRADES-END`
+
+
+RUBRIC-ID: relation-types-v1 source_sha256=ea3f245e3794afbf11c2759459a44aab3a52ab90b49716f80f3ddd9420e0f2d4 registry_sha256=edc8fd5fcd35d254c716c1f094503727ca4306b50d974884d3bc67eb578e8d13
+
+Rejected: `cites` is not a relation type -- modality, never a relation type (field conventions, all types)
+
+**Field conventions (all types):**
+- A claim has `subject`, `relation_type`, `object`, `modality ∈ {stated, cited}`, `locator` and **`quote`** (a verbatim span, checked mechanically against the source).
+- **Modality is never a relation.** `cites` is rejected by the validator.
+- "Result" means a theorem, proposition, lemma, corollary, remark or claim, or the paper itself.
+- "Statement" means a mathematical assertion. "Object" means a mathematical object, structure, space, category or quantity. "Predicate" means a property phrase that can be asserted of an object.
+
+### 1. `proves`
+1. **Meaning:** the result *subject* establishes the statement *object*.
+2. **Kinds:** subject is a result; object is a statement.
+3. **Direction:** result → statement.
+4. **Admissibility test:** "Is the subject a result, and does the quoted passage say that this result establishes the object?" If the subject is an object rather than a result, use `has-property`.
+5. **Examples:**
+   - (a) W2015765968 c12: `Proposition 2.24 proves "moduli space C_3 ≅ (U(3)×U(3))\(GL_3(C)×GL_3(C))/U(3) has real dimension 10"`, Prop. 2.24, Eq. (2.40) [verified, RCA item 1 context].
+   - (b) W7160385925 c12 rewritten: `Proposition 0.2.1 proves "Z[S] ≅ ⋃_n lim_i Z[S_i]_{≤n}"` [verified, RCA item 6].
+   - **Near-miss:** RCA item 10: `Z[S] proves "quasiseparated…"`. The subject is an object, so this is `has-property` [verified].
+6. **Boundary:** with `has-property`, check whether the subject is a result or an object. With `conjectures`, check whether the passage claims a proof.
+
+### 2. `has-property`
+1. **Meaning:** the paper asserts that the object *subject* has the property *object*.
+2. **Kinds:** subject is an object; object is a **predicate phrase**, never a full statement and never another object.
+3. **Direction:** object → predicate.
+4. **Admissibility test:** "Can the object field be read as 'is/has ___' about the subject, and does the passage assert it at the locator?" The locator names the asserting result or sentence.
+5. **Examples:**
+   - (a) RCA item 10: `Z[S] has-property "quasiseparated; comes from a compactly generated weak Hausdorff space"`, Remark 0.2.2 [verified].
+   - (b) RCA item 9: `condensed abelian groups has-property "form an abelian category"`, §0.1 [verified].
+   - **Near-miss:** `Z[S] has-property "Z[S] ≅ ⋃_n …"`. An isomorphism to a named object is `equivalent-to`, not a property.
+6. **Boundary:** with `proves`, see above. With `equivalent-to`, if the object is another object, it isn't a property. **Guard:** if `has-property` exceeds ~30% of a paper's claims, flag the paper for review, because this type is the natural dumping ground.
+
+### 3. `defines`
+1. **Meaning:** the paper introduces the term *object* at the locator.
+2. **Kinds:** subject is the defining statement (e.g. "Definition 1.6") or the defined term; object is the term or its defining content.
+3. **Direction:** definition → term.
+4. **Admissibility test:** "Is this where the term is *introduced*: a Definition, a `:=` on a symbol not used before, or 'we call'?" A formula or identification for a quantity already named is not `defines`.
+5. **Examples:**
+   - (a) RCA item 4: `Definition 1.6 defines "uncompleted analytic ring (A,M)"`, cited [Sch19] [verified].
+   - (b) RCA item 3, rewritten with a non-degenerate subject: `[Man22] defines "descendable maps of analytic rings"`, cited, Remark 0.6 [verified].
+   - **Near-misses** [verified]:
+     - RCA item 14: `c_l(λ) defines "…Eq. (3.76)"`. c_l(λ) is introduced in Eq. (3.74), and Eq. (3.76) evaluates it, so this is `equivalent-to` (sense: equal-value).
+     - RCA item 15: G_N, Newton's constant, has a prior meaning.
+6. **Boundary:** with `equivalent-to`, ask whether the symbol is new here. A `:=` on an already-defined symbol (RCA item 18) is `equivalent-to` with sense `equivalent-category` or `isomorphic`.
+
+### 4. `equivalent-to` (+ `sense`)
+1. **Meaning:** the paper asserts that subject and object are the same, in the stated sense.
+2. **Kinds:** both are objects, or both are statements, of the same kind. `sense ∈ {iff, isomorphic, equal-value, equivalent-category}`. `sense` is required whenever it can be read from the passage, and otherwise left out.
+3. **Direction:** symmetric. The validator stores it in canonical order.
+4. **Admissibility test:** "Does the passage assert identity, isomorphism, equality or logical equivalence, and does the sense match the symbol or wording (⟺, ≅, =, ≃)?"
+5. **Examples:**
+   - (a) W1641073798 c17: `Ω̂ for self-dual Ω, represented by A, equivalent-to √det A · A⁻¹` (sense: equal-value), Prop. 12. Quote: "If A ∈ Sym²S* represents a self-dual 3-form Ω then Ω̂ = √det A A⁻¹ ∈ Sym²S" [verified].
+   - (b) W1630303706 c2: `restriction of the Pin(h) and Pin(−h) extensions to Spin(h) equivalent-to "the extension given by (5)"` (sense: isomorphic), Prop. 1. Quote: "By restriction to Spin(h) each of these extensions reduces to the one given by (5)." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) …` "⊂" C⊕H⊕H⊕M_3(C). That's inclusion, not equivalence, so `subobject-of` [verified].
+6. **Boundary:** with `defines`, see above. With `subobject-of`, ⊂ is not ≅.
+
+### 5. `depends-on` (n-ary: head + premise set)
+1. **Meaning:** the statement or proof of the *head* result **uses all of the tail premises together**, along one proof route.
+2. **Kinds:** the head is a result, statement or construction. The tail is a **set of ≥ 1** premises, each a result, statement, construction, hypothesis, equation label or external citation. Each tail member is typed `internal` (a label in this paper) or `external` (a `\cite` or a named result).
+3. **Direction:** head ← tail.
+   - **AND** inside one edge: all tail members are needed jointly.
+   - **OR** across edges with the same head: alternative proofs. Each edge carries a `route` id.
+   - A binary claim is a tail of size 1.
+4. **Admissibility test, per tail member:** "Is this member invoked *as a step* of this proof?"
+   - Not a premise: a comparison ("cf."), a technique reuse ("as in the proof of …", which is `uses-technique`), or context ("this generalises …", which is `generalises`).
+   - A consequence of the head is never a premise.
+   - The edge must quote the sentence(s) that invoke each premise.
+5. **Examples:**
+   - (a) W4412210893 c3: `theory of solid abelian groups ← {Nöbeling's theorem}`, Abstract. Quote: "Nöbeling's theorem … is a crucial ingredient in the theory of solid abelian groups; without it one cannot give any nonzero examples of solid abelian groups." [verified]
+   - (b) RCA item 16, in the correct direction: `"A_∞ is a nearly-Kähler instanton" (Remark 4.7) ← {[35, Proposition 3]}` [verified].
+   - **Near-miss:** RCA item 16 as extracted: `AC G_2-instanton ← {"A_∞ is NK instanton"}`. That's a consequence, not a premise [verified].
+   - Joint/alternative cues:
+     - "by Lemmas 2 and 3", "combining", "together with" → **joint**;
+     - "alternatively", "another proof", "can also be deduced from" → a **new route**;
+     - several refs in one `proof` environment with no cue → joint by default.
+6. **Boundary:**
+   - With `uses-technique`, the object is a method, not a result.
+   - With citation, a reference is a premise only if it's invoked as a step.
+   - **Closure:** an extracted premise set is complete only over *cited* premises, because unstated background is never captured. Any traversal must label it `closed-over-cited`, never `closed`.
+   - Tail recall is measured against all in-proof refs (D11a seed), which are classified premise / comparison / technique / context.
+
+### 6. `generalises` (stored direction; `specialises` is rewritten)
+1. **Meaning:** *subject* is the more general one, and *object* is a special case of it.
+2. **Kinds:** both are results, theories or constructions.
+3. **Direction:** general → special. The validator rewrites `specialises(A,B)` as `generalises(B,A)`.
+4. **Admissibility test:** "Is the object obtained from the subject by fixing parameters or adding hypotheses, and does the passage say so?" Inclusion of a sub-object is not specialisation.
+5. **Examples:**
+   - (a) RCA item 5: `Theorem 0.3 generalises Theorem 0.1 (Mathew)`, abstract: "we generalize the result of Mathew" [verified].
+   - (b) W1778604937 c3, rewritten: `Theorem 0.1 generalises Corollary 0.2`. Quote: "Taking k=2 and E₀=Ar(C) we obtain the following." [verified]
+   - **Near-miss:** RCA item 2: `C⊕H⊕M_3(C) specialises C⊕H⊕H⊕M_3(C)`. That's a subalgebra inclusion, so `subobject-of` [verified].
+6. **Boundary:** with `subobject-of`, see above. With `depends-on`, a special case doesn't *use* the general result; it is an instance of it.
+
+### 7. `subobject-of`
+1. **Meaning:** *subject* is a sub-object (subalgebra, subgroup, subspace, subcategory, …) of *object*, as the paper states.
+2. **Kinds:** both are objects of the same kind.
+3. **Direction:** part → whole.
+4. **Admissibility test:** "Does the passage assert an inclusion (⊂, 'subalgebra of', 'full subcategory of')?"
+5. **Examples:**
+   - (a) RCA item 2, re-typed: `C⊕H⊕M_3(C) subobject-of C⊕H⊕H⊕M_3(C)`, Eq. (1.2) [verified].
+   - (b) W7160385925, Theorem 0.2.5: `Solid subobject-of Cond(Ab)` (full subcategory, "as a subcategory of the category Cond(Ab)") [verified, packet text].
+   - **Near-miss:** an equivalence of categories is `equivalent-to`, not inclusion.
+6. **Boundary:** with `generalises` and `equivalent-to`, see above.
+
+### 8. `counterexample-to`
+1. **Meaning:** *subject* (an example or object) violates the statement *object*, as the paper shows.
+2. **Kinds:** subject is an object or example; object is a statement or claim.
+3. **Direction:** example → statement it refutes.
+4. **Admissibility test:** "Is the subject the *example*, and does the passage show the object fails for it?"
+5. **Examples:**
+   - (a) W2074702261, re-typed from c26: `example (43) counterexample-to "commutativity of [D,h] with h and self-adjointness of D suffice for the conclusion of Lemma 5.1"`. Quote: the example shows they "do not suffice to entail the conclusion of Lemma 5.1" [verified]. (The claim as extracted, `Remark 5.5 counterexample-to "regularity of …"`, is garbled. What Remark 5.5 asserts is a property of example (43), "regularity fails", which is `has-property`.)
+   - (b) W1936971149 c39: `Ḟ(n) ∖ dⁱF(n−1) (0<i<n) counterexample-to "every subobject weakly equivalent to F(n) is a cover"`, Remark 10.2. Quote: "…is weakly equivalent to F(n) in the Segal space model category structure, but is not a cover." [verified]
+   - **Near-miss:** W1501965422 c25 as extracted: `naive descent for derived categories counterexample-to BG_m`. The direction is reversed. Quote, §0.2: naive descent "does not hold anymore, since otherwise the classifying stack BG_m over an algebraically closed field would have finite cohomological dimension, which is false." So BG_m is the example and naive descent is the statement that fails [verified].
+6. **Boundary:** with `proves` of a negation, a general impossibility theorem is `proves`, not `counterexample-to`.
+
+### 9. `conjectures`
+1. **Meaning:** the paper (or the named source) asserts *object* without proof, as expected to hold.
+2. **Kinds:** subject is the paper, a remark, or a named conjecture; object is a statement.
+3. **Direction:** source → conjectured statement.
+4. **Admissibility test:** "Does the passage present the object as expected, conjectured or 'should hold', and **not** prove it?"
+5. **Examples:**
+   - (a) W1936971149 c33: `Remark 8.13 conjectures "Theorem 8.11 and Corollary 8.12 hold for any reasonable model category M"`. Quote: "It seems that … the statements of (8.11) and (8.12) should hold for any 'reasonable' model category" [verified; the extractor called 8.12 a theorem, but it is a corollary].
+   - (b) W2964288547 c15, subject re-typed: `Remark 5.10 conjectures "L(r²t;1,1+rt,1+2rt,1+4rt) and L(r²t;1,1−rt,1−2rt,1−4rt) are Dirac isospectral, r odd, t ≥ 1"`. Quote: "The computations … hint at Theorem 5.6 being generalizable to the pairs …" [verified; the remark doesn't restate Theorem 5.6's r ≥ 7].
+   - **Near-miss (form only):** W1936971149 c27 as extracted: `Remark 8.4 conjectures "generalisation of Theorem 8.3 to arbitrary closed model categories"`. The content is right ("This result (8.3) presumably generalizes to an arbitrary closed model category"), but the object names a *kind* of result, not the statement. Fix: "Theorem 8.3 holds for any closed model category, with map_V the Dwyer–Kan function complexes" [verified].
+6. **Boundary:** with `proves`, a proof sketch is still `conjectures` unless the paper claims a proof.
+
+### 10. `uses-technique` (low weight)
+1. **Meaning:** the result or construction *subject* is obtained by the named method *object*.
+2. **Kinds:** subject is a result or construction; object is a **named method or framework**, not a specific result.
+3. **Direction:** user → method.
+4. **Admissibility test:** "Is the object a method or framework (Dold–Kan, ∞-categorical descent, Schrödinger transform), and does the passage say the subject is obtained with it?"
+5. **Examples:**
+   - (a) W1501965422 c24: `enhancement of derived categories uses-technique stable ∞-categories (Lurie)`. Quote: "Instead of the usual unbounded derived category, we work with its enhancement, which is a stable ∞-category in the sense of Lurie" [verified].
+   - (b) W1501965422 c23: `six operations construction uses-technique ∞-categorical (co)homological descent`. Quote, Abstract: "We enhance derived categories … to the level of ∞-categories and introduce ∞-categorical (co)homological descent." [verified]
+   - **Near-miss:** W1663788542 c19 as extracted: `Proposition 2.14 uses-technique Dold–Kan correspondence (Theorem 2.8)`. Prop. 2.14's statement is phrased through the cited Theorem 2.8 ("The tower associated (via the Dold-Kan correspondence) …"), a specific result, so it's `depends-on` [verified]. **Rule:** a named method or framework is `uses-technique`; a specific cited result, even one named after a method, is `depends-on`.
+6. **Boundary:** with `depends-on`, see above. **Excluded from §6 proof-candidate ranking.**
+
+**Settled at signing:**
+- (i) A **remark** counts as a result for `proves` when it proves something (papers do prove things in remarks). A remark that only *hints* is `conjectures`, as Remark 5.10 and Remark 8.13 show.
+- (ii) The `has-property` dumping-ground threshold stays **open by design**. It's measured in round 1.1/1.2 and set from data in the pre-reg, not guessed. Until then it's a review flag only, never a gate.
+- (iii) Every example and near-miss is verified against the paper.
+
+
+## Paper text
+
+We formulate a model-independent theory of co/cartesian morphisms and co/cartesian fibrations: that is, one which resides entirely *within the $\infty$-category of $\infty$-categories*. We prove this is suitably compatible with the corresponding quasicategorical (and in particular, model-dependent) notions studied by Joyal and Lurie.
+
+0. Introduction Outline and goals This note concerns the notions of cocartesian fibrations and of cartesian fibrations , as well as their connection to the Grothendieck construction , in the ∞ \infty -categorical context. • The ur-example of a cartesian fibration is the forgetful functor 𝒱 ​ ect ​ ℬ ​ dl → ℳ ​ fld {\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}\rightarrow{\mathcal{M}\textup{fld}}
+from the category of vector bundles – that is, of pairs ( M , V ) (M,V) of a manifold M M and a vector bundle V ↓ M V\downarrow M – to the category of manifolds; the fact that this is a cartesian fibration encodes the observation that vector bundles can be pulled back in a category-theoretically meaningful way. (See 1.5 .) • Meanwhile, the ur-example of the Grothendieck construction accounts for
+the equivalence between the two competing definitions of a stack in algebraic geometry, either as a functor to the category of groupoids or as a “category fibered in groupoids”. The purpose of this note is twofold. (1) On the one hand, we offer a relaxed and informal discussion of co/cartesian fibrations and their motivation coming from the Grothendieck construction, which assumes no prerequisites
+beyond a vague sense of the meaning of the signifier “ ∞ \infty -category”. (2) On the other hand, we carefully prove that our relaxed and informal discussion was in fact actually completely rigorous all along . More precisely, we show that our definitions, which are formulated within the ∞ \infty -category of ∞ \infty -categories , are suitably compatible with the corresponding notions in
+quasicategories (see 3.3 and 3.4 ). 1 1 1 As the quasicategorical definitions are not manifestly model-independent, the proofs of these results are nontrivial. Indeed, they are fairly involved, and rely on rather subtle model-categorical manipulations. The bulk of this note consists in section 1 (where we offer our relaxed and informal discussion) and in section 3 (where we present our proofs).
+Separating these, in section 2 we distill the discussion of section 1 into precise model-independent definitions of co/cartesian morphisms and of co/cartesian fibrations. Wherefore model-independence? As for the technical content of this note, the skeptical reader is completely justified in asking: Why does this matter? We offer three related and complementary responses. (a) The first and most
+obvious justification for model-independence is that it allows one to work model-independently . Being a vastly general and broadly applicable home for derived mathematics , the theory of ∞ \infty -categories has recently found widespread and exciting use in a plethora of different areas – for instance in the geometric Langlands program and in mathematical physics, to name but two (closely
+related) examples. In such applications, “ ∞ \infty -categories” are generally manipulated in a purely formal fashion, a rule of thumb being that anything the typical user of ∞ \infty -categories would like to study should be accessible without reference to model-dependent notions such as quasicategories, various sorts of fibrations between them, their individual simplices, etc. For the most part,
+the theory of quasicategories – being itself soundly founded in the theory of model categories – allows for direct and straightforward manipulation of the corresponding model-independent notions: by and large, the definitions visibly descend to the underlying ∞ \infty -category of the model category s ​ 𝒮 ​ et Joyal s{\mathcal{S}\textup{et}}_{\textup{Joyal}} . However, the theory of co/cartesian
+fibrations is a glaring exception. It is therefore not a priori meaningful to work with these notions in a model-independent fashion. In order to allow the myriad users of ∞ \infty -category theory throughout mathematics to employ the theory of co/cartesian fibrations – and in particular, to allow them to appeal to the various results which have been proved about their incarnations in
+quasicategories –, it seems like nothing more than good homotopical manners to prove that these quasicategorical definitions do indeed descend to the underlying ∞ \infty -category of s ​ 𝒮 ​ et Joyal s{\mathcal{S}\textup{et}}_{\textup{Joyal}} as well. In particular, our results provide the crucial input to a model-independent reading of [ Lur14 ] , which work is premised heavily on the notion of
+co/cartesian morphisms in quasicategories. (b) The next most obvious justification for model-independence is that it provides conceptual clarity : a model-independent definition is by definition unfettered by point-set or model-dependent notions which obfuscate its true meaning and significance. For a rather grotesque example, recall that one can define the “ n th n^{\textup{th}} homotopy group”
+of a based simplicial set ( Y , y ) ∈ s ​ 𝒮 ​ et ∗ (Y,y)\in s{\mathcal{S}\textup{et}}_{*} as certain subquotient π n ( Y , y ) = { σ ∈ ( ℝ Y ) n : δ i n ( σ ) = σ ∘ ( n − 1 ) ( y ) for all 0 ≤ i ≤ n } / ∼ \pi_{n}(Y,y)=\left.\left\{\sigma\in(\mathbb{R}Y)_{n}:\delta^{n}_{i}(\sigma)=\sigma^{\circ(n-1)}(y)\textup{ for all }0\leq i\leq n\right\}\right/\sim of the set of n n -simplices of a fibrant
+replacement Y → ≈ ℝ ​ Y ↠ Δ 0 Y\stackrel{{\scriptstyle\approx}}{{\rightarrow}}\mathbb{R}Y\twoheadrightarrow\Delta^{0} (relative to the standard Kan–Quillen model category structure s ​ 𝒮 ​ et KQ s{\mathcal{S}\textup{et}}_{\textup{KQ}} , and with respect to the induced basepoint Δ 0 → 𝑦 Y → ℝ ​ Y \Delta^{0}\xrightarrow{y}Y\rightarrow\mathbb{R}Y ). This definition completely obscures a number of
+important features of homotopy groups: • that they are independent of the choice of fibrant replacement; • that they actually form a group at all (for n ≥ 1 n\geq 1 , let alone an abelian group for n ≥ 2 n\geq 2 ); • that a path connecting two basepoints (which itself may only be representable by a zigzag of edges in Y Y itself) induces a conjugation isomorphism (for n ≥ 1 n\geq 1 ); • that they
+are corepresentable in the homotopy category ho ⁡ ( 𝒮 ∗ ) \ho(\mathcal{S}_{*}) of pointed spaces. Though the quasicategorical definitions of co/cartesian morphisms and co/cartesian fibrations are not nearly so abstruse, they are nevertheless model-dependent, and hence the assertion that they have homotopical meaning requires further proof. (c) Lastly, proving that quasicategorical definitions are
+model-independent also allows mathematicians employing specific but alternate models for ∞ \infty -categories to employ these notions and their attending results while continuing to work within their native context. As is particularly well-known to homotopy theorists, different model categories presenting the same ∞ \infty -category (e.g.​ and i.e.​ that of spectra) can be advantageous for
+different purposes. For a few examples of where such alternate models for ∞ \infty -categories arise: • 𝒯 ​ op {\mathcal{T}\textup{op}} -enriched categories appear in geometric topology; • 𝒜 ∞ \mathcal{A}_{\infty} -categories appear in mirror symmetry; • dg-categories appear in derived algebraic geometry and homological algebra; • Segal spaces (and indeed, Segal Θ n \Theta_{n} -spaces) appear in
+bordism theory; • s ​ 𝒮 ​ et s{\mathcal{S}\textup{et}} -enriched categories appear in homotopy theory (both as hammock localizations of relative categories (e.g.​ model categories) and as (the full subcategories of bifibrant objects of) simplicial model categories). In some sense, this is mainly a preservation-of-sanity issue. All of the various the model categories which present “the ∞ \infty
+-category of ∞ \infty -categories” are connected by an intricate web of Quillen equivalences (see [ BSP ] ). It is therefore already possible to wrangle a given question asked in any of these model categories into a corresponding question asked in the model category s ​ 𝒮 ​ et Joyal s{\mathcal{S}\textup{et}}_{\textup{Joyal}} , so long as one is willing to take the appropriate co/fibrant
+replacements at every step to ensure that one is computing the derived values of these various Quillen equivalences. However, this procedure is a hassle at best, and at worst can effectively destroy all hope of answering the given question (since taking co/fibrant replacements generally drastically alters the object’s point-set features). This motivation can therefore be seen as something of a
+“down-then-up” maneuver: in proving that these notions actually descend to the underlying ∞ \infty -category which is common to all of these distinct model categories of ∞ \infty -categories, we prove that all of the results which have been proved in quasicategories can be brought to bear while working in any of these models – no wrangling required. Conventions We refer to Lurie’s twin tomes [
+Lur09 ] and [ Lur14 ] for general references on quasicategories. For further motivation regarding the Grothendieck construction (including a variety of applications), we refer the interested reader to [ MGa ] . Lastly, we refer to [ MGb , §A] for details and specifics on working “within the ∞ \infty -category of ∞ \infty -categories” (as well as for further clarification regarding our
+conventions). Acknowledgments It is a pleasure to acknowledge our debt of influence to David Ayala, both for the generalities as well as for various specific observations that appear throughout this note. We are also deeply grateful to Piotr Pstragowski for his suggested outline of the proof of 3.3 , and to Zhen Lin Low for countless conversations regarding the ideas that appear here. Finally, we
+would like to thank Montana State University for its hospitality as well as UC Berkeley’s Geometry and Topology RTG grant (which is part of NSF grant DMS-0838703) for its generous funding of our stay there (during which this note was written).
+
+Question 1.1: If ℬ \mathcal{B} is a “space whose morphisms are not all invertible” – that is, if ℬ \mathcal{B} is an ∞ \infty -category –, then what, exactly, is classified by a map ℬ → 𝒮 ​ et \mathcal{B}\rightarrow{\mathcal{S}\textup{et}} ?
+
+Example 1.2: Let us illustrate just a hint of the bookkeeping power which results from this reduction of category level. First of all, the datum of a monoidal category ( 𝒞 , ⊗ ) (\mathcal{C},\otimes) can be encoded as a certain functor 𝚫 o ​ p {\lx@inpgf@ignorespaces{\bf\Delta}^{op}} 𝒞 ​ at , {\lx@inpgf@ignorespaces{\mathcal{C}\textup{at}},} Bar ​ ( 𝒞 ) ∙
+\scriptstyle{\lx@inpgf@ignorespaces\textup{Bar}(\mathcal{C})_{\bullet}} namely its bar construction (as a monoid object in the symmetric monoidal category ( 𝒞 ​ at , × ) ({\mathcal{C}\textup{at}},\times) ): this is given on objects by Bar ​ ( 𝒞 ) n = 𝒞 × n \textup{Bar}(\mathcal{C})_{n}=\mathcal{C}^{\times n} , while its structure maps encode the monoidal structure on 𝒞 \mathcal{C} and the unit map
+pt 𝒞 ​ at ≃ { 1 𝒞 } ↪ 𝒞 \textup{pt}_{\mathcal{C}\textup{at}}\simeq\{\textbf{1}_{\mathcal{C}}\}\hookrightarrow\mathcal{C} . Similarly, we can encode the datum of a symmetric monoidal category ( 𝒞 , ⊗ ) (\mathcal{C},\otimes) as a functor ℱ ​ in ∗ → 𝒞 ​ at \mathcal{F}\textup{in}_{*}\rightarrow{\mathcal{C}\textup{at}} from the category of finite pointed sets: this takes an object T + = T ⊔ { ∗ }
+T_{+}=T\sqcup\{*\} to the category 𝒞 × T \mathcal{C}^{\times T} , and it takes a morphism T + → 𝛼 U + T_{+}\xrightarrow{\alpha}U_{+} to the functor 𝒞 × T → 𝒞 × U \mathcal{C}^{\times T}\rightarrow\mathcal{C}^{\times U} described by the formula ( c t ) t ∈ T ↦ ( ⨂ t ∈ α − 1 ​ ( u ) c t ) u ∈ U (c_{t})_{t\in T}\mapsto\left(\bigotimes_{t\in\alpha^{-1}(u)}c_{t}\right)_{u\in U} where, by convention, a
+monoidal product indexed over an empty set is defined to be the unit object 1 𝒞 ∈ 𝒞 \textbf{1}_{\mathcal{C}}\in\mathcal{C} . (We note in passing that if α ( t ) = ∗ ∈ U + \alpha(t)=*\in U_{+} for some t ∈ T t\in T , then c t c_{t} does not appear in any of the resulting monoidal products indexed by the elements u ∈ U u\in U : it is simply “thrown away”.) It follows that we can equivalently
+consider a symmetric monoidal category ( 𝒞 , ⊗ ) (\mathcal{C},\otimes) as a cocartesian fibration 𝒞 ⊗ {\lx@inpgf@ignorespaces\mathcal{C}^{\otimes}} ℱ ​ in ∗ {\lx@inpgf@ignorespaces\mathcal{F}\textup{in}_{*}} p \scriptstyle{\lx@inpgf@ignorespaces p} over the category of finite pointed sets. For instance, writing ⟨ n ⟩ = { 1 , … , n } + {\langle{n}\rangle}=\{1,\ldots,n\}_{+} , the unique map ⟨ 2 ⟩ →
+𝜇 ⟨ 1 ⟩ {\langle{2}\rangle}\xrightarrow{\mu}{\langle{1}\rangle} in ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} satisfying μ − 1 ​ ( ∗ ) = { ∗ } \mu^{-1}(*)=\{*\} has cocartesian lifts of the form ( c 1 , c 2 ) → ( c 1 ⊗ c 2 ) , (c_{1},c_{2})\rightarrow(c_{1}\otimes c_{2}), which morphisms therefore encode the monoidal product 𝒞 × 𝒞 → − ⊗ − 𝒞 \mathcal{C}\times\mathcal{C}\xrightarrow{-\otimes-}\mathcal{C} .
+Now, in this language, a symmetric monoidal functor ( 𝒞 , ⊗ ) → 𝐹 ( 𝒟 , ⊠ ) (\mathcal{C},\otimes)\xrightarrow{F}(\mathcal{D},\boxtimes) is equivalent data to that of a morphism of cocartesian fibrations 𝒞 ⊗ {\lx@inpgf@ignorespaces\mathcal{C}^{\otimes}} 𝒟 ⊠ {\lx@inpgf@ignorespaces\mathcal{D}^{\boxtimes}} ℱ ​ in ∗ {\lx@inpgf@ignorespaces\mathcal{F}\textup{in}_{*}} F
+\scriptstyle{\lx@inpgf@ignorespaces F} p \scriptstyle{\lx@inpgf@ignorespaces p} q \scriptstyle{\lx@inpgf@ignorespaces q} over ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} : over an object T + ∈ ℱ ​ in ∗ T_{+}\in\mathcal{F}\textup{in}_{*} the induced map on fibers is given by 𝒞 × n → F × n 𝒟 × n \mathcal{C}^{\times n}\xrightarrow{F^{\times n}}\mathcal{D}^{\times n} , and the fact that the functor respects
+the monoidal products is encoded by the fact that it preserves cocartesian morphisms. For instance, the p p -cocartesian morphism ( c 1 , c 2 ) → ( c 1 ⊗ c 2 ) (c_{1},c_{2})\rightarrow(c_{1}\otimes c_{2}) of 𝒞 ⊗ \mathcal{C}^{\otimes} lying over ⟨ 2 ⟩ → 𝜇 ⟨ 1 ⟩ {\langle{2}\rangle}\xrightarrow{\mu}{\langle{1}\rangle} is taken to a morphism ( F ⁡ ( c 1 ) , F ⁡ ( c 2 ) ) → F ⁡ ( c 1 ⊗ c 2 )
+(F(c_{1}),F(c_{2}))\rightarrow F(c_{1}\otimes c_{2}) of 𝒟 ⊠ \mathcal{D}^{\boxtimes} also lying over ⟨ 2 ⟩ → 𝜇 ⟨ 1 ⟩ {\langle{2}\rangle}\xrightarrow{\mu}{\langle{1}\rangle} , and the assertion that this is q q -cocartesian guarantees a unique isomorphism F ⁡ ( c 1 ) ⊠ F ⁡ ( c 2 ) ≅ F ⁡ ( c 1 ⊗ c 2 ) F(c_{1})\boxtimes F(c_{2})\cong F(c_{1}\otimes c_{2}) in 𝒟 ≅ 𝒟 × 1
+\mathcal{D}\cong\mathcal{D}^{\times 1} . However, more is true: even if F F is now only a lax symmetric monoidal functor , it still defines a morphism among cocartesian fibrations (in constrast to “a morphism of cocartesian fibrations”), but in general it will not preserve the cocartesian morphisms. For instance, the p p -cocartesian morphism ( c 1 , c 2 ) → ( c 1 ⊗ c 2 )
+(c_{1},c_{2})\rightarrow(c_{1}\otimes c_{2}) in 𝒞 ⊗ \mathcal{C}^{\otimes} will be sent to an arbitrary morphism ( F ⁡ ( c 1 ) , F ⁡ ( c 2 ) ) → F ⁡ ( c 1 ⊗ c 2 ) (F(c_{1}),F(c_{2}))\rightarrow F(c_{1}\otimes c_{2}) , which then admits a unique cocartesian/fiber factorization ( F ⁡ ( c 1 ) , F ⁡ ( c 2 ) ) {\lx@inpgf@ignorespaces(F(c_{1}),F(c_{2}))} ( F ⁡ ( c 1 ) ⊠ F ⁡ ( c 2 ) )
+{\lx@inpgf@ignorespaces(F(c_{1})\boxtimes F(c_{2}))} F ⁡ ( c 1 ⊗ c 2 ) {\lx@inpgf@ignorespaces F(c_{1}\otimes c_{2})} in 𝒟 ⊠ \mathcal{D}^{\boxtimes} , in which the fiber morphism is the “structure map” witnessing the laxness of F F (at the pair of objects c 1 , c 2 ∈ 𝒞 c_{1},c_{2}\in\mathcal{C} ). As a special case, note that the identity map of ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} is a cocartesian
+fibration, which corresponds to the canonical (and unique) symmetric monoidal structure on the terminal category pt 𝒞 ​ at ∈ 𝒞 ​ at \textup{pt}_{\mathcal{C}\textup{at}}\in{\mathcal{C}\textup{at}} . Then, a commutative algebra object in the symmetric monoidal category ( 𝒞 , ⊗ ) (\mathcal{C},\otimes) is nothing but a lax symmetric monoidal functor pt 𝒞 ​ at → 𝐴 ( 𝒞 , ⊗ ) .
+\textup{pt}_{\mathcal{C}\textup{at}}\xrightarrow{A}(\mathcal{C},\otimes). Moreover, the functoriality of commutative algebra objects for a lax symmetric monoidal functor ( 𝒞 , ⊗ ) → 𝐹 ( 𝒟 , ⊠ ) (\mathcal{C},\otimes)\xrightarrow{F}(\mathcal{D},\boxtimes) is encoded simply by the composition ℱ ​ in ∗ {\lx@inpgf@ignorespaces\mathcal{F}\textup{in}_{*}} 𝒞 ⊗ {\lx@inpgf@ignorespaces\mathcal{C}^{\otimes}}
+𝒟 ⊠ {\lx@inpgf@ignorespaces\mathcal{D}^{\boxtimes}} ℱ ​ in ∗ {\lx@inpgf@ignorespaces\mathcal{F}\textup{in}_{*}} A \scriptstyle{\lx@inpgf@ignorespaces A} id ℱ ​ in ∗ \scriptstyle{\lx@inpgf@ignorespaces\textup{id}_{\mathcal{F}\textup{in}_{*}}} F \scriptstyle{\lx@inpgf@ignorespaces F} p \scriptstyle{\lx@inpgf@ignorespaces p} q \scriptstyle{\lx@inpgf@ignorespaces q} of morphisms among cocartesian
+fibrations. (Of course, we can equivalently write the map A A as a section of the cocartesian fibration 𝒞 ⊗ → ℱ ​ in ∗ \mathcal{C}^{\otimes}\rightarrow\mathcal{F}\textup{in}_{*} ; then, the functoriality of commutative algebras for lax symmetric monoidal functors is encoded by the functoriality of sections.)
+
+Remark 1.3: In 1.2 , we were careful not to say that a lax symmetric monoidal functor (or, in particular, an algebra object) was exactly characterized as a morphism 𝒞 ⊗ {\lx@inpgf@ignorespaces\mathcal{C}^{\otimes}} 𝒟 ⊠ {\lx@inpgf@ignorespaces\mathcal{D}^{\boxtimes}} ℱ ​ in ∗ {\lx@inpgf@ignorespaces\mathcal{F}\textup{in}_{*}} F \scriptstyle{\lx@inpgf@ignorespaces F} p
+\scriptstyle{\lx@inpgf@ignorespaces p} q \scriptstyle{\lx@inpgf@ignorespaces q} among cocartesian fibrations. This was only because we had not yet introduced a certain bit of terminology. First of all, let us say that a morphism T + → 𝛼 U + T_{+}\xrightarrow{\alpha}U_{+} in ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} is inert if for all u ∈ U u\in U , the preimage α − 1 ​ ( u ) \alpha^{-1}(u) has exactly
+one element. Inasmuch as the basepoints of objects in ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} might be thought of as “trash receptacles”, such an inert morphism should therefore be thought of as parametrizing the operation of “throwing away” some specified subset of the T T -indexed list of objects. For instance, the unique map ⟨ 2 ⟩ → 𝜌 ⟨ 1 ⟩ {\langle{2}\rangle}\xrightarrow{\rho}{\langle{1}\rangle}
+in ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} satisfying ρ − 1 ​ ( 1 ) = { 2 } \rho^{-1}(1)=\{2\} has p p -cocartesian lifts of the form ( c 1 , c 2 ) → c 2 . (c_{1},c_{2})\rightarrow c_{2}. Then, a morphism in 𝒞 ⊗ \mathcal{C}^{\otimes} is called p p -inert (or simply inert ) if it is p p -cocartesian and lies over an inert morphism in ℱ ​ in ∗ \mathcal{F}\textup{in}_{*} . Now, we can define a lax
+symmetric monoidal functor ( 𝒞 , ⊗ ) → 𝐹 ( 𝒟 , ⊠ ) (\mathcal{C},\otimes)\xrightarrow{F}(\mathcal{D},\boxtimes) to be a commutative triangle as above which preserves inert morphisms (i.e.​ which takes p p -inert morphisms to q q -inert morphisms).
+
+Remark 1.4: The observations of 1.2 and 1.3 form the foundations of the extremely versatile theory of ∞ \infty -operads introduced and studied in [ Lur14 , Chapter 2] .
+
+Example 1.5: Consider the category 𝒱 ​ ect ​ ℬ ​ dl {\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}} of vector bundles: its objects are the pairs ( M , V ) (M,V) of a manifold M M and a vector bundle V ↓ M V\downarrow M , and its morphisms are commutative squares V {\lx@inpgf@ignorespaces V} W {\lx@inpgf@ignorespaces W} M {\lx@inpgf@ignorespaces M} N {\lx@inpgf@ignorespaces N} (of a morphism of
+manifolds and a compatible morphism of (total spaces of) vector bundles). Then, the forgetful functor 𝒱 ​ ect ​ ℬ ​ dl {\lx@inpgf@ignorespaces{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} ℳ ​ fld {\lx@inpgf@ignorespaces{\mathcal{M}\textup{fld}}} U 𝒱 ​ ect ​ ℬ ​ dl \scriptstyle{\lx@inpgf@ignorespaces\textup{U}_{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} to the category of manifolds is a
+cartesian fibration. Given a morphism M → 𝜑 N M\xrightarrow{\varphi}N in ℳ ​ fld {\mathcal{M}\textup{fld}} and a vector bundle W ↓ N W\downarrow N , a cartesian lift is provided by the pullback vector bundle , which is defined by a pullback square φ ∗ ​ ( W ) {\lx@inpgf@ignorespaces\varphi^{*}(W)} W {\lx@inpgf@ignorespaces W} M {\lx@inpgf@ignorespaces M} N {\lx@inpgf@ignorespaces N} φ
+\scriptstyle{\lx@inpgf@ignorespaces\varphi} of underlying topological spaces. The fiber/cartesian factorization system in this cartesian fibration translates into the assertion that for any vector bundle V ↓ M V\downarrow M , the induced diagram hom 𝒱 ​ ect ​ ℬ ​ dl ​ ( M ) ( V ↓ M , φ ∗ ( M ) ↓ M ) {\lx@inpgf@ignorespaces\hom_{{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}(M)}(V\downarrow
+M,\varphi^{*}(M)\downarrow M)} hom 𝒱 ​ ect ​ ℬ ​ dl ( V ↓ M , W ↓ N ) {\lx@inpgf@ignorespaces\hom_{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}(V\downarrow M,W\downarrow N)} { φ } {\lx@inpgf@ignorespaces\{\varphi\}} hom ℳ ​ fld ⁡ ( M , N ) {\lx@inpgf@ignorespaces\hom_{\mathcal{M}\textup{fld}}(M,N)} is a pullback square in 𝒮 ​ et {\mathcal{S}\textup{et}} , where 𝒱 ​ ect ​ ℬ ​ dl ​ ( M )
+{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}(M) denotes the fiber U 𝒱 ​ ect ​ ℬ ​ dl − 1 ​ ( M ) \textup{U}_{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}^{-1}(M) of the forgetful functor over the object M ∈ ℳ ​ fld M\in{\mathcal{M}\textup{fld}} (or equivalently, the value at M M of the functor ℳ ​ fld o ​ p {\lx@inpgf@ignorespaces{\mathcal{M}\textup{fld}}^{op}} 𝒞 ​ at
+{\lx@inpgf@ignorespaces{\mathcal{C}\textup{at}}} 𝒱 ​ ect ​ ℬ ​ dl \scriptstyle{\lx@inpgf@ignorespaces{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} classifying our cartesian fibration). There is a canonical section 𝒱 ​ ect ​ ℬ ​ dl {\lx@inpgf@ignorespaces{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} ℳ ​ fld {\lx@inpgf@ignorespaces{\mathcal{M}\textup{fld}}} U 𝒱 ​ ect ​ ℬ ​ dl
+\scriptstyle{\lx@inpgf@ignorespaces\textup{U}_{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} T \scriptstyle{\lx@inpgf@ignorespaces T} of the forgetful functor, called the tangent bundle : this takes a manifold M ∈ ℳ ​ fld M\in{\mathcal{M}\textup{fld}} to its tangent bundle T ​ M ↓ M TM\downarrow M . Note that this is not a cartesian section: it does not take morphisms in ℳ ​ fld
+{\mathcal{M}\textup{fld}} to cartesian morphisms of the cartesian fibration. (Correspondingly, this does not arise from a natural transformation ℳ ​ fld o ​ p {\lx@inpgf@ignorespaces{\mathcal{M}\textup{fld}}^{op}} 𝒞 ​ at {\lx@inpgf@ignorespaces{\mathcal{C}\textup{at}}} const ​ ( pt 𝒞 ​ at ) \scriptstyle{\lx@inpgf@ignorespaces\textup{const}(\textup{pt}_{\mathcal{C}\textup{at}})} ⇓
+\scriptstyle{\lx@inpgf@ignorespaces\Downarrow} 𝒱 ​ ect ​ ℬ ​ dl \scriptstyle{\lx@inpgf@ignorespaces{\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}} between 𝒞 ​ at {\mathcal{C}\textup{at}} -valued functors on ℳ ​ fld o ​ p {\mathcal{M}\textup{fld}}^{op} .) In other words, given an arbitrary morphism M → 𝜑 N M\xrightarrow{\varphi}N of manifolds, we obtain a canonical map T ​ M → φ ∗ ​ ( T ​ N )
+TM\rightarrow\varphi^{*}(TN) in 𝒱 ​ ect ​ ℬ ​ dl ​ ( M ) {\mathcal{V}\textup{ect}\mathcal{B}\textup{dl}}(M) , but this map is not generally an isomorphism. However, it is an isomorphism (and the morphism T ​ M → φ ∗ ​ ( T ​ N ) TM\rightarrow\varphi^{*}(TN) is a cartesian lift of φ \varphi ) whenever the morphism φ \varphi is an open embedding .
+
+Example 1.6: The forgetful functor 𝒯 ​ op {\lx@inpgf@ignorespaces{\mathcal{T}\textup{op}}} 𝒮 ​ et {\lx@inpgf@ignorespaces{\mathcal{S}\textup{et}}} U 𝒯 ​ op \scriptstyle{\lx@inpgf@ignorespaces\textup{U}_{\mathcal{T}\textup{op}}} is a cartesian fibration. Given a morphism U → Y U\rightarrow Y in 𝒮 ​ et {\mathcal{S}\textup{et}} and a topological space 𝒴 ∈ 𝒯 ​ op \mathcal{Y}\in{\mathcal{T}\textup{op}}
+equipped with an isomorphism U 𝒯 ​ op ​ ( 𝒴 ) ≅ Y \textup{U}_{\mathcal{T}\textup{op}}(\mathcal{Y})\cong Y in 𝒮 ​ et {\mathcal{S}\textup{et}} , a U 𝒯 ​ op \textup{U}_{\mathcal{T}\textup{op}} -cartesian lift is provided by endowing the set U ∈ 𝒮 ​ et U\in{\mathcal{S}\textup{et}} with the induced topology : this yields a topological space 𝒰 ∈ 𝒯 ​ op \mathcal{U}\in{\mathcal{T}\textup{op}} equipped
+with a map 𝒰 → 𝒴 \mathcal{U}\rightarrow\mathcal{Y} in 𝒯 ​ op {\mathcal{T}\textup{op}} and an isomorphism U 𝒯 ​ op ​ ( 𝒰 ) ≅ U \textup{U}_{\mathcal{T}\textup{op}}(\mathcal{U})\cong U in 𝒮 ​ et {\mathcal{S}\textup{et}} , which has the universal property that for any 𝒵 ∈ 𝒯 ​ op \mathcal{Z}\in{\mathcal{T}\textup{op}} with underlying set Z = U 𝒯 ​ op ​ ( 𝒵 ) ∈ 𝒮 ​ et
+Z=\textup{U}_{\mathcal{T}\textup{op}}(\mathcal{Z})\in{\mathcal{S}\textup{et}} , the resulting diagram hom 𝒯 ​ op ⁡ ( 𝒵 , 𝒰 ) {\lx@inpgf@ignorespaces\hom_{\mathcal{T}\textup{op}}(\mathcal{Z},\mathcal{U})} hom 𝒯 ​ op ⁡ ( 𝒵 , 𝒴 ) {\lx@inpgf@ignorespaces\hom_{\mathcal{T}\textup{op}}(\mathcal{Z},\mathcal{Y})} hom 𝒮 ​ et ⁡ ( Z , U ) {\lx@inpgf@ignorespaces\hom_{\mathcal{S}\textup{et}}(Z,U)} hom 𝒮 ​ et ⁡
+( Z , Y ) {\lx@inpgf@ignorespaces\hom_{\mathcal{S}\textup{et}}(Z,Y)} is a pullback square in 𝒮 ​ et {\mathcal{S}\textup{et}} . (If the morphism U → Y U\rightarrow Y is actually the inclusion of a subset, this specializes to define the subspace topology on the set U U .)
+
+Definition 2.1: Let ℰ → 𝑓 ℬ \mathcal{E}\xrightarrow{f}\mathcal{B} be a functor of ∞ \infty -categories. (1) We say that a morphism e 1 → 𝜑 e 2 e_{1}\xrightarrow{\varphi}e_{2} in ℰ \mathcal{E} is f f -cocartesian (or simply cocartesian , if the functor f f is clear from the context) if it induces a pullback diagram ℰ e 2 / {\lx@inpgf@ignorespaces\mathcal{E}_{e_{2}/}} ℰ e 1 /
+{\lx@inpgf@ignorespaces\mathcal{E}_{e_{1}/}} ℬ f ( e 2 ) / {\lx@inpgf@ignorespaces\mathcal{B}_{f(e_{2})/}} ℬ f ( e 1 ) / {\lx@inpgf@ignorespaces\mathcal{B}_{f(e_{1})/}} − ∘ φ \scriptstyle{\lx@inpgf@ignorespaces-\circ\varphi} f \scriptstyle{\lx@inpgf@ignorespaces f} f \scriptstyle{\lx@inpgf@ignorespaces f} − ∘ f ( φ ) \scriptstyle{\lx@inpgf@ignorespaces-\circ f(\varphi)} in 𝒞 ​ at ∞
+{{\mathcal{C}\textup{at}}_{\infty}} . In this case, we call φ \varphi an f f -cocartesian lift (or simply a cocartesian lift ) of f ⁡ ( φ ) f(\varphi) relative to e 1 e_{1} . We then say that the functor f f is a cocartesian fibration if every object of Fun ​ ( [ 1 ] , ℬ ) ​ × s , ℬ , f ​ ℰ \textup{Fun}([1],\mathcal{B})\underset{s,\mathcal{B},f}{\times}\mathcal{E} admits an f f -cocartesian lift.
+(2) Dually, we say that a morphism e 1 → 𝜑 e 2 e_{1}\xrightarrow{\varphi}e_{2} in ℰ \mathcal{E} is f f -cartesian (or simply cartesian ) if it induces a pullback diagram ℰ / e 1 {\lx@inpgf@ignorespaces\mathcal{E}_{/e_{1}}} ℰ / e 2 {\lx@inpgf@ignorespaces\mathcal{E}_{/e_{2}}} ℬ / f ⁡ ( e 1 ) {\lx@inpgf@ignorespaces\mathcal{B}_{/f(e_{1})}} ℬ / f ⁡ ( e 2 )
+{\lx@inpgf@ignorespaces\mathcal{B}_{/f(e_{2})}} φ ∘ − \scriptstyle{\lx@inpgf@ignorespaces\varphi\circ-} f \scriptstyle{\lx@inpgf@ignorespaces f} f \scriptstyle{\lx@inpgf@ignorespaces f} f ( φ ) ∘ − \scriptstyle{\lx@inpgf@ignorespaces f(\varphi)\circ-} in 𝒞 ​ at ∞ {{\mathcal{C}\textup{at}}_{\infty}} . In this case, we call φ \varphi an f f -cartesian lift (or simply a cartesian lift ) of f ⁡ ( φ )
+f(\varphi) relative to e 2 e_{2} . We then say that the functor f f is a cartesian fibration if every object of Fun ​ ( [ 1 ] , ℬ ) ​ × t , ℬ , f ​ ℰ \textup{Fun}([1],\mathcal{B})\underset{t,\mathcal{B},f}{\times}\mathcal{E} admits an f f -cartesian lift.
+
+Remark 2.2: Let ℰ → 𝑓 ℬ \mathcal{E}\xrightarrow{f}\mathcal{B} be a functor of ∞ \infty -categories. The crucial consequence of a morphism e 1 → 𝜑 e 2 e_{1}\xrightarrow{\varphi}e_{2} in ℰ \mathcal{E} being f f -cocartesian is that for any object e ∈ ℰ e\in\mathcal{E} , the induced diagram hom ℰ ⁡ ( e 2 , e ) {\lx@inpgf@ignorespaces\hom_{\mathcal{E}}(e_{2},e)} hom ℰ ⁡ ( e 1 , e )
+{\lx@inpgf@ignorespaces\hom_{\mathcal{E}}(e_{1},e)} hom ℬ ⁡ ( f ⁡ ( e 2 ) , f ⁡ ( e ) ) {\lx@inpgf@ignorespaces\hom_{\mathcal{B}}(f(e_{2}),f(e))} hom ℬ ⁡ ( f ⁡ ( e 1 ) , f ⁡ ( e ) ) {\lx@inpgf@ignorespaces\hom_{\mathcal{B}}(f(e_{1}),f(e))} is a pullback square in 𝒮 \mathcal{S} . Dually, the crucial consequence of a morphism e 1 → 𝜑 e 2 e_{1}\xrightarrow{\varphi}e_{2} in ℰ \mathcal{E} being f f
+-cartesian is that for any object e ∈ ℰ e\in\mathcal{E} , the induced diagram hom ℰ ⁡ ( e , e 1 ) {\lx@inpgf@ignorespaces\hom_{\mathcal{E}}(e,e_{1})} hom ℰ ⁡ ( e , e 2 ) {\lx@inpgf@ignorespaces\hom_{\mathcal{E}}(e,e_{2})} hom ℬ ⁡ ( f ⁡ ( e ) , f ⁡ ( e 1 ) ) {\lx@inpgf@ignorespaces\hom_{\mathcal{B}}(f(e),f(e_{1}))} hom ℬ ⁡ ( f ⁡ ( e ) , f ⁡ ( e 2 ) )
+{\lx@inpgf@ignorespaces\hom_{\mathcal{B}}(f(e),f(e_{2}))} is a pullback square in 𝒮 \mathcal{S} . (Recall 1.6 , and see [ Lur09 , Proposition 2.4.1.10] .)
+
+Remark 2.3: A cocartesian fibration ℰ → 𝑓 ℬ \mathcal{E}\xrightarrow{f}\mathcal{B} whose fibers f − 1 ​ ( b ) f^{-1}(b) are all ∞ \infty -groupoids is called a left fibration . These assemble into the full subcategory ℒ ​ ℱ ​ ib ​ ( ℬ ) ⊂ co ​ 𝒞 ​ ℱ ​ ib ​ ( ℬ ) \mathcal{LF}\textup{ib}(\mathcal{B})\subset\textup{co}\mathcal{C}\mathcal{F}\textup{ib}(\mathcal{B}) . Correspondingly, the (covariant)
+Grothendieck construction restricts to an equivalence Fun ​ ( ℬ , 𝒞 ​ at ∞ ) {\lx@inpgf@ignorespaces\textup{Fun}(\mathcal{B},{{\mathcal{C}\textup{at}}_{\infty}})} co ​ 𝒞 ​ ℱ ​ ib ​ ( ℬ ) {\lx@inpgf@ignorespaces\textup{co}\mathcal{C}\mathcal{F}\textup{ib}(\mathcal{B})} Fun ​ ( ℬ , 𝒮 ) {\lx@inpgf@ignorespaces\textup{Fun}(\mathcal{B},\mathcal{S})} ℒ ​ ℱ ​ ib ​ ( ℬ )
+{\lx@inpgf@ignorespaces\mathcal{LF}\textup{ib}(\mathcal{B})} Gr ∼ \scriptstyle{\lx@inpgf@ignorespaces\sim} ∼ \scriptstyle{\lx@inpgf@ignorespaces\sim} Gr from the ∞ \infty -category of functors ℬ → 𝒮 \mathcal{B}\rightarrow\mathcal{S} valued in the ∞ \infty -category of spaces to the ∞ \infty -category ℒ ​ ℱ ​ ib ​ ( ℬ ) \mathcal{LF}\textup{ib}(\mathcal{B}) of left fibrations over ℬ \mathcal{B} . As
+a result of the fact that all morphisms in a space are equivalences, given a left fibration ℰ → 𝑓 ℬ \mathcal{E}\xrightarrow{f}\mathcal{B} , every morphism in ℰ \mathcal{E} is f f -cocartesian. Dually, a cartesian fibration whose fibers are all ∞ \infty -groupoids is called a right fibration , the contravariant Grothendieck construction restricts to an equivalence Fun ​ ( ℬ o ​ p , 𝒞 ​ at ∞ )
+{\lx@inpgf@ignorespaces\textup{Fun}(\mathcal{B}^{op},{{\mathcal{C}\textup{at}}_{\infty}})} 𝒞 ​ ℱ ​ ib ​ ( ℬ ) {\lx@inpgf@ignorespaces\mathcal{C}\mathcal{F}\textup{ib}(\mathcal{B})} Fun ​ ( ℬ o ​ p , 𝒮 ) {\lx@inpgf@ignorespaces\textup{Fun}(\mathcal{B}^{op},\mathcal{S})} ℛ ​ ℱ ​ ib ​ ( ℬ ) {\lx@inpgf@ignorespaces\mathcal{RF}\textup{ib}(\mathcal{B})} Gr −
+\scriptstyle{\lx@inpgf@ignorespaces\textup{Gr}^{-}} ∼ \scriptstyle{\lx@inpgf@ignorespaces\sim} ∼ \scriptstyle{\lx@inpgf@ignorespaces\sim} Gr − \scriptstyle{\lx@inpgf@ignorespaces\textup{Gr}^{-}} from the ∞ \infty -category of functors ℬ o ​ p → 𝒮 \mathcal{B}^{op}\rightarrow\mathcal{S} to the full subcategory ℛ ​ ℱ ​ ib ​ ( ℬ ) ⊂ 𝒞 ​ ℱ ​ ib ​ ( ℬ )
+\mathcal{RF}\textup{ib}(\mathcal{B})\subset\mathcal{C}\mathcal{F}\textup{ib}(\mathcal{B}) of right fibrations over ℬ \mathcal{B} , and given a right fibration ℰ → 𝑓 ℬ \mathcal{E}\xrightarrow{f}\mathcal{B} , every morphism in ℰ \mathcal{E} is f f -cartesian.
+
+Notation 3.1: We will write hom ¯ ​ ( − , − ) = hom ¯ s ​ 𝒮 ​ et ​ ( − , − ) : ( s ​ 𝒮 ​ et ) o ​ p × s ​ 𝒮 ​ et → s ​ 𝒮 ​ et \underline{\hom}(-,-)=\underline{\hom}_{s{\mathcal{S}\textup{et}}}(-,-):(s{\mathcal{S}\textup{et}})^{op}\times s{\mathcal{S}\textup{et}}\rightarrow s{\mathcal{S}\textup{et}} for the internal hom bifunctor in s ​ 𝒮 ​ et s{\mathcal{S}\textup{et}} (relative to its cartesian
+symmetric monoidal structure).
+
+Definition 3.2: Let 𝙴 → 𝚙 𝙱 {\tt E}\xrightarrow{{\tt p}}{\tt B} be an inner fibration in s ​ 𝒮 ​ et s{\mathcal{S}\textup{et}} . Following [ Lur09 , Definition 2.4.1.1] , we will say that an edge Δ 1 → 𝚏 𝙴 \Delta^{1}\xrightarrow{{\tt f}}{\tt E} is JL- 𝚙 {\tt p} -cartesian (or simply JL-cartesian ) if the induced map 𝙴 / 𝚏 → 𝙴 / 𝚏 ⁡ ( 1 ) ​ × 𝙱 / 𝚙 ⁡ ( 𝚏 ⁡ ( 1 ) ) ​ 𝙱 / 𝚙 ⁡ ( 𝚏 ) {\tt E}_{/{\tt
+f}}\rightarrow{\tt E}_{/{\tt f}(1)}\underset{{\tt B}_{/{\tt p}({\tt f}(1))}}{\times}{\tt B}_{/{\tt p}({\tt f})} lies in ( 𝐖 ∩ 𝐅 ) Joyal ⊂ s ​ 𝒮 ​ et ({\bf W}\cap{\bf F})_{\textup{Joyal}}\subset s{\mathcal{S}\textup{et}} . 2 2 2 The map 𝙴 / 𝚏 → 𝙴 / 𝚏 ⁡ ( 1 ) {\tt E}_{/{\tt f}}\rightarrow{\tt E}_{/{\tt f}(1)} should be thought of simply as “postcomposition with 𝚏 {\tt f} ”: the restriction map 𝙴 / 𝚏
+→ 𝙴 / 𝚏 ⁡ ( 0 ) {\tt E}_{/{\tt f}}\rightarrow{\tt E}_{/{\tt f}(0)} lies in ( 𝐖 ∩ 𝐅 ) Joyal ({\bf W}\cap{\bf F})_{\textup{Joyal}} . Similarly for the map 𝙱 / 𝚙 ⁡ ( 𝚏 ) → 𝙱 / 𝚙 ⁡ ( 𝚏 ⁡ ( 1 ) ) {\tt B}_{/{\tt p}({\tt f})}\rightarrow{\tt B}_{/{\tt p}({\tt f}(1))} . In this case, we will refer to the edge 𝚏 ∈ 𝙴 1 {\tt f}\in{\tt E}_{1} as a JL- 𝚙 {\tt p} -cartesian lift (or simply a JL-cartesian lift )
+of the edge 𝚙 ⁡ ( 𝚏 ) ∈ 𝙱 1 {\tt p}({\tt f})\in{\tt B}_{1} relative to the vertex 𝚏 ⁡ ( 1 ) ∈ 𝙴 0 {\tt f}(1)\in{\tt E}_{0} . Following [ Lur09 , Definition 2.4.2.1] , we then say that the morphism 𝚏 {\tt f} is a JL-cartesian fibration if every vertex of hom ¯ ​ ( Δ 1 , 𝙱 ) ​ × ev 1 , 𝙱 , 𝚏 ​ 𝙴 \underline{\hom}(\Delta^{1},{\tt B})\underset{\textup{ev}_{1},{\tt B},{\tt f}}{\times}{\tt E} admits an 𝚏
+{\tt f} -cartesian lift.
+
+Theorem 3.3: Let 𝙴 ↠ 𝚙 𝙱 {\tt E}\stackrel{{\scriptstyle{\tt p}}}{{\twoheadrightarrow}}{\tt B} be a fibration between fibrant objects in s ​ 𝒮 ​ et Joyal s{\mathcal{S}\textup{et}}_{\textup{Joyal}} which presents a map ℰ → 𝑝 ℬ \mathcal{E}\xrightarrow{p}\mathcal{B} in 𝒞 ​ at ∞ {{\mathcal{C}\textup{at}}_{\infty}} . Suppose that a map Δ 1 → 𝚏 𝙴 \Delta^{1}\xrightarrow{{\tt f}}{\tt E} in s ​ 𝒮 ​ et Joyal
+s{\mathcal{S}\textup{et}}_{\textup{Joyal}} presents a p p -cartesian morphism [ 1 ] → 𝑓 ℰ [1]\xrightarrow{f}\mathcal{E} . Then the edge 𝚏 ∈ 𝙴 1 {\tt f}\in{\tt E}_{1} is JL- 𝚙 {\tt p} -cartesian.
+
+Corollary 3.4: Let 𝙴 ↠ 𝚙 𝙱 {\tt E}\stackrel{{\scriptstyle{\tt p}}}{{\twoheadrightarrow}}{\tt B} be a fibration between fibrant objects in s ​ 𝒮 ​ et Joyal s{\mathcal{S}\textup{et}}_{\textup{Joyal}} which presents a map ℰ → 𝑝 ℬ \mathcal{E}\xrightarrow{p}\mathcal{B} in 𝒞 ​ at ∞ {{\mathcal{C}\textup{at}}_{\infty}} . If p p is a cartesian fibration, then 𝚙 {\tt p} is a JL-cartesian fibration.
+
+## Claims
+
+{"n": 1, "subject": "Definition 2.1", "relation": "defines", "object": "f-cartesian morphism", "modality": "stated", "locator": "Definition 2.1(2)"}
+{"n": 2, "subject": "forgetful functor Top to Set", "relation": "specialises", "object": "cartesian fibration (Definition 2.1(2))", "modality": "stated", "locator": "Example 1.6"}
+{"n": 3, "subject": "left fibration", "relation": "specialises", "object": "cocartesian fibration", "modality": "stated", "locator": "Remark 2.3"}
+{"n": 4, "subject": "Theorem 3.3", "relation": "proves", "object": "if a map Δ^1 → E presents a p-cartesian morphism [1] → 𝓔, where E → B is a fibration between fibrant objects in sSet_Joyal presenting 𝓔 → 𝓑 in Cat_∞, then the edge f in E_1 is JL-p-cartesian", "modality": "stated", "locator": "Theorem 3.3"}
+{"n": 5, "subject": "Remark 1.3", "relation": "defines", "object": "p-inert morphism", "modality": "stated", "locator": "Remark 1.3"}
+{"n": 6, "subject": "Definition 2.1", "relation": "defines", "object": "f-cocartesian morphism", "modality": "stated", "locator": "Definition 2.1(1)"}
+{"n": 7, "subject": "forgetful functor Top → Set", "relation": "specialises", "object": "cartesian fibration", "modality": "stated", "locator": "Example 1.6"}
+{"n": 8, "subject": "forgetful functor VectBdl → Mfld", "relation": "specialises", "object": "cartesian fibration", "modality": "stated", "locator": "Example 1.5"}
+{"n": 9, "subject": "symmetric monoidal functor", "relation": "equivalent-to", "object": "morphism of cocartesian fibrations over Fin_* preserving cocartesian morphisms", "modality": "stated", "locator": "Example 1.2"}
+{"n": 10, "subject": "theory of ∞-operads", "relation": "depends-on", "object": "observations of Example 1.2 and Remark 1.3", "modality": "cited", "locator": "Remark 1.4 ([Lur14, Chapter 2])"}
+{"n": 11, "subject": "Theorem 3.3", "relation": "proves", "object": "JL-p-cartesian edge: if f presents a p-cartesian morphism in the model-independent sense, then the edge f is JL-p-cartesian", "modality": "stated", "locator": "Theorem 3.3"}
+{"n": 12, "subject": "identity functor Fin_* → Fin_*", "relation": "specialises", "object": "cocartesian fibration", "modality": "stated", "locator": "Example 1.2"}
+{"n": 13, "subject": "Corollary 3.4", "relation": "depends-on", "object": "Theorem 3.3", "modality": "stated", "locator": "Corollary 3.4"}
+{"n": 14, "subject": "symmetric monoidal category", "relation": "equivalent-to", "object": "cocartesian fibration over Fin_*", "modality": "stated", "locator": "Example 1.2"}
+{"n": 15, "subject": "cartesian fibration", "relation": "defines", "object": "functor f such that every object of Fun([1],B) times_{t,B,f} E admits an f-cartesian lift", "modality": "stated", "locator": "Definition 2.1(2)"}
+{"n": 16, "subject": "f-cartesian morphism", "relation": "defines", "object": "morphism inducing a pullback square in Cat_infty on slice categories E_{/e_1} to E_{/e_2}", "modality": "stated", "locator": "Definition 2.1(2)"}
+{"n": 17, "subject": "left fibration", "relation": "defines", "object": "cocartesian fibration whose fibers are all infinity-groupoids", "modality": "stated", "locator": "Remark 2.3"}
+{"n": 18, "subject": "forgetful functor Vect Bdl to Mfld", "relation": "specialises", "object": "cartesian fibration (Definition 2.1(2))", "modality": "stated", "locator": "Example 1.5"}
+{"n": 19, "subject": "JL-p-cartesian edge", "relation": "defines", "object": "edge f with E_{/f} to E_{/f(1)} times B_{/p(f(1))} B_{/p(f)} in (W cap F)_Joyal", "modality": "stated", "locator": "Definition 3.2"}
+{"n": 20, "subject": "inert morphism in Fin_*", "relation": "defines", "object": "morphism T_+ to U_+ with |alpha^{-1}(u)|=1 for all u in U", "modality": "stated", "locator": "Remark 1.3"}

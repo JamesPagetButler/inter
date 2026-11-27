@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "wrong-relation", "reason": "The subject is a mathematical object, not a result, so it cannot prove a statement; the text asserts this in Theorem 4.10."}
+{"n": 2, "grade": "faithful", "reason": "Corollary 5.2: (2). Let \\mathfrak{X},\\mathfrak{Y} \\in \\mathrm{FSch}^{\\mathrm{qt}}. If there is a symmetric monoidal triangulated equivalence Ho(Nuc^CS(X)) ≅ Ho(Nuc^CS(Y)), then X ≅ Y."}
+{"n": 3, "grade": "wrong-modality", "reason": "Definition 2.5 ( [ 7 , Definitions 8.5] ): Let C be a compactly generated tt- \\infty-category."}
+{"n": 4, "grade": "wrong-relation", "reason": "The subject is a mathematical object (a functor) and thus cannot prove a statement; the text uses has-property semantics."}
+{"n": 5, "grade": "faithful", "reason": "Moreover, this construction defines a contravariant functor Spec : ( tt \u200b - \u200b Cat wcg ) op \u2192 LocSpaces ."}
+{"n": 6, "grade": "wrong-relation", "reason": "Theorem 1.1 (Corollary 5.2 ) ."}
+{"n": 7, "grade": "wrong-direction", "reason": "The full subcategory of nuclear objects in C is denoted by \\mathrm{Nuc}(C)."}
+{"n": 8, "grade": "faithful", "reason": "Proposition 4.7: Let F : T \u2192 T \u2032 be a cg-preserving homomorphism of weakly compactly generated tt-categories. Then there is a natural morphism of ringed spaces Spec \u2061 ( T \u2032 ) \u2192 Spec \u2061 ( T )."}
+{"n": 9, "grade": "faithful", "reason": "Theorem 1.2 . Let k = \ud835\udc0f or a field. The following functors are fully faithful: ... ( fin . aff . FSch k ) op \u2192 CAlg k \u200b ( Cat st dual ) : \ud83d\udd1b \u21a6 Nuc CS \u200b ( \ud83d\udd1b ) ."}
+{"n": 10, "grade": "faithful", "reason": "(2). If \ud83d\udd1b , \ud83d\udd1c are affine, and there is a symmetric monoidal triangulated equivalence Ho \u2061 ( Nuc CS \u200b ( \ud83d\udd1b ) ) \u2245 Ho \u2061 ( Nuc CS \u200b ( \ud83d\udd1c ) ) , then \ud83d\udd1b \u2245 \ud83d\udd1c ."}
+{"n": 11, "grade": "faithful", "reason": "Theorem 1.2 . Let k = \ud835\udc0f or a field. The following functors are fully faithful: ( fin . FSch k ) op \u2192 CAlg k \u200b ( Cat st dual ) : \ud83d\udd1b \u21a6 Nuc Ef \u200b ( \ud83d\udd1b )"}
+{"n": 12, "grade": "faithful", "reason": "Moreover, D tors \u200b ( \ud83d\udd1b ) is a strongly compactly generated localizing ideal of Nuc CS \u200b ( \ud83d\udd1b ) ."}
+{"n": 13, "grade": "faithful", "reason": "Proposition 2.8: For formal schemes, the assignment \ud83d\udd1b \u21a6 Nuc Ef \u200b ( \ud83d\udd1b ) satisfies Zariski descent in Pr st L . Moreover, for every open subset U \u2282 \ud83d\udd1b , the restriction functor Nuc Ef \u200b ( \ud83d\udd1b ) \u2192 Nuc Ef \u200b ( U ) is a quotient functor and its kernel is a smashing ideal."}
+{"n": 14, "grade": "faithful", "reason": "Definition 4.4: The ringed space Spec \u2061 ( T ) = ( Spc \u2061 ( T ) , \ud835\udcae T ) is called the Balmer spectrum of a weakly compactly generated tt-category T ."}
+{"n": 15, "grade": "faithful", "reason": "If \ud83d\udd1b , \ud83d\udd1c \u2208 FSch k sq , then Map CAlg k \u200b ( Cat st dual ) \u2061 ( Nuc CS \u200b ( \ud83d\udd1b ) , Nuc CS \u200b ( \ud83d\udd1c ) ) \u2245 Hom \u2061 ( \ud83d\udd1c , \ud83d\udd1b ) ."}
+{"n": 16, "grade": "faithful", "reason": "Then F is a quotient functor and its kernel is a smashing ideal."}
+{"n": 17, "grade": "faithful", "reason": "Theorem 6.5: Let k be \ud835\udc0f or a field, and let \ud83d\udd1b be a Noetherian formal scheme over k . Then the map of sets \u03d5 : { x \u2208 \ud83d\udd1b \u2223 tr . deg k ( \u03ba ( x ) ) < \ud83d\udd24 } \u2192 \u03c0 0 ( ( Fld k ) Nuc Ef ( \ud83d\udd1b ) / ) ... is bijective."}
+{"n": 18, "grade": "faithful", "reason": "Theorem 1.2 . Let k = \ud835\udc0f or a field. The following functors are fully faithful: ... ( fin . aff . FSch k ) op \u2192 CAlg k \u200b ( Cat st dual ) : \ud83d\udd1b \u21a6 Nuc CS \u200b ( \ud83d\udd1b ) ."}
+{"n": 19, "grade": "faithful", "reason": "Theorem 6.7: Let k be \ud835\udc0f or a field, and let \ud83d\udd1b , \ud83d\udd1c be Noetherian formal schemes over k . Assume that \ud83d\udd1c is nearly of < \ud83d\udd24 -type over k . Then Map CAlg k \u200b ( Cat st dual ) \u2061 ( Nuc Ef \u200b ( \ud83d\udd1b ) , Nuc Ef \u200b ( \ud83d\udd1c ) ) \u2245 Hom \u2061 ( \ud83d\udd1c , \ud83d\udd1b ) ."}
+{"n": 20, "grade": "faithful", "reason": "Assume that f is \u03c9 1 -compact. Then E rig \u2192 ( E / I ) rig is a quotient functor and its kernel is a smashing ideal."}
+GRADES-END
+```

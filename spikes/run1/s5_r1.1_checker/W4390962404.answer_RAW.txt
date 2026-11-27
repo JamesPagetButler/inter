@@ -1,0 +1,23 @@
+```json
+{"n": 1, "grade": "faithful", "reason": "The abstract states: \"extending the theory of D-cap-modules of Ardakov and Wadsley to the theory of analytic D-modules.\""}
+{"n": 2, "grade": "wrong-direction", "reason": "The subject is the defined term and the object is its defining content, but the rubric specifies the direction is definition \u2192 term."}
+{"n": 3, "grade": "wrong-relation", "reason": "The subject \"solid smooth morphism f\" is an object, not a result, so this should be typed as has-property."}
+{"n": 4, "grade": "faithful", "reason": "Definition 1.0.2 introduces the term \"derived Tate adic space\" as exactly this sheaf."}
+{"n": 5, "grade": "faithful", "reason": "The paper cites Simpson for introducing this definition: \"Simpson's de Rham stack is defined as the stack in the \u00e9tale topology given by X_{dR}^{alg}(R)=X(R^{\\red})\"."}
+{"n": 6, "grade": "faithful", "reason": "Remark 1.0.15 introduces the notation and definition via \":=\" for the analytic de Rham groupoid."}
+{"n": 7, "grade": "faithful", "reason": "The text states: \"The study of D-modules via the de Rham stack... can be found in the work of Gaitsgory and Rozenblyum [GR14].\""}
+{"n": 8, "grade": "faithful", "reason": "Corollary 1.0.9 establishes \"natural equivalences of stable \\infty-categories given by Fourier-Mukai transforms\" between these two module categories."}
+{"n": 9, "grade": "faithful", "reason": "Theorem 1.0.12 (4) states \"there is an equivalence of analytic de Rham stacks X_{dR}=Y^{\\dagger/X}_{dR}\"."}
+{"n": 10, "grade": "wrong-relation", "reason": "The object \"six-functor formalism for wideparen D_X-modules\" is a construction or object, not a statement, so this cannot be a 'proves' relation."}
+{"n": 11, "grade": "wrong-relation", "reason": "Theorem 1.0.8 is the theorem that Corollary 1.0.9 follows from, making it a consequence rather than a premise used in a proof step."}
+{"n": 12, "grade": "wrong-relation", "reason": "The subject \"g: X/(G^la/H^dagger) -> Y\" is a mathematical object (a morphism), not a result, so this should be 'has-property'."}
+{"n": 13, "grade": "faithful", "reason": "Theorem 1.0.12, item 8 explicitly proves these identities and the promotion to a filtered object with the given graded pieces."}
+{"n": 14, "grade": "faithful", "reason": "Theorem 1.0.7 explicitly states these cohomological properties and equivalences for the morphism f."}
+{"n": 15, "grade": "faithful", "reason": "Theorem 1.0.17 explicitly establishes this specific property for the morphism g."}
+{"n": 16, "grade": "faithful", "reason": "Proposition 1.0.14 states \"There is a natural equivalence G^{la}_{dR}=G^{sm}.\""}
+{"n": 17, "grade": "wrong-relation", "reason": "The subject \"Mod(A) of solid A-modules\" is an object, not a result, so this should be 'has-property'."}
+{"n": 18, "grade": "wrong-relation", "reason": "The subject \"solid smooth morphism f\" is an object, so asserting a property about it requires the 'has-property' relation, not 'proves'."}
+{"n": 19, "grade": "faithful", "reason": "Proposition 1.0.14 directly asserts the equivalence G^{la}_{dR}=G^{sm}."}
+{"n": 20, "grade": "wrong-relation", "reason": "The subject \"g: X/V(F)^dagger -> X\" is an object (a morphism), not a result, so 'proves' is the wrong relation."}
+GRADES-END
+```

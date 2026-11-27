@@ -1,0 +1,21 @@
+{"n": 1, "grade": "wrong-direction", "reason": "The rubric specifies that the direction for 'defines' is from the definition to the defined term, but here the subject is the defined term and the object is the defining content."}
+{"n": 2, "grade": "faithful", "reason": "The paper explicitly states this in Lemma 3.3: \"then S(\\phi) = Tr(\\mathcal{E}(T))\"."}
+{"n": 3, "grade": "wrong-relation", "reason": "Being \"a rational multiple of \\zeta(3)\" is a property, not a specific object, so the correct relation is 'has-property'."}
+{"n": 4, "grade": "faithful", "reason": "The paper states this in Proposition 4.4: \"One has h(x) = \\int_0^\\infty e^{-tx^2}\\tilde{g}(t)dt\"."}
+{"n": 5, "grade": "faithful", "reason": "The paper states this in Lemma 4.6: \"The coefficient of t^a in the heat expansion is the term \\gamma(a) = \\frac{1-2^{-2a}}{a}\\pi^{-a}\\xi(2a)\"."}
+{"n": 6, "grade": "wrong-direction", "reason": "The direction for 'defines' must be from the defining statement or content to the defined term, but here the subject is the defined term 'h(x)'."}
+{"n": 7, "grade": "faithful", "reason": "The paper proves this in Proposition 2.6(ii): \"\\psi_{\\beta}(A)=\\frac{1}{Z}{\\rm Tr}\\left(\\exterior\\exp(-\\beta|D|)\\gamma_{I}(A)\\right)\"."}
+{"n": 8, "grade": "faithful", "reason": "The paper states these formulas in Lemma 4.5(i)."}
+{"n": 9, "grade": "wrong-relation", "reason": "Being \"a rational multiple of \\zeta(5)\" is a property of c(4), not a distinct mathematical object, so this should be 'has-property'."}
+{"n": 10, "grade": "faithful", "reason": "The paper states this equation in Lemma 4.2."}
+{"n": 11, "grade": "faithful", "reason": "The paper states this equality in Corollary 3.2."}
+{"n": 12, "grade": "wrong-direction", "reason": "The subject is the defined term and the object is its definition, but the 'defines' relation must point from the definition to the term."}
+{"n": 13, "grade": "faithful", "reason": "The paper proves this derivative in Lemma 4.1."}
+{"n": 14, "grade": "faithful", "reason": "The paper asserts this in Lemma 3.3."}
+{"n": 15, "grade": "faithful", "reason": "The paper states this generalized integral in Lemma 4.5(ii)."}
+{"n": 16, "grade": "not-in-paper", "reason": "The paper does not define the \"spectral action principle\" as the \"spectral action Tr(chi(D^2/Lambda^2))\"; it merely mentions the principle and then recalls the definition of the spectral action."}
+{"n": 17, "grade": "faithful", "reason": "The paper explicitly states both properties of h(x) in Lemma 4.1."}
+{"n": 18, "grade": "faithful", "reason": "The paper repeats this assertion in Corollary 3.2."}
+{"n": 19, "grade": "not-in-paper", "reason": "The paper states that the \"associated irreducible representation is given by the Fermionic second quantization\", not that the state \\psi_\\beta itself is equivalent to it."}
+{"n": 20, "grade": "faithful", "reason": "The paper states the existence and uniqueness of this KMS_\\beta state in Proposition 2.2."}
+GRADES-END

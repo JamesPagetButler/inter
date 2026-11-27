@@ -1,0 +1,21 @@
+{"n": 1, "grade": "faithful", "reason": "Theorem 4.7.8. There is a commutative diagram ... of (large) ℬ-categories."}
+{"n": 2, "grade": "faithful", "reason": "By making use of the Grothendieck construction, we derive our second main result, an internal version of Yoneda’s lemma."}
+{"n": 3, "grade": "faithful", "reason": "By construction, a map in 𝒞 is a monomorphism if and only if its diagonal is an equivalence."}
+{"n": 4, "grade": "faithful", "reason": "one obtains an equivalence Cat(ℬ) ≃ Shv_{Cat_∞}(ℬ) between the ∞-category of ℬ-categories and the ∞-category of Cat_∞-valued sheaves on ℬ."}
+{"n": 5, "grade": "faithful", "reason": "There is a canonical equivalence [𝖢,Ω] ≃ 𝖫𝖥𝗂𝖻_𝖢 that is natural in 𝖢."}
+{"n": 6, "grade": "faithful", "reason": "we define a large ℬ-category 𝖫𝖥𝗂𝖻_𝖢 whose objects are given by left fibrations over 𝖢."}
+{"n": 7, "grade": "faithful", "reason": "The composite functor ... is equivalent to the identity functor on ℬ_Δ."}
+{"n": 8, "grade": "faithful", "reason": "Proposition 3.2.7 shows that an 𝒮-category is precisely a complete Segal space as developed by Rezk [Rez01]."}
+{"n": 9, "grade": "faithful", "reason": "Then S is saturated if (1) S contains all equivalences in 𝒞 and is closed under composition; (2) S is closed under small colimits in Fun(Δ^1,𝒞); (3) S is closed under pushouts."}
+{"n": 10, "grade": "faithful", "reason": "As the Quillen model structure on the 1-category of simplicial sets is left proper, ordinary pushouts along monomorphisms of simplicial sets present homotopy pushouts in 𝒮."}
+{"n": 11, "grade": "faithful", "reason": "both ℛ and ℒ are stable under taking retracts."}
+{"n": 12, "grade": "faithful", "reason": "The inclusion Cat(ℬ) ↪ ℬ_Δ exhibits Cat(ℬ) as an accessible localisation of ℬ_Δ."}
+{"n": 13, "grade": "faithful", "reason": "The following conditions are equivalent: (1) C is a ℬ-category; (2) for all n ≥ 2 the maps C_n → C_1 ×_{C_0} ⋯ ×_{C_0} C_1 as well as the map C_0 → (C_0 × C_0) ×_{C_1 × C_1} C_3 are equivalences."}
+{"n": 14, "grade": "faithful", "reason": "we say that a map is a strong epimorphism if it is internally left orthogonal to every monomorphism."}
+{"n": 15, "grade": "faithful", "reason": "By a theorem of Joyal and Tierney [JT07] the ∞-category of complete Segal spaces is a model for the ∞-category of ∞-categories Cat_∞"}
+{"n": 16, "grade": "faithful", "reason": "Let 𝒞 be a presentable ∞-category and let S be a small set of maps in 𝒞. Then there is a factorisation system (ℒ,ℛ) in 𝒞 with ℛ = S^⊥ and ℒ = ^⊥ℛ."}
+{"n": 17, "grade": "faithful", "reason": "If 𝒞 is an ∞-topos, then strong epimorphisms are precisely covers, i.e. effective epimorphisms in the terminology of [Lur09a]."}
+{"n": 18, "grade": "faithful", "reason": "Proposition 3.2.7 shows that an 𝒮-category is precisely a complete Segal space as developed by Rezk [Rez01]."}
+{"n": 19, "grade": "faithful", "reason": "Such parametrised ∞-categories are a special case of the more general notion of categories in an arbitrary ∞-topos"}
+{"n": 20, "grade": "faithful", "reason": "they precisely correspond to categories in presheaf ∞-topoi."}
+GRADES-END
