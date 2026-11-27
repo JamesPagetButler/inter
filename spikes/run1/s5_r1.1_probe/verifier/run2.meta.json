@@ -20,6 +20,7 @@
    "output_tokens": 5129
   }
  ],
+ "rater": "opus-verifier-v1",
  "run": 2,
  "sum": {
   "cache_creation_input_tokens": 52083,
