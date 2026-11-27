@@ -1,0 +1,25 @@
+{
+ "claims": 20,
+ "disagreeing_claims": {
+  "3": [
+   "faithful",
+   "faithful",
+   "wrong-modality",
+   "faithful",
+   "faithful"
+  ],
+  "6": [
+   "wrong-relation",
+   "wrong-relation",
+   "faithful",
+   "wrong-relation",
+   "wrong-relation"
+  ]
+ },
+ "doubt_always_claims": [],
+ "doubt_unstable_claims": {},
+ "fleiss_kappa": 0.8815867377146239,
+ "rule": "single runs stand",
+ "runs": 5,
+ "unanimous_share": 0.9
+}

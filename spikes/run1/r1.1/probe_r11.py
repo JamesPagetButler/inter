@@ -50,7 +50,7 @@ def analyse(runs, tokens=None):
     table, per_claim = [], {}
     for n in ns:
         gs = [r[n]["grade"] for r in runs]
-        ds = [bool(r[n]["doubt"]) for r in runs]
+        ds = [bool(r[n].get("doubt", False)) for r in runs]  # the checker output has no doubt flag
         c = Counter(gs)
         table.append([c[g] for g in GRADES])
         per_claim[n] = {"grades": gs, "distinct": len(c), "doubts": sum(ds)}
