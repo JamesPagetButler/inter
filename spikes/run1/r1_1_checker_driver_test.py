@@ -136,11 +136,56 @@ def check_probe_paper_not_in_manifest() -> None:
     )
 
 
+def check_build_call_cmd_uses_gemini_venv_python() -> None:
+    """Live-fire finding, seq 341: execute_plan used to spawn checker_v1.py
+    with `sys.executable`, which lacks google-genai on plain system python3
+    and silently fails every real call (never caught by gate 0, which is
+    dry-run-only). build_call_cmd must point at the gemini MCP server's own
+    venv interpreter instead."""
+    if not driver.GEMINI_VENV_PYTHON.is_file():
+        raise AssertionError(
+            f"GEMINI_VENV_PYTHON does not exist on this host: {driver.GEMINI_VENV_PYTHON} "
+            "-- fix the constant or rebuild the venv per the gemini MCP README"
+        )
+    call = {
+        "prompt": "p.txt", "prompt_sha": "ps", "rubric": "r.txt", "rubric_sha": "rs",
+        "input": "i.txt", "input_sha": "is", "label": "PX", "run_index": 2,
+    }
+    cmd = driver.build_call_cmd(call, "out")
+    if cmd[0] != str(driver.GEMINI_VENV_PYTHON):
+        raise AssertionError(f"build_call_cmd did not use GEMINI_VENV_PYTHON as the interpreter: {cmd}")
+    if "--run-index" not in cmd or cmd[cmd.index("--run-index") + 1] != "2":
+        raise AssertionError(f"run_index not threaded into the command: {cmd}")
+    print("PASS (gemini venv python): build_call_cmd uses the gemini MCP server's own venv interpreter, which exists on this host.")
+
+
+def check_build_call_cmd_guards_missing_interpreter() -> None:
+    """Mutation check: if GEMINI_VENV_PYTHON pointed at a nonexistent path,
+    build_call_cmd must refuse loudly rather than silently fall back to a
+    different interpreter (the exact failure mode this fix closes)."""
+    original = driver.GEMINI_VENV_PYTHON
+    driver.GEMINI_VENV_PYTHON = Path("/nonexistent/gemini-venv/bin/python")
+    try:
+        call = {
+            "prompt": "p.txt", "prompt_sha": "ps", "rubric": "r.txt", "rubric_sha": "rs",
+            "input": "i.txt", "input_sha": "is", "label": "PX", "run_index": None,
+        }
+        expect_system_exit(
+            lambda: driver.build_call_cmd(call, "out"),
+            "gemini venv python not found",
+            "missing gemini venv interpreter",
+        )
+    finally:
+        driver.GEMINI_VENV_PYTHON = original
+
+
 def main() -> int:
     check_happy_path()
     check_samples_sha_mismatch()
     check_manifest_sample_mismatch()
     check_probe_paper_not_in_manifest()
+    check_build_call_cmd_uses_gemini_venv_python()
+    check_build_call_cmd_guards_missing_interpreter()
     print("ALL PASS")
     return 0
 

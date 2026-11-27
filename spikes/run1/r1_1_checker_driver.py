@@ -29,6 +29,22 @@ from pathlib import Path
 HERE = Path(__file__).parent
 CHECKER = HERE / "checker_v1.py"
 
+# live-fire finding (contextus-spike, seq-341 §8b probe, run_index=0 CALL_FAILED):
+# checker_v1.py's _get_client() imports `server.py` in-process, which itself
+# imports `google.genai` -- a package installed only inside the gemini MCP
+# server's own venv, never on plain system python3. execute_plan() used to
+# spawn checker_v1.py with `sys.executable` (whatever interpreter is running
+# the driver), which works for every build-only path (dry-run never reaches
+# _get_client -- see checker_v1.py's own comment) but silently can't make a
+# real call: `from google import genai` fails and server.py's own `sys.exit(1)`
+# aborts the subprocess before any request is even sent. This was invisible
+# to gate 0 by construction (dry-run-only) and only a live call could catch
+# it -- which is exactly gate 0b's purpose. Fixed by pointing execute_plan at
+# the gemini MCP server's own venv interpreter, verified to still resolve
+# google.genai under -I (the venv's own site-packages are not part of what -I
+# strips; only user-site and PYTHONPATH are).
+GEMINI_VENV_PYTHON = Path.home() / ".claude" / "mcp-servers" / "gemini" / "venv" / "bin" / "python"
+
 # §4 samples pin (qbp-architecture, inter <commit on seed-corpus-s5-grades
 # branch>, live-test seq 5293): spikes/run1/r1.1/samples_r1.1.json, seed
 # 251117, reproduced byte-identical on a second draw.
@@ -125,32 +141,45 @@ def print_plan(plan: list) -> None:
         print(f"  [{call['kind']}] {call['label']}{suffix}")
 
 
+def build_call_cmd(call: dict, out_dir: str) -> list:
+    """Pure command construction for one plan entry -- no subprocess, no
+    network, exercised directly by r1_1_checker_driver_test.py so the
+    interpreter-path fix has a test that doesn't require a real Gemini call."""
+    if not GEMINI_VENV_PYTHON.is_file():
+        raise SystemExit(
+            f"gemini venv python not found at {GEMINI_VENV_PYTHON} -- "
+            "refusing to fall back to a different interpreter that may lack google-genai"
+        )
+    cmd = [
+        str(GEMINI_VENV_PYTHON),
+        "-I",
+        str(CHECKER),
+        "grade",
+        "--prompt",
+        call["prompt"],
+        "--prompt-sha",
+        call["prompt_sha"],
+        "--rubric",
+        call["rubric"],
+        "--rubric-sha",
+        call["rubric_sha"],
+        "--input",
+        call["input"],
+        "--input-sha",
+        call["input_sha"],
+        "--label",
+        call["label"],
+        "--out-dir",
+        out_dir,
+    ]
+    if call["run_index"] is not None:
+        cmd += ["--run-index", str(call["run_index"])]
+    return cmd
+
+
 def execute_plan(plan: list, out_dir: str) -> int:
     for call in plan:
-        cmd = [
-            sys.executable,
-            "-I",
-            str(CHECKER),
-            "grade",
-            "--prompt",
-            call["prompt"],
-            "--prompt-sha",
-            call["prompt_sha"],
-            "--rubric",
-            call["rubric"],
-            "--rubric-sha",
-            call["rubric_sha"],
-            "--input",
-            call["input"],
-            "--input-sha",
-            call["input_sha"],
-            "--label",
-            call["label"],
-            "--out-dir",
-            out_dir,
-        ]
-        if call["run_index"] is not None:
-            cmd += ["--run-index", str(call["run_index"])]
+        cmd = build_call_cmd(call, out_dir)
         print("RUN:", " ".join(cmd))
         subprocess.run(cmd, check=True)
     return 0
