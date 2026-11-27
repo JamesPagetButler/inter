@@ -20,6 +20,7 @@ Plan shape:
     own `--run-index`), never by changing the hashed request text.
 """
 import argparse
+import fnmatch
 import hashlib
 import json
 import subprocess
@@ -67,42 +68,97 @@ def gemini_venv_python() -> Path:
 # of prompt_token_count on Gemini, not additional). Spend is always
 # recomputed from the run's own *.meta.json files on disk, never carried
 # only in memory, so a restart mid-run re-derives the same answer.
+#
+# seq 355 (blocking scope correction): the 1.65M kill line is ONE line for
+# ALL of round 1.1's Gemini spend -- checker, L1, labeller, and the probe's
+# already-spent 108,542 -- not one line per directory. A per-out_dir guard
+# would let the checker and labeller drivers each independently reach
+# ~1.65M (~3.3M total) without either tripping. Every round-1.1 run dir
+# lives under HERE/s5_r1.1_*/, and the guard scans every meta under every
+# such sibling directory, not just the one it was called for; an out_dir
+# outside that root is refused outright.
 GEMINI_TOKEN_BUDGET_DEFAULT = 1_650_000
 GEMINI_PER_CALL_WORST_CASE = 25_000
+ROUND_1_1_ROOT_PATTERN = "s5_r1.1_*"
 
 
-def usage_sums_from_meta(meta: dict, meta_path: Path) -> dict:
-    sums = meta.get("usage_sums")
-    if sums is None:
+def require_round_1_1_out_dir(out_dir: Path, root: Path = HERE) -> Path:
+    """The HERE/s5_r1.1_*/ ancestor out_dir lives under, checked by NAME
+    pattern alone -- never by filesystem existence, since this runs before
+    out_dir has necessarily been created. Raises SystemExit if out_dir
+    isn't under any such directory."""
+    out_dir_resolved, root_resolved = Path(out_dir).resolve(), Path(root).resolve()
+    try:
+        rel_parts = out_dir_resolved.relative_to(root_resolved).parts
+    except ValueError:
+        rel_parts = ()
+    if not rel_parts or not fnmatch.fnmatch(rel_parts[0], ROUND_1_1_ROOT_PATTERN):
         raise SystemExit(
-            f"{meta_path} has no usage_sums -- cannot compute cumulative Gemini spend "
-            "from an output written before the F-0b-1/budget fix (7de7151 and later)"
+            f"out_dir {out_dir} is not under {root}/{ROUND_1_1_ROOT_PATTERN} -- refusing to "
+            "run a round-1.1 Gemini call outside the shared token-budget root"
         )
-    return sums
+    return root_resolved / rel_parts[0]
 
 
-def cumulative_gemini_spend(out_dir: Path) -> dict:
+def usage_sums_from_meta_file(meta_path: Path) -> dict:
+    """Four-field and three-field sums for one completed call. Prefers the
+    recorded usage_sums (7de7151/70907e3 and later); falls back to the
+    sibling response_RAW.json's own usage_metadata for a meta written
+    before that (e.g. the §8b probe's original 5 metas, committed in
+    3577576) -- only a meta with NEITHER is rejected loudly, never
+    silently counted as zero (qbp-architecture seq 355)."""
+    meta = json.loads(meta_path.read_text())
+    sums = meta.get("usage_sums")
+    if sums is not None:
+        return sums
+
+    stem = meta_path.name[: -len(".meta.json")]
+    response_path = meta_path.with_name(stem + ".response_RAW.json")
+    if not response_path.is_file():
+        raise SystemExit(
+            f"{meta_path} has neither usage_sums nor a sibling {response_path.name} to "
+            "recompute three-field spend from -- refusing to silently count it as zero"
+        )
+    usage = json.loads(response_path.read_text()).get("usage_metadata") or {}
+    p = usage.get("prompt_token_count") or 0
+    c = usage.get("cached_content_token_count") or 0
+    t = usage.get("thoughts_token_count") or 0
+    a = usage.get("candidates_token_count") or 0
+    return {"four_field": p + c + t + a, "three_field": p + t + a}
+
+
+def cumulative_gemini_spend(root: Path = HERE) -> dict:
     """Four-field and three-field token sums across every *.meta.json
-    already in out_dir -- recomputed from disk every call, so it survives
-    a restart."""
+    under every {root}/s5_r1.1_*/ directory -- ALL of round 1.1's Gemini
+    components share one total, not one per directory (seq 355).
+    Recomputed from disk every call, so it survives a restart."""
     totals = {"four_field": 0, "three_field": 0}
-    for meta_path in sorted(Path(out_dir).glob("*.meta.json")):
-        sums = usage_sums_from_meta(json.loads(meta_path.read_text()), meta_path)
-        totals["four_field"] += sums["four_field"]
-        totals["three_field"] += sums["three_field"]
+    for subdir in sorted(Path(root).glob(ROUND_1_1_ROOT_PATTERN)):
+        if not subdir.is_dir():
+            continue
+        for meta_path in sorted(subdir.rglob("*.meta.json")):
+            sums = usage_sums_from_meta_file(meta_path)
+            totals["four_field"] += sums["four_field"]
+            totals["three_field"] += sums["three_field"]
     return totals
 
 
-def check_gemini_token_budget(out_dir: Path, budget: int = GEMINI_TOKEN_BUDGET_DEFAULT) -> None:
+def check_gemini_token_budget(
+    out_dir: Path, budget: int = GEMINI_TOKEN_BUDGET_DEFAULT, root: Path = HERE
+) -> None:
     """Stops BEFORE building the next call's request if cumulative
-    three-field spend so far, plus one worst-case call, would exceed
-    `budget`. Raises a named SystemExit; never silently proceeds."""
-    spend = cumulative_gemini_spend(out_dir)
+    three-field spend across every round-1.1 component under `root`, plus
+    one worst-case call, would exceed `budget`. Also refuses an out_dir
+    outside `root`'s s5_r1.1_* pattern. Raises a named SystemExit; never
+    silently proceeds."""
+    require_round_1_1_out_dir(Path(out_dir), Path(root))
+    spend = cumulative_gemini_spend(Path(root))
     if spend["three_field"] + GEMINI_PER_CALL_WORST_CASE > budget:
         raise SystemExit(
             "Gemini cumulative token guard tripped: three-field spend so far "
-            f"{spend['three_field']} + per-call worst case {GEMINI_PER_CALL_WORST_CASE} "
-            f"> budget {budget} -- refusing to start another call"
+            f"{spend['three_field']} (across every {ROUND_1_1_ROOT_PATTERN} dir under {root}) "
+            f"+ per-call worst case {GEMINI_PER_CALL_WORST_CASE} > budget {budget} -- "
+            "refusing to start another call"
         )
 
 
@@ -233,9 +289,11 @@ def build_call_cmd(call: dict, out_dir: str) -> list:
     return cmd
 
 
-def execute_plan(plan: list, out_dir: str, token_budget: int = GEMINI_TOKEN_BUDGET_DEFAULT) -> int:
+def execute_plan(
+    plan: list, out_dir: str, token_budget: int = GEMINI_TOKEN_BUDGET_DEFAULT, root: Path = HERE
+) -> int:
     for call in plan:
-        check_gemini_token_budget(Path(out_dir), token_budget)
+        check_gemini_token_budget(Path(out_dir), token_budget, Path(root))
         cmd = build_call_cmd(call, out_dir)
         print("RUN:", " ".join(cmd))
         subprocess.run(cmd, check=True)

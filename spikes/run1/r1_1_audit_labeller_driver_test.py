@@ -137,7 +137,9 @@ def check_execute_plan_reuses_checker_driver_token_budget() -> None:
     over-budget out_dir must stop execute_plan before any subprocess runs,
     the same way it stops the checker driver."""
     with tempfile.TemporaryDirectory() as tmp:
-        out_dir = Path(tmp)
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_labeller"
+        out_dir.mkdir(parents=True)
         budget = 100_000
         (out_dir / "already_spent.meta.json").write_text(
             json.dumps({"usage_sums": {"three_field": budget, "four_field": budget}})
@@ -148,7 +150,7 @@ def check_execute_plan_reuses_checker_driver_token_budget() -> None:
             "input": "i.txt", "input_sha": "is",
         }]
         try:
-            driver.execute_plan(plan, str(out_dir), budget)
+            driver.execute_plan(plan, str(out_dir), budget, root)
         except SystemExit as e:
             if "Gemini cumulative token guard tripped" not in str(e):
                 raise AssertionError(f"wrong SystemExit reason: {e}")
@@ -157,6 +159,34 @@ def check_execute_plan_reuses_checker_driver_token_budget() -> None:
         else:
             raise AssertionError("execute_plan did not stop on an already-over-budget out_dir")
     print("PASS (token budget reused): execute_plan stops via the shared checker-driver guard before any subprocess runs.")
+
+
+def check_execute_plan_shares_cross_component_spend() -> None:
+    """Spend already incurred in the CHECKER driver's directory must trip
+    the labeller driver's guard too, when both share the same root
+    (qbp-architecture seq 355) -- not just the labeller's own out_dir."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        checker_dir = root / "s5_r1.1_checker"
+        labeller_dir = root / "s5_r1.1_labeller"
+        checker_dir.mkdir(parents=True)
+        budget = 100_000
+        (checker_dir / "already_spent.meta.json").write_text(
+            json.dumps({"usage_sums": {"three_field": budget, "four_field": budget}})
+        )
+        plan = [{
+            "paper": "PX", "claim_numbers": [1],
+            "prompt": "p.txt", "prompt_sha": "ps", "rubric": "r.txt", "rubric_sha": "rs",
+            "input": "i.txt", "input_sha": "is",
+        }]
+        try:
+            driver.execute_plan(plan, str(labeller_dir), budget, root)
+        except SystemExit as e:
+            if "Gemini cumulative token guard tripped" not in str(e):
+                raise AssertionError(f"wrong SystemExit reason: {e}")
+        else:
+            raise AssertionError("execute_plan did not count the checker dir's spend against the labeller's budget")
+    print("PASS (cross-component spend shared): the checker driver's spend trips the labeller driver's guard via the shared root.")
 
 
 def main() -> int:
@@ -168,6 +198,7 @@ def main() -> int:
     check_collect_grades_missing_file()
     check_build_call_cmd_uses_gemini_venv_python()
     check_execute_plan_reuses_checker_driver_token_budget()
+    check_execute_plan_shares_cross_component_spend()
     print("ALL PASS")
     return 0
 

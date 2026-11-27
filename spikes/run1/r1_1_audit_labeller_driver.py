@@ -124,10 +124,13 @@ def build_call_cmd(call: dict, out_dir: str) -> list:
 
 
 def execute_plan(
-    plan: list, out_dir: str, token_budget: int = checker_driver.GEMINI_TOKEN_BUDGET_DEFAULT
+    plan: list,
+    out_dir: str,
+    token_budget: int = checker_driver.GEMINI_TOKEN_BUDGET_DEFAULT,
+    root: Path = checker_driver.HERE,
 ) -> int:
     for call in plan:
-        checker_driver.check_gemini_token_budget(Path(out_dir), token_budget)
+        checker_driver.check_gemini_token_budget(Path(out_dir), token_budget, Path(root))
         cmd = build_call_cmd(call, out_dir)
         print("RUN:", " ".join(cmd))
         subprocess.run(cmd, check=True)

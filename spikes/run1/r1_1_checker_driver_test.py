@@ -181,26 +181,29 @@ def check_build_call_cmd_guards_missing_interpreter() -> None:
         driver.GEMINI_VENV_PYTHON = original
 
 
-def _write_meta(out_dir: Path, stem: str, three_field: int, four_field: int | None = None) -> None:
+def _write_meta(subdir: Path, stem: str, three_field: int, four_field: int | None = None) -> None:
+    subdir.mkdir(parents=True, exist_ok=True)
     if four_field is None:
         four_field = three_field
-    (out_dir / f"{stem}.meta.json").write_text(
+    (subdir / f"{stem}.meta.json").write_text(
         json.dumps({"usage_sums": {"three_field": three_field, "four_field": four_field}})
     )
 
 
 def check_gemini_token_budget_boundary() -> None:
-    """The guard trips exactly when cumulative three-field spend + the
-    per-call worst case would exceed the budget (qbp-architecture seq
-    350/351) -- not a call before, not a call after."""
+    """The guard trips exactly when cumulative three-field spend across
+    every s5_r1.1_* dir under root, plus the per-call worst case, would
+    exceed the budget (qbp-architecture seq 350/351/355) -- not a call
+    before, not a call after."""
     with tempfile.TemporaryDirectory() as tmp:
-        out_dir = Path(tmp)
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_checker"
         budget = 100_000
         worst = driver.GEMINI_PER_CALL_WORST_CASE
 
         # Right at the boundary: spend + worst == budget must NOT trip.
         _write_meta(out_dir, "a", budget - worst)
-        driver.check_gemini_token_budget(out_dir, budget)
+        driver.check_gemini_token_budget(out_dir, budget, root)
         print(
             f"PASS (budget boundary, at limit): spend {budget - worst} + worst {worst} "
             f"== budget {budget}, not tripped."
@@ -209,60 +212,151 @@ def check_gemini_token_budget_boundary() -> None:
         # One token over: spend + worst == budget + 1 must trip.
         _write_meta(out_dir, "b", 1)
         expect_system_exit(
-            lambda: driver.check_gemini_token_budget(out_dir, budget),
+            lambda: driver.check_gemini_token_budget(out_dir, budget, root),
             "Gemini cumulative token guard tripped",
             "budget boundary, one over",
         )
 
 
 def check_gemini_token_budget_missing_usage_sums_rejected() -> None:
-    """A meta.json written before this fix (no usage_sums) must fail loud,
-    never silently count as zero spend."""
+    """A meta.json with neither usage_sums nor a sibling response_RAW.json
+    to recompute from must fail loud, never silently count as zero
+    spend."""
     with tempfile.TemporaryDirectory() as tmp:
-        out_dir = Path(tmp)
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_checker"
+        out_dir.mkdir(parents=True)
         (out_dir / "old.meta.json").write_text(json.dumps({"label": "X"}))
         expect_system_exit(
-            lambda: driver.check_gemini_token_budget(out_dir, 100_000),
-            "has no usage_sums",
+            lambda: driver.check_gemini_token_budget(out_dir, 100_000, root),
+            "has neither usage_sums nor a sibling",
             "missing usage_sums rejected",
         )
 
 
-def check_gemini_token_budget_mutant_killed() -> None:
-    """Mutation check: a mutant that feeds the guard zero spend (as if
-    cumulative_gemini_spend never actually read the meta.json files) must
-    be caught -- demonstrated by showing it wrongly lets an over-budget run
-    proceed that the real guard (and the boundary test above) correctly
-    refuses."""
+def check_gemini_token_budget_falls_back_to_response_raw() -> None:
+    """A meta.json without usage_sums (written before 70907e3) is still
+    counted, via the sibling response_RAW.json's usage_metadata
+    (qbp-architecture seq 355)."""
     with tempfile.TemporaryDirectory() as tmp:
-        out_dir = Path(tmp)
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_checker"
+        out_dir.mkdir(parents=True)
+        (out_dir / "old.meta.json").write_text(json.dumps({"label": "X"}))
+        (out_dir / "old.response_RAW.json").write_text(json.dumps({
+            "usage_metadata": {
+                "prompt_token_count": 100,
+                "cached_content_token_count": 40,
+                "thoughts_token_count": 20,
+                "candidates_token_count": 5,
+            }
+        }))
+        spend = driver.cumulative_gemini_spend(root)
+        if spend != {"four_field": 165, "three_field": 125}:
+            raise AssertionError(f"fallback sums wrong: {spend}")
+    print("PASS (fallback to response_RAW.json): a meta.json without usage_sums is still counted correctly, from its sibling's usage_metadata.")
+
+
+def check_out_dir_outside_root_refused() -> None:
+    """An out_dir that isn't under root/s5_r1.1_*/ is refused outright,
+    before any spend is even computed (qbp-architecture seq 355)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp) / "spikes_run1"
+        root.mkdir()
+        outside = Path(tmp) / "somewhere_else"
+        expect_system_exit(
+            lambda: driver.check_gemini_token_budget(outside, 100_000, root),
+            "is not under",
+            "out dir outside root refused",
+        )
+
+
+def check_cross_component_spend_is_shared() -> None:
+    """Spend already incurred in one component's directory (e.g. the
+    checker) must trip another component's guard (e.g. the labeller) when
+    both share the same root -- the 1.65M kill line is ONE line for all of
+    round 1.1, not one per directory (qbp-architecture seq 355, the
+    blocking scope correction to seq 350)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        checker_dir = root / "s5_r1.1_checker"
+        labeller_dir = root / "s5_r1.1_labeller"
         budget = 100_000
-        _write_meta(out_dir, "a", budget)  # already at the full budget alone
+        _write_meta(checker_dir, "a", budget)  # checker dir alone already at the full budget
+        expect_system_exit(
+            lambda: driver.check_gemini_token_budget(labeller_dir, budget, root),
+            "Gemini cumulative token guard tripped",
+            "cross-component spend shared across sibling dirs",
+        )
+
+
+def check_real_probe_counted_in_cumulative_spend() -> None:
+    """The actual committed §8b probe metas (3577576, written before
+    usage_sums existed) are counted via the response_RAW.json fallback --
+    expected three-field total 108,542 (qbp-architecture seq 355)."""
+    probe_dir = driver.HERE / "s5_r1.1_probe" / "checker"
+    probe_total = sum(
+        driver.usage_sums_from_meta_file(p)["three_field"] for p in sorted(probe_dir.glob("*.meta.json"))
+    )
+    if probe_total != 108_542:
+        raise AssertionError(f"probe three-field total wrong: {probe_total} != 108542")
+
+    spend = driver.cumulative_gemini_spend(driver.HERE)
+    if spend["three_field"] < probe_total:
+        raise AssertionError(
+            f"cumulative_gemini_spend(HERE) ({spend}) does not include the probe dir's spend ({probe_total})"
+        )
+    print(
+        "PASS (real probe counted): the committed §8b probe metas sum to exactly 108,542 "
+        "via the fallback, and are included in cumulative_gemini_spend(HERE)."
+    )
+
+
+def check_single_dir_scope_mutant_killed() -> None:
+    """Mutation check: a mutant that scopes the guard back to just the one
+    out_dir passed in (the pre-seq-355 per-directory behavior) must be
+    caught -- demonstrated by showing it wrongly misses the checker dir's
+    spend when checking the labeller dir's budget, which the real
+    cross-root scan (and the cross-component test above) correctly
+    catches."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        checker_dir = root / "s5_r1.1_checker"
+        labeller_dir = root / "s5_r1.1_labeller"
+        budget = 100_000
+        _write_meta(checker_dir, "a", budget)
 
         try:
-            driver.check_gemini_token_budget(out_dir, budget)
+            driver.check_gemini_token_budget(labeller_dir, budget, root)
         except SystemExit:
             pass
         else:
-            raise AssertionError("real check_gemini_token_budget unexpectedly accepted an over-budget spend")
+            raise AssertionError("real check_gemini_token_budget unexpectedly missed the checker dir's spend")
 
-        original = driver.cumulative_gemini_spend
-        driver.cumulative_gemini_spend = lambda _out_dir: {"four_field": 0, "three_field": 0}
+        def mutant_scoped_to_out_dir(out_dir, budget_=driver.GEMINI_TOKEN_BUDGET_DEFAULT, root_=driver.HERE):
+            # BUG: scans cumulative_gemini_spend(out_dir) -- the single
+            # directory it was called for -- instead of the whole root.
+            driver.require_round_1_1_out_dir(Path(out_dir), Path(root_))
+            spend = driver.cumulative_gemini_spend(Path(out_dir))
+            if spend["three_field"] + driver.GEMINI_PER_CALL_WORST_CASE > budget_:
+                raise SystemExit("mutant tripped (should not happen in this probe)")
+
+        original = driver.check_gemini_token_budget
+        driver.check_gemini_token_budget = mutant_scoped_to_out_dir
         try:
             try:
-                driver.check_gemini_token_budget(out_dir, budget)
+                driver.check_gemini_token_budget(labeller_dir, budget, root)
             except SystemExit as e:
                 raise AssertionError(
-                    f"zero-spend mutant was still caught ({e}) -- this probe no longer "
-                    "demonstrates reading real cumulative spend as load-bearing; rewrite it"
+                    f"single-dir-scope mutant was still caught ({e}) -- this probe no longer "
+                    "demonstrates cross-root scanning as load-bearing; rewrite it"
                 )
         finally:
-            driver.cumulative_gemini_spend = original
+            driver.check_gemini_token_budget = original
     print(
-        "PASS (budget mutant demonstrated killed): a guard fed zero spend (as if "
-        "cumulative_gemini_spend never read the real meta.json files) wrongly lets an "
-        "over-budget run proceed, which the real guard (and the boundary test above) "
-        "correctly refuses -- confirms reading real spend is load-bearing."
+        "PASS (single-dir-scope mutant demonstrated killed): scoping the guard to just out_dir "
+        "instead of the shared root wrongly misses the checker dir's spend when checking the "
+        "labeller dir -- confirms the cross-root scan is load-bearing."
     )
 
 
@@ -275,7 +369,11 @@ def main() -> int:
     check_build_call_cmd_guards_missing_interpreter()
     check_gemini_token_budget_boundary()
     check_gemini_token_budget_missing_usage_sums_rejected()
-    check_gemini_token_budget_mutant_killed()
+    check_gemini_token_budget_falls_back_to_response_raw()
+    check_out_dir_outside_root_refused()
+    check_cross_component_spend_is_shared()
+    check_real_probe_counted_in_cumulative_spend()
+    check_single_dir_scope_mutant_killed()
     print("ALL PASS")
     return 0
 
