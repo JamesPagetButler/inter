@@ -1,0 +1,35 @@
+{
+ "claims": 20,
+ "disagreeing_claims": {
+  "6": [
+   "wrong-relation",
+   "faithful",
+   "wrong-relation",
+   "wrong-relation",
+   "faithful"
+  ]
+ },
+ "doubt_always_claims": [
+  6
+ ],
+ "doubt_unstable_claims": {
+  "5": 4,
+  "10": 1,
+  "15": 1
+ },
+ "fleiss_kappa": 0.9316939890710382,
+ "rule": "single runs stand",
+ "runs": 5,
+ "tokens_min_max": [
+  79534,
+  83005
+ ],
+ "tokens_per_run": [
+  79534,
+  80171,
+  83005,
+  82838,
+  82709
+ ],
+ "unanimous_share": 0.95
+}
