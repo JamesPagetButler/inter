@@ -1,0 +1,31 @@
+{
+ "api_calls": 2,
+ "dispatch_sha256_as_sent": "277c9930114d438efd3e6a7c3a5bbe82786d0a499992ce379b374f12ce074964",
+ "files_read": [
+  "spikes/run1/s5_grader_inputs_A2/W7168273025.grader_input.txt",
+  "spikes/run1/vocab/relation-rubric-v1.txt"
+ ],
+ "note": "Usage copied from the transcript usage objects (four Anthropic fields). The dispatch was sent with absolute worktree paths; dispatch.txt here shows them repo-relative.",
+ "per_call": [
+  {
+   "cache_creation_input_tokens": 22752,
+   "cache_read_input_tokens": 0,
+   "input_tokens": 2,
+   "output_tokens": 203
+  },
+  {
+   "cache_creation_input_tokens": 29331,
+   "cache_read_input_tokens": 22752,
+   "input_tokens": 2,
+   "output_tokens": 5129
+  }
+ ],
+ "run": 2,
+ "sum": {
+  "cache_creation_input_tokens": 52083,
+  "cache_read_input_tokens": 22752,
+  "input_tokens": 4,
+  "output_tokens": 5332
+ },
+ "sum_all": 80171
+}
