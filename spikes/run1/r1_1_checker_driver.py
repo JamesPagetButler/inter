@@ -100,14 +100,30 @@ def require_round_1_1_out_dir(out_dir: Path, root: Path = HERE) -> Path:
     return root_resolved / rel_parts[0]
 
 
-def usage_sums_from_meta_file(meta_path: Path) -> dict:
+# seq 357 (blocking interaction with the Opus verifier's own probe,
+# qbp-architecture + cartan): the shared s5_r1.1_* root also holds the
+# Opus verifier's metas (Anthropic usage, not Gemini), once both branches
+# land side by side. A meta declaring a non-Gemini `rater` is skipped
+# entirely -- never counted, never rejected for lacking Gemini usage
+# fields. A meta with NO rater tag at all is NOT exempted by this: it must
+# still resolve to real Gemini usage data, fail-closed, same as before.
+GEMINI_RATER_PREFIX = "gemini"
+
+
+def meta_belongs_to_gemini(meta: dict) -> bool:
+    rater = meta.get("rater")
+    return rater is None or str(rater).startswith(GEMINI_RATER_PREFIX)
+
+
+def usage_sums_from_meta_file(meta_path: Path, meta: dict | None = None) -> dict:
     """Four-field and three-field sums for one completed call. Prefers the
     recorded usage_sums (7de7151/70907e3 and later); falls back to the
     sibling response_RAW.json's own usage_metadata for a meta written
     before that (e.g. the §8b probe's original 5 metas, committed in
     3577576) -- only a meta with NEITHER is rejected loudly, never
     silently counted as zero (qbp-architecture seq 355)."""
-    meta = json.loads(meta_path.read_text())
+    if meta is None:
+        meta = json.loads(meta_path.read_text())
     sums = meta.get("usage_sums")
     if sums is not None:
         return sums
@@ -130,14 +146,19 @@ def usage_sums_from_meta_file(meta_path: Path) -> dict:
 def cumulative_gemini_spend(root: Path = HERE) -> dict:
     """Four-field and three-field token sums across every *.meta.json
     under every {root}/s5_r1.1_*/ directory -- ALL of round 1.1's Gemini
-    components share one total, not one per directory (seq 355).
-    Recomputed from disk every call, so it survives a restart."""
+    components share one total, not one per directory (seq 355). A meta
+    tagged with a non-Gemini `rater` (e.g. the Opus verifier's own metas)
+    is skipped, never counted and never rejected (seq 357). Recomputed
+    from disk every call, so it survives a restart."""
     totals = {"four_field": 0, "three_field": 0}
     for subdir in sorted(Path(root).glob(ROUND_1_1_ROOT_PATTERN)):
         if not subdir.is_dir():
             continue
         for meta_path in sorted(subdir.rglob("*.meta.json")):
-            sums = usage_sums_from_meta_file(meta_path)
+            meta = json.loads(meta_path.read_text())
+            if not meta_belongs_to_gemini(meta):
+                continue
+            sums = usage_sums_from_meta_file(meta_path, meta)
             totals["four_field"] += sums["four_field"]
             totals["three_field"] += sums["three_field"]
     return totals

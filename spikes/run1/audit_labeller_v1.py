@@ -67,6 +67,10 @@ CANONICAL_PROMPT_SHA = (
 
 MODEL = checker_v1.MODEL
 
+# Shared-root rater tag (qbp-architecture seq 357), same reason as
+# checker_v1.RATER.
+RATER = "gemini-labeller-v1"
+
 
 def claims_block_of(claim_numbers) -> str:
     ns = sorted(set(claim_numbers))
@@ -239,6 +243,7 @@ def cmd_label(args) -> int:
                 "usage": usage_fields,
                 "usage_sums": usage_sums,
                 "defenced": defenced,
+                "rater": RATER,
             },
             indent=2,
         )

@@ -40,6 +40,11 @@ from pathlib import Path
 GEMINI_SERVER_DIR = Path.home() / ".claude" / "mcp-servers" / "gemini"
 MODEL = "gemini-3.1-pro-preview"
 
+# Shared-root rater tag (qbp-architecture seq 357): the s5_r1.1_* root also
+# holds the Opus verifier's own metas (Anthropic usage, not Gemini), so
+# every meta.json this component writes declares which rater produced it.
+RATER = "gemini-checker-v1"
+
 FIXTURE_DIR = Path(__file__).parent / "checker_v1_fixtures"
 FIXTURE_PROMPT = FIXTURE_DIR / "fixture_prompt.txt"
 FIXTURE_RUBRIC = FIXTURE_DIR / "fixture_rubric.txt"
@@ -393,6 +398,7 @@ def cmd_grade(args) -> int:
                 "thought_tokens": thought_tokens,
                 "usage": usage_fields,
                 "usage_sums": usage_sums,
+                "rater": RATER,
             },
             indent=2,
         )

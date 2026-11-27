@@ -360,6 +360,76 @@ def check_single_dir_scope_mutant_killed() -> None:
     )
 
 
+def check_opus_rated_meta_ignored() -> None:
+    """A meta declaring a non-Gemini rater (the Opus verifier's own metas,
+    sharing the same s5_r1.1_* root) is skipped entirely -- never counted,
+    never rejected for lacking Gemini usage fields (qbp-architecture
+    seq 357)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        checker_dir = root / "s5_r1.1_checker"
+        verifier_dir = root / "s5_r1.1_verifier"
+        verifier_dir.mkdir(parents=True)
+        (verifier_dir / "run1.meta.json").write_text(json.dumps({"rater": "opus-verifier-v1"}))
+        _write_meta(checker_dir, "a", 1000)
+
+        spend = driver.cumulative_gemini_spend(root)
+        if spend != {"four_field": 1000, "three_field": 1000}:
+            raise AssertionError(f"opus-rated meta was not ignored cleanly: {spend}")
+    print("PASS (opus-rated meta ignored): a non-Gemini-rated meta is skipped entirely, not rejected and not counted.")
+
+
+def check_untagged_meta_with_no_usage_still_refused() -> None:
+    """A meta with NO rater tag at all is not exempted by the rater check
+    -- it must still resolve to real Gemini usage data or be rejected
+    loudly, fail-closed (qbp-architecture seq 357)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_checker"
+        out_dir.mkdir(parents=True)
+        (out_dir / "mystery.meta.json").write_text(json.dumps({"label": "X"}))
+        expect_system_exit(
+            lambda: driver.cumulative_gemini_spend(root),
+            "has neither usage_sums nor a sibling",
+            "untagged meta with no usage still refused",
+        )
+
+
+def check_rater_skip_mutant_killed() -> None:
+    """Mutation check: a mutant that skips EVERY meta carrying a rater tag
+    -- gemini-rated ones included, not just non-Gemini ones -- must be
+    caught, demonstrated by showing it wrongly drops a real gemini-rated
+    meta's spend that the real check correctly keeps."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        out_dir = root / "s5_r1.1_checker"
+        out_dir.mkdir(parents=True)
+        (out_dir / "a.meta.json").write_text(
+            json.dumps({"rater": "gemini-checker-v1", "usage_sums": {"three_field": 1000, "four_field": 1200}})
+        )
+
+        real_spend = driver.cumulative_gemini_spend(root)
+        if real_spend["three_field"] != 1000:
+            raise AssertionError(f"real cumulative_gemini_spend did not count the gemini-rated meta: {real_spend}")
+
+        original = driver.meta_belongs_to_gemini
+        driver.meta_belongs_to_gemini = lambda meta: meta.get("rater") is None  # BUG: drops every rated meta
+        try:
+            mutant_spend = driver.cumulative_gemini_spend(root)
+            if mutant_spend["three_field"] != 0:
+                raise AssertionError(
+                    f"mutant unexpectedly still counted the gemini-rated meta: {mutant_spend} -- "
+                    "this probe no longer demonstrates the rater check as load-bearing; rewrite it"
+                )
+        finally:
+            driver.meta_belongs_to_gemini = original
+    print(
+        "PASS (rater-skip mutant demonstrated killed): a mutant that drops EVERY rated meta "
+        "(gemini-rated ones included) wrongly misses real spend that the real rater check "
+        "correctly keeps -- confirms checking the rater's PREFIX, not just its absence, is load-bearing."
+    )
+
+
 def main() -> int:
     check_happy_path()
     check_samples_sha_mismatch()
@@ -374,6 +444,9 @@ def main() -> int:
     check_cross_component_spend_is_shared()
     check_real_probe_counted_in_cumulative_spend()
     check_single_dir_scope_mutant_killed()
+    check_opus_rated_meta_ignored()
+    check_untagged_meta_with_no_usage_still_refused()
+    check_rater_skip_mutant_killed()
     print("ALL PASS")
     return 0
 
