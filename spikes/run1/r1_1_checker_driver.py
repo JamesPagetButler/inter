@@ -45,6 +45,67 @@ CHECKER = HERE / "checker_v1.py"
 # strips; only user-site and PYTHONPATH are).
 GEMINI_VENV_PYTHON = Path.home() / ".claude" / "mcp-servers" / "gemini" / "venv" / "bin" / "python"
 
+
+def gemini_venv_python() -> Path:
+    """The gemini MCP server's own venv interpreter, or a loud SystemExit --
+    never a silent fallback to a different interpreter that may lack
+    google-genai. Shared with r1_1_audit_labeller_driver.py, which makes
+    the same class of call and had the same unfixed sys.executable bug
+    (found while folding in the token-budget guard below, qbp-architecture
+    seq 350)."""
+    if not GEMINI_VENV_PYTHON.is_file():
+        raise SystemExit(
+            f"gemini venv python not found at {GEMINI_VENV_PYTHON} -- "
+            "refusing to fall back to a different interpreter that may lack google-genai"
+        )
+    return GEMINI_VENV_PYTHON
+
+
+# Cumulative Gemini token guard (qbp-architecture seq 350, worst-case-per-call
+# corrected to 25k at seq 351; unit ruling at seq 348/351 -- three-field,
+# prompt+thoughts+candidates, since cached_content_token_count is a SUBSET
+# of prompt_token_count on Gemini, not additional). Spend is always
+# recomputed from the run's own *.meta.json files on disk, never carried
+# only in memory, so a restart mid-run re-derives the same answer.
+GEMINI_TOKEN_BUDGET_DEFAULT = 1_650_000
+GEMINI_PER_CALL_WORST_CASE = 25_000
+
+
+def usage_sums_from_meta(meta: dict, meta_path: Path) -> dict:
+    sums = meta.get("usage_sums")
+    if sums is None:
+        raise SystemExit(
+            f"{meta_path} has no usage_sums -- cannot compute cumulative Gemini spend "
+            "from an output written before the F-0b-1/budget fix (7de7151 and later)"
+        )
+    return sums
+
+
+def cumulative_gemini_spend(out_dir: Path) -> dict:
+    """Four-field and three-field token sums across every *.meta.json
+    already in out_dir -- recomputed from disk every call, so it survives
+    a restart."""
+    totals = {"four_field": 0, "three_field": 0}
+    for meta_path in sorted(Path(out_dir).glob("*.meta.json")):
+        sums = usage_sums_from_meta(json.loads(meta_path.read_text()), meta_path)
+        totals["four_field"] += sums["four_field"]
+        totals["three_field"] += sums["three_field"]
+    return totals
+
+
+def check_gemini_token_budget(out_dir: Path, budget: int = GEMINI_TOKEN_BUDGET_DEFAULT) -> None:
+    """Stops BEFORE building the next call's request if cumulative
+    three-field spend so far, plus one worst-case call, would exceed
+    `budget`. Raises a named SystemExit; never silently proceeds."""
+    spend = cumulative_gemini_spend(out_dir)
+    if spend["three_field"] + GEMINI_PER_CALL_WORST_CASE > budget:
+        raise SystemExit(
+            "Gemini cumulative token guard tripped: three-field spend so far "
+            f"{spend['three_field']} + per-call worst case {GEMINI_PER_CALL_WORST_CASE} "
+            f"> budget {budget} -- refusing to start another call"
+        )
+
+
 # §4 samples pin (qbp-architecture, inter <commit on seed-corpus-s5-grades
 # branch>, live-test seq 5293): spikes/run1/r1.1/samples_r1.1.json, seed
 # 251117, reproduced byte-identical on a second draw.
@@ -145,13 +206,8 @@ def build_call_cmd(call: dict, out_dir: str) -> list:
     """Pure command construction for one plan entry -- no subprocess, no
     network, exercised directly by r1_1_checker_driver_test.py so the
     interpreter-path fix has a test that doesn't require a real Gemini call."""
-    if not GEMINI_VENV_PYTHON.is_file():
-        raise SystemExit(
-            f"gemini venv python not found at {GEMINI_VENV_PYTHON} -- "
-            "refusing to fall back to a different interpreter that may lack google-genai"
-        )
     cmd = [
-        str(GEMINI_VENV_PYTHON),
+        str(gemini_venv_python()),
         "-I",
         str(CHECKER),
         "grade",
@@ -177,8 +233,9 @@ def build_call_cmd(call: dict, out_dir: str) -> list:
     return cmd
 
 
-def execute_plan(plan: list, out_dir: str) -> int:
+def execute_plan(plan: list, out_dir: str, token_budget: int = GEMINI_TOKEN_BUDGET_DEFAULT) -> int:
     for call in plan:
+        check_gemini_token_budget(Path(out_dir), token_budget)
         cmd = build_call_cmd(call, out_dir)
         print("RUN:", " ".join(cmd))
         subprocess.run(cmd, check=True)
@@ -200,6 +257,12 @@ def main() -> int:
         action="store_true",
         help="actually invoke checker_v1.py; default is plan-only (nothing paid runs)",
     )
+    parser.add_argument(
+        "--gemini-token-budget",
+        type=int,
+        default=GEMINI_TOKEN_BUDGET_DEFAULT,
+        help="cumulative three-field Gemini token budget (qbp-architecture seq 348/350/351)",
+    )
     args = parser.parse_args()
 
     manifest = load_manifest(Path(args.manifest))
@@ -218,7 +281,7 @@ def main() -> int:
         print("Plan-only (pass --execute to actually call checker_v1.py). Nothing paid ran.")
         return 0
 
-    return execute_plan(plan, args.out_dir)
+    return execute_plan(plan, args.out_dir, args.gemini_token_budget)
 
 
 if __name__ == "__main__":

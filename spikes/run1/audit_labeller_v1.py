@@ -202,6 +202,8 @@ def cmd_label(args) -> int:
         answer_text = "\n".join(answer_parts)
         thought_text = "\n".join(thought_parts)
         thought_tokens = getattr(response.usage_metadata, "thoughts_token_count", 0)
+        usage_fields = checker_v1.usage_fields_of(response)
+        usage_sums = checker_v1.usage_sums_of(usage_fields)
     except Exception as e:
         (out_dir / f"{stem}.PARSE_FAILED.txt").write_text(
             f"{type(e).__name__}: {e} -- see {stem}.response_RAW.json"
@@ -234,6 +236,8 @@ def cmd_label(args) -> int:
                 "rubric_id_line": prepared["rubric_id_line"],
                 "finish_reason": finish_reason,
                 "thought_tokens": thought_tokens,
+                "usage": usage_fields,
+                "usage_sums": usage_sums,
                 "defenced": defenced,
             },
             indent=2,

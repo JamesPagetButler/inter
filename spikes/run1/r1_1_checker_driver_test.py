@@ -4,7 +4,9 @@ no subprocess, no network, no real sample/manifest files -- a small
 synthetic fixture with a known correct plan.
 """
 import hashlib
+import json
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -179,6 +181,91 @@ def check_build_call_cmd_guards_missing_interpreter() -> None:
         driver.GEMINI_VENV_PYTHON = original
 
 
+def _write_meta(out_dir: Path, stem: str, three_field: int, four_field: int | None = None) -> None:
+    if four_field is None:
+        four_field = three_field
+    (out_dir / f"{stem}.meta.json").write_text(
+        json.dumps({"usage_sums": {"three_field": three_field, "four_field": four_field}})
+    )
+
+
+def check_gemini_token_budget_boundary() -> None:
+    """The guard trips exactly when cumulative three-field spend + the
+    per-call worst case would exceed the budget (qbp-architecture seq
+    350/351) -- not a call before, not a call after."""
+    with tempfile.TemporaryDirectory() as tmp:
+        out_dir = Path(tmp)
+        budget = 100_000
+        worst = driver.GEMINI_PER_CALL_WORST_CASE
+
+        # Right at the boundary: spend + worst == budget must NOT trip.
+        _write_meta(out_dir, "a", budget - worst)
+        driver.check_gemini_token_budget(out_dir, budget)
+        print(
+            f"PASS (budget boundary, at limit): spend {budget - worst} + worst {worst} "
+            f"== budget {budget}, not tripped."
+        )
+
+        # One token over: spend + worst == budget + 1 must trip.
+        _write_meta(out_dir, "b", 1)
+        expect_system_exit(
+            lambda: driver.check_gemini_token_budget(out_dir, budget),
+            "Gemini cumulative token guard tripped",
+            "budget boundary, one over",
+        )
+
+
+def check_gemini_token_budget_missing_usage_sums_rejected() -> None:
+    """A meta.json written before this fix (no usage_sums) must fail loud,
+    never silently count as zero spend."""
+    with tempfile.TemporaryDirectory() as tmp:
+        out_dir = Path(tmp)
+        (out_dir / "old.meta.json").write_text(json.dumps({"label": "X"}))
+        expect_system_exit(
+            lambda: driver.check_gemini_token_budget(out_dir, 100_000),
+            "has no usage_sums",
+            "missing usage_sums rejected",
+        )
+
+
+def check_gemini_token_budget_mutant_killed() -> None:
+    """Mutation check: a mutant that feeds the guard zero spend (as if
+    cumulative_gemini_spend never actually read the meta.json files) must
+    be caught -- demonstrated by showing it wrongly lets an over-budget run
+    proceed that the real guard (and the boundary test above) correctly
+    refuses."""
+    with tempfile.TemporaryDirectory() as tmp:
+        out_dir = Path(tmp)
+        budget = 100_000
+        _write_meta(out_dir, "a", budget)  # already at the full budget alone
+
+        try:
+            driver.check_gemini_token_budget(out_dir, budget)
+        except SystemExit:
+            pass
+        else:
+            raise AssertionError("real check_gemini_token_budget unexpectedly accepted an over-budget spend")
+
+        original = driver.cumulative_gemini_spend
+        driver.cumulative_gemini_spend = lambda _out_dir: {"four_field": 0, "three_field": 0}
+        try:
+            try:
+                driver.check_gemini_token_budget(out_dir, budget)
+            except SystemExit as e:
+                raise AssertionError(
+                    f"zero-spend mutant was still caught ({e}) -- this probe no longer "
+                    "demonstrates reading real cumulative spend as load-bearing; rewrite it"
+                )
+        finally:
+            driver.cumulative_gemini_spend = original
+    print(
+        "PASS (budget mutant demonstrated killed): a guard fed zero spend (as if "
+        "cumulative_gemini_spend never read the real meta.json files) wrongly lets an "
+        "over-budget run proceed, which the real guard (and the boundary test above) "
+        "correctly refuses -- confirms reading real spend is load-bearing."
+    )
+
+
 def main() -> int:
     check_happy_path()
     check_samples_sha_mismatch()
@@ -186,6 +273,9 @@ def main() -> int:
     check_probe_paper_not_in_manifest()
     check_build_call_cmd_uses_gemini_venv_python()
     check_build_call_cmd_guards_missing_interpreter()
+    check_gemini_token_budget_boundary()
+    check_gemini_token_budget_missing_usage_sums_rejected()
+    check_gemini_token_budget_mutant_killed()
     print("ALL PASS")
     return 0
 

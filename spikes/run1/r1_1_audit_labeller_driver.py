@@ -19,6 +19,8 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 LABELLER = HERE / "audit_labeller_v1.py"
+sys.path.insert(0, str(HERE))
+import r1_1_checker_driver as checker_driver  # noqa: E402
 
 
 def load_manifest(manifest_path: Path) -> dict:
@@ -85,34 +87,48 @@ def print_plan(plan: list) -> None:
         print(f"  [audit] {call['paper']} claims={call['claim_numbers']}")
 
 
-def execute_plan(plan: list, out_dir: str) -> int:
+def build_call_cmd(call: dict, out_dir: str) -> list:
+    """Pure command construction for one plan entry -- no subprocess, no
+    network, exercised directly by r1_1_audit_labeller_driver_test.py.
+    Same live-fire finding as r1_1_checker_driver.py (seq 341): this driver
+    also shells out to the gemini MCP server's client, so it must use that
+    venv's own interpreter, not sys.executable -- found while folding in
+    the cumulative token guard below (qbp-architecture seq 350, "and in
+    the labeller driver, if it makes its own calls")."""
+    return [
+        str(checker_driver.gemini_venv_python()),
+        "-I",
+        str(LABELLER),
+        "label",
+        "--prompt",
+        call["prompt"],
+        "--prompt-sha",
+        call["prompt_sha"],
+        "--rubric",
+        call["rubric"],
+        "--rubric-sha",
+        call["rubric_sha"],
+        "--input",
+        call["input"],
+        "--input-sha",
+        call["input_sha"],
+        "--claims",
+        ",".join(str(n) for n in call["claim_numbers"]),
+        "--paper",
+        call["paper"],
+        "--label",
+        call["paper"],
+        "--out-dir",
+        out_dir,
+    ]
+
+
+def execute_plan(
+    plan: list, out_dir: str, token_budget: int = checker_driver.GEMINI_TOKEN_BUDGET_DEFAULT
+) -> int:
     for call in plan:
-        cmd = [
-            sys.executable,
-            "-I",
-            str(LABELLER),
-            "label",
-            "--prompt",
-            call["prompt"],
-            "--prompt-sha",
-            call["prompt_sha"],
-            "--rubric",
-            call["rubric"],
-            "--rubric-sha",
-            call["rubric_sha"],
-            "--input",
-            call["input"],
-            "--input-sha",
-            call["input_sha"],
-            "--claims",
-            ",".join(str(n) for n in call["claim_numbers"]),
-            "--paper",
-            call["paper"],
-            "--label",
-            call["paper"],
-            "--out-dir",
-            out_dir,
-        ]
+        checker_driver.check_gemini_token_budget(Path(out_dir), token_budget)
+        cmd = build_call_cmd(call, out_dir)
         print("RUN:", " ".join(cmd))
         subprocess.run(cmd, check=True)
     return 0
@@ -162,6 +178,12 @@ def main() -> int:
         help="after --execute, collect every planned paper's {paper}.grades.json into "
         "{paper: {n: grade}} and write it here, ready for r1_1_audit_labeller.py --grades",
     )
+    parser.add_argument(
+        "--gemini-token-budget",
+        type=int,
+        default=checker_driver.GEMINI_TOKEN_BUDGET_DEFAULT,
+        help="cumulative three-field Gemini token budget (qbp-architecture seq 348/350/351)",
+    )
     args = parser.parse_args()
 
     audit_items = [(p, int(n)) for p, n in json.loads(Path(args.audit_items).read_text())]
@@ -181,7 +203,7 @@ def main() -> int:
         print("Plan-only (pass --execute to actually call audit_labeller_v1.py). Nothing paid ran.")
         return 0
 
-    rc = execute_plan(plan, args.out_dir)
+    rc = execute_plan(plan, args.out_dir, args.gemini_token_budget)
     if rc != 0 or not args.merge_grades_out:
         return rc
 

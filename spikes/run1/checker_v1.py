@@ -183,6 +183,37 @@ def rubric_id_line_of(rubric_text: str) -> str | None:
     )
 
 
+# Gemini token-unit ruling (deming, spike-seed-corpus-s4 seq 348, confirmed
+# by cartan against the API's own total_token_count on all 5 probe calls,
+# seq 351): on Gemini, prompt_token_count already INCLUDES
+# cached_content_token_count -- it is 16,209 on every §8b probe run whether
+# cached is null or 14,158. Summing all four fields double-counts cached
+# tokens. The three-field sum (prompt + thoughts + candidates) is the
+# correct "tokens consumed" unit; the four-field sum is still recorded, so
+# the pre-registered (incorrect) unit can be recomputed after the fact.
+USAGE_FIELDS = ("prompt_token_count", "cached_content_token_count", "thoughts_token_count", "candidates_token_count")
+
+
+def usage_fields_of(response) -> dict:
+    """The 4 required Gemini usage fields from one response's
+    usage_metadata. Reused by audit_labeller_v1.py's cmd_label, same reason
+    parse_grade_lines is shared. Each field is recorded as the int value or
+    None if the API didn't return it -- never silently defaulted here (only
+    usage_sums_of defaults a missing field to 0, for the sum)."""
+    um = response.usage_metadata
+    return {f: getattr(um, f, None) for f in USAGE_FIELDS}
+
+
+def usage_sums_of(fields: dict) -> dict:
+    """{'four_field': ..., 'three_field': ...} from usage_fields_of's
+    output (or an equivalent dict), per the unit ruling above."""
+    p = fields.get("prompt_token_count") or 0
+    c = fields.get("cached_content_token_count") or 0
+    t = fields.get("thoughts_token_count") or 0
+    a = fields.get("candidates_token_count") or 0
+    return {"four_field": p + c + t + a, "three_field": p + t + a}
+
+
 def validate_and_prepare(
     prompt_text: str,
     rubric_text: str,
@@ -336,6 +367,8 @@ def cmd_grade(args) -> int:
         answer_text = "\n".join(answer_parts)
         thought_text = "\n".join(thought_parts)
         thought_tokens = getattr(response.usage_metadata, "thoughts_token_count", 0)
+        usage_fields = usage_fields_of(response)
+        usage_sums = usage_sums_of(usage_fields)
     except Exception as e:
         (out_dir / f"{stem}.PARSE_FAILED.txt").write_text(
             f"{type(e).__name__}: {e} -- see {stem}.response_RAW.json"
@@ -358,6 +391,8 @@ def cmd_grade(args) -> int:
                 "rubric_id_line": rubric_id_line,
                 "finish_reason": finish_reason,
                 "thought_tokens": thought_tokens,
+                "usage": usage_fields,
+                "usage_sums": usage_sums,
             },
             indent=2,
         )
